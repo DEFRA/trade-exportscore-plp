@@ -1,0 +1,36 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: trade-exportscore-plp
+  description: Exports Core: Packing List Parser
+  annotations:
+    github.com/project-slug: defra/trade-exportscore-plp
+    dev.azure.com/project: DEFRA-EXPORTSCORE-PLP
+    dev.azure.com/build-definition: trade-exportscore-plp
+    sonarqube.org/project-key: trade-exportscore-plp
+    grafana/dashboard-selector: "folderTitle == 'Managed Prometheus'"
+    backstage.io/kubernetes-id: trade-exportscore-plp
+  links:
+    - url: https://github.com/defra/trade-exportscore-plp
+      title: GitHub Repository
+      icon: github
+    - url: https://dev.azure.com/defragovuk/DEFRA-EXPORTSCORE-PLP/
+      title: Azure DevOps Project
+      icon: project
+    - url: https://sonarcloud.io/project/overview?id=trade-exportscore-plp
+      title: SonarCloud Analysis
+      icon: check
+    - url: https://snyk.io/test/github/DEFRA/trade-exportscore-plp
+      title: Snyk Analysis
+      icon: policy
+    - url: https://portal.azure.com/defradev.onmicrosoft.com
+      title: Azure Portal - Defra Dev
+      icon: cloud
+    - url: https://portal.azure.com/Defra.onmicrosoft.com
+      title: Azure Portal - Defra
+      icon: cloud
+spec:
+  type: backend
+  lifecycle: alpha
+  owner: "group:default/eutd-trade-exports-core"
+  

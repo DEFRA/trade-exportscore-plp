@@ -1,0 +1,8 @@
+{{- include "adp-helm-library.deployment" (list . "trade-exportscore-plp.deployment") -}}
+{{- define "trade-exportscore-plp.deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+      - {{ include "adp-helm-library.container" (list . "trade-exportscore-plp.container") }}
+{{- end -}}

@@ -1,0 +1,19 @@
+services:
+  trade-exportscore-plp:
+    build:
+      context: .
+      target: production
+    image: trade-exportscore-plp
+    container_name: trade-exportscore-plp
+    depends_on:
+      - trade-exportscore-plp-postgres
+    environment:
+      APPINSIGHTS_CLOUDROLE: trade-exportscore-plp-local
+      APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
+
+  trade-exportscore-plp-postgres:
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: trade-exportscore-plp
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres

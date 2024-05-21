@@ -1,0 +1,2 @@
+{{- define "trade-exportscore-plp.container" -}}
+{{- end -}}

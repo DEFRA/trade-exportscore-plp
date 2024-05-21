@@ -1,0 +1,6 @@
+
+{{- include "adp-aso-helm-library.flexible-servers-db" (list . "trade-exportscore-plp.flexible-servers-db") -}}
+
+{{- define "trade-exportscore-plp.flexible-servers-db" }}
+{{ end -}}
+

@@ -1,0 +1,6 @@
+services:
+  trade-exportscore-plp:
+    command: >
+      sh -c "npm run test:watch"
+    volumes:
+      - ./.git:/home/node/.git

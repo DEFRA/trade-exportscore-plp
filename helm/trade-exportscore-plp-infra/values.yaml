@@ -1,0 +1,8 @@
+# For documentation on how to use, please go here: https://github.com/DEFRA/adp-aso-helm-library?tab=readme-ov-file#adp-platform-azure-service-operator-helm-library-chart.
+# You may create Queues, Topics, Subscriptions, Storage Accounts, Databases and Role Assignments on these here.
+
+postgres:
+  db:
+    name: trade-exportscore-plp
+    charset: UTF8
+    collation: en_US.utf8
