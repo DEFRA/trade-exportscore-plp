@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: trade-exportscore-plp
-  description: Exports Core: Packing List Parser
+  description: Exports Core - Packing List Parser
   annotations:
     github.com/project-slug: defra/trade-exportscore-plp
     dev.azure.com/project: DEFRA-EXPORTSCORE-PLP
