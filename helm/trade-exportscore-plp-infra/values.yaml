@@ -6,3 +6,6 @@ postgres:
     name: trade-exportscore-plp
     charset: UTF8
     collation: en_US.utf8
+
+namespaceTopics:          <Array of Object>
+  - name: plingestion
