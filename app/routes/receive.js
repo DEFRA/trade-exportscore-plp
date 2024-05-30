@@ -1,8 +1,8 @@
 const { delay, ServiceBusClient, ServiceBusMessage } = require("@azure/service-bus");
 const { DefaultAzureCredential } = require("@azure/identity");
 
-const fullyQualifiedNamespace = "<SERVICE-BUS-NAMESPACE>.servicebus.windows.net";
-const queueName = "<QUEUE NAME>";
+const fullyQualifiedNamespace = process.env.SERVICE_BUS_NAMESPACE + ".servicebus.windows.net";
+const queueName = process.env.TEAM_NAME + "-plingestion";
 const credential = new DefaultAzureCredential();
 
  async function main() {

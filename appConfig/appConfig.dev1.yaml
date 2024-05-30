@@ -1,3 +1,5 @@
 - key: APPINSIGHTS_CONNECTIONSTRING
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
+- key: SERVICE_BUS_NAMESPACE
+  value: "DEVADPINFSB3401"
