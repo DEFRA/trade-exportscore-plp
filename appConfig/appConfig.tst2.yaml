@@ -1,3 +1,5 @@
 - key: APPINSIGHTS_CONNECTIONSTRING
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
+- key: MESSAGE_QUEUE_HOST
+  value: "TSTADPINFSB3401.servicebus.windows.net"
