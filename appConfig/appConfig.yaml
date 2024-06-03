@@ -4,3 +4,5 @@
   value: "3000"
 - key: APPINSIGHTS_CLOUDROLE
   value: "{{serviceName}}"
+- key: TEAM_NAME
+  value: "{{teamName}}"
