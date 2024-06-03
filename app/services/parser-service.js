@@ -1,4 +1,4 @@
-function matchesBandM() {
+function matchesBandM(packingListJson) {
     return true
 }
 

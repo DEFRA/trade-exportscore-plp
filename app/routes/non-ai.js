@@ -6,7 +6,7 @@ const parserService = require('../services/parser-service')
 const filename = plDir + 'test-packing-list.xlsx'
 const result = excelToJson({
     sourceFile: filename
-}).PackingList_Extract
+})
 
 if (parserService.matchesAsda()) {
     console.log('Packling list matches Asda')
