@@ -1,4 +1,3 @@
-//jest.mock('../../../../app/services/parser-service')
 jest.mock('convert-excel-to-json')
 jest.mock('../../../../app/services/parser-service', () => ({
   matchesBandM: jest.fn().mockResolvedValue(false),
