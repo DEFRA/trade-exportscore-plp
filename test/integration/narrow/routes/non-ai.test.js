@@ -8,7 +8,7 @@ describe('Non-ai test', () => {
     test('GET /non-ai route returns 200', async () => {
       const options = {
         method: 'GET',
-        url: '/healthy'
+        url: '/non-ai'
       }
   
       const response = await server.inject(options)
