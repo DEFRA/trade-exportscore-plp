@@ -8,22 +8,19 @@ const result = excelToJson({
     sourceFile: filename
 })
 
+var parsedPackingList;
 if (parserService.matchesAsda()) {
     console.log('Packling list matches Asda')
-	//parsePackingList(packinglist, "Asda")
 } else if (parserService.matchesBandM(result.Sheet1, filename)) {
     console.log('Packling list matches BandM')
-	//parsePacklingList(packingList, "BandM")
+	parsedPackingList = parserService.parseBandM(result.Sheet1)
 } else {
 	console.log('failed to parse')
 }
 
-const combined = {
-    result
-  }
 
 module.exports = {
     method: 'GET',
     path: '/non-ai',
-    handler: (_request, h) => h.response(combined).code(200)
+    handler: (_request, h) => h.response(parsedPackingList).code(200)
   }

@@ -34,4 +34,24 @@ function matchesAsda() {
     return false
 }
 
-module.exports = { matchesBandM, matchesAsda}
+function parseBandM(packingListJson) {
+    const establishmentNumber = packingListJson[2].I
+    const headerRow = packingListJson.findIndex(x => x.B == 'PRISM')
+    const packingListContents = packingListJson.slice(headerRow + 1, packingListJson.length).map(col => ({
+        description: col.C,
+        nature_of_products: "",
+        type_of_treatment: "",
+        commodity_code: col.D,
+        number_of_packages: col.F,
+        total_net_weight_kg: col.G
+      }))
+
+    const combined = {
+        registration_approval_number: establishmentNumber,
+        items: packingListContents
+        }
+
+    return combined
+}
+
+module.exports = { matchesBandM, matchesAsda, parseBandM}
