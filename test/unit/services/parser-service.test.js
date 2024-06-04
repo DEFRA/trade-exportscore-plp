@@ -7,6 +7,7 @@ describe('matchesBandM', () => {
             {},
             {},
             {
+              H: "WAREHOUSE SCHEME NUMBER:",
               I: "RMS-GB-000005-001",
             },
             {},
@@ -39,6 +40,7 @@ describe('matchesBandM', () => {
             {},
             {},
             {
+              H: "WAREHOUSE SCHEME NUMBER:",
               I: "INCORRECT"
             }
           ]
@@ -60,6 +62,7 @@ describe('matchesBandM', () => {
             {},
             {},
             {
+              H: "WAREHOUSE SCHEME NUMBER:",
               I: "RMS-GB-000005-001",
             },
             {},

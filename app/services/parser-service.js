@@ -5,7 +5,8 @@ function matchesBandM(packingListJson, filename) {
         if (fileExtension != 'xlsx') return false
 
         // check for correct establishment number
-        const establishmentNumber = packingListJson[2].I
+        const traderRow = packingListJson.findIndex(x => x.H == 'WAREHOUSE SCHEME NUMBER:')
+        const establishmentNumber = packingListJson[traderRow].I
         const regex = new RegExp('^RMS-GB-000005-[0-9]{3}$')
         if (!regex.test(establishmentNumber)) return false
 
