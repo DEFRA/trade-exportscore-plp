@@ -55,7 +55,7 @@ describe('matchesBandM', () => {
     })
 
     test('return false for incorrect header values', () => {
-        const filename = 'packinglist.pdf'
+        const filename = 'packinglist.xlxs'
         const packingListJson = [
             {},
             {},
