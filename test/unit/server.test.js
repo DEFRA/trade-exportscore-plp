@@ -15,6 +15,8 @@ jest.mock('@hapi/hapi', () => {
   }
 })
 
+jest.mock('../../app/routes/non-ai', () => [{ path: '/non-ai' }])
+
 describe('Server setup', () => {
   test('should setup app insights and start the server', async () => {
     require('../../app/server')
