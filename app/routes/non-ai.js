@@ -11,7 +11,7 @@ const result = excelToJson({
 if (parserService.matchesAsda()) {
     console.log('Packling list matches Asda')
 	//parsePackingList(packinglist, "Asda")
-} else if (parserService.matchesBandM(result)) {
+} else if (parserService.matchesBandM(result.Sheet1, filename)) {
     console.log('Packling list matches BandM')
 	//parsePacklingList(packingList, "BandM")
 } else {
