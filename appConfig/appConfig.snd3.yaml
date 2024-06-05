@@ -3,3 +3,7 @@
   type: "keyvault"
 - key: MESSAGE_QUEUE_HOST
   value: "SNDADPINFSB3401.servicebus.windows.net"
+- key: POSTGRES_HOST
+  value: "sndadpdbsps3401.postgres.database.azure.com"
+- key: POSTGRES_USERNAME
+  value: "sndadpdbsps3401-trade-exportscore-plp"   

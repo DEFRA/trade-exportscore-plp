@@ -6,3 +6,9 @@
   value: "{{serviceName}}"
 - key: TEAM_NAME
   value: "{{teamName}}"
+- key: POSTGRES_SCHEMA_NAME
+  value: "public"
+- key: POSTGRES_PORT
+  value: "5432" 
+- key: POSTGRES_DB
+  value: "trade-exportscore-plp"

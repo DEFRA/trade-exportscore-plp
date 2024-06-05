@@ -15,5 +15,8 @@ services:
     image: postgres:11.4-alpine
     environment:
       POSTGRES_DB: trade-exportscore-plp
-      POSTGRES_PASSWORD: ppp
-      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: ${POSTGRES_HOST:-trade-exportscore-plp}
+      POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
+      POSTGRES_PORT: 5432
+      POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
+      POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
