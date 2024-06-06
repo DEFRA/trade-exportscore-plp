@@ -85,6 +85,7 @@ describe('parseBandM', () => {
             {},
             {},
             {
+              H: "WAREHOUSE SCHEME NUMBER:",
               I: "RMS-GB-000005-001",
             },
             {},
@@ -140,14 +141,42 @@ describe('parseBandM', () => {
 describe('failedParser', () => {
   test('parses json', () => {
     const packingListJson = {
-        registration_approval_number: "",
-        items: [],
+        registration_approval_number: null,
+        items: null,
         business_checks: [
             {
                 all_required_fields_present: false
             }]
     }
     const result = parserService.failedParser()
+    expect(result).toMatchObject(packingListJson)
+    expect(result.registration_approval_number).toBeNull()
+    expect(result.items).toBeNull
+    expect(result.business_checks.all_required_fields_present).toBeFalsy()
+  })
+})
+
+describe('combineParser', () => {
+  test('parses json', () => {
+    const registration_approval_number = "test"
+    const items = [{
+      description: "test desc",
+      nature_of_products: "products",
+      type_of_treatment: "teatment",
+      commodity_code: 123,
+      number_of_packages: 1,
+      total_net_weight_kg: 1.2
+    }]
+    const packingListJson = {
+      registration_approval_number: registration_approval_number,
+      items: items,
+      business_checks: [
+        {
+          all_required_fields_present: true
+        }
+      ]
+    }
+    const result = parserService.combineParser(registration_approval_number, items, true)
     expect(result).toMatchObject(packingListJson)
   })
 })
