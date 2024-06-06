@@ -4,9 +4,9 @@ models.exports = (sequelize, DataTypes) => {
         description: DataTypes.STRING,
         natureOfProducts: DataTypes.STRING,
         typeOfTreatment: DataTypes.STRING,
-        commodityCode: DataTypes.INTEGER,
+        commodityCode: DataTypes.INTEGER, // leading 0?
         numberOfPackages: DataTypes.INTEGER,
-        totalWeight: DataTypes.FLOAT, // says int in schema?
+        totalWeight: DataTypes.FLOAT, // says int in schema? check what it returns typeof
         applicationId: DataTypes.INTEGER
     }, {})
     Item.associate = function (models) {
