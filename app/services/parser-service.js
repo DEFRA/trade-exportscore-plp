@@ -49,10 +49,25 @@ function parseBandM(packingListJson) {
 
     const combined = {
         registration_approval_number: establishmentNumber,
-        items: packingListContents
-        }
+        items: packingListContents,
+        business_checks: [
+        {
+            all_required_fields_present: true
+        }]
+    }
 
     return combined
 }
 
-module.exports = { matchesBandM, matchesAsda, parseBandM}
+function failedParser() {
+    return parsedPackingList = {
+        registration_approval_number: "", // how do we get this if its failed to parse?
+        items: [],
+        business_checks: [
+            {
+                all_required_fields_present: false
+            }]
+    }
+}
+
+module.exports = { matchesBandM, matchesAsda, parseBandM, failedParser}

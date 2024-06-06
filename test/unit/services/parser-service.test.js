@@ -136,3 +136,18 @@ describe('parseBandM', () => {
         expect(result.items[1].total_net_weight_kg).toBe(packingListJson[7].G)
     })
 })
+
+describe('failedParser', () => {
+  test('parses json', () => {
+    const packingListJson = {
+        registration_approval_number: "",
+        items: [],
+        business_checks: [
+            {
+                all_required_fields_present: false
+            }]
+    }
+    const result = parserService.failedParser()
+    expect(result).toMatchObject(packingListJson)
+  })
+})
