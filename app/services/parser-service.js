@@ -36,38 +36,34 @@ function matchesAsda() {
 }
 
 function parseBandM(packingListJson) {
-    const establishmentNumber = packingListJson[2].I
+    const traderRow = packingListJson.findIndex(x => x.H == 'WAREHOUSE SCHEME NUMBER:')
+    const establishmentNumber = packingListJson[traderRow].I 
     const headerRow = packingListJson.findIndex(x => x.B == 'PRISM')
     const packingListContents = packingListJson.slice(headerRow + 1, packingListJson.length).map(col => ({
         description: col.C,
-        nature_of_products: "",
-        type_of_treatment: "",
+        nature_of_products: null,
+        type_of_treatment: null,
         commodity_code: col.D,
         number_of_packages: col.F,
         total_net_weight_kg: col.G
       }))
 
-    const combined = {
+    return combineParser(establishmentNumber, packingListContents, true)
+}
+
+function combineParser(establishmentNumber, packingListContents, allRequiredFieldsPresent) {
+    return {
         registration_approval_number: establishmentNumber,
         items: packingListContents,
         business_checks: [
         {
-            all_required_fields_present: true
+            all_required_fields_present: allRequiredFieldsPresent
         }]
     }
-
-    return combined
 }
 
 function failedParser() {
-    return parsedPackingList = {
-        registration_approval_number: "", // how do we get this if its failed to parse?
-        items: [],
-        business_checks: [
-            {
-                all_required_fields_present: false
-            }]
-    }
+    return combineParser(null, null, false)
 }
 
-module.exports = { matchesBandM, matchesAsda, parseBandM, failedParser}
+module.exports = { matchesBandM, matchesAsda, parseBandM, failedParser, combineParser}
