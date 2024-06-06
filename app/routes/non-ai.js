@@ -16,6 +16,7 @@ if (parserService.matchesAsda()) {
 	parsedPackingList = parserService.parseBandM(result.Sheet1)
 } else {
 	console.log('failed to parse')
+    parsedPackingList = parserService.failedParser()
 }
 
 
