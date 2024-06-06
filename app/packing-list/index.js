@@ -6,13 +6,13 @@ async function createPackingList (packingList) {
             include: [item],
             transaction
         })
-        console.info(`saved packing list: ${packingList.packingListId}`)
+        console.info(`saved packing list: ${packingList.applicationId}`)
     })
 }
 
-async function getByPackingListId (packingListId) {
+async function getByPackingListId (applicationId) {
     const packingList = await models.packingList.findAll({
-        where: {packingListId},
+        where: {applicationId},
         include: [models.item]
     })
     return packingList

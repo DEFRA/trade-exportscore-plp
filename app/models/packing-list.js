@@ -1,11 +1,11 @@
 models.exports = (sequelize, DataTypes) => {
     const PackingList = sequelize.define('packingList', {
-        packingListId: { type: DataTypes.UUID, primaryKey: true},
+        applicationId: { type: DataTypes.INTEGER, primaryKey: true}, // id from idcoms?
         registrationApprovalNumber: DataTypes.STRING,
         allRequiredFieldsPresent: DataTypes.BOOLEAN
     }, {})
     PackingList.associate = function (models) {
-        models.packingList.hasMany(models.item, { foreignKey: 'packingListId', targetKey: 'packingListId'})
+        models.packingList.hasMany(models.item, { foreignKey: 'applicationId', targetKey: 'applicationId'}) // should we use a separate id?
     }
     return PackingList
 }

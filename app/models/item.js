@@ -6,11 +6,11 @@ models.exports = (sequelize, DataTypes) => {
         typeOfTreatment: DataTypes.STRING,
         commodityCode: DataTypes.INTEGER,
         numberOfPackages: DataTypes.INTEGER,
-        totalWeight: DataTypes.INTEGER,
-        packingListId: DataTypes.UUID
+        totalWeight: DataTypes.FLOAT, // says int in schema?
+        applicationId: DataTypes.INTEGER
     }, {})
     Item.associate = function (models) {
-        models.item.belongsTo(models.packingList, { foreignKey: 'packingListId', targetKey: 'packingListId'})
+        models.item.belongsTo(models.packingList, { foreignKey: 'applicationId', targetKey: 'applicationId'})
     }
     return Item
 }

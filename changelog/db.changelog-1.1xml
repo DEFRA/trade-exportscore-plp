@@ -1,0 +1,32 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet author="Padget Avery" id="1596009647200-0">
+      <tagDatabase tag="v1.1.0" />
+    </changeSet>
+    <changeSet author="Padget Avery" id="1596009647200-1">
+        <createTable tableName="packingList">
+            <column name="applicationId" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="packingList_pkey"/>
+            </column>
+            <column name="registrationApprovalNumber" type="VARCHAR(255)"/>
+            <column name="allRequiredFieldsPresent" type="BOOLEAN">
+        </createTable>
+    </changeSet author="Padget Avery" id="1596009647200-2">
+        <createTable tableName="item">
+            <column name="itemId" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="item_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="natureOfProducts" type="VARCHAR(255)"/>
+            <column name="typeOfTreatment" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="commodityCode" type="INTEGER"/>
+            <column name="numberOfPackages" type="INTEGER"/>
+            <column name="totalWeight" type="FLOAT"/>
+            <column name="applicationId" type="INTEGER"/>
+        </createTable>
+    <changeSet>
+    <changeSet author="Padget Avery" id="1596009647200-3">
+        <addForeignKeyConstraint baseColumnNames="applicationId" baseTableName="item" constraintName="item_applicationId_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="applicationId" referencedTableName="packingList" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
