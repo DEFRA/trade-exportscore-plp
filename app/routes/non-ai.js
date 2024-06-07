@@ -4,9 +4,16 @@ const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 
 const filename = plDir + 'test-packing-list.xlsx'
-const result = excelToJson({
-    sourceFile: filename
-})
+const result = {}
+try {
+    result = excelToJson({
+        sourceFile: filename
+    })
+}
+catch (err) {
+    console.log(err)
+}
+
 
 var parsedPackingList;
 if (parserService.matchesAsda()) {
