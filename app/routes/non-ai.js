@@ -13,7 +13,7 @@ try {
   console.log(err)
 }
 
-let parsedPackingList
+let parsedPackingList = parserService.failedParser
 if (parserService.matchesAsda()) {
   console.log('Packling list matches Asda')
 } else if (parserService.matchesBandM(result.Sheet1, filename)) {
@@ -21,7 +21,6 @@ if (parserService.matchesAsda()) {
   parsedPackingList = parserService.parseBandM(result.Sheet1)
 } else {
   console.log('failed to parse')
-  parsedPackingList = parserService.failedParser()
 }
 
 module.exports = {
