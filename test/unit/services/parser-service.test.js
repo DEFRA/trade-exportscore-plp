@@ -133,3 +133,81 @@ describe('parseBandM', () => {
         expect(result.items[1].total_net_weight_kg).toBe(packingListJson[7].G)
     })
 })
+
+//ASDA 
+
+describe('matchesAsda', () => {
+  test('returns true', () => {
+      const filename = 'packinglist.xls'
+      const packingListJson = [
+          {},
+          {},
+          {
+            I: "RMS-GB-000015-001",
+          },
+          {},
+          {},
+          {
+            A: "[Description Of All Retail Goods]",
+            B: "[Nature Of Product]",
+            C: "[Treatment Type]",
+            D: "[Number Of Establishment]",
+            E: "[Destination Store Establishment Number]",
+            F: "[Number of Packages]",
+            G: "[Weight]",
+            H: "[kilograms/grams]",
+            I: ""
+          }
+        ]
+      const result = parserService.matchesAsda(packingListJson, filename)
+      expect(result).toBeTruthy()
+  })
+
+  test('returns false for empty json', () => {
+      packingListJson = {}
+      const filename = 'packinglist.xls'
+      const result = parserService.matchesAsda(packingListJson, filename)
+      expect(result).toBeFalsy()
+  })
+
+  test('returns false for missing establishment number', () => {
+      const packingListJson = [
+          {},
+          {},
+          {
+            I: "INCORRECT"
+          }
+        ]
+      const filename = 'packinglist.xls'
+      const result = parserService.matchesAsda(packingListJson, filename)
+      expect(result).toBeFalsy()
+  })
+
+  test('return false for incorrect file extension', () => {
+      const filename = 'packinglist.pdf'
+      const packingListJson = {}
+      const result = parserService.matchesAsda(packingListJson, filename)
+      expect(result).toBeFalsy()
+  })
+
+  test('return false for incorrect header values', () => {
+      const filename = 'packinglist.xls'
+      const packingListJson = [
+          {},
+          {},
+          {
+            I: "RMS-GB-000015-001",
+          },
+          {},
+          {},
+          {
+            A: "NOT",
+            B: "CORRECT",
+            C: "HEADER"
+          }
+        ]
+      const result = parserService.matchesAsda(packingListJson, filename)
+      expect(result).toBeFalsy()
+  })
+
+})
