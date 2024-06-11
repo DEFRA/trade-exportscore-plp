@@ -33,11 +33,8 @@ if (isParsed) {
   createPackingList(parsedPackingList, randomInt)
 }
 
-
-
 module.exports = {
   method: 'GET',
   path: '/non-ai',
   handler: (_request, h) => h.response(parsedPackingList).code(200)
 }
-

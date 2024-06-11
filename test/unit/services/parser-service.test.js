@@ -142,10 +142,10 @@ describe('failedParser', () => {
     const packingListJson = {
       registration_approval_number: null,
       items: null,
-      business_checks: [
-        {
-          all_required_fields_present: false
-        }]
+      business_checks:
+      {
+        all_required_fields_present: false
+      }
     }
     const result = parserService.failedParser()
     expect(result).toMatchObject(packingListJson)
@@ -169,11 +169,10 @@ describe('combineParser', () => {
     const packingListJson = {
       registration_approval_number: registrationApprovalNumber,
       items,
-      business_checks: [
-        {
-          all_required_fields_present: true
-        }
-      ]
+      business_checks:
+      {
+        all_required_fields_present: true
+      }
     }
     const result = parserService.combineParser(registrationApprovalNumber, items, true)
     expect(result).toMatchObject(packingListJson)
