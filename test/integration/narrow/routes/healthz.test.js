@@ -1,8 +1,14 @@
 describe('Healthz test', () => {
-  const server = require('../../../../app/server')
+  let createServer
+  let server
+
+  beforeAll(async () => {
+    createServer = require('../../../../app/server')
+  })
 
   beforeEach(async () => {
-    await server.start()
+    server = await createServer()
+    await server.initialize()
   })
 
   test('GET /healthz route returns 200', async () => {

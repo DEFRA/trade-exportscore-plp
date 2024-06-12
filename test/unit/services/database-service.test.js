@@ -38,7 +38,7 @@ describe('Database setup', () => {
     jest.clearAllMocks()
   })
 
-  test('should call Sequelize constructor with correct arguments', () => {
+  test('should call Sequelize constructor with correct arguments', async () => {
     fs.readdirSync = jest.fn().mockReturnValue(['index.js'])
     require('../../../app/services/database-service')
     expect(Sequelize).toHaveBeenCalled()

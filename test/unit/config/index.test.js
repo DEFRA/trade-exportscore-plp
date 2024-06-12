@@ -4,6 +4,10 @@ const joi = require('joi')
 jest.mock('../../../app/config/database-config', () => {
   return 'mock object'
 })
+jest.mock('../../../app/packing-list/index', () => ({
+  packingListMapper: jest.fn().mockResolvedValue({}),
+  createPackingList: jest.fn()
+}))
 
 describe('config index', () => {
   beforeEach(() => {

@@ -17,6 +17,10 @@ describe('database config', () => {
         getToken: jest.fn().mockResolvedValue(mockToken)
       }
     })
+    jest.mock('../../../app/packing-list/index', () => ({
+      packingListMapper: jest.fn().mockResolvedValue({}),
+      createPackingList: jest.fn()
+    }))
   })
 
   afterEach(() => {

@@ -38,6 +38,10 @@ describe('Packing list', () => {
           all_required_fields_present: true
         }
     }
+    jest.mock('../../../app/packing-list/index', () => ({
+      packingListMapper: jest.fn().mockResolvedValue({}),
+      createPackingList: jest.fn()
+    }))
     await packingListIndex.createPackingList(packingListJson, '123')
     expect(mockDatabaseService.models.packingList.create).toHaveBeenCalled()
     expect(mockDatabaseService.models.item.bulkCreate).toHaveBeenCalled()
