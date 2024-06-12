@@ -39,7 +39,6 @@ function parseBandM (packingListJson) {
   const establishmentNumber = packingListJson[traderRow].I
   const headerRow = packingListJson.findIndex(x => x.B === 'PRISM')
   const lastRow = packingListJson.slice(headerRow + 1).findIndex(x => Number.isInteger(x.D) === false) + headerRow
-  console.log(lastRow)
   const packingListContents = packingListJson.slice(headerRow + 1, lastRow + 1).map(col => ({
     description: col.C,
     nature_of_products: null,
