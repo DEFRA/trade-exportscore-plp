@@ -7,21 +7,63 @@ jest.mock('../../../app/config', () => {
         username: 'postgres',
         password: '<PASSWORD>',
         host: 'localhost',
-        dialect: 'postgres'
+        dialect: 'postgres',
+        hooks: {
+          beforeConnect: jest.fn()
+        },
+        dialectOptions: {
+          ssl: false
+        },
+        retry: {
+          backoffBase: 500,
+          backoffExponent: 1.1,
+          match: [/SequelizeConnectionError/],
+          max: 10,
+          name: 'connection',
+          timeout: 60000
+        },
       },
       production: {
         database: 'production',
         username: 'postgres',
         password: '<PASSWORD>',
         host: 'localhost',
-        dialect: 'postgres'
+        dialect: 'postgres',
+        hooks: {
+          beforeConnect: jest.fn()
+        },
+        dialectOptions: {
+          ssl: false
+        },
+        retry: {
+          backoffBase: 500,
+          backoffExponent: 1.1,
+          match: [/SequelizeConnectionError/],
+          max: 10,
+          name: 'connection',
+          timeout: 60000
+        },
       },
       test: {
         database: 'test',
         username: 'postgres',
         password: '<PASSWORD>',
         host: 'localhost',
-        dialect: 'postgres'
+        dialect: 'postgres',
+        hooks: {
+          beforeConnect: jest.fn()
+        },
+        dialectOptions: {
+          ssl: false
+        },
+        retry: {
+          backoffBase: 500,
+          backoffExponent: 1.1,
+          match: [/SequelizeConnectionError/],
+          max: 10,
+          name: 'connection',
+          timeout: 60000
+        },
       }
     }
   }
