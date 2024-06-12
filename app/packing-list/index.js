@@ -5,7 +5,7 @@ async function createPackingList (packingListJson, applicationId) {
   await sequelize.transaction(async (transaction) => {
     const packingList = packingListMapper(packingListJson, applicationId)
     await models.packingList.create(packingList, {
-      include: [models.item],
+      // include: [models.item],
       transaction
     })
     console.info(`saved packing list: ${packingList.applicationId}`)
@@ -29,11 +29,11 @@ function itemsMapper (o, applicationId) {
     typeOfTreatment: o.type_of_treatment,
     commodityCode: o.commodity_code,
     numberOfPackages: o.number_of_packages,
-    totalWeight: o.total_net_weight,
+    totalWeight: o.total_net_weight_kg,
     applicationId
   }
 }
 
 module.exports = {
-  createPackingList
+  createPackingList, itemsMapper, packingListMapper
 }

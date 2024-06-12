@@ -9,8 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     totalWeight: DataTypes.FLOAT,
     applicationId: DataTypes.INTEGER
   }, {
-    freezeTableName: true,
-    timestamps: false
+    freezeTableName: true
   })
   Item.associate = function (models) {
     models.item.belongsTo(models.packingList, { foreignKey: 'applicationId', targetKey: 'applicationId' })
