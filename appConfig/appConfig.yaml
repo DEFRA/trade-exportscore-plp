@@ -6,3 +6,7 @@
   value: "{{serviceName}}"
 - key: TEAM_NAME
   value: "{{teamName}}"
+- key: PLP_TOPIC_ADDRESS
+  value: "eutd-trade-exports-core-plingestion"
+- key: PLP_SUBSCRIPTION_ADDRESS
+  value: "eutd-trade-exports-core-plingestion"

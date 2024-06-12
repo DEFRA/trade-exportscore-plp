@@ -10,6 +10,9 @@ services:
     environment:
       APPINSIGHTS_CLOUDROLE: trade-exportscore-plp-local
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
+      MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST}
+      MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD}
+      MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER}
 
   trade-exportscore-plp-postgres:
     image: postgres:11.4-alpine
