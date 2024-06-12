@@ -5,9 +5,9 @@ async function createPackingList (packingListJson, applicationId) {
   await sequelize.transaction(async (transaction) => {
     const packingList = packingListMapper(packingListJson, applicationId)
     await models.packingList.create(packingList, {
-      // include: [models.item],
       transaction
     })
+    await models.item.bulkCreate(packingList.item, { transaction })
     console.info(`saved packing list: ${packingList.applicationId}`)
   })
 }

@@ -121,6 +121,9 @@ describe('parseBandM', () => {
         G: 3.27,
         H: 3.63,
         I: 'YES'
+      },
+      {
+        D: ' '
       }
     ]
     const result = parserService.parseBandM(packingListJson)

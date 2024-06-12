@@ -2,6 +2,9 @@ const mockDatabaseService = {
   models: {
     packingList: {
       create: jest.fn()
+    },
+    item: {
+      bulkCreate: jest.fn()
     }
   },
   sequelize: {
@@ -20,16 +23,24 @@ describe('Packing list', () => {
   })
 
   test('should create a new packing list if it not exists', async () => {
-    const packingList = {
+    const packingListJson = {
       registration_approval_number: 'remos',
-      items: [],
+      items: [{
+        description: 'description',
+        nature_of_products: 'nature_of_products',
+        type_of_treatment: 'type_of_treatment',
+        commodity_code: 123,
+        number_of_packages: 1,
+        total_net_weight_kg: 0.5
+      }],
       business_checks:
         {
           all_required_fields_present: true
         }
     }
-    await packingListIndex.createPackingList(packingList, '123')
+    await packingListIndex.createPackingList(packingListJson, '123')
     expect(mockDatabaseService.models.packingList.create).toHaveBeenCalled()
+    expect(mockDatabaseService.models.item.bulkCreate).toHaveBeenCalled()
   })
 
   test('itemsMapper should return correct object', () => {
