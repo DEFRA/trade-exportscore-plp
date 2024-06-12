@@ -16,6 +16,11 @@ describe('Packing list Model', () => {
     PackingList = require('../../../app/models/packing-list')(sequelize, DataTypes)
   })
 
+  afterAll(async () => {
+    jest.resetAllMocks()
+    await sequelize.close
+  })
+
   test('should define the model with correct fields', () => {
     expect(sequelize.define).toHaveBeenCalled()
     expect(PackingList.associate).toBeDefined()

@@ -43,7 +43,8 @@ describe('Healthy test', () => {
     jest.clearAllMocks()
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     jest.resetAllMocks()
+    await sequelize.close()
   })
 })

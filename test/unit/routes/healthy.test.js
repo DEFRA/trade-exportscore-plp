@@ -8,6 +8,11 @@ jest.mock('../../../app/services/database-service', () => ({
 }))
 
 describe('healthy route', () => {
+  afterAll(async () => {
+    jest.resetAllMocks()
+    await sequelize.close
+  })
+
   test('should return 200 when sequelize.authenticate is successful', async () => {
     sequelize.authenticate.mockResolvedValue()
 

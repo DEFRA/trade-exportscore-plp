@@ -17,6 +17,11 @@ describe('Item Model', () => {
     Item = require('../../../app/models/item')(sequelize, DataTypes)
   })
 
+  afterAll(async () => {
+    jest.resetAllMocks()
+    await sequelize.close
+  })
+
   test('should define the model with correct fields', () => {
     expect(sequelize.define).toHaveBeenCalled()
     expect(Item.associate).toBeDefined()
