@@ -51,17 +51,6 @@ function parseBandM (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-/**
- * @typedef {object} packingListItem
- * @property {string} description
- */
-/**
- *
- * @param {string} establishmentNumber
- * @param {packingListItem[]} packingListContents
- * @param {boolean} allRequiredFieldsPresent
- * @returns
- */
 function combineParser (establishmentNumber, packingListContents, allRequiredFieldsPresent) {
   return {
     registration_approval_number: establishmentNumber,
