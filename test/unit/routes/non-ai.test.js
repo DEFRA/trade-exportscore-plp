@@ -5,6 +5,10 @@ jest.mock('../../../app/services/parser-service', () => ({
   matchesBandM: jest.fn().mockResolvedValue(false),
   matchesAsda: jest.fn().mockResolvedValue(false)
 }))
+jest.mock('../../../app/packing-list/index', () => ({
+  ...jest.requireActual('../../../app/packing-list/index'),
+  createPackingList: jest.fn()
+}))
 
 describe('/non-ai', () => {
   beforeEach(() => {
