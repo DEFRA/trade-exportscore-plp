@@ -13,6 +13,8 @@ services:
       PACT_BROKER_URL: ${PACT_BROKER_URL:-notset}
       PACT_BROKER_USERNAME: ${PACT_BROKER_USERNAME:-notset}
       PACT_BROKER_PASSWORD: ${PACT_BROKER_PASSWORD:-notset}
+    depends_on:
+      - trade-exportscore-plp-postgres
     volumes:
       - ./app:/home/node/app
       - ./test:/home/node/test

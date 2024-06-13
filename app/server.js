@@ -1,7 +1,10 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
+const { sequelize } = require('./services/database-service')
 
 async function createServer () {
+  await sequelize.authenticate()
+
   // Create the hapi server
   const server = hapi.server({
     port: config.port,

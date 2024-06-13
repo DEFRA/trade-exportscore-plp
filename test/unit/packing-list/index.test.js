@@ -10,6 +10,9 @@ const mockDatabaseService = {
   sequelize: {
     transaction: jest
       .fn()
+      .mockImplementation((callback) => Promise.resolve(callback())),
+    authenticate: jest
+      .fn()
       .mockImplementation((callback) => Promise.resolve(callback()))
   }
 }

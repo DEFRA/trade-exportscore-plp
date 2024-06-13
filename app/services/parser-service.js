@@ -51,6 +51,17 @@ function parseBandM (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
+/**
+ * @typedef {object} packingListItem
+ * @property {string} description
+ */
+/**
+ *
+ * @param {string} establishmentNumber
+ * @param {packingListItem[]} packingListContents
+ * @param {boolean} allRequiredFieldsPresent
+ * @returns
+ */
 function combineParser (establishmentNumber, packingListContents, allRequiredFieldsPresent) {
   return {
     registration_approval_number: establishmentNumber,
@@ -63,7 +74,7 @@ function combineParser (establishmentNumber, packingListContents, allRequiredFie
 }
 
 function failedParser () {
-  return combineParser(null, null, false)
+  return combineParser(null, [], false)
 }
 
 module.exports = { matchesBandM, matchesAsda, parseBandM, failedParser, combineParser }

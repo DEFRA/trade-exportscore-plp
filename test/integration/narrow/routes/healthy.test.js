@@ -46,5 +46,6 @@ describe('Healthy test', () => {
   afterAll(async () => {
     jest.resetAllMocks()
     await sequelize.close()
+    await server.stop()
   })
 })

@@ -144,7 +144,7 @@ describe('failedParser', () => {
   test('parses json', () => {
     const packingListJson = {
       registration_approval_number: null,
-      items: null,
+      items: [],
       business_checks:
       {
         all_required_fields_present: false
@@ -153,7 +153,7 @@ describe('failedParser', () => {
     const result = parserService.failedParser()
     expect(result).toMatchObject(packingListJson)
     expect(result.registration_approval_number).toBeNull()
-    expect(result.items).toBeNull()
+    expect(result.items).toMatchObject([])
     expect(result.business_checks.all_required_fields_present).toBeFalsy()
   })
 })

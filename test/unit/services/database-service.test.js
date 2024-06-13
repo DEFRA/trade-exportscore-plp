@@ -21,7 +21,7 @@ jest.mock('../../../app/config', () => {
           max: 10,
           name: 'connection',
           timeout: 60000
-        },
+        }
       },
       production: {
         database: 'production',
@@ -42,7 +42,7 @@ jest.mock('../../../app/config', () => {
           max: 10,
           name: 'connection',
           timeout: 60000
-        },
+        }
       },
       test: {
         database: 'test',
@@ -63,7 +63,7 @@ jest.mock('../../../app/config', () => {
           max: 10,
           name: 'connection',
           timeout: 60000
-        },
+        }
       }
     }
   }

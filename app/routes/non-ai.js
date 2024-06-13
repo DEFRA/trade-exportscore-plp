@@ -14,7 +14,7 @@ try {
 }
 
 // match and parse
-let parsedPackingList = parserService.failedParser
+let parsedPackingList = parserService.failedParser()
 let isParsed = false
 if (parserService.matchesAsda()) {
   console.log('Packling list matches Asda')
@@ -27,14 +27,17 @@ if (parserService.matchesAsda()) {
   console.log('failed to parse')
 }
 
-// save to db
-if (isParsed) {
-  const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString()
-  createPackingList(parsedPackingList, randomInt)
-}
+let hasSaved = false
 
 module.exports = {
   method: 'GET',
   path: '/non-ai',
-  handler: (_request, h) => h.response(parsedPackingList).code(200)
+  handler: async (_request, h) => {
+    if (isParsed && !hasSaved) {
+      const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString()
+      await createPackingList(parsedPackingList, randomInt)
+      hasSaved = true
+    }
+    return h.response(parsedPackingList).code(200)
+  }
 }

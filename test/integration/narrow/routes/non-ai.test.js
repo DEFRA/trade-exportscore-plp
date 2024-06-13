@@ -25,5 +25,6 @@ describe('Non-ai test', () => {
 
   afterAll(async () => {
     jest.resetAllMocks()
+    await server.stop()
   })
 })
