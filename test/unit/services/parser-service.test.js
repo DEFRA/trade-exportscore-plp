@@ -257,8 +257,6 @@ describe('matchesAsda', () => {
 
 })
 
-//New tests
-
 describe('parseAsda', () => {
   test('parses json', () => {
     const packingListJson = [
@@ -303,10 +301,10 @@ describe('parseAsda', () => {
     const result = parserService.parseAsda(packingListJson)
     expect(result.registration_approval_number).toBe(packingListJson[0].D)
     expect(result.items).toHaveLength(2)
-    expect(result.items[0].description).toBe(packingListJson[6].C)
-    expect(result.items[1].description).toBe(packingListJson[7].C)
-    expect(result.items[0].commodity_code).toBe(packingListJson[6].D)
-    expect(result.items[1].commodity_code).toBe(packingListJson[7].D)
+    expect(result.items[0].description).toBe(packingListJson[6].A)
+    expect(result.items[1].description).toBe(packingListJson[7].A)
+    expect(result.items[0].commodity_code).toBe(packingListJson[6].B)
+    expect(result.items[1].commodity_code).toBe(packingListJson[7].B)
     expect(result.items[0].number_of_packages).toBe(packingListJson[6].F)
     expect(result.items[1].number_of_packages).toBe(packingListJson[7].F)
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[6].G)
