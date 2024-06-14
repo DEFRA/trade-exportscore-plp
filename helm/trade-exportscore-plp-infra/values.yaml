@@ -8,7 +8,7 @@ postgres:
     collation: en_US.utf8
 
 namespaceTopics:
-  - name: plingestion
+  name: plingestion
   roleAssignments:  
     - roleName: TopicReceiver 
   topicSubscriptions:
