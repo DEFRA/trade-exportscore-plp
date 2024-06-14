@@ -1,16 +1,30 @@
-require('./insights').setup()
-const Hapi = require('@hapi/hapi')
+const hapi = require('@hapi/hapi')
+const config = require('./config')
+const { sequelize } = require('./services/database-service')
 
-const server = Hapi.server({
-  port: process.env.PORT
-})
+async function createServer () {
+  await sequelize.authenticate()
 
-const routes = [].concat(
-  require('./routes/healthy'),
-  require('./routes/healthz'),
-  require('./routes/non-ai')
-)
+  // Create the hapi server
+  const server = hapi.server({
+    port: config.port,
+    routes: {
+      validate: {
+        options: {
+          abortEarly: false
+        }
+      }
+    }
+  })
 
-server.route(routes)
+  // Register the plugins
+  await server.register(require('./plugins/router'))
 
-module.exports = server
+  if (config.isDev) {
+    await server.register(require('blipp'))
+  }
+
+  return server
+}
+
+module.exports = createServer

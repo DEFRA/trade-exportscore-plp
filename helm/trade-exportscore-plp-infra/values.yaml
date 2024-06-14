@@ -9,3 +9,7 @@ postgres:
 
 namespaceTopics:
   - name: plingestion
+  roleAssignments:  
+    - roleName: TopicReceiver 
+  topicSubscriptions:
+    - name: plp-subscription-01

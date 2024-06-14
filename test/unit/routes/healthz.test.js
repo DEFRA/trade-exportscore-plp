@@ -1,21 +1,15 @@
-const healthz = require('../../../app/routes/healthz')
+const health = require('../../../app/routes/healthz')
 
-describe('/healthz', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-  test('should return success', async () => {
-    const mockRequest = {}
+describe('health route', () => {
+  test('should return 200 when handler is called', async () => {
     const mockH = {
-      response: jest.fn(() => {
-        return {
-          code: jest.fn()
-        }
-      })
+      response: jest.fn().mockReturnThis(),
+      code: jest.fn()
     }
 
-    await healthz.handler(mockRequest, mockH)
+    await health.options.handler({}, mockH)
 
-    expect(mockH.response).toHaveBeenCalled()
+    expect(mockH.response).toHaveBeenCalledWith('ok')
+    expect(mockH.code).toHaveBeenCalledWith(200)
   })
 })
