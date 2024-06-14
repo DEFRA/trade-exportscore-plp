@@ -10,10 +10,10 @@ const mqSchema = joi.object({
   },
   plpSubscription: {
     name: joi.string().default('trade-exportscore-plp-plingestion'),
-    address: joi.string().default('schedule'),
+    address: joi.string().default('eutd-trade-exports-core-plp-subscription-01'),
     username: joi.string(),
     password: joi.string(),
-    topic: joi.string()
+    topic: joi.string().default('trade-exportscore-plp-plingestion')
   }
 })
 const mqConfig = {
@@ -25,7 +25,7 @@ const mqConfig = {
     appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
   },
   plpSubscription: {
-    name: process.env.PLP_SUBSCRIPTION_NAME, // where is this defined
+    name: process.env.PLP_SUBSCRIPTION_NAME,
     address: process.env.PLP_SUBSCRIPTION_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD,
@@ -43,5 +43,7 @@ if (mqResult.error) {
 }
 
 const plpSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.plpSubscription }
+
+console.log(plpSubscription)
 
 module.exports = { plpSubscription }

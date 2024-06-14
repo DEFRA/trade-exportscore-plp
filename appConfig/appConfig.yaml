@@ -16,3 +16,5 @@
   value: "eutd-trade-exports-core-plingestion"
 - key: PLP_SUBSCRIPTION_ADDRESS
   value: "eutd-trade-exports-core-plingestion"
+- key: PLP_SUBSCRIPTION_NAME
+  value: "eutd-trade-exports-core-plp-subscription-01"
