@@ -20,6 +20,7 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@hapi/hapi": "21.3.2",
+    "adp-messaging": "^2.9.0",
     "applicationinsights": "2.8.0",
     "convert-excel-to-json": "^1.7.0"
   },

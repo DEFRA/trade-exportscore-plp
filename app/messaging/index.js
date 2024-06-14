@@ -4,7 +4,7 @@ const { MessageReceiver } = require('adp-messaging')
 let plpReceiver
 
 async function start () {
-  const plpAction = message => processPlpMessage(message, scheduleReceiver)
+  const plpAction = message => processPlpMessage(message, plpReceiver)
   plpReceiver = new MessageReceiver(config.plpSubscription, plpAction)
   await plpReceiver.subscribe()
 
