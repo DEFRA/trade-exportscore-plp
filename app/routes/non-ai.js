@@ -14,10 +14,11 @@ try {
 }
 let parsedPackingList = parserService.failedParser()
 console.log(parsedPackingList)
-if (parserService.matchesAsda()) {
-  console.log('Packling list matches Asda')
+if (parserService.matchesAsda(result.PackingList_Extract, filename)) {
+  console.log('Packing list matches Asda')
+  parsedPackingList = parserService.parseAsda(result.PackingList_Extract)
 } else if (parserService.matchesBandM(result.Sheet1, filename)) {
-  console.log('Packling list matches BandM')
+  console.log('Packing list matches BandM')
   parsedPackingList = parserService.parseBandM(result.Sheet1)
 } else {
   console.log('failed to parse')

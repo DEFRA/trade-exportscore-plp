@@ -179,95 +179,12 @@ describe('combineParser', () => {
     expect(result).toMatchObject(packingListJson)
   })
 })
-//ASDA 
+// ASDA
 
 describe('matchesAsda', () => {
   test('returns true', () => {
-      const filename = 'packinglist.xls'
-      const packingListJson = [
-          {},
-          {},
-          {
-            I: "RMS-GB-000015-001",
-          },
-          {},
-          {},
-          {
-            A: "[Description Of All Retail Goods]",
-            B: "[Nature Of Product]",
-            C: "[Treatment Type]",
-            D: "[Number Of Establishment]",
-            E: "[Destination Store Establishment Number]",
-            F: "[Number of Packages]",
-            G: "[Weight]",
-            H: "[kilograms/grams]",
-            I: ""
-          }
-        ]
-      const result = parserService.matchesAsda(packingListJson, filename)
-      expect(result).toBeTruthy()
-  })
-
-  test('returns false for empty json', () => {
-      packingListJson = {}
-      const filename = 'packinglist.xls'
-      const result = parserService.matchesAsda(packingListJson, filename)
-      expect(result).toBeFalsy()
-  })
-
-  test('returns false for missing establishment number', () => {
-      const packingListJson = [
-          {},
-          {},
-          {
-            I: "INCORRECT"
-          }
-        ]
-      const filename = 'packinglist.xls'
-      const result = parserService.matchesAsda(packingListJson, filename)
-      expect(result).toBeFalsy()
-  })
-
-  test('return false for incorrect file extension', () => {
-      const filename = 'packinglist.pdf'
-      const packingListJson = {}
-      const result = parserService.matchesAsda(packingListJson, filename)
-      expect(result).toBeFalsy()
-  })
-
-  test('return false for incorrect header values', () => {
-      const filename = 'packinglist.xls'
-      const packingListJson = [
-          {},
-          {},
-          {
-            I: "RMS-GB-000015-001",
-          },
-          {},
-          {},
-          {
-            A: "NOT",
-            B: "CORRECT",
-            C: "HEADER"
-          }
-        ]
-      const result = parserService.matchesAsda(packingListJson, filename)
-      expect(result).toBeFalsy()
-  })
-
-})
-
-describe('parseAsda', () => {
-  test('parses json', () => {
+    const filename = 'packinglist.xls'
     const packingListJson = [
-      {},
-      {},
-      {
-        H: 'WAREHOUSE SCHEME NUMBER:', //?
-        I: 'RMS-GB-000015-001'
-      },
-      {},
-      {},
       {
         A: '[Description Of All Retail Goods]',
         B: '[Nature Of Product]',
@@ -275,7 +192,72 @@ describe('parseAsda', () => {
         D: '[Number Of Establishment]',
         E: '[Destination Store Establishment Number]',
         F: '[Number of Packages]',
-        G: '[Weight]',
+        G: '[Net Weight]',
+        H: '[kilograms/grams]'
+      },
+      {
+        D: 'RMS-GB-000015-001'
+      }
+    ]
+    const result = parserService.matchesAsda(packingListJson, filename)
+    expect(result).toBeTruthy()
+  })
+
+  test('returns false for empty json', () => {
+    const packingListJson = {}
+    const filename = 'packinglist.xls'
+    const result = parserService.matchesAsda(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns false for missing establishment number', () => {
+    const packingListJson = [
+      {},
+      {},
+      {
+        I: 'INCORRECT'
+      }
+    ]
+    const filename = 'packinglist.xls'
+    const result = parserService.matchesAsda(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('return false for incorrect file extension', () => {
+    const filename = 'packinglist.pdf'
+    const packingListJson = {}
+    const result = parserService.matchesAsda(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('return false for incorrect header values', () => {
+    const filename = 'packinglist.xls'
+    const packingListJson = [
+      {
+        A: 'NOT',
+        B: 'CORRECT',
+        C: 'HEADER'
+      },
+      {
+        D: 'RMS-GB-000015-001'
+      }
+    ]
+    const result = parserService.matchesAsda(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+})
+
+describe('parseAsda', () => {
+  test('parses json', () => {
+    const packingListJson = [
+      {
+        A: '[Description Of All Retail Goods]',
+        B: '[Nature Of Product]',
+        C: '[Treatment Type]',
+        D: '[Number Of Establishment]',
+        E: '[Destination Store Establishment Number]',
+        F: '[Number of Packages]',
+        G: '[Net Weight]',
         H: '[kilograms/grams]'
       },
       {
@@ -286,7 +268,7 @@ describe('parseAsda', () => {
         E: 'RMS-NI-000008-017',
         F: 2,
         G: 0.3800,
-        H: 'kgs',
+        H: 'kgs'
       },
       {
         A: '19 CRIMES',
@@ -295,62 +277,22 @@ describe('parseAsda', () => {
         D: 'RMS-GB-000015-006',
         E: 'RMS-NI-000008-017',
         F: 1,
-        G: 'kgs',
+        G: 0.3457,
+        H: 'kgs'
       }
     ]
     const result = parserService.parseAsda(packingListJson)
-    expect(result.registration_approval_number).toBe(packingListJson[0].D)
+    expect(result.registration_approval_number).toBe(packingListJson[1].D)
     expect(result.items).toHaveLength(2)
-    expect(result.items[0].description).toBe(packingListJson[6].A)
-    expect(result.items[1].description).toBe(packingListJson[7].A)
-    expect(result.items[0].commodity_code).toBe(packingListJson[6].B)
-    expect(result.items[1].commodity_code).toBe(packingListJson[7].B)
-    expect(result.items[0].number_of_packages).toBe(packingListJson[6].F)
-    expect(result.items[1].number_of_packages).toBe(packingListJson[7].F)
-    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[6].G)
-    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[7].G)
-  })
-})
-
-describe('failedParser', () => {
-  test('parses json', () => {
-    const packingListJson = {
-      registration_approval_number: null,
-      items: null,
-      business_checks: [
-        {
-          all_required_fields_present: false
-        }]
-    }
-    const result = parserService.failedParser()
-    expect(result).toMatchObject(packingListJson)
-    expect(result.registration_approval_number).toBeNull()
-    expect(result.items).toBeNull()
-    expect(result.business_checks.all_required_fields_present).toBeFalsy()
-  })
-})
-
-describe('combineParser', () => {
-  test('parses json', () => {
-    const registrationApprovalNumber = 'test'
-    const items = [{
-      description: 'test desc',
-      nature_of_products: 'products',
-      type_of_treatment: 'teatment',
-      commodity_code: 123,
-      number_of_packages: 1,
-      total_net_weight_kg: 1.2
-    }]
-    const packingListJson = {
-      registration_approval_number: registrationApprovalNumber,
-      items,
-      business_checks: [
-        {
-          all_required_fields_present: true
-        }
-      ]
-    }
-    const result = parserService.combineParser(registrationApprovalNumber, items, true)
-    expect(result).toMatchObject(packingListJson)
+    expect(result.items[0].description).toBe(packingListJson[1].A)
+    expect(result.items[1].description).toBe(packingListJson[2].A)
+    expect(result.items[0].nature_of_products).toBe(packingListJson[1].B)
+    expect(result.items[1].nature_of_products).toBe(packingListJson[2].B)
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[1].C)
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[2].C)
+    expect(result.items[0].number_of_packages).toBe(packingListJson[1].F)
+    expect(result.items[1].number_of_packages).toBe(packingListJson[2].F)
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].G)
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].G)
   })
 })
