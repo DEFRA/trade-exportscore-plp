@@ -1,5 +1,13 @@
 const joi = require('joi')
 
+const queueSchema = joi.object({
+  name: joi.string(),
+  address: joi.string().required(),
+  username: joi.string().optional(),
+  password: joi.string().optional(),
+  type: joi.string().optional()
+})
+
 const mqSchema = joi.object({
   messageQueue: {
     host: joi.string().default('localhost'),
@@ -8,30 +16,27 @@ const mqSchema = joi.object({
     type: joi.string(),
     appInsights: joi.object()
   },
-  plpSubscription: {
-    name: joi.string().default('trade-exportscore-plp-plingestion'),
-    address: joi.string().default('eutd-trade-exports-core-plp-subscription-01'),
-    username: joi.string(),
-    password: joi.string(),
-    topic: joi.string().default('trade-exportscore-plp-plingestion')
-  }
+  plpTopic: queueSchema
 })
+
 const mqConfig = {
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
     useCredentialChain: process.env.NODE_ENV === 'production',
     managedIdentityClientId: process.env.AZURE_CLIENT_ID,
-    type: 'subscription',
+    type: 'queue',
     appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
   },
-  plpSubscription: {
-    name: process.env.PLP_SUBSCRIPTION_NAME,
-    address: process.env.PLP_SUBSCRIPTION_ADDRESS,
+  plpTopic: {
+    name: process.env.PLP_TOPIC_NAME || 'eutd-trade-exports-core-plingestion',
+    address: process.env.PLP_TOPIC_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD,
-    topic: process.env.PLP_TOPIC_ADDRESS
+    type: 'topic'
   }
 }
+
+console.log(mqConfig)
 
 const mqResult = mqSchema.validate(mqConfig, {
   abortEarly: false
@@ -42,8 +47,11 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const plpSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.plpSubscription }
+const plpTopic = {
+  ...mqResult.value.messageQueue,
+  ...mqResult.value.plpTopic
+}
 
-console.log(plpSubscription)
-
-module.exports = { plpSubscription }
+module.exports = {
+  plpTopic
+}
