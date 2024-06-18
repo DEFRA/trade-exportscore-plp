@@ -5,7 +5,8 @@ const queueSchema = joi.object({
   address: joi.string().required(),
   username: joi.string().optional(),
   password: joi.string().optional(),
-  type: joi.string().optional()
+  type: joi.string().optional(),
+  topic: joi.string()
 })
 
 const mqSchema = joi.object({
@@ -16,7 +17,7 @@ const mqSchema = joi.object({
     type: joi.string(),
     appInsights: joi.object()
   },
-  plpTopic: queueSchema
+  plpSubscription: queueSchema
 })
 
 const mqConfig = {
@@ -27,11 +28,12 @@ const mqConfig = {
     type: 'queue',
     appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
   },
-  plpTopic: {
-    name: process.env.PLP_TOPIC_NAME || 'eutd-trade-exports-core-plingestion',
-    address: process.env.PLP_TOPIC_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
+  plpSubscription: {
+    name: process.env.PLP_SUBSCRIPTION_NAME,
+    address: process.env.PLP_SUBSCRIPTION_ADDRESS,
+    username: 'test',
+    password: 'test',
+    topic: process.env.PLP_TOPIC_ADDRESS,
     type: 'topic'
   }
 }
@@ -47,11 +49,11 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const plpTopic = {
+const plpSubscription = {
   ...mqResult.value.messageQueue,
-  ...mqResult.value.plpTopic
+  ...mqResult.value.plpSubscription
 }
 
 module.exports = {
-  plpTopic
+  plpSubscription
 }
