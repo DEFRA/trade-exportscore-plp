@@ -34,7 +34,7 @@ value.isDev = value.env === development
 value.isProd = value.env === production
 
 value.dbConfig = dbConfig
-value.plpSubscription = mqConfig.plpSubscription
+value.plpSubscription = mqConfig.plpTopic
 
 value.plDir = path.join(process.cwd(), '/app/packing-lists/')
 
