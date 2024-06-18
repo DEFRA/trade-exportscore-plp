@@ -11,7 +11,7 @@
 - key: POSTGRES_PORT
   value: "5432" 
 - key: POSTGRES_DB
-  value: "trade-exportscore-plp"
+  value: "eutd-trade-exports-core-trade-exportscore-plp"
 - key: PLP_TOPIC_ADDRESS
   value: "eutd-trade-exports-core-plingestion"
 - key: PLP_SUBSCRIPTION_ADDRESS
