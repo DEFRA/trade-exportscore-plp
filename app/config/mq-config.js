@@ -1,25 +1,3 @@
-const joi = require('joi')
-
-const queueSchema = joi.object({
-  name: joi.string(),
-  address: joi.string().required(),
-  username: joi.string().optional(),
-  password: joi.string().optional(),
-  type: joi.string().optional(),
-  topic: joi.string()
-})
-
-const mqSchema = joi.object({
-  messageQueue: {
-    host: joi.string().default('localhost'),
-    useCredentialChain: joi.bool().default(false),
-    managedIdentityClientId: joi.string().optional(),
-    type: joi.string(),
-    appInsights: joi.object()
-  },
-  plpSubscription: queueSchema
-})
-
 const mqConfig = {
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
@@ -38,20 +16,9 @@ const mqConfig = {
   }
 }
 
-console.log(mqConfig)
-
-const mqResult = mqSchema.validate(mqConfig, {
-  abortEarly: false
-})
-
-// Throw if config is invalid
-if (mqResult.error) {
-  throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
-}
-
 const plpSubscription = {
-  ...mqResult.value.messageQueue,
-  ...mqResult.value.plpSubscription
+  ...mqConfig.messageQueue,
+  ...mqConfig.plpSubscription
 }
 
 module.exports = {
