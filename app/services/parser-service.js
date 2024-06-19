@@ -5,13 +5,13 @@ function matchesBandM (packingListJson, filename) {
     if (fileExtension !== 'xlsx') return false
 
     // check for correct establishment number
-    const traderRow = packingListJson.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
-    const establishmentNumber = packingListJson[traderRow].I
+    const traderRow = packingListJson.Sheet1.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
+    const establishmentNumber = packingListJson.Sheet1[traderRow].I
     const regex = /^RMS-GB-000005-[0-9]{3}$/
     if (!regex.test(establishmentNumber)) return false
 
     // check for header values
-    const headerRow = packingListJson.findIndex(x => x.B === 'PRISM')
+    const headerRow = packingListJson.Sheet1.findIndex(x => x.B === 'PRISM')
     const header = {
       A: 'PRODUCT CODE (SHORT)',
       B: 'PRISM',
@@ -23,7 +23,7 @@ function matchesBandM (packingListJson, filename) {
       H: 'GROSS WEIGHT',
       I: 'ANIMAL ORIGIN'
     }
-    if (JSON.stringify(packingListJson[headerRow]) !== JSON.stringify(header)) return false
+    if (JSON.stringify(packingListJson.Sheet1[headerRow]) !== JSON.stringify(header)) return false
     else return true
   } catch (err) {
     return false
@@ -37,7 +37,7 @@ function matchesAsda (packingListJson, filename) {
     if (fileExtension !== 'xls') return false
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson[1].D
+    const establishmentNumber = packingListJson.PackingList_Extract[1].D
     const regex = /^RMS-GB-000015-[0-9]{3}$/
     if (!regex.test(establishmentNumber)) return false
 
@@ -53,7 +53,7 @@ function matchesAsda (packingListJson, filename) {
       H: '[kilograms/grams]'
     }
 
-    if (JSON.stringify(packingListJson[0]) !== JSON.stringify(header)) return false
+    if (JSON.stringify(packingListJson.PackingList_Extract[0]) !== JSON.stringify(header)) return false
     else return true
   } catch (err) {
     return false
