@@ -34,7 +34,7 @@ const mqConfig = {
     username: 'test',
     password: 'test',
     topic: process.env.PLP_TOPIC_ADDRESS,
-    type: 'topic'
+    type: 'subscription'
   }
 }
 
