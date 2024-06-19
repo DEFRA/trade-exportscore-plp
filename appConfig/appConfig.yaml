@@ -18,3 +18,7 @@
   value: "eutd-trade-exports-core-plp-subscription-01"
 - key: PLP_SUBSCRIPTION_NAME
   value: "eutd-trade-exports-core-plp-subscription-01"
+- key: PARSED_QUEUE_ADDRESS
+  value: "eutd-trade-exports-core-parsed"
+- key: PARSED_QUEUE_NAME
+  value: "eutd-trade-exports-core-parsed"
