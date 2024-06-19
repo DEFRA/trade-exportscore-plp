@@ -1,29 +1,39 @@
-const mockStart = jest.fn()
-jest.mock('../../app/server', () => ({
-  start: mockStart,
-  info: {
-    uri: 'server-uri'
-  }
-}))
-const server = require('../../app/server')
+jest.mock('../../app/services/app-insights')
+jest.mock('../../app/server')
+const appInsights = require('../../app/services/app-insights')
+const createServer = require('../../app/server')
 
 describe('Server setup', () => {
-  let spyExit
-  let spyError
+  let mockExit
+  let mockConsoleLog
 
   beforeEach(() => {
     jest.clearAllMocks()
-    spyExit = jest.spyOn(process, 'exit').mockImplementation(() => {})
-    spyError = jest.spyOn(console, 'error').mockImplementation(() => {})
+    mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {})
+    mockConsoleLog = jest.spyOn(console, 'log').mockImplementation(() => {})
   })
 
   afterEach(() => {
-    spyExit.mockRestore()
-    spyError.mockRestore()
+    mockExit.mockRestore()
+    mockConsoleLog.mockRestore()
   })
 
-  test('start the server', async () => {
+  test('should setup app insights and start the server', async () => {
+    const mockStart = jest.fn()
+    createServer.mockResolvedValue({ start: mockStart })
+
     require('../../app/index')
-    expect(server.start).toHaveBeenCalled()
+
+    expect(appInsights.setup).toHaveBeenCalled()
+    expect(createServer).toHaveBeenCalled()
+  })
+
+  test('should log error and exit process when server start fails', async () => {
+    const error = new Error('Server start failed')
+    require('../../app/index')
+    const mockStart = jest
+      .fn()
+      .mockRejectedValue(error)
+    createServer.mockResolvedValue({ start: mockStart })
   })
 })

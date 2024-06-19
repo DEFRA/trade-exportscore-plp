@@ -128,6 +128,9 @@ describe('parseBandM', () => {
          G: 3.27,
          H: 3.63,
          I: 'YES'
+       },
+       {
+         D: ' '
        }
      ]
     const result = parserService.parseBandM(packingListJson)
@@ -148,16 +151,16 @@ describe('failedParser', () => {
   test('parses json', () => {
     const packingListJson = {
       registration_approval_number: null,
-      items: null,
-      business_checks: [
-        {
-          all_required_fields_present: false
-        }]
+      items: [],
+      business_checks:
+      {
+        all_required_fields_present: false
+      }
     }
     const result = parserService.failedParser()
     expect(result).toMatchObject(packingListJson)
     expect(result.registration_approval_number).toBeNull()
-    expect(result.items).toBeNull()
+    expect(result.items).toMatchObject([])
     expect(result.business_checks.all_required_fields_present).toBeFalsy()
   })
 })
@@ -176,11 +179,10 @@ describe('combineParser', () => {
     const packingListJson = {
       registration_approval_number: registrationApprovalNumber,
       items,
-      business_checks: [
-        {
-          all_required_fields_present: true
-        }
-      ]
+      business_checks:
+      {
+        all_required_fields_present: true
+      }
     }
     const result = parserService.combineParser(registrationApprovalNumber, items, true)
     expect(result).toMatchObject(packingListJson)

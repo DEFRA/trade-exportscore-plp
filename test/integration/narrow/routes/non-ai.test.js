@@ -1,15 +1,11 @@
-jest.mock('convert-excel-to-json')
-jest.mock('../../../app/services/parser-service', () => ({
-  ...jest.requireActual('../../../app/services/parser-service'),
-  matchesBandM: jest.fn().mockResolvedValue(false),
-  matchesAsda: jest.fn().mockResolvedValue(false)
-}))
+const createServer = require('../../../../app/server')
 
 describe('Non-ai test', () => {
-  const server = require('../../../../app/server')
+  let server
 
   beforeEach(async () => {
-    await server.start()
+    server = await createServer()
+    await server.initialize()
   })
 
   test('GET /non-ai route returns 200', async () => {
@@ -23,6 +19,12 @@ describe('Non-ai test', () => {
   })
 
   afterEach(async () => {
+    await server.stop()
+    jest.clearAllMocks()
+  })
+
+  afterAll(async () => {
+    jest.resetAllMocks()
     await server.stop()
   })
 })

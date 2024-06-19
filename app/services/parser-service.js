@@ -64,7 +64,8 @@ function parseBandM (packingListJson) {
   const traderRow = packingListJson.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
   const establishmentNumber = packingListJson[traderRow].I
   const headerRow = packingListJson.findIndex(x => x.B === 'PRISM')
-  const packingListContents = packingListJson.slice(headerRow + 1, packingListJson.length).map(col => ({
+  const lastRow = packingListJson.slice(headerRow + 1).findIndex(x => Number.isInteger(x.D) === false) + headerRow
+  const packingListContents = packingListJson.slice(headerRow + 1, lastRow + 1).map(col => ({
     description: col.C,
     nature_of_products: null,
     type_of_treatment: null,
@@ -80,15 +81,15 @@ function combineParser (establishmentNumber, packingListContents, allRequiredFie
   return {
     registration_approval_number: establishmentNumber,
     items: packingListContents,
-    business_checks: [
-      {
-        all_required_fields_present: allRequiredFieldsPresent
-      }]
+    business_checks:
+    {
+      all_required_fields_present: allRequiredFieldsPresent
+    }
   }
 }
 
 function failedParser () {
-  return combineParser(null, null, false)
+  return combineParser(null, [], false)
 }
 
 function parseAsda (packingListJson) {
