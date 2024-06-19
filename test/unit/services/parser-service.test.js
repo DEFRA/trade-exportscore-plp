@@ -86,8 +86,7 @@ describe('matchesBandM', () => {
 
 describe('parseBandM', () => {
   test('parses json', () => {
-    const packingListJson =
-     [
+    const packingListJson = [
        {},
        {},
        {
