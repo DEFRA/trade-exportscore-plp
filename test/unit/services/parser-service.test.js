@@ -87,51 +87,51 @@ describe('matchesBandM', () => {
 describe('parseBandM', () => {
   test('parses json', () => {
     const packingListJson = [
-       {},
-       {},
-       {
-         H: 'WAREHOUSE SCHEME NUMBER:',
-         I: 'RMS-GB-000005-001'
-       },
-       {},
-       {},
-       {
-         A: 'PRODUCT CODE (SHORT)',
-         B: 'PRISM',
-         C: 'ITEM DESCRIPTION',
-         D: 'COMMODITY CODE',
-         E: 'PLACE OF DISPATCH',
-         F: 'TOTAL NUMBER OF CASES',
-         G: 'NET WEIGHT',
-         H: 'GROSS WEIGHT',
-         I: 'ANIMAL ORIGIN'
-       },
-       {
-         A: 412267,
-         B: 10145600,
-         C: 'J/L JERKY 70G TERIYAKI',
-         D: 16025095,
-         E: 'RMS-GB-000005-001',
-         F: 1,
-         G: 1.15,
-         H: 1.28,
-         I: 'YES'
-       },
-       {
-         A: 351357,
-         B: 10300700,
-         C: 'MINI ROLLS 10PK',
-         D: 19053199,
-         E: 'RMS-GB-000005-001',
-         F: 1,
-         G: 3.27,
-         H: 3.63,
-         I: 'YES'
-       },
-       {
-         D: ' '
-       }
-     ]
+      {},
+      {},
+      {
+        H: 'WAREHOUSE SCHEME NUMBER:',
+        I: 'RMS-GB-000005-001'
+      },
+      {},
+      {},
+      {
+        A: 'PRODUCT CODE (SHORT)',
+        B: 'PRISM',
+        C: 'ITEM DESCRIPTION',
+        D: 'COMMODITY CODE',
+        E: 'PLACE OF DISPATCH',
+        F: 'TOTAL NUMBER OF CASES',
+        G: 'NET WEIGHT',
+        H: 'GROSS WEIGHT',
+        I: 'ANIMAL ORIGIN'
+      },
+      {
+        A: 412267,
+        B: 10145600,
+        C: 'J/L JERKY 70G TERIYAKI',
+        D: 16025095,
+        E: 'RMS-GB-000005-001',
+        F: 1,
+        G: 1.15,
+        H: 1.28,
+        I: 'YES'
+      },
+      {
+        A: 351357,
+        B: 10300700,
+        C: 'MINI ROLLS 10PK',
+        D: 19053199,
+        E: 'RMS-GB-000005-001',
+        F: 1,
+        G: 3.27,
+        H: 3.63,
+        I: 'YES'
+      },
+      {
+        D: ' '
+      }
+    ]
     const result = parserService.parseBandM(packingListJson)
     expect(result.registration_approval_number).toBe(packingListJson[2].I)
     expect(result.items).toHaveLength(2)
