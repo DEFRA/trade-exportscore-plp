@@ -9,13 +9,12 @@ jest.mock('../../../app/packing-list/index', () => ({
   ...jest.requireActual('../../../app/packing-list/index'),
   createPackingList: jest.fn()
 }))
+jest.mock('../../../app/messaging/send-parsed-message', () => ({
+  sendParsed: jest.fn()
+}))
 
 describe('/non-ai', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
   test('should return success', async () => {
-    jest.mock('convert-excel-to-json')
     const mockRequest = {}
     const mockH = {
       response: jest.fn(() => {
