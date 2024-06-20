@@ -1,13 +1,16 @@
 function matchesBandM (packingListJson, filename) {
   try {
+    // check for correct extension
     const fileExtension = filename.split('.').pop()
     if (fileExtension !== 'xlsx') return false
 
+    // check for correct establishment number
     const traderRow = packingListJson.Sheet1.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
     const establishmentNumber = packingListJson.Sheet1[traderRow].I
     const regex = /^RMS-GB-000005-[0-9]{3}$/
     if (!regex.test(establishmentNumber)) return false
 
+    // check for header values
     const headerRow = packingListJson.Sheet1.findIndex(x => x.B === 'PRISM')
     const header = {
       A: 'PRODUCT CODE (SHORT)',
@@ -29,13 +32,16 @@ function matchesBandM (packingListJson, filename) {
 
 function matchesAsda (packingListJson, filename) {
   try {
+    // check for correct extension
     const fileExtension = filename.split('.').pop()
     if (fileExtension !== 'xls') return false
 
+    // check for correct establishment number
     const establishmentNumber = packingListJson.PackingList_Extract[1].D
     const regex = /^RMS-GB-000015-[0-9]{3}$/
     if (!regex.test(establishmentNumber)) return false
 
+    // check for header values
     const header = {
       A: '[Description Of All Retail Goods]',
       B: '[Nature Of Product]',
