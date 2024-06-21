@@ -9,7 +9,7 @@ services:
       - trade-exportscore-plp-postgres
     environment:
       APPINSIGHTS_CLOUDROLE: trade-exportscore-plp-local
-      APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
+      APPINSIGHTS_INSTRUMENTATIONKEY: ${APPINSIGHTS_INSTRUMENTATIONKEY}
       POSTGRES_DB: eutd-trade-exports-core-trade-exportscore-plp
       POSTGRES_HOST: ${POSTGRES_HOST:-trade-exportscore-plp-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
