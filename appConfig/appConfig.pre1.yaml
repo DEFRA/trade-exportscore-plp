@@ -1,4 +1,3 @@
-  type: "keyvault"
 - key: MESSAGE_QUEUE_HOST
   value: "PREADPINFSB3401.servicebus.windows.net"
 - key: POSTGRES_HOST
