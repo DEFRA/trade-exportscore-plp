@@ -9,8 +9,6 @@ const mqConfig = {
   plpSubscription: {
     name: process.env.PLP_SUBSCRIPTION_NAME,
     address: process.env.PLP_SUBSCRIPTION_ADDRESS,
-    username: 'test',
-    password: 'test',
     topic: process.env.PLP_TOPIC_ADDRESS,
     type: 'subscription'
   },
