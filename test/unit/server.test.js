@@ -1,11 +1,18 @@
 const { sequelize } = require('../../app/services/database-service')
 const createServer = require('../../app/server')
-const messageService = require('../../app/messaging')
 
 jest.mock('../../app/services/database-service', () => ({
   sequelize: {
     authenticate: jest.fn()
   }
+}))
+
+jest.mock('../../app/messaging', () => ({
+  start: jest.fn()
+}))
+
+jest.mock('../../app/config', () => ({
+  isDev: true
 }))
 
 describe('cresteServer', () => {
