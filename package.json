@@ -1,6 +1,6 @@
 {
   "name": "trade-exportscore-plp",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "",
   "homepage": "github.com?owner=defra&repo=trade-exportscore-plp&organization=defra",
   "main": "app/index.js",
@@ -21,6 +21,7 @@
   "dependencies": {
     "@azure/identity": "^4.2.1",
     "@hapi/hapi": "21.3.2",
+    "adp-messaging": "^2.9.0",
     "applicationinsights": "2.8.0",
     "blipp": "^4.0.2",
     "convert-excel-to-json": "^1.7.0",

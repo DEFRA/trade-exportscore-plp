@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const path = require('path')
+const mqConfig = require('./mq-config')
 const dbConfig = require('./database-config')
 const { development, production, test } = require('./constants').environments
 
@@ -33,6 +34,8 @@ value.isDev = value.env === development
 value.isProd = value.env === production
 
 value.dbConfig = dbConfig
+value.plpSubscription = mqConfig.plpSubscription
+value.parsedQueue = mqConfig.parsedQueue
 
 value.plDir = path.join(process.cwd(), '/app/packing-lists/')
 

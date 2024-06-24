@@ -2,6 +2,7 @@ const { plDir } = require('../config')
 const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
+const { sendParsed } = require('../../app/messaging/send-parsed-message')
 
 const filename = plDir + 'PACKING LIST - 230.xlsx'
 let result = {}
@@ -37,6 +38,7 @@ module.exports = {
       const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString()
       await createPackingList(parsedPackingList, randomInt)
       hasSaved = true
+      await sendParsed(parsedPackingList.business_checks)
     }
     return h.response(parsedPackingList).code(200)
   }
