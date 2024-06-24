@@ -22,14 +22,14 @@ describe('App Insights setup', () => {
     jest.clearAllMocks()
   })
 
-  test('should call appInsights.setup when APPINSIGHTS_INSTRUMENTATIONKEY is set', () => {
-    process.env.APPINSIGHTS_INSTRUMENTATIONKEY = 'test-key'
+  test('should call appInsights.setup when APPINSIGHTS_CONNECTIONSTRING is set', () => {
+    process.env.APPINSIGHTS_CONNECTIONSTRING = 'test-string'
     require('../../../app/services/app-insights').setup()
     expect(appInsights.setup).toHaveBeenCalled()
   })
 
-  test('should not call appInsights.setup when APPINSIGHTS_INSTRUMENTATIONKEY is not set', () => {
-    delete process.env.APPINSIGHTS_INSTRUMENTATIONKEY
+  test('should not call appInsights.setup when APPINSIGHTS_CONNECTIONSTRING is not set', () => {
+    delete process.env.APPINSIGHTS_CONNECTIONSTRING
     require('../../../app/services/app-insights').setup()
     expect(appInsights.setup).not.toHaveBeenCalled()
   })
