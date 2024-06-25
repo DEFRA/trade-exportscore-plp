@@ -310,3 +310,126 @@ describe('parseAsda', () => {
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].G)
   })
 })
+
+describe('matchesSainsburys', () => {
+  test('returns false for empty json', () => {
+    const packingListJson = { }
+    const filename = 'packinglist.xlsx'
+    const result = parserService.matchesSainsburys(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns false for incorrect file extension', () => {
+    const filename = 'packinglist.pdf'
+    const packingListJson = {}
+    const result = parserService.matchesSainsburys(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns false for missing establishment number', () => {
+    const packingListJson = {
+      Sheet1: [
+        {},
+        {
+          N: 'Incorrect'
+        }
+      ]
+    }
+    const filename = 'packinglist.xlsx'
+    const result = parserService.matchesSainsburys(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns false for incorrect header values', () => {
+    const filename = 'packinglist.xlsx'
+    const packingListJson = {
+      PackingList_Extract: [
+        {
+          E: 'Not',
+          F: 'Correct',
+          G: 'Header'
+        },
+        {
+          N: 'RMS-GB-000094-001'
+        }
+      ]
+    }
+    const result = parserService.matchesSainsburys(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns true', () => {
+    const filename = 'packinglist.xlsx'
+    const packingListJson = {
+      Sheet1: [
+        {
+          A: 'Delivery Date',
+          B: 'Load Ref\r\n(Trailer Number)',
+          C: 'Product Type / Category',
+          D: 'Product / Part Number',
+          E: 'Product / Part Number Description',
+          F: 'Packed Singles',
+          G: 'Packages',
+          H: 'Net\r\nWeight / Package KG',
+          I: 'Gross\r\nWeight / Package KG',
+          J: 'Packaging Type',
+          K: 'Excise Code',
+          L: 'Final Destination ID',
+          M: 'Dispatch Unit ID',
+          N: 'RMS Number (based on depot)',
+          O: 'Commodity Code'
+        },
+        {
+          N: 'RMS-GB-000094-001'
+        }
+      ]
+    }
+    const result = parserService.matchesSainsburys(packingListJson, filename)
+    expect(result).toBeTruthy()
+  })
+})
+
+describe('parseSainsburys', () => {
+  test('parses json', () => {
+    const packingListJson =
+    [
+      {
+        E: 'Product / Part Number Description',
+        C: 'Product Type / Category',
+        O: 'Commodity Code',
+        G: 'Packages',
+        H: 'Net\nWeight / Package KG'
+      },
+      {
+        E: 'JS Chicken Korma 400g',
+        C: 'Chilled Indian Meals',
+        O: '0709991000',
+        G: 1,
+        H: 3.15,
+        N: 'RMS-GB-000094-002​'
+      },
+      {
+        E: 'JS TTD Gunpowder Potatoes 250g',
+        C: 'Chilled Indian Meals',
+        O: '1602323090',
+        G: 2,
+        H: 1.4,
+        N: 'RMS-GB-000094-002​'
+      }
+    ]
+
+    const result = parserService.parseSainsburys(packingListJson)
+    expect(result.registration_approval_number).toBe('RMS-GB-000094-002')
+    expect(result.items).toHaveLength(2)
+    expect(result.items[0].description).toBe(packingListJson[1].E)
+    expect(result.items[1].description).toBe(packingListJson[2].E)
+    expect(result.items[0].nature_of_products).toBe(packingListJson[1].C)
+    expect(result.items[1].nature_of_products).toBe(packingListJson[2].C)
+    expect(result.items[0].commodity_code).toBe(packingListJson[1].O)
+    expect(result.items[1].commodity_code).toBe(packingListJson[2].O)
+    expect(result.items[0].number_of_packages).toBe(packingListJson[1].G)
+    expect(result.items[1].number_of_packages).toBe(packingListJson[2].G)
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].H)
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].H)
+  })
+})
