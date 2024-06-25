@@ -8,7 +8,6 @@ module.exports = {
   method: 'GET',
   path: '/non-ai',
   handler: async (_request, h) => {
-    console.log(_request.query.filename)
     const filename = config.plDir + _request.query.filename
     let result = {}
     try {
@@ -16,21 +15,21 @@ module.exports = {
         sourceFile: filename
       })
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
 
     let parsedPackingList = parserService.failedParser()
     let isParsed = false
     if (parserService.matchesAsda(result, filename)) {
-      console.log('Packing list matches Asda')
+      console.info('Packing list matches Asda with filename: ', filename)
       parsedPackingList = parserService.parseAsda(result.PackingList_Extract)
       isParsed = true
     } else if (parserService.matchesBandM(result, filename)) {
-      console.log('Packing list matches BandM')
+      console.info('Packing list matches BandM wit filename: ', filename)
       parsedPackingList = parserService.parseBandM(result.Sheet1)
       isParsed = true
     } else {
-      console.log('failed to parse')
+      console.info('Failed to parse packing list with filename: ', filename)
     }
     if (isParsed) {
       const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString()
@@ -38,7 +37,7 @@ module.exports = {
       try {
         await sendParsed(parsedPackingList.business_checks)
       } catch (err) {
-        console.log(err)
+        console.error(err)
       }
     }
     return h.response(parsedPackingList).code(200)
