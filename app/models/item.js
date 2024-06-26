@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     natureOfProducts: DataTypes.STRING,
     typeOfTreatment: DataTypes.STRING,
-    commodityCode: DataTypes.INTEGER,
+    commodityCode: DataTypes.STRING,
     numberOfPackages: DataTypes.INTEGER,
     totalWeight: DataTypes.FLOAT,
     applicationId: DataTypes.INTEGER
