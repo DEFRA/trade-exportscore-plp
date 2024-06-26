@@ -20,17 +20,21 @@ module.exports = {
 
     let parsedPackingList = parserService.failedParser()
     let isParsed = false
-    if (parserService.matchesAsda(result, filename)) {
+    if (parserService.matchesTjmorris(result, filename)) {
+      console.info('Packing list matches TJ Morris with filename: ', filename)
+      parsedPackingList = parserService.parseTjmorris(result.Sheet1)
+      isParsed = true
+    } else if (parserService.matchesAsda(result, filename)) {
       console.info('Packing list matches Asda with filename: ', filename)
       parsedPackingList = parserService.parseAsda(result.PackingList_Extract)
-      isParsed = true
-    } else if (parserService.matchesBandM(result, filename)) {
-      console.info('Packing list matches BandM with filename: ', filename)
-      parsedPackingList = parserService.parseBandM(result.Sheet1)
       isParsed = true
     } else if (parserService.matchesSainsburys(result, filename)) {
       console.info('Packing list matches Sainsburys with filename: ', filename)
       parsedPackingList = parserService.parseSainsburys(result.Sheet1)
+      isParsed = true
+    } else if (parserService.matchesBandM(result, filename)) {
+      console.info('Packing list matches BandM with filename: ', filename)
+      parsedPackingList = parserService.parseBandM(result.Sheet1)
       isParsed = true
     } else {
       console.info('Failed to parse packing list with filename: ', filename)

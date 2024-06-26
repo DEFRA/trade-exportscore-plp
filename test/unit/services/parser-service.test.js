@@ -433,3 +433,140 @@ describe('parseSainsburys', () => {
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].H)
   })
 })
+
+describe('matchesTjmorris', () => {
+  test('returns false for empty json', () => {
+    const packingListJson = { }
+    const filename = 'packinglist.xls'
+    const result = parserService.matchesTjmorris(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns false for incorrect file extension', () => {
+    const filename = 'packinglist.pdf'
+    const packingListJson = {}
+    const result = parserService.matchesTjmorris(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns false for missing establishment number', () => {
+    const packingListJson = {
+      Sheet1: [
+        {},
+        {
+          A: 'Incorrect'
+        }
+      ]
+    }
+    const filename = 'packinglist.xls'
+    const result = parserService.matchesTjmorris(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns false for incorrect header values', () => {
+    const filename = 'packinglist.xls'
+    const packingListJson = {
+      PackingList_Extract: [
+        {
+          E: 'Not',
+          F: 'Correct',
+          G: 'Header'
+        },
+        {
+          A: 'RMS-GB-000010-001'
+        }
+      ]
+    }
+    const result = parserService.matchesTjmorris(packingListJson, filename)
+    expect(result).toBeFalsy()
+  })
+
+  test('returns true', () => {
+    const filename = 'packinglist.xls'
+    const packingListJson = {
+      Sheet1: [
+        {
+          A: 'Consignor / Place o f Despatch',
+          B: 'CONSIGNEE',
+          C: 'Trailer',
+          D: 'Seal',
+          E: 'Store',
+          F: 'STORENAME',
+          G: 'Order',
+          H: 'Cage/Ref',
+          I: 'Group',
+          J: 'TREATMENTTYPE',
+          K: 'Sub-Group',
+          L: 'Description',
+          M: 'Item',
+          N: 'Description',
+          O: 'Tariff/Commodity',
+          P: 'Cases',
+          Q: 'Gross Weight Kg',
+          R: 'Net Weight Kg',
+          S: 'Cost',
+          T: 'Country of Origin',
+          U: 'VAT Status',
+          V: 'SPS',
+          W: 'Consignment ID',
+          X: 'Processed?',
+          Y: 'Created Timestamp'
+        },
+        {
+          A: 'RMS-GB-000010-001'
+        }
+      ]
+    }
+    const result = parserService.matchesTjmorris(packingListJson, filename)
+    expect(result).toBeTruthy()
+  })
+})
+
+describe('parseTjmorris', () => {
+  test('parses json', () => {
+    const packingListJson =
+    [
+      {
+        A: 'Consignor / Place o f Despatch',
+        J: 'TREATMENTTYPE',
+        L: 'SANDWICHES',
+        N: '28 TUNA CRUNCH TIGER ROLL',
+        O: 'Tariff/Commodity',
+        P: 'Cases',
+        R: 'Net Weight Kg'
+      },
+      {
+        A: 'RMS-GB-000010-001',
+        J: 'CHILLED',
+        L: 'Description',
+        N: 'Description',
+        O: '0408192000',
+        P: '2',
+        R: '1.4'
+      },
+      {
+        A: 'RMS-GB-000010-001',
+        J: 'FRESH PRODUCTS',
+        L: 'LETTUCE & BAGGED SALADS',
+        N: 'FLORETTE SWEET & CRUNCHY 250G',
+        O: '1602906100',
+        P: '4',
+        R: '8'
+      }
+    ]
+
+    const result = parserService.parseTjmorris(packingListJson)
+    expect(result.registration_approval_number).toBe(packingListJson[1].A)
+    expect(result.items).toHaveLength(2)
+    expect(result.items[0].description).toBe(packingListJson[1].N)
+    expect(result.items[1].description).toBe(packingListJson[2].N)
+    expect(result.items[0].nature_of_products).toBe(packingListJson[1].L)
+    expect(result.items[1].nature_of_products).toBe(packingListJson[2].L)
+    expect(result.items[0].commodity_code).toBe(packingListJson[1].O)
+    expect(result.items[1].commodity_code).toBe(packingListJson[2].O)
+    expect(result.items[0].number_of_packages).toBe(packingListJson[1].P)
+    expect(result.items[1].number_of_packages).toBe(packingListJson[2].P)
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].R)
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].R)
+  })
+})
