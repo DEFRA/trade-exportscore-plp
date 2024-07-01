@@ -25,3 +25,18 @@
 - key: APPINSIGHTS_CONNECTIONSTRING
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
+- key: DYNAMICS_AUTH_URL
+  value: "{{servicename}}-DYNAMICS_AUTH_URL"
+  type: "keyvault"
+- key: DYNAMICS_URL
+  value: "{{servicename}}-DYNAMICS_URL"
+  type: "keyvault"
+- key: DYNAMICS_CLIENT_ID
+  value: "{{servicename}}-DYNAMICS_CLIENT_ID"
+  type: "keyvault"
+- key: DYNAMICS_CLIENT_SECRET
+  value: "{{servicename}}-DYNAMICS_CLIENT_SECRET"
+  type: "keyvault"
+- key: DYNAMICS_APPLICATION_ID
+  value: "{{servicename}}-DYNAMICS_APPLICATION_ID"
+  type: "keyvault"

@@ -3,6 +3,7 @@ const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
 const { sendParsed } = require('../../app/messaging/send-parsed-message')
+const patchPackingListCheck = require('../../app/services/dynamics-service')
 
 const filename = plDir + 'PACKING LIST - 230.xlsx'
 let result = {}
@@ -34,6 +35,7 @@ module.exports = {
   method: 'GET',
   path: '/non-ai',
   handler: async (_request, h) => {
+    console.log(await patchPackingListCheck(process.env.DYNAMICS_APPLICATION_ID, true))
     if (isParsed && !hasSaved) {
       const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString()
       await createPackingList(parsedPackingList, randomInt)
