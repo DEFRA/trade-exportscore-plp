@@ -3,7 +3,7 @@ const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
 
-const filename = plDir + 'PACKING LIST - 230.xlsx'
+const filename = plDir + '30.04.24 NIRMS.xlsx'
 let result = {}
 try {
   result = excelToJson({
@@ -23,6 +23,14 @@ if (parserService.matchesAsda(result, filename)) {
   console.log('Packing list matches BandM')
   parsedPackingList = parserService.parseBandM(result.Sheet1)
   isParsed = true
+} else if (parserService.matchesTescoModel1(result, filename)) {
+  console.log('Packing list matches Tesco')
+  parsedPackingList = parserService.parseTescoModel1(result.Input_Data_Sheet)
+  isParsed = true
+// } else if (parserService.matchesTescoModel2(result, filename)) {
+//   console.log('Packing list matches Tesco')
+//   parsedPackingList = parserService.parseTescoModel2(result.Sheet2)
+//   isParsed = true
 } else {
   console.log('failed to parse')
 }
