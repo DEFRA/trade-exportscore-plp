@@ -26,17 +26,17 @@
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
 - key: DYNAMICS_AUTH_URL
-  value: "{{servicename}}-DYNAMICS_AUTH_URL"
+  value: "{{servicename}}-DYNAMICS-AUTH-URL"
   type: "keyvault"
 - key: DYNAMICS_URL
-  value: "{{servicename}}-DYNAMICS_URL"
+  value: "{{servicename}}-DYNAMICS-URL"
   type: "keyvault"
 - key: DYNAMICS_CLIENT_ID
-  value: "{{servicename}}-DYNAMICS_CLIENT_ID"
+  value: "{{servicename}}-DYNAMICS-CLIENT-ID"
   type: "keyvault"
 - key: DYNAMICS_CLIENT_SECRET
-  value: "{{servicename}}-DYNAMICS_CLIENT_SECRET"
+  value: "{{servicename}}-DYNAMICS-CLIENT-SECRET"
   type: "keyvault"
 - key: DYNAMICS_APPLICATION_ID
-  value: "{{servicename}}-DYNAMICS_APPLICATION_ID"
+  value: "{{servicename}}-DYNAMICS-APPLICATION-ID"
   type: "keyvault"
