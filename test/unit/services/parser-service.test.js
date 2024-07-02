@@ -439,147 +439,143 @@ describe('parseTescoModel1', () => {
   })
 })
 
-// Tesco2
 
-// describe('matchesTescoModel2', () => {
-//   test('returns true', () => {
-//     const filename = 'PackingListTesco2.xlsx'
-//     const packingListJson = {
-//       Sheet2: [
-//         {
-//           A: 'Item',
-//           B: 'Product code',
-//           C: 'Commmodity code',
-//           D: 'Online Check',
-//           E: 'Meursing code',
-//           F: 'Description of goods',
-//           G: 'Country of Origin',
-//           H: 'No. of pkgs',
-//           I: 'Type of pkgs',
-//           J: 'Total Gross Weight',
-//           K: 'Total Net Weight',
-//           L: 'Total Line Value',
-//           M: 'GB Establishment RMS Number'
-//         },
-//         {},
-//         {
-//           M: 'RMS-GB-000015-009'
-//         }
-//       ]
-//     }
-//     const result = parserService.matchesTescoModel2(packingListJson, filename)
-//     expect(result).toBeTruthy()
-//   })
-// })
+describe('matchesTescoModel2', () => {
+  test('returns true', () => {
+    const filename = 'PackingListTesco2.xlsx'
+    const packingListJson = {
+      Sheet2: [
+        {
+          A: 'Item',
+          B: 'Product code',
+          C: 'Commmodity code',
+          D: 'Online Check',
+          E: 'Meursing code',
+          F: 'Description of goods',
+          G: 'Country of Origin',
+          H: 'No. of pkgs',
+          I: 'Type of pkgs',
+          J: 'Total Gross Weight',
+          K: 'Total Net Weight',
+          L: 'Total Line Value',
+          M: 'GB Establishment RMS Number'
+        },
+        {},
+        {
+          M: 'RMS-GB-000015-009'
+        }
+      ]
+    }
+    const result = parserService.matchesTescoModel2(packingListJson, filename)
+    expect(result).toBeTruthy()
+  })
+})
 
-// test('returns false for empty json', () => {
-//   const packingListJson = {}
-//   const filename = 'packinglist.xls'
-//   const result = parserService.matchesTescoModel2(packingListJson, filename)
-//   expect(result).toBeFalsy()
-// })
+test('returns false for empty json', () => {
+  const packingListJson = {}
+  const filename = 'packinglist.xls'
+  const result = parserService.matchesTescoModel2(packingListJson, filename)
+  expect(result).toBeFalsy()
+})
 
-// test('returns false for missing establishment number', () => {
-//   const packingListJson = {
-//     Sheet2: [
-//       {},
-//       {},
-//       {
-//         M: 'INCORRECT'
-//       }
-//     ]
-//   }
-//   const filename = 'packinglist.xls'
-//   const result = parserService.matchesTescoModel2(packingListJson, filename)
-//   expect(result).toBeFalsy()
-// })
+test('returns false for missing establishment number', () => {
+  const packingListJson = {
+    Sheet2: [
+      {},
+      {},
+      {
+        M: 'INCORRECT'
+      }
+    ]
+  }
+  const filename = 'packinglist.xls'
+  const result = parserService.matchesTescoModel2(packingListJson, filename)
+  expect(result).toBeFalsy()
+})
 
-// test('return false for incorrect file extension', () => {
-//   const filename = 'packinglist.pdf'
-//   const packingListJson = {}
-//   const result = parserService.matchesTescoModel2(packingListJson, filename)
-//   expect(result).toBeFalsy()
-// })
+test('return false for incorrect file extension', () => {
+  const filename = 'packinglist.pdf'
+  const packingListJson = {}
+  const result = parserService.matchesTescoModel2(packingListJson, filename)
+  expect(result).toBeFalsy()
+})
 
-// test('return false for incorrect header values', () => {
-//   const filename = 'packinglist.xls'
-//   const packingListJson = {
-//     Sheet2: [
-//       {
-//         A: 'NOT',
-//         B: 'CORRECT',
-//         C: 'HEADER'
-//       },
-//       {},
-//       {
-//         M: 'RMS-GB-000015-009'
-//       }
-//     ]
-//   }
-//   const result = parserService.matchesTescoModel2(packingListJson, filename)
-//   expect(result).toBeFalsy()
-// })
+test('return false for incorrect header values', () => {
+  const filename = 'packinglist.xls'
+  const packingListJson = {
+    Sheet2: [
+      {
+        A: 'NOT',
+        B: 'CORRECT',
+        C: 'HEADER'
+      },
+      {},
+      {
+        M: 'RMS-GB-000015-009'
+      }
+    ]
+  }
+  const result = parserService.matchesTescoModel2(packingListJson, filename)
+  expect(result).toBeFalsy()
+})
 
-// describe('parseTescoModel2', () => {
-//   test('parses json', () => {
-//     const packingListJson =
-//     [
-//       {
-//         A: 'Item',
-//         B: 'Product code',
-//         C: 'Commmodity code',
-//         D: 'Online Check',
-//         E: 'Meursing code',
-//         F: 'Description of goods',
-//         G: 'Country of Origin',
-//         H: 'No. of pkgs',
-//         I: 'Type of pkgs',
-//         J: 'Total Gross Weight',
-//         K: 'Total Net Weight',
-//         L: 'Total Line Value',
-//         M: 'GB Establishment RMS Number'
-//       },
-//       {
-//         A: '1',
-//         B: 'SKU1944',
-//         C: '2005995090',
-//         D: '',
-//         E: '',
-//         F: 'TF R/Bow Tom with Blsac Glze 340g x4',
-//         G: 'Great Britain',
-//         H: '4',
-//         I: 'Cases',
-//         J: '16',
-//         K: '9.312',
-//         L: '31.04',
-//         M: 'RMS-GB-000015-009'
-//       },
-//       {
-//         A: '2',
-//         B: 'SKU1938',
-//         C: '2005995090',
-//         D: '',
-//         E: '',
-//         F: 'TF 300g Roasting Vegetables x8',
-//         G: 'Great Britain',
-//         H: '4',
-//         I: 'Cases',
-//         J: '32',
-//         K: '16.144',
-//         L: '64.32',
-//         M: 'RMS-GB-000015-009'
-//       }
-//     ]
-//     const result = parserService.parseTescoModel2(packingListJson)
-//     expect(result.registration_approval_number).toBe(packingListJson[3].M)
-//     expect(result.items).toHaveLength(2)
-//     expect(result.items[0].description).toBe(packingListJson[0].F)
-//     expect(result.items[1].description).toBe(packingListJson[2].F)
-//     expect(result.items[0].commodity_code).toBe(packingListJson[0].C)
-//     expect(result.items[1].commodity_code).toBe(packingListJson[2].C)
-//     expect(result.items[0].number_of_packages).toBe(packingListJson[0].I)
-//     expect(result.items[1].number_of_packages).toBe(packingListJson[2].I)
-//     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[0].K)
-//     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].K)
-//   })
-// })
+describe('parseTescoModel2', () => {
+  test('parses json', () => {
+    const packingListJson =
+    [
+      {
+        A: 'Item',
+        B: 'Product code',
+        C: 'Commmodity code',
+        D: 'Online Check',
+        E: 'Meursing code',
+        F: 'Description of goods',
+        G: 'Country of Origin',
+        H: 'No. of pkgs',
+        I: 'Type of pkgs',
+        J: 'Total Gross Weight',
+        K: 'Total Net Weight',
+        L: 'Total Line Value',
+        M: 'GB Establishment RMS Number'
+      },
+      {},
+      {
+        A: '1',
+        B: 'SKU1944',
+        C: '2005995090',
+        F: 'TF R/Bow Tom with Blsac Glze 340g x4',
+        G: 'Great Britain',
+        H: '4',
+        I: 'Cases',
+        J: '16',
+        K: '9.312',
+        L: '31.04',
+        M: 'RMS-GB-000015-009'
+      },
+      {
+        A: '2',
+        B: 'SKU1938',
+        C: '2005995090',
+        F: 'TF 300g Roasting Vegetables x8',
+        G: 'Great Britain',
+        H: '4',
+        I: 'Cases',
+        J: '32',
+        K: '16.144',
+        L: '64.32',
+        M: 'RMS-GB-000015-009'
+      }
+    ]
+    const result = parserService.parseTescoModel2(packingListJson)
+    expect(result.registration_approval_number).toBe(packingListJson[2].M)
+    expect(result.items).toHaveLength(2)
+    expect(result.items[0].description).toBe(packingListJson[2].F)
+    expect(result.items[1].description).toBe(packingListJson[3].F)
+    expect(result.items[0].commodity_code).toBe(packingListJson[2].C)
+    expect(result.items[1].commodity_code).toBe(packingListJson[3].C)
+    expect(result.items[0].number_of_packages).toBe(packingListJson[2].H)
+    expect(result.items[1].number_of_packages).toBe(packingListJson[3].H)
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[2].K)
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[3].K)
+  })
+})

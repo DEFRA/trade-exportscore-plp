@@ -2,8 +2,9 @@ const { plDir } = require('../config')
 const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
+const { parse } = require('uuid')
 
-const filename = plDir + '30.04.24 NIRMS.xlsx'
+const filename = plDir + 'Packing List 618.xlsx'
 let result = {}
 try {
   result = excelToJson({
@@ -12,7 +13,6 @@ try {
 } catch (err) {
   console.log(err)
 }
-
 let parsedPackingList = parserService.failedParser()
 let isParsed = false
 if (parserService.matchesAsda(result, filename)) {
@@ -24,13 +24,13 @@ if (parserService.matchesAsda(result, filename)) {
   parsedPackingList = parserService.parseBandM(result.Sheet1)
   isParsed = true
 } else if (parserService.matchesTescoModel1(result, filename)) {
-  console.log('Packing list matches Tesco')
+  console.log('Packing list matches Tesco Model 1')
   parsedPackingList = parserService.parseTescoModel1(result.Input_Data_Sheet)
   isParsed = true
-// } else if (parserService.matchesTescoModel2(result, filename)) {
-//   console.log('Packing list matches Tesco')
-//   parsedPackingList = parserService.parseTescoModel2(result.Sheet2)
-//   isParsed = true
+} else if (parserService.matchesTescoModel2(result, filename)) {
+  console.log('Packing list matches Tesco Model 2')
+  parsedPackingList = parserService.parseTescoModel2(result.Sheet2)
+  isParsed = true
 } else {
   console.log('failed to parse')
 }
@@ -43,7 +43,7 @@ module.exports = {
   handler: async (_request, h) => {
     if (isParsed && !hasSaved) {
       const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString()
-      await createPackingList(parsedPackingList, randomInt)
+      // await createPackingList(parsedPackingList, randomInt)
       hasSaved = true
     }
     return h.response(parsedPackingList).code(200)
