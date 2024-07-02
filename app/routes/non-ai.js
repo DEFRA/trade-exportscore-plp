@@ -41,13 +41,12 @@ module.exports = {
       console.info('Failed to parse packing list with filename: ', filename)
     }
 
-    console.log(await patchPackingListCheck(process.env.DYNAMICS_APPLICATION_ID, true))
-
     if (isParsed) {
-      const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString()
+      const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString() // TODO replace with application id from ehco
       await createPackingList(parsedPackingList, randomInt)
       try {
-        await sendParsed(parsedPackingList.business_checks)
+        const checkStatus = await patchPackingListCheck(process.env.DYNAMICS_APPLICATION_ID, true) // TODO replace with application id from ehco
+        console.log('Packing list check upsert to IDCOMS with status ', checkStatus)
       } catch (err) {
         console.error(err)
       }
