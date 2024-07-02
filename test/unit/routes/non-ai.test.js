@@ -18,6 +18,7 @@ describe('/non-ai', () => {
         }
       })
     }
+    mockRequest.query = '?filename=test'
 
     await nonai.handler(mockRequest, mockH)
 
