@@ -8,7 +8,7 @@ async function createPackingList (packingListJson, applicationId) {
       transaction
     })
     await models.item.bulkCreate(packingList.item, { transaction })
-    console.info(`saved packing list: ${packingList.applicationId}`)
+    console.info('Saved packing list in database with application id: ', packingList.applicationId)
   })
 }
 

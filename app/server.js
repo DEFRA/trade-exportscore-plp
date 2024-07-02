@@ -1,6 +1,7 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
 const { sequelize } = require('./services/database-service')
+const messageService = require('./messaging')
 
 async function createServer () {
   await sequelize.authenticate()
@@ -23,6 +24,18 @@ async function createServer () {
   if (config.isDev) {
     await server.register(require('blipp'))
   }
+
+  await messageService.start()
+
+  process.on('SIGTERM', async function () {
+    await messageService.stop()
+    process.exit(0)
+  })
+
+  process.on('SIGINT', async function () {
+    await messageService.stop()
+    process.exit(0)
+  })
 
   return server
 }
