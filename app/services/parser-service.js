@@ -327,5 +327,9 @@ module.exports = {
   matchesSainsburys,
   parseSainsburys,
   matchesTjmorris,
-  parseTjmorris
+  parseTjmorris,
+  matchesTescoModel1,
+  matchesTescoModel2,
+  parseTescoModel1,
+  parseTescoModel2
 }
