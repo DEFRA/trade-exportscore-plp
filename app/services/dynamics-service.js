@@ -46,4 +46,4 @@ async function patchPackingListCheck (applicationId, isParsed) {
   }
 }
 
-module.exports = patchPackingListCheck
+module.exports = { patchPackingListCheck, bearerTokenRequest }
