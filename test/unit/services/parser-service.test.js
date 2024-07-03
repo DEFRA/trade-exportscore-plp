@@ -448,7 +448,7 @@ describe('matchesTescoModel2', () => {
         {
           A: 'Item',
           B: 'Product code',
-          C: 'Commmodity code',
+          C: 'Commodity code',
           D: 'Online Check',
           E: 'Meursing code',
           F: 'Description of goods',

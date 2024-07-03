@@ -99,11 +99,13 @@ function matchesTescoModel2 (packingListJson, filename) {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
     if (fileExtension !== 'xlsx') return false
+    console.log(fileExtension)
 
     // check for correct establishment number
     const establishmentNumber = packingListJson.Sheet2[2].M
     const regex = /^RMS-GB-000015-[0-9]{3}$/
     if (!regex.test(establishmentNumber)) return false
+    console.log(establishmentNumber)
 
     // check for header values
     const header = {
@@ -121,6 +123,7 @@ function matchesTescoModel2 (packingListJson, filename) {
       L: 'Total Line Value',
       M: 'GB Establishment RMS Number'
     }
+    
     if (JSON.stringify(packingListJson.Sheet2[0]) !== JSON.stringify(header)) return false
     else return true
 
