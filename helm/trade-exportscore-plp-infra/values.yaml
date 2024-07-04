@@ -19,9 +19,3 @@ namespaceQueues:
     roleAssignments:
       - roleName: 'QueueSender'
 
-storageAccounts:
-  - name: tradeplp
-    roleAssignments:
-       roleName: 'DataReader'
-    blobContainers:
-      - name: packing-lists
