@@ -7,7 +7,6 @@ const router = require('../../../app/plugins/router')
 jest.mock('../../../app/routes/non-ai', () => [{ path: '/non-ai' }])
 jest.mock('../../../app/routes/healthy', () => [{ path: '/healthy' }])
 jest.mock('../../../app/routes/healthz', () => [{ path: '/healthz' }])
-jest.mock('../../../app/routes/healthz', () => [{ path: '/healthz' }])
 jest.mock('../../../app/routes/upsert-idcoms', () => [{ path: '/upsert-idcoms' }])
 
 describe('router plugin', () => {
