@@ -24,6 +24,7 @@ services:
       PLP_SUBSCRIPTION_NAME: ${PLP_SUBSCRIPTION_NAME}
       PARSED_QUEUE_ADDRESS: ${PARSED_QUEUE_ADDRESS:-eutd-trade-exports-core-parsed}
       PARSED_QUEUE_NAME: ${PARSED_QUEUE_NAME:-eutd-trade-exports-core-parsed}
+      STORAGE_ACCOUNT_NAME: ${STORAGE_ACCOUNT_NAME}
 
   trade-exportscore-plp-postgres:
     image: postgres:11.4-alpine
