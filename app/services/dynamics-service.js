@@ -15,6 +15,7 @@ async function bearerTokenRequest () {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
+
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`)
     }
@@ -23,6 +24,7 @@ async function bearerTokenRequest () {
     return json.access_token
   } catch (error) {
     console.error(error.message)
+    return error.message
   }
 }
 
@@ -43,6 +45,7 @@ async function patchPackingListCheck (applicationId, isParsed) {
     return ((await response).status)
   } catch (error) {
     console.error(error.message)
+    return error.message
   }
 }
 
