@@ -3,13 +3,13 @@ const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
 const { sendParsed } = require('../../app/messaging/send-parsed-message')
-const storageAccountService = require('../../app/services/storage-account')
+const { createStorageAccountClient } = require('../../app/services/storage-account')
 
 module.exports = {
   method: 'GET',
   path: '/non-ai',
   handler: async (_request, h) => {
-    const storageAccountClient = storageAccountService.createStorageAccountClient()
+    const storageAccountClient = createStorageAccountClient()
     console.log(storageAccountClient)
     const filename = config.plDir + _request.query.filename
     let result = {}

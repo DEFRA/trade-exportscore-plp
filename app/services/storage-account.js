@@ -9,4 +9,4 @@ function createStorageAccountClient () {
   )
 }
 
-module.exports = createStorageAccountClient
+module.exports = { createStorageAccountClient }

@@ -7,6 +7,9 @@ jest.mock('../../../app/packing-list/index', () => ({
 jest.mock('../../../app/messaging/send-parsed-message', () => ({
   sendParsed: jest.fn()
 }))
+jest.mock('../../../app/services/storage-account', () => ({
+  createStorageAccountClient: jest.fn()
+}))
 
 describe('/non-ai', () => {
   test('should return success', async () => {
