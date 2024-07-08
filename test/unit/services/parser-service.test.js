@@ -312,7 +312,6 @@ describe('parseAsda', () => {
   })
 })
 
-// Tesco1
 
 describe('matchesTescoModel1', () => {
   test('returns true', () => {
