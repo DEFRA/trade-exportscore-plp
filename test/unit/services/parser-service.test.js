@@ -1,7 +1,8 @@
 const parserService = require('../../../app/services/parser-service')
+const MatcherResult = require('../../../app/services/matches-result')
 
 describe('matchesBandM', () => {
-  test('returns true', () => {
+  test('returns correct', () => {
     const filename = 'packinglist.xlsx'
     const packingListJson = {
       Sheet1: [
@@ -27,17 +28,17 @@ describe('matchesBandM', () => {
       ]
     }
     const result = parserService.matchesBandM(packingListJson, filename)
-    expect(result).toBeTruthy()
+    expect(result).toBe(MatcherResult.CORRECT)
   })
 
-  test('returns false for empty json', () => {
+  test('returns generic error for empty json', () => {
     const packingListJson = {}
     const filename = 'packinglist.xlsx'
     const result = parserService.matchesBandM(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.GENERIC_ERROR)
   })
 
-  test('returns false for missing establishment number', () => {
+  test('returns wrong establishment number for missing establishment number', () => {
     const packingListJson = {
       Sheet1: [
         {},
@@ -50,18 +51,18 @@ describe('matchesBandM', () => {
     }
     const filename = 'packinglist.xlsx'
     const result = parserService.matchesBandM(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
   })
 
-  test('return false for incorrect file extension', () => {
+  test('return wrong extension for incorrect file extension', () => {
     const filename = 'packinglist.pdf'
     const packingListJson = {}
     const result = parserService.matchesBandM(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
   })
 
-  test('return false for incorrect header values', () => {
-    const filename = 'packinglist.xlxs'
+  test('return wrong header for incorrect header values', () => {
+    const filename = 'packinglist.xlsx'
     const packingListJson = {
       Sheet1: [
         {},
@@ -80,7 +81,7 @@ describe('matchesBandM', () => {
       ]
     }
     const result = parserService.matchesBandM(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_HEADER)
   })
 })
 
@@ -209,17 +210,17 @@ describe('matchesAsda', () => {
       ]
     }
     const result = parserService.matchesAsda(packingListJson, filename)
-    expect(result).toBeTruthy()
+    expect(result).toBe(MatcherResult.CORRECT)
   })
 
-  test('returns false for empty json', () => {
+  test('returns generic error for empty json', () => {
     const packingListJson = {}
     const filename = 'packinglist.xls'
     const result = parserService.matchesAsda(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.GENERIC_ERROR)
   })
 
-  test('returns false for missing establishment number', () => {
+  test('returns wrong establishment number for missing establishment number', () => {
     const packingListJson = {
       PackingList_Extract: [
         {},
@@ -231,17 +232,17 @@ describe('matchesAsda', () => {
     }
     const filename = 'packinglist.xls'
     const result = parserService.matchesAsda(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
   })
 
-  test('return false for incorrect file extension', () => {
+  test('return wrong extension for incorrect file extension', () => {
     const filename = 'packinglist.pdf'
     const packingListJson = {}
     const result = parserService.matchesAsda(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
   })
 
-  test('return false for incorrect header values', () => {
+  test('return wrong header for incorrect header values', () => {
     const filename = 'packinglist.xls'
     const packingListJson = {
       PackingList_Extract: [
@@ -256,7 +257,7 @@ describe('matchesAsda', () => {
       ]
     }
     const result = parserService.matchesAsda(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_HEADER)
   })
 })
 
@@ -336,55 +337,63 @@ describe('matchesTescoModel1', () => {
       ]
     }
     const result = parserService.matchesTescoModel1(packingListJson, filename)
-    expect(result).toBeTruthy()
+    expect(result).toBe(MatcherResult.CORRECT)
   })
 })
 
-test('returns false for empty json', () => {
+test('returns generic error for empty json', () => {
   const packingListJson = {}
-  const filename = 'packinglist.xls'
+  const filename = 'packinglist.xlsx'
   const result = parserService.matchesTescoModel1(packingListJson, filename)
-  expect(result).toBeFalsy()
+  expect(result).toBe(MatcherResult.GENERIC_ERROR)
 })
 
-test('returns false for missing establishment number', () => {
+test('returns wrong establishment number for missing establishment number', () => {
   const packingListJson = {
     Input_Data_Sheet: [
       {},
       {},
+      {},
       {
-        I: 'INCORRECT'
+        AT: 'INCORRECT'
       }
     ]
   }
-  const filename = 'packinglist.xls'
+  const filename = 'packinglist.xlsx'
   const result = parserService.matchesTescoModel1(packingListJson, filename)
-  expect(result).toBeFalsy()
+  expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
 })
 
-test('return false for incorrect file extension', () => {
+test('return wrong extension for incorrect file extension', () => {
   const filename = 'packinglist.pdf'
   const packingListJson = {}
   const result = parserService.matchesTescoModel1(packingListJson, filename)
-  expect(result).toBeFalsy()
+  expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
 })
 
-test('return false for incorrect header values', () => {
-  const filename = 'packinglist.xls'
+test('return wrong header for incorrect header values', () => {
+  const filename = 'packinglist.xlsx'
   const packingListJson = {
     Input_Data_Sheet: [
-      {
-        A: 'NOT',
-        B: 'CORRECT',
-        C: 'HEADER'
-      },
+      {},
+      {},
+      {},
       {
         AT: 'RMS-GB-000022-001'
+      },
+      {
+        G: 'NOT',
+        L: 'CORRECT',
+        AS: 'HEADER',
+        AT: 'Green Lane',
+        BR: 'Packages',
+        BT: 'Gross Weight',
+        BU: 'Net Weight'
       }
     ]
   }
   const result = parserService.matchesTescoModel1(packingListJson, filename)
-  expect(result).toBeFalsy()
+  expect(result).toBe(MatcherResult.WRONG_HEADER)
 })
 
 describe('parseTescoModel1', () => {
@@ -439,7 +448,6 @@ describe('parseTescoModel1', () => {
   })
 })
 
-
 describe('matchesTescoModel2', () => {
   test('returns true', () => {
     const filename = 'PackingListTesco2.xlsx'
@@ -467,18 +475,18 @@ describe('matchesTescoModel2', () => {
       ]
     }
     const result = parserService.matchesTescoModel2(packingListJson, filename)
-    expect(result).toBeTruthy()
+    expect(result).toBe(MatcherResult.CORRECT)
   })
 })
 
-test('returns false for empty json', () => {
+test('returns generic error for empty json', () => {
   const packingListJson = {}
-  const filename = 'packinglist.xls'
+  const filename = 'packinglist.xlsx'
   const result = parserService.matchesTescoModel2(packingListJson, filename)
-  expect(result).toBeFalsy()
+  expect(result).toBe(MatcherResult.GENERIC_ERROR)
 })
 
-test('returns false for missing establishment number', () => {
+test('returns wrong establishment number for missing establishment number', () => {
   const packingListJson = {
     Sheet2: [
       {},
@@ -488,20 +496,20 @@ test('returns false for missing establishment number', () => {
       }
     ]
   }
-  const filename = 'packinglist.xls'
+  const filename = 'packinglist.xlsx'
   const result = parserService.matchesTescoModel2(packingListJson, filename)
-  expect(result).toBeFalsy()
+  expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
 })
 
-test('return false for incorrect file extension', () => {
+test('return wrong extensions for incorrect file extension', () => {
   const filename = 'packinglist.pdf'
   const packingListJson = {}
   const result = parserService.matchesTescoModel2(packingListJson, filename)
-  expect(result).toBeFalsy()
+  expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
 })
 
-test('return false for incorrect header values', () => {
-  const filename = 'packinglist.xls'
+test('return wrong header for incorrect header values', () => {
+  const filename = 'packinglist.xlsx'
   const packingListJson = {
     Sheet2: [
       {
@@ -516,7 +524,7 @@ test('return false for incorrect header values', () => {
     ]
   }
   const result = parserService.matchesTescoModel2(packingListJson, filename)
-  expect(result).toBeFalsy()
+  expect(result).toBe(MatcherResult.WRONG_HEADER)
 })
 
 describe('parseTescoModel2', () => {
@@ -581,21 +589,21 @@ describe('parseTescoModel2', () => {
 })
 
 describe('matchesSainsburys', () => {
-  test('returns false for empty json', () => {
+  test('returns generic error for empty json', () => {
     const packingListJson = { }
     const filename = 'packinglist.xlsx'
     const result = parserService.matchesSainsburys(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.GENERIC_ERROR)
   })
 
-  test('returns false for incorrect file extension', () => {
+  test('returns wrong extensions for incorrect file extension', () => {
     const filename = 'packinglist.pdf'
     const packingListJson = {}
     const result = parserService.matchesSainsburys(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
   })
 
-  test('returns false for missing establishment number', () => {
+  test('returns wrong establishment number for missing establishment number', () => {
     const packingListJson = {
       Sheet1: [
         {},
@@ -606,17 +614,29 @@ describe('matchesSainsburys', () => {
     }
     const filename = 'packinglist.xlsx'
     const result = parserService.matchesSainsburys(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
   })
 
-  test('returns false for incorrect header values', () => {
+  test('returns wrong header for incorrect header values', () => {
     const filename = 'packinglist.xlsx'
     const packingListJson = {
-      PackingList_Extract: [
+      Sheet1: [
         {
-          E: 'Not',
-          F: 'Correct',
-          G: 'Header'
+          A: 'NOT',
+          B: 'CORRECT',
+          C: 'HEADER',
+          D: 'Product / Part Number',
+          E: 'Product / Part Number Description',
+          F: 'Packed Singles',
+          G: 'Packages',
+          H: 'Net\r\nWeight / Package KG',
+          I: 'Gross\r\nWeight / Package KG',
+          J: 'Packaging Type',
+          K: 'Excise Code',
+          L: 'Final Destination ID',
+          M: 'Dispatch Unit ID',
+          N: 'RMS Number (based on depot)',
+          O: 'Commodity Code'
         },
         {
           N: 'RMS-GB-000094-001'
@@ -624,7 +644,7 @@ describe('matchesSainsburys', () => {
       ]
     }
     const result = parserService.matchesSainsburys(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_HEADER)
   })
 
   test('returns true', () => {
@@ -654,7 +674,7 @@ describe('matchesSainsburys', () => {
       ]
     }
     const result = parserService.matchesSainsburys(packingListJson, filename)
-    expect(result).toBeTruthy()
+    expect(result).toBe(MatcherResult.CORRECT)
   })
 })
 
@@ -704,21 +724,21 @@ describe('parseSainsburys', () => {
 })
 
 describe('matchesTjmorris', () => {
-  test('returns false for empty json', () => {
+  test('returns generic error for empty json', () => {
     const packingListJson = { }
     const filename = 'packinglist.xls'
     const result = parserService.matchesTjmorris(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.GENERIC_ERROR)
   })
 
-  test('returns false for incorrect file extension', () => {
+  test('returns wrong extension for incorrect file extension', () => {
     const filename = 'packinglist.pdf'
     const packingListJson = {}
     const result = parserService.matchesTjmorris(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
   })
 
-  test('returns false for missing establishment number', () => {
+  test('returns wrong establishmentn number for missing establishment number', () => {
     const packingListJson = {
       Sheet1: [
         {},
@@ -729,17 +749,39 @@ describe('matchesTjmorris', () => {
     }
     const filename = 'packinglist.xls'
     const result = parserService.matchesTjmorris(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
   })
 
-  test('returns false for incorrect header values', () => {
+  test('returns wrong header for incorrect header values', () => {
     const filename = 'packinglist.xls'
     const packingListJson = {
-      PackingList_Extract: [
+      Sheet1: [
         {
-          E: 'Not',
-          F: 'Correct',
-          G: 'Header'
+          A: 'NOT',
+          B: 'CORRECT',
+          C: 'HEADER',
+          D: 'Seal',
+          E: 'Store',
+          F: 'STORENAME',
+          G: 'Order',
+          H: 'Cage/Ref',
+          I: 'Group',
+          J: 'TREATMENTTYPE',
+          K: 'Sub-Group',
+          L: 'Description',
+          M: 'Item',
+          N: 'Description',
+          O: 'Tariff/Commodity',
+          P: 'Cases',
+          Q: 'Gross Weight Kg',
+          R: 'Net Weight Kg',
+          S: 'Cost',
+          T: 'Country of Origin',
+          U: 'VAT Status',
+          V: 'SPS',
+          W: 'Consignment ID',
+          X: 'Processed?',
+          Y: 'Created Timestamp'
         },
         {
           A: 'RMS-GB-000010-001'
@@ -747,7 +789,7 @@ describe('matchesTjmorris', () => {
       ]
     }
     const result = parserService.matchesTjmorris(packingListJson, filename)
-    expect(result).toBeFalsy()
+    expect(result).toBe(MatcherResult.WRONG_HEADER)
   })
 
   test('returns true', () => {
@@ -787,7 +829,7 @@ describe('matchesTjmorris', () => {
       ]
     }
     const result = parserService.matchesTjmorris(packingListJson, filename)
-    expect(result).toBeTruthy()
+    expect(result).toBe(MatcherResult.CORRECT)
   })
 })
 
