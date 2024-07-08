@@ -185,7 +185,7 @@ function parseTescoModel1 (packingListJson) {
     description: col.G,
     nature_of_products: null,
     type_of_treatment: col.AS,
-    commodity_code: null,
+    commodity_code: col.L,
     number_of_packages: col.BR,
     total_net_weight_kg: col.BU
   }))

@@ -441,6 +441,8 @@ describe('parseTescoModel1', () => {
     expect(result.items[1].description).toBe(packingListJson[6].G)
     expect(result.items[0].type_of_treatment).toBe(packingListJson[5].AS)
     expect(result.items[1].type_of_treatment).toBe(packingListJson[6].AS)
+    expect(result.items[0].commodity_code).toBe(packingListJson[5].L)
+    expect(result.items[1].commodity_code).toBe(packingListJson[6].L)
     expect(result.items[0].number_of_packages).toBe(packingListJson[5].BR)
     expect(result.items[1].number_of_packages).toBe(packingListJson[6].BR)
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[5].BU)
