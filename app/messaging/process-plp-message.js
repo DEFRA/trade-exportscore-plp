@@ -1,7 +1,20 @@
+const { findParser } = require('../../app/services/parser-service')
+const { createStorageAccountClient, getXlsPackingListFromBlob } = require('../../app/services/storage-account')
+const { createPackingList } = require('../packing-list')
+
 async function processPlpMessage (message, receiver) {
   try {
     await receiver.completeMessage(message)
     console.info('Received message: ', message.body)
+    const blobClient = createStorageAccountClient(message.body.packing_list_blob)
+    let result = {}
+    result = await getXlsPackingListFromBlob(blobClient)
+    const parsed = findParser(result, message.body.packing_list_blob)
+
+    if (parsed.isParsed) {
+      await createPackingList(parsed.parsedPackingList, message.body.application_id)
+      // TODO upsert idcoms
+    }
   } catch (err) {
     console.error('Unable to process message:', err)
     await receiver.abandonMessage(message)

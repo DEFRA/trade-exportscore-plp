@@ -5,4 +5,4 @@
 - key: POSTGRES_USERNAME
   value: "sndadpinfmi4401-trade-exportscore-plp"  
 - key: STORAGE_ACCOUNT_NAME
-  value: "tradeplp"
+  value: "sndadpinfst4401tradeplp"
