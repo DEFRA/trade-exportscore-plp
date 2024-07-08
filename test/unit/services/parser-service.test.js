@@ -312,7 +312,6 @@ describe('parseAsda', () => {
   })
 })
 
-
 describe('matchesTescoModel1', () => {
   test('returns true', () => {
     const filename = 'PackingListTesco1.xlsx'
