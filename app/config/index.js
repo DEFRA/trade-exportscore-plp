@@ -3,10 +3,11 @@ const path = require('path')
 const mqConfig = require('./mq-config')
 const dbConfig = require('./database-config')
 const { development, production, test } = require('./constants').environments
+const schemaDefaultPort = 3004
 
 // Define config schema
 const schema = Joi.object({
-  port: Joi.number().default(3004),
+  port: Joi.number().default(schemaDefaultPort),
   env: Joi.string().valid(development, test, production).default(development)
 })
 

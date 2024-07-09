@@ -1,7 +1,5 @@
 const { sequelize } = require('../services/database-service')
-
-const SERVICE_UNAVAILABLE = 503
-const OK = 200
+const { StatusCodes } = require('http-status-codes')
 
 module.exports = {
   method: 'GET',
@@ -10,10 +8,10 @@ module.exports = {
     handler: async (request, h) => {
       try {
         await sequelize.authenticate()
-        return h.response('ok').code(OK)
+        return h.response('ok').code(StatusCodes.OK)
       } catch (err) {
         console.error('Error running healthy check', err)
-        return h.response(`Error running healthy check: ${err.message}`).code(SERVICE_UNAVAILABLE)
+        return h.response(`Error running healthy check: ${err.message}`).code(StatusCodes.SERVICE_UNAVAILABLE)
       }
     }
   }
