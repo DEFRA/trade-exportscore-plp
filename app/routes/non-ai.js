@@ -3,6 +3,7 @@ const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
 const { patchPackingListCheck } = require('../../app/services/dynamics-service')
+const MatcherResult = require('../services/matches-result')
 
 module.exports = {
   method: 'GET',
@@ -20,21 +21,30 @@ module.exports = {
 
     let parsedPackingList = parserService.failedParser()
     let isParsed = false
-    if (parserService.matchesTjmorris(result, filename)) {
+
+    if (parserService.matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
       console.info('Packing list matches TJ Morris with filename: ', filename)
       parsedPackingList = parserService.parseTjmorris(result.Sheet1)
       isParsed = true
-    } else if (parserService.matchesAsda(result, filename)) {
+    } else if (parserService.matchesAsda(result, filename) === MatcherResult.CORRECT) {
       console.info('Packing list matches Asda with filename: ', filename)
       parsedPackingList = parserService.parseAsda(result.PackingList_Extract)
       isParsed = true
-    } else if (parserService.matchesSainsburys(result, filename)) {
+    } else if (parserService.matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
       console.info('Packing list matches Sainsburys with filename: ', filename)
       parsedPackingList = parserService.parseSainsburys(result.Sheet1)
       isParsed = true
-    } else if (parserService.matchesBandM(result, filename)) {
+    } else if (parserService.matchesBandM(result, filename) === MatcherResult.CORRECT) {
       console.info('Packing list matches BandM with filename: ', filename)
       parsedPackingList = parserService.parseBandM(result.Sheet1)
+      isParsed = true
+    } else if (parserService.matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
+      console.log('Packing list matches Tesco Model 1 with filename: ', filename)
+      parsedPackingList = parserService.parseTescoModel1(result.Input_Data_Sheet)
+      isParsed = true
+    } else if (parserService.matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
+      console.log('Packing list matches Tesco Model 2 with filename: ', filename)
+      parsedPackingList = parserService.parseTescoModel2(result.Sheet2)
       isParsed = true
     } else {
       console.info('Failed to parse packing list with filename: ', filename)
