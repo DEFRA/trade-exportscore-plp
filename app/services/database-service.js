@@ -4,7 +4,6 @@ const { Sequelize, DataTypes } = require('sequelize')
 const config = require('../config')
 const dbConfig = config.dbConfig[config.env]
 const modelPath = path.join(__dirname, '..', 'models')
-const fileEnd = -3
 
 module.exports = (() => {
   const sequelize = new Sequelize(
@@ -17,9 +16,9 @@ module.exports = (() => {
   fs.readdirSync(modelPath)
     .filter((file) => {
       return (
-        file.indexOf('.') !== 0 &&
+        file.startsWith('.') &&
         file !== 'index.js' &&
-        file.slice(fileEnd) === '.js'
+        file.endsWith('.js')
       )
     })
     .forEach((file) =>

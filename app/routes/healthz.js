@@ -4,7 +4,7 @@ module.exports = {
   method: 'GET',
   path: '/healthz',
   options: {
-    handler: (request, h) => {
+    handler: (_request, h) => {
       return h.response('ok').code(StatusCodes.OK)
     }
   }

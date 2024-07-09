@@ -5,7 +5,7 @@ module.exports = {
   method: 'GET',
   path: '/healthy',
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       try {
         await sequelize.authenticate()
         return h.response('ok').code(StatusCodes.OK)
