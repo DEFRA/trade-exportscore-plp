@@ -1,22 +1,32 @@
+const MatcherResult = require('../services/matches-result')
+
 function findParser (result, filename) {
   let parsedPackingList = failedParser()
   let isParsed = false
 
-  if (matchesTjmorris(result, filename)) {
+  if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches TJ Morris with filename: ', filename)
     parsedPackingList = parseTjmorris(result.Sheet1)
     isParsed = true
-  } else if (matchesAsda(result, filename)) {
+  } else if (matchesAsda(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Asda with filename: ', filename)
     parsedPackingList = parseAsda(result.PackingList_Extract)
     isParsed = true
-  } else if (matchesSainsburys(result, filename)) {
+  } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Sainsburys with filename: ', filename)
     parsedPackingList = parseSainsburys(result.Sheet1)
     isParsed = true
-  } else if (matchesBandM(result, filename)) {
+  } else if (matchesBandM(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches BandM with filename: ', filename)
     parsedPackingList = parseBandM(result.Sheet1)
+    isParsed = true
+  } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
+    console.log('Packing list matches Tesco Model 1 with filename: ', filename)
+    parsedPackingList = parseTescoModel1(result.Input_Data_Sheet)
+    isParsed = true
+  } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
+    console.log('Packing list matches Tesco Model 2 with filename: ', filename)
+    parsedPackingList = parseTescoModel2(result.Sheet2)
     isParsed = true
   } else {
     console.info('Failed to parse packing list with filename: ', filename)
@@ -29,13 +39,13 @@ function matchesBandM (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
-    if (fileExtension !== 'xlsx') return false
+    if (fileExtension !== 'xlsx') return MatcherResult.WRONG_EXTENSIONS
 
     // check for correct establishment number
     const traderRow = packingListJson.Sheet1.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
     const establishmentNumber = packingListJson.Sheet1[traderRow].I
     const regex = /^RMS-GB-000005-[0-9]{3}$/
-    if (!regex.test(establishmentNumber)) return false
+    if (!regex.test(establishmentNumber)) return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
 
     // check for header values
     const headerRow = packingListJson.Sheet1.findIndex(x => x.B === 'PRISM')
@@ -50,10 +60,10 @@ function matchesBandM (packingListJson, filename) {
       H: 'GROSS WEIGHT',
       I: 'ANIMAL ORIGIN'
     }
-    if (JSON.stringify(packingListJson.Sheet1[headerRow]) !== JSON.stringify(header)) return false
-    else return true
+    if (JSON.stringify(packingListJson.Sheet1[headerRow]) !== JSON.stringify(header)) return MatcherResult.WRONG_HEADER
+    else return MatcherResult.CORRECT
   } catch (err) {
-    return false
+    return MatcherResult.GENERIC_ERROR
   }
 }
 
@@ -61,12 +71,12 @@ function matchesAsda (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
-    if (fileExtension !== 'xls') return false
+    if (fileExtension !== 'xls') return MatcherResult.WRONG_EXTENSIONS
 
     // check for correct establishment number
     const establishmentNumber = packingListJson.PackingList_Extract[1].D
     const regex = /^RMS-GB-000015-[0-9]{3}$/
-    if (!regex.test(establishmentNumber)) return false
+    if (!regex.test(establishmentNumber)) return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
 
     // check for header values
     const header = {
@@ -80,10 +90,79 @@ function matchesAsda (packingListJson, filename) {
       H: '[kilograms/grams]'
     }
 
-    if (JSON.stringify(packingListJson.PackingList_Extract[0]) !== JSON.stringify(header)) return false
-    else return true
+    if (JSON.stringify(packingListJson.PackingList_Extract[0]) !== JSON.stringify(header)) return MatcherResult.WRONG_HEADER
+    else return MatcherResult.CORRECT
   } catch (err) {
-    return false
+    return MatcherResult.GENERIC_ERROR
+  }
+}
+
+function matchesTescoModel1 (packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split('.').pop()
+    if (fileExtension !== 'xlsx') return MatcherResult.WRONG_EXTENSIONS
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson.Input_Data_Sheet[3].AT
+    const regex = /^RMS-GB-000022-[0-9]{3}$/
+    if (!regex.test(establishmentNumber)) return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
+
+    // check for header values
+    const header = {
+      G: 'Product/ Part Number description',
+      L: 'Tariff Code UK',
+      AS: 'Treatment Type',
+      AT: 'Green Lane',
+      BR: 'Packages',
+      BT: 'Gross Weight',
+      BU: 'Net Weight'
+    }
+
+    for (const key in header) {
+      if (!packingListJson.Input_Data_Sheet[4] || packingListJson.Input_Data_Sheet[4][key] !== header[key]) {
+        return MatcherResult.WRONG_HEADER
+      }
+    }
+
+    return MatcherResult.CORRECT
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR
+  }
+}
+
+function matchesTescoModel2 (packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split('.').pop()
+    if (fileExtension !== 'xlsx') return MatcherResult.WRONG_EXTENSIONS
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson.Sheet2[2].M
+    const regex = /^RMS-GB-000015-[0-9]{3}$/
+    if (!regex.test(establishmentNumber)) return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
+
+    // check for header values
+    const header = {
+      A: 'Item',
+      B: 'Product code',
+      C: 'Commodity code',
+      D: 'Online Check',
+      E: 'Meursing code',
+      F: 'Description of goods',
+      G: 'Country of Origin',
+      H: 'No. of pkgs',
+      I: 'Type of pkgs',
+      J: 'Total Gross Weight',
+      K: 'Total Net Weight',
+      L: 'Total Line Value',
+      M: 'GB Establishment RMS Number'
+    }
+
+    if (JSON.stringify(packingListJson.Sheet2[0]) !== JSON.stringify(header)) return MatcherResult.WRONG_HEADER
+    else return MatcherResult.CORRECT
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR
   }
 }
 
@@ -133,17 +212,44 @@ function parseAsda (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
+function parseTescoModel1 (packingListJson) {
+  const establishmentNumber = packingListJson[4].AT
+  const packingListContents = packingListJson.slice(5).map(col => ({
+    description: col.G,
+    nature_of_products: null,
+    type_of_treatment: col.AS,
+    commodity_code: col.L,
+    number_of_packages: col.BR,
+    total_net_weight_kg: col.BU
+  }))
+
+  return combineParser(establishmentNumber, packingListContents, true)
+}
+
+function parseTescoModel2 (packingListJson) {
+  const establishmentNumber = packingListJson[2].M
+  const packingListContents = packingListJson.slice(2).map(col => ({
+    description: col.F,
+    nature_of_products: null,
+    type_of_treatment: null,
+    commodity_code: col.C,
+    number_of_packages: col.H,
+    total_net_weight_kg: col.K
+  }))
+
+  return combineParser(establishmentNumber, packingListContents, true)
+}
+
 function matchesSainsburys (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
-    if (fileExtension !== 'xlsx') return false
+    if (fileExtension !== 'xlsx') return MatcherResult.WRONG_EXTENSIONS
 
     // check for correct establishment number
     const establishmentNumber = packingListJson.Sheet1[1]?.N.replace(/\u200B/g, '')
-    console.log(establishmentNumber)
     const regex = /^RMS-GB-000094-[0-9]{3}$/
-    if (!regex.test(establishmentNumber)) return false
+    if (!regex.test(establishmentNumber)) return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
 
     // check for header values
     const header = {
@@ -164,10 +270,10 @@ function matchesSainsburys (packingListJson, filename) {
       O: 'Commodity Code'
     }
 
-    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) return false
-    else return true
+    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) return MatcherResult.WRONG_HEADER
+    else return MatcherResult.CORRECT
   } catch (err) {
-    return false
+    return MatcherResult.GENERIC_ERROR
   }
 }
 
@@ -189,13 +295,12 @@ function matchesTjmorris (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop().toLowerCase()
-    if (fileExtension !== 'xls') return false
+    if (fileExtension !== 'xls') return MatcherResult.WRONG_EXTENSIONS
 
     // check for correct establishment number
     const establishmentNumber = packingListJson.Sheet1[1]?.A
-    console.log(establishmentNumber)
     const regex = /^RMS-GB-000010-[0-9]{3}$/
-    if (!regex.test(establishmentNumber)) return false
+    if (!regex.test(establishmentNumber)) return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
 
     // check for header values
     const header = {
@@ -226,10 +331,10 @@ function matchesTjmorris (packingListJson, filename) {
       Y: 'Created Timestamp'
     }
 
-    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) return false
-    else return true
+    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) return MatcherResult.WRONG_HEADER
+    else return MatcherResult.CORRECT
   } catch (err) {
-    return false
+    return MatcherResult.GENERIC_ERROR
   }
 }
 
@@ -258,5 +363,9 @@ module.exports = {
   parseSainsburys,
   matchesTjmorris,
   parseTjmorris,
+  matchesTescoModel1,
+  matchesTescoModel2,
+  parseTescoModel1,
+  parseTescoModel2,
   findParser
 }
