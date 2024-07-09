@@ -337,61 +337,61 @@ describe('matchesTescoModel1', () => {
     const result = parserService.matchesTescoModel1(packingListJson, filename)
     expect(result).toBe(MatcherResult.CORRECT)
   })
-})
 
-test('returns generic error for empty json', () => {
-  const packingListJson = {}
-  const filename = 'packinglist.xlsx'
-  const result = parserService.matchesTescoModel1(packingListJson, filename)
-  expect(result).toBe(MatcherResult.GENERIC_ERROR)
-})
+  test('returns generic error for empty json', () => {
+    const packingListJson = {}
+    const filename = 'packinglist.xlsx'
+    const result = parserService.matchesTescoModel1(packingListJson, filename)
+    expect(result).toBe(MatcherResult.GENERIC_ERROR)
+  })
 
-test('returns wrong establishment number for missing establishment number', () => {
-  const packingListJson = {
-    Input_Data_Sheet: [
-      {},
-      {},
-      {},
-      {
-        AT: 'INCORRECT'
-      }
-    ]
-  }
-  const filename = 'packinglist.xlsx'
-  const result = parserService.matchesTescoModel1(packingListJson, filename)
-  expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
-})
+  test('returns wrong establishment number for missing establishment number', () => {
+    const packingListJson = {
+      Input_Data_Sheet: [
+        {},
+        {},
+        {},
+        {
+          AT: 'INCORRECT'
+        }
+      ]
+    }
+    const filename = 'packinglist.xlsx'
+    const result = parserService.matchesTescoModel1(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
+  })
 
-test('return wrong extension for incorrect file extension', () => {
-  const filename = 'packinglist.pdf'
-  const packingListJson = {}
-  const result = parserService.matchesTescoModel1(packingListJson, filename)
-  expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
-})
+  test('return wrong extension for incorrect file extension', () => {
+    const filename = 'packinglist.pdf'
+    const packingListJson = {}
+    const result = parserService.matchesTescoModel1(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
+  })
 
-test('return wrong header for incorrect header values', () => {
-  const filename = 'packinglist.xlsx'
-  const packingListJson = {
-    Input_Data_Sheet: [
-      {},
-      {},
-      {},
-      {
-        AT: 'RMS-GB-000022-001'
-      },
-      {
-        G: 'NOT',
-        L: 'CORRECT',
-        AS: 'HEADER',
-        AT: 'Green Lane',
-        BR: 'Packages',
-        BT: 'Gross Weight',
-        BU: 'Net Weight'
-      }
-    ]
-  }
-  const result = parserService.matchesTescoModel1(packingListJson, filename)
-  expect(result).toBe(MatcherResult.WRONG_HEADER)
+  test('return wrong header for incorrect header values', () => {
+    const filename = 'packinglist.xlsx'
+    const packingListJson = {
+      Input_Data_Sheet: [
+        {},
+        {},
+        {},
+        {
+          AT: 'RMS-GB-000022-001'
+        },
+        {
+          G: 'NOT',
+          L: 'CORRECT',
+          AS: 'HEADER',
+          AT: 'Green Lane',
+          BR: 'Packages',
+          BT: 'Gross Weight',
+          BU: 'Net Weight'
+        }
+      ]
+    }
+    const result = parserService.matchesTescoModel1(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_HEADER)
+  })
 })
 
 describe('parseTescoModel1', () => {
@@ -477,54 +477,54 @@ describe('matchesTescoModel2', () => {
     const result = parserService.matchesTescoModel2(packingListJson, filename)
     expect(result).toBe(MatcherResult.CORRECT)
   })
-})
 
-test('returns generic error for empty json', () => {
-  const packingListJson = {}
-  const filename = 'packinglist.xlsx'
-  const result = parserService.matchesTescoModel2(packingListJson, filename)
-  expect(result).toBe(MatcherResult.GENERIC_ERROR)
-})
+  test('returns generic error for empty json', () => {
+    const packingListJson = {}
+    const filename = 'packinglist.xlsx'
+    const result = parserService.matchesTescoModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.GENERIC_ERROR)
+  })
 
-test('returns wrong establishment number for missing establishment number', () => {
-  const packingListJson = {
-    Sheet2: [
-      {},
-      {},
-      {
-        M: 'INCORRECT'
-      }
-    ]
-  }
-  const filename = 'packinglist.xlsx'
-  const result = parserService.matchesTescoModel2(packingListJson, filename)
-  expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
-})
+  test('returns wrong establishment number for missing establishment number', () => {
+    const packingListJson = {
+      Sheet2: [
+        {},
+        {},
+        {
+          M: 'INCORRECT'
+        }
+      ]
+    }
+    const filename = 'packinglist.xlsx'
+    const result = parserService.matchesTescoModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
+  })
 
-test('return wrong extensions for incorrect file extension', () => {
-  const filename = 'packinglist.pdf'
-  const packingListJson = {}
-  const result = parserService.matchesTescoModel2(packingListJson, filename)
-  expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
-})
+  test('return wrong extensions for incorrect file extension', () => {
+    const filename = 'packinglist.pdf'
+    const packingListJson = {}
+    const result = parserService.matchesTescoModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
+  })
 
-test('return wrong header for incorrect header values', () => {
-  const filename = 'packinglist.xlsx'
-  const packingListJson = {
-    Sheet2: [
-      {
-        A: 'NOT',
-        B: 'CORRECT',
-        C: 'HEADER'
-      },
-      {},
-      {
-        M: 'RMS-GB-000015-009'
-      }
-    ]
-  }
-  const result = parserService.matchesTescoModel2(packingListJson, filename)
-  expect(result).toBe(MatcherResult.WRONG_HEADER)
+  test('return wrong header for incorrect header values', () => {
+    const filename = 'packinglist.xlsx'
+    const packingListJson = {
+      Sheet2: [
+        {
+          A: 'NOT',
+          B: 'CORRECT',
+          C: 'HEADER'
+        },
+        {},
+        {
+          M: 'RMS-GB-000015-009'
+        }
+      ]
+    }
+    const result = parserService.matchesTescoModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_HEADER)
+  })
 })
 
 describe('parseTescoModel2', () => {
