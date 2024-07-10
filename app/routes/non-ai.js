@@ -2,7 +2,7 @@ const config = require('../config')
 const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
-const { patchPackingListCheck } = require('../../app/services/dynamics-service')
+const { patchPackingListCheck } = require('../services/dynamics-service')
 const MatcherResult = require('../services/matches-result')
 
 module.exports = {

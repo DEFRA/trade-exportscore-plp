@@ -1,4 +1,4 @@
-const { patchPackingListCheck } = require('../../app/services/dynamics-service')
+const { patchPackingListCheck } = require('../services/dynamics-service')
 
 module.exports = {
   method: 'GET',
@@ -6,8 +6,11 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
-        const checkStatus = await patchPackingListCheck(request.query.applicationId, request.query.isParsed)
-        return h.response(checkStatus).code(200)
+        let checkStatus
+        if (request.query.applicationId || (request.query.applicationId !== '')) {
+          checkStatus = await patchPackingListCheck(request.query.applicationId, request.query.isParsed)
+        }
+          return h.response(checkStatus).code(200)
       } catch (err) {
         console.error('Error running upsert: ', err)
       }
