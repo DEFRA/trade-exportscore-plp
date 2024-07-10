@@ -2,11 +2,13 @@ const Joi = require('joi')
 const path = require('path')
 const mqConfig = require('./mq-config')
 const dbConfig = require('./database-config')
+const dynamicsConfig = require('./dynamics-config')
 const { development, production, test } = require('./constants').environments
+const schemaDefaultPort = 3004
 
 // Define config schema
 const schema = Joi.object({
-  port: Joi.number().default(3004),
+  port: Joi.number().default(schemaDefaultPort),
   env: Joi.string().valid(development, test, production).default(development)
 })
 
@@ -36,6 +38,7 @@ value.isProd = value.env === production
 value.dbConfig = dbConfig
 value.plpSubscription = mqConfig.plpSubscription
 value.parsedQueue = mqConfig.parsedQueue
+value.dynamicsConfig = dynamicsConfig
 
 value.plDir = path.join(process.cwd(), '/app/packing-lists/')
 
