@@ -11,7 +11,7 @@ module.exports = {
         if (request.query.applicationId || (request.query.applicationId !== '')) {
           checkStatus = await patchPackingListCheck(request.query.applicationId, request.query.isParsed)
         }
-          return h.response(checkStatus).code(StatusCodes.OK)
+        return h.response(checkStatus).code(StatusCodes.OK)
       } catch (err) {
         console.error('Error running upsert: ', err)
       }
