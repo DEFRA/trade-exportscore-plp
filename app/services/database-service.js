@@ -16,7 +16,7 @@ module.exports = (() => {
   fs.readdirSync(modelPath)
     .filter((file) => {
       return (
-        file.startsWith('.') &&
+        !(file.startsWith('.')) &&
         file !== 'index.js' &&
         file.endsWith('.js')
       )
