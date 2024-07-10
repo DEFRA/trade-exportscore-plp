@@ -4,6 +4,7 @@ const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
 const { patchPackingListCheck } = require('../services/dynamics-service')
 const MatcherResult = require('../services/matches-result')
+const { StatusCodes } = require('http-status-codes')
 
 module.exports = {
   method: 'GET',
@@ -60,6 +61,6 @@ module.exports = {
         console.error(err)
       }
     }
-    return h.response(parsedPackingList).code(200)
+    return h.response(parsedPackingList).code(StatusCodes.OK)
   }
 }
