@@ -1,7 +1,8 @@
 const routes = [].concat(
   require('../routes/non-ai'),
   require('../routes/healthy'),
-  require('../routes/healthz')
+  require('../routes/healthz'),
+  require('../routes/upsert-idcoms')
 )
 
 module.exports = {

@@ -2,7 +2,7 @@ const config = require('../config')
 const excelToJson = require('convert-excel-to-json')
 const parserService = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
-const { sendParsed } = require('../../app/messaging/send-parsed-message')
+const { patchPackingListCheck } = require('../services/dynamics-service')
 const MatcherResult = require('../services/matches-result')
 const { StatusCodes } = require('http-status-codes')
 
@@ -52,10 +52,11 @@ module.exports = {
     }
 
     if (isParsed) {
-      const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString()
+      const randomInt = Math.floor(Math.random() * (10000000 - 1 + 1) + 1).toString() // TODO replace with application id from ehco
       await createPackingList(parsedPackingList, randomInt)
       try {
-        await sendParsed(parsedPackingList.business_checks)
+        const checkStatus = await patchPackingListCheck(process.env.DYNAMICS_APPLICATION_ID, true) // TODO replace with application id from ehco
+        console.log('Packing list check upsert to IDCOMS with status ', checkStatus)
       } catch (err) {
         console.error(err)
       }
