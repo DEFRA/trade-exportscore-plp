@@ -1,6 +1,7 @@
 const { findParser } = require('../../app/services/parser-service')
 const { createStorageAccountClient, getXlsPackingListFromBlob } = require('../../app/services/storage-account')
 const { createPackingList } = require('../packing-list')
+const { patchPackingListCheck } = require('../services/dynamics-service')
 
 async function processPlpMessage (message, receiver) {
   try {
@@ -13,7 +14,7 @@ async function processPlpMessage (message, receiver) {
 
     if (parsed.isParsed) {
       await createPackingList(parsed.parsedPackingList, message.body.application_id)
-      // TODO upsert idcoms
+      await patchPackingListCheck(message.body.application_id, parsed.isParsed)
     }
   } catch (err) {
     console.error('Unable to process message:', err)
