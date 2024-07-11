@@ -45,8 +45,10 @@ async function patchPackingListCheck (applicationId, isParsed) {
       },
       body: JSON.stringify({ rms_automatedpackinglistcheck: outcome })
     })
+    const status = (await response).status
+    console.info(`Upsert ${applicationId} with outcome ${isParsed}, status ${status}`)
 
-    return ((await response).status)
+    return status
   } catch (error) {
     console.error(error.message)
     return error.message
