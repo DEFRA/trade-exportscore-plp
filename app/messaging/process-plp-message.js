@@ -1,5 +1,5 @@
-const { findParser } = require('../../app/services/parser-service')
-const { createStorageAccountClient, getXlsPackingListFromBlob } = require('../../app/services/storage-account')
+const { findParser } = require('../services/parser-service')
+const { createStorageAccountClient, getXlsPackingListFromBlob } = require('../services/storage-account')
 const { createPackingList } = require('../packing-list')
 const { patchPackingListCheck } = require('../services/dynamics-service')
 
