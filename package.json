@@ -1,6 +1,6 @@
 {
   "name": "trade-exportscore-plp",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "",
   "homepage": "github.com?owner=defra&repo=trade-exportscore-plp&organization=defra",
   "main": "app/index.js",
@@ -19,6 +19,7 @@
   "contributors": [],
   "license": "OGL-UK-3.0",
   "dependencies": {
+    "@azure/storage-blob": "^12.23.0",
     "@azure/identity": "^4.2.1",
     "@hapi/hapi": "21.3.2",
     "adp-messaging": "^2.9.0",

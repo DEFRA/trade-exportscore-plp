@@ -1,5 +1,9 @@
 const config = require('../config')
 const dsConfig = config.dynamicsConfig
+const approvalStatus = {
+  Approved: 179640000,
+  Rejected: 179640001
+}
 
 async function bearerTokenRequest () {
   try {
@@ -30,8 +34,8 @@ async function bearerTokenRequest () {
 
 async function patchPackingListCheck (applicationId, isParsed) {
   const token = 'Bearer ' + await bearerTokenRequest()
-  const url = dsConfig.dynamicsUrl + '/api/data/v9.1/trd_exportapplications(trd_applicationreference=\'' + applicationId + '\')'
-  const outcome = isParsed ? 179640000 : 179640001
+  const url = `${dsConfig.dynamicsUrl}/api/data/v9.1/trd_exportapplications(trd_applicationreference='${applicationId}'`
+  const outcome = isParsed ? approvalStatus.Approved : approvalStatus.Rejected
   try {
     const response = fetch(encodeURI(url), {
       method: 'PATCH',
@@ -41,8 +45,10 @@ async function patchPackingListCheck (applicationId, isParsed) {
       },
       body: JSON.stringify({ rms_automatedpackinglistcheck: outcome })
     })
+    const status = (await response).status
+    console.info(`Upsert ${applicationId} with outcome ${isParsed}, status ${status}`)
 
-    return ((await response).status)
+    return status
   } catch (error) {
     console.error(error.message)
     return error.message
