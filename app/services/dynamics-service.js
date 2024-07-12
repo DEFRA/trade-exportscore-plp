@@ -34,7 +34,7 @@ async function bearerTokenRequest () {
 
 async function patchPackingListCheck (applicationId, isParsed) {
   const token = 'Bearer ' + await bearerTokenRequest()
-  const url = `${dsConfig.dynamicsUrl}/api/data/v9.1/trd_exportapplications(trd_applicationreference='${applicationId}'`
+  const url = `${dsConfig.dynamicsUrl}/api/data/v9.1/trd_exportapplications(trd_applicationreference='${applicationId}')`
   const outcome = isParsed ? approvalStatus.Approved : approvalStatus.Rejected
   try {
     const response = fetch(encodeURI(url), {
