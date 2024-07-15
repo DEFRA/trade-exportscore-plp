@@ -47,6 +47,10 @@ module.exports = {
       console.log('Packing list matches Tesco Model 2 with filename: ', filename)
       parsedPackingList = parserService.parseTescoModel2(result.Sheet2)
       isParsed = true
+    } else if (parserService.matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
+      console.log('Packing list matches Fowler Welch with filename: ', filename)
+      parsedPackingList = parserService.parseFowlerWelch(result['Customer Order'])
+      isParsed = true
     } else {
       console.info('Failed to parse packing list with filename: ', filename)
     }
