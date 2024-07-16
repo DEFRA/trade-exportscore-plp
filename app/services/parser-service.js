@@ -336,9 +336,9 @@ function matchesFowlerWelch (packingListJson, filename) {
       E: 'Meursing code',
       F: 'Description of goods',
       G: 'Country of Origin',
-      H: 'No. of pkgs \r\n(1547)', // contains
+      H: 'No. of pkgs \r\n(1547)',
       I: 'Type of pkgs',
-      J: 'Total Gross Weight \r\n(11015.700kgs)', // contains
+      J: 'Total Gross Weight \r\n(11015.700kgs)',
       K: 'Total Net Weight \r\n(7921.700kgs)',
       L: 'Total Line Value \r\n(41662.4)',
       M: 'NIIRMS Dispatch number',
@@ -349,7 +349,15 @@ function matchesFowlerWelch (packingListJson, filename) {
       R: 'Cert Number'
     }
 
-    if (JSON.stringify(packingListJson['Customer Order'][44]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
+    const normalize = (str) => str.replace(/\(\d+(\.\d+)?[a-zA-Z]*\)/g, '(*)') 
+
+    const originalHeader = packingListJson['Customer Order'][44]
+    for (const key in header) {
+      if (normalize(header[key]) !== normalize(originalHeader[key])) {
+        return MatcherResult.WRONG_HEADER
+      }
+    }
+    return MatcherResult.CORRECT
   } catch (err) {
     return MatcherResult.GENERIC_ERROR
   }

@@ -882,8 +882,6 @@ describe('parseTjmorris', () => {
   })
 })
 
-// FOWLER
-
 describe('matchesFowlerWelch', () => {
   test('returns generic error for empty json', () => {
     const packingListJson = { }
@@ -955,10 +953,10 @@ describe('matchesFowlerWelch', () => {
     expect(result).toBe(MatcherResult.WRONG_HEADER)
   })
 
-  test('returns true', () => {
+  test('returns true', () => { // ??
     const filename = 'packinglist.xlsx'
     const packingListJson = {
-      'Customer Order': [ // change plists to that
+      'Customer Order': [
         {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
         {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
         {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
@@ -969,13 +967,14 @@ describe('matchesFowlerWelch', () => {
           B: 'Product code',
           C: 'Commodity code',
           D: 'Online Check',
+          E: 'Meursing code',
           F: 'Description of goods',
           G: 'Country of Origin',
-          H: 'No. of pkgs',
+          H: 'No. of pkgs \r\n(1547)',
           I: 'Type of pkgs',
-          J: 'Total Gross Weight',
-          K: 'Total Net Weight',
-          L: 'Total Line Value',
+          J: 'Total Gross Weight \r\n(11015.700kgs)',
+          K: 'Total Net Weight \r\n(7921.700kgs)',
+          L: 'Total Line Value \r\n(41662.4)',
           M: 'NIIRMS Dispatch number',
           N: 'Treatment Type (Chilled /Ambient)',
           O: 'NIRMS Lane (R/G)',
@@ -997,28 +996,75 @@ describe('parseFowlerWelch', () => {
   test('parses json', () => {
     const packingListJson =
     [
+      {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+      {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+      {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+      {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+      {}, {}, {}, {},
       {
+        A: 'Item',
+        B: 'Product code',
         C: 'Commodity code',
+        D: 'Online Check',
+        E: 'Meursing code',
         F: 'Description of goods',
-        H: 'No. of pkgs',
-        K: 'Total Net Weight'
+        G: 'Country of Origin',
+        H: 'No. of pkgs \r\n(1547)',
+        I: 'Type of pkgs',
+        J: 'Total Gross Weight \r\n(11015.700kgs)',
+        K: 'Total Net Weight \r\n(7921.700kgs)',
+        L: 'Total Line Value \r\n(41662.4)',
+        M: 'NIIRMS Dispatch number',
+        N: 'Treatment Type (Chilled /Ambient)',
+        O: 'NIRMS Lane (R/G)',
+        P: 'Secondary Qty',
+        Q: 'Cert Type Req',
+        R: 'Cert Number'
       },
       {
+        A: '1',
+        B: '1582084',
         C: '0702000007',
+        D: 'Check - 0702000007',
+        E: '',
         F: 'Nightingale Cherry Tomatoes TS 42x250g',
+        G: 'Morocco',
         H: '32',
-        K: '336'
+        I: 'Cases',
+        J: '400',
+        K: '336',
+        L: '712.32',
+        M: 'RMS-GB-000216-004',
+        N: 'Chilled',
+        O: 'G',
+        P: '',
+        Q: '',
+        R: ''
 
       },
       {
+        A: '2',
+        B: '3153779',
         C: '0702000007',
+        D: 'Check - 0702000007',
+        E: '',
         F: 'Cherry Tomatoes TS Core 30x300G',
+        G: 'Morocco',
         H: '39',
-        K: '351'
+        I: 'Cases',
+        J: '429',
+        K: '351',
+        L: '889.2',
+        M: 'RMS-GB-000216-004',
+        N: 'Chilled',
+        O: 'G',
+        P: '',
+        Q: '',
+        R: ''
       }
     ]
 
-    const result = parserService.parseTjmorris(packingListJson)
+    const result = parserService.parseFowlerWelch(packingListJson)
     expect(result.registration_approval_number).toBe(packingListJson[45].M)
     expect(result.items).toHaveLength(2)
     expect(result.items[0].description).toBe(packingListJson[45].F)
