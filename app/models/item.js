@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     commodityCode: DataTypes.STRING,
     numberOfPackages: DataTypes.INTEGER,
     totalWeight: DataTypes.FLOAT,
-    applicationId: DataTypes.INTEGER
+    applicationId: DataTypes.BIGINT
   }, {
     freezeTableName: true
   })
