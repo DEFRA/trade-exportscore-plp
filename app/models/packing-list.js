@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const PackingList = sequelize.define('packingList', {
-    applicationId: { type: DataTypes.INTEGER, primaryKey: true },
+    applicationId: { type: DataTypes.BIGINT, primaryKey: true },
     registrationApprovalNumber: DataTypes.STRING,
     allRequiredFieldsPresent: DataTypes.BOOLEAN
   }, {
