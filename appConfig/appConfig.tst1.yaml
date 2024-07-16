@@ -1,6 +1,6 @@
 - key: MESSAGE_QUEUE_HOST
-  value: "TSTADPINFSB3401.servicebus.windows.net"
+  value: "TSTADPINFSB1401.servicebus.windows.net"
 - key: POSTGRES_HOST
-  value: "tstadpdbsps3401.postgres.database.azure.com"
+  value: "tstadpdbsps1401.postgres.database.azure.com"
 - key: POSTGRES_USERNAME
-  value: "tstadpinfmi3401-trade-exportscore-plp"   
+  value: "tstadpinfmi1401-trade-exportscore-plp"   

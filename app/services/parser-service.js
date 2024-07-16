@@ -1,5 +1,40 @@
 const MatcherResult = require('../services/matches-result')
 
+function findParser (result, filename) {
+  let parsedPackingList = failedParser()
+  let isParsed = false
+
+  if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches TJ Morris with filename: ', filename)
+    parsedPackingList = parseTjmorris(result.Sheet1)
+    isParsed = true
+  } else if (matchesAsda(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Asda with filename: ', filename)
+    parsedPackingList = parseAsda(result.PackingList_Extract)
+    isParsed = true
+  } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Sainsburys with filename: ', filename)
+    parsedPackingList = parseSainsburys(result.Sheet1)
+    isParsed = true
+  } else if (matchesBandM(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches BandM with filename: ', filename)
+    parsedPackingList = parseBandM(result.Sheet1)
+    isParsed = true
+  } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Tesco Model 1 with filename: ', filename)
+    parsedPackingList = parseTescoModel1(result.Input_Data_Sheet)
+    isParsed = true
+  } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Tesco Model 2 with filename: ', filename)
+    parsedPackingList = parseTescoModel2(result.Sheet2)
+    isParsed = true
+  } else {
+    console.info('Failed to parse packing list with filename: ', filename)
+  }
+
+  return { packingList: parsedPackingList, isParsed }
+}
+
 function matchesBandM (packingListJson, filename) {
   try {
     // check for correct extension
@@ -393,5 +428,6 @@ module.exports = {
   parseTescoModel1,
   parseTescoModel2,
   matchesFowlerWelch,
-  parseFowlerWelch
+  parseFowlerWelch,
+  findParser
 }

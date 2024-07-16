@@ -1,10 +1,7 @@
 const config = require('../config')
 const excelToJson = require('convert-excel-to-json')
-const parserService = require('../services/parser-service')
+const { findParser } = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
-const { patchPackingListCheck } = require('../services/dynamics-service')
-const MatcherResult = require('../services/matches-result')
-const { StatusCodes } = require('http-status-codes')
 
 module.exports = {
   method: 'GET',
@@ -13,9 +10,7 @@ module.exports = {
     const filename = config.plDir + _request.query.filename
     let result = {}
     try {
-      result = excelToJson({
-        sourceFile: filename
-      })
+      result = excelToJson({ sourceFile: filename })
     } catch (err) {
       console.error(err)
     }

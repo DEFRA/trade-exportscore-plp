@@ -11,7 +11,7 @@ describe('Non-ai test', () => {
   test('GET /non-ai route returns 200', async () => {
     const options = {
       method: 'GET',
-      url: '/non-ai'
+      url: '/non-ai?filename=abc&isParsed=true'
     }
 
     const response = await server.inject(options)

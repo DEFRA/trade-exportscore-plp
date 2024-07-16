@@ -4,3 +4,5 @@
   value: "sndadpdbsps3401.postgres.database.azure.com"
 - key: POSTGRES_USERNAME
   value: "sndadpinfmi3401-trade-exportscore-plp"   
+- key: STORAGE_ACCOUNT_NAME
+  value: "tradeplp"
