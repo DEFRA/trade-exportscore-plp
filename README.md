@@ -3,9 +3,10 @@
 ## Prerequisites
 
 - Docker
-- Docker Compose
+- Docker Compose (installed when Docker Desktop is installed - no separate installation is required).
 
 Optional:
+
 - Kubernetes
 - Helm
 
@@ -22,7 +23,6 @@ Container images are built using Docker Compose, with the same images used to ru
 When using the Docker Compose files in development the local `app` folder will
 be mounted on top of the `app` folder within the Docker container, hiding the CSS files that were generated during the Docker build.  For the site to render correctly locally `npm run build` must be run on the host system.
 
-
 By default, the start script will build (or rebuild) images so there will
 rarely be a need to build images manually. However, this can be achieved
 through the Docker Compose
@@ -37,13 +37,12 @@ docker-compose build
 
 Use Docker Compose to run service locally.
 
-* run migrations
-  * `docker-compose -f docker-compose.migrate.yaml run --rm database-up`
-* start
-  * `docker-compose up`
-* stop
-  * `docker-compose down` or CTRL-C
-
+- run migrations
+  - `docker-compose -f docker-compose.migrate.yaml run --rm database-up`
+- start
+  - `docker-compose up`
+- stop
+  - `docker-compose down` or CTRL-C
 
 ## Test structure
 
@@ -68,11 +67,14 @@ scripts/test
 scripts/test -w
 ```
 
+In addition to the above, please refer to the [Additional Information](./additional-info.md) file for extensions that make running / debugging a single test easier than the above method.
+
 ## CI & CD Pipeline
 
 This service uses the [ADP Common Pipelines](https://github.com/DEFRA/adp-pipeline-common) for Builds and Deployments.
 
 ### AppConfig - KeyVault References
+
 If the application uses `keyvault references` in `appConfig.env.yaml`, please make sure the variable to be added to keyvault is created in ADO Library variable groups and the reference for the variable groups and variables are provided in `build.yaml` like below.
 
 ```
