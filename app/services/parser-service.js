@@ -1,7 +1,7 @@
 const MatcherResult = require('../services/matches-result')
 
-const CUSTOMER_ORDER = 'Customer Order';
-const COUNTRY_OF_ORIGIN = 'Country of Origin';
+const CUSTOMER_ORDER = 'Customer Order'
+const COUNTRY_OF_ORIGIN = 'Country of Origin'
 
 function findParser (result, filename) {
   let parsedPackingList = failedParser()
@@ -33,7 +33,7 @@ function findParser (result, filename) {
     isParsed = true
   } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Fowler Welch with filename: ', filename)
-    parsedPackingList = parseFowlerWelch(result.CUSTOMER_ORDER)
+    parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER])
     isParsed = true
   } else {
     console.info('Failed to parse packing list with filename: ', filename)
@@ -365,7 +365,7 @@ function matchesFowlerWelch (packingListJson, filename) {
     if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson.CUSTOMER_ORDER[establishmentNumberRow].M
+    const establishmentNumber = packingListJson[CUSTOMER_ORDER][establishmentNumberRow].M
     const regex = /^RMS-GB-000216-\d{3}$/
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
@@ -392,12 +392,12 @@ function matchesFowlerWelch (packingListJson, filename) {
       Q: 'Cert Type Req',
       R: 'Cert Number'
     }
-    
-    const originalHeader = packingListJson.CUSTOMER_ORDER[headerRowNumber];
-    
+
+    const originalHeader = packingListJson[CUSTOMER_ORDER][headerRowNumber]
+
     for (const key in header) {
       if (!originalHeader[key].startsWith(header[key])) {
-        return MatcherResult.WRONG_HEADER;
+        return MatcherResult.WRONG_HEADER
       }
     }
     return MatcherResult.CORRECT
