@@ -355,12 +355,14 @@ function parseTjmorris (packingListJson) {
 
 function matchesFowlerWelch (packingListJson, filename) {
   try {
+    const headerRowNumber = 44
+    const establishmentNumberRow = 45
     // check for correct extension
     const fileExtension = filename.split('.').pop().toLowerCase()
     if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson['Customer Order'][45].M
+    const establishmentNumber = packingListJson['Customer Order'][establishmentNumberRow].M
     const regex = /^RMS-GB-000216-\d{3}$/
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
@@ -387,8 +389,8 @@ function matchesFowlerWelch (packingListJson, filename) {
       Q: 'Cert Type Req',
       R: 'Cert Number'
     }
-
-    const originalHeader = packingListJson['Customer Order'][44];
+    
+    const originalHeader = packingListJson['Customer Order'][headerRowNumber];
     
     for (const key in header) {
       if (!originalHeader[key].startsWith(header[key])) {
@@ -402,8 +404,9 @@ function matchesFowlerWelch (packingListJson, filename) {
 }
 
 function parseFowlerWelch (packingListJson) {
-  const establishmentNumber = packingListJson[45].M
-  const packingListContents = packingListJson.slice(45).map(col => ({
+  const establishmentNumberRow = 45
+  const establishmentNumber = packingListJson[establishmentNumberRow].M
+  const packingListContents = packingListJson.slice(establishmentNumberRow).map(col => ({
     description: col.F,
     nature_of_products: null,
     type_of_treatment: col.N,
