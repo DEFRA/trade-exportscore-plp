@@ -1,5 +1,8 @@
 const MatcherResult = require('../services/matches-result')
 
+const CUSTOMER_ORDER = 'Customer Order';
+const COUNTRY_OF_ORIGIN = 'Country of Origin';
+
 function findParser (result, filename) {
   let parsedPackingList = failedParser()
   let isParsed = false
@@ -30,7 +33,7 @@ function findParser (result, filename) {
     isParsed = true
   } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Fowler Welch with filename: ', filename)
-    parsedPackingList = parseFowlerWelch(result['Customer Order'])
+    parsedPackingList = parseFowlerWelch(result.CUSTOMER_ORDER)
     isParsed = true
   } else {
     console.info('Failed to parse packing list with filename: ', filename)
@@ -153,7 +156,7 @@ function matchesTescoModel2 (packingListJson, filename) {
       D: 'Online Check',
       E: 'Meursing code',
       F: 'Description of goods',
-      G: 'Country of Origin',
+      G: COUNTRY_OF_ORIGIN,
       H: 'No. of pkgs',
       I: 'Type of pkgs',
       J: 'Total Gross Weight',
@@ -325,7 +328,7 @@ function matchesTjmorris (packingListJson, filename) {
       Q: 'Gross Weight Kg',
       R: 'Net Weight Kg',
       S: 'Cost',
-      T: 'Country of Origin',
+      T: COUNTRY_OF_ORIGIN,
       U: 'VAT Status',
       V: 'SPS',
       W: 'Consignment ID',
@@ -362,7 +365,7 @@ function matchesFowlerWelch (packingListJson, filename) {
     if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson['Customer Order'][establishmentNumberRow].M
+    const establishmentNumber = packingListJson.CUSTOMER_ORDER[establishmentNumberRow].M
     const regex = /^RMS-GB-000216-\d{3}$/
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
@@ -376,7 +379,7 @@ function matchesFowlerWelch (packingListJson, filename) {
       D: 'Online Check',
       E: 'Meursing code',
       F: 'Description of goods',
-      G: 'Country of Origin',
+      G: COUNTRY_OF_ORIGIN,
       H: 'No. of pkgs \r\n(1547)',
       I: 'Type of pkgs',
       J: 'Total Gross Weight \r\n(11015.700kgs)',
@@ -390,7 +393,7 @@ function matchesFowlerWelch (packingListJson, filename) {
       R: 'Cert Number'
     }
     
-    const originalHeader = packingListJson['Customer Order'][headerRowNumber];
+    const originalHeader = packingListJson.CUSTOMER_ORDER[headerRowNumber];
     
     for (const key in header) {
       if (!originalHeader[key].startsWith(header[key])) {
