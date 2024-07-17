@@ -881,3 +881,118 @@ describe('parseTjmorris', () => {
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].R)
   })
 })
+
+describe('matchesNisa', () => {
+  test('returns true', () => {
+    const filename = 'PackingList.xlsx'
+    const packingListJson = {
+      Something: [
+        {
+          A: 'RMS_ESTABLISHMENT_NO',
+          I: 'PRODUCT_TYPE_CATEGORY',
+          K: 'PART_NUMBER_DESCRIPTION',
+          L: 'TARIFF_CODE_EU',
+          M: 'PACKAGES',
+          O: 'NET_WEIGHT_TOTAL'
+        },
+        {
+          A: 'RMS-GB-000025-009'
+        }
+      ]
+    }
+    const result = parserService.matchesNisa(packingListJson, filename)
+    expect(result).toBe(MatcherResult.CORRECT)
+  })
+
+  test('returns generic error for empty json', () => {
+    const packingListJson = {}
+    const filename = 'packinglist.xlsx'
+    const result = parserService.matchesNisa(packingListJson, filename)
+    expect(result).toBe(MatcherResult.GENERIC_ERROR)
+  })
+
+  test('returns wrong establishment number for missing establishment number', () => {
+    const packingListJson = {
+      Something: [
+        {},
+        {
+          A: 'INCORRECT'
+        }
+      ]
+    }
+    const filename = 'packinglist.xlsx'
+    const result = parserService.matchesNisa(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
+  })
+
+  test('return wrong extensions for incorrect file extension', () => {
+    const filename = 'packinglist.pdf'
+    const packingListJson = {}
+    const result = parserService.matchesNisa(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
+  })
+
+  test('return wrong header for incorrect header values', () => {
+    const filename = 'packinglist.xlsx'
+    const packingListJson = {
+      Something: [
+        {
+          A: 'NOT',
+          B: 'CORRECT',
+          C: 'HEADER'
+        },
+        {
+          A: 'RMS-GB-000025-009'
+        }
+      ]
+    }
+    const result = parserService.matchesNisa(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_HEADER)
+  })
+})
+
+describe('parseNisa', () => {
+  test('parses json', () => {
+    const packingListJson =
+    [
+      {
+        A: 'RMS_ESTABLISHMENT_NO',
+        I: 'PRODUCT_TYPE_CATEGORY',
+        K: 'PART_NUMBER_DESCRIPTION',
+        L: 'TARIFF_CODE_EU',
+        M: 'PACKAGES',
+        O: 'NET_WEIGHT_TOTAL'
+      },
+      {
+        A: 'RMS-GB-000025-001',
+        I: 'PRODUCT_TYPE_CATEGORY675 - CHEESE - C',
+        K: 'DAIRYLEA DUNKERS JUMBO PM80P',
+        L: '2005995090',
+        M: 2,
+        O: 2.5
+      },
+      {
+        A: 'RMS-GB-000025-001',
+        I: '900 - VEGETABLES PREPACK-C',
+        K: 'CO OP BROCCOLI',
+        L: '0403209300',
+        M: 1,
+        O: 2
+      }
+    ]
+
+    const result = parserService.parseNisa(packingListJson)
+    expect(result.registration_approval_number).toBe(packingListJson[1].A)
+    expect(result.items).toHaveLength(2)
+    expect(result.items[0].description).toBe(packingListJson[1].K)
+    expect(result.items[1].description).toBe(packingListJson[2].K)
+    expect(result.items[0].nature_of_products).toBe(packingListJson[1].I)
+    expect(result.items[1].nature_of_products).toBe(packingListJson[2].I)
+    expect(result.items[0].commodity_code).toBe(packingListJson[1].L)
+    expect(result.items[1].commodity_code).toBe(packingListJson[2].L)
+    expect(result.items[0].number_of_packages).toBe(packingListJson[1].M)
+    expect(result.items[1].number_of_packages).toBe(packingListJson[2].M)
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].O)
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].O)
+  })
+})

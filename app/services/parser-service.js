@@ -28,6 +28,10 @@ function findParser (result, filename) {
     console.info('Packing list matches Tesco Model 2 with filename: ', filename)
     parsedPackingList = parseTescoModel2(result.Sheet2)
     isParsed = true
+  } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Nisa with filename: ', filename)
+    parsedPackingList = parseNisa(result[Object.keys(result)[0]])
+    isParsed = true
   } else {
     console.info('Failed to parse packing list with filename: ', filename)
   }
@@ -349,6 +353,55 @@ function parseTjmorris (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
+function matchesNisa (packingListJson, filename) {
+  const establishmentNumberRow = 1
+  try {
+    // check for correct extension
+    const fileExtension = filename.split('.').pop()
+    if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
+
+    // check for correct establishment number
+    const sheet = Object.keys(packingListJson)[0]
+    const establishmentNumber = packingListJson[sheet][establishmentNumberRow].A
+    const regex = /^RMS-GB-000025-\d{3}$/
+    if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
+
+    // check for header values
+    const header = {
+      A: 'RMS_ESTABLISHMENT_NO',
+      I: 'PRODUCT_TYPE_CATEGORY',
+      K: 'PART_NUMBER_DESCRIPTION',
+      L: 'TARIFF_CODE_EU',
+      M: 'PACKAGES',
+      O: 'NET_WEIGHT_TOTAL'
+    }
+
+    for (const key in header) {
+      if (!packingListJson[sheet][0] || packingListJson[sheet][0][key] !== header[key]) {
+        return MatcherResult.WRONG_HEADER
+      }
+    }
+
+    return MatcherResult.CORRECT
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR
+  }
+}
+
+function parseNisa (packingListJson) {
+  const establishmentNumber = packingListJson[1].A
+  const packingListContents = packingListJson.slice(1).map(col => ({
+    description: col.K,
+    nature_of_products: col.I,
+    type_of_treatment: null,
+    commodity_code: col.L,
+    number_of_packages: col.M,
+    total_net_weight_kg: col.O
+  }))
+
+  return combineParser(establishmentNumber, packingListContents, true)
+}
+
 module.exports = {
   matchesBandM,
   matchesAsda,
@@ -364,5 +417,7 @@ module.exports = {
   matchesTescoModel2,
   parseTescoModel1,
   parseTescoModel2,
-  findParser
+  findParser,
+  matchesNisa,
+  parseNisa
 }
