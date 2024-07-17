@@ -28,6 +28,10 @@ function findParser (result, filename) {
     console.info('Packing list matches Tesco Model 2 with filename: ', filename)
     parsedPackingList = parseTescoModel2(result.Sheet2)
     isParsed = true
+  } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Fowler Welch with filename: ', filename)
+    parsedPackingList = parseFowlerWelch(result['Customer Order'])
+    isParsed = true
   } else {
     console.info('Failed to parse packing list with filename: ', filename)
   }
