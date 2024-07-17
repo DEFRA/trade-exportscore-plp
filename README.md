@@ -28,7 +28,7 @@ rarely be a need to build images manually. However, this can be achieved
 through the Docker Compose
 [build](https://docs.docker.com/compose/reference/build/) command:
 
-```
+```text
 # Build container images
 docker-compose build
 ```
@@ -59,7 +59,7 @@ arguments to the test script.
 
 Examples:
 
-```
+```text
 # Run all tests
 scripts/test
 
@@ -77,7 +77,7 @@ This service uses the [ADP Common Pipelines](https://github.com/DEFRA/adp-pipeli
 
 If the application uses `keyvault references` in `appConfig.env.yaml`, please make sure the variable to be added to keyvault is created in ADO Library variable groups and the reference for the variable groups and variables are provided in `build.yaml` like below.
 
-```
+```text
 variableGroups:
     - trade-exportscore-plp-snd1
     - trade-exportscore-plp-snd2

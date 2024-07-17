@@ -14,3 +14,18 @@
 | markdownlint | davidanson.vscode-markdownlint | This extension helps ensure any Markdown files follow the industry recommendations. |
 | WSL | ms-vscode-remote.remote-wsl | This extension helps ensure any Markdown files follow the industry recommendations. |
 | YAML | redhat.vscode-yaml | This extension helps when editing YAML / YML files - might make the ADO one above mute but I have both so am mentioning for safety. |
+
+## GPG Commit Signing - Additional Information
+
+[Setting Up in WSL](https://blog.jmorbegoso.com/post/configure-github-gpg-key-in-windows-and-wsl/) - may be of help if the 2 links in the ADO Wiki do not help.
+
+WSL configuration should be returned from ```git config --global --list``` with similar results to the below:
+
+```text
+user.email=your.capgemini.email.address@capgemini.com
+user.name=Your Name
+user.signingkey=either your email address (or the Alpha-numeric name depending on how you configured)
+gpg.program=/mnt/c/Program Files (x86)/gnupg/bin/gpg.exe (or /mnt/c/Users/username/AppData/Local/Programs/GnuPG/bin/gpg.exe)
+commit.gpgsign=true
+tag.gpgsign=true
+```
