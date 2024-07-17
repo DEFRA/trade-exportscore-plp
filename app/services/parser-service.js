@@ -384,12 +384,11 @@ function matchesFowlerWelch (packingListJson, filename) {
       R: 'Cert Number'
     }
 
-    const normalize = (str) => str.replace(/\(\d+(\.\d+)?[a-zA-Z]*\)/g, '(*)') 
-
-    const originalHeader = packingListJson['Customer Order'][44]
+    const originalHeader = packingListJson['Customer Order'][44];
+    
     for (const key in header) {
-      if (normalize(header[key]) !== normalize(originalHeader[key])) {
-        return MatcherResult.WRONG_HEADER
+      if (!originalHeader[key].startsWith(header[key])) {
+        return MatcherResult.WRONG_HEADER;
       }
     }
     return MatcherResult.CORRECT
