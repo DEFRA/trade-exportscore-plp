@@ -4,7 +4,7 @@
 
 | Name | VS Code Id | Description |
 |------|------------|-------------|
-| Jest | vscode-jest | Adds "Run/Debug" intellisence links in the actual test file. |
+| Jest | vscode-jest | Adds "Run/Debug" intellisense links in the actual test file. |
 | Jest Runner | vscode-jest | Adds the "Run AlL" to the Test Explorer Extension (if installed) |
 | Azure Pipelines | ms-azure-devops.azure-pipelines | Adds additional support for formatting and syntax checking whilst editing ADO Pipelines... helpful even though we're using GitHub. |
 | Docker | ms-azuretools.vscode-docker | Mentioned elsewhere as the desktop tool - this is the VS-Code extension for easier consumption of Docker. |
