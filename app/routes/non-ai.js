@@ -2,6 +2,7 @@ const config = require('../config')
 const excelToJson = require('convert-excel-to-json')
 const { findParser } = require('../services/parser-service')
 const { createPackingList } = require('../packing-list/index')
+const { StatusCodes } = require('http-status-codes')
 
 module.exports = {
   method: 'GET',
@@ -21,6 +22,6 @@ module.exports = {
       await createPackingList(parsed.packingList, randomInt)
     }
 
-    return h.response(parsed.packingList).code(200)
+    return h.response(parsed.packingList).code(StatusCodes.OK)
   }
 }

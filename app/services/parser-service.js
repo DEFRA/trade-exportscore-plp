@@ -1,5 +1,8 @@
 const MatcherResult = require('../services/matches-result')
 
+const CUSTOMER_ORDER = 'Customer Order'
+const COUNTRY_OF_ORIGIN = 'Country of Origin'
+
 function findParser (result, filename) {
   let parsedPackingList = failedParser()
   let isParsed = false
@@ -27,6 +30,10 @@ function findParser (result, filename) {
   } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Tesco Model 2 with filename: ', filename)
     parsedPackingList = parseTescoModel2(result.Sheet2)
+    isParsed = true
+  } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Fowler Welch with filename: ', filename)
+    parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER])
     isParsed = true
   } else {
     console.info('Failed to parse packing list with filename: ', filename)
@@ -149,7 +156,7 @@ function matchesTescoModel2 (packingListJson, filename) {
       D: 'Online Check',
       E: 'Meursing code',
       F: 'Description of goods',
-      G: 'Country of Origin',
+      G: COUNTRY_OF_ORIGIN,
       H: 'No. of pkgs',
       I: 'Type of pkgs',
       J: 'Total Gross Weight',
@@ -321,7 +328,7 @@ function matchesTjmorris (packingListJson, filename) {
       Q: 'Gross Weight Kg',
       R: 'Net Weight Kg',
       S: 'Cost',
-      T: 'Country of Origin',
+      T: COUNTRY_OF_ORIGIN,
       U: 'VAT Status',
       V: 'SPS',
       W: 'Consignment ID',
@@ -349,6 +356,71 @@ function parseTjmorris (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
+function matchesFowlerWelch (packingListJson, filename) {
+  try {
+    const headerRowNumber = 44
+    const establishmentNumberRow = 45
+    // check for correct extension
+    const fileExtension = filename.split('.').pop().toLowerCase()
+    if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson[CUSTOMER_ORDER][establishmentNumberRow].M
+    const regex = /^RMS-GB-000216-\d{3}$/
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
+    }
+
+    // check for header values
+    const header = {
+      A: 'Item',
+      B: 'Product code',
+      C: 'Commodity code',
+      D: 'Online Check',
+      E: 'Meursing code',
+      F: 'Description of goods',
+      G: COUNTRY_OF_ORIGIN,
+      H: 'No. of pkgs ',
+      I: 'Type of pkgs',
+      J: 'Total Gross Weight',
+      K: 'Total Net Weight',
+      L: 'Total Line Value',
+      M: 'NIIRMS Dispatch number',
+      N: 'Treatment Type (Chilled /Ambient)',
+      O: 'NIRMS Lane (R/G)',
+      P: 'Secondary Qty',
+      Q: 'Cert Type Req',
+      R: 'Cert Number'
+    }
+
+    const originalHeader = packingListJson[CUSTOMER_ORDER][headerRowNumber]
+
+    for (const key in header) {
+      if (!originalHeader[key].startsWith(header[key])) {
+        return MatcherResult.WRONG_HEADER
+      }
+    }
+    return MatcherResult.CORRECT
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR
+  }
+}
+
+function parseFowlerWelch (packingListJson) {
+  const establishmentNumberRow = 45
+  const establishmentNumber = packingListJson[establishmentNumberRow].M
+  const packingListContents = packingListJson.slice(establishmentNumberRow).map(col => ({
+    description: col.F,
+    nature_of_products: null,
+    type_of_treatment: col.N,
+    commodity_code: col.C,
+    number_of_packages: col.H,
+    total_net_weight_kg: col.K
+  }))
+
+  return combineParser(establishmentNumber, packingListContents, true)
+}
+
 module.exports = {
   matchesBandM,
   matchesAsda,
@@ -364,5 +436,7 @@ module.exports = {
   matchesTescoModel2,
   parseTescoModel1,
   parseTescoModel2,
+  matchesFowlerWelch,
+  parseFowlerWelch,
   findParser
 }
