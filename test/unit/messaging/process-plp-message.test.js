@@ -49,7 +49,7 @@ describe('processPlpMessage', () => {
   })
 
   test('should process a message', async () => {
-    const message = { body: { packing_list_blob: "https://example.com/path/doesnt/matter" } }
+    const message = { body: { packing_list_blob: 'https://example.com/path/doesnt/matter' } }
     await messageAction(message, receiver)
     expect(receiver.completeMessage).toHaveBeenCalled()
   })

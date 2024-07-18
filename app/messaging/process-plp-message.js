@@ -3,7 +3,7 @@ const { createStorageAccountClient, getXlsPackingListFromBlob } = require('../se
 const { createPackingList } = require('../packing-list')
 const { patchPackingListCheck } = require('../services/dynamics-service')
 
-async function processPlpMessage(message, receiver) {
+async function processPlpMessage (message, receiver) {
   try {
     await receiver.completeMessage(message)
     console.info('Received message: ', message.body)
