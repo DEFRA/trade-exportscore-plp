@@ -13,7 +13,7 @@ async function processPlpMessage (message, receiver) {
     const parsed = findParser(result, message.body.packing_list_blob)
 
     if (parsed.isParsed) {
-      await createPackingList(parsed.parsedPackingList, message.body.application_id)
+      await createPackingList(parsed.packingList, message.body.application_id)
       await patchPackingListCheck(message.body.application_id, parsed.isParsed)
     }
   } catch (err) {
