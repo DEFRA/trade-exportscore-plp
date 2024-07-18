@@ -15,11 +15,6 @@ async function processPlpMessage(message, receiver) {
     if (parsed.isParsed) {
       await createPackingList(parsed.packingList, message.body.application_id)
       await patchPackingListCheck(message.body.application_id, parsed.isParsed)
-    } else {
-      // This else branch is not required - parsing failure is handled in the parser.
-      // It is here to see if SonarCloud detects the additional code (and associated test) correctly.
-      // ToDo: REMOVE before PR
-      console.warn('Unable to process message: ', message.body.application_id)
     }
   } catch (err) {
     console.error('Unable to process message:', err)
