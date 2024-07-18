@@ -54,6 +54,21 @@ describe('processPlpMessage', () => {
     expect(receiver.completeMessage).toHaveBeenCalled()
   })
 
+  test('should log warning message when parser cannot parse', async () => {
+    // This test is not required - parsing failure is handled in the parser.
+    // It is here to see if SonarCloud detects the additional code (and associated test) correctly.
+    // ToDo: REMOVE before PR
+    findParser.mockImplementation(() => {
+      return {
+        isParsed: false
+      }
+    })
+    jest.spyOn(global.console, 'warn')
+    const message = { body: { application_id: "id-doesnt-matter" } }
+    await messageAction(message, receiver)
+    expect(console.warn).toHaveBeenCalled()
+  })
+
   test('handle error', async () => {
     const message = {
       body: {
