@@ -55,7 +55,8 @@ describe('patchPackingListCheck', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,
-        status: 200
+        status: 200,
+        json: () => Promise.resolve({ access_token: 'abc' })
       })
     )
     dynamicsService.bearerTokenRequest = jest.fn().mockResolvedValueOnce('abc')
