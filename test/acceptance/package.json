@@ -2,7 +2,7 @@
   "author": "Seymour Pattisson <seymour.pattisson@defra.gov.uk>",
   "license": "OGL-UK-3.0",
   "name": "trade-exportscore-plp-acceptance-tests",
-  "version": "1.1.0",
+  "version": "0.0.1",
   "description": "Acceptance tests for trade-exportscore-plp",
   "homepage": "github.com?owner=defra&repo=trade-exportscore-plp&organization=defra",
   "contributors": [],
