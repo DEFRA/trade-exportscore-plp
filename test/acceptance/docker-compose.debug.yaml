@@ -1,0 +1,3 @@
+services:
+  wdio-cucumber:
+    command: npm run test:debug

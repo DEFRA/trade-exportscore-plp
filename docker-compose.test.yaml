@@ -16,12 +16,12 @@ services:
     depends_on:
       - trade-exportscore-plp-postgres
     volumes:
-      - ./app:/home/node/app
-      - ./test:/home/node/test
-      - ./test-output:/home/node/test-output
-      - ./jest.config.js:/home/node/jest.config.js
-      - ./jest.setup.js:/home/node/jest.setup.js
+      - ./test/integration:/home/node/test/integration
+      - ./test/unit:/home/node/test/unit
+      - ./test/asb-helper.js:/home/node/test/asb-helper.js
       - ./package.json:/home/node/package.json
+      - ./test-output:/home/node/test-output
+      - ./scripts:/home/node/scripts
 
   trade-exportscore-plp-postgres:
     volumes:
