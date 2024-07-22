@@ -1,8 +1,5 @@
-import { Given } from 'cucumber'
+import { Given } from "cucumber";
 
-import openWebsite from '../support/action/openWebsite'
+import openWebsite from "../support/action/openWebsite";
 
-Given(
-  /^I open the (url|site) "([^"]*)?"$/,
-  openWebsite
-)
+Given(/^I open the (url|site) "([^"]*)?"$/, openWebsite);

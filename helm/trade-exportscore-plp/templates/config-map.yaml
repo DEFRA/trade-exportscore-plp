@@ -1,1 +1,1 @@
-{{- include "adp-helm-library.azure-config-service-map" . -}}
+{ { - include "adp-helm-library.azure-config-service-map" . - } }

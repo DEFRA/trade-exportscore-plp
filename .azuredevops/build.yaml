@@ -1,12 +1,12 @@
 parameters:
-- name: deployFromFeature
-  displayName: "Deploy from Feature Branch"
-  type: boolean
-  default: false
-- name: deployConfigOnly
-  displayName: "Deploy App Config only"
-  type: boolean
-  default: false
+  - name: deployFromFeature
+    displayName: "Deploy from Feature Branch"
+    type: boolean
+    default: false
+  - name: deployConfigOnly
+    displayName: "Deploy App Config only"
+    type: boolean
+    default: false
 
 pr:
   branches:
@@ -55,9 +55,13 @@ extends:
       postDeployTest:
         envToTest: snd4,dev1,tst1
         testEnvs:
-          acceptanceTests: 
+          acceptanceTests:
             - env: snd4
-              tags: '@demotag'
+              tags: "@demotag"
+            - env: dev1
+              tags: "@smoke"
+            - env: tst1
+              tags: "@e2e"
     appDeployConfig:
       filepath: "./appConfig"
       filetype: "yaml"

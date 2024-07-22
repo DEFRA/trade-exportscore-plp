@@ -3,4 +3,4 @@
 - key: POSTGRES_HOST
   value: "preadpdbsps1401.postgres.database.azure.com"
 - key: POSTGRES_USERNAME
-  value: "preadpinfmi1401-trade-exportscore-plp"   
+  value: "preadpinfmi1401-trade-exportscore-plp"

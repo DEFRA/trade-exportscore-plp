@@ -1,10 +1,10 @@
-const hapi = require('@hapi/hapi')
-const config = require('./config')
-const { sequelize } = require('./services/database-service')
-const messageService = require('./messaging')
+const hapi = require("@hapi/hapi");
+const config = require("./config");
+const { sequelize } = require("./services/database-service");
+const messageService = require("./messaging");
 
-async function createServer () {
-  await sequelize.authenticate()
+async function createServer() {
+  await sequelize.authenticate();
 
   // Create the hapi server
   const server = hapi.server({
@@ -12,32 +12,32 @@ async function createServer () {
     routes: {
       validate: {
         options: {
-          abortEarly: false
-        }
-      }
-    }
-  })
+          abortEarly: false,
+        },
+      },
+    },
+  });
 
   // Register the plugins
-  await server.register(require('./plugins/router'))
+  await server.register(require("./plugins/router"));
 
   if (config.isDev) {
-    await server.register(require('blipp'))
+    await server.register(require("blipp"));
   }
 
-  await messageService.start()
+  await messageService.start();
 
-  process.on('SIGTERM', async function () {
-    await messageService.stop()
-    process.exit(0)
-  })
+  process.on("SIGTERM", async function () {
+    await messageService.stop();
+    process.exit(0);
+  });
 
-  process.on('SIGINT', async function () {
-    await messageService.stop()
-    process.exit(0)
-  })
+  process.on("SIGINT", async function () {
+    await messageService.stop();
+    process.exit(0);
+  });
 
-  return server
+  return server;
 }
 
-module.exports = createServer
+module.exports = createServer;

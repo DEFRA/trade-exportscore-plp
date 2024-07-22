@@ -15,17 +15,17 @@ The framework is (Cucumber)[https://cucumber.io/] and (webdriver.io)[https://web
 # Quick start
 
 Docker is used to create a container for each of selenium-hub, chrome-browser and webdriver-cuke.
-* Selenium Hub allows concurrent execution of test cases
-* Chrome Browser is the browser specified in the configuration file `wdio.conf.js` by default
-* Webdriver.io along with Cucumber is this framework that defines the tests.
+
+- Selenium Hub allows concurrent execution of test cases
+- Chrome Browser is the browser specified in the configuration file `wdio.conf.js` by default
+- Webdriver.io along with Cucumber is this framework that defines the tests.
 
 ## How to run the tests
 
 1. Set the root URL for the environment in the environment variable `TEST_ENVIRONMENT_ROOT_URL`
-   
 2. Set the tags for the environment in the environment variable `TEST_TAGS` default is empty string, which will run all tests
 
-3. If running against localhost, then no need to set `TEST_ENVIRONMENT_ROOT_URL` as it will default to `docker.host.internal:3000`.  Instead make sure the application container is running with `docker-compose up --build` in the root folder of this repository
+3. If running against localhost, then no need to set `TEST_ENVIRONMENT_ROOT_URL` as it will default to `docker.host.internal:3000`. Instead make sure the application container is running with `docker-compose up --build` in the root folder of this repository
 
 4. From the directory containing the dockerfile run `docker-compose run --rm wdio-cucumber`. This will run an acceptance test against the FFC-Demo web service.
 
@@ -41,7 +41,8 @@ that means that you write down what's supposed to happen in a real language. All
 directory. They should demonstrate, how tests could look like. Just create a new file and write your first
 test.
 
-__myFirstTest.feature__
+**myFirstTest.feature**
+
 ```gherkin
 Feature:
     In order to keep my product stable
@@ -79,11 +80,12 @@ wdio.<ENVIRONMENT>.conf.js
 
 Now you can create a specific config for your pre-deploy tests:
 
-__wdio.STAGING.conf.js__
-```js
-var config = require('./wdio.conf.js').config;
+**wdio.STAGING.conf.js**
 
-config.baseUrl = 'http://staging.example.com'
+```js
+var config = require("./wdio.conf.js").config;
+
+config.baseUrl = "http://staging.example.com";
 
 exports.config = config;
 ```
@@ -102,12 +104,12 @@ $ BROWSERSTACK_ACCESS_KEY=userkeynumber npx wdio
 ```
 
 # Running single feature
+
 Sometimes it's useful to only execute a single feature file, to do so use the following command:
 
 ```sh
 $ npx wdio wdio.conf.js --spec ./test/features/select.feature
 ```
-
 
 # Using tags
 
@@ -239,7 +241,7 @@ Check out all predefined snippets. You can see examples of how these can be used
 - `I drag element "([^"]*)?" to element "([^"]*)?"` <br>Drag an element to another element
 - `I submit the form "([^"]*)?"` <br>Submit a form
 - `I pause for (\d+)ms` <br>Pause for a certain number of milliseconds
-- `I set a cookie "([^"]*)?" with the content "([^"]*)?"` <br>Set the content of a cookie with the given name to  the given string
+- `I set a cookie "([^"]*)?" with the content "([^"]*)?"` <br>Set the content of a cookie with the given name to the given string
 - `I delete the cookie "([^"]*)?"` <br>Delete the cookie with the given name
 - `I press "([^"]*)?"` <br>Press a given key. You’ll find all supported characters [here](https://w3c.github.io/webdriver/webdriver-spec.html#keyboard-actions). To do that, the value has to correspond to a key from the table.
 - `I (accept|dismiss) the (alertbox|confirmbox|prompt)` <br>Accept or dismiss a modal window

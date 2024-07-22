@@ -5,20 +5,20 @@
  */
 export default (selector, falseCase) => {
   /**
-     * The element found in the DOM
-     * @type {Int}
-     */
-  const element = $(selector)
+   * The element found in the DOM
+   * @type {Int}
+   */
+  const element = $(selector);
 
   if (falseCase === true) {
     expect(element.elementId).to.be.a(
-      'undefined',
-      `Element with selector "${selector}" should not exist on the page`
-    )
+      "undefined",
+      `Element with selector "${selector}" should not exist on the page`,
+    );
   } else {
     expect(element.elementId).to.be.a(
-      'string',
-      `Element with selector "${selector}" should exist on the page`
-    )
+      "string",
+      `Element with selector "${selector}" should exist on the page`,
+    );
   }
-}
+};

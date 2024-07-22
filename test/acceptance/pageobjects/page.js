@@ -1,7 +1,7 @@
-import { browser } from '@wdio/globals'
+import { browser } from "@wdio/globals";
 
 export default class Page {
-  open (path) {
-    browser.url(path)
+  open(path) {
+    browser.url(path);
   }
 }

@@ -5,9 +5,9 @@
  */
 export default async (type, page) => {
   /**
-     * The URL to navigate to
-     * @type {String}
-     */
-  const url = (type === 'url') ? page : browser.options.baseUrl + page
-  await browser.url(url)
-}
+   * The URL to navigate to
+   * @type {String}
+   */
+  const url = type === "url" ? page : browser.options.baseUrl + page;
+  await browser.url(url);
+};

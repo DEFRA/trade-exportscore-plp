@@ -9,19 +9,19 @@ postgres:
 
 namespaceTopics:
   - name: plingestion
-    roleAssignments:  
-      - roleName: TopicReceiver 
+    roleAssignments:
+      - roleName: TopicReceiver
     topicSubscriptions:
       - name: plp-subscription-01
 
 namespaceQueues:
   - name: parsed
     roleAssignments:
-      - roleName: 'QueueSender'
+      - roleName: "QueueSender"
 
 storageAccounts:
   - name: tradeplp
     roleAssignments:
-       roleName: 'DataReader'
+      roleName: "DataReader"
     blobContainers:
       - name: packing-lists

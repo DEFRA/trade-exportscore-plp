@@ -1,1 +1,1 @@
-{{- include "adp-aso-helm-library.userassignedidentity" . -}}
+{ { - include "adp-aso-helm-library.userassignedidentity" . - } }

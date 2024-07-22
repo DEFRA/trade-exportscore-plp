@@ -1,29 +1,29 @@
 const sequelize = {
   define: jest.fn(() => ({
-    associate: jest.fn()
-  }))
-}
+    associate: jest.fn(),
+  })),
+};
 const DataTypes = {
-  STRING: 'string',
-  UUID: 'uuid',
-  FLOAT: 'float',
-  INTEGER: 'integer'
-}
+  STRING: "string",
+  UUID: "uuid",
+  FLOAT: "float",
+  INTEGER: "integer",
+};
 
-describe('Item Model', () => {
-  let Item
+describe("Item Model", () => {
+  let Item;
   beforeEach(() => {
-    jest.clearAllMocks()
-    Item = require('../../../app/models/item')(sequelize, DataTypes)
-  })
+    jest.clearAllMocks();
+    Item = require("../../../app/models/item")(sequelize, DataTypes);
+  });
 
   afterAll(async () => {
-    jest.resetAllMocks()
-    await sequelize.close
-  })
+    jest.resetAllMocks();
+    await sequelize.close;
+  });
 
-  test('should define the model with correct fields', () => {
-    expect(sequelize.define).toHaveBeenCalled()
-    expect(Item.associate).toBeDefined()
-  })
-})
+  test("should define the model with correct fields", () => {
+    expect(sequelize.define).toHaveBeenCalled();
+    expect(Item.associate).toBeDefined();
+  });
+});

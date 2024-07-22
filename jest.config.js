@@ -1,38 +1,29 @@
 module.exports = {
   collectCoverage: true,
-  collectCoverageFrom: [
-    '**/*.js',
-    '!**/*.test.js'
-  ],
-  coverageDirectory: 'test-output',
-  coverageReporters: [
-    'text-summary',
-    'cobertura',
-    'lcov'
-  ],
+  collectCoverageFrom: ["**/*.js", "!**/*.test.js"],
+  coverageDirectory: "test-output",
+  coverageReporters: ["text-summary", "cobertura", "lcov"],
   coveragePathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/test-output/',
-    '<rootDir>/test/',
-    '.*/__mocks__/.*',
-    '<rootDir>/jest.config.js',
-    '<rootDir>/rename.js'
+    "<rootDir>/node_modules/",
+    "<rootDir>/test-output/",
+    "<rootDir>/test/",
+    ".*/__mocks__/.*",
+    "<rootDir>/jest.config.js",
+    "<rootDir>/rename.js",
   ],
-  modulePathIgnorePatterns: [
-    'node_modules'
-  ],
+  modulePathIgnorePatterns: ["node_modules"],
   reporters: [
-    'default',
+    "default",
     [
-      'jest-junit',
+      "jest-junit",
       {
-        suiteName: 'jest tests',
-        outputDirectory: 'test-output',
-        outputName: 'junit.xml'
-      }
-    ]
+        suiteName: "jest tests",
+        outputDirectory: "test-output",
+        outputName: "junit.xml",
+      },
+    ],
   ],
-  testEnvironment: 'node',
+  testEnvironment: "node",
   testPathIgnorePatterns: [],
-  verbose: true
-}
+  verbose: true,
+};

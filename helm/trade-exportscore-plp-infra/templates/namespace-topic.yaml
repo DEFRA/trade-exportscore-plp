@@ -1,1 +1,1 @@
-{{- include "adp-aso-helm-library.namespace-topic" . -}}
+{ { - include "adp-aso-helm-library.namespace-topic" . - } }

@@ -3,7 +3,7 @@ const MatcherResult = {
   WRONG_ESTABLISHMENT_NUMBER: 1,
   WRONG_HEADER: 2,
   GENERIC_ERROR: 3,
-  CORRECT: 4
-}
+  CORRECT: 4,
+};
 
-module.exports = MatcherResult
+module.exports = MatcherResult;
