@@ -52,6 +52,12 @@ extends:
       imageRepoName: "trade-exportscore-plp"
     appTestConfig:
       testFilePath: "./docker-compose.test.yaml"
+      postDeployTest:
+        envToTest: snd4,dev1,tst1
+        testEnvs:
+          acceptanceTests: 
+            - env: snd4
+              tags: '@demotag'
     appDeployConfig:
       filepath: "./appConfig"
       filetype: "yaml"
