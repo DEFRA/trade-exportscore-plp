@@ -7,17 +7,17 @@ const { patchPackingListCheck } = require('../../../app/services/dynamics-servic
 const mockResponse = { response: 200, code: 200 }
 
 patchPackingListCheck.mockImplementation(() => {
-   response: 200; code: 200 }
-).mockName('add42');
+  return mockResponse
+})
 const mockApplicationId = 123
 
-const mockHandler = jest.fn();
+const mockHandler = jest.fn()
 
 mockHandler.mockResolvedValue(() => {
   return mockResponse
 })
 
-console.error = jest.fn();
+console.error = jest.fn()
 
 describe('upsert idcoms', () => {
   afterAll(async () => {
