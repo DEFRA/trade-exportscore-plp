@@ -240,7 +240,8 @@ function parseAsda (packingListJson) {
 
 function parseTescoModel1 (packingListJson) {
   const packingListContentsRow = 5
-  const establishmentNumber = packingListJson[3].AT ?? null
+  const establishmentNumberRow = 3
+  const establishmentNumber = packingListJson[establishmentNumberRow].AT ?? null
   const packingListContents = packingListJson.slice(packingListContentsRow).map(col => ({
     description: col.G ?? null,
     nature_of_products: null,
