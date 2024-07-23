@@ -37,7 +37,8 @@ describe('bearerTokenRequest', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: false,
-        status: 400
+        status: 400,
+        json: () => Promise.resolve({ access_token: 'abc' })
       })
     )
 
