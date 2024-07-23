@@ -33,22 +33,19 @@ describe('upsert idcoms', () => {
   })
 
   test('should log the exception when an error occurs', async () => {
-
     await upsertIdcoms.options.handler({}, mockHandler)
 
     expect(patchPackingListCheck).not.toHaveBeenCalled()
-    expect(console.error.mock.calls[0][0]).toBe("Error running upsert: ");
+    expect(console.error.mock.calls[0][0]).toBe('Error running upsert: ')
   })
 
   test('should perform the upsert when application id is specified and isParsed is true', async () => {
-
     await upsertIdcoms.options.handler({ query: { applicationId: mockApplicationId, isParsed: true } }, mockHandler)
 
     expect(patchPackingListCheck).toHaveBeenCalledWith(mockApplicationId, true)
   })
 
   test('should perform the upsert when application id is specified and isParsed is false', async () => {
-
     await upsertIdcoms.options.handler({ query: { applicationId: mockApplicationId, isParsed: false } }, mockHandler)
 
     expect(patchPackingListCheck).toHaveBeenCalledWith(mockApplicationId, false)
