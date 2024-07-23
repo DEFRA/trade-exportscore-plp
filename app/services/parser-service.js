@@ -190,7 +190,7 @@ function parseBandM (packingListJson) {
   const traderRow = packingListJson.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
   const establishmentNumber = packingListJson[traderRow].I ?? null
   const headerRow = packingListJson.findIndex(x => x.B === 'PRISM')
-  const lastRow = packingListJson.slice(headerRow + 1).findIndex(x => (x.A === ' ') && (x.B === ' ') && (x.C === ' ') && (x.D === ' ') && (x.E === ' ') && (x.F !== null) && (x.G !== null) && (x.H !== null)) + headerRow
+  const lastRow = packingListJson.slice(headerRow + 1).findIndex(x => isEndOfRow(x)) + headerRow
   const packingListContents = packingListJson.slice(headerRow + 1, lastRow + 1).map(col => ({
     description: col.C ?? null,
     nature_of_products: null,
@@ -201,6 +201,12 @@ function parseBandM (packingListJson) {
   }))
 
   return combineParser(establishmentNumber, packingListContents, true)
+}
+
+function isEndOfRow (x) {
+  const isTotal = (x.F !== null) && (x.G !== null) && (x.H !== null)
+  const isEmpty = (x.A === ' ') && (x.B === ' ') && (x.C === ' ') && (x.D === ' ') && (x.E === ' ')
+  return isTotal && isEmpty
 }
 
 function combineParser (establishmentNumber, packingListContents, allRequiredFieldsPresent) {
@@ -234,7 +240,7 @@ function parseAsda (packingListJson) {
 
 function parseTescoModel1 (packingListJson) {
   const packingListContentsRow = 5
-  const establishmentNumber = packingListJson[4].AT ?? null
+  const establishmentNumber = packingListJson[3].AT ?? null
   const packingListContents = packingListJson.slice(packingListContentsRow).map(col => ({
     description: col.G ?? null,
     nature_of_products: null,
@@ -298,7 +304,7 @@ function matchesSainsburys (packingListJson, filename) {
 }
 
 function parseSainsburys (packingListJson) {
-  const establishmentNumber = packingListJson[1].N.replace(/\u200B/g, '') ?? null
+  const establishmentNumber = packingListJson[1].N?.replace(/\u200B/g, '') ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.E ?? null,
     nature_of_products: col.C ?? null,
