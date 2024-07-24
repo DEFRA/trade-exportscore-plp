@@ -397,7 +397,7 @@ describe('matchesTescoModel1', () => {
   test('returns true', () => {
     const filename = 'PackingListTesco1.xlsx'
     const packingListJson = {
-      Input_Data_Sheet: [
+      'Input Data Sheet': [
         {},
         {},
         {},
@@ -428,7 +428,7 @@ describe('matchesTescoModel1', () => {
 
   test('returns wrong establishment number for missing establishment number', () => {
     const packingListJson = {
-      Input_Data_Sheet: [
+      'Input Data Sheet': [
         {},
         {},
         {},
@@ -452,7 +452,7 @@ describe('matchesTescoModel1', () => {
   test('return wrong header for incorrect header values', () => {
     const filename = 'packinglist.xlsx'
     const packingListJson = {
-      Input_Data_Sheet: [
+      'Input Data Sheet': [
         {},
         {},
         {},

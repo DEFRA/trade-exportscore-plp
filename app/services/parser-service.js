@@ -2,6 +2,7 @@ const MatcherResult = require('../services/matches-result')
 
 const CUSTOMER_ORDER = 'Customer Order'
 const COUNTRY_OF_ORIGIN = 'Country of Origin'
+const INPUT_DATA_SHEET = 'Input Data Sheet'
 
 function findParser (result, filename) {
   let parsedPackingList = failedParser()
@@ -25,7 +26,7 @@ function findParser (result, filename) {
     isParsed = true
   } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Tesco Model 1 with filename: ', filename)
-    parsedPackingList = parseTescoModel1(result.Input_Data_Sheet)
+    parsedPackingList = parseTescoModel1(result[INPUT_DATA_SHEET])
     isParsed = true
   } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Tesco Model 2 with filename: ', filename)
@@ -125,7 +126,7 @@ function matchesTescoModel1 (packingListJson, filename) {
     if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson.Input_Data_Sheet[establishmentNumberRow].AT
+    const establishmentNumber = packingListJson[INPUT_DATA_SHEET][establishmentNumberRow].AT
     const regex = /^RMS-GB-000022-\d{3}$/
     if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
 
@@ -141,7 +142,7 @@ function matchesTescoModel1 (packingListJson, filename) {
     }
 
     for (const key in header) {
-      if (!packingListJson.Input_Data_Sheet[4] || packingListJson.Input_Data_Sheet[4][key] !== header[key]) {
+      if (!packingListJson[INPUT_DATA_SHEET][4] || packingListJson[INPUT_DATA_SHEET][4][key] !== header[key]) {
         return MatcherResult.WRONG_HEADER
       }
     }
