@@ -100,7 +100,7 @@ function matchesAsdaModel1 (packingListJson, filename) {
     if (fileExtension !== 'xls') { return MatcherResult.WRONG_EXTENSIONS }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson.PackingList_Extract[1].D
+    const establishmentNumber = packingListJson.PackingList_Extract[1].D ?? null
     const regex = /^RMS-GB-000015-\d{3}$/
     if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
 
@@ -526,14 +526,14 @@ function matchesAsdaModel2 (packingListJson, filename) {
 }
 
 function parseAsdaModel2 (packingListJson) {
-  const establishmentNumber = packingListJson[4].H
+  const establishmentNumber = packingListJson[4].H ?? null
   const packingListContents = packingListJson.slice(4).map(col => ({
-    description: col.B,
-    nature_of_products: col.D,
-    type_of_treatment: col.F,
-    commodity_code: null,
+    description: col.B ?? null,
+    nature_of_products: col.D ?? null,
+    type_of_treatment: col.F ?? null,
+    commodity_code: null ?? null,
     number_of_packages: null,
-    total_net_weight_kg: col.N
+    total_net_weight_kg: col.N ?? null
   }))
 
   return combineParser(establishmentNumber, packingListContents, true)
