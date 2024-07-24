@@ -189,7 +189,7 @@ describe('combineParser', () => {
   })
 })
 
-describe('matchesAsda', () => {
+describe('matchesAsdaModel1', () => {
   test('returns true', () => {
     const filename = 'packinglist.xls'
     const packingListJson = {
@@ -209,14 +209,14 @@ describe('matchesAsda', () => {
         }
       ]
     }
-    const result = parserService.matchesAsda(packingListJson, filename)
+    const result = parserService.matchesAsdaModel1(packingListJson, filename)
     expect(result).toBe(MatcherResult.CORRECT)
   })
 
   test('returns generic error for empty json', () => {
     const packingListJson = {}
     const filename = 'packinglist.xls'
-    const result = parserService.matchesAsda(packingListJson, filename)
+    const result = parserService.matchesAsdaModel1(packingListJson, filename)
     expect(result).toBe(MatcherResult.GENERIC_ERROR)
   })
 
@@ -231,14 +231,14 @@ describe('matchesAsda', () => {
       ]
     }
     const filename = 'packinglist.xls'
-    const result = parserService.matchesAsda(packingListJson, filename)
+    const result = parserService.matchesAsdaModel1(packingListJson, filename)
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
   })
 
   test('return wrong extension for incorrect file extension', () => {
     const filename = 'packinglist.pdf'
     const packingListJson = {}
-    const result = parserService.matchesAsda(packingListJson, filename)
+    const result = parserService.matchesAsdaModel1(packingListJson, filename)
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
   })
 
@@ -256,12 +256,12 @@ describe('matchesAsda', () => {
         }
       ]
     }
-    const result = parserService.matchesAsda(packingListJson, filename)
+    const result = parserService.matchesAsdaModel1(packingListJson, filename)
     expect(result).toBe(MatcherResult.WRONG_HEADER)
   })
 })
 
-describe('parseAsda', () => {
+describe('parseAsdaModel1', () => {
   test('parses json', () => {
     const packingListJson =
       [
@@ -296,7 +296,7 @@ describe('parseAsda', () => {
           H: 'kgs'
         }
       ]
-    const result = parserService.parseAsda(packingListJson)
+    const result = parserService.parseAsdaModel1(packingListJson)
     expect(result.registration_approval_number).toBe(packingListJson[1].D)
     expect(result.items).toHaveLength(2)
     expect(result.items[0].description).toBe(packingListJson[1].A)
