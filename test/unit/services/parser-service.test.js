@@ -881,3 +881,128 @@ describe('parseTjmorris', () => {
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].R)
   })
 })
+
+// Asda 2
+
+describe('matchesAsdaModel2', () => {
+  test('returns true', () => {
+    const filename = 'packinglist.xls'
+    const packingListJson = {
+      Sheet1: [
+        {}, {},
+        {
+          B: '[Description Of All Retail Go',
+          D: '[Nature Of Product]',
+          F: '[Treatment Ty',
+          H: 'Establishment Number',
+          J: 'Cases',
+          L: 'Case Weight',
+          N: 'NET Weight'
+        },
+        {},
+        {
+          H: 'RMS-GB-000015-010'
+        }
+      ]
+    }
+    const result = parserService.matchesAsdaModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.CORRECT)
+  })
+
+  test('returns generic error for empty json', () => {
+    const packingListJson = {}
+    const filename = 'packinglist.xls'
+    const result = parserService.matchesAsdaModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.GENERIC_ERROR)
+  })
+
+  test('returns wrong establishment number for missing establishment number', () => {
+    const packingListJson = {
+      Sheet1: [
+        {},
+        {},
+        {},
+        {},
+        {
+          H: 'INCORRECT'
+        }
+      ]
+    }
+    const filename = 'packinglist.xls'
+    const result = parserService.matchesAsdaModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
+  })
+
+  test('return wrong extension for incorrect file extension', () => {
+    const filename = 'packinglist.pdf'
+    const packingListJson = {}
+    const result = parserService.matchesAsdaModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
+  })
+
+  test('return wrong header for incorrect header values', () => {
+    const filename = 'packinglist.xls'
+    const packingListJson = {
+      Sheet1: [
+        {}, {},
+        {
+          B: 'NOT',
+          D: 'CORRECT',
+          F: 'HEADER'
+        },
+        {},
+        {
+          H: 'RMS-GB-000015-010'
+        }
+      ]
+    }
+    const result = parserService.matchesAsdaModel2(packingListJson, filename)
+    expect(result).toBe(MatcherResult.WRONG_HEADER)
+  })
+})
+
+describe('parseAsdaModel2', () => {
+  test('parses json', () => {
+    const packingListJson =
+      [
+        {
+          B: '[Description Of All Retail Go',
+          D: '[Nature Of Product]',
+          F: '[Treatment Ty',
+          H: 'Establishment Number',
+          J: 'Cases',
+          L: 'Case Weight',
+          N: 'NET Weight'
+        },
+        {
+          B: '4PK X 17 PINK LADY APPLES',
+          D: 'TOP FRUIT',
+          F: 'PRODUCE',
+          H: 'RMS-GB-000015-010',
+          J: 20,
+          L: 12.75,
+          N: 255
+        },
+        {
+          B: 'ASDA BABY WATERMELON X10',
+          D: 'MELON HARD',
+          F: 'PRODUCE',
+          H: 'RMS-GB-000015-010',
+          J: 5,
+          L: 12,
+          N: 60
+        }
+      ]
+    const result = parserService.parseAsdaModel2(packingListJson)
+    expect(result.registration_approval_number).toBe(packingListJson[4].H)
+    expect(result.items).toHaveLength(2)
+    expect(result.items[0].description).toBe(packingListJson[4].B)
+    expect(result.items[1].description).toBe(packingListJson[5].B)
+    expect(result.items[0].nature_of_products).toBe(packingListJson[4].D)
+    expect(result.items[1].nature_of_products).toBe(packingListJson[5].D)
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[4].F)
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[5].F)
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[4].N)
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[5].N)
+  })
+})

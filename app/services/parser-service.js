@@ -377,9 +377,7 @@ function matchesAsdaModel2 (packingListJson, filename) {
       N: 'NET Weight'
     }
 
-    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } 
-    else { return MatcherResult.CORRECT }
-     
+    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
     return MatcherResult.GENERIC_ERROR
   }
