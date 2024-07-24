@@ -891,12 +891,19 @@ describe('matchesAsdaModel2', () => {
       Sheet1: [
         {}, {},
         {
+          A: '',
           B: '[Description Of All Retail Go',
+          C: '',
           D: '[Nature Of Product]',
+          E: '',
           F: '[Treatment Ty',
+          G: '',
           H: 'Establishment Number',
+          I: '',
           J: 'Cases',
+          K: '',
           L: 'Case Weight',
+          M: '',
           N: 'NET Weight'
         },
         {},
