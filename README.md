@@ -69,6 +69,10 @@ scripts/test -w
 
 In addition to the above, please refer to the [Additional Information](./additional-info.md) file for extensions that make running / debugging a single test easier than the above method.
 
+### Debugging
+
+After much _fun_, please refer to the [Debugging](./debugging.md) file for information on how (and where) to debug your tests.
+
 ## CI & CD Pipeline
 
 This service uses the [ADP Common Pipelines](https://github.com/DEFRA/adp-pipeline-common) for Builds and Deployments.
