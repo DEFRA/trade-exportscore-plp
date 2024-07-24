@@ -12,9 +12,12 @@
                 "NODE_ENV": "test"
             },
             "args": [
+                "--runTestsByPath",
                 "${relativeFile}",
-                "--config",
-                "jest.config.js"
+                "--colors",
+                "--config=${workspaceFolder}/jest.config.js",
+                "--runInBand",
+                "--coverage"
             ],
             "runtimeArgs": [
                 "--nolazy"
