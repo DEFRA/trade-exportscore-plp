@@ -358,13 +358,11 @@ function matchesAsdaModel2 (packingListJson, filename) {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
     if (fileExtension !== 'xls') { return MatcherResult.WRONG_EXTENSIONS }
-    console.log(fileExtension)
 
     // check for correct establishment number
     const establishmentNumber = packingListJson.Sheet1[4].H
     const regex = /^RMS-GB-000015-\d{3}$/
     if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
-    console.log(establishmentNumber)
 
     // check for header values
     const header = {
@@ -377,7 +375,7 @@ function matchesAsdaModel2 (packingListJson, filename) {
       N: 'NET Weight'
     }
 
-    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
+    if (JSON.stringify(packingListJson.Sheet1[2]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
     return MatcherResult.GENERIC_ERROR
   }

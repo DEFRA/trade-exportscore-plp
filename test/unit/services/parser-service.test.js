@@ -882,8 +882,6 @@ describe('parseTjmorris', () => {
   })
 })
 
-// Asda 2
-
 describe('matchesAsdaModel2', () => {
   test('returns true', () => {
     const filename = 'packinglist.xls'
@@ -891,19 +889,12 @@ describe('matchesAsdaModel2', () => {
       Sheet1: [
         {}, {},
         {
-          A: '',
           B: '[Description Of All Retail Go',
-          C: '',
           D: '[Nature Of Product]',
-          E: '',
           F: '[Treatment Ty',
-          G: '',
           H: 'Establishment Number',
-          I: '',
           J: 'Cases',
-          K: '',
           L: 'Case Weight',
-          M: '',
           N: 'NET Weight'
         },
         {},
@@ -926,10 +917,7 @@ describe('matchesAsdaModel2', () => {
   test('returns wrong establishment number for missing establishment number', () => {
     const packingListJson = {
       Sheet1: [
-        {},
-        {},
-        {},
-        {},
+        {},{},{},{},
         {
           H: 'INCORRECT'
         }
@@ -972,6 +960,7 @@ describe('parseAsdaModel2', () => {
   test('parses json', () => {
     const packingListJson =
       [
+        {}, {},
         {
           B: '[Description Of All Retail Go',
           D: '[Nature Of Product]',
@@ -981,6 +970,7 @@ describe('parseAsdaModel2', () => {
           L: 'Case Weight',
           N: 'NET Weight'
         },
+        {},
         {
           B: '4PK X 17 PINK LADY APPLES',
           D: 'TOP FRUIT',
@@ -990,6 +980,7 @@ describe('parseAsdaModel2', () => {
           L: 12.75,
           N: 255
         },
+        {},
         {
           B: 'ASDA BABY WATERMELON X10',
           D: 'MELON HARD',
@@ -1002,7 +993,7 @@ describe('parseAsdaModel2', () => {
       ]
     const result = parserService.parseAsdaModel2(packingListJson)
     expect(result.registration_approval_number).toBe(packingListJson[4].H)
-    expect(result.items).toHaveLength(2)
+    expect(result.items).toHaveLength(3)
     expect(result.items[0].description).toBe(packingListJson[4].B)
     expect(result.items[1].description).toBe(packingListJson[5].B)
     expect(result.items[0].nature_of_products).toBe(packingListJson[4].D)
