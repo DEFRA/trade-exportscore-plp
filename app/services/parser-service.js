@@ -1,5 +1,9 @@
 const MatcherResult = require('../services/matches-result')
 
+const CUSTOMER_ORDER = 'Customer Order'
+const COUNTRY_OF_ORIGIN = 'Country of Origin'
+const INPUT_DATA_SHEET = 'Input Data Sheet'
+
 function findParser (result, filename) {
   let parsedPackingList = failedParser()
   let isParsed = false
@@ -26,14 +30,33 @@ function findParser (result, filename) {
     isParsed = true
   } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Tesco Model 1 with filename: ', filename)
-    parsedPackingList = parseTescoModel1(result.Input_Data_Sheet)
+    parsedPackingList = parseTescoModel1(result[INPUT_DATA_SHEET])
     isParsed = true
   } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
     console.info('Packing list matches Tesco Model 2 with filename: ', filename)
     parsedPackingList = parseTescoModel2(result.Sheet2)
     isParsed = true
+  } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Fowler Welch with filename: ', filename)
+    parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER])
+    isParsed = true
+  } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
+    console.info('Packing list matches Nisa with filename: ', filename)
+    parsedPackingList = parseNisa(result[Object.keys(result)[0]])
+    isParsed = true
   } else {
     console.info('Failed to parse packing list with filename: ', filename)
+  }
+
+  if (isParsed) {
+    parsedPackingList.items = parsedPackingList.items.filter(x => !(x.description === null &&
+      x.nature_of_products === null &&
+      x.type_of_treatment === null &&
+      x.commodity_code === null &&
+      x.number_of_packages === null &&
+      x.total_net_weight_kg === null))
+
+    parsedPackingList.business_checks.all_required_fields_present = checkRequiredData(parsedPackingList)
   }
 
   return { packingList: parsedPackingList, isParsed }
@@ -107,7 +130,7 @@ function matchesTescoModel1 (packingListJson, filename) {
     if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson.Input_Data_Sheet[establishmentNumberRow].AT
+    const establishmentNumber = packingListJson[INPUT_DATA_SHEET][establishmentNumberRow].AT
     const regex = /^RMS-GB-000022-\d{3}$/
     if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
 
@@ -123,7 +146,7 @@ function matchesTescoModel1 (packingListJson, filename) {
     }
 
     for (const key in header) {
-      if (!packingListJson.Input_Data_Sheet[4] || packingListJson.Input_Data_Sheet[4][key] !== header[key]) {
+      if (!packingListJson[INPUT_DATA_SHEET][4] || packingListJson[INPUT_DATA_SHEET][4][key] !== header[key]) {
         return MatcherResult.WRONG_HEADER
       }
     }
@@ -153,7 +176,7 @@ function matchesTescoModel2 (packingListJson, filename) {
       D: 'Online Check',
       E: 'Meursing code',
       F: 'Description of goods',
-      G: 'Country of Origin',
+      G: COUNTRY_OF_ORIGIN,
       H: 'No. of pkgs',
       I: 'Type of pkgs',
       J: 'Total Gross Weight',
@@ -170,19 +193,25 @@ function matchesTescoModel2 (packingListJson, filename) {
 
 function parseBandM (packingListJson) {
   const traderRow = packingListJson.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
-  const establishmentNumber = packingListJson[traderRow].I
+  const establishmentNumber = packingListJson[traderRow].I ?? null
   const headerRow = packingListJson.findIndex(x => x.B === 'PRISM')
-  const lastRow = packingListJson.slice(headerRow + 1).findIndex(x => Number.isInteger(x.D) === false) + headerRow
+  const lastRow = packingListJson.slice(headerRow + 1).findIndex(x => isEndOfRow(x)) + headerRow
   const packingListContents = packingListJson.slice(headerRow + 1, lastRow + 1).map(col => ({
-    description: col.C,
+    description: col.C ?? null,
     nature_of_products: null,
     type_of_treatment: null,
-    commodity_code: col.D,
-    number_of_packages: col.F,
-    total_net_weight_kg: col.G
+    commodity_code: col.D ?? null,
+    number_of_packages: col.F ?? null,
+    total_net_weight_kg: col.G ?? null
   }))
 
   return combineParser(establishmentNumber, packingListContents, true)
+}
+
+function isEndOfRow (x) {
+  const isTotal = (x.F !== null) && (x.G !== null) && (x.H !== null)
+  const isEmpty = (x.A === ' ') && (x.B === ' ') && (x.C === ' ') && (x.D === ' ') && (x.E === ' ')
+  return isTotal && isEmpty
 }
 
 function combineParser (establishmentNumber, packingListContents, allRequiredFieldsPresent) {
@@ -203,12 +232,12 @@ function failedParser () {
 function parseAsdaModel1 (packingListJson) {
   const establishmentNumber = packingListJson[1].D
   const packingListContents = packingListJson.slice(1).map(col => ({
-    description: col.A,
-    nature_of_products: col.B,
-    type_of_treatment: col.C,
+    description: col.A ?? null,
+    nature_of_products: col.B ?? null,
+    type_of_treatment: col.C ?? null,
     commodity_code: null,
-    number_of_packages: col.F,
-    total_net_weight_kg: col.G
+    number_of_packages: col.F ?? null,
+    total_net_weight_kg: col.G ?? null
   }))
 
   return combineParser(establishmentNumber, packingListContents, true)
@@ -216,28 +245,29 @@ function parseAsdaModel1 (packingListJson) {
 
 function parseTescoModel1 (packingListJson) {
   const packingListContentsRow = 5
-  const establishmentNumber = packingListJson[4].AT
+  const establishmentNumberRow = 3
+  const establishmentNumber = packingListJson[establishmentNumberRow].AT ?? null
   const packingListContents = packingListJson.slice(packingListContentsRow).map(col => ({
-    description: col.G,
+    description: col.G ?? null,
     nature_of_products: null,
-    type_of_treatment: col.AS,
-    commodity_code: col.L,
-    number_of_packages: col.BR,
-    total_net_weight_kg: col.BU
+    type_of_treatment: col.AS ?? null,
+    commodity_code: col.L ?? null,
+    number_of_packages: col.BR ?? null,
+    total_net_weight_kg: col.BU ?? null
   }))
 
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
 function parseTescoModel2 (packingListJson) {
-  const establishmentNumber = packingListJson[2].M
+  const establishmentNumber = packingListJson[2].M ?? null
   const packingListContents = packingListJson.slice(2).map(col => ({
-    description: col.F,
+    description: col.F ?? null,
     nature_of_products: null,
     type_of_treatment: null,
-    commodity_code: col.C,
-    number_of_packages: col.H,
-    total_net_weight_kg: col.K
+    commodity_code: col.C ?? null,
+    number_of_packages: col.H ?? null,
+    total_net_weight_kg: col.K ?? null
   }))
 
   return combineParser(establishmentNumber, packingListContents, true)
@@ -280,14 +310,14 @@ function matchesSainsburys (packingListJson, filename) {
 }
 
 function parseSainsburys (packingListJson) {
-  const establishmentNumber = packingListJson[1].N.replace(/\u200B/g, '')
+  const establishmentNumber = packingListJson[1].N?.replace(/\u200B/g, '') ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
-    description: col.E,
-    nature_of_products: col.C,
+    description: col.E ?? null,
+    nature_of_products: col.C ?? null,
     type_of_treatment: null,
-    commodity_code: col.O,
-    number_of_packages: col.G,
-    total_net_weight_kg: col.H
+    commodity_code: col.O ?? null,
+    number_of_packages: col.G ?? null,
+    total_net_weight_kg: col.H ?? null
   }))
 
   return combineParser(establishmentNumber, packingListContents, true)
@@ -325,7 +355,7 @@ function matchesTjmorris (packingListJson, filename) {
       Q: 'Gross Weight Kg',
       R: 'Net Weight Kg',
       S: 'Cost',
-      T: 'Country of Origin',
+      T: COUNTRY_OF_ORIGIN,
       U: 'VAT Status',
       V: 'SPS',
       W: 'Consignment ID',
@@ -340,14 +370,128 @@ function matchesTjmorris (packingListJson, filename) {
 }
 
 function parseTjmorris (packingListJson) {
-  const establishmentNumber = packingListJson[1].A
+  const establishmentNumber = packingListJson[1].A ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
-    description: col.N,
-    nature_of_products: col.L,
-    type_of_treatment: col.J,
-    commodity_code: col.O,
-    number_of_packages: col.P,
-    total_net_weight_kg: col.R
+    description: col.N ?? null,
+    nature_of_products: col.L ?? null,
+    type_of_treatment: col.J ?? null,
+    commodity_code: col.O ?? null,
+    number_of_packages: col.P ?? null,
+    total_net_weight_kg: col.R ?? null
+  }))
+
+  return combineParser(establishmentNumber, packingListContents, true)
+}
+
+function matchesFowlerWelch (packingListJson, filename) {
+  try {
+    const headerRowNumber = 44
+    const establishmentNumberRow = 45
+    // check for correct extension
+    const fileExtension = filename.split('.').pop().toLowerCase()
+    if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson[CUSTOMER_ORDER][establishmentNumberRow].M
+    const regex = /^RMS-GB-000216-\d{3}$/
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER
+    }
+
+    // check for header values
+    const header = {
+      A: 'Item',
+      B: 'Product code',
+      C: 'Commodity code',
+      D: 'Online Check',
+      E: 'Meursing code',
+      F: 'Description of goods',
+      G: COUNTRY_OF_ORIGIN,
+      H: 'No. of pkgs ',
+      I: 'Type of pkgs',
+      J: 'Total Gross Weight',
+      K: 'Total Net Weight',
+      L: 'Total Line Value',
+      M: 'NIIRMS Dispatch number',
+      N: 'Treatment Type (Chilled /Ambient)',
+      O: 'NIRMS Lane (R/G)',
+      P: 'Secondary Qty',
+      Q: 'Cert Type Req',
+      R: 'Cert Number'
+    }
+
+    const originalHeader = packingListJson[CUSTOMER_ORDER][headerRowNumber]
+
+    for (const key in header) {
+      if (!originalHeader[key].startsWith(header[key])) {
+        return MatcherResult.WRONG_HEADER
+      }
+    }
+    return MatcherResult.CORRECT
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR
+  }
+}
+
+function parseFowlerWelch (packingListJson) {
+  const establishmentNumberRow = 45
+  const establishmentNumber = packingListJson[establishmentNumberRow].M ?? null
+  const packingListContents = packingListJson.slice(establishmentNumberRow).map(col => ({
+    description: col.F ?? null,
+    nature_of_products: null,
+    type_of_treatment: col.N ?? null,
+    commodity_code: col.C ?? null,
+    number_of_packages: col.H ?? null,
+    total_net_weight_kg: col.K ?? null
+  }))
+
+  return combineParser(establishmentNumber, packingListContents, true)
+}
+
+function matchesNisa (packingListJson, filename) {
+  const establishmentNumberRow = 1
+  try {
+    // check for correct extension
+    const fileExtension = filename.split('.').pop()
+    if (fileExtension !== 'xlsx') { return MatcherResult.WRONG_EXTENSIONS }
+
+    // check for correct establishment number
+    const sheet = Object.keys(packingListJson)[0]
+    const establishmentNumber = packingListJson[sheet][establishmentNumberRow].A
+    const regex = /^RMS-GB-000025-\d{3}$/
+    if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
+
+    // check for header values
+    const header = {
+      A: 'RMS_ESTABLISHMENT_NO',
+      I: 'PRODUCT_TYPE_CATEGORY',
+      K: 'PART_NUMBER_DESCRIPTION',
+      L: 'TARIFF_CODE_EU',
+      M: 'PACKAGES',
+      O: 'NET_WEIGHT_TOTAL'
+    }
+
+    for (const key in header) {
+      if (!packingListJson[sheet][0] || packingListJson[sheet][0][key] !== header[key]) {
+        return MatcherResult.WRONG_HEADER
+      }
+    }
+
+    return MatcherResult.CORRECT
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR
+  }
+}
+
+function parseNisa (packingListJson) {
+  const establishmentNumber = packingListJson[1].A ?? null
+  const packingListContents = packingListJson.slice(1).map(col => ({
+    description: col.K ?? null,
+    nature_of_products: col.I ?? null,
+    type_of_treatment: null,
+    commodity_code: col.L ?? null,
+    number_of_packages: col.M ?? null,
+    total_net_weight_kg: col.O ?? null
   }))
 
   return combineParser(establishmentNumber, packingListContents, true)
@@ -395,6 +539,16 @@ function parseAsdaModel2 (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
+function checkRequiredData (packingList) {
+  const hasCommodityCode = packingList.items.every(x => x.commodity_code !== null)
+  const hasTreatmentOrNature = packingList.items.every(x => (x.nature_of_products !== null && x.type_of_treatment !== null))
+  const hasDescription = packingList.items.every(x => x.description !== null)
+  const hasPackages = packingList.items.every(x => x.number_of_packages !== null)
+  const hasNetWeight = packingList.items.every(x => x.total_net_weight_kg !== null)
+  const hasRemos = packingList.registration_approval_number !== null
+  return ((hasCommodityCode || hasTreatmentOrNature) && hasDescription && hasPackages && hasNetWeight && hasRemos)
+}
+
 module.exports = {
   matchesBandM,
   matchesAsdaModel1,
@@ -412,5 +566,10 @@ module.exports = {
   parseTescoModel2,
   matchesAsdaModel2,
   parseAsdaModel2,
-  findParser
+  matchesFowlerWelch,
+  parseFowlerWelch,
+  findParser,
+  matchesNisa,
+  parseNisa,
+  checkRequiredData
 }
