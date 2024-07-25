@@ -8,7 +8,7 @@ module.exports = {
     handler: async (request, h) => {
       try {
         let checkStatus = StatusCodes.NOT_FOUND
-        if (request.query.applicationId || (request.query.applicationId !== '')) {
+        if (request.query.applicationId) {
           checkStatus = await patchPackingListCheck(request.query.applicationId, request.query.isParsed)
         }
         return h.response(checkStatus).code(StatusCodes.OK)
