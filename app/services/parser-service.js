@@ -269,13 +269,6 @@ function isEndOfRow(x) {
   return isTotal && isEmpty;
 }
 
-function isEndOfRow(x) {
-  const isTotal = x.F !== null && x.G !== null && x.H !== null;
-  const isEmpty =
-    x.A === " " && x.B === " " && x.C === " " && x.D === " " && x.E === " ";
-  return isTotal && isEmpty;
-}
-
 function combineParser(
   establishmentNumber,
   packingListContents,
@@ -596,30 +589,6 @@ function parseNisa(packingListJson) {
   }));
 
   return combineParser(establishmentNumber, packingListContents, true);
-}
-
-function checkRequiredData(packingList) {
-  const hasCommodityCode = packingList.items.every(
-    (x) => x.commodity_code !== null,
-  );
-  const hasTreatmentOrNature = packingList.items.every(
-    (x) => x.nature_of_products !== null && x.type_of_treatment !== null,
-  );
-  const hasDescription = packingList.items.every((x) => x.description !== null);
-  const hasPackages = packingList.items.every(
-    (x) => x.number_of_packages !== null,
-  );
-  const hasNetWeight = packingList.items.every(
-    (x) => x.total_net_weight_kg !== null,
-  );
-  const hasRemos = packingList.registration_approval_number !== null;
-  return (
-    (hasCommodityCode || hasTreatmentOrNature) &&
-    hasDescription &&
-    hasPackages &&
-    hasNetWeight &&
-    hasRemos
-  );
 }
 
 function checkRequiredData(packingList) {
