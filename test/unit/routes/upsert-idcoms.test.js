@@ -40,8 +40,7 @@ describe('upsert idcoms', () => {
   })
 
   test('should perform the upsert when application id is specified and isParsed is true', async () => {
-
-    let response = await upsertIdcoms.options.handler({ query: { applicationId: mockApplicationId, isParsed: true } }, mockHandler)
+    const response = await upsertIdcoms.options.handler({ query: { applicationId: mockApplicationId, isParsed: true } }, mockHandler)
 
     expect(response).toBe(200)
     expect(patchPackingListCheck).toHaveBeenCalledWith(mockApplicationId, true)
