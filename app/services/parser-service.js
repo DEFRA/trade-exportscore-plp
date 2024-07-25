@@ -25,11 +25,17 @@ function findParser(result, filename) {
     parsedPackingList = parseBandM(result.Sheet1);
     isParsed = true;
   } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Tesco Model 1 with filename: ", filename);
+    console.info(
+      "Packing list matches Tesco Model 1 with filename: ",
+      filename,
+    );
     parsedPackingList = parseTescoModel1(result[INPUT_DATA_SHEET]);
     isParsed = true;
   } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Tesco Model 2 with filename: ", filename);
+    console.info(
+      "Packing list matches Tesco Model 2 with filename: ",
+      filename,
+    );
     parsedPackingList = parseTescoModel2(result.Sheet2);
     isParsed = true;
   } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
