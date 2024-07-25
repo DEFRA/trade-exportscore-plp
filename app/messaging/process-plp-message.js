@@ -14,7 +14,7 @@ async function processPlpMessage (message, receiver) {
 
     if (parsed.isParsed) {
       await createPackingList(parsed.packingList, message.body.application_id)
-      await patchPackingListCheck(message.body.application_id, parsed.isParsed)
+      await patchPackingListCheck(message.body.application_id, parsed.packingList.business_checks.all_required_fields_present)
     }
   } catch (err) {
     console.error('Unable to process message:', err)
