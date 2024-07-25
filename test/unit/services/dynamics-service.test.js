@@ -38,6 +38,7 @@ describe("bearerTokenRequest", () => {
       Promise.resolve({
         ok: false,
         status: 400,
+        json: () => Promise.resolve({ access_token: "abc" }),
       }),
     );
 
