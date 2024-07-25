@@ -1,21 +1,21 @@
 const upsertIdcoms = require('../../../app/routes/upsert-idcoms')
+const mockResponse = { response: 200, code: 200 }
 
 jest.mock('../../../app/services/dynamics-service')
 
 const { patchPackingListCheck } = require('../../../app/services/dynamics-service')
 
-const mockResponse = { response: 200, code: 200 }
-
 patchPackingListCheck.mockImplementation(() => {
   return mockResponse
 })
+
 const mockApplicationId = 123
 
-const mockHandler = jest.fn()
-
-mockHandler.mockResolvedValue(() => {
-  return mockResponse
-})
+const mockHandler = {
+  response: jest.fn(() => ({
+    code: jest.fn(() => 200)
+  }))
+}
 
 console.error = jest.fn()
 
@@ -40,8 +40,10 @@ describe('upsert idcoms', () => {
   })
 
   test('should perform the upsert when application id is specified and isParsed is true', async () => {
-    await upsertIdcoms.options.handler({ query: { applicationId: mockApplicationId, isParsed: true } }, mockHandler)
 
+    let response = await upsertIdcoms.options.handler({ query: { applicationId: mockApplicationId, isParsed: true } }, mockHandler)
+
+    expect(response).toBe(200)
     expect(patchPackingListCheck).toHaveBeenCalledWith(mockApplicationId, true)
   })
 
