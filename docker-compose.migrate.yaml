@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 x-common-migration: &common-migration
   POSTGRES_HOST: ${POSTGRES_HOST:-trade-exportscore-plp-postgres}
@@ -17,7 +17,7 @@ services:
   database-up:
     image: liquibase/liquibase:3.10.x
     environment:
-      << : [*common-postgres, *common-migration]
+      <<: [*common-postgres, *common-migration]
     entrypoint: >
       sh -c "/scripts/migration/database-up $${SCHEMA_PASSWORD}"
     depends_on:
@@ -29,7 +29,7 @@ services:
   database-down:
     image: liquibase/liquibase:3.10.x
     environment:
-      << : [*common-postgres, *common-migration]
+      <<: [*common-postgres, *common-migration]
     entrypoint: >
       sh -c "/scripts/migration/database-down"
     depends_on:

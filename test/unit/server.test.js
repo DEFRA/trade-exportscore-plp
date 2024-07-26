@@ -1,27 +1,27 @@
-const { sequelize } = require('../../app/services/database-service')
-const createServer = require('../../app/server')
+const { sequelize } = require("../../app/services/database-service");
+const createServer = require("../../app/server");
 
-jest.mock('../../app/services/database-service', () => ({
+jest.mock("../../app/services/database-service", () => ({
   sequelize: {
-    authenticate: jest.fn()
-  }
-}))
+    authenticate: jest.fn(),
+  },
+}));
 
-jest.mock('../../app/messaging', () => ({
-  start: jest.fn()
-}))
+jest.mock("../../app/messaging", () => ({
+  start: jest.fn(),
+}));
 
-jest.mock('../../app/config', () => ({
-  isDev: true
-}))
+jest.mock("../../app/config", () => ({
+  isDev: true,
+}));
 
-describe('cresteServer', () => {
-  test('should create server', async () => {
-    sequelize.authenticate.mockResolvedValue()
+describe("cresteServer", () => {
+  test("should create server", async () => {
+    sequelize.authenticate.mockResolvedValue();
 
-    const result = await createServer()
+    const result = await createServer();
 
-    expect(result.registrations.router).toBeDefined()
-    expect(result.registrations.blipp).toBeDefined()
-  })
-})
+    expect(result.registrations.router).toBeDefined();
+    expect(result.registrations.blipp).toBeDefined();
+  });
+});

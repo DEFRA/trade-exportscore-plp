@@ -33,4 +33,3 @@ spec:
   type: backend
   lifecycle: alpha
   owner: "group:default/eutd-trade-exports-core"
-  

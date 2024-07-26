@@ -1,6 +1,6 @@
 {
   "name": "trade-exportscore-plp",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "homepage": "github.com?owner=defra&repo=trade-exportscore-plp&organization=defra",
   "main": "app/index.js",
@@ -8,7 +8,7 @@
     "pretest": "npm run test:lint",
     "test": "jest --runInBand --forceExit",
     "test:watch": "jest --coverage=false --onlyChanged --watch --runInBand",
-    "test:lint": "standard",
+    "test:lint": "prettier . --check",
     "test:debug": "node --inspect-brk=0.0.0.0 ./node_modules/jest/bin/jest.js --coverage=false --onlyChanged --watch --runInBand --no-cache",
     "test:unit": "jest --testPathPattern=test/unit --runInBand",
     "test:unit-watch": "jest --testPathPattern=test/unit --coverage=false --onlyChanged --watch",
@@ -19,8 +19,8 @@
   "contributors": [],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@azure/storage-blob": "^12.23.0",
     "@azure/identity": "^4.2.1",
+    "@azure/storage-blob": "^12.23.0",
     "@hapi/hapi": "21.3.2",
     "adp-messaging": "^2.9.0",
     "applicationinsights": "2.8.0",
@@ -38,6 +38,7 @@
     "jest": "29.7.0",
     "jest-junit": "16.0.0",
     "nodemon": "3.0.1",
+    "prettier": "3.3.3",
     "standard": "^17.1.0"
   },
   "standard": {
