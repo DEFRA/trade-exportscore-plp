@@ -22,6 +22,6 @@ namespaceQueues:
 storageAccounts:
   - name: tradeplp
     roleAssignments:
-      roleName: "DataReader"
+       roleName: 'DataReader'
     blobContainers:
       - name: packing-lists
