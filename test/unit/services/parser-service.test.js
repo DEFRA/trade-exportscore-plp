@@ -382,7 +382,7 @@ describe('parseAsdaModel1', () => {
           E: 'RMS-NI-000008-017'
         }
       ]
-    const result = parserService.parseAsda(packingListJson)
+    const result = parserService.parseAsdaModel1(packingListJson)
     expect(result.registration_approval_number).toBeNull()
     expect(result.items).toHaveLength(1)
     expect(result.items[0].description).toBeNull()
@@ -1725,7 +1725,7 @@ describe('matchesAsdaModel2', () => {
   test('returns wrong establishment number for missing establishment number', () => {
     const packingListJson = {
       Sheet1: [
-        {},{},{},{},
+        {}, {}, {}, {},
         {
           H: 'INCORRECT'
         }
@@ -1810,5 +1810,31 @@ describe('parseAsdaModel2', () => {
     expect(result.items[1].type_of_treatment).toBe(packingListJson[5].F)
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[4].N)
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[5].N)
+  })
+
+  test('parses null json', () => {
+    const packingListJson =
+      [
+        {
+          B: '[Description Of All Retail Go',
+          D: '[Nature Of Product]',
+          F: '[Treatment Ty',
+          H: 'Establishment Number',
+          J: 'Cases',
+          L: 'Case Weight',
+          N: 'NET Weight'
+        },
+        {
+          E: 'RMS-GB-000015-010'
+        }
+      ]
+    const result = parserService.parseAsdaModel2(packingListJson)
+    expect(result.registration_approval_number).toBeNull()
+    expect(result.items).toHaveLength(1)
+    expect(result.items[0].description).toBeNull()
+    expect(result.items[0].nature_of_products).toBeNull()
+    expect(result.items[0].type_of_treatment).toBeNull()
+    expect(result.items[0].number_of_packages).toBeNull()
+    expect(result.items[0].total_net_weight_kg).toBeNull()
   })
 })
