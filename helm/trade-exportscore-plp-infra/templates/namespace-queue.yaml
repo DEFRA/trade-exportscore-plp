@@ -1,1 +1,1 @@
-{ { - include "adp-aso-helm-library.namespace-queue" . - } }
+{{- include "adp-aso-helm-library.namespace-queue" . -}}

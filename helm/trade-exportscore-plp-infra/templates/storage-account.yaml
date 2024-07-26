@@ -1,1 +1,1 @@
-{ { - include "adp-aso-helm-library.storage-account" . - } }
+{{- include "adp-aso-helm-library.storage-account" . -}}
