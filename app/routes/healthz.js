@@ -1,11 +1,11 @@
-const { StatusCodes } = require('http-status-codes')
+const { StatusCodes } = require("http-status-codes");
 
 module.exports = {
-  method: 'GET',
-  path: '/healthz',
+  method: "GET",
+  path: "/healthz",
   options: {
     handler: (_request, h) => {
-      return h.response('ok').code(StatusCodes.OK)
-    }
-  }
-}
+      return h.response("ok").code(StatusCodes.OK);
+    },
+  },
+};

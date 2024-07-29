@@ -21,7 +21,7 @@ The application is designed to run in containerised environments, using Docker C
 Container images are built using Docker Compose, with the same images used to run the service with either Docker Compose or Kubernetes.
 
 When using the Docker Compose files in development the local `app` folder will
-be mounted on top of the `app` folder within the Docker container, hiding the CSS files that were generated during the Docker build.  For the site to render correctly locally `npm run build` must be run on the host system.
+be mounted on top of the `app` folder within the Docker container, hiding the CSS files that were generated during the Docker build. For the site to render correctly locally `npm run build` must be run on the host system.
 
 By default, the start script will build (or rebuild) images so there will
 rarely be a need to build images manually. However, this can be achieved
@@ -68,6 +68,18 @@ scripts/test -w
 ```
 
 In addition to the above, please refer to the [Additional Information](./additional-info.md) file for extensions that make running / debugging a single test easier than the above method.
+
+#### Troubleshooting
+
+If you receive the following error:
+
+![Docker not found error](./readme-images/Screenshot%202024-07-25%20103846.png "Docker not found error")
+
+please check docker is running. The message is _interesting_ but, more importantly, so far wrong...
+
+### Debugging
+
+After much _fun_, please refer to the [Debugging](./debugging.md) file for information on how (and where) to debug your tests.
 
 ## CI & CD Pipeline
 
