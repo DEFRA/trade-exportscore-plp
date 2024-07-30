@@ -379,7 +379,7 @@ describe('parseAsdaModel1', () => {
           H: '[kilograms/grams]'
         },
         {
-          E: 'RMS-NI-000008-017'
+          D: null
         }
       ]
     const result = parserService.parseAsdaModel1(packingListJson)
@@ -1788,7 +1788,6 @@ describe('parseAsdaModel2', () => {
           L: 12.75,
           N: 255
         },
-        {},
         {
           B: 'ASDA BABY WATERMELON X10',
           D: 'MELON HARD',
@@ -1801,7 +1800,7 @@ describe('parseAsdaModel2', () => {
       ]
     const result = parserService.parseAsdaModel2(packingListJson)
     expect(result.registration_approval_number).toBe(packingListJson[4].H)
-    expect(result.items).toHaveLength(3)
+    expect(result.items).toHaveLength(2)
     expect(result.items[0].description).toBe(packingListJson[4].B)
     expect(result.items[1].description).toBe(packingListJson[5].B)
     expect(result.items[0].nature_of_products).toBe(packingListJson[4].D)
@@ -1815,6 +1814,7 @@ describe('parseAsdaModel2', () => {
   test('parses null json', () => {
     const packingListJson =
       [
+        {}, {},
         {
           B: '[Description Of All Retail Go',
           D: '[Nature Of Product]',
@@ -1825,8 +1825,7 @@ describe('parseAsdaModel2', () => {
           N: 'NET Weight'
         },
         {
-          E: 'RMS-GB-000015-010'
-        }
+        }, {}
       ]
     const result = parserService.parseAsdaModel2(packingListJson)
     expect(result.registration_approval_number).toBeNull()
