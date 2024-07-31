@@ -1881,371 +1881,184 @@ describe("findParser", () => {
   });
 });
 
-//buffaload
+/// /////////////////////////////////////////////////////buffaload
 
-describe("matchesBuffaload", () => {
+describe("matchesBuffaloadLogistics", () => {
   test("returns true", () => {
     const filename = "PackingList.xlsx";
     const packingListJson = {
-      Something: [
+      Tabelle1: [
         {
-          A: "RMS_ESTABLISHMENT_NO",
-          I: "PRODUCT_TYPE_CATEGORY",
-          K: "PART_NUMBER_DESCRIPTION",
-          L: "TARIFF_CODE_EU",
-          M: "PACKAGES",
-          O: "NET_WEIGHT_TOTAL",
+          A: "NIIRMS Dispatch number",
+          B: "RMS-GB-000098-001",
+          C: "Dispatch address",
+          D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
         },
         {
-          A: "RMS-GB-000025-009",
+          A: "Commodity code",
+          B: "Description of goods",
+          C: "Country of Origin",
+          D: "No. of pkgs",
+          E: "Type of pkgs",
+          F: "Item Gross Weight (kgs)",
+          G: "Item Net Weight (kgs)",
+          H: "Treatment Type (Chilled /Ambient) ",
+          I: "NIRMS Lane (R/G)",
         },
       ],
     };
-    const result = parserService.matchesNisa(packingListJson, filename);
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
     expect(result).toBe(MatcherResult.CORRECT);
   });
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
-    const result = parserService.matchesNisa(packingListJson, filename);
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
   test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
-      Something: [
-        {},
+      Tabelle1: [
         {
-          A: "INCORRECT",
+          B: "INCORRECT",
         },
       ],
     };
     const filename = "packinglist.xlsx";
-    const result = parserService.matchesNisa(packingListJson, filename);
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return wrong extensions for incorrect file extension", () => {
     const filename = "packinglist.pdf";
     const packingListJson = {};
-    const result = parserService.matchesNisa(packingListJson, filename);
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
-      Something: [
+      Tabelle1: [
+        {
+          B: "RMS-GB-000098-001",
+        },
         {
           A: "NOT",
           B: "CORRECT",
           C: "HEADER",
         },
-        {
-          A: "RMS-GB-000025-009",
-        },
       ],
     };
-    const result = parserService.matchesNisa(packingListJson, filename);
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });
 
-describe("parseNisa", () => {
+describe("parseBuffaloadLogistics", () => {
   test("parses json", () => {
     const packingListJson = [
       {
-        A: "RMS_ESTABLISHMENT_NO",
-        I: "PRODUCT_TYPE_CATEGORY",
-        K: "PART_NUMBER_DESCRIPTION",
-        L: "TARIFF_CODE_EU",
-        M: "PACKAGES",
-        O: "NET_WEIGHT_TOTAL",
+        A: "NIIRMS Dispatch number",
+        B: "RMS-GB-000098-001",
+        C: "Dispatch address",
+        D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
       },
       {
-        A: "RMS-GB-000025-001",
-        I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        K: "DAIRYLEA DUNKERS JUMBO PM80P",
-        L: "2005995090",
-        M: 2,
-        O: 2.5,
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient) ",
+        I: "NIRMS Lane (R/G)",
       },
       {
-        A: "RMS-GB-000025-001",
-        I: "900 - VEGETABLES PREPACK-C",
-        K: "CO OP BROCCOLI",
-        L: "0403209300",
-        M: 1,
-        O: 2,
+        A: "1905908000",
+        B: "60008347 - Take-Out Club Classic Crust Kickin' Meat Feast",
+        C: "Great Britain",
+        D: 6,
+        E: "Cases",
+        F: 3.782,
+        G: 3.552,
+        H: "Chilled",
+        I: "Green",
+      },
+      {
+        A: "1905908000",
+        B: "60008348 - Take-Out Club Classic Crust Smokin' BBQ Pulled Pork",
+        C: "Great Britain",
+        D: 5,
+        E: "Cases",
+        F: 3.788,
+        G: 3.558,
+        H: "Chilled",
+        I: "Green",
       },
     ];
 
-    const result = parserService.parseNisa(packingListJson);
-    expect(result.registration_approval_number).toBe(packingListJson[1].A);
+    const result = parserService.parseBuffaloadLogistics(packingListJson);
+    expect(result.registration_approval_number).toBe(packingListJson[0].B);
     expect(result.items).toHaveLength(2);
-    expect(result.items[0].description).toBe(packingListJson[1].K);
-    expect(result.items[1].description).toBe(packingListJson[2].K);
-    expect(result.items[0].nature_of_products).toBe(packingListJson[1].I);
-    expect(result.items[1].nature_of_products).toBe(packingListJson[2].I);
-    expect(result.items[0].commodity_code).toBe(packingListJson[1].L);
-    expect(result.items[1].commodity_code).toBe(packingListJson[2].L);
-    expect(result.items[0].number_of_packages).toBe(packingListJson[1].M);
-    expect(result.items[1].number_of_packages).toBe(packingListJson[2].M);
-    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].O);
-    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].O);
+    expect(result.items[0].description).toBe(packingListJson[1].B);
+    expect(result.items[1].description).toBe(packingListJson[2].B);
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[1].H);
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[2].H);
+    expect(result.items[0].commodity_code).toBe(packingListJson[1].A);
+    expect(result.items[1].commodity_code).toBe(packingListJson[2].A);
+    expect(result.items[0].number_of_packages).toBe(packingListJson[1].D);
+    expect(result.items[1].number_of_packages).toBe(packingListJson[2].D);
   });
 
   test("parses null json", () => {
     const packingListJson = [
       {
-        A: "RMS_ESTABLISHMENT_NO",
-        I: "PRODUCT_TYPE_CATEGORY",
-        K: "PART_NUMBER_DESCRIPTION",
-        L: "TARIFF_CODE_EU",
-        M: "PACKAGES",
-        O: "NET_WEIGHT_TOTAL",
+        A: "NIIRMS Dispatch number",
+        B: null,
+        C: "Dispatch address",
+        D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
+      },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient) ",
+        I: "NIRMS Lane (R/G)",
       },
       {},
     ];
 
-    const result = parserService.parseNisa(packingListJson);
+    const result = parserService.parseBuffaloadLogistics(packingListJson);
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();
+    expect(result.items[0].type_of_treatment).toBeNull();
     expect(result.items[0].nature_of_products).toBeNull();
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
-  });
-});
-
-describe("checkRequiredData", () => {
-  test("missing remos number", () => {
-    const packingList = {
-      registration_approval_number: null,
-      items: [
-        {
-          description: "description",
-          nature_of_products: "nature of products",
-          type_of_treatment: "type of treatment",
-          commodity_code: "012345",
-          number_of_packages: 1,
-          total_net_weight_kg: 1.2,
-        },
-      ],
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-
-    const result = parserService.checkRequiredData(packingList);
-
-    expect(result).toBeFalsy();
-  });
-
-  test("missing commodity code", () => {
-    const packingList = {
-      registration_approval_number: "remos",
-      items: [
-        {
-          description: "description",
-          nature_of_products: "nature of products",
-          type_of_treatment: null,
-          commodity_code: null,
-          number_of_packages: 1,
-          total_net_weight_kg: 1.2,
-        },
-      ],
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-
-    const result = parserService.checkRequiredData(packingList);
-
-    expect(result).toBeFalsy();
-  });
-
-  test("missing treatment type", () => {
-    const packingList = {
-      registration_approval_number: "remos",
-      items: [
-        {
-          description: "description",
-          nature_of_products: "nature of products",
-          type_of_treatment: null,
-          commodity_code: null,
-          number_of_packages: 1,
-          total_net_weight_kg: 1.2,
-        },
-      ],
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-
-    const result = parserService.checkRequiredData(packingList);
-
-    expect(result).toBeFalsy();
-  });
-
-  test("missing nature of products", () => {
-    const packingList = {
-      registration_approval_number: "remos",
-      items: [
-        {
-          description: "description",
-          nature_of_products: null,
-          type_of_treatment: "treatment type",
-          commodity_code: null,
-          number_of_packages: 1,
-          total_net_weight_kg: 1.2,
-        },
-      ],
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-
-    const result = parserService.checkRequiredData(packingList);
-
-    expect(result).toBeFalsy();
-  });
-
-  test("missing description", () => {
-    const packingList = {
-      registration_approval_number: "remos",
-      items: [
-        {
-          description: null,
-          nature_of_products: "nature of products",
-          type_of_treatment: "treatment type",
-          commodity_code: "123",
-          number_of_packages: 1,
-          total_net_weight_kg: 1.2,
-        },
-      ],
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-
-    const result = parserService.checkRequiredData(packingList);
-
-    expect(result).toBeFalsy();
-  });
-
-  test("missing packages", () => {
-    const packingList = {
-      registration_approval_number: "remos",
-      items: [
-        {
-          description: "description",
-          nature_of_products: "nature of products",
-          type_of_treatment: "treatment type",
-          commodity_code: "123",
-          number_of_packages: null,
-          total_net_weight_kg: 1.2,
-        },
-      ],
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-
-    const result = parserService.checkRequiredData(packingList);
-
-    expect(result).toBeFalsy();
-  });
-
-  test("missing net weight", () => {
-    const packingList = {
-      registration_approval_number: "remos",
-      items: [
-        {
-          description: "description",
-          nature_of_products: "nature of products",
-          type_of_treatment: "treatment type",
-          commodity_code: "123",
-          number_of_packages: 1,
-          total_net_weight_kg: null,
-        },
-      ],
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-
-    const result = parserService.checkRequiredData(packingList);
-
-    expect(result).toBeFalsy();
-  });
-});
-
-describe("findParser", () => {
-  test("removes empty items", () => {
-    const packingListJson = {
-      Sheet1: [
-        {
-          A: "Consignor / Place o f Despatch",
-          B: "CONSIGNEE",
-          C: "Trailer",
-          D: "Seal",
-          E: "Store",
-          F: "STORENAME",
-          G: "Order",
-          H: "Cage/Ref",
-          I: "Group",
-          J: "TREATMENTTYPE",
-          K: "Sub-Group",
-          L: "Description",
-          M: "Item",
-          N: "Description",
-          O: "Tariff/Commodity",
-          P: "Cases",
-          Q: "Gross Weight Kg",
-          R: "Net Weight Kg",
-          S: "Cost",
-          T: "Country of Origin",
-          U: "VAT Status",
-          V: "SPS",
-          W: "Consignment ID",
-          X: "Processed?",
-          Y: "Created Timestamp",
-        },
-        {
-          A: "RMS-GB-000010-001",
-          J: "CHILLED",
-          L: "Description",
-          N: "Description",
-          O: "0408192000",
-          P: "2",
-          R: "1.4",
-        },
-        {
-          A: null,
-          J: null,
-          L: null,
-          N: null,
-          O: null,
-          P: null,
-          R: null,
-        },
-        {
-          A: "RMS-GB-000010-001",
-          J: "FRESH PRODUCTS",
-          L: "LETTUCE & BAGGED SALADS",
-          N: "FLORETTE SWEET & CRUNCHY 250G",
-          O: "1602906100",
-          P: "4",
-          R: "8",
-        },
-      ],
-    };
-    const filename = "packinglist.xls";
-
-    const result = parserService.findParser(packingListJson, filename);
-    expect(result.packingList.items).toHaveLength(2);
   });
 });

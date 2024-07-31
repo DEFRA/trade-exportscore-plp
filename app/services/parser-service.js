@@ -653,11 +653,8 @@ function matchesBuffaloadLogistics(packingListJson, filename) {
     };
 
     if (
-      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
+      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)) {return MatcherResult.WRONG_HEADER } 
+      else { return MatcherResult.CORRECT;
     }
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
@@ -667,89 +664,11 @@ function matchesBuffaloadLogistics(packingListJson, filename) {
 function parseBuffaloadLogistics(packingListJson) {
   const establishmentNumber = packingListJson[0].B;
   const packingListContents = packingListJson.slice(2).map((col) => ({
-    description: col.B,
+    description: col.B ?? null,
     nature_of_products: null,
-    type_of_treatment: col.H,
-    commodity_code: col.A,
-    number_of_packages: col.D,
-    total_net_weight_kg: null,
-  }));
-
-  return combineParser(establishmentNumber, packingListContents, true);
-}
-
-function checkRequiredData(packingList) {
-  const hasCommodityCode = packingList.items.every(
-    (x) => x.commodity_code !== null,
-  );
-  const hasTreatmentOrNature = packingList.items.every(
-    (x) => x.nature_of_products !== null && x.type_of_treatment !== null,
-  );
-  const hasDescription = packingList.items.every((x) => x.description !== null);
-  const hasPackages = packingList.items.every(
-    (x) => x.number_of_packages !== null,
-  );
-  const hasNetWeight = packingList.items.every(
-    (x) => x.total_net_weight_kg !== null,
-  );
-  const hasRemos = packingList.registration_approval_number !== null;
-  return (
-    (hasCommodityCode || hasTreatmentOrNature) &&
-    hasDescription &&
-    hasPackages &&
-    hasNetWeight &&
-    hasRemos
-  );
-}
-
-function matchesBuffaloadLogistics(packingListJson, filename) {
-  try {
-    // check for correct extension
-    const fileExtension = filename.split(".").pop().toLowerCase();
-    if (fileExtension !== "xlsx") {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
-
-    // check for correct establishment number
-    const establishmentNumber = packingListJson.Tabelle1[0].B;
-    const regex = /^RMS-GB-000098-\d{3}$/;
-    if (!regex.test(establishmentNumber)) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
-    }
-
-    // check for header values
-    const header = {
-      A: "Commodity code",
-      B: "Description of goods",
-      C: "Country of Origin",
-      D: "No. of pkgs",
-      E: "Type of pkgs",
-      F: "Item Gross Weight (kgs)",
-      G: "Item Net Weight (kgs)",
-      H: "Treatment Type (Chilled /Ambient) ",
-      I: "NIRMS Lane (R/G)",
-    };
-
-    if (
-      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
-    }
-  } catch (err) {
-    return MatcherResult.GENERIC_ERROR;
-  }
-}
-
-function parseBuffaloadLogistics(packingListJson) {
-  const establishmentNumber = packingListJson[0].B;
-  const packingListContents = packingListJson.slice(2).map((col) => ({
-    description: col.B,
-    nature_of_products: null,
-    type_of_treatment: col.H,
-    commodity_code: col.A,
-    number_of_packages: col.D,
+    type_of_treatment: col.H ?? null,
+    commodity_code: col.A ?? null,
+    number_of_packages: col.D ?? null,
     total_net_weight_kg: null,
   }));
 
