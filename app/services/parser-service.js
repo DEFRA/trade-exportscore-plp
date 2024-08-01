@@ -42,6 +42,10 @@ function findParser(result, filename) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
     parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER]);
     isParsed = true;
+  } else if (matchesFowlerWelch2(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Fowler Welch with filename: ", filename);
+    parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER]);
+    isParsed = true;
   } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
     parsedPackingList = parseNisa(result[Object.keys(result)[0]]);
