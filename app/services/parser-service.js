@@ -7,6 +7,7 @@ const INPUT_DATA_SHEET = "Input Data Sheet";
 function findParser(result, filename) {
   let parsedPackingList = failedParser();
   let isParsed = false;
+  console.log(matchesBuffaloadLogistics(result, filename))
 
   if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches TJ Morris with filename: ", filename);
@@ -648,7 +649,7 @@ function matchesBuffaloadLogistics(packingListJson, filename) {
       E: "Type of pkgs",
       F: "Item Gross Weight (kgs)",
       G: "Item Net Weight (kgs)",
-      H: "Treatment Type (Chilled /Ambient) ",
+      H: "Treatment Type (Chilled /Ambient)",
       I: "NIRMS Lane (R/G)",
     };
 
@@ -669,7 +670,7 @@ function parseBuffaloadLogistics(packingListJson) {
     type_of_treatment: col.H ?? null,
     commodity_code: col.A ?? null,
     number_of_packages: col.D ?? null,
-    total_net_weight_kg: null,
+    total_net_weight_kg: col.G ?? null,
   }));
 
   return combineParser(establishmentNumber, packingListContents, true);
