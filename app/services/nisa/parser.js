@@ -1,4 +1,4 @@
-const combineParser = require("../parser-combine")
+const combineParser = require("../parser-combine");
 
 function parse(packingListJson) {
   const establishmentNumber = packingListJson[1].A ?? null;

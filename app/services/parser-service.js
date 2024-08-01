@@ -1,7 +1,7 @@
 const MatcherResult = require("../services/matches-result");
-const matchesNisa = require("../services/nisa/matcher")
-const parseNisa = require("../services/nisa/parser")
-const combineParser = require("../services/parser-combine")
+const matchesNisa = require("../services/nisa/matcher");
+const parseNisa = require("../services/nisa/parser");
+const combineParser = require("../services/parser-combine");
 
 const CUSTOMER_ORDER = "Customer Order";
 const COUNTRY_OF_ORIGIN = "Country of Origin";

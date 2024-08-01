@@ -1,4 +1,3 @@
-
 function combine(
   establishmentNumber,
   packingListContents,
@@ -16,4 +15,3 @@ function combine(
 module.exports = {
   combine,
 };
-

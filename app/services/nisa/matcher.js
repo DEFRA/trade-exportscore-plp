@@ -9,7 +9,8 @@ function matches(packingListJson, filename) {
     }
 
     const sheet = Object.keys(packingListJson)[0];
-    const establishmentNumber = packingListJson[sheet][establishmentNumberRow].A;
+    const establishmentNumber =
+      packingListJson[sheet][establishmentNumberRow].A;
     const regex = /^RMS-GB-000025-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -38,6 +39,5 @@ function matches(packingListJson, filename) {
     return MatcherResult.GENERIC_ERROR;
   }
 }
-
 
 module.exports = { matches };
