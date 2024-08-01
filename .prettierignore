@@ -1,0 +1,4 @@
+/app/dist/**/*.js
+/test-output
+/helm
+/ADO-Pipeline-Common

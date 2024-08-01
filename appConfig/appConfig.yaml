@@ -9,7 +9,7 @@
 - key: POSTGRES_SCHEMA_NAME
   value: "public"
 - key: POSTGRES_PORT
-  value: "5432" 
+  value: "5432"
 - key: POSTGRES_DB
   value: "eutd-trade-exports-core-trade-exportscore-plp"
 - key: PLP_TOPIC_ADDRESS
