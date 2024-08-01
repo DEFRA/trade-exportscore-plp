@@ -1,7 +1,7 @@
 const MatcherResult = require("../services/matches-result");
-const matchesNisa = require("../services/nisa/matcher");
-const parseNisa = require("../services/nisa/parser");
-const combineParser = require("../services/parser-combine");
+const NisaMatcher = require("../services/nisa/matcher");
+const NisaParser = require("../services/nisa/parser");
+const CombineParser = require("../services/parser-combine");
 
 const CUSTOMER_ORDER = "Customer Order";
 const COUNTRY_OF_ORIGIN = "Country of Origin";
@@ -45,9 +45,9 @@ function findParser(result, filename) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
     parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER]);
     isParsed = true;
-  } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
+  } else if (NisaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
-    parsedPackingList = parseNisa.parse(result[Object.keys(result)[0]]);
+    parsedPackingList = NisaParser.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
@@ -262,7 +262,7 @@ function parseBandM(packingListJson) {
       total_net_weight_kg: col.G ?? null,
     }));
 
-  return combineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function isEndOfRow(x) {
@@ -273,7 +273,7 @@ function isEndOfRow(x) {
 }
 
 function failedParser() {
-  return combineParser.combine(null, [], false);
+  return CombineParser.combine(null, [], false);
 }
 
 function parseAsda(packingListJson) {
@@ -287,7 +287,7 @@ function parseAsda(packingListJson) {
     total_net_weight_kg: col.G ?? null,
   }));
 
-  return combineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseTescoModel1(packingListJson) {
@@ -306,7 +306,7 @@ function parseTescoModel1(packingListJson) {
       total_net_weight_kg: col.BU ?? null,
     }));
 
-  return combineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseTescoModel2(packingListJson) {
@@ -320,7 +320,7 @@ function parseTescoModel2(packingListJson) {
     total_net_weight_kg: col.K ?? null,
   }));
 
-  return combineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesSainsburys(packingListJson, filename) {
@@ -382,7 +382,7 @@ function parseSainsburys(packingListJson) {
     total_net_weight_kg: col.H ?? null,
   }));
 
-  return combineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesTjmorris(packingListJson, filename) {
@@ -450,7 +450,7 @@ function parseTjmorris(packingListJson) {
     total_net_weight_kg: col.R ?? null,
   }));
 
-  return combineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesFowlerWelch(packingListJson, filename) {
@@ -520,7 +520,7 @@ function parseFowlerWelch(packingListJson) {
       total_net_weight_kg: col.K ?? null,
     }));
 
-  return combineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function checkRequiredData(packingList) {

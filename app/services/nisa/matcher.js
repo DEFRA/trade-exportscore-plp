@@ -1,6 +1,6 @@
 const MatcherResult = require("../../services/matches-result");
 
-function matches(packingListJson, filename) {
+function matches(packingList, filename) {
   const establishmentNumberRow = 1;
   try {
     const fileExtension = filename.split(".").pop();
@@ -8,9 +8,8 @@ function matches(packingListJson, filename) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
 
-    const sheet = Object.keys(packingListJson)[0];
-    const establishmentNumber =
-      packingListJson[sheet][establishmentNumberRow].A;
+    const sheet = Object.keys(packingList)[0];
+    const establishmentNumber = packingList[sheet][establishmentNumberRow].A;
     const regex = /^RMS-GB-000025-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -27,8 +26,8 @@ function matches(packingListJson, filename) {
 
     for (const key in header) {
       if (
-        !packingListJson[sheet][0] ||
-        packingListJson[sheet][0][key] !== header[key]
+        !packingList[sheet][0] ||
+        packingList[sheet][0][key] !== header[key]
       ) {
         return MatcherResult.WRONG_HEADER;
       }
