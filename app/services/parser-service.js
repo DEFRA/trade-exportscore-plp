@@ -38,6 +38,13 @@ function findParser(result, filename) {
     );
     parsedPackingList = parseTescoModel2(result.Sheet2);
     isParsed = true;
+  } else if (matchesTescoModel3(result, filename) === MatcherResult.CORRECT) {
+    console.info(
+      "Packing list matches Tesco Model 3 with filename: ",
+      filename,
+    );
+    parsedPackingList = parseTescoModel3(result[INPUT_DATA_SHEET]);
+    isParsed = true;
   } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
     parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER]);
@@ -239,6 +246,48 @@ function matchesTescoModel2(packingListJson, filename) {
   }
 }
 
+/// //////////////////////////////////////////////////
+function matchesTescoModel3(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop();
+    if (fileExtension !== "xlsx") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson[INPUT_DATA_SHEET][3].E;
+    const regex = /^RMS-GB-000022-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      A: "Product/ Part Number description",
+      B: "Tariff Code UK",
+      C: "Treatment Type",
+      D: "Green Lane",
+      E: "Packages",
+      F: "Gross Weight",
+      G: "Net Weight",
+    };
+
+    for (const key in header) {
+      if (
+        !packingListJson[INPUT_DATA_SHEET][4] ||
+        packingListJson[INPUT_DATA_SHEET][4][key] !== header[key]
+      ) {
+        return MatcherResult.WRONG_HEADER;
+      }
+    }
+
+    return MatcherResult.CORRECT;
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
 function parseBandM(packingListJson) {
   const traderRow = packingListJson.findIndex(
     (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
@@ -329,6 +378,20 @@ function parseTescoModel2(packingListJson) {
     commodity_code: col.C ?? null,
     number_of_packages: col.H ?? null,
     total_net_weight_kg: col.K ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
+}
+
+function parseTescoModel3(packingListJson) {
+  const establishmentNumber = packingListJson[3].E ?? null;
+  const packingListContents = packingListJson.slice(5).map((col) => ({
+    description: col.A ?? null,
+    nature_of_products: null,
+    type_of_treatment: col.C ?? null,
+    commodity_code: col.B ?? null,
+    number_of_packages: col.E ?? null,
+    total_net_weight_kg: col.G ?? null,
   }));
 
   return combineParser(establishmentNumber, packingListContents, true);
@@ -628,8 +691,10 @@ module.exports = {
   parseTjmorris,
   matchesTescoModel1,
   matchesTescoModel2,
+  matchesTescoModel3,
   parseTescoModel1,
   parseTescoModel2,
+  parseTescoModel3,
   matchesFowlerWelch,
   parseFowlerWelch,
   findParser,
