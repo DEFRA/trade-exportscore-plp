@@ -1,5 +1,6 @@
 const parserService = require("../../../app/services/parser-service");
 const MatcherResult = require("../../../app/services/matches-result");
+const nisaMacher = require("../../../app/services/nisa/matcher");
 
 describe("matchesBandM", () => {
   test("returns correct", () => {
@@ -215,35 +216,6 @@ describe("failedParser", () => {
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toMatchObject([]);
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
-  });
-});
-
-describe("combineParser", () => {
-  test("parses json", () => {
-    const registrationApprovalNumber = "test";
-    const items = [
-      {
-        description: "test desc",
-        nature_of_products: "products",
-        type_of_treatment: "teatment",
-        commodity_code: 123,
-        number_of_packages: 1,
-        total_net_weight_kg: 1.2,
-      },
-    ];
-    const packingListJson = {
-      registration_approval_number: registrationApprovalNumber,
-      items,
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-    const result = parserService.combineParser(
-      registrationApprovalNumber,
-      items,
-      true,
-    );
-    expect(result).toMatchObject(packingListJson);
   });
 });
 
@@ -1532,54 +1504,8 @@ describe("matchesNisa", () => {
         },
       ],
     };
-    const result = parserService.matchesNisa(packingListJson, filename);
+    const result = nisaMacher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.CORRECT);
-  });
-
-  test("returns generic error for empty json", () => {
-    const packingListJson = {};
-    const filename = "packinglist.xlsx";
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.GENERIC_ERROR);
-  });
-
-  test("returns wrong establishment number for missing establishment number", () => {
-    const packingListJson = {
-      Something: [
-        {},
-        {
-          A: "INCORRECT",
-        },
-      ],
-    };
-    const filename = "packinglist.xlsx";
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
-  });
-
-  test("return wrong extensions for incorrect file extension", () => {
-    const filename = "packinglist.pdf";
-    const packingListJson = {};
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
-  });
-
-  test("return wrong header for incorrect header values", () => {
-    const filename = "packinglist.xlsx";
-    const packingListJson = {
-      Something: [
-        {
-          A: "NOT",
-          B: "CORRECT",
-          C: "HEADER",
-        },
-        {
-          A: "RMS-GB-000025-009",
-        },
-      ],
-    };
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });
 

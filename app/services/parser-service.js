@@ -1,4 +1,7 @@
 const MatcherResult = require("../services/matches-result");
+const matchesNisa = require("../services/nisa/matcher")
+const parseNisa = require("../services/nisa/parser")
+const combineParser = require("../services/parser-combine")
 
 const CUSTOMER_ORDER = "Customer Order";
 const COUNTRY_OF_ORIGIN = "Country of Origin";
@@ -44,7 +47,7 @@ function findParser(result, filename) {
     isParsed = true;
   } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
-    parsedPackingList = parseNisa(result[Object.keys(result)[0]]);
+    parsedPackingList = parseNisa.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
@@ -259,7 +262,7 @@ function parseBandM(packingListJson) {
       total_net_weight_kg: col.G ?? null,
     }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return combineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function isEndOfRow(x) {
@@ -269,22 +272,8 @@ function isEndOfRow(x) {
   return isTotal && isEmpty;
 }
 
-function combineParser(
-  establishmentNumber,
-  packingListContents,
-  allRequiredFieldsPresent,
-) {
-  return {
-    registration_approval_number: establishmentNumber,
-    items: packingListContents,
-    business_checks: {
-      all_required_fields_present: allRequiredFieldsPresent,
-    },
-  };
-}
-
 function failedParser() {
-  return combineParser(null, [], false);
+  return combineParser.combine(null, [], false);
 }
 
 function parseAsda(packingListJson) {
@@ -298,7 +287,7 @@ function parseAsda(packingListJson) {
     total_net_weight_kg: col.G ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return combineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseTescoModel1(packingListJson) {
@@ -317,7 +306,7 @@ function parseTescoModel1(packingListJson) {
       total_net_weight_kg: col.BU ?? null,
     }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return combineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseTescoModel2(packingListJson) {
@@ -331,7 +320,7 @@ function parseTescoModel2(packingListJson) {
     total_net_weight_kg: col.K ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return combineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesSainsburys(packingListJson, filename) {
@@ -393,7 +382,7 @@ function parseSainsburys(packingListJson) {
     total_net_weight_kg: col.H ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return combineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesTjmorris(packingListJson, filename) {
@@ -461,7 +450,7 @@ function parseTjmorris(packingListJson) {
     total_net_weight_kg: col.R ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return combineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesFowlerWelch(packingListJson, filename) {
@@ -531,64 +520,7 @@ function parseFowlerWelch(packingListJson) {
       total_net_weight_kg: col.K ?? null,
     }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
-}
-
-function matchesNisa(packingListJson, filename) {
-  const establishmentNumberRow = 1;
-  try {
-    // check for correct extension
-    const fileExtension = filename.split(".").pop();
-    if (fileExtension !== "xlsx") {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
-
-    // check for correct establishment number
-    const sheet = Object.keys(packingListJson)[0];
-    const establishmentNumber =
-      packingListJson[sheet][establishmentNumberRow].A;
-    const regex = /^RMS-GB-000025-\d{3}$/;
-    if (!regex.test(establishmentNumber)) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
-    }
-
-    // check for header values
-    const header = {
-      A: "RMS_ESTABLISHMENT_NO",
-      I: "PRODUCT_TYPE_CATEGORY",
-      K: "PART_NUMBER_DESCRIPTION",
-      L: "TARIFF_CODE_EU",
-      M: "PACKAGES",
-      O: "NET_WEIGHT_TOTAL",
-    };
-
-    for (const key in header) {
-      if (
-        !packingListJson[sheet][0] ||
-        packingListJson[sheet][0][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
-    }
-
-    return MatcherResult.CORRECT;
-  } catch (err) {
-    return MatcherResult.GENERIC_ERROR;
-  }
-}
-
-function parseNisa(packingListJson) {
-  const establishmentNumber = packingListJson[1].A ?? null;
-  const packingListContents = packingListJson.slice(1).map((col) => ({
-    description: col.K ?? null,
-    nature_of_products: col.I ?? null,
-    type_of_treatment: null,
-    commodity_code: col.L ?? null,
-    number_of_packages: col.M ?? null,
-    total_net_weight_kg: col.O ?? null,
-  }));
-
-  return combineParser(establishmentNumber, packingListContents, true);
+  return combineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function checkRequiredData(packingList) {
@@ -620,7 +552,6 @@ module.exports = {
   matchesAsda,
   parseBandM,
   failedParser,
-  combineParser,
   parseAsda,
   matchesSainsburys,
   parseSainsburys,
@@ -633,7 +564,5 @@ module.exports = {
   matchesFowlerWelch,
   parseFowlerWelch,
   findParser,
-  matchesNisa,
-  parseNisa,
   checkRequiredData,
 };
