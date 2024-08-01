@@ -246,7 +246,6 @@ function matchesTescoModel2(packingListJson, filename) {
   }
 }
 
-/// //////////////////////////////////////////////////
 function matchesTescoModel3(packingListJson, filename) {
   try {
     // check for correct extension
