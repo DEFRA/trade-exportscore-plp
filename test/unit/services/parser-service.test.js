@@ -1991,6 +1991,8 @@ describe("parseAsdaModel2", () => {
     expect(result.items[1].nature_of_products).toBe(packingListJson[2].D);
     expect(result.items[0].type_of_treatment).toBe(packingListJson[1].F);
     expect(result.items[1].type_of_treatment).toBe(packingListJson[2].F);
+    expect(result.items[0].number_of_packages).toBe(packingListJson[1].J);
+    expect(result.items[1].number_of_packages).toBe(packingListJson[2].J);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].N);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].N);
   });

@@ -608,9 +608,6 @@ function matchesAsdaModel2(packingListJson, filename) {
       N: "NET Weight",
     };
 
-    // console.log(JSON.stringify(packingListJson.Sheet1[]));
-    // console.log(JSON.stringify(header));
-
     if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) {
       return MatcherResult.WRONG_HEADER;
     } else {
@@ -627,8 +624,8 @@ function parseAsdaModel2(packingListJson) {
     description: col.B ?? null,
     nature_of_products: col.D ?? null,
     type_of_treatment: col.F ?? null,
-    commodity_code: null ?? null,
-    number_of_packages: null,
+    commodity_code: null,
+    number_of_packages: col.J ?? null,
     total_net_weight_kg: col.N ?? null,
   }));
 
