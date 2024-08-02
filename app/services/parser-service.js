@@ -12,9 +12,13 @@ function findParser(result, filename) {
     console.info("Packing list matches TJ Morris with filename: ", filename);
     parsedPackingList = parseTjmorris(result.Sheet1);
     isParsed = true;
-  } else if (matchesAsda(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Asda with filename: ", filename);
-    parsedPackingList = parseAsda(result.PackingList_Extract);
+  } else if (matchesAsdaModel1(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Asda Model 1 with filename: ", filename);
+    parsedPackingList = parseAsdaModel1(result.PackingList_Extract);
+    isParsed = true;
+  } else if (matchesAsdaModel2(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Asda Model 2 with filename: ", filename);
+    parsedPackingList = parseAsdaModel2(result.Sheet1);
     isParsed = true;
   } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Sainsburys with filename: ", filename);
@@ -114,7 +118,7 @@ function matchesBandM(packingListJson, filename) {
   }
 }
 
-function matchesAsda(packingListJson, filename) {
+function matchesAsdaModel1(packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split(".").pop();
@@ -123,7 +127,8 @@ function matchesAsda(packingListJson, filename) {
     }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson.PackingList_Extract[1].D;
+    const establishmentNumber =
+      packingListJson.PackingList_Extract[1].D ?? null;
     const regex = /^RMS-GB-000015-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -287,7 +292,7 @@ function failedParser() {
   return combineParser(null, [], false);
 }
 
-function parseAsda(packingListJson) {
+function parseAsdaModel1(packingListJson) {
   const establishmentNumber = packingListJson[1].D ?? null;
   const packingListContents = packingListJson.slice(1).map((col) => ({
     description: col.A ?? null,
@@ -577,6 +582,56 @@ function matchesNisa(packingListJson, filename) {
   }
 }
 
+function matchesAsdaModel2(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop();
+    if (fileExtension !== "xls") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson.Sheet1[1].H;
+    const regex = /^RMS-GB-000015-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      B: "[Description Of All Retail Go",
+      D: "[Nature Of Product]",
+      F: "[Treatment Ty",
+      H: "Establishment Number",
+      J: "Cases",
+      L: "Case Weight",
+      N: "NET Weight",
+    };
+
+    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) {
+      return MatcherResult.WRONG_HEADER;
+    } else {
+      return MatcherResult.CORRECT;
+    }
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
+function parseAsdaModel2(packingListJson) {
+  const establishmentNumber = packingListJson[1].H ?? null;
+  const packingListContents = packingListJson.slice(1).map((col) => ({
+    description: col.B ?? null,
+    nature_of_products: col.D ?? null,
+    type_of_treatment: col.F ?? null,
+    commodity_code: null,
+    number_of_packages: col.J ?? null,
+    total_net_weight_kg: col.N ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
+}
+
 function parseNisa(packingListJson) {
   const establishmentNumber = packingListJson[1].A ?? null;
   const packingListContents = packingListJson.slice(1).map((col) => ({
@@ -617,11 +672,11 @@ function checkRequiredData(packingList) {
 
 module.exports = {
   matchesBandM,
-  matchesAsda,
+  matchesAsdaModel1,
   parseBandM,
   failedParser,
   combineParser,
-  parseAsda,
+  parseAsdaModel1,
   matchesSainsburys,
   parseSainsburys,
   matchesTjmorris,
@@ -630,6 +685,8 @@ module.exports = {
   matchesTescoModel2,
   parseTescoModel1,
   parseTescoModel2,
+  matchesAsdaModel2,
+  parseAsdaModel2,
   matchesFowlerWelch,
   parseFowlerWelch,
   findParser,
