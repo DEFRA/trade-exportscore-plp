@@ -1881,18 +1881,13 @@ describe("findParser", () => {
   });
 });
 
-/// /////////////////////////////////////////////////////buffaload
-
 describe("matchesBuffaloadLogistics", () => {
   test("returns true", () => {
     const filename = "PackingList.xlsx";
     const packingListJson = {
       Tabelle1: [
         {
-          A: "NIIRMS Dispatch number",
           B: "RMS-GB-000098-001",
-          C: "Dispatch address",
-          D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
         },
         {
           A: "Commodity code",
@@ -1902,7 +1897,7 @@ describe("matchesBuffaloadLogistics", () => {
           E: "Type of pkgs",
           F: "Item Gross Weight (kgs)",
           G: "Item Net Weight (kgs)",
-          H: "Treatment Type (Chilled /Ambient) ",
+          H: "Treatment Type (Chilled /Ambient)",
           I: "NIRMS Lane (R/G)",
         },
       ],
@@ -2019,14 +2014,14 @@ describe("parseBuffaloadLogistics", () => {
     const result = parserService.parseBuffaloadLogistics(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[0].B);
     expect(result.items).toHaveLength(2);
-    expect(result.items[0].description).toBe(packingListJson[1].B);
-    expect(result.items[1].description).toBe(packingListJson[2].B);
-    expect(result.items[0].type_of_treatment).toBe(packingListJson[1].H);
-    expect(result.items[1].type_of_treatment).toBe(packingListJson[2].H);
-    expect(result.items[0].commodity_code).toBe(packingListJson[1].A);
-    expect(result.items[1].commodity_code).toBe(packingListJson[2].A);
-    expect(result.items[0].number_of_packages).toBe(packingListJson[1].D);
-    expect(result.items[1].number_of_packages).toBe(packingListJson[2].D);
+    expect(result.items[0].description).toBe(packingListJson[2].B);
+    expect(result.items[1].description).toBe(packingListJson[3].B);
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[2].H);
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[3].H);
+    expect(result.items[0].commodity_code).toBe(packingListJson[2].A);
+    expect(result.items[1].commodity_code).toBe(packingListJson[3].A);
+    expect(result.items[0].number_of_packages).toBe(packingListJson[2].D);
+    expect(result.items[1].number_of_packages).toBe(packingListJson[3].D);
   });
 
   test("parses null json", () => {

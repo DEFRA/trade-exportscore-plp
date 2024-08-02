@@ -7,7 +7,7 @@ const INPUT_DATA_SHEET = "Input Data Sheet";
 function findParser(result, filename) {
   let parsedPackingList = failedParser();
   let isParsed = false;
-  console.log(matchesBuffaloadLogistics(result, filename))
+  console.log(matchesBuffaloadLogistics(result, filename));
 
   if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches TJ Morris with filename: ", filename);
@@ -654,8 +654,11 @@ function matchesBuffaloadLogistics(packingListJson, filename) {
     };
 
     if (
-      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)) {return MatcherResult.WRONG_HEADER } 
-      else { return MatcherResult.CORRECT;
+      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
+    ) {
+      return MatcherResult.WRONG_HEADER;
+    } else {
+      return MatcherResult.CORRECT;
     }
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
