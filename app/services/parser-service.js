@@ -9,17 +9,17 @@ function findParser(result, filename) {
   let isParsed = false;
 
   if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches TJ Morris with filename: ', filename)
-    parsedPackingList = parseTjmorris(result.Sheet1)
-    isParsed = true
+    console.info("Packing list matches TJ Morris with filename: ", filename);
+    parsedPackingList = parseTjmorris(result.Sheet1);
+    isParsed = true;
   } else if (matchesAsdaModel1(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Asda Model 1 with filename: ', filename)
-    parsedPackingList = parseAsdaModel1(result.PackingList_Extract)
-    isParsed = true
+    console.info("Packing list matches Asda Model 1 with filename: ", filename);
+    parsedPackingList = parseAsdaModel1(result.PackingList_Extract);
+    isParsed = true;
   } else if (matchesAsdaModel2(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Asda Model 2 with filename: ', filename)
-    parsedPackingList = parseAsdaModel2(result.Sheet1)
-    isParsed = true
+    console.info("Packing list matches Asda Model 2 with filename: ", filename);
+    parsedPackingList = parseAsdaModel2(result.Sheet1);
+    isParsed = true;
   } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Sainsburys with filename: ", filename);
     parsedPackingList = parseSainsburys(result.Sheet1);
@@ -118,7 +118,7 @@ function matchesBandM(packingListJson, filename) {
   }
 }
 
-function matchesAsdaModel1 (packingListJson, filename) {
+function matchesAsdaModel1(packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split(".").pop();
@@ -127,9 +127,12 @@ function matchesAsdaModel1 (packingListJson, filename) {
     }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson.PackingList_Extract[1].D ?? null
-    const regex = /^RMS-GB-000015-\d{3}$/
-    if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
+    const establishmentNumber =
+      packingListJson.PackingList_Extract[1].D ?? null;
+    const regex = /^RMS-GB-000015-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
 
     // check for header values
     const header = {
@@ -289,9 +292,9 @@ function failedParser() {
   return combineParser(null, [], false);
 }
 
-function parseAsdaModel1 (packingListJson) {
-  const establishmentNumber = packingListJson[1].D ?? null
-  const packingListContents = packingListJson.slice(1).map(col => ({
+function parseAsdaModel1(packingListJson) {
+  const establishmentNumber = packingListJson[1].D ?? null;
+  const packingListContents = packingListJson.slice(1).map((col) => ({
     description: col.A ?? null,
     nature_of_products: col.B ?? null,
     type_of_treatment: col.C ?? null,
@@ -579,6 +582,59 @@ function matchesNisa(packingListJson, filename) {
   }
 }
 
+function matchesAsdaModel2(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop();
+    if (fileExtension !== "xls") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson.Sheet1[1].H;
+    const regex = /^RMS-GB-000015-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      B: "[Description Of All Retail Go",
+      D: "[Nature Of Product]",
+      F: "[Treatment Ty",
+      H: "Establishment Number",
+      J: "Cases",
+      L: "Case Weight",
+      N: "NET Weight",
+    };
+
+    // console.log(JSON.stringify(packingListJson.Sheet1[]));
+    // console.log(JSON.stringify(header));
+
+    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) {
+      return MatcherResult.WRONG_HEADER;
+    } else {
+      return MatcherResult.CORRECT;
+    }
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
+function parseAsdaModel2(packingListJson) {
+  const establishmentNumber = packingListJson[1].H ?? null;
+  const packingListContents = packingListJson.slice(1).map((col) => ({
+    description: col.B ?? null,
+    nature_of_products: col.D ?? null,
+    type_of_treatment: col.F ?? null,
+    commodity_code: null ?? null,
+    number_of_packages: null,
+    total_net_weight_kg: col.N ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
+}
+
 function parseNisa(packingListJson) {
   const establishmentNumber = packingListJson[1].A ?? null;
   const packingListContents = packingListJson.slice(1).map((col) => ({
@@ -591,92 +647,6 @@ function parseNisa(packingListJson) {
   }));
 
   return combineParser(establishmentNumber, packingListContents, true);
-}
-
-function matchesAsdaModel2 (packingListJson, filename) {
-  try {
-    // check for correct extension
-    const fileExtension = filename.split('.').pop()
-    if (fileExtension !== 'xls') { return MatcherResult.WRONG_EXTENSIONS }
-    
-
-    // check for correct establishment number
-    const establishmentNumber = packingListJson.Sheet1[4].H
-    const regex = /^RMS-GB-000015-\d{3}$/
-    if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
-
-    // check for header values
-    const header = {
-      B: '[Description Of All Retail Go',
-      D: '[Nature Of Product]',
-      F: '[Treatment Ty',
-      H: 'Establishment Number',
-      J: 'Cases',
-      L: 'Case Weight',
-      N: 'NET Weight'
-    }
-
-    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
-  } catch (err) {
-    return MatcherResult.GENERIC_ERROR
-  }
-}
-
-function parseAsdaModel2 (packingListJson) {
-  const establishmentNumber = packingListJson[4].H ?? null
-  const packingListContents = packingListJson.slice(4).map(col => ({
-    description: col.B ?? null,
-    nature_of_products: col.D ?? null,
-    type_of_treatment: col.F ?? null,
-    commodity_code: null ?? null,
-    number_of_packages: null,
-    total_net_weight_kg: col.N ?? null
-  }))
-
-  return combineParser(establishmentNumber, packingListContents, true)
-}
-
-function matchesAsdaModel2 (packingListJson, filename) {
-  try {
-    // check for correct extension
-    const fileExtension = filename.split('.').pop()
-    if (fileExtension !== 'xls') { return MatcherResult.WRONG_EXTENSIONS }
-    
-
-    // check for correct establishment number
-    const establishmentNumber = packingListJson.Sheet1[4].H
-    const regex = /^RMS-GB-000015-\d{3}$/
-    if (!regex.test(establishmentNumber)) { return MatcherResult.WRONG_ESTABLISHMENT_NUMBER }
-
-    // check for header values
-    const header = {
-      B: '[Description Of All Retail Go',
-      D: '[Nature Of Product]',
-      F: '[Treatment Ty',
-      H: 'Establishment Number',
-      J: 'Cases',
-      L: 'Case Weight',
-      N: 'NET Weight'
-    }
-
-    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
-  } catch (err) {
-    return MatcherResult.GENERIC_ERROR
-  }
-}
-
-function parseNisa (packingListJson) {
-  const establishmentNumber = packingListJson[1].A ?? null
-  const packingListContents = packingListJson.slice(1).map(col => ({
-    description: col.K ?? null,
-    nature_of_products: col.I ?? null,
-    type_of_treatment: null,
-    commodity_code: col.L ?? null,
-    number_of_packages: col.M ?? null,
-    total_net_weight_kg: col.O ?? null,
-  }));
-
-  return combineParser(establishmentNumber, packingListContents, true)
 }
 
 function checkRequiredData(packingList) {

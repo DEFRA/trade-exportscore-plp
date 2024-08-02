@@ -247,9 +247,9 @@ describe("combineParser", () => {
   });
 });
 
-describe('matchesAsdaModel1', () => {
-  test('returns true', () => {
-    const filename = 'packinglist.xls'
+describe("matchesAsdaModel1", () => {
+  test("returns true", () => {
+    const filename = "packinglist.xls";
     const packingListJson = {
       PackingList_Extract: [
         {
@@ -263,20 +263,20 @@ describe('matchesAsdaModel1', () => {
           H: "[kilograms/grams]",
         },
         {
-          D: 'RMS-GB-000015-001'
-        }
-      ]
-    }
-    const result = parserService.matchesAsdaModel1(packingListJson, filename)
-    expect(result).toBe(MatcherResult.CORRECT)
-  })
+          D: "RMS-GB-000015-001",
+        },
+      ],
+    };
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
+    expect(result).toBe(MatcherResult.CORRECT);
+  });
 
-  test('returns generic error for empty json', () => {
-    const packingListJson = {}
-    const filename = 'packinglist.xls'
-    const result = parserService.matchesAsdaModel1(packingListJson, filename)
-    expect(result).toBe(MatcherResult.GENERIC_ERROR)
-  })
+  test("returns generic error for empty json", () => {
+    const packingListJson = {};
+    const filename = "packinglist.xls";
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
+    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+  });
 
   test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
@@ -284,21 +284,21 @@ describe('matchesAsdaModel1', () => {
         {},
         {},
         {
-          I: 'INCORRECT'
-        }
-      ]
-    }
-    const filename = 'packinglist.xls'
-    const result = parserService.matchesAsdaModel1(packingListJson, filename)
-    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
-  })
+          I: "INCORRECT",
+        },
+      ],
+    };
+    const filename = "packinglist.xls";
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+  });
 
-  test('return wrong extension for incorrect file extension', () => {
-    const filename = 'packinglist.pdf'
-    const packingListJson = {}
-    const result = parserService.matchesAsdaModel1(packingListJson, filename)
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
-  })
+  test("return wrong extension for incorrect file extension", () => {
+    const filename = "packinglist.pdf";
+    const packingListJson = {};
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
+  });
 
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xls";
@@ -310,92 +310,90 @@ describe('matchesAsdaModel1', () => {
           C: "HEADER",
         },
         {
-          D: 'RMS-GB-000015-001'
-        }
-      ]
-    }
-    const result = parserService.matchesAsdaModel1(packingListJson, filename)
-    expect(result).toBe(MatcherResult.WRONG_HEADER)
-  })
-})
+          D: "RMS-GB-000015-001",
+        },
+      ],
+    };
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+});
 
-describe('parseAsdaModel1', () => {
-  test('parses json', () => {
-    const packingListJson =
-      [
-        {
-          A: '[Description Of All Retail Goods]',
-          B: '[Nature Of Product]',
-          C: '[Treatment Type]',
-          D: '[Number Of Establishment]',
-          E: '[Destination Store Establishment Number]',
-          F: '[Number of Packages]',
-          G: '[Net Weight]',
-          H: '[kilograms/grams]'
-        },
-        {
-          A: '169 STOREY TREEHOUSE',
-          B: 'BOOKS',
-          C: 'GM',
-          D: 'RMS-GB-000015-006',
-          E: 'RMS-NI-000008-017',
-          F: 2,
-          G: 0.3800,
-          H: 'kgs'
-        },
-        {
-          A: '19 CRIMES',
-          B: 'WINES',
-          C: 'AMBIENT',
-          D: 'RMS-GB-000015-006',
-          E: 'RMS-NI-000008-017',
-          F: 1,
-          G: 0.3457,
-          H: 'kgs'
-        }
-      ]
-    const result = parserService.parseAsdaModel1(packingListJson)
-    expect(result.registration_approval_number).toBe(packingListJson[1].D)
-    expect(result.items).toHaveLength(2)
-    expect(result.items[0].description).toBe(packingListJson[1].A)
-    expect(result.items[1].description).toBe(packingListJson[2].A)
-    expect(result.items[0].nature_of_products).toBe(packingListJson[1].B)
-    expect(result.items[1].nature_of_products).toBe(packingListJson[2].B)
-    expect(result.items[0].type_of_treatment).toBe(packingListJson[1].C)
-    expect(result.items[1].type_of_treatment).toBe(packingListJson[2].C)
-    expect(result.items[0].number_of_packages).toBe(packingListJson[1].F)
-    expect(result.items[1].number_of_packages).toBe(packingListJson[2].F)
-    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].G)
-    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].G)
-  })
+describe("parseAsdaModel1", () => {
+  test("parses json", () => {
+    const packingListJson = [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+        D: "[Number Of Establishment]",
+        E: "[Destination Store Establishment Number]",
+        F: "[Number of Packages]",
+        G: "[Net Weight]",
+        H: "[kilograms/grams]",
+      },
+      {
+        A: "169 STOREY TREEHOUSE",
+        B: "BOOKS",
+        C: "GM",
+        D: "RMS-GB-000015-006",
+        E: "RMS-NI-000008-017",
+        F: 2,
+        G: 0.38,
+        H: "kgs",
+      },
+      {
+        A: "19 CRIMES",
+        B: "WINES",
+        C: "AMBIENT",
+        D: "RMS-GB-000015-006",
+        E: "RMS-NI-000008-017",
+        F: 1,
+        G: 0.3457,
+        H: "kgs",
+      },
+    ];
+    const result = parserService.parseAsdaModel1(packingListJson);
+    expect(result.registration_approval_number).toBe(packingListJson[1].D);
+    expect(result.items).toHaveLength(2);
+    expect(result.items[0].description).toBe(packingListJson[1].A);
+    expect(result.items[1].description).toBe(packingListJson[2].A);
+    expect(result.items[0].nature_of_products).toBe(packingListJson[1].B);
+    expect(result.items[1].nature_of_products).toBe(packingListJson[2].B);
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[1].C);
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[2].C);
+    expect(result.items[0].number_of_packages).toBe(packingListJson[1].F);
+    expect(result.items[1].number_of_packages).toBe(packingListJson[2].F);
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].G);
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].G);
+  });
 
-  test('parses null json', () => {
-    const packingListJson =
-      [
-        {
-          A: '[Description Of All Retail Goods]',
-          B: '[Nature Of Product]',
-          C: '[Treatment Type]',
-          D: '[Number Of Establishment]',
-          E: '[Destination Store Establishment Number]',
-          F: '[Number of Packages]',
-          G: '[Net Weight]',
-          H: '[kilograms/grams]'
-        },
-        {
-          D: null
-        }
-      ]
-    const result = parserService.parseAsdaModel1(packingListJson)
-    expect(result.registration_approval_number).toBeNull()
-    expect(result.items).toHaveLength(1)
-    expect(result.items[0].description).toBeNull()
-    expect(result.items[0].nature_of_products).toBeNull()
-    expect(result.items[0].type_of_treatment).toBeNull()
-    expect(result.items[0].number_of_packages).toBeNull()
-    expect(result.items[0].total_net_weight_kg).toBeNull()
-  })
-})
+  test("parses null json", () => {
+    const packingListJson = [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+        D: "[Number Of Establishment]",
+        E: "[Destination Store Establishment Number]",
+        F: "[Number of Packages]",
+        G: "[Net Weight]",
+        H: "[kilograms/grams]",
+      },
+      {
+        D: null,
+      },
+    ];
+    const result = parserService.parseAsdaModel1(packingListJson);
+    expect(result.registration_approval_number).toBeNull();
+    expect(result.items).toHaveLength(1);
+    expect(result.items[0].description).toBeNull();
+    expect(result.items[0].nature_of_products).toBeNull();
+    expect(result.items[0].type_of_treatment).toBeNull();
+    expect(result.items[0].number_of_packages).toBeNull();
+    expect(result.items[0].total_net_weight_kg).toBeNull();
+  });
+});
 
 describe("matchesTescoModel1", () => {
   test("returns true", () => {
@@ -1878,155 +1876,145 @@ describe("findParser", () => {
     };
     const filename = "packinglist.xls";
 
-    const result = parserService.findParser(packingListJson, filename)
-    expect(result.packingList.items).toHaveLength(2)
-  })
-})
+    const result = parserService.findParser(packingListJson, filename);
+    expect(result.packingList.items).toHaveLength(2);
+  });
+});
 
-describe('matchesAsdaModel2', () => {
-  test('returns true', () => {
-    const filename = 'packinglist.xls'
+describe("matchesAsdaModel2", () => {
+  test("returns true", () => {
+    const filename = "packinglist.xls";
     const packingListJson = {
       Sheet1: [
-        {}, {},
         {
-          B: '[Description Of All Retail Go',
-          D: '[Nature Of Product]',
-          F: '[Treatment Ty',
-          H: 'Establishment Number',
-          J: 'Cases',
-          L: 'Case Weight',
-          N: 'NET Weight'
+          B: "[Description Of All Retail Go",
+          D: "[Nature Of Product]",
+          F: "[Treatment Ty",
+          H: "Establishment Number",
+          J: "Cases",
+          L: "Case Weight",
+          N: "NET Weight",
         },
-        {},
         {
-          H: 'RMS-GB-000015-010'
-        }
-      ]
-    }
-    const result = parserService.matchesAsdaModel2(packingListJson, filename)
-    expect(result).toBe(MatcherResult.CORRECT)
-  })
+          H: "RMS-GB-000015-010",
+        },
+      ],
+    };
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.CORRECT);
+  });
 
-  test('returns generic error for empty json', () => {
-    const packingListJson = {}
-    const filename = 'packinglist.xls'
-    const result = parserService.matchesAsdaModel2(packingListJson, filename)
-    expect(result).toBe(MatcherResult.GENERIC_ERROR)
-  })
+  test("returns generic error for empty json", () => {
+    const packingListJson = {};
+    const filename = "packinglist.xls";
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+  });
 
-  test('returns wrong establishment number for missing establishment number', () => {
+  test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
       Sheet1: [
-        {}, {}, {}, {},
+        {},
         {
-          H: 'INCORRECT'
-        }
-      ]
-    }
-    const filename = 'packinglist.xls'
-    const result = parserService.matchesAsdaModel2(packingListJson, filename)
-    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER)
-  })
+          H: "INCORRECT",
+        },
+      ],
+    };
+    const filename = "packinglist.xls";
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+  });
 
-  test('return wrong extension for incorrect file extension', () => {
-    const filename = 'packinglist.pdf'
-    const packingListJson = {}
-    const result = parserService.matchesAsdaModel2(packingListJson, filename)
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS)
-  })
+  test("return wrong extension for incorrect file extension", () => {
+    const filename = "packinglist.pdf";
+    const packingListJson = {};
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
+  });
 
-  test('return wrong header for incorrect header values', () => {
-    const filename = 'packinglist.xls'
+  test("return wrong header for incorrect header values", () => {
+    const filename = "packinglist.xls";
     const packingListJson = {
       Sheet1: [
-        {}, {},
         {
-          B: 'NOT',
-          D: 'CORRECT',
-          F: 'HEADER'
+          B: "NOT",
+          D: "CORRECT",
+          F: "HEADER",
         },
-        {},
         {
-          H: 'RMS-GB-000015-010'
-        }
-      ]
-    }
-    const result = parserService.matchesAsdaModel2(packingListJson, filename)
-    expect(result).toBe(MatcherResult.WRONG_HEADER)
-  })
-})
+          H: "RMS-GB-000015-010",
+        },
+      ],
+    };
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+});
 
-describe('parseAsdaModel2', () => {
-  test('parses json', () => {
-    const packingListJson =
-      [
-        {}, {},
-        {
-          B: '[Description Of All Retail Go',
-          D: '[Nature Of Product]',
-          F: '[Treatment Ty',
-          H: 'Establishment Number',
-          J: 'Cases',
-          L: 'Case Weight',
-          N: 'NET Weight'
-        },
-        {},
-        {
-          B: '4PK X 17 PINK LADY APPLES',
-          D: 'TOP FRUIT',
-          F: 'PRODUCE',
-          H: 'RMS-GB-000015-010',
-          J: 20,
-          L: 12.75,
-          N: 255
-        },
-        {
-          B: 'ASDA BABY WATERMELON X10',
-          D: 'MELON HARD',
-          F: 'PRODUCE',
-          H: 'RMS-GB-000015-010',
-          J: 5,
-          L: 12,
-          N: 60
-        }
-      ]
-    const result = parserService.parseAsdaModel2(packingListJson)
-    expect(result.registration_approval_number).toBe(packingListJson[4].H)
-    expect(result.items).toHaveLength(2)
-    expect(result.items[0].description).toBe(packingListJson[4].B)
-    expect(result.items[1].description).toBe(packingListJson[5].B)
-    expect(result.items[0].nature_of_products).toBe(packingListJson[4].D)
-    expect(result.items[1].nature_of_products).toBe(packingListJson[5].D)
-    expect(result.items[0].type_of_treatment).toBe(packingListJson[4].F)
-    expect(result.items[1].type_of_treatment).toBe(packingListJson[5].F)
-    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[4].N)
-    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[5].N)
-  })
+describe("parseAsdaModel2", () => {
+  test("parses json", () => {
+    const packingListJson = [
+      {
+        B: "[Description Of All Retail Go",
+        D: "[Nature Of Product]",
+        F: "[Treatment Ty",
+        H: "Establishment Number",
+        J: "Cases",
+        L: "Case Weight",
+        N: "NET Weight",
+      },
+      {
+        B: "4PK X 17 PINK LADY APPLES",
+        D: "TOP FRUIT",
+        F: "PRODUCE",
+        H: "RMS-GB-000015-010",
+        J: 20,
+        L: 12.75,
+        N: 255,
+      },
+      {
+        B: "ASDA BABY WATERMELON X10",
+        D: "MELON HARD",
+        F: "PRODUCE",
+        H: "RMS-GB-000015-010",
+        J: 5,
+        L: 12,
+        N: 60,
+      },
+    ];
+    const result = parserService.parseAsdaModel2(packingListJson);
+    expect(result.registration_approval_number).toBe(packingListJson[1].H);
+    expect(result.items).toHaveLength(2);
+    expect(result.items[0].description).toBe(packingListJson[1].B);
+    expect(result.items[1].description).toBe(packingListJson[2].B);
+    expect(result.items[0].nature_of_products).toBe(packingListJson[1].D);
+    expect(result.items[1].nature_of_products).toBe(packingListJson[2].D);
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[1].F);
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[2].F);
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].N);
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].N);
+  });
 
-  test('parses null json', () => {
-    const packingListJson =
-      [
-        {}, {},
-        {
-          B: '[Description Of All Retail Go',
-          D: '[Nature Of Product]',
-          F: '[Treatment Ty',
-          H: 'Establishment Number',
-          J: 'Cases',
-          L: 'Case Weight',
-          N: 'NET Weight'
-        },
-        {
-        }, {}
-      ]
-    const result = parserService.parseAsdaModel2(packingListJson)
-    expect(result.registration_approval_number).toBeNull()
-    expect(result.items).toHaveLength(1)
-    expect(result.items[0].description).toBeNull()
-    expect(result.items[0].nature_of_products).toBeNull()
-    expect(result.items[0].type_of_treatment).toBeNull()
-    expect(result.items[0].number_of_packages).toBeNull()
-    expect(result.items[0].total_net_weight_kg).toBeNull()
-  })
-})
+  test("parses null json", () => {
+    const packingListJson = [
+      {
+        B: "[Description Of All Retail Go",
+        D: "[Nature Of Product]",
+        F: "[Treatment Ty",
+        H: "Establishment Number",
+        J: "Cases",
+        L: "Case Weight",
+        N: "NET Weight",
+      },
+      {},
+    ];
+    const result = parserService.parseAsdaModel2(packingListJson);
+    expect(result.registration_approval_number).toBeNull();
+    expect(result.items).toHaveLength(1);
+    expect(result.items[0].description).toBeNull();
+    expect(result.items[0].nature_of_products).toBeNull();
+    expect(result.items[0].type_of_treatment).toBeNull();
+    expect(result.items[0].number_of_packages).toBeNull();
+    expect(result.items[0].total_net_weight_kg).toBeNull();
+  });
+});
