@@ -50,6 +50,15 @@ function findParser(result, filename) {
     console.info("Packing list matches Nisa with filename: ", filename);
     parsedPackingList = parseNisa(result[Object.keys(result)[0]]);
     isParsed = true;
+  } else if (
+    matchesBuffaloadLogistics(result, filename) === MatcherResult.CORRECT
+  ) {
+    console.info(
+      "Packing list matches Buffaload Logistics with filename: ",
+      filename,
+    );
+    parsedPackingList = parseBuffaloadLogistics(result.Tabelle1);
+    isParsed = true;
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
@@ -670,6 +679,60 @@ function checkRequiredData(packingList) {
   );
 }
 
+function matchesBuffaloadLogistics(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop().toLowerCase();
+    if (fileExtension !== "xlsx") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson.Tabelle1[0].B;
+    const regex = /^RMS-GB-000098-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      A: "Commodity code",
+      B: "Description of goods",
+      C: "Country of Origin",
+      D: "No. of pkgs",
+      E: "Type of pkgs",
+      F: "Item Gross Weight (kgs)",
+      G: "Item Net Weight (kgs)",
+      H: "Treatment Type (Chilled /Ambient)",
+      I: "NIRMS Lane (R/G)",
+    };
+
+    if (
+      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
+    ) {
+      return MatcherResult.WRONG_HEADER;
+    } else {
+      return MatcherResult.CORRECT;
+    }
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
+function parseBuffaloadLogistics(packingListJson) {
+  const establishmentNumber = packingListJson[0].B;
+  const packingListContents = packingListJson.slice(2).map((col) => ({
+    description: col.B ?? null,
+    nature_of_products: null,
+    type_of_treatment: col.H ?? null,
+    commodity_code: col.A ?? null,
+    number_of_packages: col.D ?? null,
+    total_net_weight_kg: col.G ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
+}
+
 module.exports = {
   matchesBandM,
   matchesAsdaModel1,
@@ -689,6 +752,8 @@ module.exports = {
   parseAsdaModel2,
   matchesFowlerWelch,
   parseFowlerWelch,
+  matchesBuffaloadLogistics,
+  parseBuffaloadLogistics,
   findParser,
   matchesNisa,
   parseNisa,
