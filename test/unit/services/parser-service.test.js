@@ -734,10 +734,9 @@ describe("parseTescoModel2", () => {
   });
 });
 
-/// /////////////////////////////////////////////////////
 describe("matchesTescoModel3", () => {
   test("returns true", () => {
-    const filename = "PackingListTesco1.xlsx";
+    const filename = "PackingListTesco3.xlsx";
     const packingListJson = {
       "Input Data Sheet": [
         {},
@@ -840,18 +839,18 @@ describe("parseTescoModel3", () => {
         B: "4015900000",
         C: "AMBIENT",
         D: "Y",
-        E: "1",
-        F: "0.46",
-        G: "0.437",
+        E: 1,
+        F: 0.46,
+        G: 0.437,
       },
       {
         A: "APTAMIL 1 1ST MILK 200ML RTF LIQD",
         B: "0401401090",
         C: "AMBIENT",
         D: "Y",
-        E: "2",
-        F: "5.68",
-        G: "5.396",
+        E: 2,
+        F: 5.68,
+        G: 5.396,
       },
     ];
     const result = parserService.parseTescoModel3(packingListJson);
