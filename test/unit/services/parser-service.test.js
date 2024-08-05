@@ -734,6 +734,170 @@ describe("parseTescoModel2", () => {
   });
 });
 
+describe("matchesTescoModel3", () => {
+  test("returns true", () => {
+    const filename = "PackingListTesco3.xlsx";
+    const packingListJson = {
+      "Input Data Sheet": [
+        {},
+        {},
+        {},
+        {
+          E: "RMS-GB-000022-999",
+        },
+        {
+          A: "Product/ Part Number description",
+          B: "Tariff Code UK",
+          C: "Treatment Type",
+          D: "Green Lane",
+          E: "Packages",
+          F: "Gross Weight",
+          G: "Net Weight",
+        },
+      ],
+    };
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.CORRECT);
+  });
+
+  test("returns generic error for empty json", () => {
+    const packingListJson = {};
+    const filename = "packinglist.xlsx";
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+  });
+
+  test("returns wrong establishment number for missing establishment number", () => {
+    const packingListJson = {
+      "Input Data Sheet": [
+        {},
+        {},
+        {},
+        {
+          E: "INCORRECT",
+        },
+      ],
+    };
+    const filename = "packinglist.xlsx";
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+  });
+
+  test("return wrong extension for incorrect file extension", () => {
+    const filename = "packinglist.pdf";
+    const packingListJson = {};
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
+  });
+
+  test("return wrong header for incorrect header values", () => {
+    const filename = "packinglist.xlsx";
+    const packingListJson = {
+      "Input Data Sheet": [
+        {},
+        {},
+        {},
+        {
+          E: "RMS-GB-000022-001",
+        },
+        {
+          A: "NOT",
+          B: "CORRECT",
+          C: "HEADER",
+          D: "Green Lane",
+          E: "Packages",
+          F: "Gross Weight",
+          G: "Net Weight",
+        },
+      ],
+    };
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+});
+
+describe("parseTescoModel3", () => {
+  test("parses json", () => {
+    const packingListJson = [
+      {},
+      {},
+      {},
+      {
+        E: "RMS-GB-000022-999",
+      },
+      {
+        A: "Product/ Part Number description",
+        B: "Tariff Code UK",
+        C: "Treatment Type",
+        D: "Green Lane",
+        E: "Packages",
+        F: "Gross Weight",
+        G: "Net Weight",
+      },
+      {
+        A: "1 MARIGOLD EXTRA LIFE GLOVES KITCHEN MEDIUM",
+        B: "4015900000",
+        C: "AMBIENT",
+        D: "Y",
+        E: 1,
+        F: 0.46,
+        G: 0.437,
+      },
+      {
+        A: "APTAMIL 1 1ST MILK 200ML RTF LIQD",
+        B: "0401401090",
+        C: "AMBIENT",
+        D: "Y",
+        E: 2,
+        F: 5.68,
+        G: 5.396,
+      },
+    ];
+    const result = parserService.parseTescoModel3(packingListJson);
+    expect(result.registration_approval_number).toBe(packingListJson[3].E);
+    expect(result.items).toHaveLength(2);
+    expect(result.items[0].description).toBe(packingListJson[5].A);
+    expect(result.items[1].description).toBe(packingListJson[6].A);
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[5].C);
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[6].C);
+    expect(result.items[0].commodity_code).toBe(packingListJson[5].B);
+    expect(result.items[1].commodity_code).toBe(packingListJson[6].B);
+    expect(result.items[0].number_of_packages).toBe(packingListJson[5].E);
+    expect(result.items[1].number_of_packages).toBe(packingListJson[6].E);
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[5].G);
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[6].G);
+  });
+
+  test("parses null json", () => {
+    const packingListJson = [
+      {},
+      {},
+      {},
+      {},
+      {
+        A: "Product/ Part Number description",
+        B: "Tariff Code UK",
+        C: "Treatment Type",
+        D: "Green Lane",
+        E: "Packages",
+        F: "Gross Weight",
+        G: "Net Weight",
+      },
+      {
+        E: null,
+      },
+    ];
+    const result = parserService.parseTescoModel3(packingListJson);
+    expect(result.registration_approval_number).toBeNull();
+    expect(result.items).toHaveLength(1);
+    expect(result.items[0].description).toBeNull();
+    expect(result.items[0].type_of_treatment).toBeNull();
+    expect(result.items[0].commodity_code).toBeNull();
+    expect(result.items[0].number_of_packages).toBeNull();
+    expect(result.items[0].total_net_weight_kg).toBeNull();
+  });
+});
+
 describe("matchesSainsburys", () => {
   test("returns generic error for empty json", () => {
     const packingListJson = {};
