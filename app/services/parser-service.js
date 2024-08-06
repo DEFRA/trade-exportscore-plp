@@ -60,7 +60,11 @@ function findParser(result, filename) {
     isParsed = true;
   } else if (NisaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
-    parsedPackingList = parseNisa(result[Object.keys(result)[0]]);
+    parsedPackingList = NisaParser.parse(result[Object.keys(result)[0]]);
+    isParsed = true;
+  } else if (NisaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Nisa2 with filename: ", filename);
+    parsedPackingList = NisaParser2.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else if (
     matchesBuffaloadLogistics(result, filename) === MatcherResult.CORRECT
@@ -398,7 +402,7 @@ function parseTescoModel3(packingListJson) {
     total_net_weight_kg: col.G ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseTescoModel3(packingListJson) {
@@ -612,7 +616,7 @@ function parseFowlerWelch(packingListJson) {
       total_net_weight_kg: col.K ?? null,
     }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesNisa(packingListJson, filename) {
@@ -705,7 +709,7 @@ function parseAsdaModel2(packingListJson) {
     total_net_weight_kg: col.N ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseNisa(packingListJson) {
@@ -719,7 +723,7 @@ function parseNisa(packingListJson) {
     total_net_weight_kg: col.O ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function checkRequiredData(packingList) {
@@ -797,7 +801,7 @@ function parseBuffaloadLogistics(packingListJson) {
     total_net_weight_kg: col.G ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 module.exports = {

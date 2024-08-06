@@ -2251,3 +2251,91 @@ describe("parseBuffaloadLogistics", () => {
     expect(result.items[0].total_net_weight_kg).toBeNull();
   });
 });
+
+describe("findParser", () => {
+  nisaMatcher.matches = jest
+    .fn()
+    .mockReturnValue(MatcherResult.CORRECT)
+    .mockName("nisaMatcherMock");
+  nisaParser.parse = jest.fn().mockReturnValue({
+    items: [],
+    business_checks: { all_required_fields_present: null },
+  });
+
+  test("matches valid Nisa file and calls parser", () => {
+    const packingListJson = [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+        I: "PRODUCT_TYPE_CATEGORY",
+        K: "PART_NUMBER_DESCRIPTION",
+        L: "TARIFF_CODE_EU",
+        M: "PACKAGES",
+        O: "NET_WEIGHT_TOTAL",
+      },
+      {
+        A: "RMS-GB-000025-001",
+        I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+        K: "DAIRYLEA DUNKERS JUMBO PM80P",
+        L: "2005995090",
+        M: 2,
+        O: 2.5,
+      },
+      {
+        A: "RMS-GB-000025-001",
+        I: "900 - VEGETABLES PREPACK-C",
+        K: "CO OP BROCCOLI",
+        L: "0403209300",
+        M: 1,
+        O: 2,
+      },
+    ];
+    const filename = "packinglist.xlsx";
+
+    parserService.findParser(packingListJson, filename);
+    expect(nisaParser.parse).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("nisa2Parser", () => {
+  nisaMatcher2.matches = jest
+    .fn()
+    .mockReturnValue(MatcherResult.CORRECT)
+    .mockName("nisa2MatcherMock");
+  nisaParser2.parse = jest.fn().mockReturnValue({
+    items: [],
+    business_checks: { all_required_fields_present: null },
+  });
+
+  test("matches valid Nisa2 file and calls parser", () => {
+    const packingListJson = [
+      {
+        B: "RMS_ESTABLISHMENT_NO",
+        J: "PRODUCT_TYPE_CATEGORY",
+        L: "PART_NUMBER_DESCRIPTION",
+        M: "TARIFF_CODE_EU",
+        N: "PACKAGES",
+        P: "NET_WEIGHT_TOTAL",
+      },
+      {
+        B: "RMS-GB-000025-001",
+        J: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+        L: "DAIRYLEA DUNKERS JUMBO PM80P",
+        M: "2005995090",
+        N: 2,
+        P: 2.5,
+      },
+      {
+        B: "RMS-GB-000025-001",
+        J: "900 - VEGETABLES PREPACK-C",
+        L: "CO OP BROCCOLI",
+        M: "0403209300",
+        N: 1,
+        P: 2,
+      },
+    ];
+    const filename = "packinglist.xlsx";
+
+    parserService.findParser(packingListJson, filename);
+    expect(nisaParser2.parse).toHaveBeenCalledTimes(1);
+  });
+});
