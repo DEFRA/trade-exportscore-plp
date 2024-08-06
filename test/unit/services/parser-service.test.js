@@ -1786,7 +1786,6 @@ describe("findParser", () => {
   });
 });
 
-
 describe("nisa2Parser", () => {
   nisaMatcher2.matches = jest
     .fn()
