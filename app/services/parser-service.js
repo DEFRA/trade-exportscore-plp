@@ -17,9 +17,13 @@ function findParser(result, filename) {
     console.info("Packing list matches TJ Morris with filename: ", filename);
     parsedPackingList = parseTjmorris(result.Sheet1);
     isParsed = true;
-  } else if (matchesAsda(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Asda with filename: ", filename);
-    parsedPackingList = parseAsda(result.PackingList_Extract);
+  } else if (matchesAsdaModel1(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Asda Model 1 with filename: ", filename);
+    parsedPackingList = parseAsdaModel1(result.PackingList_Extract);
+    isParsed = true;
+  } else if (matchesAsdaModel2(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Asda Model 2 with filename: ", filename);
+    parsedPackingList = parseAsdaModel2(result.Sheet1);
     isParsed = true;
   } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Sainsburys with filename: ", filename);
@@ -43,17 +47,29 @@ function findParser(result, filename) {
     );
     parsedPackingList = parseTescoModel2(result.Sheet2);
     isParsed = true;
+  } else if (matchesTescoModel3(result, filename) === MatcherResult.CORRECT) {
+    console.info(
+      "Packing list matches Tesco Model 3 with filename: ",
+      filename,
+    );
+    parsedPackingList = parseTescoModel3(result[INPUT_DATA_SHEET]);
+    isParsed = true;
   } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
     parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER]);
     isParsed = true;
   } else if (NisaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
-    parsedPackingList = NisaParser.parse(result[Object.keys(result)[0]]);
+    parsedPackingList = parseNisa(result[Object.keys(result)[0]]);
     isParsed = true;
-  } else if (NisaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Nisa2 with filename: ", filename);
-    parsedPackingList = NisaParser2.parse(result[Object.keys(result)[0]]);
+  } else if (
+    matchesBuffaloadLogistics(result, filename) === MatcherResult.CORRECT
+  ) {
+    console.info(
+      "Packing list matches Buffaload Logistics with filename: ",
+      filename,
+    );
+    parsedPackingList = parseBuffaloadLogistics(result.Tabelle1);
     isParsed = true;
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
@@ -123,7 +139,7 @@ function matchesBandM(packingListJson, filename) {
   }
 }
 
-function matchesAsda(packingListJson, filename) {
+function matchesAsdaModel1(packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split(".").pop();
@@ -132,7 +148,8 @@ function matchesAsda(packingListJson, filename) {
     }
 
     // check for correct establishment number
-    const establishmentNumber = packingListJson.PackingList_Extract[1].D;
+    const establishmentNumber =
+      packingListJson.PackingList_Extract[1].D ?? null;
     const regex = /^RMS-GB-000015-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -248,6 +265,47 @@ function matchesTescoModel2(packingListJson, filename) {
   }
 }
 
+function matchesTescoModel3(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop();
+    if (fileExtension !== "xlsx") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson[INPUT_DATA_SHEET][3].E;
+    const regex = /^RMS-GB-000022-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      A: "Product/ Part Number description",
+      B: "Tariff Code UK",
+      C: "Treatment Type",
+      D: "Green Lane",
+      E: "Packages",
+      F: "Gross Weight",
+      G: "Net Weight",
+    };
+
+    for (const key in header) {
+      if (
+        !packingListJson[INPUT_DATA_SHEET][4] ||
+        packingListJson[INPUT_DATA_SHEET][4][key] !== header[key]
+      ) {
+        return MatcherResult.WRONG_HEADER;
+      }
+    }
+
+    return MatcherResult.CORRECT;
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
 function parseBandM(packingListJson) {
   const traderRow = packingListJson.findIndex(
     (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
@@ -282,7 +340,7 @@ function failedParser() {
   return CombineParser.combine(null, [], false);
 }
 
-function parseAsda(packingListJson) {
+function parseAsdaModel1(packingListJson) {
   const establishmentNumber = packingListJson[1].D ?? null;
   const packingListContents = packingListJson.slice(1).map((col) => ({
     description: col.A ?? null,
@@ -327,6 +385,34 @@ function parseTescoModel2(packingListJson) {
   }));
 
   return CombineParser.combine(establishmentNumber, packingListContents, true);
+}
+
+function parseTescoModel3(packingListJson) {
+  const establishmentNumber = packingListJson[3].E ?? null;
+  const packingListContents = packingListJson.slice(5).map((col) => ({
+    description: col.A ?? null,
+    nature_of_products: null,
+    type_of_treatment: col.C ?? null,
+    commodity_code: col.B ?? null,
+    number_of_packages: col.E ?? null,
+    total_net_weight_kg: col.G ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
+}
+
+function parseTescoModel3(packingListJson) {
+  const establishmentNumber = packingListJson[3].E ?? null;
+  const packingListContents = packingListJson.slice(5).map((col) => ({
+    description: col.A ?? null,
+    nature_of_products: null,
+    type_of_treatment: col.C ?? null,
+    commodity_code: col.B ?? null,
+    number_of_packages: col.E ?? null,
+    total_net_weight_kg: col.G ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
 }
 
 function matchesSainsburys(packingListJson, filename) {
@@ -526,7 +612,114 @@ function parseFowlerWelch(packingListJson) {
       total_net_weight_kg: col.K ?? null,
     }));
 
-  return CombineParser.combine(establishmentNumber, packingListContents, true);
+  return combineParser(establishmentNumber, packingListContents, true);
+}
+
+function matchesNisa(packingListJson, filename) {
+  const establishmentNumberRow = 1;
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop();
+    if (fileExtension !== "xlsx") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const sheet = Object.keys(packingListJson)[0];
+    const establishmentNumber =
+      packingListJson[sheet][establishmentNumberRow].A;
+    const regex = /^RMS-GB-000025-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      A: "RMS_ESTABLISHMENT_NO",
+      I: "PRODUCT_TYPE_CATEGORY",
+      K: "PART_NUMBER_DESCRIPTION",
+      L: "TARIFF_CODE_EU",
+      M: "PACKAGES",
+      O: "NET_WEIGHT_TOTAL",
+    };
+
+    for (const key in header) {
+      if (
+        !packingListJson[sheet][0] ||
+        packingListJson[sheet][0][key] !== header[key]
+      ) {
+        return MatcherResult.WRONG_HEADER;
+      }
+    }
+
+    return MatcherResult.CORRECT;
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
+function matchesAsdaModel2(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop();
+    if (fileExtension !== "xls") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson.Sheet1[1].H;
+    const regex = /^RMS-GB-000015-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      B: "[Description Of All Retail Go",
+      D: "[Nature Of Product]",
+      F: "[Treatment Ty",
+      H: "Establishment Number",
+      J: "Cases",
+      L: "Case Weight",
+      N: "NET Weight",
+    };
+
+    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) {
+      return MatcherResult.WRONG_HEADER;
+    } else {
+      return MatcherResult.CORRECT;
+    }
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
+function parseAsdaModel2(packingListJson) {
+  const establishmentNumber = packingListJson[1].H ?? null;
+  const packingListContents = packingListJson.slice(1).map((col) => ({
+    description: col.B ?? null,
+    nature_of_products: col.D ?? null,
+    type_of_treatment: col.F ?? null,
+    commodity_code: null,
+    number_of_packages: col.J ?? null,
+    total_net_weight_kg: col.N ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
+}
+
+function parseNisa(packingListJson) {
+  const establishmentNumber = packingListJson[1].A ?? null;
+  const packingListContents = packingListJson.slice(1).map((col) => ({
+    description: col.K ?? null,
+    nature_of_products: col.I ?? null,
+    type_of_treatment: null,
+    commodity_code: col.L ?? null,
+    number_of_packages: col.M ?? null,
+    total_net_weight_kg: col.O ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
 }
 
 function checkRequiredData(packingList) {
@@ -553,22 +746,83 @@ function checkRequiredData(packingList) {
   );
 }
 
+function matchesBuffaloadLogistics(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop().toLowerCase();
+    if (fileExtension !== "xlsx") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson.Tabelle1[0].B;
+    const regex = /^RMS-GB-000098-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      A: "Commodity code",
+      B: "Description of goods",
+      C: "Country of Origin",
+      D: "No. of pkgs",
+      E: "Type of pkgs",
+      F: "Item Gross Weight (kgs)",
+      G: "Item Net Weight (kgs)",
+      H: "Treatment Type (Chilled /Ambient)",
+      I: "NIRMS Lane (R/G)",
+    };
+
+    if (
+      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
+    ) {
+      return MatcherResult.WRONG_HEADER;
+    } else {
+      return MatcherResult.CORRECT;
+    }
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
+function parseBuffaloadLogistics(packingListJson) {
+  const establishmentNumber = packingListJson[0].B;
+  const packingListContents = packingListJson.slice(2).map((col) => ({
+    description: col.B ?? null,
+    nature_of_products: null,
+    type_of_treatment: col.H ?? null,
+    commodity_code: col.A ?? null,
+    number_of_packages: col.D ?? null,
+    total_net_weight_kg: col.G ?? null,
+  }));
+
+  return combineParser(establishmentNumber, packingListContents, true);
+}
+
 module.exports = {
   matchesBandM,
-  matchesAsda,
+  matchesAsdaModel1,
   parseBandM,
   failedParser,
-  parseAsda,
+  combineParser,
+  parseAsdaModel1,
   matchesSainsburys,
   parseSainsburys,
   matchesTjmorris,
   parseTjmorris,
   matchesTescoModel1,
   matchesTescoModel2,
+  matchesTescoModel3,
   parseTescoModel1,
   parseTescoModel2,
+  parseTescoModel3,
+  matchesAsdaModel2,
+  parseAsdaModel2,
   matchesFowlerWelch,
   parseFowlerWelch,
+  matchesBuffaloadLogistics,
+  parseBuffaloadLogistics,
   findParser,
   checkRequiredData,
 };
