@@ -405,20 +405,6 @@ function parseTescoModel3(packingListJson) {
   return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
-function parseTescoModel3(packingListJson) {
-  const establishmentNumber = packingListJson[3].E ?? null;
-  const packingListContents = packingListJson.slice(5).map((col) => ({
-    description: col.A ?? null,
-    nature_of_products: null,
-    type_of_treatment: col.C ?? null,
-    commodity_code: col.B ?? null,
-    number_of_packages: col.E ?? null,
-    total_net_weight_kg: col.G ?? null,
-  }));
-
-  return combineParser(establishmentNumber, packingListContents, true);
-}
-
 function matchesSainsburys(packingListJson, filename) {
   try {
     // check for correct extension
@@ -809,7 +795,6 @@ module.exports = {
   matchesAsdaModel1,
   parseBandM,
   failedParser,
-  combineParser,
   parseAsdaModel1,
   matchesSainsburys,
   parseSainsburys,

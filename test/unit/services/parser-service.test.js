@@ -1,9 +1,5 @@
 const parserService = require("../../../app/services/parser-service");
 const MatcherResult = require("../../../app/services/matches-result");
-const nisaMatcher = require("../../../app/services/nisa/matcher");
-const nisaParser = require("../../../app/services/nisa/parser");
-const nisaMatcher2 = require("../../../app/services/nisa/matcher2");
-const nisaParser2 = require("../../../app/services/nisa/parser2");
 
 describe("matchesBandM", () => {
   test("returns correct", () => {
@@ -219,35 +215,6 @@ describe("failedParser", () => {
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toMatchObject([]);
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
-  });
-});
-
-describe("combineParser", () => {
-  test("parses json", () => {
-    const registrationApprovalNumber = "test";
-    const items = [
-      {
-        description: "test desc",
-        nature_of_products: "products",
-        type_of_treatment: "teatment",
-        commodity_code: 123,
-        number_of_packages: 1,
-        total_net_weight_kg: 1.2,
-      },
-    ];
-    const packingListJson = {
-      registration_approval_number: registrationApprovalNumber,
-      items,
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-    const result = parserService.combineParser(
-      registrationApprovalNumber,
-      items,
-      true,
-    );
-    expect(result).toMatchObject(packingListJson);
   });
 });
 
@@ -1682,29 +1649,6 @@ describe("parseFowlerWelch", () => {
   });
 });
 
-describe("matchesNisa", () => {
-  test("returns true", () => {
-    const filename = "PackingList.xlsx";
-    const packingListJson = {
-      Something: [
-        {
-          A: "RMS_ESTABLISHMENT_NO",
-          I: "PRODUCT_TYPE_CATEGORY",
-          K: "PART_NUMBER_DESCRIPTION",
-          L: "TARIFF_CODE_EU",
-          M: "PACKAGES",
-          O: "NET_WEIGHT_TOTAL",
-        },
-        {
-          A: "RMS-GB-000025-009",
-        },
-      ],
-    };
-    const result = nisaMatcher.matches(packingListJson, filename);
-    expect(result).toBe(MatcherResult.CORRECT);
-  });
-});
-
 describe("checkRequiredData", () => {
   test("missing remos number", () => {
     const packingList = {
@@ -2249,93 +2193,5 @@ describe("parseBuffaloadLogistics", () => {
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
-  });
-});
-
-describe("findParser", () => {
-  nisaMatcher.matches = jest
-    .fn()
-    .mockReturnValue(MatcherResult.CORRECT)
-    .mockName("nisaMatcherMock");
-  nisaParser.parse = jest.fn().mockReturnValue({
-    items: [],
-    business_checks: { all_required_fields_present: null },
-  });
-
-  test("matches valid Nisa file and calls parser", () => {
-    const packingListJson = [
-      {
-        A: "RMS_ESTABLISHMENT_NO",
-        I: "PRODUCT_TYPE_CATEGORY",
-        K: "PART_NUMBER_DESCRIPTION",
-        L: "TARIFF_CODE_EU",
-        M: "PACKAGES",
-        O: "NET_WEIGHT_TOTAL",
-      },
-      {
-        A: "RMS-GB-000025-001",
-        I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        K: "DAIRYLEA DUNKERS JUMBO PM80P",
-        L: "2005995090",
-        M: 2,
-        O: 2.5,
-      },
-      {
-        A: "RMS-GB-000025-001",
-        I: "900 - VEGETABLES PREPACK-C",
-        K: "CO OP BROCCOLI",
-        L: "0403209300",
-        M: 1,
-        O: 2,
-      },
-    ];
-    const filename = "packinglist.xlsx";
-
-    parserService.findParser(packingListJson, filename);
-    expect(nisaParser.parse).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe("nisa2Parser", () => {
-  nisaMatcher2.matches = jest
-    .fn()
-    .mockReturnValue(MatcherResult.CORRECT)
-    .mockName("nisa2MatcherMock");
-  nisaParser2.parse = jest.fn().mockReturnValue({
-    items: [],
-    business_checks: { all_required_fields_present: null },
-  });
-
-  test("matches valid Nisa2 file and calls parser", () => {
-    const packingListJson = [
-      {
-        B: "RMS_ESTABLISHMENT_NO",
-        J: "PRODUCT_TYPE_CATEGORY",
-        L: "PART_NUMBER_DESCRIPTION",
-        M: "TARIFF_CODE_EU",
-        N: "PACKAGES",
-        P: "NET_WEIGHT_TOTAL",
-      },
-      {
-        B: "RMS-GB-000025-001",
-        J: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        L: "DAIRYLEA DUNKERS JUMBO PM80P",
-        M: "2005995090",
-        N: 2,
-        P: 2.5,
-      },
-      {
-        B: "RMS-GB-000025-001",
-        J: "900 - VEGETABLES PREPACK-C",
-        L: "CO OP BROCCOLI",
-        M: "0403209300",
-        N: 1,
-        P: 2,
-      },
-    ];
-    const filename = "packinglist.xlsx";
-
-    parserService.findParser(packingListJson, filename);
-    expect(nisaParser2.parse).toHaveBeenCalledTimes(1);
   });
 });
