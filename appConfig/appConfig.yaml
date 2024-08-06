@@ -40,3 +40,9 @@
 - key: DYNAMICS_APPLICATION_ID
   value: "{{servicename}}-DYNAMICS-APPLICATION-ID"
   type: "keyvault"
+- key: IS_DYNAMICS_INTEGRATION
+  value: "{{servicename}}-IS-DYNAMICS-INTEGRATION"
+  type: "keyvault"
+- key: TP_CONNECTIONSTRING
+  value: "{{servicename}}-TP-CONNECTIONSTRING"
+  type: "keyvault"
