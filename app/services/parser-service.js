@@ -1,6 +1,8 @@
 const MatcherResult = require("../services/matches-result");
 const NisaMatcher = require("../services/nisa/matcher");
 const NisaParser = require("../services/nisa/parser");
+const NisaParser2 = require("../services/nisa/parser2");
+const NisaMatcher2 = require("../services/nisa/matcher2");
 const CombineParser = require("../services/parser-combine");
 
 const CUSTOMER_ORDER = "Customer Order";
@@ -48,6 +50,10 @@ function findParser(result, filename) {
   } else if (NisaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
     parsedPackingList = NisaParser.parse(result[Object.keys(result)[0]]);
+    isParsed = true;
+  } else if (NisaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Nisa2 with filename: ", filename);
+    parsedPackingList = NisaParser2.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else {
     console.info("Failed to parse packing list with filename: ", filename);

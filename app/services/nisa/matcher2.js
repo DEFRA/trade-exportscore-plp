@@ -9,19 +9,19 @@ function matches(packingList, filename) {
     }
 
     const sheet = Object.keys(packingList)[0];
-    const establishmentNumber = packingList[sheet][establishmentNumberRow].A;
+    const establishmentNumber = packingList[sheet][establishmentNumberRow].B;
     const regex = /^RMS-GB-000025-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
     const header = {
-      A: "RMS_ESTABLISHMENT_NO",
-      I: "PRODUCT_TYPE_CATEGORY",
-      K: "PART_NUMBER_DESCRIPTION",
-      L: "TARIFF_CODE_EU",
-      M: "PACKAGES",
-      O: "NET_WEIGHT_TOTAL",
+      B: "RMS_ESTABLISHMENT_NO",
+      J: "PRODUCT_TYPE_CATEGORY",
+      L: "PART_NUMBER_DESCRIPTION",
+      M: "TARIFF_CODE_EU",
+      N: "PACKAGES",
+      P: "NET_WEIGHT_TOTAL",
     };
 
     for (const key in header) {
