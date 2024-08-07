@@ -1,4 +1,9 @@
 const MatcherResult = require("../services/matches-result");
+const NisaMatcher = require("../services/nisa/matcher");
+const NisaParser = require("../services/nisa/parser");
+const NisaParser2 = require("../services/nisa/parser2");
+const NisaMatcher2 = require("../services/nisa/matcher2");
+const CombineParser = require("../services/parser-combine");
 
 const CUSTOMER_ORDER = "Customer Order";
 const COUNTRY_OF_ORIGIN = "Country of Origin";
@@ -42,13 +47,33 @@ function findParser(result, filename) {
     );
     parsedPackingList = parseTescoModel2(result.Sheet2);
     isParsed = true;
+  } else if (matchesTescoModel3(result, filename) === MatcherResult.CORRECT) {
+    console.info(
+      "Packing list matches Tesco Model 3 with filename: ",
+      filename,
+    );
+    parsedPackingList = parseTescoModel3(result[INPUT_DATA_SHEET]);
+    isParsed = true;
   } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
     parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER]);
     isParsed = true;
-  } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
+  } else if (NisaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
-    parsedPackingList = parseNisa(result[Object.keys(result)[0]]);
+    parsedPackingList = NisaParser.parse(result[Object.keys(result)[0]]);
+    isParsed = true;
+  } else if (NisaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Nisa2 with filename: ", filename);
+    parsedPackingList = NisaParser2.parse(result[Object.keys(result)[0]]);
+    isParsed = true;
+  } else if (
+    matchesBuffaloadLogistics(result, filename) === MatcherResult.CORRECT
+  ) {
+    console.info(
+      "Packing list matches Buffaload Logistics with filename: ",
+      filename,
+    );
+    parsedPackingList = parseBuffaloadLogistics(result.Tabelle1);
     isParsed = true;
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
@@ -244,6 +269,47 @@ function matchesTescoModel2(packingListJson, filename) {
   }
 }
 
+function matchesTescoModel3(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop();
+    if (fileExtension !== "xlsx") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson[INPUT_DATA_SHEET][3].E;
+    const regex = /^RMS-GB-000022-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      A: "Product/ Part Number description",
+      B: "Tariff Code UK",
+      C: "Treatment Type",
+      D: "Green Lane",
+      E: "Packages",
+      F: "Gross Weight",
+      G: "Net Weight",
+    };
+
+    for (const key in header) {
+      if (
+        !packingListJson[INPUT_DATA_SHEET][4] ||
+        packingListJson[INPUT_DATA_SHEET][4][key] !== header[key]
+      ) {
+        return MatcherResult.WRONG_HEADER;
+      }
+    }
+
+    return MatcherResult.CORRECT;
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
 function parseBandM(packingListJson) {
   const traderRow = packingListJson.findIndex(
     (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
@@ -264,7 +330,7 @@ function parseBandM(packingListJson) {
       total_net_weight_kg: col.G ?? null,
     }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function isEndOfRow(x) {
@@ -274,22 +340,8 @@ function isEndOfRow(x) {
   return isTotal && isEmpty;
 }
 
-function combineParser(
-  establishmentNumber,
-  packingListContents,
-  allRequiredFieldsPresent,
-) {
-  return {
-    registration_approval_number: establishmentNumber,
-    items: packingListContents,
-    business_checks: {
-      all_required_fields_present: allRequiredFieldsPresent,
-    },
-  };
-}
-
 function failedParser() {
-  return combineParser(null, [], false);
+  return CombineParser.combine(null, [], false);
 }
 
 function parseAsdaModel1(packingListJson) {
@@ -303,7 +355,7 @@ function parseAsdaModel1(packingListJson) {
     total_net_weight_kg: col.G ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseTescoModel1(packingListJson) {
@@ -322,7 +374,7 @@ function parseTescoModel1(packingListJson) {
       total_net_weight_kg: col.BU ?? null,
     }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseTescoModel2(packingListJson) {
@@ -336,7 +388,21 @@ function parseTescoModel2(packingListJson) {
     total_net_weight_kg: col.K ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
+}
+
+function parseTescoModel3(packingListJson) {
+  const establishmentNumber = packingListJson[3].E ?? null;
+  const packingListContents = packingListJson.slice(5).map((col) => ({
+    description: col.A ?? null,
+    nature_of_products: null,
+    type_of_treatment: col.C ?? null,
+    commodity_code: col.B ?? null,
+    number_of_packages: col.E ?? null,
+    total_net_weight_kg: col.G ?? null,
+  }));
+
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesSainsburys(packingListJson, filename) {
@@ -398,7 +464,7 @@ function parseSainsburys(packingListJson) {
     total_net_weight_kg: col.H ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesTjmorris(packingListJson, filename) {
@@ -466,7 +532,7 @@ function parseTjmorris(packingListJson) {
     total_net_weight_kg: col.R ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesFowlerWelch(packingListJson, filename) {
@@ -536,7 +602,7 @@ function parseFowlerWelch(packingListJson) {
       total_net_weight_kg: col.K ?? null,
     }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function matchesNisa(packingListJson, filename) {
@@ -629,7 +695,7 @@ function parseAsdaModel2(packingListJson) {
     total_net_weight_kg: col.N ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function parseNisa(packingListJson) {
@@ -643,7 +709,7 @@ function parseNisa(packingListJson) {
     total_net_weight_kg: col.O ?? null,
   }));
 
-  return combineParser(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 function checkRequiredData(packingList) {
@@ -670,12 +736,65 @@ function checkRequiredData(packingList) {
   );
 }
 
+function matchesBuffaloadLogistics(packingListJson, filename) {
+  try {
+    // check for correct extension
+    const fileExtension = filename.split(".").pop().toLowerCase();
+    if (fileExtension !== "xlsx") {
+      return MatcherResult.WRONG_EXTENSIONS;
+    }
+
+    // check for correct establishment number
+    const establishmentNumber = packingListJson.Tabelle1[0].B;
+    const regex = /^RMS-GB-000098-\d{3}$/;
+    if (!regex.test(establishmentNumber)) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
+
+    // check for header values
+    const header = {
+      A: "Commodity code",
+      B: "Description of goods",
+      C: "Country of Origin",
+      D: "No. of pkgs",
+      E: "Type of pkgs",
+      F: "Item Gross Weight (kgs)",
+      G: "Item Net Weight (kgs)",
+      H: "Treatment Type (Chilled /Ambient)",
+      I: "NIRMS Lane (R/G)",
+    };
+
+    if (
+      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
+    ) {
+      return MatcherResult.WRONG_HEADER;
+    } else {
+      return MatcherResult.CORRECT;
+    }
+  } catch (err) {
+    return MatcherResult.GENERIC_ERROR;
+  }
+}
+
+function parseBuffaloadLogistics(packingListJson) {
+  const establishmentNumber = packingListJson[0].B;
+  const packingListContents = packingListJson.slice(2).map((col) => ({
+    description: col.B ?? null,
+    nature_of_products: null,
+    type_of_treatment: col.H ?? null,
+    commodity_code: col.A ?? null,
+    number_of_packages: col.D ?? null,
+    total_net_weight_kg: col.G ?? null,
+  }));
+
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
+}
+
 module.exports = {
   matchesBandM,
   matchesAsdaModel1,
   parseBandM,
   failedParser,
-  combineParser,
   parseAsdaModel1,
   matchesSainsburys,
   parseSainsburys,
@@ -683,14 +802,16 @@ module.exports = {
   parseTjmorris,
   matchesTescoModel1,
   matchesTescoModel2,
+  matchesTescoModel3,
   parseTescoModel1,
   parseTescoModel2,
+  parseTescoModel3,
   matchesAsdaModel2,
   parseAsdaModel2,
   matchesFowlerWelch,
   parseFowlerWelch,
+  matchesBuffaloadLogistics,
+  parseBuffaloadLogistics,
   findParser,
-  matchesNisa,
-  parseNisa,
   checkRequiredData,
 };
