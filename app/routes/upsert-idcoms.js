@@ -1,7 +1,7 @@
 const { sendParsed } = require("../messaging/send-parsed-message");
 const { patchPackingListCheck } = require("../services/dynamics-service");
 const { StatusCodes } = require("http-status-codes");
-const { isDynamicsIntegration } = require("../config").isDynamicsIntegration;
+const config = require("../config");
 
 module.exports = {
   method: "GET",
@@ -9,9 +9,10 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
+        console.log(config);
         let checkStatus = StatusCodes.NOT_FOUND;
         if (request.query.applicationId) {
-          if (isDynamicsIntegration) {
+          if (config.isDynamicsIntegration) {
             checkStatus = await patchPackingListCheck(
               request.query.applicationId,
               request.query.isParsed,
@@ -21,6 +22,7 @@ module.exports = {
               request.query.isParsed,
               request.query.applicationId,
             );
+            checkStatus = StatusCodes.OK;
           }
         }
         return h.response(checkStatus).code(StatusCodes.OK);

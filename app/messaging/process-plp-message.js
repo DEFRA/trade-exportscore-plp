@@ -5,7 +5,7 @@ const {
 } = require("../services/storage-account");
 const { createPackingList } = require("../packing-list");
 const { patchPackingListCheck } = require("../services/dynamics-service");
-const { isDynamicsIntegration } = require("../config").isDynamicsIntegration;
+const config = require("../config");
 
 async function processPlpMessage(message, receiver) {
   try {
@@ -23,7 +23,7 @@ async function processPlpMessage(message, receiver) {
       console.info(
         `Business checks for ${message.body.application_id}: ${parsed.packingList.business_checks}`,
       );
-      if (isDynamicsIntegration) {
+      if (config.isDynamicsIntegration) {
         await patchPackingListCheck(
           message.body.application_id,
           parsed.packingList.business_checks.all_required_fields_present,

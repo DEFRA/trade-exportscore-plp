@@ -43,6 +43,7 @@ value.dynamicsConfig = dynamicsConfig;
 value.plDir = path.join(process.cwd(), "/app/packing-lists/");
 
 // TP/IDCOMS toggle
-value.isDynamicsIntegration = process.env.IS_DYNAMICS_INTEGRATION;
+value.isDynamicsIntegration =
+  process.env.IS_DYNAMICS_INTEGRATION === "true" ? true : false;
 
 module.exports = value;

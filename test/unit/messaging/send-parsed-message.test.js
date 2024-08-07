@@ -17,11 +17,11 @@ describe("sendParsed", () => {
     MessageSender.mockImplementation(() => ({ sendMessage, closeConnection }));
 
     // Act
-    await sendParsed(message);
+    await sendParsed(true, "appid");
 
     // Assert
-    expect(createMessage).toHaveBeenCalledWith(message);
-    expect(MessageSender).toHaveBeenCalledWith(config.parsedQueue);
+    expect(createMessage).toHaveBeenCalledWith(true, "appid");
+    expect(MessageSender).toHaveBeenCalledWith(config.tpQueue);
     expect(sendMessage).toHaveBeenCalledWith(message);
     expect(closeConnection).toHaveBeenCalledTimes(1);
   });
