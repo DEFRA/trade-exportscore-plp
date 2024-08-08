@@ -1,7 +1,7 @@
 const parserService = require("../../../app/services/parser-service");
 const MatcherResult = require("../../../app/services/matches-result");
-const nisaMatcher2 = require("../../../app/services/nisa/matcher2");
-const nisaParser2 = require("../../../app/services/nisa/parser2");
+const nisaMatcher2 = require("../../../app/services/parsers/nisa/model2/matcher");
+const nisaParser2 = require("../../../app/services/parsers/nisa/model2/parser");
 
 describe("nisa2Parser", () => {
   nisaMatcher2.matches = jest

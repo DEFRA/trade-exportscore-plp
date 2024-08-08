@@ -1,7 +1,7 @@
 const parserService = require("../../../app/services/parser-service");
 const MatcherResult = require("../../../app/services/matches-result");
-const nisaMatcher = require("../../../app/services/nisa/matcher");
-const nisaParser = require("../../../app/services/nisa/parser");
+const nisaMatcher = require("../../../app/services/parsers/nisa/model1/parser");
+const nisaParser = require("../../../app/services/parsers/nisa/model1/parser");
 
 describe("matchesNisa", () => {
   test("returns true", () => {
