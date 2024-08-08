@@ -45,6 +45,7 @@ describe("parsesBuffaloadLogisticsModel1", () => {
     ];
 
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBe(packingListJson[0].B);
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[2].B);
@@ -80,6 +81,7 @@ describe("parsesBuffaloadLogisticsModel1", () => {
     ];
 
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();

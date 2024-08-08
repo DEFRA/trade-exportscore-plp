@@ -5,14 +5,18 @@ describe("matchesTjmorris", () => {
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xls";
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
   test("returns wrong extension for incorrect file extension", () => {
     const filename = "packinglist.pdf";
     const packingListJson = {};
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
@@ -26,7 +30,9 @@ describe("matchesTjmorris", () => {
       ],
     };
     const filename = "packinglist.xls";
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
@@ -66,7 +72,9 @@ describe("matchesTjmorris", () => {
         },
       ],
     };
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
@@ -106,7 +114,9 @@ describe("matchesTjmorris", () => {
         },
       ],
     };
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.CORRECT);
   });
 });

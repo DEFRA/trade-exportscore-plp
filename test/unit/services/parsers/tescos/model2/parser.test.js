@@ -46,7 +46,9 @@ describe("parseTescoModel2", () => {
         M: "RMS-GB-000015-009",
       },
     ];
+
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBe(packingListJson[2].M);
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[2].F);
@@ -86,7 +88,9 @@ describe("parseTescoModel2", () => {
         L: "31.04",
       },
     ];
+
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();

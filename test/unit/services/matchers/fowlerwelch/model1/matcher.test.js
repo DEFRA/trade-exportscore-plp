@@ -5,14 +5,18 @@ describe("matchesFowlerWelchModel1", () => {
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
   test("returns wrong extension for incorrect file extension", () => {
     const filename = "packinglist.xls";
     const packingListJson = {};
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
@@ -70,7 +74,9 @@ describe("matchesFowlerWelchModel1", () => {
       ],
     };
     const filename = "packinglist.xlsx";
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
@@ -147,7 +153,9 @@ describe("matchesFowlerWelchModel1", () => {
         },
       ],
     };
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
@@ -224,7 +232,9 @@ describe("matchesFowlerWelchModel1", () => {
         },
       ],
     };
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.CORRECT);
   });
 });

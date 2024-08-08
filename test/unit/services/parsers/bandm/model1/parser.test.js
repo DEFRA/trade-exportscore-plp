@@ -55,7 +55,9 @@ describe("parseBandMModel1", () => {
         H: 3.63,
       },
     ];
+
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBe(packingListJson[2].I);
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[6].C);
@@ -106,7 +108,9 @@ describe("parseBandMModel1", () => {
         H: 3.63,
       },
     ];
+
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();

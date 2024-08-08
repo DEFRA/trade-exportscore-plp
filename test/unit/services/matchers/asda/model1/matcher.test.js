@@ -21,6 +21,7 @@ describe("matchesAsdaModel1", () => {
         },
       ],
     };
+
     const result = Matcher.matches(packingListJson, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
@@ -29,7 +30,9 @@ describe("matchesAsdaModel1", () => {
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xls";
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
@@ -44,14 +47,18 @@ describe("matchesAsdaModel1", () => {
       ],
     };
     const filename = "packinglist.xls";
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return wrong extension for incorrect file extension", () => {
     const filename = "packinglist.pdf";
     const packingListJson = {};
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
@@ -69,7 +76,9 @@ describe("matchesAsdaModel1", () => {
         },
       ],
     };
+
     const result = Matcher.matches(packingListJson, filename);
+
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });

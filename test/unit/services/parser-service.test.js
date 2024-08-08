@@ -9,7 +9,9 @@ describe("failedParser", () => {
         all_required_fields_present: false,
       },
     };
+
     const result = ParserService.failedParser();
+
     expect(result).toMatchObject(packingListJson);
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toMatchObject([]);
@@ -243,6 +245,7 @@ describe("findParser", () => {
     const filename = "packinglist.xls";
 
     const result = ParserService.findParser(packingListJson, filename);
+
     expect(result.packingList.items).toHaveLength(2);
   });
 });

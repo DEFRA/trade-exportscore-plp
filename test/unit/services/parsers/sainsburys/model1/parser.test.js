@@ -29,6 +29,7 @@ describe("parseSainsburysModel1", () => {
     ];
 
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBe("RMS-GB-000094-002");
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[1].E);
@@ -56,6 +57,7 @@ describe("parseSainsburysModel1", () => {
     ];
 
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();
