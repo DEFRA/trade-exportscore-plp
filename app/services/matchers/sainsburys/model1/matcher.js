@@ -1,4 +1,4 @@
-const MatcherResult = require("../matches-result");
+const MatcherResult = require("../../../matches-result");
 
 function matches(packingListJson, filename) {
   try {

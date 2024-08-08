@@ -1,4 +1,4 @@
-const nisaParser = require("../../../../../../app/services/parsers/nisa/model1/parser");
+const Parser = require("../../../../../../app/services/parsers/nisa/model1/parser");
 
 describe("parseNisa", () => {
   test("parses json", () => {
@@ -29,7 +29,7 @@ describe("parseNisa", () => {
       },
     ];
 
-    const result = nisaParser.parse(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[1].A);
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[1].K);
@@ -57,7 +57,7 @@ describe("parseNisa", () => {
       {},
     ];
 
-    const result = nisaParser.parse(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();

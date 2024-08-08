@@ -11,7 +11,7 @@ function parse(packingListJson) {
     total_net_weight_kg: col.P ?? null,
   }));
 
-  return combineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
 module.exports = {

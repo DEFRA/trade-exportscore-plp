@@ -1,4 +1,5 @@
-const CombineParser = require("../parser-combine");
+const CombineParser = require("../../../parser-combine");
+
 
 function parse(packingListJson) {
   const establishmentNumberRow = 45;
