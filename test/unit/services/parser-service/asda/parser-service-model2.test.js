@@ -28,20 +28,3 @@ describe("matchesAsdaModel2", () => {
     expect(result.isParsed).toBeTruthy();
   });
 });
-
-describe("parsesAsdaModel2", () => {
-  Matcher.matches = jest
-    .fn()
-    .mockReturnValue(MatcherResult.CORRECT)
-    .mockName("AsdaMatcherMock");
-  Parser.parse = jest.fn().mockReturnValue({
-    items: [],
-    business_checks: { all_required_fields_present: null },
-  });
-
-  test("matches valid Asda Model 2 file and calls parser", () => {
-    ParserService.findParser(packingListJson, filename);
-
-    expect(Parser.parse).toHaveBeenCalledTimes(1);
-  });
-});

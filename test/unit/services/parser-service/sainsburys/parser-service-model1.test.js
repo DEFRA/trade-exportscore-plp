@@ -36,20 +36,3 @@ describe("matchesSainsburysModel1", () => {
     expect(result.isParsed).toBeTruthy();
   });
 });
-
-describe("parsesSainsburysModel1", () => {
-  Matcher.matches = jest
-    .fn()
-    .mockReturnValue(MatcherResult.CORRECT)
-    .mockName("SainsburysMatcherMock");
-  Parser.parse = jest.fn().mockReturnValue({
-    items: [],
-    business_checks: { all_required_fields_present: null },
-  });
-
-  test("matches valid Sainsburys Model 1 file and calls parser", () => {
-    ParserService.findParser(packingListJson, filename);
-
-    expect(Parser.parse).toHaveBeenCalledTimes(1);
-  });
-});

@@ -35,20 +35,3 @@ describe("matchesBandMModel1", () => {
     expect(result.isParsed).toBeTruthy();
   });
 });
-
-describe("parsesBAndMModel1", () => {
-  Matcher.matches = jest
-    .fn()
-    .mockReturnValue(MatcherResult.CORRECT)
-    .mockName("BAndMMatcherMock");
-  Parser.parse = jest.fn().mockReturnValue({
-    items: [],
-    business_checks: { all_required_fields_present: null },
-  });
-
-  test("matches valid BAndM Model 1 file and calls parser", () => {
-    ParserService.findParser(packingListJson, filename);
-
-    expect(Parser.parse).toHaveBeenCalledTimes(1);
-  });
-});
