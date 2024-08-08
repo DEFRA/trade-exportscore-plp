@@ -21,8 +21,8 @@ const TescosMatcher2 = require("../services/matchers/tescos/model2/matcher");
 const TescosParser2 = require("../services/parsers/tescos/model2/parser");
 const TescosMatcher3 = require("../services/matchers/tescos/model3/matcher");
 const TescosParser3 = require("../services/parsers/tescos/model3/parser");
-const TjMorrisMatcher = require("../services/matchers/tescos/model1/matcher");
-const TjMorrisParser = require("../services/parsers/tescos/model1/parser");
+const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
+const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
 const CombineParser = require("./parser-combine");
 
 const CUSTOMER_ORDER = "Customer Order";
