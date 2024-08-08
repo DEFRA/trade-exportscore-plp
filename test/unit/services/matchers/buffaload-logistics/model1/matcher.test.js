@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../../app/services/parsers/buffaload-logistics/model1/parser");
+const Matcher = require("../../../../../../app/services/matchers/buffaload-logistics/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
 
 describe("matchesBuffaloadLogisticsModel1", () => {
@@ -22,17 +22,15 @@ describe("matchesBuffaloadLogisticsModel1", () => {
         },
       ],
     };
-    const result = parserService.matchesBuffaloadLogistics(
-      packingListJson,
-      filename,
-    );
+    const result = Matcher.matches(packingListJson, filename);
+    
     expect(result).toBe(MatcherResult.CORRECT);
   });
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
-    const result = parserService.matchesBuffaloadLogistics(
+    const result = Matcher.matches(
       packingListJson,
       filename,
     );
@@ -48,7 +46,7 @@ describe("matchesBuffaloadLogisticsModel1", () => {
       ],
     };
     const filename = "packinglist.xlsx";
-    const result = parserService.matchesBuffaloadLogistics(
+    const result = Matcher.matches(
       packingListJson,
       filename,
     );
@@ -58,7 +56,7 @@ describe("matchesBuffaloadLogisticsModel1", () => {
   test("return wrong extensions for incorrect file extension", () => {
     const filename = "packinglist.pdf";
     const packingListJson = {};
-    const result = parserService.matchesBuffaloadLogistics(
+    const result = Matcher.matches(
       packingListJson,
       filename,
     );
@@ -79,7 +77,7 @@ describe("matchesBuffaloadLogisticsModel1", () => {
         },
       ],
     };
-    const result = parserService.matchesBuffaloadLogistics(
+    const result = Matcher.matches(
       packingListJson,
       filename,
     );

@@ -34,7 +34,7 @@ describe("parseAsdaModel1", () => {
         H: "kgs",
       },
     ];
-    const result = parserService.parseAsdaModel1(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[1].D);
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[1].A);
@@ -65,7 +65,7 @@ describe("parseAsdaModel1", () => {
         D: null,
       },
     ];
-    const result = parserService.parseAsdaModel1(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();

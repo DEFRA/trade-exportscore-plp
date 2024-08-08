@@ -1,4 +1,4 @@
-const Parser = require("../../../../services/parsers/tjmorris/model1/parser");
+const Parser = require("../../../../../../app/services/parsers/tjmorris/model1/parser");
 
 describe("parseTjmorrisModel1", () => {
   test("parses json", () => {

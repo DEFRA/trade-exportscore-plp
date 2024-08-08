@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../../app/services/parsers/tescos/model1/parser");
+const Matcher = require("../../../../../../app/services/matchers/tescos/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
 
 describe("matchesTescoModel1", () => {
@@ -23,14 +23,14 @@ describe("matchesTescoModel1", () => {
         },
       ],
     };
-    const result = parserService.matchesTescoModel1(packingListJson, filename);
+    const result = Matcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.CORRECT);
   });
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
-    const result = parserService.matchesTescoModel1(packingListJson, filename);
+    const result = Matcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
@@ -46,14 +46,14 @@ describe("matchesTescoModel1", () => {
       ],
     };
     const filename = "packinglist.xlsx";
-    const result = parserService.matchesTescoModel1(packingListJson, filename);
+    const result = Matcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return wrong extension for incorrect file extension", () => {
     const filename = "packinglist.pdf";
     const packingListJson = {};
-    const result = parserService.matchesTescoModel1(packingListJson, filename);
+    const result = Matcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
@@ -78,7 +78,7 @@ describe("matchesTescoModel1", () => {
         },
       ],
     };
-    const result = parserService.matchesTescoModel1(packingListJson, filename);
+    const result = Matcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });

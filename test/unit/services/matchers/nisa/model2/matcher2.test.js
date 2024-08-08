@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../../app/services/parsers/nisa/model2/matcher");
+const Matcher = require("../../../../../../app/services/matchers/nisa/model2/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
 
 describe("matchesNisa2", () => {

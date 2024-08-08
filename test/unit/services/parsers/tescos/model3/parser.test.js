@@ -37,7 +37,7 @@ describe("parseTescoModel3", () => {
         G: 5.396,
       },
     ];
-    const result = parserService.parseTescoModel3(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[3].E);
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[5].A);
@@ -71,7 +71,7 @@ describe("parseTescoModel3", () => {
         E: null,
       },
     ];
-    const result = parserService.parseTescoModel3(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();
