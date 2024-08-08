@@ -31,15 +31,15 @@ const packingListJson = [
 ];
 const filename = "packinglist.xlsx";
 
-describe("matcherNisa1", () => {
-  test("returns true", () => {
-    const result = Matcher.matches(packingListJson, filename);
+describe("matchesNisaModel1", () => {
+  test("returns isParsed as true", () => {
+    const result = ParserService.findParser(packingListJson, filename);
 
-    expect(result).toBe(MatcherResult.CORRECT);
+    expect(result.isParsed).toBeTruthy();
   });
 });
 
-describe("parserNisa1", () => {
+describe("parsesNisaModel1", () => {
   Matcher.matches = jest
     .fn()
     .mockReturnValue(MatcherResult.CORRECT)

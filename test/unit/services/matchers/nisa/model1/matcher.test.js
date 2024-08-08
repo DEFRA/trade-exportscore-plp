@@ -2,7 +2,7 @@ const Matcher = require("../../../../../../app/services/parsers/nisa/model1/pars
 const MatcherResult = require("../../../../../../app/services/matches-result");
 
 describe("matchesNisa", () => {
-  test("returns true", () => {
+  test("returns Correct", () => {
     const filename = "PackingList.xlsx";
     const packingListJson = {
       Something: [
