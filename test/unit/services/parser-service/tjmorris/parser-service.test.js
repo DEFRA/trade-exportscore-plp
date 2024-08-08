@@ -201,7 +201,6 @@ describe("parseBandM", () => {
   });
 });
 
-
 describe("matchesAsdaModel1", () => {
   test("returns true", () => {
     const filename = "packinglist.xls";

@@ -1,6 +1,5 @@
 const CombineParser = require("../../../parser-combine");
 
-
 function parse(packingListJson) {
   const traderRow = packingListJson.findIndex(
     (x) => x.H === "WAREHOUSE SCHEME NUMBER:",

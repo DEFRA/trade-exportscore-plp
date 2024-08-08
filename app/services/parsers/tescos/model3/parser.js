@@ -1,6 +1,5 @@
 const CombineParser = require("../../../parser-combine");
 
-
 function parse(packingListJson) {
   const establishmentNumber = packingListJson[3].E ?? null;
   const packingListContents = packingListJson.slice(5).map((col) => ({

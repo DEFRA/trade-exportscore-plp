@@ -1,6 +1,5 @@
 const CombineParser = require("../../../parser-combine");
 
-
 function parse(packingListJson) {
   const establishmentNumber =
     packingListJson[1].N?.replace(/\u200B/g, "") ?? null;

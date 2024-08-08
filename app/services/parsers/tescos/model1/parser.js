@@ -1,6 +1,5 @@
 const CombineParser = require("../../../parser-combine");
 
-
 function parse(packingListJson) {
   const packingListContentsRow = 5;
   const establishmentNumberRow = 3;
