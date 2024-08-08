@@ -9,6 +9,7 @@ module.exports = {
     "<rootDir>/test/",
     ".*/__mocks__/.*",
     "<rootDir>/jest.config.js",
+    "<rootDir>/jest.setup.js",
     "<rootDir>/rename.js",
   ],
   modulePathIgnorePatterns: ["node_modules"],

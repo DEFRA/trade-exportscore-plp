@@ -218,36 +218,7 @@ describe("failedParser", () => {
   });
 });
 
-describe("combineParser", () => {
-  test("parses json", () => {
-    const registrationApprovalNumber = "test";
-    const items = [
-      {
-        description: "test desc",
-        nature_of_products: "products",
-        type_of_treatment: "teatment",
-        commodity_code: 123,
-        number_of_packages: 1,
-        total_net_weight_kg: 1.2,
-      },
-    ];
-    const packingListJson = {
-      registration_approval_number: registrationApprovalNumber,
-      items,
-      business_checks: {
-        all_required_fields_present: true,
-      },
-    };
-    const result = parserService.combineParser(
-      registrationApprovalNumber,
-      items,
-      true,
-    );
-    expect(result).toMatchObject(packingListJson);
-  });
-});
-
-describe("matchesAsda", () => {
+describe("matchesAsdaModel1", () => {
   test("returns true", () => {
     const filename = "packinglist.xls";
     const packingListJson = {
@@ -267,14 +238,14 @@ describe("matchesAsda", () => {
         },
       ],
     };
-    const result = parserService.matchesAsda(packingListJson, filename);
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
     expect(result).toBe(MatcherResult.CORRECT);
   });
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xls";
-    const result = parserService.matchesAsda(packingListJson, filename);
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
@@ -289,14 +260,14 @@ describe("matchesAsda", () => {
       ],
     };
     const filename = "packinglist.xls";
-    const result = parserService.matchesAsda(packingListJson, filename);
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return wrong extension for incorrect file extension", () => {
     const filename = "packinglist.pdf";
     const packingListJson = {};
-    const result = parserService.matchesAsda(packingListJson, filename);
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
@@ -314,12 +285,12 @@ describe("matchesAsda", () => {
         },
       ],
     };
-    const result = parserService.matchesAsda(packingListJson, filename);
+    const result = parserService.matchesAsdaModel1(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });
 
-describe("parseAsda", () => {
+describe("parseAsdaModel1", () => {
   test("parses json", () => {
     const packingListJson = [
       {
@@ -353,7 +324,7 @@ describe("parseAsda", () => {
         H: "kgs",
       },
     ];
-    const result = parserService.parseAsda(packingListJson);
+    const result = parserService.parseAsdaModel1(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[1].D);
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[1].A);
@@ -381,10 +352,10 @@ describe("parseAsda", () => {
         H: "[kilograms/grams]",
       },
       {
-        E: "RMS-NI-000008-017",
+        D: null,
       },
     ];
-    const result = parserService.parseAsda(packingListJson);
+    const result = parserService.parseAsdaModel1(packingListJson);
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();
@@ -728,6 +699,170 @@ describe("parseTescoModel2", () => {
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();
+    expect(result.items[0].commodity_code).toBeNull();
+    expect(result.items[0].number_of_packages).toBeNull();
+    expect(result.items[0].total_net_weight_kg).toBeNull();
+  });
+});
+
+describe("matchesTescoModel3", () => {
+  test("returns true", () => {
+    const filename = "PackingListTesco3.xlsx";
+    const packingListJson = {
+      "Input Data Sheet": [
+        {},
+        {},
+        {},
+        {
+          E: "RMS-GB-000022-999",
+        },
+        {
+          A: "Product/ Part Number description",
+          B: "Tariff Code UK",
+          C: "Treatment Type",
+          D: "Green Lane",
+          E: "Packages",
+          F: "Gross Weight",
+          G: "Net Weight",
+        },
+      ],
+    };
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.CORRECT);
+  });
+
+  test("returns generic error for empty json", () => {
+    const packingListJson = {};
+    const filename = "packinglist.xlsx";
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+  });
+
+  test("returns wrong establishment number for missing establishment number", () => {
+    const packingListJson = {
+      "Input Data Sheet": [
+        {},
+        {},
+        {},
+        {
+          E: "INCORRECT",
+        },
+      ],
+    };
+    const filename = "packinglist.xlsx";
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+  });
+
+  test("return wrong extension for incorrect file extension", () => {
+    const filename = "packinglist.pdf";
+    const packingListJson = {};
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
+  });
+
+  test("return wrong header for incorrect header values", () => {
+    const filename = "packinglist.xlsx";
+    const packingListJson = {
+      "Input Data Sheet": [
+        {},
+        {},
+        {},
+        {
+          E: "RMS-GB-000022-001",
+        },
+        {
+          A: "NOT",
+          B: "CORRECT",
+          C: "HEADER",
+          D: "Green Lane",
+          E: "Packages",
+          F: "Gross Weight",
+          G: "Net Weight",
+        },
+      ],
+    };
+    const result = parserService.matchesTescoModel3(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+});
+
+describe("parseTescoModel3", () => {
+  test("parses json", () => {
+    const packingListJson = [
+      {},
+      {},
+      {},
+      {
+        E: "RMS-GB-000022-999",
+      },
+      {
+        A: "Product/ Part Number description",
+        B: "Tariff Code UK",
+        C: "Treatment Type",
+        D: "Green Lane",
+        E: "Packages",
+        F: "Gross Weight",
+        G: "Net Weight",
+      },
+      {
+        A: "1 MARIGOLD EXTRA LIFE GLOVES KITCHEN MEDIUM",
+        B: "4015900000",
+        C: "AMBIENT",
+        D: "Y",
+        E: 1,
+        F: 0.46,
+        G: 0.437,
+      },
+      {
+        A: "APTAMIL 1 1ST MILK 200ML RTF LIQD",
+        B: "0401401090",
+        C: "AMBIENT",
+        D: "Y",
+        E: 2,
+        F: 5.68,
+        G: 5.396,
+      },
+    ];
+    const result = parserService.parseTescoModel3(packingListJson);
+    expect(result.registration_approval_number).toBe(packingListJson[3].E);
+    expect(result.items).toHaveLength(2);
+    expect(result.items[0].description).toBe(packingListJson[5].A);
+    expect(result.items[1].description).toBe(packingListJson[6].A);
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[5].C);
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[6].C);
+    expect(result.items[0].commodity_code).toBe(packingListJson[5].B);
+    expect(result.items[1].commodity_code).toBe(packingListJson[6].B);
+    expect(result.items[0].number_of_packages).toBe(packingListJson[5].E);
+    expect(result.items[1].number_of_packages).toBe(packingListJson[6].E);
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[5].G);
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[6].G);
+  });
+
+  test("parses null json", () => {
+    const packingListJson = [
+      {},
+      {},
+      {},
+      {},
+      {
+        A: "Product/ Part Number description",
+        B: "Tariff Code UK",
+        C: "Treatment Type",
+        D: "Green Lane",
+        E: "Packages",
+        F: "Gross Weight",
+        G: "Net Weight",
+      },
+      {
+        E: null,
+      },
+    ];
+    const result = parserService.parseTescoModel3(packingListJson);
+    expect(result.registration_approval_number).toBeNull();
+    expect(result.items).toHaveLength(1);
+    expect(result.items[0].description).toBeNull();
+    expect(result.items[0].type_of_treatment).toBeNull();
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
@@ -1514,143 +1649,6 @@ describe("parseFowlerWelch", () => {
   });
 });
 
-describe("matchesNisa", () => {
-  test("returns true", () => {
-    const filename = "PackingList.xlsx";
-    const packingListJson = {
-      Something: [
-        {
-          A: "RMS_ESTABLISHMENT_NO",
-          I: "PRODUCT_TYPE_CATEGORY",
-          K: "PART_NUMBER_DESCRIPTION",
-          L: "TARIFF_CODE_EU",
-          M: "PACKAGES",
-          O: "NET_WEIGHT_TOTAL",
-        },
-        {
-          A: "RMS-GB-000025-009",
-        },
-      ],
-    };
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.CORRECT);
-  });
-
-  test("returns generic error for empty json", () => {
-    const packingListJson = {};
-    const filename = "packinglist.xlsx";
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.GENERIC_ERROR);
-  });
-
-  test("returns wrong establishment number for missing establishment number", () => {
-    const packingListJson = {
-      Something: [
-        {},
-        {
-          A: "INCORRECT",
-        },
-      ],
-    };
-    const filename = "packinglist.xlsx";
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
-  });
-
-  test("return wrong extensions for incorrect file extension", () => {
-    const filename = "packinglist.pdf";
-    const packingListJson = {};
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
-  });
-
-  test("return wrong header for incorrect header values", () => {
-    const filename = "packinglist.xlsx";
-    const packingListJson = {
-      Something: [
-        {
-          A: "NOT",
-          B: "CORRECT",
-          C: "HEADER",
-        },
-        {
-          A: "RMS-GB-000025-009",
-        },
-      ],
-    };
-    const result = parserService.matchesNisa(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_HEADER);
-  });
-});
-
-describe("parseNisa", () => {
-  test("parses json", () => {
-    const packingListJson = [
-      {
-        A: "RMS_ESTABLISHMENT_NO",
-        I: "PRODUCT_TYPE_CATEGORY",
-        K: "PART_NUMBER_DESCRIPTION",
-        L: "TARIFF_CODE_EU",
-        M: "PACKAGES",
-        O: "NET_WEIGHT_TOTAL",
-      },
-      {
-        A: "RMS-GB-000025-001",
-        I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        K: "DAIRYLEA DUNKERS JUMBO PM80P",
-        L: "2005995090",
-        M: 2,
-        O: 2.5,
-      },
-      {
-        A: "RMS-GB-000025-001",
-        I: "900 - VEGETABLES PREPACK-C",
-        K: "CO OP BROCCOLI",
-        L: "0403209300",
-        M: 1,
-        O: 2,
-      },
-    ];
-
-    const result = parserService.parseNisa(packingListJson);
-    expect(result.registration_approval_number).toBe(packingListJson[1].A);
-    expect(result.items).toHaveLength(2);
-    expect(result.items[0].description).toBe(packingListJson[1].K);
-    expect(result.items[1].description).toBe(packingListJson[2].K);
-    expect(result.items[0].nature_of_products).toBe(packingListJson[1].I);
-    expect(result.items[1].nature_of_products).toBe(packingListJson[2].I);
-    expect(result.items[0].commodity_code).toBe(packingListJson[1].L);
-    expect(result.items[1].commodity_code).toBe(packingListJson[2].L);
-    expect(result.items[0].number_of_packages).toBe(packingListJson[1].M);
-    expect(result.items[1].number_of_packages).toBe(packingListJson[2].M);
-    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].O);
-    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].O);
-  });
-
-  test("parses null json", () => {
-    const packingListJson = [
-      {
-        A: "RMS_ESTABLISHMENT_NO",
-        I: "PRODUCT_TYPE_CATEGORY",
-        K: "PART_NUMBER_DESCRIPTION",
-        L: "TARIFF_CODE_EU",
-        M: "PACKAGES",
-        O: "NET_WEIGHT_TOTAL",
-      },
-      {},
-    ];
-
-    const result = parserService.parseNisa(packingListJson);
-    expect(result.registration_approval_number).toBeNull();
-    expect(result.items).toHaveLength(1);
-    expect(result.items[0].description).toBeNull();
-    expect(result.items[0].nature_of_products).toBeNull();
-    expect(result.items[0].commodity_code).toBeNull();
-    expect(result.items[0].number_of_packages).toBeNull();
-    expect(result.items[0].total_net_weight_kg).toBeNull();
-  });
-});
-
 describe("checkRequiredData", () => {
   test("missing remos number", () => {
     const packingList = {
@@ -1878,6 +1876,323 @@ describe("findParser", () => {
 
     const result = parserService.findParser(packingListJson, filename);
     expect(result.packingList.items).toHaveLength(2);
+  });
+});
+
+describe("matchesAsdaModel2", () => {
+  test("returns true", () => {
+    const filename = "packinglist.xls";
+    const packingListJson = {
+      Sheet1: [
+        {
+          B: "[Description Of All Retail Go",
+          D: "[Nature Of Product]",
+          F: "[Treatment Ty",
+          H: "Establishment Number",
+          J: "Cases",
+          L: "Case Weight",
+          N: "NET Weight",
+        },
+        {
+          H: "RMS-GB-000015-010",
+        },
+      ],
+    };
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.CORRECT);
+  });
+
+  test("returns generic error for empty json", () => {
+    const packingListJson = {};
+    const filename = "packinglist.xls";
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+  });
+
+  test("returns wrong establishment number for missing establishment number", () => {
+    const packingListJson = {
+      Sheet1: [
+        {},
+        {
+          H: "INCORRECT",
+        },
+      ],
+    };
+    const filename = "packinglist.xls";
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+  });
+
+  test("return wrong extension for incorrect file extension", () => {
+    const filename = "packinglist.pdf";
+    const packingListJson = {};
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
+  });
+
+  test("return wrong header for incorrect header values", () => {
+    const filename = "packinglist.xls";
+    const packingListJson = {
+      Sheet1: [
+        {
+          B: "NOT",
+          D: "CORRECT",
+          F: "HEADER",
+        },
+        {
+          H: "RMS-GB-000015-010",
+        },
+      ],
+    };
+    const result = parserService.matchesAsdaModel2(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+});
+
+describe("parseAsdaModel2", () => {
+  test("parses json", () => {
+    const packingListJson = [
+      {
+        B: "[Description Of All Retail Go",
+        D: "[Nature Of Product]",
+        F: "[Treatment Ty",
+        H: "Establishment Number",
+        J: "Cases",
+        L: "Case Weight",
+        N: "NET Weight",
+      },
+      {
+        B: "4PK X 17 PINK LADY APPLES",
+        D: "TOP FRUIT",
+        F: "PRODUCE",
+        H: "RMS-GB-000015-010",
+        J: 20,
+        L: 12.75,
+        N: 255,
+      },
+      {
+        B: "ASDA BABY WATERMELON X10",
+        D: "MELON HARD",
+        F: "PRODUCE",
+        H: "RMS-GB-000015-010",
+        J: 5,
+        L: 12,
+        N: 60,
+      },
+    ];
+    const result = parserService.parseAsdaModel2(packingListJson);
+    expect(result.registration_approval_number).toBe(packingListJson[1].H);
+    expect(result.items).toHaveLength(2);
+    expect(result.items[0].description).toBe(packingListJson[1].B);
+    expect(result.items[1].description).toBe(packingListJson[2].B);
+    expect(result.items[0].nature_of_products).toBe(packingListJson[1].D);
+    expect(result.items[1].nature_of_products).toBe(packingListJson[2].D);
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[1].F);
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[2].F);
+    expect(result.items[0].number_of_packages).toBe(packingListJson[1].J);
+    expect(result.items[1].number_of_packages).toBe(packingListJson[2].J);
+    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].N);
+    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].N);
+  });
+
+  test("parses null json", () => {
+    const packingListJson = [
+      {
+        B: "[Description Of All Retail Go",
+        D: "[Nature Of Product]",
+        F: "[Treatment Ty",
+        H: "Establishment Number",
+        J: "Cases",
+        L: "Case Weight",
+        N: "NET Weight",
+      },
+      {},
+    ];
+    const result = parserService.parseAsdaModel2(packingListJson);
+    expect(result.registration_approval_number).toBeNull();
+    expect(result.items).toHaveLength(1);
+    expect(result.items[0].description).toBeNull();
+    expect(result.items[0].nature_of_products).toBeNull();
+    expect(result.items[0].type_of_treatment).toBeNull();
+    expect(result.items[0].number_of_packages).toBeNull();
+    expect(result.items[0].total_net_weight_kg).toBeNull();
+  });
+});
+
+describe("matchesBuffaloadLogistics", () => {
+  test("returns true", () => {
+    const filename = "PackingList.xlsx";
+    const packingListJson = {
+      Tabelle1: [
+        {
+          B: "RMS-GB-000098-001",
+        },
+        {
+          A: "Commodity code",
+          B: "Description of goods",
+          C: "Country of Origin",
+          D: "No. of pkgs",
+          E: "Type of pkgs",
+          F: "Item Gross Weight (kgs)",
+          G: "Item Net Weight (kgs)",
+          H: "Treatment Type (Chilled /Ambient)",
+          I: "NIRMS Lane (R/G)",
+        },
+      ],
+    };
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
+    expect(result).toBe(MatcherResult.CORRECT);
+  });
+
+  test("returns generic error for empty json", () => {
+    const packingListJson = {};
+    const filename = "packinglist.xlsx";
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
+    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+  });
+
+  test("returns wrong establishment number for missing establishment number", () => {
+    const packingListJson = {
+      Tabelle1: [
+        {
+          B: "INCORRECT",
+        },
+      ],
+    };
+    const filename = "packinglist.xlsx";
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+  });
+
+  test("return wrong extensions for incorrect file extension", () => {
+    const filename = "packinglist.pdf";
+    const packingListJson = {};
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
+    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
+  });
+
+  test("return wrong header for incorrect header values", () => {
+    const filename = "packinglist.xlsx";
+    const packingListJson = {
+      Tabelle1: [
+        {
+          B: "RMS-GB-000098-001",
+        },
+        {
+          A: "NOT",
+          B: "CORRECT",
+          C: "HEADER",
+        },
+      ],
+    };
+    const result = parserService.matchesBuffaloadLogistics(
+      packingListJson,
+      filename,
+    );
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+});
+
+describe("parseBuffaloadLogistics", () => {
+  test("parses json", () => {
+    const packingListJson = [
+      {
+        A: "NIIRMS Dispatch number",
+        B: "RMS-GB-000098-001",
+        C: "Dispatch address",
+        D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
+      },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient) ",
+        I: "NIRMS Lane (R/G)",
+      },
+      {
+        A: "1905908000",
+        B: "60008347 - Take-Out Club Classic Crust Kickin' Meat Feast",
+        C: "Great Britain",
+        D: 6,
+        E: "Cases",
+        F: 3.782,
+        G: 3.552,
+        H: "Chilled",
+        I: "Green",
+      },
+      {
+        A: "1905908000",
+        B: "60008348 - Take-Out Club Classic Crust Smokin' BBQ Pulled Pork",
+        C: "Great Britain",
+        D: 5,
+        E: "Cases",
+        F: 3.788,
+        G: 3.558,
+        H: "Chilled",
+        I: "Green",
+      },
+    ];
+
+    const result = parserService.parseBuffaloadLogistics(packingListJson);
+    expect(result.registration_approval_number).toBe(packingListJson[0].B);
+    expect(result.items).toHaveLength(2);
+    expect(result.items[0].description).toBe(packingListJson[2].B);
+    expect(result.items[1].description).toBe(packingListJson[3].B);
+    expect(result.items[0].type_of_treatment).toBe(packingListJson[2].H);
+    expect(result.items[1].type_of_treatment).toBe(packingListJson[3].H);
+    expect(result.items[0].commodity_code).toBe(packingListJson[2].A);
+    expect(result.items[1].commodity_code).toBe(packingListJson[3].A);
+    expect(result.items[0].number_of_packages).toBe(packingListJson[2].D);
+    expect(result.items[1].number_of_packages).toBe(packingListJson[3].D);
+  });
+
+  test("parses null json", () => {
+    const packingListJson = [
+      {
+        A: "NIIRMS Dispatch number",
+        B: null,
+        C: "Dispatch address",
+        D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
+      },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient) ",
+        I: "NIRMS Lane (R/G)",
+      },
+      {},
+    ];
+
+    const result = parserService.parseBuffaloadLogistics(packingListJson);
+    expect(result.registration_approval_number).toBeNull();
+    expect(result.items).toHaveLength(1);
+    expect(result.items[0].description).toBeNull();
+    expect(result.items[0].type_of_treatment).toBeNull();
+    expect(result.items[0].nature_of_products).toBeNull();
+    expect(result.items[0].commodity_code).toBeNull();
+    expect(result.items[0].number_of_packages).toBeNull();
+    expect(result.items[0].total_net_weight_kg).toBeNull();
   });
 });
 
