@@ -1,5 +1,5 @@
 const nisaMatcher = require("../../../../../app/services/nisa/matcher");
-const MatcherResult = require("../../../../../app/services/matches-result");
+const matcherResult = require("../../../../../app/services/matches-result");
 
 describe("matchesNisa", () => {
   test("returns true", () => {
@@ -20,14 +20,14 @@ describe("matchesNisa", () => {
       ],
     };
     const result = nisaMatcher.matches(packingListJson, filename);
-    expect(result).toBe(MatcherResult.CORRECT);
+    expect(result).toBe(matcherResult.CORRECT);
   });
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
     const result = nisaMatcher.matches(packingListJson, filename);
-    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.GENERIC_ERROR);
   });
 
   test("returns wrong establishment number for missing establishment number", () => {
@@ -41,14 +41,14 @@ describe("matchesNisa", () => {
     };
     const filename = "packinglist.xlsx";
     const result = nisaMatcher.matches(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+    expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return wrong extensions for incorrect file extension", () => {
     const filename = "packinglist.pdf";
     const packingListJson = {};
     const result = nisaMatcher.matches(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
+    expect(result).toBe(matcherResult.WRONG_EXTENSIONS);
   });
 
   test("return wrong header for incorrect header values", () => {
@@ -66,6 +66,6 @@ describe("matchesNisa", () => {
       ],
     };
     const result = nisaMatcher.matches(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_HEADER);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 });

@@ -1,2 +1,2 @@
-const AsdaMatcher = require("../../../../../app/services/asda/matcher");
+const bAndMMatcher = require("../../../../../app/services/bandm/matcher");
 const matcherResult = require("../../../../../app/services/matches-result");
