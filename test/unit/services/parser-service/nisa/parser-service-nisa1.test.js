@@ -1,7 +1,7 @@
-const ParserService = require("../../../app/services/parser-service");
-const MatcherResult = require("../../../app/services/matches-result");
-const Matcher = require("../../../app/services/matchers/nisa/model1/matcher");
-const Parser = require("../../../app/services/parsers/nisa/model1/parser");
+const ParserService = require("../../../../../app/services/parser-service");
+const MatcherResult = require("../../../../../app/services/matches-result");
+const Matcher = require("../../../../../app/services/matchers/nisa/model1/matcher");
+const Parser = require("../../../../../app/services/parsers/nisa/model1/parser");
 
 const packingListJson = [
   {
