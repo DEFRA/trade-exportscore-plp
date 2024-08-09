@@ -21,18 +21,27 @@ const mockHandler = {
 
 console.error = jest.fn();
 
+jest.mock("../../../app/config", () => {
+  return {
+    ...jest.requireActual("../../../app/config"),
+    get isDynamicsIntegration() {
+      return isDynamicsIntegration;
+    },
+  };
+});
+
+let isDynamicsIntegration = true;
+
 describe("upsert idcoms", () => {
   afterAll(async () => {
     jest.resetAllMocks();
   });
 
+  afterEach(async () => {
+    isDynamicsIntegration = true;
+  })
+
   test("should not call the upsert when application id not is specified", async () => {
-    jest.mock("../../../app/config", () => {
-      return {
-        ...jest.requireActual("../../../app/config"),
-        isDynamicsIntegration: true,
-      };
-    });
     const mockHandler = {};
 
     await upsertIdcoms.options.handler({}, mockHandler);
@@ -41,12 +50,6 @@ describe("upsert idcoms", () => {
   });
 
   test("should log the exception when an error occurs", async () => {
-    jest.mock("../../../app/config", () => {
-      return {
-        ...jest.requireActual("../../../app/config"),
-        isDynamicsIntegration: true,
-      };
-    });
     await upsertIdcoms.options.handler({}, mockHandler);
 
     expect(patchPackingListCheck).not.toHaveBeenCalled();
@@ -54,12 +57,6 @@ describe("upsert idcoms", () => {
   });
 
   test("should perform the upsert when application id is specified and isParsed is true", async () => {
-    jest.mock("../../../app/config", () => {
-      return {
-        ...jest.requireActual("../../../app/config"),
-        isDynamicsIntegration: true,
-      };
-    });
     const response = await upsertIdcoms.options.handler(
       { query: { applicationId: mockApplicationId, isParsed: true } },
       mockHandler,
@@ -70,12 +67,6 @@ describe("upsert idcoms", () => {
   });
 
   test("should perform the upsert when application id is specified and isParsed is false", async () => {
-    jest.mock("../../../app/config", () => {
-      return {
-        ...jest.requireActual("../../../app/config"),
-        isDynamicsIntegration: true,
-      };
-    });
     await upsertIdcoms.options.handler(
       { query: { applicationId: mockApplicationId, isParsed: false } },
       mockHandler,
