@@ -25,12 +25,12 @@ jest.mock("../../../app/config", () => {
   return {
     ...jest.requireActual("../../../app/config"),
     get isDynamicsIntegration() {
-      return isDynamicsIntegration;
+      return mockIsDynamicsIntegration;
     },
   };
 });
 
-let isDynamicsIntegration = true;
+let mockIsDynamicsIntegration = true;
 
 describe("upsert idcoms", () => {
   afterAll(async () => {
@@ -38,8 +38,8 @@ describe("upsert idcoms", () => {
   });
 
   afterEach(async () => {
-    isDynamicsIntegration = true;
-  })
+    mockIsDynamicsIntegration = true;
+  });
 
   test("should not call the upsert when application id not is specified", async () => {
     const mockHandler = {};
