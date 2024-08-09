@@ -20,8 +20,7 @@ describe("matchesFowlerWelchModel1", () => {
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
-  test.skip("returns wrong establishment number for missing establishment number", () => {
-    // ToDo - fix this!!!
+  test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
       "Customer Order": [
         {},
@@ -81,8 +80,7 @@ describe("matchesFowlerWelchModel1", () => {
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test.skip("returns wrong header for incorrect header values", () => {
-    // ToDo - fix this!!!
+  test("returns wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
       "Customer Order": [
@@ -161,8 +159,7 @@ describe("matchesFowlerWelchModel1", () => {
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
-  test.skip("returns Correct", () => {
-    // ToDo - fix this!!!
+  test("returns Correct", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
       "Customer Order": [

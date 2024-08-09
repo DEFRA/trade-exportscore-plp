@@ -2,7 +2,7 @@ const Matcher = require("../../../../../../app/services/matchers/tescos/model1/m
 const MatcherResult = require("../../../../../../app/services/matches-result");
 
 describe("matchesTescoModel1", () => {
-  test.skip("returns Correct", () => {
+  test("returns Correct", () => {
     // ToDo - fix this!!!
     const filename = "PackingListTesco1.xlsx";
     const packingListJson = {
