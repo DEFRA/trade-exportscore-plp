@@ -187,7 +187,7 @@ describe("findParser", () => {
     const packingListJson = {
       Sheet1: [
         {
-          A: "Consignor / Place of Despatch",
+          A: "Consignor / Place o f Despatch",
           B: "CONSIGNEE",
           C: "Trailer",
           D: "Seal",
@@ -245,7 +245,6 @@ describe("findParser", () => {
     const filename = "packinglist.xls";
 
     const result = ParserService.findParser(packingListJson, filename);
-
     expect(result.packingList.items).toHaveLength(2);
   });
 });
