@@ -182,9 +182,8 @@ describe("checkRequiredData", () => {
   });
 });
 
-// ToDo - fix this!!!
 describe("findParser", () => {
-  test.skip("removes empty items", () => {
+  test("removes empty items", () => {
     const packingListJson = {
       Sheet1: [
         {

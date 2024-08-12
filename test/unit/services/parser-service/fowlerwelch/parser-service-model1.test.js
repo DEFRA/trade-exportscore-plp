@@ -1,7 +1,4 @@
 const ParserService = require("../../../../../app/services/parser-service");
-const MatcherResult = require("../../../../../app/services/matches-result");
-const Matcher = require("../../../../../app/services/matchers/fowlerwelch/model1/matcher");
-const Parser = require("../../../../../app/services/parsers/fowlerwelch/model1/parser");
 
 const filename = "packinglist.xlsx";
 const packingListJson = {
@@ -76,11 +73,25 @@ const packingListJson = {
   ],
 };
 
-// ToDo - fix this!!!
 describe("matchesFowlerWelchModel1", () => {
-  test.skip("returns isParsed as true", () => {
+  test("returns isParsed as true", () => {
     const result = ParserService.findParser(packingListJson, filename);
 
     expect(result.isParsed).toBeTruthy();
+  });
+
+  test("matches valid FowlerWelch Model 1 file and calls parser", () => {
+    const result = ParserService.findParser(packingListJson, filename);
+
+    expect(result).toEqual({
+      isParsed: true,
+      packingList: {
+        business_checks: {
+          all_required_fields_present: true,
+        },
+        items: [],
+        registration_approval_number: "RMS-GB-000216-004",
+      },
+    });
   });
 });

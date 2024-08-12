@@ -1,7 +1,4 @@
 const ParserService = require("../../../../../app/services/parser-service");
-const MatcherResult = require("../../../../../app/services/matches-result");
-const Matcher = require("../../../../../app/services/matchers/tescos/model2/matcher");
-const Parser = require("../../../../../app/services/parsers/tescos/model2/parser");
 
 const filename = "PackingListTesco2.xlsx";
 const packingListJson = {
@@ -28,10 +25,25 @@ const packingListJson = {
   ],
 };
 
-describe("matchesTescoModel2", () => {
+describe("matchesTescosModel2", () => {
   test("returns isParsed as true", () => {
     const result = ParserService.findParser(packingListJson, filename);
 
     expect(result.isParsed).toBeTruthy();
+  });
+
+  test("matches valid Tescos Model 2 file and calls parser", () => {
+    const result = ParserService.findParser(packingListJson, filename);
+
+    expect(result).toEqual({
+      isParsed: true,
+      packingList: {
+        business_checks: {
+          all_required_fields_present: true,
+        },
+        items: [],
+        registration_approval_number: "RMS-GB-000015-009",
+      },
+    });
   });
 });

@@ -3,7 +3,6 @@ const MatcherResult = require("../../../../../../app/services/matches-result");
 
 describe("matchesTescoModel1", () => {
   test("returns Correct", () => {
-    // ToDo - fix this!!!
     const filename = "PackingListTesco1.xlsx";
     const packingListJson = {
       "Input Data Sheet": [
@@ -39,8 +38,7 @@ describe("matchesTescoModel1", () => {
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
-  test.skip("returns wrong establishment number for missing establishment number", () => {
-    // ToDo - fix this!!!
+  test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
       "Input Data Sheet": [
         {},
@@ -67,8 +65,7 @@ describe("matchesTescoModel1", () => {
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
-  test.skip("return wrong header for incorrect header values", () => {
-    // ToDo - fix this!!!
+  test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
       "Input Data Sheet": [

@@ -1,7 +1,4 @@
 const ParserService = require("../../../../../app/services/parser-service");
-const MatcherResult = require("../../../../../app/services/matches-result");
-const Matcher = require("../../../../../app/services/matchers/asda/model2/matcher");
-const Parser = require("../../../../../app/services/parsers/asda/model2/parser");
 
 const filename = "packinglist.xls";
 const packingListJson = {
@@ -26,5 +23,20 @@ describe("matchesAsdaModel2", () => {
     const result = ParserService.findParser(packingListJson, filename);
 
     expect(result.isParsed).toBeTruthy();
+  });
+
+  test("matches valid Asda Model 2 file and calls parser", () => {
+    const result = ParserService.findParser(packingListJson, filename);
+
+    expect(result).toEqual({
+      isParsed: true,
+      packingList: {
+        business_checks: {
+          all_required_fields_present: true,
+        },
+        items: [],
+        registration_approval_number: "RMS-GB-000015-010",
+      },
+    });
   });
 });

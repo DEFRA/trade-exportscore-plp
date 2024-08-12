@@ -92,7 +92,7 @@ function findParser(result, filename) {
     parsedPackingList = NisaParser.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else if (NisaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Nisa2 with filename: ", filename);
+    console.info("Packing list matches Nisa Model 2 with filename: ", filename);
     parsedPackingList = NisaParser2.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else if (

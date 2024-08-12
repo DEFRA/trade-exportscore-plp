@@ -1,5 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 
+const INPUT_DATA_SHEET = "Input Data Sheet";
+
 function matches(packingListJson, filename) {
   const establishmentNumberRow = 3;
   try {
