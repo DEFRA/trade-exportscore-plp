@@ -20,7 +20,7 @@ function matches(packingList, filename) {
       E: "PART_NUMBER_DESCRIPTION",
       F: "TARIFF_CODE_EU",
       G: "PACKAGES",
-      H: "NET_WEIGHT_TOTAL"
+      H: "NET_WEIGHT_TOTAL",
     };
 
     for (const key in header) {
