@@ -13,6 +13,8 @@ const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
 const NisaParser = require("../services/parsers/nisa/model1/parser");
 const NisaMatcher2 = require("../services/matchers/nisa/model2/matcher");
 const NisaParser2 = require("../services/parsers/nisa/model2/parser");
+const NisaMatcher3 = require("../services/matchers/nisa/model3/matcher");
+const NisaParser3 = require("../services/parsers/nisa/model3/parser");
 const SainsburysMatcher = require("../services/matchers/sainsburys/model1/matcher");
 const SainsburysParser = require("../services/parsers/sainsburys/model1/parser");
 const TescosMatcher = require("../services/matchers/tescos/model1/matcher");
@@ -94,6 +96,10 @@ function findParser(result, filename) {
   } else if (NisaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa Model 2 with filename: ", filename);
     parsedPackingList = NisaParser2.parse(result[Object.keys(result)[0]]);
+    isParsed = true;
+  } else if (NisaMatcher3.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Nisa Model 3 with filename: ", filename);
+    parsedPackingList = NisaParser3.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else if (
     BuffaloadMatcher.matches(result, filename) === MatcherResult.CORRECT
