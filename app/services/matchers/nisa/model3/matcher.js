@@ -1,3 +1,4 @@
+const { ContainerSASPermissions } = require("@azure/storage-blob");
 const MatcherResult = require("../../../matches-result");
 
 function matches(packingList, filename) {
@@ -16,17 +17,17 @@ function matches(packingList, filename) {
     }
 
     const header = {
-      C: "PRODUCT_TYPE_CATEGORY",
-      E: "PART_NUMBER_DESCRIPTION",
-      F: "TARIFF_CODE_EU",
+      C: "PRODUCT TYPE CATEGORY",
+      E: "PART NUMBER DESCRIPTION",
+      F: "TARIFF CODE EU",
       G: "PACKAGES",
-      H: "NET_WEIGHT_TOTAL",
+      I: "NET WEIGHT TOTAL",
     };
 
     for (const key in header) {
       if (
-        !packingList[sheet][3] ||
-        packingList[sheet][3][key] !== header[key]
+        !packingList[sheet][2] ||
+        packingList[sheet][2][key] !== header[key]
       ) {
         return MatcherResult.WRONG_HEADER;
       }

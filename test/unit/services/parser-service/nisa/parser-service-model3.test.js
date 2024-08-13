@@ -8,27 +8,26 @@ const packingListJson = {
     {
       A: "RMS-GB-000025-003",
     },
-    {},
     {
-      C: "PRODUCT_TYPE_CATEGORY",
-      E: "PART_NUMBER_DESCRIPTION",
-      F: "TARIFF_CODE_EU",
+      C: "PRODUCT TYPE CATEGORY",
+      E: "PART NUMBER DESCRIPTION",
+      F: "TARIFF CODE EU",
       G: "PACKAGES",
-      H: "NET_WEIGHT_TOTAL",
+      I: "NET WEIGHT TOTAL",
     },
     {
       C: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
       E: "DAIRYLEA DUNKERS JUMBO PM80P",
       F: "2005995090",
       G: 2,
-      H: 2.5,
+      I: 2.5,
     },
     {
       C: "900 - VEGETABLES PREPACK-C",
       E: "CO OP BROCCOLI",
       F: "0403209300",
       G: 1,
-      H: 2,
+      I: 2,
     },
   ],
 };
