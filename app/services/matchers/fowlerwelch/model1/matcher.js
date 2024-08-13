@@ -1,17 +1,16 @@
 const MatcherResult = require("../../../matches-result");
+const FileExtension = require("../../../../utilities/file-extension");
 
 const COUNTRY_OF_ORIGIN = "Country of Origin";
 const CUSTOMER_ORDER = "Customer Order";
 
 function matches(packingListJson, filename) {
   try {
-    const headerRowNumber = 44;
-    const establishmentNumberRow = 45;
-    // check for correct extension
-    const fileExtension = filename.split(".").pop().toLowerCase();
-    if (fileExtension !== "xlsx") {
+    if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
+    const headerRowNumber = 44;
+    const establishmentNumberRow = 45;
 
     // check for correct establishment number
     const establishmentNumber =
