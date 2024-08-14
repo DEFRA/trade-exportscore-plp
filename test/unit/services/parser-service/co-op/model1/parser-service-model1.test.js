@@ -6,7 +6,7 @@ const packingListJson = {
     {
       E: "Dispatch RMS Establishment",
       O: "Product/ Part Number description",
-      P: "Nature Of Product",
+      P: "Tariff Code EU",
       Q: "Packages",
       S: "NW total",
     },

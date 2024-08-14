@@ -1,24 +1,24 @@
 const Parser = require("../../../../../../app/services/parsers/co-op/model1/parser");
 
-describe("parseAsdaModel1", () => {
+describe("parseCoopModel1", () => {
   test("parses json", () => {
     const packingListJson = [
       {
         E: "Dispatch RMS Establishment",
         O: "Product/ Part Number description",
-        P: "Nature Of Product",
+        P: "Tariff Code EU",
         Q: "Packages",
         S: "NW total",
       },
       {
-        E: "RMS-GB-000009-006",
+        E: "RMS-GB-000009-001",
         O: "Co-op Red Peppers Each",
         P: "0709601000",
         Q: 12,
         S: 12,
       },
       {
-        E: "RMS-GB-000009-006",
+        E: "RMS-GB-000009-001",
         O: "Co-op Ripe And Ready To Eat Avocados 2S.",
         P: "0709601001",
         Q: 1,
@@ -34,8 +34,6 @@ describe("parseAsdaModel1", () => {
     expect(result.items[1].description).toBe(packingListJson[2].O);
     expect(result.items[0].nature_of_products).toBe(packingListJson[1].P);
     expect(result.items[1].nature_of_products).toBe(packingListJson[2].P);
-    expect(result.items[0].type_of_treatment).toBe(undefined);
-    expect(result.items[1].type_of_treatment).toBe(undefined);
     expect(result.items[0].number_of_packages).toBe(packingListJson[1].Q);
     expect(result.items[1].number_of_packages).toBe(packingListJson[2].Q);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].S);
@@ -45,14 +43,11 @@ describe("parseAsdaModel1", () => {
   test("parses null json", () => {
     const packingListJson = [
       {
-        A: "[Description Of All Retail Goods]",
-        B: "[Nature Of Product]",
-        C: "[Treatment Type]",
-        D: "[Number Of Establishment]",
-        E: "[Destination Store Establishment Number]",
-        F: "[Number of Packages]",
-        G: "[Net Weight]",
-        H: "[kilograms/grams]",
+        E: "Dispatch RMS Establishment",
+        O: "Product/ Part Number description",
+        P: "Tariff Code EU",
+        Q: "Packages",
+        S: "NW total",
       },
       {
         D: null,
