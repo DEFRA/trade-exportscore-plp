@@ -60,7 +60,7 @@ function findParser(result, filename) {
     isParsed = true;
   } else if (CoopMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Co-op with filename: ", filename);
-    parsedPackingList = CoopParser.parse(result['Input Packing Sheet']);
+    parsedPackingList = CoopParser.parse(result["Input Packing Sheet"]);
     isParsed = true;
   } else if (
     TescosMatcher.matches(result, filename) === MatcherResult.CORRECT
