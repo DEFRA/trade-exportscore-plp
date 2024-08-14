@@ -24,7 +24,7 @@ const plpSubscription = {
 
 const tpQueue = {
   address: process.env.PARSED_QUEUE_ADDRESS,
-  connectionString: process.env.TP_CONNECTIONSTRING,
+  managedIdentityClientId: process.env.TP_CLIENT_ID,
 };
 
 module.exports = {

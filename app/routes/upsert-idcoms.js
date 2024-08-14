@@ -9,7 +9,6 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
-        console.log(config);
         let checkStatus = StatusCodes.NOT_FOUND;
         if (request.query.applicationId) {
           if (config.isDynamicsIntegration) {

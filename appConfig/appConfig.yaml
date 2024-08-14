@@ -43,6 +43,6 @@
 - key: IS_DYNAMICS_INTEGRATION
   value: "{{servicename}}-IS-DYNAMICS-INTEGRATION"
   type: "keyvault"
-- key: TP_CONNECTIONSTRING
-  value: "{{servicename}}-TP-CONNECTIONSTRING"
+- key: TP_CLIENT_ID
+  value: "{{servicename}}-TP-CLIENT-ID"
   type: "keyvault"
