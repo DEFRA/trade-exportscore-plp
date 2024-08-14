@@ -1,4 +1,4 @@
-const fowlerWelchParser = require("../../../../app/services/fowlerwelch/parser");
+const FowlerWelchParser = require("../../../../app/services/fowlerwelch/parser");
 
 describe("parseFowlerWelch", () => {
   test("parses json", () => {
@@ -109,7 +109,7 @@ describe("parseFowlerWelch", () => {
       },
     ];
 
-    const result = fowlerWelchParser.parseFowlerWelch(packingListJson);
+    const result = FowlerWelchParser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[45].M);
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[45].F);
@@ -204,7 +204,7 @@ describe("parseFowlerWelch", () => {
       },
     ];
 
-    const result = fowlerWelchParser.parseFowlerWelch(packingListJson);
+    const result = FowlerWelchParser.parse(packingListJson);
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();

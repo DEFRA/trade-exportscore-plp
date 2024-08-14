@@ -2,7 +2,7 @@ const MatcherResult = require("../matches-result");
 const CUSTOMER_ORDER = "Customer Order";
 const COUNTRY_OF_ORIGIN = "Country of Origin";
 
-function matchesFowlerWelch(packingListJson, filename) {
+function matches(packingListJson, filename) {
   try {
     const headerRowNumber = 44;
     const establishmentNumberRow = 45;
@@ -55,4 +55,4 @@ function matchesFowlerWelch(packingListJson, filename) {
   }
 }
 
-module.exports = { matchesFowlerWelch };
+module.exports = { matches };

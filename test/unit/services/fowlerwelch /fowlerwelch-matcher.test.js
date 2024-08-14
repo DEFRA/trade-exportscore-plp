@@ -1,24 +1,18 @@
 const MatcherResult = require("../../../../app/services/matches-result");
-const fowlerWelchMatcher = require("../../../../app/services/fowlerwelch/matcher");
+const FowlerWelchMatcher = require("../../../../app/services/fowlerwelch/matcher");
 
 describe("matchesFowlerWelch", () => {
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
-    const result = fowlerWelchMatcher.matchesFowlerWelch(
-      packingListJson,
-      filename,
-    );
+    const result = FowlerWelchMatcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
   test("returns wrong extension for incorrect file extension", () => {
     const filename = "packinglist.xls";
     const packingListJson = {};
-    const result = fowlerWelchMatcher.matchesFowlerWelch(
-      packingListJson,
-      filename,
-    );
+    const result = FowlerWelchMatcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
@@ -76,10 +70,7 @@ describe("matchesFowlerWelch", () => {
       ],
     };
     const filename = "packinglist.xlsx";
-    const result = fowlerWelchMatcher.matchesFowlerWelch(
-      packingListJson,
-      filename,
-    );
+    const result = FowlerWelchMatcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
@@ -156,10 +147,7 @@ describe("matchesFowlerWelch", () => {
         },
       ],
     };
-    const result = fowlerWelchMatcher.matchesFowlerWelch(
-      packingListJson,
-      filename,
-    );
+    const result = FowlerWelchMatcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
@@ -236,10 +224,7 @@ describe("matchesFowlerWelch", () => {
         },
       ],
     };
-    const result = fowlerWelchMatcher.matchesFowlerWelch(
-      packingListJson,
-      filename,
-    );
+    const result = FowlerWelchMatcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.CORRECT);
   });
 });

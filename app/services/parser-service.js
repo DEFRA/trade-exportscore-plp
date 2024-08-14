@@ -4,20 +4,15 @@ const NisaParser = require("../services/nisa/parser");
 const NisaParser2 = require("../services/nisa/parser2");
 const NisaMatcher2 = require("../services/nisa/matcher2");
 const CombineParser = require("../services/parser-combine");
-const fowlerWelchMatcher = require("./fowlerwelch/matcher");
-const fowlerWelchParser = require("./fowlerwelch/parser");
+const FowlerWelchMatcher = require("./fowlerwelch/matcher");
+const FowlerWelchParser = require("./fowlerwelch/parser");
+const FowlerWelchMatcher2 = require("./fowlerwelch/matcher2");
+const FowlerWelchParser2 = require("./fowlerwelch/parser2");
 
 const CUSTOMER_ORDER = "Customer Order";
 const COUNTRY_OF_ORIGIN = "Country of Origin";
 const INPUT_DATA_SHEET = "Input Data Sheet";
-const sheets = [
-  "Cust Ord - Vitacress",
-  // "ARGO",
-  // "Customer Order (3)",
-  // "Customer Order (2)",
-  // "Customer Order",
-];
-let pages = "";
+const CUST_ORD_VITACRESS = "Cust Ord - Vitacress";
 
 function findParser(result, filename) {
   let parsedPackingList = failedParser();
@@ -64,16 +59,21 @@ function findParser(result, filename) {
     );
     parsedPackingList = parseTescoModel3(result[INPUT_DATA_SHEET]);
     isParsed = true;
-  } else if (fowlerWelchMatcher(result, filename) === MatcherResult.CORRECT) {
+  } else if (
+    FowlerWelchMatcher.matches(result, filename) === MatcherResult.CORRECT
+  ) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
-    parsedPackingList = fowlerWelchParser(result[CUSTOMER_ORDER]);
+    parsedPackingList = FowlerWelchParser.parse(
+      result[CUSTOMER_ORDER]);
     isParsed = true;
-  } else if (matchesFowlerWelch2(result, filename) === MatcherResult.CORRECT) {
+  } else if (
+    FowlerWelchMatcher2.matches(result, filename) === MatcherResult.CORRECT
+  ) {
     console.info(
       "Packing list matches Fowler Welch 2 with filename: ",
       filename,
     );
-    parsedPackingList = parseFowlerWelch2(result[CUSTOMER_ORDER]);
+    parsedPackingList = FowlerWelchParser2.parse(result);
     isParsed = true;
   } else if (NisaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
@@ -95,26 +95,26 @@ function findParser(result, filename) {
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
-
-  if (isParsed) {
-    parsedPackingList.items = parsedPackingList.items.filter(
-      (x) =>
-        !(
-          x.description === null &&
-          x.nature_of_products === null &&
-          x.type_of_treatment === null &&
-          x.commodity_code === null &&
-          x.number_of_packages === null &&
-          x.total_net_weight_kg === null
-        ),
-    );
-
-    parsedPackingList.business_checks.all_required_fields_present =
-      checkRequiredData(parsedPackingList);
-  }
+console.log(parsedPackingList)
+  // if (isParsed) {
+  //   parsedPackingList.items = parsedPackingList.items.filter(
+  //     (x) =>
+  //       !(
+  //         x.description === null &&
+  //         x.nature_of_products === null &&
+  //         x.type_of_treatment === null &&
+  //         x.commodity_code === null &&
+  //         x.number_of_packages === null &&
+  //         x.total_net_weight_kg === null
+  //       )
+  //   );
+//console.log(parsedPackingList)
+//     parsedPackingList.business_checks.all_required_fields_present =
+//       checkRequiredData(parsedPackingList);
+//   }
 
   return { packingList: parsedPackingList, isParsed };
-}
+ }
 
 function matchesBandM(packingListJson, filename) {
   try {
@@ -552,49 +552,6 @@ function parseTjmorris(packingListJson) {
   return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
-function matchesNisa(packingListJson, filename) {
-  const establishmentNumberRow = 1;
-  try {
-    // check for correct extension
-    const fileExtension = filename.split(".").pop();
-    if (fileExtension !== "xlsx") {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
-
-    // check for correct establishment number
-    const sheet = Object.keys(packingListJson)[0];
-    const establishmentNumber =
-      packingListJson[sheet][establishmentNumberRow].A;
-    const regex = /^RMS-GB-000025-\d{3}$/;
-    if (!regex.test(establishmentNumber)) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
-    }
-
-    // check for header values
-    const header = {
-      A: "RMS_ESTABLISHMENT_NO",
-      I: "PRODUCT_TYPE_CATEGORY",
-      K: "PART_NUMBER_DESCRIPTION",
-      L: "TARIFF_CODE_EU",
-      M: "PACKAGES",
-      O: "NET_WEIGHT_TOTAL",
-    };
-
-    for (const key in header) {
-      if (
-        !packingListJson[sheet][0] ||
-        packingListJson[sheet][0][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
-    }
-
-    return MatcherResult.CORRECT;
-  } catch (err) {
-    return MatcherResult.GENERIC_ERROR;
-  }
-}
-
 function matchesAsdaModel2(packingListJson, filename) {
   try {
     // check for correct extension
@@ -737,130 +694,6 @@ function parseBuffaloadLogistics(packingListJson) {
   return CombineParser.combine(establishmentNumber, packingListContents, true);
 }
 
-function matchesBuffaloadLogistics(packingListJson, filename) {
-  try {
-    // check for correct extension
-    const fileExtension = filename.split(".").pop().toLowerCase();
-    if (fileExtension !== "xlsx") {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
-
-    // check for correct establishment number
-    const establishmentNumber = packingListJson.Tabelle1[0].B;
-    const regex = /^RMS-GB-000098-\d{3}$/;
-    if (!regex.test(establishmentNumber)) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
-    }
-
-    // check for header values
-    const header = {
-      A: "Commodity code",
-      B: "Description of goods",
-      C: "Country of Origin",
-      D: "No. of pkgs",
-      E: "Type of pkgs",
-      F: "Item Gross Weight (kgs)",
-      G: "Item Net Weight (kgs)",
-      H: "Treatment Type (Chilled /Ambient)",
-      I: "NIRMS Lane (R/G)",
-    };
-
-    if (
-      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
-    }
-  } catch (err) {
-    return MatcherResult.GENERIC_ERROR;
-  }
-}
-
-function parseBuffaloadLogistics(packingListJson) {
-  const establishmentNumber = packingListJson[0].B;
-  const packingListContents = packingListJson.slice(2).map((col) => ({
-    description: col.B ?? null,
-    nature_of_products: null,
-    type_of_treatment: col.H ?? null,
-    commodity_code: col.A ?? null,
-    number_of_packages: col.D ?? null,
-    total_net_weight_kg: col.G ?? null,
-  }));
-
-  return CombineParser.combine(establishmentNumber, packingListContents, true);
-}
-
-function matchesFowlerWelch2(packingListJson, filename) {
-  try {
-    const headerRowNumber = 44;
-    const establishmentNumberRow = 45;
-    // check for correct extension
-    const fileExtension = filename.split(".").pop().toLowerCase();
-    if (fileExtension !== "xlsx") {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
-    let count = 0;
-    for (let i = 0; i < sheets.length; i++) {
-      pages = sheets[i];
-      console.log(pages);
-      //check for correct establishment number
-      const establishmentNumber =
-        packingListJson[pages][establishmentNumberRow].M;
-      console.log(establishmentNumber);
-      const regex = /^RMS-GB-000216-\d{3}$/;
-      if (!regex.test(establishmentNumber)) {
-        return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
-      }
-      // check for header values
-      const header = {
-        A: "Item",
-        B: "Product code",
-        C: "Commodity code",
-        D: "Online Check",
-        E: "Meursing code",
-        F: "Description of goods",
-        G: COUNTRY_OF_ORIGIN,
-        H: "No. of pkgs ",
-        I: "Type of pkgs",
-        J: "Total Gross Weight",
-        K: "Total Net Weight",
-        L: "Item Value",
-        M: "NIIRMS Dispatch number",
-        N: "Treatment Type (Chilled /Ambient)",
-        O: "NIRMS Lane (R/G)",
-      };
-
-      const originalHeader = packingListJson[pages][headerRowNumber];
-
-      for (const key in header) {
-        if (originalHeader[key] !== header[key]) {
-          return MatcherResult.WRONG_HEADER;
-        }
-      }
-    }
-    return MatcherResult.CORRECT;
-  } catch (err) {
-    return MatcherResult.GENERIC_ERROR;
-  }
-}
-
-function parseFowlerWelch2(packingListJson) {
-  const establishmentNumberRow = 45;
-  const establishmentNumber = packingListJson[establishmentNumberRow].M ?? null;
-  const packingListContents = packingListJson
-    .slice(establishmentNumberRow)
-    .map((col) => ({
-      description: col.F ?? null,
-      commodity_code: col.C ?? null,
-      number_of_packages: col.H ?? null,
-      nature_of_products: null,
-      total_net_weight_kg: col.K ?? null,
-      type_of_treatment: col.N ?? null,
-    }));
-
-  return combineParser(establishmentNumber, packingListContents, true);
-}
 module.exports = {
   matchesBandM,
   matchesAsdaModel1,
@@ -879,12 +712,8 @@ module.exports = {
   parseTescoModel3,
   matchesAsdaModel2,
   parseAsdaModel2,
-  matchesFowlerWelch,
-  parseFowlerWelch,
   matchesBuffaloadLogistics,
   parseBuffaloadLogistics,
   findParser,
   checkRequiredData,
-  matchesFowlerWelch2,
-  parseFowlerWelch2,
 };
