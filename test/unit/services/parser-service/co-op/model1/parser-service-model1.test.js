@@ -1,27 +1,33 @@
-const ParserService = require("../../../../../app/services/parser-service");
+const ParserService = require("../../../../../../app/services/parser-service");
 
-const filename = "packinglist.xls";
+const filename = "packinglist.xlsx";
 const packingListJson = {
-  PackingList_Extract: [
+  Sheet1: [
     {
-      T: "[Description Of All Retail Goods]",
-      B: "[Nature Of Product]",
-      C: "[Treatment Type]",
+      E: "Dispatch RMS Establishment",
+      O: "Product/ Part Number description",
+      P: "Nature Of Product",
+      Q: "Packages",
+      S: "NW total",
     },
     {
-      D: "RMS-GB-000015-001",
+      E: "RMS-GB-000009-001",
+      O: "Co-op Red Peppers Each",
+      P: "0709601000",
+      Q: 12,
+      S: 1,
     },
   ],
 };
 
-describe("matchesAsdaModel1", () => {
+describe("matchesCoopModel1", () => {
   test("returns isParsed as true", () => {
     const result = ParserService.findParser(packingListJson, filename);
 
     expect(result.isParsed).toBeTruthy();
   });
 
-  test("matches valid Asda Model 1 file and calls parser", () => {
+  test("matches valid Co-op Model 1 file and calls parser", () => {
     const result = ParserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
@@ -30,8 +36,16 @@ describe("matchesAsdaModel1", () => {
         business_checks: {
           all_required_fields_present: true,
         },
-        items: [],
-        registration_approval_number: "RMS-GB-000015-001",
+        items: [
+          {
+            commodity_code: null,
+            description: "Co-op Red Peppers Each",
+            nature_of_products: "0709601000",
+            number_of_packages: 12,
+            total_net_weight_kg: 1,
+          },
+        ],
+        registration_approval_number: "RMS-GB-000009-001",
       },
     });
   });

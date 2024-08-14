@@ -3,16 +3,18 @@ const MatcherResult = require("../../../../../../app/services/matches-result");
 
 describe("matchesAsdaModel1", () => {
   test("returns Correct", () => {
-    const filename = "packinglist.xls";
+    const filename = "packinglist.xlsx";
     const packingListJson = {
       PackingList_Extract: [
         {
-          T: "[Description Of All Retail Goods]",
-          B: "[Nature Of Product]",
-          C: "[Treatment Type]",
+          E: "Dispatch RMS Establishment",
+          O: "Product/ Part Number description",
+          P: "Nature Of Product",
+          Q: "Packages",
+          S: "NW total",
         },
         {
-          D: "RMS-GB-000015-001",
+          E: "RMS-GB-000009-001",
         },
       ],
     };
@@ -24,7 +26,7 @@ describe("matchesAsdaModel1", () => {
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
-    const filename = "packinglist.xls";
+    const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(packingListJson, filename);
 
@@ -37,11 +39,11 @@ describe("matchesAsdaModel1", () => {
         {},
         {},
         {
-          I: "INCORRECT",
+          E: "INCORRECT",
         },
       ],
     };
-    const filename = "packinglist.xls";
+    const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(packingListJson, filename);
 
@@ -58,16 +60,16 @@ describe("matchesAsdaModel1", () => {
   });
 
   test("return wrong header for incorrect header values", () => {
-    const filename = "packinglist.xls";
+    const filename = "packinglist.xlsx";
     const packingListJson = {
       PackingList_Extract: [
         {
           A: "NOT",
           B: "CORRECT",
-          C: "HEADER",
+          E: "HEADER",
         },
         {
-          D: "RMS-GB-000015-001",
+          E: "RMS-GB-000009-001",
         },
       ],
     };
