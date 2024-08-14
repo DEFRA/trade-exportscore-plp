@@ -1,10 +1,9 @@
 const MatcherResult = require("../../../matches-result");
+const FileExtension = require("../../../../utilities/file-extension");
 
 function matches(packingListJson, filename) {
   try {
-    // check for correct extension
-    const fileExtension = filename.split(".").pop();
-    if (fileExtension !== "xlsx") {
+    if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
 
