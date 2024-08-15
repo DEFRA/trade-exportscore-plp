@@ -27,9 +27,10 @@ function matches(packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) {
       return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
     }
+
+    console.info("Packing list matches Asda Model 2 with filename: ", filename);
+    return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

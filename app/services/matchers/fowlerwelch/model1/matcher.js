@@ -49,6 +49,8 @@ function matches(packingListJson, filename) {
         return MatcherResult.WRONG_HEADER;
       }
     }
+
+    console.info("Packing list matches Fowler Welch with filename: ", filename);
     return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
