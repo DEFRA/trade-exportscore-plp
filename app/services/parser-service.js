@@ -9,6 +9,8 @@ const BuffaloadMatcher = require("./matchers/buffaload-logistics/model1/matcher"
 const BuffaloadParser = require("./parsers/buffaload-logistics/model1/parser");
 const CoopMatcher = require("./matchers/co-op/model1/matcher");
 const CoopParser = require("./parsers/co-op/model1/parser");
+const CdsMatcher = require("./matchers/cds/model1/matcher");
+const CdsParser = require("./parsers/cds/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
 const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
@@ -67,7 +69,7 @@ function findParser(result, filename) {
   ) {
     console.info(
       "Packing list matches Tesco Model 1 with filename: ",
-      filename,
+      filename
     );
     parsedPackingList = TescosParser.parse(result[INPUT_DATA_SHEET]);
     isParsed = true;
@@ -76,7 +78,7 @@ function findParser(result, filename) {
   ) {
     console.info(
       "Packing list matches Tesco Model 2 with filename: ",
-      filename,
+      filename
     );
     parsedPackingList = TescosParser2.parse(result.Sheet2);
     isParsed = true;
@@ -85,7 +87,7 @@ function findParser(result, filename) {
   ) {
     console.info(
       "Packing list matches Tesco Model 3 with filename: ",
-      filename,
+      filename
     );
     parsedPackingList = TescosParser3.parse(result[INPUT_DATA_SHEET]);
     isParsed = true;
@@ -112,9 +114,13 @@ function findParser(result, filename) {
   ) {
     console.info(
       "Packing list matches Buffaload Logistics with filename: ",
-      filename,
+      filename
     );
     parsedPackingList = BuffaloadParser.parse(result.Tabelle1);
+    isParsed = true;
+  } else if (CdsMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches CDS Model 1 with filename: ", filename);
+    parsedPackingList = CdsParser.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
@@ -130,7 +136,7 @@ function findParser(result, filename) {
           x.commodity_code === null &&
           x.number_of_packages === null &&
           x.total_net_weight_kg === null
-        ),
+        )
     );
 
     parsedPackingList.business_checks.all_required_fields_present =
@@ -146,17 +152,17 @@ function failedParser() {
 
 function checkRequiredData(packingList) {
   const hasCommodityCode = packingList.items.every(
-    (x) => x.commodity_code !== null,
+    (x) => x.commodity_code !== null
   );
   const hasTreatmentOrNature = packingList.items.every(
-    (x) => x.nature_of_products !== null && x.type_of_treatment !== null,
+    (x) => x.nature_of_products !== null && x.type_of_treatment !== null
   );
   const hasDescription = packingList.items.every((x) => x.description !== null);
   const hasPackages = packingList.items.every(
-    (x) => x.number_of_packages !== null,
+    (x) => x.number_of_packages !== null
   );
   const hasNetWeight = packingList.items.every(
-    (x) => x.total_net_weight_kg !== null,
+    (x) => x.total_net_weight_kg !== null
   );
   const hasRemos = packingList.registration_approval_number !== null;
   return (
