@@ -4,8 +4,6 @@ const FileExtension = require("../../../../utilities/file-extension");
 function matches(packingList, filename) {
   const establishmentNumberRow = 1;
   try {
-    console.log(packingList);
-
     if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
