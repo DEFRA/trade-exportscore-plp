@@ -37,14 +37,14 @@ describe("matchesAsdaModel1", () => {
             type_of_treatment: "AMBIENT",
           },
         ],
-        registration_approval_number: "RMS-GB-000015-001",
+        registration_approval_number: "RMS-GB-000015-006",
       },
     });
   });
 
   test("matches valid Asda Model 1 file and calls parser but all_required_fields_present is false when column empty", () => {
     const result = ParserService.findParser(
-      model.invalidModel_MissingColumns,
+      model.invalidModel_MissingColumnCells,
       filename,
     );
 
