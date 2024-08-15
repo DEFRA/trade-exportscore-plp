@@ -38,9 +38,9 @@ describe("matchesCoopModel1", () => {
         },
         items: [
           {
-            commodity_code: null,
+            commodity_code: "0709601000",
             description: "Co-op Red Peppers Each",
-            nature_of_products: "0709601000",
+            nature_of_products: null,
             number_of_packages: 12,
             total_net_weight_kg: 1,
           },

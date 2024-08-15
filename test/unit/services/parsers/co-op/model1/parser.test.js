@@ -32,8 +32,8 @@ describe("parseCoopModel1", () => {
     expect(result.items).toHaveLength(2);
     expect(result.items[0].description).toBe(packingListJson[1].O);
     expect(result.items[1].description).toBe(packingListJson[2].O);
-    expect(result.items[0].nature_of_products).toBe(packingListJson[1].P);
-    expect(result.items[1].nature_of_products).toBe(packingListJson[2].P);
+    expect(result.items[0].commodity_code).toBe(packingListJson[1].P);
+    expect(result.items[1].commodity_code).toBe(packingListJson[2].P);
     expect(result.items[0].number_of_packages).toBe(packingListJson[1].Q);
     expect(result.items[1].number_of_packages).toBe(packingListJson[2].Q);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].S);
