@@ -7,6 +7,8 @@ const BandMMatcher = require("../services/matchers/bandm/model1/matcher");
 const BandMParser = require("../services/parsers/bandm/model1/parser");
 const BuffaloadMatcher = require("./matchers/buffaload-logistics/model1/matcher");
 const BuffaloadParser = require("./parsers/buffaload-logistics/model1/parser");
+const CoopMatcher = require("./matchers/co-op/model1/matcher");
+const CoopParser = require("./parsers/co-op/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
 const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
@@ -55,6 +57,10 @@ function findParser(result, filename) {
   } else if (BandMMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches BandM with filename: ", filename);
     parsedPackingList = BandMParser.parse(result.Sheet1);
+    isParsed = true;
+  } else if (CoopMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Co-op with filename: ", filename);
+    parsedPackingList = CoopParser.parse(result["Input Packing Sheet"]);
     isParsed = true;
   } else if (
     TescosMatcher.matches(result, filename) === MatcherResult.CORRECT
