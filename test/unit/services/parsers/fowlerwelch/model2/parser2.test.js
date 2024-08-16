@@ -1,7 +1,4 @@
 const fowlerWelchParser2 = require("../../../../../../app/services/parsers/fowlerwelch/model2/parser2");
-const {
-  isNullOrEmptyOrSpace,
-} = require("../../../../../../app/services/parsers/fowlerwelch/model2/parser2");
 
 describe("parseFowlerWelch2", () => {
   test("parses json", () => {
@@ -128,6 +125,12 @@ describe("parseFowlerWelch2", () => {
     );
     expect(result.items[1].total_net_weight_kg).toBe(
       packingListJson["Cust Ord"][46].K,
+    );
+    expect(result.items[0].type_of_treatment).toBe(
+      packingListJson["Cust Ord"][45].N,
+    );
+    expect(result.items[1].type_of_treatment).toBe(
+      packingListJson["Cust Ord"][46].N,
     );
   });
 
@@ -353,6 +356,12 @@ describe("parseFowlerWelch2", () => {
     expect(result.items[1].total_net_weight_kg).toBe(
       packingListJson["Cust Ord"][46].K,
     );
+    expect(result.items[0].type_of_treatment).toBe(
+      packingListJson["Cust Ord"][45].N,
+    );
+    expect(result.items[1].type_of_treatment).toBe(
+      packingListJson["Cust Ord"][46].N,
+    );
 
     expect(result.items[2].description).toBe(packingListJson["ARGO"][45].F);
     expect(result.items[3].description).toBe(packingListJson["ARGO"][46].F);
@@ -369,6 +378,12 @@ describe("parseFowlerWelch2", () => {
     );
     expect(result.items[3].total_net_weight_kg).toBe(
       packingListJson["ARGO"][46].K,
+    );
+    expect(result.items[2].type_of_treatment).toBe(
+      packingListJson["ARGO"][45].N,
+    );
+    expect(result.items[3].type_of_treatment).toBe(
+      packingListJson["ARGO"][46].N,
     );
   });
 
@@ -456,25 +471,26 @@ describe("parseFowlerWelch2", () => {
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
+    expect(result.items[0].type_of_treatment).toBeNull();
   });
 });
 
-describe("conditionsForParser", () => {
+describe("isNullOrEmptyOrSpace", () => {
   test("if type is a string with length 0 it should return null", () => {
     const str = "";
-    expect(isNullOrEmptyOrSpace(str)).toBeNull();
+    expect(fowlerWelchParser2.isNullOrEmptyOrSpace(str)).toBeNull();
   });
 
   test("if type is a string with just space it should return null", () => {
     const str = " ";
-    expect(isNullOrEmptyOrSpace(str)).toBeNull();
+    expect(fowlerWelchParser2.isNullOrEmptyOrSpace(str)).toBeNull();
   });
   test("if type is null return null", () => {
     const str = null;
-    expect(isNullOrEmptyOrSpace(str)).toBeNull();
+    expect(fowlerWelchParser2.isNullOrEmptyOrSpace(str)).toBeNull();
   });
   test("if type is a valid string return the string", () => {
     const str = "salads";
-    expect(isNullOrEmptyOrSpace(str)).toBe("salads");
+    expect(fowlerWelchParser2.isNullOrEmptyOrSpace(str)).toBe("salads");
   });
 });
