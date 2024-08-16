@@ -1,4 +1,3 @@
-const ParserModel = require("../../../../../app/services/parser-model");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-helpers/asda/model1/data-model");
 
@@ -6,16 +5,8 @@ const filename = "packinglist-asda-model1.xls";
 
 describe("matchesAsdaModel1", () => {
   test("matches valid Asda Model 1 file and calls parser", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual({
-      business_checks: {
-        all_required_fields_present: true,
-      },
-      items: [],
-      registration_approval_number: "RMS-GB-000015-001",
-      parserModel: ParserModel.ASDA1,
-    });
     expect(result).toEqual(model.validTestResult);
   });
 
@@ -25,6 +16,6 @@ describe("matchesAsdaModel1", () => {
       filename,
     );
 
-    expect(result).toEqual(model.invalidTestResults_MissingCell);
+    expect(result).toEqual(model.invalidTestResult_MissingCells);
   });
 });

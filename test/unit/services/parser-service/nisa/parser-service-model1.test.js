@@ -32,12 +32,6 @@ const packingListJson = {
 const filename = "packinglist-nisa-model-1.xlsx";
 
 describe("findParser", () => {
-  test("returns isParsed as true", () => {
-    const result = parserService.findParser(packingListJson, filename);
-
-    expect(result.isParsed).toBeTruthy();
-  });
-
   test("matches valid Nisa Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(packingListJson, filename);
 

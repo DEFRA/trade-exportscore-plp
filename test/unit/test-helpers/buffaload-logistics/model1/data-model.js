@@ -89,7 +89,6 @@ module.exports = {
     Sheet1: [],
   },
   validTestResult: {
-    isParsed: true,
     packingList: {
       business_checks: {
         all_required_fields_present: true,
@@ -116,7 +115,6 @@ module.exports = {
     },
   },
   invalidTestResult_MissingCells: {
-    isParsed: true,
     packingList: {
       business_checks: {
         all_required_fields_present: false,

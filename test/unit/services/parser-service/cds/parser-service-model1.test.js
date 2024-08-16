@@ -25,7 +25,7 @@ const packingListJson = {
 
 describe("matchesCdsModel1", () => {
   test("matches valid CDS Model 1 file and calls parser", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
       business_checks: {

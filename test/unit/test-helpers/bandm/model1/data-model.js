@@ -113,7 +113,6 @@ module.exports = {
     Sheet1: [],
   },
   validTestResult: {
-    isParsed: true,
     packingList: {
       business_checks: {
         all_required_fields_present: true,
@@ -137,10 +136,10 @@ module.exports = {
         },
       ],
       registration_approval_number: "RMS-GB-000005-001",
+      parserModel: ParserModel.BANDM1,
     },
   },
   invalidTestResult_MissingCells: {
-    isParsed: true,
     packingList: {
       business_checks: {
         all_required_fields_present: false,
@@ -164,6 +163,7 @@ module.exports = {
         },
       ],
       registration_approval_number: "RMS-GB-000005-001",
+      parserModel: ParserModel.BANDM1,
     },
   },
 };
