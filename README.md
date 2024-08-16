@@ -67,6 +67,24 @@ scripts/test
 scripts/test -w
 ```
 
+### Passing files to the local app
+
+From within VS Code, please start the local app (i.e. press 'F5').
+
+Once running, in the brower of your choice, navigate to the following:
+
+```text
+http://localhost:3000/non-ai?filename={filename and path}
+```
+
+e.g.
+
+```text
+http://localhost:3000/non-ai?filename=240424-I6001%20DDICE017%20MAIN20DD.xlsx
+```
+
+To facilitate the above, you will need to create a local directory called `packing-lists` under the main `app` directory (it is excluded from Git and thus no files will be commited to the repository). Prior to running the test(s) for the first time, simply add the file(s) to the `packing-lists` directory.
+
 In addition to the above, please refer to the [Additional Information](./additional-info.md) file for extensions that make running / debugging a single test easier than the above method.
 
 #### Troubleshooting

@@ -24,6 +24,7 @@ _Any relevant testing information and pipeline runs._
 - [ ] Description covers all the changes in the PR
 - [ ] This PR contains documentation
 - [ ] This PR contains tests
+- [ ] If the PR includes a new parser, please ensure the happy & unhappy path test files are linked to [this](https://eaflood.atlassian.net/wiki/spaces/EX/pages/4855562467/Packing+List+analysis#Top-20-Traders) page and the detailed description is added to [this](https://eaflood.atlassian.net/wiki/spaces/EX/pages/4855562467/Packing+List+analysis) page. Thanks
 
 ## How does this PR make you feel:
 
