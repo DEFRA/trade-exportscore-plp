@@ -13,6 +13,8 @@ const MatchedModel = {
   NISA2: "nisa-2",
   NISA3: "nisa-3",
   BUFFALOAD1: "buffaload-1",
+  CDS1: "cds-1",
+  COOP1: "coop-1",
 };
 
 module.exports = MatchedModel;

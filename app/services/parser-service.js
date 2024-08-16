@@ -8,6 +8,10 @@ const BandMMatcher = require("../services/matchers/bandm/model1/matcher");
 const BandMParser = require("../services/parsers/bandm/model1/parser");
 const BuffaloadMatcher = require("./matchers/buffaload-logistics/model1/matcher");
 const BuffaloadParser = require("./parsers/buffaload-logistics/model1/parser");
+const CoopMatcher = require("./matchers/co-op/model1/matcher");
+const CoopParser = require("./parsers/co-op/model1/parser");
+const CdsMatcher = require("./matchers/cds/model1/matcher");
+const CdsParser = require("./parsers/cds/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
 const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
@@ -52,6 +56,10 @@ function findParser(result, filename) {
   } else if (BandMMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches BandM with filename: ", filename);
     parsedPackingList = BandMParser.parse(result.Sheet1);
+    isParsed = true;
+  } else if (CoopMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Co-op with filename: ", filename);
+    parsedPackingList = CoopParser.parse(result["Input Packing Sheet"]);
   } else if (
     TescosMatcher.matches(result, filename) === MatcherResult.CORRECT
   ) {
@@ -98,6 +106,10 @@ function findParser(result, filename) {
       filename,
     );
     parsedPackingList = BuffaloadParser.parse(result.Tabelle1);
+    isParsed = true;
+  } else if (CdsMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches CDS Model 1 with filename: ", filename);
+    parsedPackingList = CdsParser.parse(result[Object.keys(result)[0]]);
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
