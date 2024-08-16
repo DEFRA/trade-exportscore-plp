@@ -1,7 +1,7 @@
-const fowlerWelchParser2 = require("../../../../app/services/fowlerwelch/parser2");
+const fowlerWelchParser2 = require("../../../../../../app/services/parsers/fowlerwelch/model2/parser2");
 const {
   isNullOrEmptyOrSpace,
-} = require("../../../../app/services/fowlerwelch/parser2");
+} = require("../../../../../../app/services/parsers/fowlerwelch/model2/parser2");
 
 describe("parseFowlerWelch2", () => {
   test("parses json", () => {
@@ -473,7 +473,7 @@ describe("conditionsForParser", () => {
     const str = null;
     expect(isNullOrEmptyOrSpace(str)).toBeNull();
   });
-  test("if type is a valid string return said string", () => {
+  test("if type is a valid string return the string", () => {
     const str = "salads";
     expect(isNullOrEmptyOrSpace(str)).toBe("salads");
   });

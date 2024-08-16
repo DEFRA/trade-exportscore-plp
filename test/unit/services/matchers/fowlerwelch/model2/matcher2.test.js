@@ -1,5 +1,5 @@
-const MatcherResult = require("../../../../app/services/matches-result");
-const fowlerWelchMatcher2 = require("../../../../app/services/fowlerwelch/matcher2");
+const MatcherResult = require("../../../../../../app/services/matches-result");
+const fowlerWelchMatcher2 = require("../../../../../../app/services/matchers/fowlerwelch/model2/matcher");
 
 describe("matchesFowlerWelch2", () => {
   test("returns generic error for empty json", () => {
