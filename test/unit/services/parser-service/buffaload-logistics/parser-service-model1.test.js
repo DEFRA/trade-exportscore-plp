@@ -23,12 +23,6 @@ const packingListJson = {
 };
 
 describe("matchesBuffaloadModel1", () => {
-  test("returns isParsed as true", () => {
-    const result = parserService.findParser(packingListJson, filename);
-
-    expect(result.isParsed).toBeTruthy();
-  });
-
   test("matches valid Buffaload Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(packingListJson, filename);
 

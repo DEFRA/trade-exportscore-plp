@@ -1,10 +1,9 @@
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-helpers/bandm/model1/data-model");
-const parserService = require("../../../../../app/services/parser-service");
 
 const filename = "packinglist-bandm-model1.xlsx";
 
-describe("matchesBAndMModel1", () => {
+describe("matchesAsdaModel1", () => {
   test("matches valid BAndM Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(model.validModel, filename);
 
