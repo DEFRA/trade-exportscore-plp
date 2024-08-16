@@ -19,7 +19,10 @@ describe("matchesBAndMModel1", () => {
   });
 
   test("matches valid BAndM Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
-    const result = parserService.findParser(model.invalidModel_MissingColumnCells, filename);
+    const result = parserService.findParser(
+      model.invalidModel_MissingColumnCells,
+      filename,
+    );
 
     expect(result).toEqual(model.invalidTestResult_MissingCells);
 
@@ -34,7 +37,6 @@ describe("matchesBAndMModel1", () => {
         registration_approval_number: "RMS-GB-000005-001",
         parserModel: ParserModel.BANDM1,
       });
-
     });
-  })
+  });
 });

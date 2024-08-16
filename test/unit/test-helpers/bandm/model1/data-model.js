@@ -110,9 +110,7 @@ module.exports = {
     ],
   },
   emptyModel: {
-    Sheet1: [
-
-    ],
+    Sheet1: [],
   },
   validTestResult: {
     isParsed: true,
@@ -167,5 +165,5 @@ module.exports = {
       ],
       registration_approval_number: "RMS-GB-000005-001",
     },
-  }
+  },
 };
