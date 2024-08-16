@@ -9,6 +9,8 @@ const BuffaloadMatcher = require("./matchers/buffaload-logistics/model1/matcher"
 const BuffaloadParser = require("./parsers/buffaload-logistics/model1/parser");
 const CoopMatcher = require("./matchers/co-op/model1/matcher");
 const CoopParser = require("./parsers/co-op/model1/parser");
+const CdsMatcher = require("./matchers/cds/model1/matcher");
+const CdsParser = require("./parsers/cds/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
 const FowlerWelchMatcher2 = require("./matchers/fowlerwelch/model2/matcher");
@@ -126,6 +128,10 @@ function findParser(result, filename) {
       filename,
     );
     parsedPackingList = BuffaloadParser.parse(result.Tabelle1);
+    isParsed = true;
+  } else if (CdsMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches CDS Model 1 with filename: ", filename);
+    parsedPackingList = CdsParser.parse(result[Object.keys(result)[0]]);
     isParsed = true;
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
