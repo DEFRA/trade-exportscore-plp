@@ -1,5 +1,5 @@
 const ParserService = require("../../../../../../app/services/parser-service");
-const MatchedModel = require("../../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 const filename = "packinglist.xlsx";
 const packingListJson = {
@@ -39,7 +39,7 @@ describe("matchesCoopModel1", () => {
         },
       ],
       registration_approval_number: "RMS-GB-000009-001",
-      parserModel: MatchedModel.COOP1,
+      parserModel: ParserModel.COOP1,
     });
   });
 });
