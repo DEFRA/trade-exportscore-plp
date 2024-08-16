@@ -1,24 +1,24 @@
-const ParserService = require("../../../../../app/services/parser-service");
+const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-helpers/asda/model2/data-model");
-const filename = "packinglist.xls";
+const filename = "packinglist-asda-model2.xls";
 
 describe("matchesAsdaModel2", () => {
   test("returns isParsed as true", () => {
-    const result = ParserService.findParser(model.validModel, filename);
+    const result = parserService.findParser(model.validModel, filename);
 
     expect(result.isParsed).toBeTruthy();
   });
 
-  test("matches valid Asda Model 2 file and calls parser", () => {
-    const result = ParserService.findParser(model.validModel, filename);
+  test("matches valid Asda Model 2 file, calls parser and returns all_required_fields_present as true", () => {
+    const result = parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(model.validTestResult);
   });
 
-  test("matches valid Asda Model 2 file and calls parser but all_required_fields_present is false when column empty", () => {
-    const result = ParserService.findParser(model.invalidModel_MissingColumnCells, filename,);
+  test("matches valid Asda Model 2 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
+    const result = parserService.findParser(model.invalidModel_MissingColumnCells, filename,);
 
-    expect(result).toEqual(model.invalidTest_MissingCellResults);
+    expect(result).toEqual(model.invalidTestResult_MissingCells);
   });
 });
 

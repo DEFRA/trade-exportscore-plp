@@ -1,4 +1,4 @@
-const ParserService = require("../../../../../../app/services/parser-service");
+const parserService = require("../../../../../../app/services/parser-service");
 
 const filename = "packinglist.xlsx";
 const packingListJson = {
@@ -22,13 +22,13 @@ const packingListJson = {
 
 describe("matchesCoopModel1", () => {
   test("returns isParsed as true", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result.isParsed).toBeTruthy();
   });
 
-  test("matches valid Co-op Model 1 file and calls parser", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+  test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as true", () => {
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
       isParsed: true,

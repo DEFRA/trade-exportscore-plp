@@ -34,7 +34,7 @@ module.exports = {
     ],
   },
   invalidModel_MissingColumnCells: {
-    PackingList_Extract: [
+    Sheet1: [
       {
         A: "[Description Of All Retail Goods]",
         B: "[Nature Of Product]",
@@ -71,7 +71,7 @@ module.exports = {
     ],
   },
   emptyModel: {
-    PackingList_Extract: [
+    Sheet1: [
       {
         A: "[Description Of All Retail Goods]",
         B: "[Nature Of Product]",
@@ -114,7 +114,7 @@ module.exports = {
       registration_approval_number: "RMS-GB-000015-006",
     },
   },
-  invalidTest_MissingCellResults: {
+  invalidTestResult_MissingCells: {
     isParsed: true,
     packingList: {
       business_checks: {

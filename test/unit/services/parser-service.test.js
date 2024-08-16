@@ -1,4 +1,4 @@
-const ParserService = require("../../../app/services/parser-service");
+const parserService = require("../../../app/services/parser-service");
 
 describe("failedParser", () => {
   test("parses json", () => {
@@ -10,7 +10,7 @@ describe("failedParser", () => {
       },
     };
 
-    const result = ParserService.failedParser();
+    const result = parserService.failedParser();
 
     expect(result).toMatchObject(packingListJson);
     expect(result.registration_approval_number).toBeNull();
@@ -38,7 +38,7 @@ describe("checkRequiredData", () => {
       },
     };
 
-    const result = ParserService.checkRequiredData(packingList);
+    const result = parserService.checkRequiredData(packingList);
 
     expect(result).toBeFalsy();
   });
@@ -61,7 +61,7 @@ describe("checkRequiredData", () => {
       },
     };
 
-    const result = ParserService.checkRequiredData(packingList);
+    const result = parserService.checkRequiredData(packingList);
 
     expect(result).toBeFalsy();
   });
@@ -84,7 +84,7 @@ describe("checkRequiredData", () => {
       },
     };
 
-    const result = ParserService.checkRequiredData(packingList);
+    const result = parserService.checkRequiredData(packingList);
 
     expect(result).toBeFalsy();
   });
@@ -107,7 +107,7 @@ describe("checkRequiredData", () => {
       },
     };
 
-    const result = ParserService.checkRequiredData(packingList);
+    const result = parserService.checkRequiredData(packingList);
 
     expect(result).toBeFalsy();
   });
@@ -130,7 +130,7 @@ describe("checkRequiredData", () => {
       },
     };
 
-    const result = ParserService.checkRequiredData(packingList);
+    const result = parserService.checkRequiredData(packingList);
 
     expect(result).toBeFalsy();
   });
@@ -153,7 +153,7 @@ describe("checkRequiredData", () => {
       },
     };
 
-    const result = ParserService.checkRequiredData(packingList);
+    const result = parserService.checkRequiredData(packingList);
 
     expect(result).toBeFalsy();
   });
@@ -176,7 +176,7 @@ describe("checkRequiredData", () => {
       },
     };
 
-    const result = ParserService.checkRequiredData(packingList);
+    const result = parserService.checkRequiredData(packingList);
 
     expect(result).toBeFalsy();
   });
@@ -244,7 +244,7 @@ describe("findParser", () => {
     };
     const filename = "packinglist.xls";
 
-    const result = ParserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(packingListJson, filename);
     expect(result.packingList.items).toHaveLength(2);
   });
 });

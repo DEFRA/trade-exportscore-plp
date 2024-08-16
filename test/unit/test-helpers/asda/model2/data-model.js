@@ -104,7 +104,7 @@ module.exports = {
       registration_approval_number: "RMS-GB-000015-010",
     },
   },
-  invalidTest_MissingCellResults: {
+  invalidTestResult_MissingCells: {
     isParsed: true,
     packingList: {
       business_checks: {

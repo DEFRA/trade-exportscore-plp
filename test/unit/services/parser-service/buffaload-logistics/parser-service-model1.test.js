@@ -1,4 +1,5 @@
-const ParserService = require("../../../../../app/services/parser-service");
+const parserService = require("../../../../../app/services/parser-service");
+const model = require("../../../test-helpers/bandm/model1/data-model");
 
 const filename = "PackingList.xlsx";
 const packingListJson = {
@@ -22,13 +23,13 @@ const packingListJson = {
 
 describe("matchesBuffaloadModel1", () => {
   test("returns isParsed as true", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result.isParsed).toBeTruthy();
   });
 
-  test("matches valid Buffaload Model 1 file and calls parser", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+  test("matches valid Buffaload Model 1 file, calls parser and returns all_required_fields_present as true", () => {
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
       isParsed: true,

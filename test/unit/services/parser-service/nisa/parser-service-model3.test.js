@@ -1,4 +1,4 @@
-const ParserService = require("../../../../../app/services/parser-service");
+const parserService = require("../../../../../app/services/parser-service");
 
 const packingListJson = {
   sheet: [
@@ -35,13 +35,13 @@ const filename = "packinglist-nisa3.xlsx";
 
 describe("matchesNisaModel3", () => {
   test("returns isParsed as true", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result.isParsed).toBeTruthy();
   });
 
-  test("matches valid Nisa Model 3 file and calls parser", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+  test("matches valid Nisa Model 3 file, calls parser and returns all_required_fields_present as true", () => {
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
       isParsed: true,
