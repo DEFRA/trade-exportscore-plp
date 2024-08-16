@@ -19,6 +19,7 @@ const mockDatabaseService = {
 jest.mock("../../../app/services/database-service", () => mockDatabaseService);
 
 const packingListIndex = require("../../../app/packing-list/index");
+const MatchedModel = require("../../../app/services/matched-model");
 
 describe("Packing list", () => {
   beforeEach(async () => {
@@ -41,6 +42,7 @@ describe("Packing list", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      parserModel: MatchedModel.ASDA1,
     };
     jest.mock("../../../app/packing-list/index", () => ({
       packingListMapper: jest.fn().mockResolvedValue({}),

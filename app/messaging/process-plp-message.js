@@ -5,6 +5,7 @@ const {
 } = require("../services/storage-account");
 const { createPackingList } = require("../packing-list");
 const { patchPackingListCheck } = require("../services/dynamics-service");
+const MatchedModel = require("../services/matched-model");
 
 async function processPlpMessage(message, receiver) {
   try {
@@ -15,10 +16,10 @@ async function processPlpMessage(message, receiver) {
     );
     let result = {};
     result = await getXlsPackingListFromBlob(blobClient);
-    const parsed = findParser(result, message.body.packing_list_blob);
+    const packingList = findParser(result, message.body.packing_list_blob);
 
-    if (parsed.isParsed) {
-      await createPackingList(parsed.packingList, message.body.application_id);
+    if (packingList.parserModel !== MatchedModel.NOMATCH) {
+      await createPackingList(packingList, message.body.application_id);
       await patchPackingListCheck(
         message.body.application_id,
         parsed.packingList.business_checks.all_required_fields_present,

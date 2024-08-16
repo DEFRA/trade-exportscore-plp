@@ -1,4 +1,5 @@
 const Parser = require("../../../../../../app/services/parsers/asda/model2/parser");
+const MatchedModel = require("../../../../../../app/services/matched-model");
 
 describe("parseAsdaModel2", () => {
   test("parses json", () => {
@@ -46,6 +47,7 @@ describe("parseAsdaModel2", () => {
     expect(result.items[1].number_of_packages).toBe(packingListJson[2].J);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].N);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].N);
+    expect(result.parserModel).toBe(MatchedModel.ASDA2);
   });
 
   test("parses null json", () => {
@@ -71,5 +73,6 @@ describe("parseAsdaModel2", () => {
     expect(result.items[0].type_of_treatment).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
+    expect(result.parserModel).toBe(MatchedModel.ASDA2);
   });
 });

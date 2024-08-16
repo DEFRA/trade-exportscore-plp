@@ -16,6 +16,7 @@ const { createPackingList } = require("../../../app/packing-list");
 const {
   patchPackingListCheck,
 } = require("../../../app/services/dynamics-service");
+const MatchedModel = require("../../../app/services/matched-model");
 
 createStorageAccountClient.mockImplementation(() => {
   return jest.fn();
@@ -25,7 +26,7 @@ getXlsPackingListFromBlob.mockImplementation(() => {
 });
 findParser.mockImplementation(() => {
   return {
-    isParsed: true,
+    parserModel: MatchedModel.NISA1,
   };
 });
 createPackingList.mockImplementation(() => {

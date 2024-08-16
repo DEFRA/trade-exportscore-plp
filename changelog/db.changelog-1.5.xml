@@ -5,7 +5,7 @@
     </changeSet>
     <changeSet author="Padget Avery" id="1596009647200-1">
         <addColumn tableName="packingList">
-            <column name="parserModel" type="ENUM"/>
+            <column name="parserModel" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>
