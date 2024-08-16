@@ -1,4 +1,5 @@
 const parserService = require("../../../../../app/services/parser-service");
+const ParserModel = require("../../../../../app/services/parser-model");
 
 const filename = "packinglist.xlsx";
 const packingListJson = {
@@ -74,24 +75,16 @@ const packingListJson = {
 };
 
 describe("matchesFowlerWelchModel1", () => {
-  test("returns isParsed as true", () => {
-    const result = parserService.findParser(packingListJson, filename);
-
-    expect(result.isParsed).toBeTruthy();
-  });
-
-  test("matches valid FowlerWelch Model 1 file, calls parser and returns all_required_fields_present as true", () => {
+  test("matches valid FowlerWelch Model 1 file and calls parser", () => {
     const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
-      isParsed: true,
-      packingList: {
-        business_checks: {
-          all_required_fields_present: true,
-        },
-        items: [],
-        registration_approval_number: "RMS-GB-000216-004",
+      business_checks: {
+        all_required_fields_present: true,
       },
+      items: [],
+      registration_approval_number: "RMS-GB-000216-004",
+      parserModel: ParserModel.FOWLERWELCH1,
     });
   });
 });

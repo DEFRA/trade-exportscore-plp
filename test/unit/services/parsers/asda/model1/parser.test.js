@@ -1,3 +1,4 @@
+const ParserModel = require("../../../../../../app/services/parser-model");
 const Parser = require("../../../../../../app/services/parsers/asda/model1/parser");
 const model = require("../../../../test-helpers/asda/model1/data-model");
 describe("parseAsdaModel1", () => {
@@ -17,6 +18,7 @@ describe("parseAsdaModel1", () => {
     expect(result.items[1].number_of_packages).toBe(packingListJson[2].F);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].G);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].G);
+    expect(result.parserModel).toBe(ParserModel.ASDA1);
   });
 
   test("parses null json", () => {
@@ -31,6 +33,7 @@ describe("parseAsdaModel1", () => {
     expect(result.items[0].type_of_treatment).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
+    expect(result.parserModel).toBe(ParserModel.ASDA1);
   });
 });
 module.exports = {};

@@ -1,4 +1,5 @@
 const parserService = require("../../../../../app/services/parser-service");
+const ParserModel = require("../../../../../app/services/parser-model");
 
 const packingListJson = {
   sheet: [
@@ -34,41 +35,33 @@ const packingListJson = {
 const filename = "packinglist-nisa3.xlsx";
 
 describe("matchesNisaModel3", () => {
-  test("returns isParsed as true", () => {
-    const result = parserService.findParser(packingListJson, filename);
-
-    expect(result.isParsed).toBeTruthy();
-  });
-
-  test("matches valid Nisa Model 3 file, calls parser and returns all_required_fields_present as true", () => {
+  test("matches valid Nisa Model 3 file and calls parser", () => {
     const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
-      isParsed: true,
-      packingList: {
-        business_checks: {
-          all_required_fields_present: true,
-        },
-        items: [
-          {
-            commodity_code: "2005995090",
-            description: "DAIRYLEA DUNKERS JUMBO PM80P",
-            nature_of_products: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-            number_of_packages: 2,
-            total_net_weight_kg: 2.5,
-            type_of_treatment: null,
-          },
-          {
-            commodity_code: "0403209300",
-            description: "CO OP BROCCOLI",
-            nature_of_products: "900 - VEGETABLES PREPACK-C",
-            number_of_packages: 1,
-            total_net_weight_kg: 2,
-            type_of_treatment: null,
-          },
-        ],
-        registration_approval_number: "RMS-GB-000025-003",
+      business_checks: {
+        all_required_fields_present: true,
       },
+      items: [
+        {
+          commodity_code: "2005995090",
+          description: "DAIRYLEA DUNKERS JUMBO PM80P",
+          nature_of_products: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+          number_of_packages: 2,
+          total_net_weight_kg: 2.5,
+          type_of_treatment: null,
+        },
+        {
+          commodity_code: "0403209300",
+          description: "CO OP BROCCOLI",
+          nature_of_products: "900 - VEGETABLES PREPACK-C",
+          number_of_packages: 1,
+          total_net_weight_kg: 2,
+          type_of_treatment: null,
+        },
+      ],
+      registration_approval_number: "RMS-GB-000025-003",
+      parserModel: ParserModel.NISA3,
     });
   });
 });

@@ -1,5 +1,7 @@
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-helpers/bandm/model1/data-model");
+const ParserModel = require("../../../../../app/services/parser-model");
+const ParserService = require("../../../../../app/services/parser-service");
 
 const filename = "packinglist-bandm-model1.xlsx";
 
@@ -20,5 +22,19 @@ describe("matchesBAndMModel1", () => {
     const result = parserService.findParser(model.invalidModel_MissingColumnCells, filename);
 
     expect(result).toEqual(model.invalidTestResult_MissingCells);
-  });
+
+    test("matches valid BAndM Model 1 file and calls parser", () => {
+      const result = ParserService.findParser(packingListJson, filename);
+
+      expect(result).toEqual({
+        business_checks: {
+          all_required_fields_present: true,
+        },
+        items: [],
+        registration_approval_number: "RMS-GB-000005-001",
+        parserModel: ParserModel.BANDM1,
+      });
+
+    });
+  })
 });
