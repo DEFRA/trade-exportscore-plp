@@ -1,6 +1,7 @@
 const MatcherResult = require("../matches-result");
 const CUSTOMER_ORDER = "Customer Order";
 const COUNTRY_OF_ORIGIN = "Country of Origin";
+//const FileExtension = require("../../../../utilities/file-extension");
 
 function matches(packingListJson, filename) {
   try {

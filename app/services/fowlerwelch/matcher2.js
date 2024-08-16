@@ -1,5 +1,6 @@
 const MatcherResult = require("../matches-result");
 const COUNTRY_OF_ORIGIN = "Country of Origin";
+//const FileExtension = require("../../../../utilities/file-extension");
 
 function matches(packingList, filename) {
   const establishmentNumberRow = 45;

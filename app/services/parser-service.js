@@ -63,8 +63,7 @@ function findParser(result, filename) {
     FowlerWelchMatcher.matches(result, filename) === MatcherResult.CORRECT
   ) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
-    parsedPackingList = FowlerWelchParser.parse(
-      result[CUSTOMER_ORDER]);
+    parsedPackingList = FowlerWelchParser.parse(result[CUSTOMER_ORDER]);
     isParsed = true;
   } else if (
     FowlerWelchMatcher2.matches(result, filename) === MatcherResult.CORRECT
@@ -95,26 +94,25 @@ function findParser(result, filename) {
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
-console.log(parsedPackingList)
-  // if (isParsed) {
-  //   parsedPackingList.items = parsedPackingList.items.filter(
-  //     (x) =>
-  //       !(
-  //         x.description === null &&
-  //         x.nature_of_products === null &&
-  //         x.type_of_treatment === null &&
-  //         x.commodity_code === null &&
-  //         x.number_of_packages === null &&
-  //         x.total_net_weight_kg === null
-  //       )
-  //   );
-//console.log(parsedPackingList)
-//     parsedPackingList.business_checks.all_required_fields_present =
-//       checkRequiredData(parsedPackingList);
-//   }
 
+  if (isParsed) {
+    parsedPackingList.items = parsedPackingList.items.filter(
+      (x) =>
+        !(
+          x.description === null &&
+          x.nature_of_products === null &&
+          x.type_of_treatment === null &&
+          x.commodity_code === null &&
+          x.number_of_packages === null &&
+          x.total_net_weight_kg === null
+        ),
+    );
+    parsedPackingList.business_checks.all_required_fields_present =
+      checkRequiredData(parsedPackingList);
+  }
+  //console.log(parsedPackingList)
   return { packingList: parsedPackingList, isParsed };
- }
+}
 
 function matchesBandM(packingListJson, filename) {
   try {
