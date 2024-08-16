@@ -1,5 +1,5 @@
 const Parser = require("../../../../../../app/services/parsers/bandm/model1/parser");
-const MatchedModel = require("../../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseBandMModel1", () => {
   test("parses json", () => {
@@ -69,7 +69,7 @@ describe("parseBandMModel1", () => {
     expect(result.items[1].number_of_packages).toBe(packingListJson[7].F);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[6].G);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[7].G);
-    expect(result.parserModel).toBe(MatchedModel.BANDM1);
+    expect(result.parserModel).toBe(ParserModel.BANDM1);
   });
 
   test("parses null json", () => {
@@ -119,6 +119,6 @@ describe("parseBandMModel1", () => {
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
-    expect(result.parserModel).toBe(MatchedModel.BANDM1);
+    expect(result.parserModel).toBe(ParserModel.BANDM1);
   });
 });

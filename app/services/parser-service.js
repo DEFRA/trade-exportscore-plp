@@ -1,5 +1,5 @@
 const MatcherResult = require("./matches-result");
-const MatchedModel = require("./matched-model");
+const ParserModel = require("./parser-model");
 const AsdaMatcher = require("../services/matchers/asda/model1/matcher");
 const AsdaParser = require("../services/parsers/asda/model1/parser");
 const AsdaMatcher2 = require("../services/matchers/asda/model2/matcher");
@@ -31,7 +31,6 @@ const TescosParser3 = require("../services/parsers/tescos/model3/parser");
 const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
 const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
 const CombineParser = require("./parser-combine");
-const { parse } = require("uuid");
 
 const CUSTOMER_ORDER = "Customer Order";
 const INPUT_DATA_SHEET = "Input Data Sheet";
@@ -114,7 +113,7 @@ function findParser(result, filename) {
     console.info("Failed to parse packing list with filename: ", filename);
   }
 
-  if (parsedPackingList.parserModel !== MatchedModel.NOMATCH) {
+  if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
     parsedPackingList.items = parsedPackingList.items.filter(
       (x) =>
         !(
@@ -135,7 +134,7 @@ function findParser(result, filename) {
 }
 
 function failedParser() {
-  return CombineParser.combine(null, [], false, MatchedModel.NOMATCH);
+  return CombineParser.combine(null, [], false, ParserModel.NOMATCH);
 }
 
 function checkRequiredData(packingList) {

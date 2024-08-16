@@ -1,5 +1,5 @@
 const Parser = require("../../../../../../app/services/parsers/buffaload-logistics/model1/parser");
-const MatchedModel = require("../../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parsesBuffaloadLogisticsModel1", () => {
   test("parses json", () => {
@@ -57,7 +57,7 @@ describe("parsesBuffaloadLogisticsModel1", () => {
     expect(result.items[1].commodity_code).toBe(packingListJson[3].A);
     expect(result.items[0].number_of_packages).toBe(packingListJson[2].D);
     expect(result.items[1].number_of_packages).toBe(packingListJson[3].D);
-    expect(result.parserModel).toBe(MatchedModel.BUFFALOAD1);
+    expect(result.parserModel).toBe(ParserModel.BUFFALOAD1);
   });
 
   test("parses null json", () => {
@@ -92,6 +92,6 @@ describe("parsesBuffaloadLogisticsModel1", () => {
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
-    expect(result.parserModel).toBe(MatchedModel.BUFFALOAD1);
+    expect(result.parserModel).toBe(ParserModel.BUFFALOAD1);
   });
 });

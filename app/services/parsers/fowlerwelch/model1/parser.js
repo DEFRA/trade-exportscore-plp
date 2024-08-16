@@ -1,5 +1,5 @@
 const CombineParser = require("../../../parser-combine");
-const MatchedModel = require("../../../matched-model");
+const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
   const establishmentNumberRow = 45;
@@ -19,7 +19,7 @@ function parse(packingListJson) {
     establishmentNumber,
     packingListContents,
     true,
-    MatchedModel.FOWLERWELCH1,
+    ParserModel.FOWLERWELCH1,
   );
 }
 

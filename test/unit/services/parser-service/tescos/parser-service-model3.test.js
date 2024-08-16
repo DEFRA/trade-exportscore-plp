@@ -1,4 +1,4 @@
-const MatchedModel = require("../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../app/services/parser-model");
 const ParserService = require("../../../../../app/services/parser-service");
 
 const filename = "PackingListTesco3.xlsx";
@@ -32,7 +32,7 @@ describe("matchesTescosModel3", () => {
       },
       items: [],
       registration_approval_number: "RMS-GB-000022-999",
-      parserModel: MatchedModel.TESCO3,
+      parserModel: ParserModel.TESCO3,
     });
   });
 });

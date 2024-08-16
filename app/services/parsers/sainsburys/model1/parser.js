@@ -1,5 +1,5 @@
 const CombineParser = require("../../../parser-combine");
-const MatchedModel = require("../../../matched-model");
+const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
   const establishmentNumber =
@@ -17,7 +17,7 @@ function parse(packingListJson) {
     establishmentNumber,
     packingListContents,
     true,
-    MatchedModel.SAINSBURYS1,
+    ParserModel.SAINSBURYS1,
   );
 }
 

@@ -1,5 +1,5 @@
 const Parser = require("../../../../../../app/services/parsers/sainsburys/model1/parser");
-const MatchedModel = require("../../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseSainsburysModel1", () => {
   test("parses json", () => {
@@ -43,7 +43,7 @@ describe("parseSainsburysModel1", () => {
     expect(result.items[1].number_of_packages).toBe(packingListJson[2].G);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].H);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].H);
-    expect(result.parserModel).toBe(MatchedModel.SAINSBURYS1);
+    expect(result.parserModel).toBe(ParserModel.SAINSBURYS1);
   });
 
   test("parses null json", () => {
@@ -67,6 +67,6 @@ describe("parseSainsburysModel1", () => {
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
-    expect(result.parserModel).toBe(MatchedModel.SAINSBURYS1);
+    expect(result.parserModel).toBe(ParserModel.SAINSBURYS1);
   });
 });

@@ -1,4 +1,4 @@
-const MatchedModel = require("../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../app/services/parser-model");
 const ParserService = require("../../../../../app/services/parser-service");
 
 const packingListJson = {
@@ -58,7 +58,7 @@ describe("matchesNisaModel2", () => {
         },
       ],
       registration_approval_number: "RMS-GB-000025-001",
-      parserModel: MatchedModel.NISA2,
+      parserModel: ParserModel.NISA2,
     });
   });
 });

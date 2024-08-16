@@ -1,5 +1,5 @@
 const CombineParser = require("../../../parser-combine");
-const MatchedModel = require("../../../matched-model");
+const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
   const establishmentNumber = packingListJson[2].M ?? null;
@@ -16,7 +16,7 @@ function parse(packingListJson) {
     establishmentNumber,
     packingListContents,
     true,
-    MatchedModel.TESCO2,
+    ParserModel.TESCO2,
   );
 }
 

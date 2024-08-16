@@ -1,4 +1,5 @@
 const Parser = require("../../../../../../app/services/parsers/cds/model1/parser");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseCdsModel1", () => {
   test("parses json", () => {
@@ -64,6 +65,7 @@ describe("parseCdsModel1", () => {
     expect(result.items[1].number_of_packages).toBe(packingListJson[2].E);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].H);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].H);
+    expect(result.parserModel).toBe(ParserModel.CDS1);
   });
 
   test("parses null json", () => {
@@ -95,5 +97,6 @@ describe("parseCdsModel1", () => {
     expect(result.items[0].type_of_treatment).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
+    expect(result.parserModel).toBe(ParserModel.CDS1);
   });
 });

@@ -1,5 +1,5 @@
 const CombineParser = require("../../../parser-combine");
-const MatchedModel = require("../../../matched-model");
+const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
   const traderRow = packingListJson.findIndex(
@@ -25,7 +25,7 @@ function parse(packingListJson) {
     establishmentNumber,
     packingListContents,
     true,
-    MatchedModel.BANDM1,
+    ParserModel.BANDM1,
   );
 }
 

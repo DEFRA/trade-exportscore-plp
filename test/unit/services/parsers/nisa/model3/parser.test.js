@@ -1,5 +1,5 @@
 const Parser = require("../../../../../../app/services/parsers/nisa/model3/parser");
-const MatchedModel = require("../../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseNisa3", () => {
   test("parses json", () => {
@@ -47,7 +47,7 @@ describe("parseNisa3", () => {
     expect(result.items[1].number_of_packages).toBe(packingListJson[4].G);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[3].I);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[4].I);
-    expect(result.parserModel).toBe(MatchedModel.NISA3);
+    expect(result.parserModel).toBe(ParserModel.NISA3);
   });
 
   test("parses empty json", () => {
@@ -75,6 +75,6 @@ describe("parseNisa3", () => {
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
-    expect(result.parserModel).toBe(MatchedModel.NISA3);
+    expect(result.parserModel).toBe(ParserModel.NISA3);
   });
 });

@@ -1,4 +1,4 @@
-const MatchedModel = require("../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../app/services/parser-model");
 const ParserService = require("../../../../../app/services/parser-service");
 
 const filename = "packinglist.xlsx";
@@ -84,7 +84,7 @@ describe("matchesFowlerWelchModel1", () => {
       },
       items: [],
       registration_approval_number: "RMS-GB-000216-004",
-      parserModel: MatchedModel.FOWLERWELCH1,
+      parserModel: ParserModel.FOWLERWELCH1,
     });
   });
 });

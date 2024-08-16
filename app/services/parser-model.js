@@ -1,4 +1,4 @@
-const MatchedModel = {
+const ParserModel = {
   NOMATCH: "no-match",
   TJMORRIS1: "tjmorris-1",
   ASDA1: "asda-1",
@@ -17,4 +17,4 @@ const MatchedModel = {
   COOP1: "coop-1",
 };
 
-module.exports = MatchedModel;
+module.exports = ParserModel;

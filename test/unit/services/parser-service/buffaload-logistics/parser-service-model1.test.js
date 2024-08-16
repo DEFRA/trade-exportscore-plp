@@ -1,4 +1,4 @@
-const MatchedModel = require("../../../../../app/services/matched-model");
+const ParserModel = require("../../../../../app/services/parser-model");
 const ParserService = require("../../../../../app/services/parser-service");
 
 const filename = "PackingList.xlsx";
@@ -31,7 +31,7 @@ describe("matchesBuffaloadModel1", () => {
       },
       items: [],
       registration_approval_number: "RMS-GB-000098-001",
-      parserModel: MatchedModel.BUFFALOAD1,
+      parserModel: ParserModel.BUFFALOAD1,
     });
   });
 });
