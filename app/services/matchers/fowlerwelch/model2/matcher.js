@@ -1,8 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 
-const COUNTRY_OF_ORIGIN = "Country of Origin";
-
 function matches(packingList, filename) {
   const establishmentNumberRow = 45;
   const headerRowNumber = 44;
@@ -20,7 +18,7 @@ function matches(packingList, filename) {
     if (sheets.length === 0) {
       throw new Error("generic error");
     }
-    //maybe needs -1
+
     for (let i = 0; i < sheets.length; i++) {
       const establishmentNumber =
         packingList[sheets[i]][establishmentNumberRow].M;

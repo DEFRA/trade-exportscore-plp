@@ -33,7 +33,6 @@ const CombineParser = require("./parser-combine");
 
 const CUSTOMER_ORDER = "Customer Order";
 const INPUT_DATA_SHEET = "Input Data Sheet";
-const CUST_ORD_VITACRESS = "Cust Ord - Vitacress";
 
 function findParser(result, filename) {
   let parsedPackingList = failedParser();
@@ -147,7 +146,7 @@ function findParser(result, filename) {
     parsedPackingList.business_checks.all_required_fields_present =
       checkRequiredData(parsedPackingList);
   }
-  //console.log(parsedPackingList)
+
   return { packingList: parsedPackingList, isParsed };
 }
 
