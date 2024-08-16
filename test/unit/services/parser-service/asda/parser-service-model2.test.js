@@ -18,19 +18,20 @@ describe("matchesAsdaModel2", () => {
         },
         items: [
           {
-            "commodity_code": null,
-            "description": "4PK X 17 PINK LADY APPLES",
-            "nature_of_products": "TOP FRUIT",
-            "number_of_packages": 20,
-            "total_net_weight_kg": 255,
-            "type_of_treatment": "PRODUCE"
-          }, {
-            "commodity_code": null,
-            "description": "ASDA BABY WATERMELON X10",
-            "nature_of_products": "MELON HARD",
-            "number_of_packages": 5,
-            "total_net_weight_kg": 60,
-            "type_of_treatment": "PRODUCE",
+            commodity_code: null,
+            description: "4PK X 17 PINK LADY APPLES",
+            nature_of_products: "TOP FRUIT",
+            number_of_packages: 20,
+            total_net_weight_kg: 255,
+            type_of_treatment: "PRODUCE",
+          },
+          {
+            commodity_code: null,
+            description: "ASDA BABY WATERMELON X10",
+            nature_of_products: "MELON HARD",
+            number_of_packages: 5,
+            total_net_weight_kg: 60,
+            type_of_treatment: "PRODUCE",
           },
         ],
         registration_approval_number: "RMS-GB-000015-010",
@@ -39,7 +40,10 @@ describe("matchesAsdaModel2", () => {
   });
 
   test("matches valid Asda Model 2 file and calls parser but all_required_fields_present is false when column empty", () => {
-    const result = ParserService.findParser(packingListJsonMissingCell, filename);
+    const result = ParserService.findParser(
+      packingListJsonMissingCell,
+      filename,
+    );
 
     expect(result).toEqual({
       isParsed: true,
@@ -49,19 +53,20 @@ describe("matchesAsdaModel2", () => {
         },
         items: [
           {
-            "commodity_code": null,
-            "description": "4PK X 17 PINK LADY APPLES",
-            "nature_of_products": "TOP FRUIT",
-            "number_of_packages": 20,
-            "total_net_weight_kg": 255,
-            "type_of_treatment": "PRODUCE"
-          }, {
-            "commodity_code": null,
-            "description": "ASDA BABY WATERMELON X10",
-            "nature_of_products": "MELON HARD",
-            "number_of_packages": 5,
-            "total_net_weight_kg": 60,
-            "type_of_treatment": null,
+            commodity_code: null,
+            description: "4PK X 17 PINK LADY APPLES",
+            nature_of_products: "TOP FRUIT",
+            number_of_packages: 20,
+            total_net_weight_kg: 255,
+            type_of_treatment: "PRODUCE",
+          },
+          {
+            commodity_code: null,
+            description: "ASDA BABY WATERMELON X10",
+            nature_of_products: "MELON HARD",
+            number_of_packages: 5,
+            total_net_weight_kg: 60,
+            type_of_treatment: null,
           },
         ],
         registration_approval_number: "RMS-GB-000015-010",

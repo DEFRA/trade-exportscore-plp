@@ -33,4 +33,4 @@ describe("parseAsdaModel1", () => {
     expect(result.items[0].total_net_weight_kg).toBeNull();
   });
 });
-module.exports={};
+module.exports = {};
