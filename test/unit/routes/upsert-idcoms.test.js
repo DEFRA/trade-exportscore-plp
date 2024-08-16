@@ -41,9 +41,9 @@ describe("upsert idcoms", () => {
     expect(console.error.mock.calls[0][0]).toBe("Error running upsert: ");
   });
 
-  test("should perform the upsert when application id is specified and isParsed is true", async () => {
+  test("should perform the upsert when application id is specified and isApproved is true", async () => {
     const response = await upsertIdcoms.options.handler(
-      { query: { applicationId: mockApplicationId, isParsed: true } },
+      { query: { applicationId: mockApplicationId, isApproved: true } },
       mockHandler,
     );
 
@@ -51,9 +51,9 @@ describe("upsert idcoms", () => {
     expect(patchPackingListCheck).toHaveBeenCalledWith(mockApplicationId, true);
   });
 
-  test("should perform the upsert when application id is specified and isParsed is false", async () => {
+  test("should perform the upsert when application id is specified and isApproved is false", async () => {
     await upsertIdcoms.options.handler(
-      { query: { applicationId: mockApplicationId, isParsed: false } },
+      { query: { applicationId: mockApplicationId, isApproved: false } },
       mockHandler,
     );
 

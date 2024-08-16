@@ -1,3 +1,4 @@
+const ParserModel = require("../../../../../app/services/parser-model");
 const ParserService = require("../../../../../app/services/parser-service");
 
 const packingListJson = {
@@ -31,41 +32,33 @@ const packingListJson = {
 const filename = "packinglist-nisa-model-1.xlsx";
 
 describe("findParser", () => {
-  test("returns isParsed as true", () => {
-    const result = ParserService.findParser(packingListJson, filename);
-
-    expect(result.isParsed).toBeTruthy();
-  });
-
   test("matches valid Nisa Model 1 file and calls parser", () => {
     const result = ParserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
-      isParsed: true,
-      packingList: {
-        business_checks: {
-          all_required_fields_present: true,
-        },
-        items: [
-          {
-            commodity_code: "2005995090",
-            description: "DAIRYLEA DUNKERS JUMBO PM80P",
-            nature_of_products: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-            number_of_packages: 2,
-            total_net_weight_kg: 2.5,
-            type_of_treatment: null,
-          },
-          {
-            commodity_code: "0403209300",
-            description: "CO OP BROCCOLI",
-            nature_of_products: "900 - VEGETABLES PREPACK-C",
-            number_of_packages: 1,
-            total_net_weight_kg: 2,
-            type_of_treatment: null,
-          },
-        ],
-        registration_approval_number: "RMS-GB-000025-001",
+      business_checks: {
+        all_required_fields_present: true,
       },
+      items: [
+        {
+          commodity_code: "2005995090",
+          description: "DAIRYLEA DUNKERS JUMBO PM80P",
+          nature_of_products: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+          number_of_packages: 2,
+          total_net_weight_kg: 2.5,
+          type_of_treatment: null,
+        },
+        {
+          commodity_code: "0403209300",
+          description: "CO OP BROCCOLI",
+          nature_of_products: "900 - VEGETABLES PREPACK-C",
+          number_of_packages: 1,
+          total_net_weight_kg: 2,
+          type_of_treatment: null,
+        },
+      ],
+      registration_approval_number: "RMS-GB-000025-001",
+      parserModel: ParserModel.NISA1,
     });
   });
 });

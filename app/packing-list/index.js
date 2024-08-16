@@ -22,6 +22,7 @@ function packingListMapper(packingListJson, applicationId) {
     allRequiredFieldsPresent:
       packingListJson.business_checks.all_required_fields_present,
     item: packingListJson.items.map((n) => itemsMapper(n, applicationId)),
+    parserModel: packingListJson.parserModel,
   };
 }
 

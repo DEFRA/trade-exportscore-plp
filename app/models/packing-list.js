@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       applicationId: { type: DataTypes.BIGINT, primaryKey: true },
       registrationApprovalNumber: DataTypes.STRING,
       allRequiredFieldsPresent: DataTypes.BOOLEAN,
+      parserModel: DataTypes.STRING,
     },
     {
       freezeTableName: true,
@@ -14,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     models.packingList.hasMany(models.item, {
       foreignKey: "applicationId",
       targetKey: "applicationId",
-    }); // should we use a separate id?
+    });
   };
   return PackingList;
 };

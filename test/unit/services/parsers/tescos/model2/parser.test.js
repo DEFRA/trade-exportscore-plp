@@ -1,4 +1,5 @@
 const Parser = require("../../../../../../app/services/parsers/tescos/model2/parser");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseTescoModel2", () => {
   test("parses json", () => {
@@ -59,6 +60,7 @@ describe("parseTescoModel2", () => {
     expect(result.items[1].number_of_packages).toBe(packingListJson[3].H);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[2].K);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[3].K);
+    expect(result.parserModel).toBe(ParserModel.TESCO2);
   });
 
   test("parses null json", () => {
@@ -97,5 +99,6 @@ describe("parseTescoModel2", () => {
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
+    expect(result.parserModel).toBe(ParserModel.TESCO2);
   });
 });

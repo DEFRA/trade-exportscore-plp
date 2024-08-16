@@ -1,4 +1,5 @@
 const ParserService = require("../../../../../../app/services/parser-service");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 const filename = "packinglist.xlsx";
 const packingListJson = {
@@ -21,32 +22,24 @@ const packingListJson = {
 };
 
 describe("matchesCoopModel1", () => {
-  test("returns isParsed as true", () => {
-    const result = ParserService.findParser(packingListJson, filename);
-
-    expect(result.isParsed).toBeTruthy();
-  });
-
   test("matches valid Co-op Model 1 file and calls parser", () => {
     const result = ParserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
-      isParsed: true,
-      packingList: {
-        business_checks: {
-          all_required_fields_present: true,
-        },
-        items: [
-          {
-            commodity_code: "0709601000",
-            description: "Co-op Red Peppers Each",
-            nature_of_products: null,
-            number_of_packages: 12,
-            total_net_weight_kg: 1,
-          },
-        ],
-        registration_approval_number: "RMS-GB-000009-001",
+      business_checks: {
+        all_required_fields_present: true,
       },
+      items: [
+        {
+          commodity_code: "0709601000",
+          description: "Co-op Red Peppers Each",
+          nature_of_products: null,
+          number_of_packages: 12,
+          total_net_weight_kg: 1,
+        },
+      ],
+      registration_approval_number: "RMS-GB-000009-001",
+      parserModel: ParserModel.COOP1,
     });
   });
 });

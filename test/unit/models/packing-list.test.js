@@ -5,7 +5,7 @@ const sequelize = {
 };
 const DataTypes = {
   STRING: "string",
-  BIIKEAN: "boolean",
+  BOOLEAN: "boolean",
   INTEGER: "integer",
 };
 

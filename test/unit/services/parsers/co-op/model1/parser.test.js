@@ -1,4 +1,5 @@
 const Parser = require("../../../../../../app/services/parsers/co-op/model1/parser");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseCoopModel1", () => {
   test("parses json", () => {
@@ -38,6 +39,7 @@ describe("parseCoopModel1", () => {
     expect(result.items[1].number_of_packages).toBe(packingListJson[2].Q);
     expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].S);
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].S);
+    expect(result.parserModel).toBe(ParserModel.COOP1);
   });
 
   test("parses null json", () => {
@@ -62,5 +64,6 @@ describe("parseCoopModel1", () => {
     expect(result.items[0].nature_of_products).toBeNull();
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
+    expect(result.parserModel).toBe(ParserModel.COOP1);
   });
 });
