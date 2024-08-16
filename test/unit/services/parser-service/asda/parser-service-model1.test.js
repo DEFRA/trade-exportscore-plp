@@ -1,7 +1,7 @@
 const ParserService = require("../../../../../app/services/parser-service");
+const model = require("../../../test-helpers/asda/model1/data-model");
 
 const filename = "packinglist.xls";
-const model = require("../../../test-helpers/asda/model1/data-model");
 
 describe("matchesAsdaModel1", () => {
   test("returns isParsed as true", () => {
