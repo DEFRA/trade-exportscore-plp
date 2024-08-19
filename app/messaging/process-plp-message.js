@@ -22,7 +22,7 @@ async function processPlpMessage(message, receiver) {
       await createPackingList(packingList, message.body.application_id);
       await patchPackingListCheck(
         message.body.application_id,
-        parsed.packingList.business_checks.all_required_fields_present,
+        packingList.business_checks.all_required_fields_present,
       );
     }
   } catch (err) {
