@@ -1,53 +1,65 @@
-const upsertIdcoms = require('../../../app/routes/upsert-idcoms')
+const upsertIdcoms = require("../../../app/routes/upsert-idcoms");
+const mockResponse = { response: 200, code: 200 };
 
-jest.mock('../../../app/services/dynamics-service')
+jest.mock("../../../app/services/dynamics-service");
 
-const { patchPackingListCheck } = require('../../../app/services/dynamics-service')
-
-const mockResponse = { response: 200, code: 200 }
+const {
+  patchPackingListCheck,
+} = require("../../../app/services/dynamics-service");
 
 patchPackingListCheck.mockImplementation(() => {
-  return mockResponse
-})
-const mockApplicationId = 123
+  return mockResponse;
+});
 
-const mockHandler = jest.fn()
+const mockApplicationId = 123;
 
-mockHandler.mockResolvedValue(() => {
-  return mockResponse
-})
+const mockHandler = {
+  response: jest.fn(() => ({
+    code: jest.fn(() => 200),
+  })),
+};
 
-console.error = jest.fn()
+console.error = jest.fn();
 
-describe('upsert idcoms', () => {
+describe("upsert idcoms", () => {
   afterAll(async () => {
-    jest.resetAllMocks()
-  })
+    jest.resetAllMocks();
+  });
 
-  test('should not call the upsert when application id not is specified', async () => {
-    const mockHandler = {}
+  test("should not call the upsert when application id not is specified", async () => {
+    const mockHandler = {};
 
-    await upsertIdcoms.options.handler({}, mockHandler)
+    await upsertIdcoms.options.handler({}, mockHandler);
 
-    expect(patchPackingListCheck).not.toHaveBeenCalled()
-  })
+    expect(patchPackingListCheck).not.toHaveBeenCalled();
+  });
 
-  test('should log the exception when an error occurs', async () => {
-    await upsertIdcoms.options.handler({}, mockHandler)
+  test("should log the exception when an error occurs", async () => {
+    await upsertIdcoms.options.handler({}, mockHandler);
 
-    expect(patchPackingListCheck).not.toHaveBeenCalled()
-    expect(console.error.mock.calls[0][0]).toBe('Error running upsert: ')
-  })
+    expect(patchPackingListCheck).not.toHaveBeenCalled();
+    expect(console.error.mock.calls[0][0]).toBe("Error running upsert: ");
+  });
 
-  test('should perform the upsert when application id is specified and isParsed is true', async () => {
-    await upsertIdcoms.options.handler({ query: { applicationId: mockApplicationId, isParsed: true } }, mockHandler)
+  test("should perform the upsert when application id is specified and isApproved is true", async () => {
+    const response = await upsertIdcoms.options.handler(
+      { query: { applicationId: mockApplicationId, isApproved: true } },
+      mockHandler,
+    );
 
-    expect(patchPackingListCheck).toHaveBeenCalledWith(mockApplicationId, true)
-  })
+    expect(response).toBe(200);
+    expect(patchPackingListCheck).toHaveBeenCalledWith(mockApplicationId, true);
+  });
 
-  test('should perform the upsert when application id is specified and isParsed is false', async () => {
-    await upsertIdcoms.options.handler({ query: { applicationId: mockApplicationId, isParsed: false } }, mockHandler)
+  test("should perform the upsert when application id is specified and isApproved is false", async () => {
+    await upsertIdcoms.options.handler(
+      { query: { applicationId: mockApplicationId, isApproved: false } },
+      mockHandler,
+    );
 
-    expect(patchPackingListCheck).toHaveBeenCalledWith(mockApplicationId, false)
-  })
-})
+    expect(patchPackingListCheck).toHaveBeenCalledWith(
+      mockApplicationId,
+      false,
+    );
+  });
+});
