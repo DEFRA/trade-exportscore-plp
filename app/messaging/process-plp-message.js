@@ -6,6 +6,7 @@ const {
 const { createPackingList } = require("../packing-list");
 const { patchPackingListCheck } = require("../services/dynamics-service");
 const config = require("../config");
+const ParserModel = require("../services/parser-model");
 
 async function processPlpMessage(message, receiver) {
   try {
@@ -16,21 +17,21 @@ async function processPlpMessage(message, receiver) {
     );
     let result = {};
     result = await getXlsPackingListFromBlob(blobClient);
-    const parsed = findParser(result, message.body.packing_list_blob);
+    const packingList = findParser(result, message.body.packing_list_blob);
 
-    if (parsed.isParsed) {
-      await createPackingList(parsed.packingList, message.body.application_id);
+    if (packingList.parserModel !== ParserModel.NOMATCH) {
+      await createPackingList(packingList, message.body.application_id);
       console.info(
         `Business checks for ${message.body.application_id}: ${parsed.packingList.business_checks}`,
       );
       if (config.isDynamicsIntegration) {
         await patchPackingListCheck(
           message.body.application_id,
-          parsed.packingList.business_checks.all_required_fields_present,
+          packingList.business_checks.all_required_fields_present,
         );
       } else {
         await sendParsed(
-          parsed.packingList.business_checks.all_required_fields_present,
+          packingList.business_checks.all_required_fields_present,
           message.body.application_id,
         );
       }

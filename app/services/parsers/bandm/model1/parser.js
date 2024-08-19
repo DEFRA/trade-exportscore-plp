@@ -1,4 +1,5 @@
 const CombineParser = require("../../../parser-combine");
+const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
   const traderRow = packingListJson.findIndex(
@@ -20,7 +21,12 @@ function parse(packingListJson) {
       total_net_weight_kg: col.G ?? null,
     }));
 
-  return CombineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(
+    establishmentNumber,
+    packingListContents,
+    true,
+    ParserModel.BANDM1,
+  );
 }
 
 function isEndOfRow(x) {

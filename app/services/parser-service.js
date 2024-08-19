@@ -1,4 +1,5 @@
 const MatcherResult = require("./matches-result");
+const ParserModel = require("./parser-model");
 const AsdaMatcher = require("../services/matchers/asda/model1/matcher");
 const AsdaParser = require("../services/parsers/asda/model1/parser");
 const AsdaMatcher2 = require("../services/matchers/asda/model2/matcher");
@@ -7,6 +8,10 @@ const BandMMatcher = require("../services/matchers/bandm/model1/matcher");
 const BandMParser = require("../services/parsers/bandm/model1/parser");
 const BuffaloadMatcher = require("./matchers/buffaload-logistics/model1/matcher");
 const BuffaloadParser = require("./parsers/buffaload-logistics/model1/parser");
+const CoopMatcher = require("./matchers/co-op/model1/matcher");
+const CoopParser = require("./parsers/co-op/model1/parser");
+const CdsMatcher = require("./matchers/cds/model1/matcher");
+const CdsParser = require("./parsers/cds/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
 const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
@@ -32,30 +37,28 @@ const INPUT_DATA_SHEET = "Input Data Sheet";
 
 function findParser(result, filename) {
   let parsedPackingList = failedParser();
-  let isParsed = false;
 
   if (TjMorrisMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches TJ Morris with filename: ", filename);
     parsedPackingList = TjMorrisParser.parse(result.Sheet1);
-    isParsed = true;
   } else if (AsdaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Asda Model 1 with filename: ", filename);
     parsedPackingList = AsdaParser.parse(result.PackingList_Extract);
-    isParsed = true;
   } else if (AsdaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Asda Model 2 with filename: ", filename);
     parsedPackingList = AsdaParser2.parse(result.Sheet1);
-    isParsed = true;
   } else if (
     SainsburysMatcher.matches(result, filename) === MatcherResult.CORRECT
   ) {
     console.info("Packing list matches Sainsburys with filename: ", filename);
     parsedPackingList = SainsburysParser.parse(result.Sheet1);
-    isParsed = true;
   } else if (BandMMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches BandM with filename: ", filename);
     parsedPackingList = BandMParser.parse(result.Sheet1);
     isParsed = true;
+  } else if (CoopMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches Co-op with filename: ", filename);
+    parsedPackingList = CoopParser.parse(result["Input Packing Sheet"]);
   } else if (
     TescosMatcher.matches(result, filename) === MatcherResult.CORRECT
   ) {
@@ -64,7 +67,6 @@ function findParser(result, filename) {
       filename,
     );
     parsedPackingList = TescosParser.parse(result[INPUT_DATA_SHEET]);
-    isParsed = true;
   } else if (
     TescosMatcher2.matches(result, filename) === MatcherResult.CORRECT
   ) {
@@ -73,7 +75,6 @@ function findParser(result, filename) {
       filename,
     );
     parsedPackingList = TescosParser2.parse(result.Sheet2);
-    isParsed = true;
   } else if (
     TescosMatcher3.matches(result, filename) === MatcherResult.CORRECT
   ) {
@@ -82,25 +83,20 @@ function findParser(result, filename) {
       filename,
     );
     parsedPackingList = TescosParser3.parse(result[INPUT_DATA_SHEET]);
-    isParsed = true;
   } else if (
     FowlerWelchMatcher.matches(result, filename) === MatcherResult.CORRECT
   ) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
     parsedPackingList = FowlerWelchParser.parse(result[CUSTOMER_ORDER]);
-    isParsed = true;
   } else if (NisaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa with filename: ", filename);
     parsedPackingList = NisaParser.parse(result[Object.keys(result)[0]]);
-    isParsed = true;
   } else if (NisaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa Model 2 with filename: ", filename);
     parsedPackingList = NisaParser2.parse(result[Object.keys(result)[0]]);
-    isParsed = true;
   } else if (NisaMatcher3.matches(result, filename) === MatcherResult.CORRECT) {
     console.info("Packing list matches Nisa Model 3 with filename: ", filename);
     parsedPackingList = NisaParser3.parse(result[Object.keys(result)[0]]);
-    isParsed = true;
   } else if (
     BuffaloadMatcher.matches(result, filename) === MatcherResult.CORRECT
   ) {
@@ -110,11 +106,14 @@ function findParser(result, filename) {
     );
     parsedPackingList = BuffaloadParser.parse(result.Tabelle1);
     isParsed = true;
+  } else if (CdsMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+    console.info("Packing list matches CDS Model 1 with filename: ", filename);
+    parsedPackingList = CdsParser.parse(result[Object.keys(result)[0]]);
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
 
-  if (isParsed) {
+  if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
     parsedPackingList.items = parsedPackingList.items.filter(
       (x) =>
         !(
@@ -131,11 +130,11 @@ function findParser(result, filename) {
       checkRequiredData(parsedPackingList);
   }
 
-  return { packingList: parsedPackingList, isParsed };
+  return parsedPackingList;
 }
 
 function failedParser() {
-  return CombineParser.combine(null, [], false);
+  return CombineParser.combine(null, [], false, ParserModel.NOMATCH);
 }
 
 function checkRequiredData(packingList) {

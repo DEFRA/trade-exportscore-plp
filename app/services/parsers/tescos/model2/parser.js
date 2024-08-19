@@ -1,4 +1,5 @@
 const CombineParser = require("../../../parser-combine");
+const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
   const establishmentNumber = packingListJson[2].M ?? null;
@@ -11,7 +12,12 @@ function parse(packingListJson) {
     total_net_weight_kg: col.K ?? null,
   }));
 
-  return CombineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(
+    establishmentNumber,
+    packingListContents,
+    true,
+    ParserModel.TESCO2,
+  );
 }
 
 module.exports = {

@@ -16,6 +16,17 @@ jest.mock("adp-messaging", () => {
 
 jest.mock("../../../app/messaging/process-plp-message", () => jest.fn());
 
+jest.mock("../../../app/config", () => {
+  return {
+    plpSubscription: {
+      name: "name",
+      address: "address",
+      topic: "topic",
+      type: "subscription",
+    },
+  };
+});
+
 describe("messaging module", () => {
   beforeEach(() => {
     // Clear all instances and calls to constructor and all methods:

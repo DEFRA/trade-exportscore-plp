@@ -14,11 +14,11 @@ module.exports = {
           if (config.isDynamicsIntegration) {
             checkStatus = await patchPackingListCheck(
               request.query.applicationId,
-              request.query.isParsed,
+              request.query.isApproved,
             );
           } else {
             await sendParsed(
-              request.query.isParsed,
+              request.query.isApproved,
               request.query.applicationId,
             );
             checkStatus = StatusCodes.OK;
