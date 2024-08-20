@@ -1,6 +1,6 @@
 module.exports = {
   validModel: {
-    Sheet1: [
+    Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
         B: "RMS-GB-000098-001",
