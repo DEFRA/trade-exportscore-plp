@@ -33,6 +33,7 @@ function matches(packingList, filename) {
       }
     }
 
+    console.info("Packing list matches Nisa with filename: ", filename);
     return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;

@@ -44,6 +44,7 @@ function matches(packingList, filename) {
       }
     }
 
+    console.info("Packing list matches CDS Model 1 with filename: ", filename);
     return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;

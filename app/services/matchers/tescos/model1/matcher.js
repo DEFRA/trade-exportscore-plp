@@ -38,6 +38,10 @@ function matches(packingListJson, filename) {
       }
     }
 
+    console.info(
+      "Packing list matches Tesco Model 1 with filename: ",
+      filename,
+    );
     return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;

@@ -31,9 +31,13 @@ function matches(packingListJson, filename) {
       JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
     ) {
       return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
     }
+
+    console.info(
+      "Packing list matches Buffaload Logistics Model 1 with filename: ",
+      filename,
+    );
+    return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
