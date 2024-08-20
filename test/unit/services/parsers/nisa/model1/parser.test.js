@@ -23,7 +23,7 @@ describe("parseNisa", () => {
       {
         A: "RMS-GB-000025-001",
         I: "900 - VEGETABLES PREPACK-C",
-        K: "CO OP BROCCOLI",
+        K: "NISA BROCCOLI",
         L: "0403209300",
         M: 1,
         O: 2,
