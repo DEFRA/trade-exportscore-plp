@@ -18,7 +18,7 @@ describe("parsesBuffaloadLogisticsModel1", () => {
         E: "Type of pkgs",
         F: "Item Gross Weight (kgs)",
         G: "Item Net Weight (kgs)",
-        H: "Treatment Type (Chilled /Ambient) ",
+        H: "Treatment Type (Chilled /Ambient)",
         I: "NIRMS Lane (R/G)",
       },
       {
@@ -76,7 +76,7 @@ describe("parsesBuffaloadLogisticsModel1", () => {
         E: "Type of pkgs",
         F: "Item Gross Weight (kgs)",
         G: "Item Net Weight (kgs)",
-        H: "Treatment Type (Chilled /Ambient) ",
+        H: "Treatment Type (Chilled /Ambient)",
         I: "NIRMS Lane (R/G)",
       },
       {},

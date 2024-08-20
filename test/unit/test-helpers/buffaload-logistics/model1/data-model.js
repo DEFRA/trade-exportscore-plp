@@ -1,3 +1,5 @@
+const ParserModel = require("../../../../../app/services/parser-model");
+
 module.exports = {
   validModel: {
     Tabelle1: [
@@ -15,7 +17,7 @@ module.exports = {
         E: "Type of pkgs",
         F: "Item Gross Weight (kgs)",
         G: "Item Net Weight (kgs)",
-        H: "Treatment Type (Chilled /Ambient) ",
+        H: "Treatment Type (Chilled /Ambient)",
         I: "NIRMS Lane (R/G)",
       },
       {
@@ -43,7 +45,7 @@ module.exports = {
     ],
   },
   invalidModel_MissingColumnCells: {
-    Sheet1: [
+    Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
         B: "RMS-GB-000098-001",
@@ -58,7 +60,7 @@ module.exports = {
         E: "Type of pkgs",
         F: "Item Gross Weight (kgs)",
         G: "Item Net Weight (kgs)",
-        H: "Treatment Type (Chilled /Ambient) ",
+        H: "Treatment Type (Chilled /Ambient)",
         I: "NIRMS Lane (R/G)",
       },
       {
@@ -86,58 +88,54 @@ module.exports = {
     ],
   },
   emptyModel: {
-    Sheet1: [],
+    Tabelle1: [],
   },
   validTestResult: {
-    packingList: {
-      business_checks: {
-        all_required_fields_present: true,
+    registration_approval_number: 'RMS-GB-000098-001',
+    items: [
+      {
+        description: "60008347 - Take-Out Club Classic Crust Kickin' Meat Feast",
+        nature_of_products: null,
+        type_of_treatment: 'Chilled',
+        commodity_code: '1905908000',
+        number_of_packages: 6,
+        total_net_weight_kg: 3.552
       },
-      items: [
-        {
-          commodity_code: 16025095,
-          description: "J/L JERKY 70G TERIYAKI",
-          nature_of_products: null,
-          number_of_packages: 1,
-          total_net_weight_kg: 1.15,
-          type_of_treatment: null,
-        },
-        {
-          commodity_code: 19053199,
-          description: "MINI ROLLS 10PK",
-          nature_of_products: null,
-          number_of_packages: 1,
-          total_net_weight_kg: 3.27,
-          type_of_treatment: null,
-        },
-      ],
-      registration_approval_number: "RMS-GB-000098-001",
-    },
+      {
+        description: "60008348 - Take-Out Club Classic Crust Smokin' BBQ Pulled Pork",
+        nature_of_products: null,
+        type_of_treatment: 'Chilled',
+        commodity_code: '1905908000',
+        number_of_packages: 5,
+        total_net_weight_kg: 3.558
+      }
+    ],
+    business_checks: { all_required_fields_present: true },
+    parserModel: ParserModel.BUFFALOAD1,
   },
   invalidTestResult_MissingCells: {
-    packingList: {
-      business_checks: {
-        all_required_fields_present: false,
-      },
-      items: [
-        {
-          commodity_code: null,
-          description: "J/L JERKY 70G TERIYAKI",
-          nature_of_products: null,
-          number_of_packages: 1,
-          total_net_weight_kg: null,
-          type_of_treatment: null,
-        },
-        {
-          commodity_code: 19053199,
-          description: "MINI ROLLS 10PK",
-          nature_of_products: null,
-          number_of_packages: 1,
-          total_net_weight_kg: 3.27,
-          type_of_treatment: null,
-        },
-      ],
-      registration_approval_number: "RMS-GB-000098-001",
+    business_checks: {
+      all_required_fields_present: false,
     },
+    items: [
+      {
+        description: "60008347 - Take-Out Club Classic Crust Kickin' Meat Feast",
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: '1905908000',
+        number_of_packages: 6,
+        total_net_weight_kg: 3.552
+      },
+      {
+        description: "60008348 - Take-Out Club Classic Crust Smokin' BBQ Pulled Pork",
+        nature_of_products: null,
+        type_of_treatment: "Chilled",
+        commodity_code: '1905908000',
+        number_of_packages: 5,
+        total_net_weight_kg: null
+      }
+    ],
+    registration_approval_number: "RMS-GB-000098-001",
+    parserModel: ParserModel.BUFFALOAD1,
   },
 };

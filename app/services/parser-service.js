@@ -101,7 +101,7 @@ function findParser(result, filename) {
     BuffaloadMatcher.matches(result, filename) === MatcherResult.CORRECT
   ) {
     console.info(
-      "Packing list matches Buffaload Logistics with filename: ",
+      "Packing list matches Buffaload Logistics Model 1 with filename: ",
       filename,
     );
     parsedPackingList = BuffaloadParser.parse(result.Tabelle1);
