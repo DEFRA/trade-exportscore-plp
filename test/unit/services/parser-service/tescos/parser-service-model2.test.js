@@ -27,7 +27,7 @@ const packingListJson = {
 };
 
 describe("matchesTescosModel2", () => {
-  test("matches valid Tescos Model 2 file and calls parser", () => {
+  test("matches valid Tescos Model 2 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({

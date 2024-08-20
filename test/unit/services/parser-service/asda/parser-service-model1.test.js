@@ -4,7 +4,7 @@ const model = require("../../../test-helpers/asda/model1/data-model");
 const filename = "packinglist-asda-model1.xls";
 
 describe("matchesAsdaModel1", () => {
-  test("matches valid Asda Model 1 file and calls parser", () => {
+  test("matches valid Asda Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(model.validTestResult);

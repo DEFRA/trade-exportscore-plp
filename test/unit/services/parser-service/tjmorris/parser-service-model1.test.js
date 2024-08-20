@@ -38,7 +38,7 @@ const packingListJson = {
 };
 
 describe("matchesTJMorrisModel1", () => {
-  test("matches valid TJMorris Model 1 file and calls parser", () => {
+  test("matches valid TJMorris Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({

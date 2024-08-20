@@ -22,7 +22,7 @@ const packingListJson = {
 };
 
 describe("matchesCoopModel1", () => {
-  test("matches valid Co-op Model 1 file and calls parser", () => {
+  test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({

@@ -35,7 +35,7 @@ const packingListJson = {
 const filename = "packinglist-nisa3.xlsx";
 
 describe("matchesNisaModel3", () => {
-  test("matches valid Nisa Model 3 file and calls parser", () => {
+  test("matches valid Nisa Model 3 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({

@@ -75,7 +75,7 @@ const packingListJson = {
 };
 
 describe("matchesFowlerWelchModel1", () => {
-  test("matches valid FowlerWelch Model 1 file and calls parser", () => {
+  test("matches valid FowlerWelch Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
