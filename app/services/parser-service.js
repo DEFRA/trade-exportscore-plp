@@ -31,84 +31,140 @@ const TescosParser3 = require("../services/parsers/tescos/model3/parser");
 const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
 const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
 const CombineParser = require("./parser-combine");
+const JsonFile = require("../utilities/json-file");
 
 const CUSTOMER_ORDER = "Customer Order";
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
-function findParser(result, filename) {
+function findParser(packingList, filename) {
   let parsedPackingList = failedParser();
 
-  if (TjMorrisMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+  // Sanitised packing list (i.e. emove trailing spaces and empty cells)
+  let packingListJson = JSON.stringify(packingList);
+  sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
+  sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+
+  if (
+    TjMorrisMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
     console.info("Packing list matches TJ Morris with filename: ", filename);
-    parsedPackingList = TjMorrisParser.parse(result.Sheet1);
-  } else if (AsdaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Asda Model 1 with filename: ", filename);
-    parsedPackingList = AsdaParser.parse(result.PackingList_Extract);
-  } else if (AsdaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Asda Model 2 with filename: ", filename);
-    parsedPackingList = AsdaParser2.parse(result.Sheet1);
+    parsedPackingList = TjMorrisParser.parse(sanitisedPackingList.Sheet1);
   } else if (
-    SainsburysMatcher.matches(result, filename) === MatcherResult.CORRECT
+    AsdaMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    console.info("Packing list matches Asda Model 1 with filename: ", filename);
+    parsedPackingList = AsdaParser.parse(
+      sanitisedPackingList.PackingList_Extract,
+    );
+  } else if (
+    AsdaMatcher2.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    console.info("Packing list matches Asda Model 2 with filename: ", filename);
+    parsedPackingList = AsdaParser2.parse(sanitisedPackingList.Sheet1);
+  } else if (
+    SainsburysMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
   ) {
     console.info("Packing list matches Sainsburys with filename: ", filename);
-    parsedPackingList = SainsburysParser.parse(result.Sheet1);
-  } else if (BandMMatcher.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches BandM with filename: ", filename);
-    parsedPackingList = BandMParser.parse(result.Sheet1);
-    isParsed = true;
-  } else if (CoopMatcher.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Co-op with filename: ", filename);
-    parsedPackingList = CoopParser.parse(result["Input Packing Sheet"]);
+    parsedPackingList = SainsburysParser.parse(sanitisedPackingList.Sheet1);
   } else if (
-    TescosMatcher.matches(result, filename) === MatcherResult.CORRECT
+    BandMMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    console.info("Packing list matches BandM with filename: ", filename);
+    parsedPackingList = BandMParser.parse(sanitisedPackingList.Sheet1);
+    isParsed = true;
+  } else if (
+    CoopMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    console.info("Packing list matches Co-op with filename: ", filename);
+    parsedPackingList = CoopParser.parse(
+      sanitisedPackingList["Input Packing Sheet"],
+    );
+  } else if (
+    TescosMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
   ) {
     console.info(
       "Packing list matches Tesco Model 1 with filename: ",
       filename,
     );
-    parsedPackingList = TescosParser.parse(result[INPUT_DATA_SHEET]);
+    parsedPackingList = TescosParser.parse(
+      sanitisedPackingList[INPUT_DATA_SHEET],
+    );
   } else if (
-    TescosMatcher2.matches(result, filename) === MatcherResult.CORRECT
+    TescosMatcher2.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
   ) {
     console.info(
       "Packing list matches Tesco Model 2 with filename: ",
       filename,
     );
-    parsedPackingList = TescosParser2.parse(result.Sheet2);
+    parsedPackingList = TescosParser2.parse(sanitisedPackingList.Sheet2);
   } else if (
-    TescosMatcher3.matches(result, filename) === MatcherResult.CORRECT
+    TescosMatcher3.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
   ) {
     console.info(
       "Packing list matches Tesco Model 3 with filename: ",
       filename,
     );
-    parsedPackingList = TescosParser3.parse(result[INPUT_DATA_SHEET]);
+    parsedPackingList = TescosParser3.parse(
+      sanitisedPackingList[INPUT_DATA_SHEET],
+    );
   } else if (
-    FowlerWelchMatcher.matches(result, filename) === MatcherResult.CORRECT
+    FowlerWelchMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
   ) {
     console.info("Packing list matches Fowler Welch with filename: ", filename);
-    parsedPackingList = FowlerWelchParser.parse(result[CUSTOMER_ORDER]);
-  } else if (NisaMatcher.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Nisa with filename: ", filename);
-    parsedPackingList = NisaParser.parse(result[Object.keys(result)[0]]);
-  } else if (NisaMatcher2.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Nisa Model 2 with filename: ", filename);
-    parsedPackingList = NisaParser2.parse(result[Object.keys(result)[0]]);
-  } else if (NisaMatcher3.matches(result, filename) === MatcherResult.CORRECT) {
-    console.info("Packing list matches Nisa Model 3 with filename: ", filename);
-    parsedPackingList = NisaParser3.parse(result[Object.keys(result)[0]]);
+    parsedPackingList = FowlerWelchParser.parse(
+      sanitisedPackingList[CUSTOMER_ORDER],
+    );
   } else if (
-    BuffaloadMatcher.matches(result, filename) === MatcherResult.CORRECT
+    NisaMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    console.info("Packing list matches Nisa with filename: ", filename);
+    parsedPackingList = NisaParser.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
+  } else if (
+    NisaMatcher2.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    console.info("Packing list matches Nisa Model 2 with filename: ", filename);
+    parsedPackingList = NisaParser2.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
+  } else if (
+    NisaMatcher3.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    console.info("Packing list matches Nisa Model 3 with filename: ", filename);
+    parsedPackingList = NisaParser3.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
+  } else if (
+    BuffaloadMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
   ) {
     console.info(
       "Packing list matches Buffaload Logistics Model 1 with filename: ",
       filename,
     );
-    parsedPackingList = BuffaloadParser.parse(result.Tabelle1);
+    parsedPackingList = BuffaloadParser.parse(sanitisedPackingList.Tabelle1);
     isParsed = true;
-  } else if (CdsMatcher.matches(result, filename) === MatcherResult.CORRECT) {
+  } else if (
+    CdsMatcher.matches(sanitisedPackingList, filename) === MatcherResult.CORRECT
+  ) {
     console.info("Packing list matches CDS Model 1 with filename: ", filename);
-    parsedPackingList = CdsParser.parse(result[Object.keys(result)[0]]);
+    parsedPackingList = CdsParser.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
