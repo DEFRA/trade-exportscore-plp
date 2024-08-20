@@ -41,8 +41,8 @@ function findParser(packingList, filename) {
 
   // Sanitised packing list (i.e. emove trailing spaces and empty cells)
   let packingListJson = JSON.stringify(packingList);
-  sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
-  sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+  let sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
+  let sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
 
   if (
     TjMorrisMatcher.matches(sanitisedPackingList, filename) ===

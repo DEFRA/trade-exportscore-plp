@@ -3,7 +3,7 @@ const model = require("../../../test-helpers/bandm/model1/data-model");
 
 const filename = "packinglist-bandm-model1.xlsx";
 
-describe("matchesAsdaModel1", () => {
+describe("matchesBAndMModel1", () => {
   test("matches valid BAndM Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(model.validModel, filename);
 

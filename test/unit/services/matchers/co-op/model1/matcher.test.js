@@ -1,7 +1,7 @@
 const Matcher = require("../../../../../../app/services/matchers/co-op/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
 
-describe("matchesAsdaModel1", () => {
+describe("matchesCoopModel1", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
