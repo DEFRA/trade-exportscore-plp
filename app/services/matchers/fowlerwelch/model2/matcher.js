@@ -2,8 +2,7 @@ const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 
 function matches(packingList, filename) {
-  const establishmentNumberRow = 45;
-  const headerRowNumber = 44;
+  let headerRow = 0;
 
   try {
     // check for correct extension
@@ -15,19 +14,23 @@ function matches(packingList, filename) {
     //check for correct establishment number
 
     const sheets = Object.keys(packingList);
+
     if (sheets.length === 0) {
       throw new Error("generic error");
     }
 
     for (let i = 0; i < sheets.length; i++) {
-      const establishmentNumber =
-        packingList[sheets[i]][establishmentNumberRow].M;
+      headerRow = packingList[sheets[i]].findIndex(
+        (x) => x.F === "Description of goods",
+      );
+      const establishmentNumber = packingList[sheets[i]][headerRow + 1].M;
       const regex = /^RMS-GB-000216-\d{3}$/;
       if (!regex.test(establishmentNumber)) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
+
       const header = {
         C: "Commodity code",
         F: "Description of goods",
@@ -37,7 +40,12 @@ function matches(packingList, filename) {
       };
 
       for (const key in header) {
-        if (packingList[sheets[i]][headerRowNumber][key] !== header[key]) {
+        if (
+          (key === "K" &&
+            !packingList[sheets[i]][headerRow][key].includes("Net Weight")) ||
+          (key !== "K" &&
+            !packingList[sheets[i]][headerRow][key].startsWith(header[key]))
+        ) {
           return MatcherResult.WRONG_HEADER;
         }
       }

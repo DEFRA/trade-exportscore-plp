@@ -1,41 +1,43 @@
 const CombineParser = require("../../../parser-combine");
+const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
   const sheets = Object.keys(packingListJson);
   let packingListContents = [];
   let packingListContentsTemp = [];
 
-  const establishmentNumberRow = 45;
+  let headerRow = packingListJson[sheets[0]].findIndex(
+    (x) => x.M === "NIIRMS Dispatch number",
+  );
 
   const establishmentNumber =
-    packingListJson[sheets[0]][establishmentNumberRow].M ?? null;
+    packingListJson[sheets[0]][headerRow + 1].M ?? null;
+
   for (let i = 0; i < sheets.length; i++) {
+    headerRow = packingListJson[sheets[i]].findIndex(
+      (x) => x.M === "NIIRMS Dispatch number",
+    );
+
     packingListContentsTemp = packingListJson[sheets[i]]
-      .slice(establishmentNumberRow)
+      .slice(headerRow + 1)
       .map((col) => ({
-        description: isNullOrEmptyOrSpace(col.F) ?? null,
+        description: col.F ?? null,
         nature_of_products: null,
-        type_of_treatment: isNullOrEmptyOrSpace(col.N) ?? null,
-        commodity_code: isNullOrEmptyOrSpace(col.C) ?? null,
-        number_of_packages: isNullOrEmptyOrSpace(col.H) ?? null,
-        total_net_weight_kg: isNullOrEmptyOrSpace(col.K) ?? null,
+        type_of_treatment: col.N ?? null,
+        commodity_code: col.C ?? null,
+        number_of_packages: col.H ?? null,
+        total_net_weight_kg: col.K ?? null,
       }));
 
     packingListContents = packingListContents.concat(packingListContentsTemp);
   }
-  return CombineParser.combine(establishmentNumber, packingListContents, true);
+
+  return CombineParser.combine(
+    establishmentNumber,
+    packingListContents,
+    true,
+    ParserModel.FOWLERWELCH2,
+  );
 }
 
-function isNullOrEmptyOrSpace(str) {
-  if (
-    (typeof str === "string" && str.length === 0) ||
-    str === null ||
-    (str === " " && typeof str === "string")
-  ) {
-    return null;
-  } else {
-    return str;
-  }
-}
-
-module.exports = { parse, isNullOrEmptyOrSpace };
+module.exports = { parse };

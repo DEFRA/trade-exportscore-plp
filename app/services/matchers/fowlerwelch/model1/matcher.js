@@ -22,24 +22,11 @@ function matches(packingListJson, filename) {
 
     // check for header values
     const header = {
-      A: "Item",
-      B: "Product code",
       C: "Commodity code",
-      D: "Online Check",
-      E: "Meursing code",
       F: "Description of goods",
-      G: COUNTRY_OF_ORIGIN,
-      H: "No. of pkgs ",
-      I: "Type of pkgs",
-      J: "Total Gross Weight",
+      H: "No. of pkgs",
       K: "Total Net Weight",
-      L: "Total Line Value",
-      M: "NIIRMS Dispatch number",
       N: "Treatment Type (Chilled /Ambient)",
-      O: "NIRMS Lane (R/G)",
-      P: "Secondary Qty",
-      Q: "Cert Type Req",
-      R: "Cert Number",
     };
 
     const originalHeader = packingListJson[CUSTOMER_ORDER][headerRowNumber];

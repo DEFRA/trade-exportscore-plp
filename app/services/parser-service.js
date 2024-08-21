@@ -127,14 +127,14 @@ function findParser(packingList, filename) {
       sanitisedPackingList[CUSTOMER_ORDER],
     );
   } else if (
-    FowlerWelchMatcher2.matches(result, filename) === MatcherResult.CORRECT
+    FowlerWelchMatcher2.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
   ) {
     console.info(
       "Packing list matches Fowler Welch 2 with filename: ",
       filename,
     );
-    parsedPackingList = FowlerWelchParser2.parse(result);
-    isParsed = true;
+    parsedPackingList = FowlerWelchParser2.parse(sanitisedPackingList);
   } else if (
     NisaMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
