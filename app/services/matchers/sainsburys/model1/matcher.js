@@ -29,10 +29,9 @@ function matches(packingListJson, filename) {
 
     for (const key in header) {
       if (
-        !packingList.Sheet1[0] ||
-        packingList.Sheet1[0][key] !== header[key]
+        !packingListJson.Sheet1[0] ||
+        packingListJson.Sheet1[0][key] !== header[key]
       ) {
-        console.log(packingList.Sheet1[0][key])
         return MatcherResult.WRONG_HEADER;
       }
     }
