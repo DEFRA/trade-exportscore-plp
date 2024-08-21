@@ -6,3 +6,5 @@
   value: "sndadpinfmi4401-trade-exportscore-plp"
 - key: STORAGE_ACCOUNT_NAME
   value: "sndadpinfst4401tradeplp"
+- key: PARSED_QUEUE_ADDRESS
+  value: "SNDTREINFSB1001.servicebus.windows.net"
