@@ -27,6 +27,7 @@ const tpQueue = {
   host: process.env.TP_QUEUE_HOST,
   address: process.env.TP_QUEUE_ADDRESS,
   managedIdentityClientId: process.env.TP_CLIENT_ID,
+  tenantId: process.env.TP_TENANT_ID,
 };
 
 module.exports = {
