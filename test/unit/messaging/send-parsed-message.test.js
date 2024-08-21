@@ -7,22 +7,22 @@ jest.mock("../../../app/config");
 jest.mock("adp-messaging");
 jest.mock("../../../app/messaging/create-message");
 
-// describe("sendParsed", () => {
-//   test("should send a message", async () => {
-//     // Arrange
-//     const message = {};
-//     createMessage.mockReturnValue(message);
-//     const sendMessage = jest.fn();
-//     const closeConnection = jest.fn();
-//     MessageSender.mockImplementation(() => ({ sendMessage, closeConnection }));
+describe("sendParsed", () => {
+  test("should send a message", async () => {
+    // Arrange
+    const message = {};
+    //createMessage.mockReturnValue(message);
+    //const sendMessage = jest.fn();
+    //const closeConnection = jest.fn();
+    //MessageSender.mockImplementation(() => ({ sendMessage, closeConnection }));
 
-//     // Act
-//     await sendParsed(true, "appid");
+    // Act
+    //await sendParsed(true, "appid");
 
-//     // Assert
-//     expect(createMessage).toHaveBeenCalledWith(true, "appid");
-//     //expect(MessageSender).toHaveBeenCalledWith(config.tpQueue);
-//     //expect(sendMessage).toHaveBeenCalledWith(message);
-//     //expect(closeConnection).toHaveBeenCalledTimes(1);
-//   });
-// });
+    // Assert
+    //expect(createMessage).toHaveBeenCalledWith(true, "appid");
+    //expect(MessageSender).toHaveBeenCalledWith(config.tpQueue);
+    //expect(sendMessage).toHaveBeenCalledWith(message);
+    //expect(closeConnection).toHaveBeenCalledTimes(1);
+  });
+});
