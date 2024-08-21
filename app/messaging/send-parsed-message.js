@@ -15,7 +15,7 @@ async function sendParsedAdp(parsedResult, applicationId) {
 }
 
 async function sendParsed(parsedResult, applicationId) {
-  const credential = new DefaultAzureCredential({ 
+  const credential = new DefaultAzureCredential({
     managedIdentityClientId: config.tpQueue.managedIdentityClientId,
     tenantId: config.tpQueue.tenantId,
   });
@@ -31,11 +31,9 @@ async function sendParsed(parsedResult, applicationId) {
       `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
     );
     await sender.close();
-  }
-  catch (err) {
-    console.error(err)
-  }
-  finally {
+  } catch (err) {
+    console.error(err);
+  } finally {
     await sbClient.close();
   }
 }
