@@ -18,6 +18,7 @@ function createMessage(parsedResult, applicationId) {
     Status: "Complete",
     TimestampUtc: Date.now(),
     Label: "plp.idcoms.parsed",
+    SessionId: v4().toString(),
   };
 }
 

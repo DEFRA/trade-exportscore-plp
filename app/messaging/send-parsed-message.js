@@ -26,7 +26,7 @@ async function sendParsed(parsedResult, applicationId) {
   const message = createMessage(parsedResult, applicationId);
 
   try {
-    await sender.sendMessages(message, message.MessageId.toString());
+    await sender.sendMessages(message);
     console.info(
       `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
     );
