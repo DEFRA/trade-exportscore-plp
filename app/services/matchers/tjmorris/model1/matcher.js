@@ -24,11 +24,16 @@ function matches(packingListJson, filename) {
       R: "Net Weight Kg",
     };
 
-    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
+    for (const key in header) {
+      if (
+        !packingListJson.Sheet1[0] ||
+        packingListJson.Sheet1[0][key] !== header[key]
+      ) {
+        return MatcherResult.WRONG_HEADER;
+      }
     }
+
+    return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
