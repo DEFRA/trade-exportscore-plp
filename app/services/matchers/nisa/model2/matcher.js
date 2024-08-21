@@ -16,7 +16,6 @@ function matches(packingList, filename) {
     }
 
     const header = {
-      B: "RMS_ESTABLISHMENT_NO",
       J: "PRODUCT_TYPE_CATEGORY",
       L: "PART_NUMBER_DESCRIPTION",
       M: "TARIFF_CODE_EU",

@@ -16,7 +16,6 @@ function matches(packingList, filename) {
     }
 
     const header = {
-      E: "Dispatch RMS Establishment",
       O: "Product/ Part Number description",
       P: "Tariff Code EU",
       Q: "Packages",

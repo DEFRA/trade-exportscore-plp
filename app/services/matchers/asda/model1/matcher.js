@@ -20,21 +20,20 @@ function matches(packingListJson, filename) {
       A: "[Description Of All Retail Goods]",
       B: "[Nature Of Product]",
       C: "[Treatment Type]",
-      D: "[Number Of Establishment]",
-      E: "[Destination Store Establishment Number]",
       F: "[Number of Packages]",
       G: "[Net Weight]",
-      H: "[kilograms/grams]",
     };
 
-    if (
-      JSON.stringify(packingListJson.PackingList_Extract[0]) !==
-      JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
+    for (const key in header) {
+      if (
+        !packingListJson.PackingList_Extract[0] ||
+        packingListJson.PackingList_Extract[0][key] !== header[key]
+      ) {
+        return MatcherResult.WRONG_HEADER;
+      }
     }
+
+    return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

@@ -22,17 +22,11 @@ function matches(packingList, filename) {
 
     // check for header values
     const header = {
-      A: "TruckID",
-      B: "Dept",
-      C: "SubDept",
       D: "Product",
       E: "# Packages",
-      F: "# Units",
-      G: "GrossWeight",
       H: "NetWeight",
       I: "NatureOfProduct",
       J: "Treatment",
-      K: "PlaceOfDispatch",
     };
 
     for (const key in header) {

@@ -18,22 +18,21 @@ function matches(packingListJson, filename) {
     const header = {
       A: "Commodity code",
       B: "Description of goods",
-      C: "Country of Origin",
       D: "No. of pkgs",
-      E: "Type of pkgs",
-      F: "Item Gross Weight (kgs)",
       G: "Item Net Weight (kgs)",
       H: "Treatment Type (Chilled /Ambient)",
-      I: "NIRMS Lane (R/G)",
     };
 
-    if (
-      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
+    for (const key in header) {
+      if (
+        !packingListJson.Tabelle1[1] ||
+        packingListJson.Tabelle1[1][key] !== header[key]
+      ) {
+        return MatcherResult.WRONG_HEADER;
+      }
     }
+
+    return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

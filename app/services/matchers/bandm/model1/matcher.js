@@ -18,26 +18,24 @@ function matches(packingListJson, filename) {
     }
 
     // check for header values
-    const headerRow = packingListJson.Sheet1.findIndex((x) => x.B === "PRISM");
+    const headerRow = packingListJson.Sheet1.findIndex((x) => x.D === "COMMODITY CODE");
     const header = {
-      A: "PRODUCT CODE (SHORT)",
-      B: "PRISM",
       C: "ITEM DESCRIPTION",
       D: "COMMODITY CODE",
-      E: "PLACE OF DISPATCH",
       F: "TOTAL NUMBER OF CASES",
       G: "NET WEIGHT",
-      H: "GROSS WEIGHT",
-      I: "ANIMAL ORIGIN",
     };
-    if (
-      JSON.stringify(packingListJson.Sheet1[headerRow]) !==
-      JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
+
+    for (const key in header) {
+      if (
+        !packingListJson.Sheet1[headerRow] ||
+        packingListJson.Sheet1[headerRow][key] !== header[key]
+      ) {
+        return MatcherResult.WRONG_HEADER;
+      }
     }
+
+    return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
