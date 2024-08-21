@@ -11,7 +11,7 @@ module.exports = {
         if (request.query.applicationId) {
           checkStatus = await patchPackingListCheck(
             request.query.applicationId,
-            request.query.isParsed,
+            request.query.isApproved,
           );
         }
         return h.response(checkStatus).code(StatusCodes.OK);

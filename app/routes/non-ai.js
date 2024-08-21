@@ -3,6 +3,7 @@ const excelToJson = require("convert-excel-to-json");
 const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const { StatusCodes } = require("http-status-codes");
+const ParserModel = require("../services/parser-model");
 
 module.exports = {
   method: "GET",
@@ -16,14 +17,14 @@ module.exports = {
       console.error(err);
     }
 
-    const parsed = findParser(result, filename);
-    if (parsed.isParsed) {
+    const packingList = findParser(result, filename);
+    if (packingList.parserModel !== ParserModel.NOMATCH) {
       const randomInt = Math.floor(
         Math.random() * (10000000 - 1 + 1) + 1,
       ).toString();
-      await createPackingList(parsed.packingList, randomInt);
+      await createPackingList(packingList, randomInt);
     }
 
-    return h.response(parsed.packingList).code(StatusCodes.OK);
+    return h.response(packingList).code(StatusCodes.OK);
   },
 };

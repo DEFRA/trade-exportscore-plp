@@ -1,4 +1,5 @@
 const ParserService = require("../../../../../app/services/parser-service");
+const ParserModel = require("../../../../../app/services/parser-model");
 
 const filename = "packinglist.xlsx";
 const packingListJson = {
@@ -23,24 +24,16 @@ const packingListJson = {
 };
 
 describe("matchesCdsModel1", () => {
-  test("returns isParsed as true", () => {
-    const result = ParserService.findParser(packingListJson, filename);
-
-    expect(result.isParsed).toBeTruthy();
-  });
-
   test("matches valid CDS Model 1 file and calls parser", () => {
     const result = ParserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
-      isParsed: true,
-      packingList: {
-        business_checks: {
-          all_required_fields_present: true,
-        },
-        items: [],
-        registration_approval_number: "RMS-GB-000252-002",
+      business_checks: {
+        all_required_fields_present: true,
       },
+      items: [],
+      registration_approval_number: "RMS-GB-000252-002",
+      parserModel: ParserModel.CDS1,
     });
   });
 });

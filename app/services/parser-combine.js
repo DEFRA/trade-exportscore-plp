@@ -2,6 +2,7 @@ function combine(
   establishmentNumber,
   packingListContents,
   allRequiredFieldsPresent,
+  ParserModel,
 ) {
   return {
     registration_approval_number: establishmentNumber,
@@ -9,6 +10,7 @@ function combine(
     business_checks: {
       all_required_fields_present: allRequiredFieldsPresent,
     },
+    parserModel: ParserModel,
   };
 }
 

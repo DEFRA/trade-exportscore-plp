@@ -1,3 +1,4 @@
+const ParserModel = require("../../../parser-model");
 const CombineParser = require("../../../parser-combine");
 
 function parse(packingListJson) {
@@ -17,7 +18,12 @@ function parse(packingListJson) {
     total_net_weight_kg: col.H ?? null,
   }));
 
-  return CombineParser.combine(establishmentNumber, packingListContents, true);
+  return CombineParser.combine(
+    establishmentNumber,
+    packingListContents,
+    true,
+    ParserModel.CDS1,
+  );
 }
 
 module.exports = {
