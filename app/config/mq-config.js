@@ -23,7 +23,9 @@ const plpSubscription = {
 };
 
 const tpQueue = {
-  address: process.env.PARSED_QUEUE_ADDRESS,
+  useCredentialChain: process.env.NODE_ENV === "production",
+  host: process.env.TP_QUEUE_HOST,
+  address: process.env.TP_QUEUE_ADDRESS,
   managedIdentityClientId: process.env.TP_CLIENT_ID,
 };
 

@@ -44,3 +44,5 @@
 - key: TP_CLIENT_ID
   value: "{{servicename}}-TP-CLIENT-ID"
   type: "keyvault"
+- key: TP_QUEUE_ADDRESS
+  value: "defra.trade.plp.parsed"
