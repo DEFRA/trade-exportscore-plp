@@ -18,7 +18,9 @@ function matches(packingListJson, filename) {
     }
 
     // check for header values
-    const headerRow = packingListJson.Sheet1.findIndex((x) => x.D === "COMMODITY CODE");
+    const headerRow = packingListJson.Sheet1.findIndex(
+      (x) => x.D === "COMMODITY CODE",
+    );
     const header = {
       C: "ITEM DESCRIPTION",
       D: "COMMODITY CODE",
