@@ -15,6 +15,7 @@ const ParserModel = {
   BUFFALOAD1: "buffaload-1",
   CDS1: "cds-1",
   COOP1: "coop-1",
+  DAVENPORT1: "davenport-1",
 };
 
 module.exports = ParserModel;
