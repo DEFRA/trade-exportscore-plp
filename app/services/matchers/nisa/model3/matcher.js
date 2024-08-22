@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingList, filename) {
   const establishmentNumberRow = 1;
@@ -23,16 +24,7 @@ function matches(packingList, filename) {
       I: "NET WEIGHT TOTAL",
     };
 
-    for (const key in header) {
-      if (
-        !packingList[sheet][2] ||
-        packingList[sheet][2][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
-    }
-
-    return MatcherResult.CORRECT;
+    return matchesHeader(header, packingList[sheet][2]);
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
