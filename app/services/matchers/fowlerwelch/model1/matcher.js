@@ -19,11 +19,11 @@ function matches(packingList, filename) {
       throw new Error("generic error");
     }
 
-    for (let i = 0; i < sheets.length; i++) {
-      headerRow = packingList[sheets[i]].findIndex(
+    for (let sheet of sheets) {
+      headerRow = packingList[sheet].findIndex(
         (x) => x.F === "Description of goods",
       );
-      const establishmentNumber = packingList[sheets[i]][headerRow + 1].M;
+      const establishmentNumber = packingList[sheet][headerRow + 1].M;
       const regex = /^RMS-GB-000216-\d{3}$/;
       if (!regex.test(establishmentNumber)) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -42,9 +42,9 @@ function matches(packingList, filename) {
       for (const key in header) {
         if (
           (key === "K" &&
-            !packingList[sheets[i]][headerRow][key].includes("Net Weight")) ||
+            !packingList[sheet][headerRow][key].includes("Net Weight")) ||
           (key !== "K" &&
-            !packingList[sheets[i]][headerRow][key].startsWith(header[key]))
+            !packingList[sheet][headerRow][key].startsWith(header[key]))
         ) {
           return MatcherResult.WRONG_HEADER;
         }

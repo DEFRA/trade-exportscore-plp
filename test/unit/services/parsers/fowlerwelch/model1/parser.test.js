@@ -1,7 +1,7 @@
-const fowlerWelchParser = require("../../../../../../app/services/parsers/fowlerwelch/model1/parser");
+const Parser = require("../../../../../../app/services/parsers/fowlerwelch/model1/parser");
 const ParserModel = require("../../../../../../app/services/parser-model");
 
-describe("parseFowlerWelch2", () => {
+describe("parseFowlerWelchModel1", () => {
   test("parses json", () => {
     const packingListJson = {
       "Cust Ord": [
@@ -102,7 +102,7 @@ describe("parseFowlerWelch2", () => {
         },
       ],
     };
-    const result = fowlerWelchParser.parse(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(
       packingListJson["Cust Ord"][45].M,
     );
@@ -333,7 +333,7 @@ describe("parseFowlerWelch2", () => {
         },
       ],
     };
-    const result = fowlerWelchParser.parse(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(
       packingListJson["Cust Ord"][45].M,
     );
@@ -467,7 +467,7 @@ describe("parseFowlerWelch2", () => {
         },
       ],
     };
-    const result = fowlerWelchParser.parse(packingListJson);
+    const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toHaveLength(1);
     expect(result.items[0].description).toBeNull();
