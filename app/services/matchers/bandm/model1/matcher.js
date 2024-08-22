@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
@@ -28,16 +29,7 @@ function matches(packingListJson, filename) {
       G: "NET WEIGHT",
     };
 
-    for (const key in header) {
-      if (
-        !packingListJson.Sheet1[headerRow] ||
-        packingListJson.Sheet1[headerRow][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
-    }
-
-    return MatcherResult.CORRECT;
+    return matchesHeader(header, packingListJson.Sheet1[headerRow]);
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

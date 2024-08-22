@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
@@ -23,16 +24,7 @@ function matches(packingListJson, filename) {
       H: "Treatment Type (Chilled /Ambient)",
     };
 
-    for (const key in header) {
-      if (
-        !packingListJson.Tabelle1[1] ||
-        packingListJson.Tabelle1[1][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
-    }
-
-    return MatcherResult.CORRECT;
+    return matchesHeader(header, packingListJson.Tabelle1[1]);
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

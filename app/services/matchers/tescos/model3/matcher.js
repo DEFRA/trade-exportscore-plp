@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
@@ -24,16 +25,7 @@ function matches(packingListJson, filename) {
       G: "Net Weight",
     };
 
-    for (const key in header) {
-      if (
-        !packingListJson[INPUT_DATA_SHEET][4] ||
-        packingListJson[INPUT_DATA_SHEET][4][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
-    }
-
-    return MatcherResult.CORRECT;
+    return matchesHeader(header, packingListJson[INPUT_DATA_SHEET][4]);
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
