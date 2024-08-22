@@ -38,4 +38,4 @@ async function sendParsed(parsedResult, applicationId) {
   }
 }
 
-module.exports = { sendParsed };
+module.exports = { sendParsed, sendParsedAdp };
