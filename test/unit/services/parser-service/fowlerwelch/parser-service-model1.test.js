@@ -3,7 +3,7 @@ const ParserService = require("../../../../../app/services/parser-service");
 
 const filename = "packinglist.xlsx";
 const packingListJson = {
-  "Customer Order": [
+  "Cust Ord": [
     {},
     {},
     {},
@@ -69,7 +69,7 @@ const packingListJson = {
       R: "Cert Number",
     },
     {
-      M: "RMS-GB-000216-004",
+      M: "RMS-GB-000216-002",
     },
   ],
 };
@@ -83,7 +83,7 @@ describe("matchesFowlerWelchModel1", () => {
         all_required_fields_present: true,
       },
       items: [],
-      registration_approval_number: "RMS-GB-000216-004",
+      registration_approval_number: "RMS-GB-000216-002",
       parserModel: ParserModel.FOWLERWELCH1,
     });
   });

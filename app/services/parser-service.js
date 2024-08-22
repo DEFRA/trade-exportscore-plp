@@ -14,8 +14,6 @@ const CdsMatcher = require("./matchers/cds/model1/matcher");
 const CdsParser = require("./parsers/cds/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
-const FowlerWelchMatcher2 = require("./matchers/fowlerwelch/model2/matcher");
-const FowlerWelchParser2 = require("./parsers/fowlerwelch/model2/parser2");
 const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
 const NisaParser = require("../services/parsers/nisa/model1/parser");
 const NisaMatcher2 = require("../services/matchers/nisa/model2/matcher");
@@ -122,19 +120,11 @@ function findParser(packingList, filename) {
     FowlerWelchMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
-    console.info("Packing list matches Fowler Welch with filename: ", filename);
-    parsedPackingList = FowlerWelchParser.parse(
-      sanitisedPackingList[CUSTOMER_ORDER],
-    );
-  } else if (
-    FowlerWelchMatcher2.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
-  ) {
     console.info(
-      "Packing list matches Fowler Welch 2 with filename: ",
+      "Packing list matches Fowler Welch 1 with filename: ",
       filename,
     );
-    parsedPackingList = FowlerWelchParser2.parse(sanitisedPackingList);
+    parsedPackingList = FowlerWelchParser.parse(sanitisedPackingList);
   } else if (
     NisaMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
