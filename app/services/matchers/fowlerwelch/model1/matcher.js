@@ -1,38 +1,53 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 
-const CUSTOMER_ORDER = "Customer Order";
+function matches(packingList, filename) {
+  let headerRow = 0;
 
-function matches(packingListJson, filename) {
   try {
+    // check for correct extension
+
     if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
-    const headerRowNumber = 44;
-    const establishmentNumberRow = 45;
 
-    // check for correct establishment number
-    const establishmentNumber =
-      packingListJson[CUSTOMER_ORDER][establishmentNumberRow].M;
-    const regex = /^RMS-GB-000216-\d{3}$/;
-    if (!regex.test(establishmentNumber)) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    //check for correct establishment number
+
+    const sheets = Object.keys(packingList);
+
+    if (sheets.length === 0) {
+      throw new Error("generic error");
     }
 
-    // check for header values
-    const header = {
-      C: "Commodity code",
-      F: "Description of goods",
-      H: "No. of pkgs ",
-      K: "Total Net Weight",
-      N: "Treatment Type (Chilled /Ambient)",
-    };
+    for (let sheet of sheets) {
+      headerRow = packingList[sheet].findIndex(
+        (x) => x.F === "Description of goods",
+      );
+      const establishmentNumber = packingList[sheet][headerRow + 1].M;
+      const regex = /^RMS-GB-000216-\d{3}$/;
+      if (!regex.test(establishmentNumber)) {
+        return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      }
 
-    const originalHeader = packingListJson[CUSTOMER_ORDER][headerRowNumber];
+      // check for header values
 
-    for (const key in header) {
-      if (!originalHeader[key].startsWith(header[key])) {
-        return MatcherResult.WRONG_HEADER;
+      const header = {
+        C: "Commodity code",
+        F: "Description of goods",
+        H: "No. of pkgs",
+        K: "Item Net Weight (kgs)",
+        N: "Treatment Type (Chilled /Ambient)",
+      };
+
+      for (const key in header) {
+        if (
+          (key === "K" &&
+            !packingList[sheet][headerRow][key].includes("Net Weight")) ||
+          (key !== "K" &&
+            !packingList[sheet][headerRow][key].startsWith(header[key]))
+        ) {
+          return MatcherResult.WRONG_HEADER;
+        }
       }
     }
     return MatcherResult.CORRECT;
@@ -41,6 +56,4 @@ function matches(packingListJson, filename) {
   }
 }
 
-module.exports = {
-  matches,
-};
+module.exports = { matches };
