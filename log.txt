@@ -1,0 +1,1063 @@
+#0 building with "default" instance using docker driver
+
+#1 [trade-exportscore-plp internal] load build definition from Dockerfile
+#1 transferring dockerfile: 822B done
+#1 DONE 0.0s
+
+#2 [trade-exportscore-plp internal] load metadata for docker.io/defradigital/node-development:2.1.2-node18.11.0
+#2 DONE 0.8s
+
+#3 [trade-exportscore-plp internal] load .dockerignore
+#3 transferring context: 219B done
+#3 DONE 0.0s
+
+#4 [trade-exportscore-plp development 1/4] FROM docker.io/defradigital/node-development:2.1.2-node18.11.0@sha256:3235b483dfda73620ef5cff490b0c67dcde3e523c80bbc4c8fabf99901f28a59
+#4 DONE 0.0s
+
+#5 [trade-exportscore-plp internal] load build context
+#5 transferring context: 992.90kB 0.1s done
+#5 DONE 0.1s
+
+#6 [trade-exportscore-plp development 2/4] COPY --chown=node:node package*.json ./
+#6 CACHED
+
+#7 [trade-exportscore-plp development 3/4] RUN npm install
+#7 CACHED
+
+#8 [trade-exportscore-plp development 4/4] COPY --chown=node:node . .
+#8 DONE 0.1s
+
+#9 [trade-exportscore-plp] exporting to image
+#9 exporting layers 0.1s done
+#9 writing image sha256:83f22f9607f34e2890c99f45ac7d1106df11f706284790898d3306babb931cb3 done
+#9 naming to docker.io/library/trade-exportscore-plp-development done
+#9 DONE 0.2s
+
+#10 [trade-exportscore-plp] resolving provenance for metadata file
+#10 DONE 0.0s
+db update on trade-exportscore-plp-postgres public as postgres
+waiting for postgres trade-exportscore-plp-postgres:5432
+.postgres server available
+postgres started
+Liquibase Community 3.10.3 by Datical
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##  Get advanced features and support at          ##
+##      liquibase.com/protrial                    ##
+##                                                ##
+####################################################
+Starting Liquibase at Fri, 23 Aug 2024 10:03:13 UTC (version 3.10.3 #32 built at Mon Oct 12 07:24:42 UTC 2020)
+Liquibase: Update has been successful.
+
+> trade-exportscore-plp@2.0.6 pretest
+> npm run test:lint
+
+
+> trade-exportscore-plp@2.0.6 test:lint
+> prettier . --write
+
+.azuredevops/build.yaml 44ms (unchanged)
+additional-info.md 52ms (unchanged)
+app/config/constants.js 51ms (unchanged)
+app/config/database-config.js 23ms (unchanged)
+app/config/dynamics-config.js 3ms (unchanged)
+app/config/index.js 15ms (unchanged)
+app/config/mq-config.js 6ms (unchanged)
+app/index.js 6ms (unchanged)
+app/messaging/create-message.js 2ms (unchanged)
+app/messaging/index.js 8ms (unchanged)
+app/messaging/process-plp-message.js 6ms (unchanged)
+app/messaging/send-parsed-message.js 4ms (unchanged)
+app/models/item.js 5ms (unchanged)
+app/models/packing-list.js 3ms (unchanged)
+app/packing-list/index.js 6ms (unchanged)
+app/plugins/router.js 2ms (unchanged)
+app/routes/healthy.js 3ms (unchanged)
+app/routes/healthz.js 2ms (unchanged)
+app/routes/non-ai.js 5ms (unchanged)
+app/routes/upsert-idcoms.js 6ms (unchanged)
+app/server.js 4ms (unchanged)
+app/services/app-insights.js 3ms (unchanged)
+app/services/database-service.js 5ms (unchanged)
+app/services/dynamics-service.js 7ms (unchanged)
+app/services/matchers/asda/model1/matcher.js 4ms (unchanged)
+app/services/matchers/asda/model2/matcher.js 5ms (unchanged)
+app/services/matchers/bandm/model1/matcher.js 4ms (unchanged)
+app/services/matchers/buffaload-logistics/model1/matcher.js 4ms (unchanged)
+app/services/matchers/cds/model1/matcher.js 4ms (unchanged)
+app/services/matchers/co-op/model1/matcher.js 2ms (unchanged)
+app/services/matchers/davenport/model1/matcher.js 5ms (unchanged)
+app/services/matchers/fowlerwelch/model1/matcher.js 4ms (unchanged)
+app/services/matchers/nisa/model1/matcher.js 3ms (unchanged)
+app/services/matchers/nisa/model2/matcher.js 3ms (unchanged)
+app/services/matchers/nisa/model3/matcher.js 3ms (unchanged)
+app/services/matchers/sainsburys/model1/matcher.js 6ms (unchanged)
+app/services/matchers/tescos/model1/matcher.js 3ms (unchanged)
+app/services/matchers/tescos/model2/matcher.js 3ms (unchanged)
+app/services/matchers/tescos/model3/matcher.js 3ms (unchanged)
+app/services/matchers/tjmorris/model1/matcher.js 2ms (unchanged)
+app/services/matches-header.js 2ms (unchanged)
+app/services/matches-result.js 1ms (unchanged)
+app/services/parser-combine.js 1ms (unchanged)
+app/services/parser-model.js 1ms (unchanged)
+app/services/parser-service.js 12ms (unchanged)
+app/services/parsers/asda/model1/parser.js 2ms (unchanged)
+app/services/parsers/asda/model2/parser.js 2ms (unchanged)
+app/services/parsers/bandm/model1/parser.js 4ms (unchanged)
+app/services/parsers/buffaload-logistics/model1/parser.js 1ms (unchanged)
+app/services/parsers/cds/model1/parser.js 3ms (unchanged)
+app/services/parsers/co-op/model1/parser.js 2ms (unchanged)
+app/services/parsers/davenport/model1/parser.js 2ms (unchanged)
+app/services/parsers/fowlerwelch/model1/parser.js 5ms (unchanged)
+app/services/parsers/nisa/model1/parser.js 2ms (unchanged)
+app/services/parsers/nisa/model2/parser.js 2ms (unchanged)
+app/services/parsers/nisa/model3/parser.js 2ms (unchanged)
+app/services/parsers/sainsburys/model1/parser.js 3ms (unchanged)
+app/services/parsers/tescos/model1/parser.js 3ms (unchanged)
+app/services/parsers/tescos/model2/parser.js 3ms (unchanged)
+app/services/parsers/tescos/model3/parser.js 2ms (unchanged)
+app/services/parsers/tjmorris/model1/parser.js 3ms (unchanged)
+app/services/storage-account.js 2ms (unchanged)
+app/utilities/file-extension.js 2ms (unchanged)
+app/utilities/json-file.js 4ms (unchanged)
+appConfig/appConfig.dev1.yaml 6ms (unchanged)
+appConfig/appConfig.prd1.yaml 2ms (unchanged)
+appConfig/appConfig.pre1.yaml 2ms (unchanged)
+appConfig/appConfig.snd3.yaml 1ms (unchanged)
+appConfig/appConfig.snd4.yaml 3ms (unchanged)
+appConfig/appConfig.tst1.yaml 2ms (unchanged)
+appConfig/appConfig.tst2.yaml 1ms (unchanged)
+appConfig/appConfig.yaml 6ms (unchanged)
+branching-and-linking.md 16ms (unchanged)
+catalog-info.yaml 5ms (unchanged)
+debugging.md 18ms (unchanged)
+jest.config.js 2ms (unchanged)
+jest.setup.js 0ms (unchanged)
+package-lock.json 118ms (unchanged)
+package.json 1ms (unchanged)
+pull_request_template.md 5ms (unchanged)
+test/integration/narrow/index.test.js 4ms (unchanged)
+test/integration/narrow/routes/healthy.test.js 5ms (unchanged)
+test/integration/narrow/routes/healthz.test.js 2ms (unchanged)
+test/integration/narrow/routes/non-ai.test.js 3ms (unchanged)
+test/unit/config/constants.test.js 2ms (unchanged)
+test/unit/config/database-config.test.js 5ms (unchanged)
+test/unit/config/index.test.js 4ms (unchanged)
+test/unit/index.test.js 4ms (unchanged)
+test/unit/messaging/create-message.test.js 1ms (unchanged)
+test/unit/messaging/index.test.js 4ms (unchanged)
+test/unit/messaging/process-plp-message.test.js 6ms (unchanged)
+test/unit/messaging/send-parsed-message.test.js 3ms (unchanged)
+test/unit/models/item.test.js 3ms (unchanged)
+test/unit/models/packing-list.test.js 2ms (unchanged)
+test/unit/packing-list/index.test.js 11ms (unchanged)
+test/unit/plugins/router.test.js 3ms (unchanged)
+test/unit/routes/healthy.test.js 4ms (unchanged)
+test/unit/routes/healthz.test.js 2ms (unchanged)
+test/unit/routes/non-ai.test.js 1ms (unchanged)
+test/unit/routes/upsert-idcoms.test.js 3ms (unchanged)
+test/unit/server.test.js 2ms (unchanged)
+test/unit/services/app-insights.test.js 3ms (unchanged)
+test/unit/services/database-service.test.js 4ms (unchanged)
+test/unit/services/dynamics-service.test.js 5ms (unchanged)
+test/unit/services/matchers/asda/model1/matcher.test.js 4ms (unchanged)
+test/unit/services/matchers/asda/model2/matcher.test.js 5ms (unchanged)
+test/unit/services/matchers/bandm/model1/matcher.test.js 4ms (unchanged)
+test/unit/services/matchers/buffaload-logistics/model1/matcher.test.js 3ms (unchanged)
+test/unit/services/matchers/cds/model1/matcher.test.js 3ms (unchanged)
+test/unit/services/matchers/co-op/model1/matcher.test.js 4ms (unchanged)
+test/unit/services/matchers/davenport/model1/matcher.test.js 6ms (unchanged)
+test/unit/services/matchers/fowlerwelch/model1/matcher.test.js 16ms (unchanged)
+test/unit/services/matchers/nisa/model1/matcher.test.js 4ms (unchanged)
+test/unit/services/matchers/nisa/model2/matcher2.test.js 4ms (unchanged)
+test/unit/services/matchers/nisa/model3/matcher3.test.js 4ms (unchanged)
+test/unit/services/matchers/sainsburys/model1/matcher.test.js 4ms (unchanged)
+test/unit/services/matchers/tescos/model1/matcher.test.js 4ms (unchanged)
+test/unit/services/matchers/tescos/model2/matcher.test.js 5ms (unchanged)
+test/unit/services/matchers/tescos/model3/matcher.test.js 5ms (unchanged)
+test/unit/services/matchers/tjmorris/model1/matcher.test.js 6ms (unchanged)
+test/unit/services/matches-header.test.js 3ms (unchanged)
+test/unit/services/parser-combine.test.js 3ms (unchanged)
+test/unit/services/parser-service.test.js 10ms (unchanged)
+test/unit/services/parser-service/asda/model-1/parser-service.test.js 1ms (unchanged)
+test/unit/services/parser-service/asda/model-2/parser-service.test.js 1ms (unchanged)
+test/unit/services/parser-service/bandm/model-1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/buffaload-logistics/model1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/cds/model-1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/co-op/model-1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/davenport/model-1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/fowlerwelch/model-1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/nisa/model-1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/nisa/model-2/parser-service.test.js 1ms (unchanged)
+test/unit/services/parser-service/nisa/model-3/parser-service.test.js 1ms (unchanged)
+test/unit/services/parser-service/sainsburys/model-1/parser-service.test.js 1ms (unchanged)
+test/unit/services/parser-service/tescos/model-1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/tescos/model-2/parser-service.test.js 1ms (unchanged)
+test/unit/services/parser-service/tescos/model-3/parser-service.test.js 2ms (unchanged)
+test/unit/services/parser-service/tjmorris/model-1/parser-service.test.js 2ms (unchanged)
+test/unit/services/parsers/asda/model1/parser.test.js 5ms (unchanged)
+test/unit/services/parsers/asda/model2/parser.test.js 4ms (unchanged)
+test/unit/services/parsers/bandm/model1/parser.test.js 5ms (unchanged)
+test/unit/services/parsers/buffaload-logistics/model1/parser.test.js 5ms (unchanged)
+test/unit/services/parsers/cds/model1/parser.test.js 7ms (unchanged)
+test/unit/services/parsers/co-op/model1/parser.test.js 5ms (unchanged)
+test/unit/services/parsers/davenport/model1/parser.test.js 5ms (unchanged)
+test/unit/services/parsers/fowlerwelch/model1/parser.test.js 17ms (unchanged)
+test/unit/services/parsers/nisa/model1/parser.test.js 6ms (unchanged)
+test/unit/services/parsers/nisa/model2/parser2.test.js 4ms (unchanged)
+test/unit/services/parsers/nisa/model3/parser.test.js 4ms (unchanged)
+test/unit/services/parsers/sainsburys/model1/parser.test.js 8ms (unchanged)
+test/unit/services/parsers/tescos/model1/parser.test.js 6ms (unchanged)
+test/unit/services/parsers/tescos/model2/parser.test.js 6ms (unchanged)
+test/unit/services/parsers/tescos/model3/parser.test.js 8ms (unchanged)
+test/unit/services/parsers/tjmorris/model1/parser.test.js 6ms (unchanged)
+test/unit/test-helpers/asda/model1/data-model.js 4ms (unchanged)
+test/unit/test-helpers/asda/model2/data-model.js 5ms (unchanged)
+test/unit/test-helpers/bandm/model1/data-model.js 3ms (unchanged)
+test/unit/test-helpers/buffaload-logistics/model1/data-model.js 3ms (unchanged)
+test/unit/test-helpers/cds/model1/data-model.js 4ms (unchanged)
+test/unit/test-helpers/co-op/model1/data-model.js 3ms (unchanged)
+test/unit/test-helpers/fowlerwelch/model1/data-model.js 5ms (unchanged)
+test/unit/test-helpers/nisa/model1/data-model.js 3ms (unchanged)
+test/unit/test-helpers/nisa/model2/data-model.js 3ms (unchanged)
+test/unit/test-helpers/nisa/model3/data-model.js 3ms (unchanged)
+test/unit/test-helpers/sainsburys/model1/data-model.js 3ms (unchanged)
+test/unit/test-helpers/tescos/model-1/data-model.js 3ms (unchanged)
+test/unit/test-helpers/tescos/model-2/data-model.js 4ms (unchanged)
+test/unit/test-helpers/tescos/model-3/data-model.js 4ms (unchanged)
+test/unit/test-helpers/tjmorris/model-1/data-model.js 3ms (unchanged)
+test/unit/utilities/file-extension.test.js 2ms (unchanged)
+test/unit/utilities/json-file.test.js 4ms (unchanged)
+
+> trade-exportscore-plp@2.0.6 test
+> jest --runInBand --forceExit
+
+  console.info
+    Packing list matches Fowler Welch with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/fowlerwelch/model1/matcher.js:54:13)
+
+  console.info
+    Packing list matches Fowler Welch with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/fowlerwelch/model1/matcher.js:54:13)
+
+  console.info
+    Packing list matches TJ Morris Model 1 with filename:  packinglist.xls
+
+      at Object.info [as matches] (app/services/matchers/tjmorris/model1/matcher.js:30:15)
+
+  console.info
+    Saved packing list in database with application id:  123
+
+      at info (app/packing-list/index.js:11:13)
+
+  console.info
+    Packing list matches TJ Morris Model 1 with filename:  packinglist.xls
+
+      at Object.info [as matches] (app/services/matchers/tjmorris/model1/matcher.js:30:15)
+
+  console.info
+    Packing list matches Sainsburys Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/sainsburys/model1/matcher.js:33:15)
+
+  console.log
+    [
+      {
+        E: 'Product / Part Number Description',
+        C: 'Product Type / Category',
+        O: 'Commodity Code',
+        G: 'Packages',
+        H: 'Net\nWeight / Package KG'
+      },
+      {
+        E: 'JS Chicken Korma 400g',
+        C: 'Chilled Indian Meals',
+        O: '0709991000',
+        G: 1,
+        H: 3.15,
+        N: 'RMS-GB-000094-002​'
+      },
+      {
+        E: 'JS TTD Gunpowder Potatoes 250g',
+        C: 'Chilled Indian Meals',
+        O: '1602323090',
+        G: 2,
+        H: 1.4,
+        N: 'RMS-GB-000094-002​'
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:5:11)
+
+  console.log
+    establishmentNumber:  RMS-GB-000094-002
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:8:11)
+
+  console.log
+    packingListContents:  [
+      {
+        description: 'JS Chicken Korma 400g',
+        nature_of_products: 'Chilled Indian Meals',
+        type_of_treatment: null,
+        commodity_code: '0709991000',
+        number_of_packages: 1,
+        total_net_weight_kg: 3.15
+      },
+      {
+        description: 'JS TTD Gunpowder Potatoes 250g',
+        nature_of_products: 'Chilled Indian Meals',
+        type_of_treatment: null,
+        commodity_code: '1602323090',
+        number_of_packages: 2,
+        total_net_weight_kg: 1.4
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:18:11)
+
+  console.log
+    [
+      {
+        E: 'Product / Part Number Description',
+        C: 'Product Type / Category',
+        O: 'Commodity Code',
+        G: 'Packages',
+        H: 'Net\nWeight / Package KG'
+      },
+      {}
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:5:11)
+
+  console.log
+    establishmentNumber:  null
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:8:11)
+
+  console.log
+    packingListContents:  [
+      {
+        description: null,
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: null,
+        number_of_packages: null,
+        total_net_weight_kg: null
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:18:11)
+
+  console.info
+    Packing list matches Nisa Model 3 with filename:  PackingList.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model3/matcher.js:29:15)
+
+  console.info
+    Packing list matches BandM Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/bandm/model1/matcher.js:34:15)
+
+  console.info
+    Packing list matches Tesco Model 1 with filename:  PackingListTesco1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model1/matcher.js:33:15)
+
+  console.info
+    Packing list matches Tesco Model 3 with filename:  PackingListTesco3.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model3/matcher.js:30:15)
+
+  console.info
+    Packing list matches Tesco Model 2 with filename:  PackingListTesco2.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model2/matcher.js:28:15)
+
+  console.info
+    Packing list matches CDS Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/cds/model1/matcher.js:35:15)
+
+  console.info
+    Packing list matches Asda Model 1 with filename:  packinglist.xls
+
+      at Object.info [as matches] (app/services/matchers/asda/model1/matcher.js:30:15)
+
+  console.info
+    Packing list matches Buffaload Model 1 with filename:  PackingList.xlsx
+
+      at Object.info [as matches] (app/services/matchers/buffaload-logistics/model1/matcher.js:29:15)
+
+  console.info
+    Received message:  { packing_list_blob: 'https://example.com/path/doesnt/matter' }
+
+      at info (app/messaging/process-plp-message.js:13:13)
+
+  console.error
+    Unable to process message: TypeError: Cannot read properties of undefined (reading 'all_required_fields_present')
+        at all_required_fields_present (/home/node/app/messaging/process-plp-message.js:25:37)
+        at Object.<anonymous> (/home/node/test/unit/messaging/process-plp-message.test.js:61:5)
+
+      27 |     }
+      28 |   } catch (err) {
+    > 29 |     console.error("Unable to process message:", err);
+         |             ^
+      30 |     await receiver.abandonMessage(message);
+      31 |   }
+      32 | }
+
+      at error (app/messaging/process-plp-message.js:29:13)
+      at Object.<anonymous> (test/unit/messaging/process-plp-message.test.js:61:5)
+
+  console.error
+    Unable to process message: Error: Error
+        at Object.<anonymous> (/home/node/test/unit/messaging/process-plp-message.test.js:72:13)
+        at /home/node/node_modules/jest-mock/build/index.js:397:39
+        at Object.<anonymous> (/home/node/node_modules/jest-mock/build/index.js:404:13)
+        at Object.mockConstructor (/home/node/node_modules/jest-mock/build/index.js:148:19)
+        at completeMessage (/home/node/app/messaging/process-plp-message.js:12:20)
+        at Object.messageAction (/home/node/test/unit/messaging/process-plp-message.test.js:74:11)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      27 |     }
+      28 |   } catch (err) {
+    > 29 |     console.error("Unable to process message:", err);
+         |             ^
+      30 |     await receiver.abandonMessage(message);
+      31 |   }
+      32 | }
+
+      at error (app/messaging/process-plp-message.js:29:13)
+      at Object.messageAction (test/unit/messaging/process-plp-message.test.js:74:11)
+
+  console.info
+    Packing list matches Co-op Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/co-op/model1/matcher.js:28:15)
+
+  console.info
+    Packing list matches Asda Model 2 with filename:  packinglist.xls
+
+      at Object.info [as matches] (app/services/matchers/asda/model2/matcher.js:29:15)
+
+  console.info
+    Packing list matches Nisa Model 2 with filename:  PackingList.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model2/matcher.js:29:15)
+
+  console.info
+    Packing list matches Nisa Model 1 with filename:  PackingList.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model1/matcher.js:29:15)
+
+  console.error
+    Response status: 400
+
+      28 |     return json.access_token;
+      29 |   } catch (error) {
+    > 30 |     console.error(error.message);
+         |             ^
+      31 |     return error.message;
+      32 |   }
+      33 | }
+
+      at Object.error [as bearerTokenRequest] (app/services/dynamics-service.js:30:13)
+      at Object.<anonymous> (test/unit/services/dynamics-service.test.js:46:20)
+
+  console.info
+    Upsert 123 with outcome true, status 200
+
+      at Object.info [as patchPackingListCheck] (app/services/dynamics-service.js:51:13)
+
+  console.error
+    Invalid JSON string provided: SyntaxError: Unexpected end of JSON input
+        at JSON.parse (<anonymous>)
+        at Object.parse [as sanitises] (/home/node/app/utilities/json-file.js:4:26)
+        at Object.sanitises (/home/node/test/unit/utilities/json-file.test.js:29:29)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      30 |     return JSON.stringify(jsonObj);
+      31 |   } catch (error) {
+    > 32 |     console.error("Invalid JSON string provided:", error);
+         |             ^
+      33 |     return null;
+      34 |   }
+      35 | }
+
+      at Object.error [as sanitises] (app/utilities/json-file.js:32:13)
+      at Object.sanitises (test/unit/utilities/json-file.test.js:29:29)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/routes/healthy.test.js:10:14)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/routes/healthy.test.js:10:14)
+
+  console.error
+    Error running healthy check Error: database connection timeout
+        at Object.<anonymous> (/home/node/test/integration/narrow/routes/healthy.test.js:34:13)
+        at /home/node/node_modules/jest-mock/build/index.js:397:39
+        at Object.<anonymous> (/home/node/node_modules/jest-mock/build/index.js:404:13)
+        at Object.mockConstructor [as authenticate] (/home/node/node_modules/jest-mock/build/index.js:148:19)
+        at authenticate (/home/node/app/routes/healthy.js:10:25)
+        at Object.<anonymous>.exports.Manager.execute (/home/node/node_modules/@hapi/hapi/lib/toolkit.js:57:29)
+        at Object.<anonymous>.internals.handler (/home/node/node_modules/@hapi/hapi/lib/handler.js:46:48)
+        at Object.<anonymous>.exports.execute (/home/node/node_modules/@hapi/hapi/lib/handler.js:31:36)
+        at Request._lifecycle (/home/node/node_modules/@hapi/hapi/lib/request.js:370:68)
+        at processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at Request._execute (/home/node/node_modules/@hapi/hapi/lib/request.js:280:9)
+
+      11 |         return h.response("ok").code(StatusCodes.OK);
+      12 |       } catch (err) {
+    > 13 |         console.error("Error running healthy check", err);
+         |                 ^
+      14 |         return h
+      15 |           .response(`Error running healthy check: ${err.message}`)
+      16 |           .code(StatusCodes.SERVICE_UNAVAILABLE);
+
+      at error (app/routes/healthy.js:13:17)
+      at Object.<anonymous>.exports.Manager.execute (node_modules/@hapi/hapi/lib/toolkit.js:57:29)
+      at Object.<anonymous>.internals.handler (node_modules/@hapi/hapi/lib/handler.js:46:48)
+      at Object.<anonymous>.exports.execute (node_modules/@hapi/hapi/lib/handler.js:31:36)
+      at Request._lifecycle (node_modules/@hapi/hapi/lib/request.js:370:68)
+      at Request._execute (node_modules/@hapi/hapi/lib/request.js:280:9)
+
+  console.info
+    Ready to receive messages
+
+      at info (app/messaging/index.js:13:13)
+
+  console.info
+    Ready to receive messages
+
+      at info (app/messaging/index.js:13:13)
+
+  console.error
+    Error running healthy check Error: test error
+        at Object.<anonymous> (/home/node/test/unit/routes/healthy.test.js:31:19)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      11 |         return h.response("ok").code(StatusCodes.OK);
+      12 |       } catch (err) {
+    > 13 |         console.error("Error running healthy check", err);
+         |                 ^
+      14 |         return h
+      15 |           .response(`Error running healthy check: ${err.message}`)
+      16 |           .code(StatusCodes.SERVICE_UNAVAILABLE);
+
+      at Object.error [as handler] (app/routes/healthy.js:13:17)
+      at Object.<anonymous> (test/unit/routes/healthy.test.js:39:5)
+
+  console.info
+    App Insights Running
+
+      at Object.info [as setup] (app/services/app-insights.js:9:13)
+
+  console.info
+    App Insights Not Running!
+
+      at Object.info [as setup] (app/services/app-insights.js:14:13)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/index.test.js:14:14)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/index.test.js:27:14)
+
+  console.info
+    Sent parsed result for:  {}
+
+      at info (app/messaging/send-parsed-message.js:10:11)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist-tjmorris-model-1.xls
+
+      at Object.info [as findParser] (app/services/parser-service.js:152:13)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist-tjmorris-model-1.xls
+
+      at Object.info [as findParser] (app/services/parser-service.js:152:13)
+
+  console.info
+    Packing list matches Co-op Model 1 with filename:  packinglist-co-op-model-1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/co-op/model1/matcher.js:28:15)
+
+  console.info
+    Packing list matches Co-op Model 1 with filename:  packinglist-co-op-model-1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/co-op/model1/matcher.js:28:15)
+
+  console.info
+    Packing list matches Sainsburys Model 1 with filename:  PackingListTesco3.xlsx
+
+      at Object.info [as matches] (app/services/matchers/sainsburys/model1/matcher.js:33:15)
+
+  console.log
+    [
+      {
+        C: 'Product Type / Category',
+        E: 'Product / Part Number Description',
+        G: 'Packages',
+        H: 'Net\r\nWeight / Package KG',
+        J: 'Packaging Type',
+        N: 'RMS Number (based on depot)',
+        O: 'Commodity Code'
+      },
+      {
+        E: 'JS Chicken Korma 400g',
+        C: 'Chilled Indian Meals',
+        O: '0709991000',
+        G: 1,
+        H: 3.15,
+        N: 'RMS-GB-000094-002​'
+      },
+      {
+        E: 'JS TTD Gunpowder Potatoes 250g',
+        C: 'Chilled Indian Meals',
+        O: '1602323090',
+        G: 2,
+        H: 1.4,
+        N: 'RMS-GB-000094-002​'
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:5:11)
+
+  console.log
+    establishmentNumber:  RMS-GB-000094-002
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:8:11)
+
+  console.log
+    packingListContents:  [
+      {
+        description: 'JS Chicken Korma 400g',
+        nature_of_products: 'Chilled Indian Meals',
+        type_of_treatment: null,
+        commodity_code: '0709991000',
+        number_of_packages: 1,
+        total_net_weight_kg: 3.15
+      },
+      {
+        description: 'JS TTD Gunpowder Potatoes 250g',
+        nature_of_products: 'Chilled Indian Meals',
+        type_of_treatment: null,
+        commodity_code: '1602323090',
+        number_of_packages: 2,
+        total_net_weight_kg: 1.4
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:18:11)
+
+  console.info
+    Packing list matches Sainsburys Model 1 with filename:  PackingListTesco3.xlsx
+
+      at Object.info [as matches] (app/services/matchers/sainsburys/model1/matcher.js:33:15)
+
+  console.log
+    [
+      {
+        C: 'Product Type / Category',
+        E: 'Product / Part Number Description',
+        G: 'Packages',
+        H: 'Net\r\nWeight / Package KG',
+        J: 'Packaging Type',
+        N: 'RMS Number (based on depot)',
+        O: 'Commodity Code'
+      },
+      {
+        E: 'JS Chicken Korma 400g',
+        C: null,
+        O: '0709991000',
+        G: 1,
+        H: 3.15,
+        N: 'RMS-GB-000094-002​'
+      },
+      {
+        E: 'JS TTD Gunpowder Potatoes 250g',
+        C: 'Chilled Indian Meals',
+        O: '1602323090',
+        G: 2,
+        H: null,
+        N: 'RMS-GB-000094-002​'
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:5:11)
+
+  console.log
+    establishmentNumber:  RMS-GB-000094-002
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:8:11)
+
+  console.log
+    packingListContents:  [
+      {
+        description: 'JS Chicken Korma 400g',
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: '0709991000',
+        number_of_packages: 1,
+        total_net_weight_kg: 3.15
+      },
+      {
+        description: 'JS TTD Gunpowder Potatoes 250g',
+        nature_of_products: 'Chilled Indian Meals',
+        type_of_treatment: null,
+        commodity_code: '1602323090',
+        number_of_packages: 2,
+        total_net_weight_kg: null
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:18:11)
+
+  console.info
+    Packing list matches Sainsburys Model 1 with filename:  PackingListTesco2.xlsx
+
+      at Object.info [as matches] (app/services/matchers/sainsburys/model1/matcher.js:33:15)
+
+  console.log
+    [
+      {
+        C: 'Product Type / Category',
+        E: 'Product / Part Number Description',
+        G: 'Packages',
+        H: 'Net\r\nWeight / Package KG',
+        J: 'Packaging Type',
+        N: 'RMS Number (based on depot)',
+        O: 'Commodity Code'
+      },
+      {
+        E: 'JS Chicken Korma 400g',
+        C: 'Chilled Indian Meals',
+        O: '0709991000',
+        G: 1,
+        H: 3.15,
+        N: 'RMS-GB-000094-002​'
+      },
+      {
+        E: 'JS TTD Gunpowder Potatoes 250g',
+        C: 'Chilled Indian Meals',
+        O: '1602323090',
+        G: 2,
+        H: 1.4,
+        N: 'RMS-GB-000094-002​'
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:5:11)
+
+  console.log
+    establishmentNumber:  RMS-GB-000094-002
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:8:11)
+
+  console.log
+    packingListContents:  [
+      {
+        description: 'JS Chicken Korma 400g',
+        nature_of_products: 'Chilled Indian Meals',
+        type_of_treatment: null,
+        commodity_code: '0709991000',
+        number_of_packages: 1,
+        total_net_weight_kg: 3.15
+      },
+      {
+        description: 'JS TTD Gunpowder Potatoes 250g',
+        nature_of_products: 'Chilled Indian Meals',
+        type_of_treatment: null,
+        commodity_code: '1602323090',
+        number_of_packages: 2,
+        total_net_weight_kg: 1.4
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:18:11)
+
+  console.info
+    Packing list matches Sainsburys Model 1 with filename:  PackingListTesco2.xlsx
+
+      at Object.info [as matches] (app/services/matchers/sainsburys/model1/matcher.js:33:15)
+
+  console.log
+    [
+      {
+        C: 'Product Type / Category',
+        E: 'Product / Part Number Description',
+        G: 'Packages',
+        H: 'Net\r\nWeight / Package KG',
+        J: 'Packaging Type',
+        N: 'RMS Number (based on depot)',
+        O: 'Commodity Code'
+      },
+      {
+        E: 'JS Chicken Korma 400g',
+        C: null,
+        O: '0709991000',
+        G: 1,
+        H: 3.15,
+        N: 'RMS-GB-000094-002​'
+      },
+      {
+        E: 'JS TTD Gunpowder Potatoes 250g',
+        C: 'Chilled Indian Meals',
+        O: '1602323090',
+        G: 2,
+        H: null,
+        N: 'RMS-GB-000094-002​'
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:5:11)
+
+  console.log
+    establishmentNumber:  RMS-GB-000094-002
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:8:11)
+
+  console.log
+    packingListContents:  [
+      {
+        description: 'JS Chicken Korma 400g',
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: '0709991000',
+        number_of_packages: 1,
+        total_net_weight_kg: 3.15
+      },
+      {
+        description: 'JS TTD Gunpowder Potatoes 250g',
+        nature_of_products: 'Chilled Indian Meals',
+        type_of_treatment: null,
+        commodity_code: '1602323090',
+        number_of_packages: 2,
+        total_net_weight_kg: null
+      }
+    ]
+
+      at Object.log [as parse] (app/services/parsers/sainsburys/model1/parser.js:18:11)
+
+  console.info
+    Packing list matches Tesco Model 1 with filename:  PackingListTesco1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model1/matcher.js:33:15)
+
+  console.info
+    Packing list matches Tesco Model 1 with filename:  PackingListTesco1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model1/matcher.js:33:15)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/routes/non-ai.test.js:7:14)
+
+  console.error
+    Error: ENOENT: no such file or directory, open '/home/node/app/packing-lists/abc'
+        at Object.openSync (node:fs:600:3)
+        at Object.readFileSync (node:fs:468:35)
+        at read_binary (/home/node/node_modules/xlsx/xlsx.js:1891:44)
+        at readSync (/home/node/node_modules/xlsx/xlsx.js:19491:69)
+        at Object.readFileSync (/home/node/node_modules/xlsx/xlsx.js:19519:9)
+        at convertExcelToJson (/home/node/node_modules/convert-excel-to-json/lib/convert-excel-to-json.js:137:29)
+        at excelToJson (/home/node/app/routes/non-ai.js:15:16)
+        at Object.<anonymous>.exports.Manager.execute (/home/node/node_modules/@hapi/hapi/lib/toolkit.js:57:29)
+        at Object.<anonymous>.internals.handler (/home/node/node_modules/@hapi/hapi/lib/handler.js:46:48)
+        at Object.<anonymous>.exports.execute (/home/node/node_modules/@hapi/hapi/lib/handler.js:31:36)
+        at Request._lifecycle (/home/node/node_modules/@hapi/hapi/lib/request.js:370:68)
+        at processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at Request._execute (/home/node/node_modules/@hapi/hapi/lib/request.js:280:9) {
+      errno: -2,
+      syscall: 'open',
+      code: 'ENOENT',
+      path: '/home/node/app/packing-lists/abc'
+    }
+
+      15 |       result = excelToJson({ sourceFile: filename });
+      16 |     } catch (err) {
+    > 17 |       console.error(err);
+         |               ^
+      18 |     }
+      19 |
+      20 |     const packingList = findParser(result, filename);
+
+      at error (app/routes/non-ai.js:17:15)
+      at Object.<anonymous>.exports.Manager.execute (node_modules/@hapi/hapi/lib/toolkit.js:57:29)
+      at Object.<anonymous>.internals.handler (node_modules/@hapi/hapi/lib/handler.js:46:48)
+      at Object.<anonymous>.exports.execute (node_modules/@hapi/hapi/lib/handler.js:31:36)
+      at Request._lifecycle (node_modules/@hapi/hapi/lib/request.js:370:68)
+      at Request._execute (node_modules/@hapi/hapi/lib/request.js:280:9)
+
+  console.info
+    Failed to parse packing list with filename:  /home/node/app/packing-lists/abc
+
+      at info (app/services/parser-service.js:152:13)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/routes/healthz.test.js:10:14)
+
+  console.error
+    Invalid JSON string provided: SyntaxError: Unexpected token u in JSON at position 0
+        at JSON.parse (<anonymous>)
+        at Object.parse [as sanitises] (/home/node/app/utilities/json-file.js:4:26)
+        at sanitises (/home/node/app/services/parser-service.js:45:43)
+        at Object.findParser [as handler] (/home/node/app/routes/non-ai.js:20:25)
+        at Object.handler (/home/node/test/unit/routes/non-ai.test.js:16:17)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      30 |     return JSON.stringify(jsonObj);
+      31 |   } catch (error) {
+    > 32 |     console.error("Invalid JSON string provided:", error);
+         |             ^
+      33 |     return null;
+      34 |   }
+      35 | }
+
+      at Object.error [as sanitises] (app/utilities/json-file.js:32:13)
+      at sanitises (app/services/parser-service.js:45:43)
+      at Object.findParser [as handler] (app/routes/non-ai.js:20:25)
+      at Object.handler (test/unit/routes/non-ai.test.js:16:17)
+
+  console.info
+    Failed to parse packing list with filename:  /home/node/app/packing-lists/undefined
+
+      at info (app/services/parser-service.js:152:13)
+
+
+=============================== Coverage summary ===============================
+Statements   : 95.04% ( 767/807 )
+Branches     : 92.97% ( 384/413 )
+Functions    : 90.9% ( 100/110 )
+Lines        : 95.06% ( 751/790 )
+================================================================================

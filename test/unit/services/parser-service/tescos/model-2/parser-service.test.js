@@ -1,42 +1,21 @@
-const parserService = require("../../../../../app/services/parser-service");
-const ParserModel = require("../../../../../app/services/parser-model");
+const parserService = require("../../../../../../app/services/parser-service");
+const model = require("../../../../test-helpers/tescos/model-2/data-model");
 
 const filename = "PackingListTesco2.xlsx";
-const packingListJson = {
-  Sheet2: [
-    {
-      A: "Item",
-      B: "Product code",
-      C: "Commodity code",
-      D: "Online Check",
-      E: "Meursing code",
-      F: "Description of goods",
-      G: "Country of Origin",
-      H: "No. of pkgs",
-      I: "Type of pkgs",
-      J: "Total Gross Weight",
-      K: "Total Net Weight",
-      L: "Total Line Value",
-      M: "GB Establishment RMS Number",
-    },
-    {},
-    {
-      M: "RMS-GB-000015-009",
-    },
-  ],
-};
 
 describe("matchesTescosModel2", () => {
   test("matches valid Tescos Model 2 file, calls parser and returns all_required_fields_present as true", () => {
-    const result = parserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual({
-      business_checks: {
-        all_required_fields_present: true,
-      },
-      items: [],
-      registration_approval_number: "RMS-GB-000015-009",
-      parserModel: ParserModel.TESCO2,
-    });
+    expect(result).toEqual(model.validTestResult);
+  });
+
+  test("matches valid Tescos Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
+    const result = parserService.findParser(
+      model.invalidModel_MissingColumnCells,
+      filename,
+    );
+
+    expect(result).toEqual(model.invalidTestResult_MissingCells);
   });
 });

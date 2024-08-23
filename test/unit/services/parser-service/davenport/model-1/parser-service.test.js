@@ -1,4 +1,4 @@
-const ParserService = require("../../../../../app/services/parser-service");
+const parserService = require("../../../../../../app/services/parser-service");
 const ParserModel = require("../../../../../app/services/parser-model");
 
 const filename = "packinglist.xlsx";

@@ -1,4 +1,4 @@
-const parserService = require("../../../../../app/services/parser-service");
+const parserService = require("../../../../../../app/services/parser-service");
 const model = require("../../../test-helpers/nisa/model3/data-model");
 
 const filename = "packinglist-nisa-model-3.xlsx";

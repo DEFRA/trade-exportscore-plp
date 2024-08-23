@@ -1,4 +1,4 @@
-const parserService = require("../../../../../app/services/parser-service");
+const parserService = require("../../../../../../app/services/parser-service");
 const model = require("../../../test-helpers/bandm/model1/data-model");
 
 const filename = "packinglist-bandm-model1.xlsx";
