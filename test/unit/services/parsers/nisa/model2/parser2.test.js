@@ -2,7 +2,7 @@ const Parser = require("../../../../../../app/services/parsers/nisa/model2/parse
 const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseNisa2", () => {
-  test("parses json", () => {
+  test("parses valid json", () => {
     const packingListJson = [
       {
         B: "RMS_ESTABLISHMENT_NO",
@@ -47,7 +47,7 @@ describe("parseNisa2", () => {
     expect(result.parserModel).toBe(ParserModel.NISA2);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = [
       {
         B: "RMS_ESTABLISHMENT_NO",

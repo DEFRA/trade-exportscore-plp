@@ -1,7 +1,7 @@
 const parserCombine = require("../../../app/services/parser-combine");
 
 describe("combineParser", () => {
-  test("parses json", () => {
+  test("parses valid json", () => {
     const registrationApprovalNumber = "test";
     const items = [
       {

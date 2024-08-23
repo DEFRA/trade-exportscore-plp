@@ -2,7 +2,7 @@ const Parser = require("../../../../../../app/services/parsers/tescos/model3/par
 const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseTescoModel3", () => {
-  test("parses json", () => {
+  test("parses valid json", () => {
     const packingListJson = [
       {},
       {},
@@ -56,7 +56,7 @@ describe("parseTescoModel3", () => {
     expect(result.parserModel).toBe(ParserModel.TESCO3);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = [
       {},
       {},

@@ -2,7 +2,7 @@ const Parser = require("../../../../../../app/services/parsers/sainsburys/model1
 const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseSainsburysModel1", () => {
-  test("parses json", () => {
+  test("parses valid json", () => {
     const packingListJson = [
       {
         E: "Product / Part Number Description",
@@ -46,7 +46,7 @@ describe("parseSainsburysModel1", () => {
     expect(result.parserModel).toBe(ParserModel.SAINSBURYS1);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = [
       {
         E: "Product / Part Number Description",

@@ -2,7 +2,7 @@ const Parser = require("../../../../../../app/services/parsers/nisa/model3/parse
 const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseNisa3", () => {
-  test("parses json", () => {
+  test("parses valid json", () => {
     const packingListJson = [
       {
         A: "RMS ESTABLISHMENT NO",
