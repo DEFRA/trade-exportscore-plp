@@ -1,5 +1,5 @@
+const parserService = require("../../../../../app/services/parser-service");
 const ParserModel = require("../../../../../app/services/parser-model");
-const ParserService = require("../../../../../app/services/parser-service");
 
 const filename = "PackingListTesco3.xlsx";
 const packingListJson = {
@@ -23,8 +23,8 @@ const packingListJson = {
 };
 
 describe("matchesTescosModel3", () => {
-  test("matches valid Tescos Model 3 file and calls parser", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+  test("matches valid Tescos Model 3 file, calls parser and returns all_required_fields_present as true", () => {
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
       business_checks: {

@@ -1,39 +1,21 @@
-const ParserService = require("../../../../../app/services/parser-service");
-const ParserModel = require("../../../../../app/services/parser-model");
+const parserService = require("../../../../../app/services/parser-service");
+const model = require("../../../test-helpers/cds/model1/data-model");
 
-const filename = "packinglist.xlsx";
-const packingListJson = {
-  PackingList_Extract: [
-    {
-      A: "TruckID",
-      B: "Dept",
-      C: "SubDept",
-      D: "Product",
-      E: "# Packages",
-      F: "# Units",
-      G: "GrossWeight",
-      H: "NetWeight",
-      I: "NatureOfProduct",
-      J: "Treatment",
-      K: "PlaceOfDispatch",
-    },
-    {
-      K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
-    },
-  ],
-};
+const filename = "packinglist-cds-model-1.xlsx";
 
 describe("matchesCdsModel1", () => {
-  test("matches valid CDS Model 1 file and calls parser", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+  test("matches valid CDS Model 1 file, calls parser and returns all_required_fields_present as true", () => {
+    const result = parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual({
-      business_checks: {
-        all_required_fields_present: true,
-      },
-      items: [],
-      registration_approval_number: "RMS-GB-000252-002",
-      parserModel: ParserModel.CDS1,
-    });
+    expect(result).toEqual(model.validTestResult);
+  });
+
+  test("matches valid CDS Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
+    const result = parserService.findParser(
+      model.invalidModel_MissingColumnCells,
+      filename,
+    );
+
+    expect(result).toEqual(model.invalidTestResult_MissingCells);
   });
 });

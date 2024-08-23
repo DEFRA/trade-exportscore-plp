@@ -25,7 +25,11 @@ function matches(packingListJson, filename) {
       G: "Net Weight",
     };
 
-    return matchesHeader(header, packingListJson[INPUT_DATA_SHEET][4]);
+    let result = matchesHeader(header, packingListJson[INPUT_DATA_SHEET][4]);
+    if (result === MatcherResult.CORRECT) {
+      console.info("Packing list matches Tesco Model 3 with filename: ", filename);
+    }
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

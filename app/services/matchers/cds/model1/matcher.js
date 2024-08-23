@@ -30,7 +30,11 @@ function matches(packingList, filename) {
       J: "Treatment",
     };
 
-    return matchesHeader(header, packingList[sheet][0]);
+    let result = matchesHeader(header, packingList[sheet][0]);
+    if (result === MatcherResult.CORRECT) {
+      console.info("Packing list matches CDS Model 1 with filename: ", filename);
+    }
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

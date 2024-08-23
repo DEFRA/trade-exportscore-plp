@@ -24,7 +24,11 @@ function matches(packingListJson, filename) {
       H: "Treatment Type (Chilled /Ambient)",
     };
 
-    return matchesHeader(header, packingListJson.Tabelle1[1]);
+    let result = matchesHeader(header, packingListJson.Tabelle1[1]);
+    if (result === MatcherResult.CORRECT) {
+      console.info("Packing list matches Buffaload Model 1 with filename: ", filename);
+    }
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

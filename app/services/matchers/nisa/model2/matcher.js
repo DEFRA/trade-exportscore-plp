@@ -24,7 +24,11 @@ function matches(packingList, filename) {
       P: "NET_WEIGHT_TOTAL",
     };
 
-    return matchesHeader(header, packingList[sheet][0]);
+    let result = matchesHeader(header, packingList[sheet][0]);
+    if (result === MatcherResult.CORRECT) {
+      console.info("Packing list matches Nisa Model 2 with filename: ", filename);
+    }
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
