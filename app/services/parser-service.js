@@ -32,6 +32,8 @@ const TescosMatcher3 = require("../services/matchers/tescos/model3/matcher");
 const TescosParser3 = require("../services/parsers/tescos/model3/parser");
 const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
 const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
+const WarrensMatcher = require("../services/matchers/warrens/model1/matcher");
+const WarrensParser = require("../services/parsers/warrens/model1/parser");
 const CombineParser = require("./parser-combine");
 const JsonFile = require("../utilities/json-file");
 
@@ -148,6 +150,11 @@ function findParser(packingList, filename) {
     parsedPackingList = DavenportParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
+  } else if (
+    WarrensMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    parsedPackingList = WarrensParser.parse(sanitisedPackingList);
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
