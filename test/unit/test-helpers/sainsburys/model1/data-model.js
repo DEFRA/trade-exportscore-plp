@@ -123,4 +123,21 @@ module.exports = {
     registration_approval_number: "RMS-GB-000094-002",
     parserModel: ParserModel.SAINSBURYS1,
   },
+  emptyTestResult: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: null,
+        description: null,
+        nature_of_products: null,
+        number_of_packages: null,
+        total_net_weight_kg: null,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: null,
+    parserModel: ParserModel.SAINSBURYS1,
+  },
 };
