@@ -135,4 +135,12 @@ module.exports = {
     registration_approval_number: "RMS-GB-000022-998",
     parserModel: ParserModel.TESCO1,
   },
+  emptyTestResult: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [],
+    registration_approval_number: null,
+    parserModel: ParserModel.TESCO1,
+  },
 };
