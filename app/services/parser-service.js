@@ -12,6 +12,8 @@ const CoopMatcher = require("./matchers/co-op/model1/matcher");
 const CoopParser = require("./parsers/co-op/model1/parser");
 const CdsMatcher = require("./matchers/cds/model1/matcher");
 const CdsParser = require("./parsers/cds/model1/parser");
+const DavenportMatcher = require("./matchers/davenport/model1/matcher");
+const DavenportParser = require("../services/parsers/davenport/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
 const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
@@ -163,6 +165,17 @@ function findParser(packingList, filename) {
   ) {
     console.info("Packing list matches CDS Model 1 with filename: ", filename);
     parsedPackingList = CdsParser.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
+  } else if (
+    DavenportMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    console.info(
+      "Packing list matches Davenport Model 1 with filename: ",
+      filename,
+    );
+    parsedPackingList = DavenportParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
   } else {
