@@ -112,7 +112,27 @@ module.exports = {
     ],
   },
   emptyModel: {
-    Sheet1: [],
+    Sheet1: [
+      {},
+      {},
+      {
+        H: "WAREHOUSE SCHEME NUMBER:",
+        I: null,
+      },
+      {},
+      {},
+      {
+        A: "PRODUCT CODE (SHORT)",
+        B: "PRISM",
+        C: "ITEM DESCRIPTION",
+        D: "COMMODITY CODE",
+        E: "PLACE OF DISPATCH",
+        F: "TOTAL NUMBER OF CASES",
+        G: "NET WEIGHT",
+        H: "GROSS WEIGHT",
+        I: "ANIMAL ORIGIN",
+      },
+    ],
   },
   validTestResult: {
     business_checks: {
@@ -162,6 +182,14 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
+    parserModel: ParserModel.BANDM1,
+  },
+  emptyTestResult: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [],
+    registration_approval_number: null,
     parserModel: ParserModel.BANDM1,
   },
 };

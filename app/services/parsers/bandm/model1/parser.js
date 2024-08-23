@@ -32,12 +32,20 @@ function parse(packingListJson) {
 function isEndOfRow(x) {
   const isTotal = x.F !== null && x.G !== null && x.H !== null;
   const isEmpty =
-    x.A === null &&
-    x.B === null &&
-    x.C === null &&
-    x.D === null &&
-    x.E === null;
+    resetEmpty(x.A) === null &&
+    resetEmpty(x.B) === null &&
+    resetEmpty(x.C) === null &&
+    resetEmpty(x.D) === null &&
+    resetEmpty(x.E) === null;
   return isTotal && isEmpty;
+}
+
+function resetEmpty(str) {
+  if (str === " ") {
+    return null;
+  }
+
+  return str;
 }
 
 module.exports = {
