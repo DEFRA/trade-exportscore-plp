@@ -1,29 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/buffaload-logistics/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/buffaload-logistics/model1/data-model");
 
 describe("matchesBuffaloadLogisticsModel1", () => {
   test("returns Correct", () => {
     const filename = "PackingList.xlsx";
-    const packingListJson = {
-      Tabelle1: [
-        {
-          B: "RMS-GB-000098-001",
-        },
-        {
-          A: "Commodity code",
-          B: "Description of goods",
-          C: "Country of Origin",
-          D: "No. of pkgs",
-          E: "Type of pkgs",
-          F: "Item Gross Weight (kgs)",
-          G: "Item Net Weight (kgs)",
-          H: "Treatment Type (Chilled /Ambient)",
-          I: "NIRMS Lane (R/G)",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });
