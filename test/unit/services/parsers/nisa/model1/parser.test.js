@@ -1,74 +1,16 @@
-const Parser = require("../../../../../../app/services/parsers/nisa/model1/parser");
-const ParserModel = require("../../../../../../app/services/parser-model");
+const parser = require("../../../../../../app/services/parsers/nisa/model1/parser");
+const model = require("../../../../test-helpers/nisa/model1/data-model");
 
 describe("parseNisa", () => {
-  test("parses valid json", () => {
-    const packingListJson = [
-      {
-        A: "RMS_ESTABLISHMENT_NO",
-        I: "PRODUCT_TYPE_CATEGORY",
-        K: "PART_NUMBER_DESCRIPTION",
-        L: "TARIFF_CODE_EU",
-        M: "PACKAGES",
-        O: "NET_WEIGHT_TOTAL",
-      },
-      {
-        A: "RMS-GB-000025-001",
-        I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        K: "DAIRYLEA DUNKERS JUMBO PM80P",
-        L: "2005995090",
-        M: 2,
-        O: 2.5,
-      },
-      {
-        A: "RMS-GB-000025-001",
-        I: "900 - VEGETABLES PREPACK-C",
-        K: "NISA BROCCOLI",
-        L: "0403209300",
-        M: 1,
-        O: 2,
-      },
-    ];
+  test("parses populated json", () => {
+    const result = parser.parse(model.validModel["Customer Order"]);
 
-    const result = Parser.parse(packingListJson);
-
-    expect(result.registration_approval_number).toBe(packingListJson[1].A);
-    expect(result.items).toHaveLength(2);
-    expect(result.items[0].description).toBe(packingListJson[1].K);
-    expect(result.items[1].description).toBe(packingListJson[2].K);
-    expect(result.items[0].nature_of_products).toBe(packingListJson[1].I);
-    expect(result.items[1].nature_of_products).toBe(packingListJson[2].I);
-    expect(result.items[0].commodity_code).toBe(packingListJson[1].L);
-    expect(result.items[1].commodity_code).toBe(packingListJson[2].L);
-    expect(result.items[0].number_of_packages).toBe(packingListJson[1].M);
-    expect(result.items[1].number_of_packages).toBe(packingListJson[2].M);
-    expect(result.items[0].total_net_weight_kg).toBe(packingListJson[1].O);
-    expect(result.items[1].total_net_weight_kg).toBe(packingListJson[2].O);
-    expect(result.parserModel).toBe(ParserModel.NISA1);
+    expect(result).toEqual(model.validTestResult);
   });
 
   test("parses empty json", () => {
-    const packingListJson = [
-      {
-        A: "RMS_ESTABLISHMENT_NO",
-        I: "PRODUCT_TYPE_CATEGORY",
-        K: "PART_NUMBER_DESCRIPTION",
-        L: "TARIFF_CODE_EU",
-        M: "PACKAGES",
-        O: "NET_WEIGHT_TOTAL",
-      },
-      {},
-    ];
+    const result = parser.parse(model.emptyModel["Customer Order"]);
 
-    const result = Parser.parse(packingListJson);
-
-    expect(result.registration_approval_number).toBeNull();
-    expect(result.items).toHaveLength(1);
-    expect(result.items[0].description).toBeNull();
-    expect(result.items[0].nature_of_products).toBeNull();
-    expect(result.items[0].commodity_code).toBeNull();
-    expect(result.items[0].number_of_packages).toBeNull();
-    expect(result.items[0].total_net_weight_kg).toBeNull();
-    expect(result.parserModel).toBe(ParserModel.NISA1);
+    expect(result).toEqual(model.emptyTestResult);
   });
 });
