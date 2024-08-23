@@ -33,7 +33,6 @@ const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
 const CombineParser = require("./parser-combine");
 const JsonFile = require("../utilities/json-file");
 
-const CUSTOMER_ORDER = "Customer Order";
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
 function findParser(packingList, filename) {
@@ -102,9 +101,7 @@ function findParser(packingList, filename) {
     FowlerWelchMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
-    parsedPackingList = FowlerWelchParser.parse(
-      sanitisedPackingList[CUSTOMER_ORDER],
-    );
+    parsedPackingList = FowlerWelchParser.parse(sanitisedPackingList);
   } else if (
     NisaMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT

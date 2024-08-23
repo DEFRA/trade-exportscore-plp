@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingList, filename) {
   const establishmentNumberRow = 1;
@@ -23,17 +24,11 @@ function matches(packingList, filename) {
       I: "NET WEIGHT TOTAL",
     };
 
-    for (const key in header) {
-      if (
-        !packingList[sheet][2] ||
-        packingList[sheet][2][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
+    let result = matchesHeader(header, packingList[sheet][2]);
+    if (result === MatcherResult.CORRECT) {
+      console.info("Packing list matches Nisa Model 3 with filename: ", filename);
     }
-
-    console.info("Packing list matches Nisa Model 3 with filename: ", filename);
-    return MatcherResult.CORRECT;
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
@@ -18,26 +19,16 @@ function matches(packingListJson, filename) {
     const header = {
       A: "Commodity code",
       B: "Description of goods",
-      C: "Country of Origin",
       D: "No. of pkgs",
-      E: "Type of pkgs",
-      F: "Item Gross Weight (kgs)",
       G: "Item Net Weight (kgs)",
       H: "Treatment Type (Chilled /Ambient)",
-      I: "NIRMS Lane (R/G)",
     };
 
-    if (
-      JSON.stringify(packingListJson.Tabelle1[1]) !== JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
+    let result = matchesHeader(header, packingListJson.Tabelle1[1]);
+    if (result === MatcherResult.CORRECT) {
+      console.info("Packing list matches Buffaload Model 1 with filename: ", filename);
     }
-
-    console.info(
-      "Packing list matches Buffaload Logistics Model 1 with filename: ",
-      filename,
-    );
-    return MatcherResult.CORRECT;
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

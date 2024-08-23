@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
@@ -20,27 +21,15 @@ function matches(packingListJson, filename) {
     const header = {
       A: "Product/ Part Number description",
       B: "Tariff Code UK",
-      C: "Treatment Type",
-      D: "Green Lane",
       E: "Packages",
-      F: "Gross Weight",
       G: "Net Weight",
     };
 
-    for (const key in header) {
-      if (
-        !packingListJson[INPUT_DATA_SHEET][4] ||
-        packingListJson[INPUT_DATA_SHEET][4][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
+    let result = matchesHeader(header, packingListJson[INPUT_DATA_SHEET][4]);
+    if (result === MatcherResult.CORRECT) {
+      console.info("Packing list matches Tesco Model 3 with filename: ", filename);
     }
-
-    console.info(
-      "Packing list matches Tesco Model 3 with filename: ",
-      filename,
-    );
-    return MatcherResult.CORRECT;
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

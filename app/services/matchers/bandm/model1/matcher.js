@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
@@ -18,27 +19,21 @@ function matches(packingListJson, filename) {
     }
 
     // check for header values
-    const headerRow = packingListJson.Sheet1.findIndex((x) => x.B === "PRISM");
+    const headerRow = packingListJson.Sheet1.findIndex(
+      (x) => x.D === "COMMODITY CODE",
+    );
     const header = {
-      A: "PRODUCT CODE (SHORT)",
-      B: "PRISM",
       C: "ITEM DESCRIPTION",
       D: "COMMODITY CODE",
-      E: "PLACE OF DISPATCH",
       F: "TOTAL NUMBER OF CASES",
       G: "NET WEIGHT",
-      H: "GROSS WEIGHT",
-      I: "ANIMAL ORIGIN",
     };
-    if (
-      JSON.stringify(packingListJson.Sheet1[headerRow]) !==
-      JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
-    }
 
-    console.info("Packing list matches BandM with filename: ", filename);
-    return MatcherResult.CORRECT;
+    let result = matchesHeader(header, packingListJson.Sheet1[headerRow]);
+    if (result === MatcherResult.CORRECT) {
+      console.info("Packing list matches BandM Model 1 with filename: ", filename);
+    }
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
