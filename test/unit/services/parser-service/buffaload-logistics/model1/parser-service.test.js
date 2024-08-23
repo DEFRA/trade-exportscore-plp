@@ -1,7 +1,7 @@
 const parserService = require("../../../../../../app/services/parser-service");
-const model = require("../../../test-helpers/buffaload-logistics/model1/data-model");
+const model = require("../../../../test-helpers/buffaload-logistics/model1/data-model");
 
-const filename = "PackingList-Buffaload-Model-1.xlsx";
+const filename = "PackingList-Buffaload-model1.xlsx";
 
 describe("matchesBuffaloadModel1", () => {
   test("matches valid Buffaload Model 1 file, calls parser and returns all_required_fields_present as true", () => {
