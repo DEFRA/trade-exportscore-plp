@@ -1,65 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/davenport/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/davenport/model1/data-model");
 
 describe("matchesDavenportModel1", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xlsx";
-    const packingListJson = {
-      Customer_Order: [
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        { C: "RMS-GB-000323-001" },
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {
-          C: "Commodity Code",
-          F: "Description of Goods",
-          H: "No. of Pkgs(X)",
-          K: "Total Net Weight(X)",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });
