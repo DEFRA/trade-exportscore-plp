@@ -1,5 +1,6 @@
-const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-helpers/asda/model2/data-model");
+const parserService = require("../../../../../../app/services/parser-service");
+const model = require("../../../../test-helpers/asda/model2/data-model");
+
 const filename = "packinglist-asda-model2.xls";
 
 describe("matchesAsdaModel2", () => {

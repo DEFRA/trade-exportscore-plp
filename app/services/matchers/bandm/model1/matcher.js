@@ -31,7 +31,10 @@ function matches(packingListJson, filename) {
 
     let result = matchesHeader(header, packingListJson.Sheet1[headerRow]);
     if (result === MatcherResult.CORRECT) {
-      console.info("Packing list matches BandM Model 1 with filename: ", filename);
+      console.info(
+        "Packing list matches BandM Model 1 with filename: ",
+        filename,
+      );
     }
     return result;
   } catch (err) {

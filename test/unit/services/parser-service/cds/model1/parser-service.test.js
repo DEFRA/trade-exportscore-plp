@@ -1,7 +1,7 @@
-const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-helpers/cds/model1/data-model");
+const parserService = require("../../../../../../app/services/parser-service");
+const model = require("../../../../test-helpers/cds/model1/data-model");
 
-const filename = "packinglist-cds-model-1.xlsx";
+const filename = "packinglist-cds-model1.xlsx";
 
 describe("matchesCdsModel1", () => {
   test("matches valid CDS Model 1 file, calls parser and returns all_required_fields_present as true", () => {

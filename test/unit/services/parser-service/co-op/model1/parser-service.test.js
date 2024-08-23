@@ -1,7 +1,7 @@
 const parserService = require("../../../../../../app/services/parser-service");
 const model = require("../../../../test-helpers/co-op/model1/data-model");
 
-const filename = "packinglist-co-op-model-1.xlsx";
+const filename = "packinglist-co-op-model1.xlsx";
 
 describe("matchesCoopModel1", () => {
   test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as true", () => {
