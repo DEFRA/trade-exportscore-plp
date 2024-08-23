@@ -1,43 +1,21 @@
 const parserService = require("../../../../../app/services/parser-service");
-const ParserModel = require("../../../../../app/services/parser-model");
+const model = require("../../../test-helpers/sainsburys/model1/data-model");
 
-const filename = "packinglist.xlsx";
-const packingListJson = {
-  Sheet1: [
-    {
-      A: "Delivery Date",
-      B: "Load Ref\r\n(Trailer Number)",
-      C: "Product Type / Category",
-      D: "Product / Part Number",
-      E: "Product / Part Number Description",
-      F: "Packed Singles",
-      G: "Packages",
-      H: "Net\r\nWeight / Package KG",
-      I: "Gross\r\nWeight / Package KG",
-      J: "Packaging Type",
-      K: "Excise Code",
-      L: "Final Destination ID",
-      M: "Dispatch Unit ID",
-      N: "RMS Number (based on depot)",
-      O: "Commodity Code",
-    },
-    {
-      N: "RMS-GB-000094-001",
-    },
-  ],
-};
+const filename = "packinglist-sainsburys-model-1.xlsx";
 
 describe("matchesSainsburysModel1", () => {
   test("matches valid Sainsburys Model 1 file, calls parser and returns all_required_fields_present as true", () => {
-    const result = parserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual({
-      business_checks: {
-        all_required_fields_present: true,
-      },
-      items: [],
-      registration_approval_number: "RMS-GB-000094-001",
-      parserModel: ParserModel.SAINSBURYS1,
-    });
+    expect(result).toEqual(model.validTestResult);
+  });
+
+  test("matches valid Sainsburys Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
+    const result = parserService.findParser(
+      model.invalidModel_MissingColumnCells,
+      filename,
+    );
+
+    expect(result).toEqual(model.invalidTestResult_MissingCells);
   });
 });

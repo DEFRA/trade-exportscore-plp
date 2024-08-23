@@ -26,7 +26,10 @@ function matches(packingListJson, filename) {
 
     let result = matchesHeader(header, packingListJson.Sheet1[0]);
     if (result === MatcherResult.CORRECT) {
-      console.info("Packing list matches Asda Model 2 with filename: ", filename);
+      console.info(
+        "Packing list matches Asda Model 2 with filename: ",
+        filename,
+      );
     }
     return result;
   } catch (err) {
