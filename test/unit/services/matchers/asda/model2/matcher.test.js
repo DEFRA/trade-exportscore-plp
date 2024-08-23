@@ -1,27 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/asda/model2/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/asda/model2/data-model");
 
 describe("matchesAsdaModel2", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xls";
-    const packingListJson = {
-      Sheet1: [
-        {
-          B: "[Description Of All Retail Go",
-          D: "[Nature Of Product]",
-          F: "[Treatment Ty",
-          H: "Establishment Number",
-          J: "Cases",
-          L: "Case Weight",
-          N: "NET Weight",
-        },
-        {
-          H: "RMS-GB-000015-010",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });

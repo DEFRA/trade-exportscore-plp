@@ -1,30 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/tescos/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/tescos/model1/data-model");
 
 describe("matchesTescoModel1", () => {
   test("returns Correct", () => {
     const filename = "PackingListTesco1.xlsx";
-    const packingListJson = {
-      "Input Data Sheet": [
-        {},
-        {},
-        {},
-        {
-          AT: "RMS-GB-000022-998",
-        },
-        {
-          G: "Product/ Part Number description",
-          L: "Tariff Code UK",
-          AS: "Treatment Type",
-          AT: "Green Lane",
-          BR: "Packages",
-          BT: "Gross Weight",
-          BU: "Net Weight",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });

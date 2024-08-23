@@ -1,31 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/cds/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/cds/model1/data-model");
 
 describe("matchesCdsModel1", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xlsx";
-    const packingListJson = {
-      PackingList_Extract: [
-        {
-          A: "TruckID",
-          B: "Dept",
-          C: "SubDept",
-          D: "Product",
-          E: "# Packages",
-          F: "# Units",
-          G: "GrossWeight",
-          H: "NetWeight",
-          I: "NatureOfProduct",
-          J: "Treatment",
-          K: "PlaceOfDispatch",
-        },
-        {
-          K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });

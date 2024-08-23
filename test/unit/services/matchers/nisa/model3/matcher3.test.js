@@ -1,42 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/nisa/model3/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/nisa/model3/data-model");
 
 describe("matchesNisa3", () => {
   test("returns Correct", () => {
     const filename = "PackingList.xlsx";
-    const packingListJson = {
-      sheet: [
-        {
-          A: "RMS_ESTABLISHMENT_NO",
-        },
-        {
-          A: "RMS-GB-000025-003",
-        },
-        {
-          C: "PRODUCT TYPE CATEGORY",
-          E: "PART NUMBER DESCRIPTION",
-          F: "TARIFF CODE EU",
-          G: "PACKAGES",
-          I: "NET WEIGHT TOTAL",
-        },
-        {
-          C: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-          E: "DAIRYLEA DUNKERS JUMBO PM80P",
-          F: "2005995090",
-          G: 2,
-          I: 2.5,
-        },
-        {
-          C: "900 - VEGETABLES PREPACK-C",
-          E: "NISA BROCCOLI",
-          F: "0403209300",
-          G: 1,
-          I: 2,
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });
