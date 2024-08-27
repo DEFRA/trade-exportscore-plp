@@ -34,6 +34,9 @@ const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
 const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
 const CombineParser = require("./parser-combine");
 const JsonFile = require("../utilities/json-file");
+const {
+  STATS_COLLECTION_SHORT_INTERVAL,
+} = require("applicationinsights/out/AutoCollection/Statsbeat");
 
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
@@ -164,6 +167,7 @@ function findParser(packingList, filename) {
           x.total_net_weight_kg === null
         ),
     );
+    parsedPackingList.items = checkType(parsedPackingList.items);
 
     parsedPackingList.business_checks.all_required_fields_present =
       checkRequiredData(parsedPackingList);
@@ -199,9 +203,20 @@ function checkRequiredData(packingList) {
     hasRemos
   );
 }
-
+function checkType(packingList) {
+  for (let i = 0; i < packingList.length; i++) {
+    if (isNaN(Number(packingList[i].number_of_packages))) {
+      packingList[i].number_of_packages = null;
+    }
+    if (isNaN(Number(packingList[i].total_net_weight_kg))) {
+      packingList[i].total_net_weight_kg = null;
+    }
+  }
+  return packingList;
+}
 module.exports = {
   failedParser,
   findParser,
   checkRequiredData,
+  checkType,
 };
