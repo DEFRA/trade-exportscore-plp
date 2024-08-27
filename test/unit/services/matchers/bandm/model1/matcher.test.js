@@ -5,7 +5,7 @@ const model = require("../../../../test-helpers/bandm/model1/data-model");
 describe("matchesBandMModel1", () => {
   test("returns correct", () => {
     const filename = "packinglist.xlsx";
-    
+
     const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
