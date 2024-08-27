@@ -42,9 +42,9 @@ function matches(packingList, filename) {
       for (const key in header) {
         if (
           (key === "K" &&
-            !packingList[sheet][headerRow][key].includes("Net Weight")) ||
+            !packingList[sheet][headerRow][key].toLowerCase().includes("net weight")) ||
           (key !== "K" &&
-            !packingList[sheet][headerRow][key].startsWith(header[key]))
+            !packingList[sheet][headerRow][key].toLowerCase().startsWith(header[key].toLowerCase()))
         ) {
           return MatcherResult.WRONG_HEADER;
         }
