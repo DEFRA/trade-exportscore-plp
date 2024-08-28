@@ -1,26 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/nisa/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/nisa/model1/data-model");
 
 describe("matchesNisa", () => {
   test("returns Correct", () => {
     const filename = "PackingList.xlsx";
-    const packingListJson = {
-      Something: [
-        {
-          A: "RMS_ESTABLISHMENT_NO",
-          I: "PRODUCT_TYPE_CATEGORY",
-          K: "PART_NUMBER_DESCRIPTION",
-          L: "TARIFF_CODE_EU",
-          M: "PACKAGES",
-          O: "NET_WEIGHT_TOTAL",
-        },
-        {
-          A: "RMS-GB-000025-009",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });

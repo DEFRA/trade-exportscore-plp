@@ -1,33 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/bandm/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/bandm/model1/data-model");
 
 describe("matchesBandMModel1", () => {
   test("returns correct", () => {
     const filename = "packinglist.xlsx";
-    const packingListJson = {
-      Sheet1: [
-        {},
-        {},
-        {
-          H: "WAREHOUSE SCHEME NUMBER:",
-          I: "RMS-GB-000005-001",
-        },
-        {},
-        {},
-        {
-          A: "PRODUCT CODE (SHORT)",
-          B: "PRISM",
-          C: "ITEM DESCRIPTION",
-          D: "COMMODITY CODE",
-          E: "PLACE OF DISPATCH",
-          F: "TOTAL NUMBER OF CASES",
-          G: "NET WEIGHT",
-          H: "GROSS WEIGHT",
-          I: "ANIMAL ORIGIN",
-        },
-      ],
-    };
-    const result = Matcher.matches(packingListJson, filename);
+
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });

@@ -1,25 +1,12 @@
 const Matcher = require("../../../../../../app/services/matchers/co-op/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
+const model = require("../../../../test-helpers/co-op/model1/data-model");
 
-describe("matchesAsdaModel1", () => {
+describe("matchesCoopModel1", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xlsx";
-    const packingListJson = {
-      PackingList_Extract: [
-        {
-          E: "Dispatch RMS Establishment",
-          O: "Product/ Part Number description",
-          P: "Tariff Code EU",
-          Q: "Packages",
-          S: "NW total",
-        },
-        {
-          E: "RMS-GB-000009-001",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
   });

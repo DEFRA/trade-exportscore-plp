@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
@@ -20,21 +21,18 @@ function matches(packingListJson, filename) {
       A: "[Description Of All Retail Goods]",
       B: "[Nature Of Product]",
       C: "[Treatment Type]",
-      D: "[Number Of Establishment]",
-      E: "[Destination Store Establishment Number]",
       F: "[Number of Packages]",
       G: "[Net Weight]",
-      H: "[kilograms/grams]",
     };
 
-    if (
-      JSON.stringify(packingListJson.PackingList_Extract[0]) !==
-      JSON.stringify(header)
-    ) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
+    let result = matchesHeader(header, packingListJson.PackingList_Extract[0]);
+    if (result === MatcherResult.CORRECT) {
+      console.info(
+        "Packing list matches Asda Model 1 with filename: ",
+        filename,
+      );
     }
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

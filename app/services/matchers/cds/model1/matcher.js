@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingList, filename) {
   const establishmentNumberRow = 1;
@@ -22,29 +23,21 @@ function matches(packingList, filename) {
 
     // check for header values
     const header = {
-      A: "TruckID",
-      B: "Dept",
-      C: "SubDept",
       D: "Product",
       E: "# Packages",
-      F: "# Units",
-      G: "GrossWeight",
       H: "NetWeight",
       I: "NatureOfProduct",
       J: "Treatment",
-      K: "PlaceOfDispatch",
     };
 
-    for (const key in header) {
-      if (
-        !packingList[sheet][0] ||
-        packingList[sheet][0][key] !== header[key]
-      ) {
-        return MatcherResult.WRONG_HEADER;
-      }
+    let result = matchesHeader(header, packingList[sheet][0]);
+    if (result === MatcherResult.CORRECT) {
+      console.info(
+        "Packing list matches CDS Model 1 with filename: ",
+        filename,
+      );
     }
-
-    return MatcherResult.CORRECT;
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

@@ -55,7 +55,7 @@ describe("matchesTjmorris", () => {
           L: "Description",
           M: "Item",
           N: "Description",
-          O: "Tariff/Commodity",
+          O: "Incorrect",
           P: "Cases",
           Q: "Gross Weight Kg",
           R: "Net Weight Kg",

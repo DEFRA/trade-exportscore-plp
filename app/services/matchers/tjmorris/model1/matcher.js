@@ -1,7 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
-
-const COUNTRY_OF_ORIGIN = "Country of Origin";
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
@@ -18,38 +17,22 @@ function matches(packingListJson, filename) {
 
     // check for header values
     const header = {
-      A: "Consignor / Place o f Despatch",
-      B: "CONSIGNEE",
-      C: "Trailer",
-      D: "Seal",
-      E: "Store",
-      F: "STORENAME",
-      G: "Order",
-      H: "Cage/Ref",
-      I: "Group",
       J: "TREATMENTTYPE",
-      K: "Sub-Group",
       L: "Description",
-      M: "Item",
       N: "Description",
       O: "Tariff/Commodity",
       P: "Cases",
-      Q: "Gross Weight Kg",
       R: "Net Weight Kg",
-      S: "Cost",
-      T: COUNTRY_OF_ORIGIN,
-      U: "VAT Status",
-      V: "SPS",
-      W: "Consignment ID",
-      X: "Processed?",
-      Y: "Created Timestamp",
     };
 
-    if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) {
-      return MatcherResult.WRONG_HEADER;
-    } else {
-      return MatcherResult.CORRECT;
+    let result = matchesHeader(header, packingListJson.Sheet1[0]);
+    if (result === MatcherResult.CORRECT) {
+      console.info(
+        "Packing list matches TJ Morris Model 1 with filename: ",
+        filename,
+      );
     }
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

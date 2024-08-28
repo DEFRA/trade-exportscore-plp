@@ -1,41 +1,9 @@
 const ParserModel = require("../../../../../../app/services/parser-model");
 const Parser = require("../../../../../../app/services/parsers/asda/model1/parser");
-
+const model = require("../../../../test-helpers/asda/model1/data-model");
 describe("parseAsdaModel1", () => {
   test("parses json", () => {
-    const packingListJson = [
-      {
-        A: "[Description Of All Retail Goods]",
-        B: "[Nature Of Product]",
-        C: "[Treatment Type]",
-        D: "[Number Of Establishment]",
-        E: "[Destination Store Establishment Number]",
-        F: "[Number of Packages]",
-        G: "[Net Weight]",
-        H: "[kilograms/grams]",
-      },
-      {
-        A: "169 STOREY TREEHOUSE",
-        B: "BOOKS",
-        C: "GM",
-        D: "RMS-GB-000015-006",
-        E: "RMS-NI-000008-017",
-        F: 2,
-        G: 0.38,
-        H: "kgs",
-      },
-      {
-        A: "19 CRIMES",
-        B: "WINES",
-        C: "AMBIENT",
-        D: "RMS-GB-000015-006",
-        E: "RMS-NI-000008-017",
-        F: 1,
-        G: 0.3457,
-        H: "kgs",
-      },
-    ];
-
+    const packingListJson = model.validModel.PackingList_Extract;
     const result = Parser.parse(packingListJson);
 
     expect(result.registration_approval_number).toBe(packingListJson[1].D);
@@ -54,21 +22,7 @@ describe("parseAsdaModel1", () => {
   });
 
   test("parses null json", () => {
-    const packingListJson = [
-      {
-        A: "[Description Of All Retail Goods]",
-        B: "[Nature Of Product]",
-        C: "[Treatment Type]",
-        D: "[Number Of Establishment]",
-        E: "[Destination Store Establishment Number]",
-        F: "[Number of Packages]",
-        G: "[Net Weight]",
-        H: "[kilograms/grams]",
-      },
-      {
-        D: null,
-      },
-    ];
+    const packingListJson = model.emptyModel.PackingList_Extract;
 
     const result = Parser.parse(packingListJson);
 
@@ -82,3 +36,4 @@ describe("parseAsdaModel1", () => {
     expect(result.parserModel).toBe(ParserModel.ASDA1);
   });
 });
+module.exports = {};
