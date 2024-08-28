@@ -16,6 +16,8 @@ const DavenportMatcher = require("./matchers/davenport/model1/matcher");
 const DavenportParser = require("../services/parsers/davenport/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
+const KepakMatcher = require("../services/matchers/kepak/model1/matcher");
+const KepakParser = require("../services/parsers/kepak/model1/parser");
 const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
 const NisaParser = require("../services/parsers/nisa/model1/parser");
 const NisaMatcher2 = require("../services/matchers/nisa/model2/matcher");
@@ -146,6 +148,13 @@ function findParser(packingList, filename) {
       filename,
     );
     parsedPackingList = DavenportParser.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
+  } else if (
+    KepakMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    parsedPackingList = KepakParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
   } else {
