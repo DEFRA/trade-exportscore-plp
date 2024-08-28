@@ -6,13 +6,11 @@ function matches(packingList, filename) {
 
   try {
     // check for correct extension
-
     if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
 
     //check for correct establishment number
-
     const sheets = Object.keys(packingList);
 
     if (sheets.length === 0) {
@@ -20,23 +18,17 @@ function matches(packingList, filename) {
     }
 
     for (let sheet of sheets) {
-      console.log(sheet);
       headerRow = packingList[sheet].findIndex(
         (x) => x.F === "Description of goods",
       );
 
       let establishmentNumber = packingList[sheet][headerRow + 1].M;
-      console.log(establishmentNumber);
-      if (establishmentNumber === undefined) {
-        establishmentNumber = packingList[sheet][headerRow + 2].M;
-      }
       const regex = /^RMS-GB-000174-\d{3}$/;
       if (!regex.test(establishmentNumber)) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
-
       const header = {
         C: "Commodity code",
         F: "Description of goods",
@@ -47,7 +39,6 @@ function matches(packingList, filename) {
 
       for (const key in header) {
         if (!packingList[sheet][headerRow][key].startsWith(header[key])) {
-          console.log(packingList[sheet][headerRow][key]);
           return MatcherResult.WRONG_HEADER;
         }
       }
@@ -56,7 +47,6 @@ function matches(packingList, filename) {
     console.info("Packing list matches Warrens with filename: ", filename);
     return MatcherResult.CORRECT;
   } catch (err) {
-    console.log(err);
     return MatcherResult.GENERIC_ERROR;
   }
 }

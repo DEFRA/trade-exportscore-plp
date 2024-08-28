@@ -26,7 +26,7 @@ function parse(packingListJson) {
         type_of_treatment: col.N ?? null,
         commodity_code: col.C ?? null,
         number_of_packages: col.H ?? null,
-        total_net_weight_kg: col.K ?? null,
+        total_net_weight_kg: col.L ?? null,
       }));
 
     packingListContents = packingListContents.concat(packingListContentsTemp);
