@@ -14,7 +14,7 @@ async function sendParsedAdp(parsedResult, applicationId) {
   );
 }
 
-async function sendParsed(parsedResult, applicationId) {
+async function sendParsed(applicationId, parsedResult) {
   const credential = new DefaultAzureCredential({
     managedIdentityClientId: config.tpQueue.managedIdentityClientId,
     tenantId: config.tpQueue.tenantId,

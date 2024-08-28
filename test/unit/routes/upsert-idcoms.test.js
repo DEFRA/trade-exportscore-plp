@@ -2,6 +2,7 @@ const upsertIdcoms = require("../../../app/routes/upsert-idcoms");
 const mockResponse = { response: 200, code: 200 };
 
 jest.mock("../../../app/services/dynamics-service");
+jest.mock("../../../app/messaging/send-parsed-message");
 
 const {
   patchPackingListCheck,
@@ -10,6 +11,8 @@ const {
 patchPackingListCheck.mockImplementation(() => {
   return mockResponse;
 });
+
+const { sendParsed } = require("../../../app/messaging/send-parsed-message");
 
 const mockApplicationId = 123;
 
@@ -76,5 +79,16 @@ describe("upsert idcoms", () => {
       mockApplicationId,
       false,
     );
+  });
+
+  test("should call sendParsed when isDynamicsIntegration is false", async () => {
+    mockIsDynamicsIntegration = false;
+    const response = await upsertIdcoms.options.handler(
+      { query: { applicationId: mockApplicationId, isApproved: true } },
+      mockHandler,
+    );
+
+    expect(response).toBe(200);
+    expect(sendParsed).toHaveBeenCalledWith(mockApplicationId, true);
   });
 });

@@ -11,8 +11,27 @@ const { DefaultAzureCredential } = require("@azure/identity");
 jest.mock("../../../app/config");
 jest.mock("adp-messaging");
 jest.mock("../../../app/messaging/create-message");
-jest.mock("@azure/service-bus");
 jest.mock("@azure/identity");
+
+jest.mock("@azure/service-bus", () => {
+  return {
+    ServiceBusClient: jest.fn().mockImplementation(() => {
+      return {
+        createSender: jest.fn().mockImplementation(() => {
+          return {
+            sendMessages: mockSendMessages,
+            close: mockClose,
+          };
+        }),
+        close: mockSbClose,
+      };
+    }),
+  };
+});
+
+let mockSendMessages = jest.fn();
+let mockClose = jest.fn();
+let mockSbClose = jest.fn();
 
 describe("sendParsedAdp", () => {
   test("should send a message", async () => {
@@ -43,8 +62,11 @@ describe("sendParsed", () => {
     await sendParsed(true, "123");
 
     //assert
-    expect(createMessage).toHaveBeenCalledWith(true, "123");
+    expect(createMessage).toHaveBeenCalledWith("123", true);
     expect(DefaultAzureCredential).toHaveBeenCalledTimes(1);
     expect(ServiceBusClient).toHaveBeenCalledTimes(1);
+    expect(mockSendMessages).toHaveBeenCalledTimes(1);
+    expect(mockSbClose).toHaveBeenCalledTimes(1);
+    expect(mockClose).toHaveBeenCalledTimes(1);
   });
 });

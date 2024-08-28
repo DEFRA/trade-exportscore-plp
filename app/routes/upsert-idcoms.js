@@ -18,8 +18,8 @@ module.exports = {
             );
           } else {
             await sendParsed(
-              request.query.isApproved,
               request.query.applicationId,
+              request.query.isApproved,
             );
             checkStatus = StatusCodes.OK;
           }
