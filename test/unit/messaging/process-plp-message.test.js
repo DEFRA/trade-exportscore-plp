@@ -96,15 +96,4 @@ describe("processPlpMessage", () => {
     await messageAction(message, receiver);
     expect(receiver.abandonMessage).toHaveBeenCalled();
   });
-
-  // test("should call sendParsed when isDynamicsIntegration is false", async () => {
-  //   mockIsDynamicsIntegration = false;
-  //   const message = {
-  //     body: { packing_list_blob: "https://example.com/path/doesnt/matter" },
-  //     application_id: 123,
-  //   };
-  //   await processPlpMessage(message, receiver);
-
-  //   expect(sendParsed).toHaveBeenCalledTimes(1);
-  // });
 });

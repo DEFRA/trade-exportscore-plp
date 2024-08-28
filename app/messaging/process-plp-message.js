@@ -23,7 +23,7 @@ async function processPlpMessage(message, receiver) {
     if (packingList.parserModel !== ParserModel.NOMATCH) {
       await createPackingList(packingList, message.body.application_id);
       console.info(
-        `Business checks for ${message.body.application_id}: ${packingList.business_checks}`,
+        `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
       );
       if (config.isDynamicsIntegration) {
         await patchPackingListCheck(

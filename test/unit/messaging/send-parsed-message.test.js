@@ -54,6 +54,10 @@ describe("sendParsedAdp", () => {
 });
 
 describe("sendParsed", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test("should send message", async () => {
     // arrange
     const message = {};
@@ -68,5 +72,22 @@ describe("sendParsed", () => {
     expect(mockSendMessages).toHaveBeenCalledTimes(1);
     expect(mockSbClose).toHaveBeenCalledTimes(1);
     expect(mockClose).toHaveBeenCalledTimes(1);
+  });
+
+  test("should error", async () => {
+    // arrange
+    const message = {};
+    createMessage.mockReturnValue(message);
+    mockSendMessages.mockImplementationOnce(new Error());
+    // act
+    await sendParsed(true, "123");
+
+    //assert
+    expect(createMessage).toHaveBeenCalledWith("123", true);
+    expect(DefaultAzureCredential).toHaveBeenCalledTimes(1);
+    expect(ServiceBusClient).toHaveBeenCalledTimes(1);
+    expect(mockSendMessages).toHaveBeenCalledTimes(1);
+    expect(mockSbClose).toHaveBeenCalledTimes(1);
+    expect(mockClose).toHaveBeenCalledTimes(0);
   });
 });
