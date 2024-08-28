@@ -16,6 +16,8 @@ const DavenportMatcher = require("./matchers/davenport/model1/matcher");
 const DavenportParser = require("../services/parsers/davenport/model1/parser");
 const FowlerWelchMatcher = require("../services/matchers/fowlerwelch/model1/matcher");
 const FowlerWelchParser = require("../services/parsers/fowlerwelch/model1/parser");
+const KepakMatcher = require("../services/matchers/kepak/model1/matcher");
+const KepakParser = require("../services/parsers/kepak/model1/parser");
 const NisaMatcher = require("../services/matchers/nisa/model1/matcher");
 const NisaParser = require("../services/parsers/nisa/model1/parser");
 const NisaMatcher2 = require("../services/matchers/nisa/model2/matcher");
@@ -148,6 +150,13 @@ function findParser(packingList, filename) {
     parsedPackingList = DavenportParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
+  } else if (
+    KepakMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    parsedPackingList = KepakParser.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
@@ -164,6 +173,7 @@ function findParser(packingList, filename) {
           x.total_net_weight_kg === null
         ),
     );
+    parsedPackingList.items = checkType(parsedPackingList.items);
 
     parsedPackingList.business_checks.all_required_fields_present =
       checkRequiredData(parsedPackingList);
@@ -199,9 +209,20 @@ function checkRequiredData(packingList) {
     hasRemos
   );
 }
-
+function checkType(packingList) {
+  for (let i = 0; i < packingList.length; i++) {
+    if (isNaN(Number(packingList[i].number_of_packages))) {
+      packingList[i].number_of_packages = null;
+    }
+    if (isNaN(Number(packingList[i].total_net_weight_kg))) {
+      packingList[i].total_net_weight_kg = null;
+    }
+  }
+  return packingList;
+}
 module.exports = {
   failedParser,
   findParser,
   checkRequiredData,
+  checkType,
 };
