@@ -1,7 +1,7 @@
-const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-helpers/nisa/model1/data-model");
+const parserService = require("../../../../../../app/services/parser-service");
+const model = require("../../../../test-helpers/nisa/model1/data-model");
 
-const filename = "packinglist-nisa-model-1.xlsx";
+const filename = "packinglist-nisa-model1.xlsx";
 
 describe("findParser", () => {
   test("matches valid Nisa Model 1 file, calls parser and returns all_required_fields_present as true", () => {

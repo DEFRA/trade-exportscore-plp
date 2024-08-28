@@ -1,5 +1,5 @@
-const ParserService = require("../../../../../app/services/parser-service");
-const ParserModel = require("../../../../../app/services/parser-model");
+const parserService = require("../../../../../../app/services/parser-service");
+const ParserModel = require("../../../../../../app/services/parser-model");
 
 const filename = "packinglist.xlsx";
 const packingListJson = {
@@ -59,7 +59,7 @@ const packingListJson = {
 
 describe("matchesDavenportModel1", () => {
   test("matches valid Davenport Model 1 file and calls parser", () => {
-    const result = ParserService.findParser(packingListJson, filename);
+    const result = parserService.findParser(packingListJson, filename);
 
     expect(result).toEqual({
       business_checks: {

@@ -26,7 +26,10 @@ function matches(packingList, filename) {
 
     let result = matchesHeader(header, packingList[sheet][2]);
     if (result === MatcherResult.CORRECT) {
-      console.info("Packing list matches Nisa Model 3 with filename: ", filename);
+      console.info(
+        "Packing list matches Nisa Model 3 with filename: ",
+        filename,
+      );
     }
     return result;
   } catch (err) {
