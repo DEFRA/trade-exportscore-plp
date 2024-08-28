@@ -34,9 +34,6 @@ const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
 const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
 const CombineParser = require("./parser-combine");
 const JsonFile = require("../utilities/json-file");
-const {
-  STATS_COLLECTION_SHORT_INTERVAL,
-} = require("applicationinsights/out/AutoCollection/Statsbeat");
 
 const INPUT_DATA_SHEET = "Input Data Sheet";
 

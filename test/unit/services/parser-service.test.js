@@ -261,16 +261,17 @@ describe("checkType", () => {
           nature_of_products: null,
           type_of_treatment: "Type C",
           commodity_code: "Text",
-          number_of_packages: null,
-          total_net_weight_kg: null,
+          number_of_packages: "Text",
+          total_net_weight_kg: "Text",
         },
       ],
       business_checks: {
         all_required_fields_present: false,
       },
     };
-    const result = parserService.checkRequiredData(packingList);
-    expect(result).toBeFalsy();
+    const result = parserService.checkType(packingList.items);
+    expect(result[0].number_of_packages).toBeNull();
+    expect(result[0].total_net_weight_kg).toBeNull();
   });
   test("Number of pkgs and total net weight are both numbers", () => {
     const packingList = {
@@ -289,7 +290,8 @@ describe("checkType", () => {
         all_required_fields_present: true,
       },
     };
-    const result = parserService.checkRequiredData(packingList);
-    expect(result).toBeTruthy();
+    const result = parserService.checkType(packingList.items);
+    expect(result[0].number_of_packages).toBe(1);
+    expect(result[0].total_net_weight_kg).toBe(1.4155);
   });
 });
