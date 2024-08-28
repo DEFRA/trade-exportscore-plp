@@ -42,7 +42,6 @@ patchPackingListCheck.mockImplementation(() => {
   return jest.fn();
 });
 
-
 MessageReceiver.mockImplementation(() => {
   return {
     subscribe: jest.fn(),
