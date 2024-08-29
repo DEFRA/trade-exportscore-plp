@@ -17,6 +17,7 @@ const ParserModel = {
   COOP1: "coop-1",
   DAVENPORT1: "davenport-1",
   GIOVANNI1: "giovanni-1",
+  KEPAK1: "kepak-1",
 };
 
 module.exports = ParserModel;
