@@ -18,8 +18,6 @@ const {
   patchPackingListCheck,
 } = require("../../../app/services/dynamics-service");
 const ParserModel = require("../../../app/services/parser-model");
-const processPlpMessage = require("../../../app/messaging/process-plp-message");
-const { sendParsed } = require("../../../app/messaging/send-parsed-message");
 
 createStorageAccountClient.mockImplementation(() => {
   return jest.fn();

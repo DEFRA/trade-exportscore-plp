@@ -15,26 +15,32 @@ async function sendParsedAdp(parsedResult, applicationId) {
 }
 
 async function sendParsed(applicationId, parsedResult) {
-  const credential = new DefaultAzureCredential({
-    managedIdentityClientId: config.tpQueue.managedIdentityClientId,
-    tenantId: config.tpQueue.tenantId,
-  });
+  if (config.tpQueue.managedIdentityClientId) {
+    const credential = new DefaultAzureCredential({
+      managedIdentityClientId: config.tpQueue.managedIdentityClientId,
+      tenantId: config.tpQueue.tenantId,
+    });
 
-  const sbClient = new ServiceBusClient(config.tpQueue.host, credential);
-  const sender = sbClient.createSender(config.tpQueue.address);
+    const sbClient = new ServiceBusClient(config.tpQueue.host, credential);
+    const sender = sbClient.createSender(config.tpQueue.address);
 
-  const message = createMessage(parsedResult, applicationId);
+    const message = createMessage(parsedResult, applicationId);
 
-  try {
-    await sender.sendMessages(message);
-    console.info(
-      `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
+    try {
+      await sender.sendMessages(message);
+      console.info(
+        `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
+      );
+      await sender.close();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      await sbClient.close();
+    }
+  } else {
+    console.error(
+      "Service Bus connection to TP has not been initialised because 'config.tpQueue.managedIdentityClientId' is missing.",
     );
-    await sender.close();
-  } catch (err) {
-    console.error(err);
-  } finally {
-    await sbClient.close();
   }
 }
 
