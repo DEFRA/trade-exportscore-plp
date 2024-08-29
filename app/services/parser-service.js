@@ -32,6 +32,8 @@ const TescosMatcher3 = require("../services/matchers/tescos/model3/matcher");
 const TescosParser3 = require("../services/parsers/tescos/model3/parser");
 const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
 const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
+const GiovanniMatcher = require("./matchers/giovanni/model1/matcher");
+const GiovanniParser = require("./parsers/giovanni/model1/parser");
 const CombineParser = require("./parser-combine");
 const JsonFile = require("../utilities/json-file");
 
@@ -148,24 +150,32 @@ function findParser(packingList, filename) {
     parsedPackingList = DavenportParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
+  } else if (
+    GiovanniMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    parsedPackingList = GiovanniParser.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
-
   if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
     parsedPackingList.items = parsedPackingList.items.filter(
       (x) =>
         !(
-          x.description === null &&
-          x.nature_of_products === null &&
-          x.type_of_treatment === null &&
-          x.commodity_code === null &&
-          x.number_of_packages === null &&
-          x.total_net_weight_kg === null
+          (x.description === null || x.description === undefined) &&
+          (x.nature_of_products === null ||
+            x.nature_of_products === undefined) &&
+          (x.type_of_treatment === null || x.type_of_treatment === undefined) &&
+          (x.commodity_code === null || x.commodity_code === undefined) &&
+          (x.number_of_packages === null ||
+            x.number_of_packages === undefined) &&
+          (x.total_net_weight_kg === null ||
+            x.total_net_weight_kg === undefined)
         ),
     );
     parsedPackingList.items = checkType(parsedPackingList.items);
-
     parsedPackingList.business_checks.all_required_fields_present =
       checkRequiredData(parsedPackingList);
   }
