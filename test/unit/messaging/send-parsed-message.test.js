@@ -8,10 +8,17 @@ const createMessage = require("../../../app/messaging/create-message");
 const { ServiceBusClient } = require("@azure/service-bus");
 const { DefaultAzureCredential } = require("@azure/identity");
 
-jest.mock("../../../app/config");
 jest.mock("adp-messaging");
 jest.mock("../../../app/messaging/create-message");
 jest.mock("@azure/identity");
+
+jest.mock("../../../app/config", () => {
+  return {
+    tpQueue: {
+      managedIdentityClientId: "123",
+    },
+  };
+});
 
 jest.mock("@azure/service-bus", () => {
   return {
