@@ -1,73 +1,21 @@
 const parserService = require("../../../../../../app/services/parser-service");
-const ParserModel = require("../../../../../../app/services/parser-model");
+const model = require("../../../../test-helpers/davenport/model1/data-model");
 
-const filename = "packinglist.xlsx";
-const packingListJson = {
-  PackingList_Extract: [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    { C: "RMS-GB-000323-001" },
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {
-      C: "Commodity Code",
-      F: "Description of Goods",
-      H: "No. of Pkgs(180)",
-      K: "Total Net Weight(X)",
-    },
-  ],
-};
+const filename = "packinglist-davenport-model1.xlsx";
 
 describe("matchesDavenportModel1", () => {
-  test("matches valid Davenport Model 1 file and calls parser", () => {
-    const result = parserService.findParser(packingListJson, filename);
+  test("matches valid Davenport Model 1 file, calls parser and returns all_required_fields_present as true", () => {
+    const result = parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual({
-      business_checks: {
-        all_required_fields_present: true,
-      },
-      items: [],
-      registration_approval_number: "RMS-GB-000323-001",
-      parserModel: ParserModel.DAVENPORT1,
-    });
+    expect(result).toEqual(model.validTestResult);
+  });
+
+  test("matches valid Davenport Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
+    const result = parserService.findParser(
+      model.invalidModel_MissingColumnCells,
+      filename,
+    );
+
+    expect(result).toEqual(model.invalidTestResult_MissingCells);
   });
 });

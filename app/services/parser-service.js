@@ -24,6 +24,8 @@ const NisaMatcher2 = require("../services/matchers/nisa/model2/matcher");
 const NisaParser2 = require("../services/parsers/nisa/model2/parser");
 const NisaMatcher3 = require("../services/matchers/nisa/model3/matcher");
 const NisaParser3 = require("../services/parsers/nisa/model3/parser");
+const NutriciaMatcher = require("../services/matchers/nutricia/model1/matcher");
+const NutriciaParser = require("../services/parsers/nutricia/model1/parser");
 const SainsburysMatcher = require("../services/matchers/sainsburys/model1/matcher");
 const SainsburysParser = require("../services/parsers/sainsburys/model1/parser");
 const TescosMatcher = require("../services/matchers/tescos/model1/matcher");
@@ -165,6 +167,13 @@ function findParser(packingList, filename) {
     MatcherResult.CORRECT
   ) {
     parsedPackingList = KepakParser.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
+  } else if (
+    NutriciaMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    parsedPackingList = NutriciaParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
   } else {

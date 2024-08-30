@@ -1,73 +1,10 @@
 const ParserModel = require("../../../../../../app/services/parser-model");
 const Parser = require("../../../../../../app/services/parsers/davenport/model1/parser");
+const model = require("../../../../test-helpers/davenport/model1/data-model");
 
 describe("parseDavenportModel1", () => {
   test("parses json", () => {
-    const packingListJson = [
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      { C: "RMS-GB-000323-001" },
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {
-        C: "Commodity Code",
-        F: "Description of Goods",
-        H: "No. of Pkgs(180)",
-        K: "Total Net Weight(X)",
-      },
-
-      {
-        C: "709200010",
-        F: "ASPARAGUS BUNDLE",
-        H: "160",
-        K: "40.000",
-      },
-      {
-        C: "709599000",
-        F: "OYSTER MUSHROOM",
-        H: "20",
-        K: "30.000",
-      },
-    ];
+    const packingListJson = model.validModel.Customer_Order;
 
     const result = Parser.parse(packingListJson);
 
@@ -87,62 +24,7 @@ describe("parseDavenportModel1", () => {
   });
 
   test("parses null json", () => {
-    const packingListJson = [
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      { C: null },
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {
-        C: "Commodity Code",
-        F: "Description of Goods",
-        H: "No. of Pkgs(180)",
-        K: "Total Net Weight(X)",
-      },
-
-      {
-        C: null,
-      },
-    ];
+    const packingListJson = model.emptyModel.PackingList_Extract;
 
     const result = Parser.parse(packingListJson);
 
