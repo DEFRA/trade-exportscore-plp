@@ -15,12 +15,6 @@ const mqConfig = {
     topic: process.env.PLP_TOPIC_ADDRESS,
     type: "subscription",
   },
-  parsedQueue: {
-    name: process.env.PARSED_QUEUE_NAME,
-    address: process.env.PARSED_QUEUE_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
-  },
 };
 
 const plpSubscription = {
@@ -28,12 +22,15 @@ const plpSubscription = {
   ...mqConfig.plpSubscription,
 };
 
-const parsedQueue = {
-  ...mqConfig.messageQueue,
-  ...mqConfig.parsedQueue,
+const tpQueue = {
+  useCredentialChain: process.env.NODE_ENV === "production",
+  host: process.env.TP_QUEUE_HOST,
+  address: process.env.TP_QUEUE_ADDRESS,
+  managedIdentityClientId: process.env.TP_CLIENT_ID,
+  tenantId: process.env.TP_TENANT_ID,
 };
 
 module.exports = {
   plpSubscription,
-  parsedQueue,
+  tpQueue,
 };

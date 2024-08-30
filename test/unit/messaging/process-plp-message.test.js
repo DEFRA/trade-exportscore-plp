@@ -5,6 +5,7 @@ jest.mock("../../../app/services/parser-service");
 jest.mock("../../../app/services/storage-account");
 jest.mock("../../../app/packing-list");
 jest.mock("../../../app/services/dynamics-service");
+jest.mock("../../../app/messaging/send-parsed-message");
 
 const { MessageReceiver } = require("adp-messaging");
 const { findParser } = require("../../../app/services/parser-service");
@@ -27,6 +28,9 @@ getXlsPackingListFromBlob.mockImplementation(() => {
 findParser.mockImplementation(() => {
   return {
     parserModel: ParserModel.NISA1,
+    business_checks: {
+      all_required_fields_present: true,
+    },
   };
 });
 createPackingList.mockImplementation(() => {
@@ -45,6 +49,17 @@ MessageReceiver.mockImplementation(() => {
   };
 });
 
+jest.mock("../../../app/config", () => {
+  return {
+    ...jest.requireActual("../../../app/config"),
+    get isDynamicsIntegration() {
+      return mockIsDynamicsIntegration;
+    },
+  };
+});
+
+let mockIsDynamicsIntegration = true;
+
 describe("processPlpMessage", () => {
   let receiver;
 
@@ -52,6 +67,10 @@ describe("processPlpMessage", () => {
     jest.clearAllMocks();
     receiver = new MessageReceiver();
     MessageReceiver.mockImplementation(() => receiver);
+  });
+
+  afterEach(async () => {
+    mockIsDynamicsIntegration = true;
   });
 
   test("should process a message", async () => {

@@ -1,13 +1,47 @@
 const config = require("../config");
 const { MessageSender } = require("adp-messaging");
 const createMessage = require("./create-message");
+const { ServiceBusClient } = require("@azure/service-bus");
+const { DefaultAzureCredential } = require("@azure/identity");
 
-async function sendParsed(parsedResult) {
-  const message = createMessage(parsedResult);
-  const parsedSender = new MessageSender(config.parsedQueue);
+async function sendParsedAdp(parsedResult, applicationId) {
+  const message = createMessage(parsedResult, applicationId);
+  const parsedSender = new MessageSender(config.tpQueue);
   await parsedSender.sendMessage(message);
   await parsedSender.closeConnection();
-  console.info("Sent parsed result for: ", parsedResult);
+  console.info(
+    `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
+  );
 }
 
-module.exports = { sendParsed };
+async function sendParsed(applicationId, parsedResult) {
+  if (config.tpQueue.managedIdentityClientId) {
+    const credential = new DefaultAzureCredential({
+      managedIdentityClientId: config.tpQueue.managedIdentityClientId,
+      tenantId: config.tpQueue.tenantId,
+    });
+
+    const sbClient = new ServiceBusClient(config.tpQueue.host, credential);
+    const sender = sbClient.createSender(config.tpQueue.address);
+
+    const message = createMessage(parsedResult, applicationId);
+
+    try {
+      await sender.sendMessages(message);
+      console.info(
+        `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
+      );
+      await sender.close();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      await sbClient.close();
+    }
+  } else {
+    console.error(
+      "Service Bus connection to TP has not been initialised because 'config.tpQueue.managedIdentityClientId' is missing.",
+    );
+  }
+}
+
+module.exports = { sendParsed, sendParsedAdp };

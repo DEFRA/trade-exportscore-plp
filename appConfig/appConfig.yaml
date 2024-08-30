@@ -18,10 +18,6 @@
   value: "eutd-trade-exports-core-plp-subscription-01"
 - key: PLP_SUBSCRIPTION_NAME
   value: "eutd-trade-exports-core-plp-subscription-01"
-- key: PARSED_QUEUE_ADDRESS
-  value: "eutd-trade-exports-core-parsed"
-- key: PARSED_QUEUE_NAME
-  value: "eutd-trade-exports-core-parsed"
 - key: APPINSIGHTS_CONNECTIONSTRING
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
@@ -40,3 +36,11 @@
 - key: DYNAMICS_APPLICATION_ID
   value: "{{servicename}}-DYNAMICS-APPLICATION-ID"
   type: "keyvault"
+- key: IS_DYNAMICS_INTEGRATION
+  value: "{{servicename}}-IS-DYNAMICS-INTEGRATION"
+  type: "keyvault"
+- key: TP_CLIENT_ID
+  value: "{{servicename}}-TP-CLIENT-ID"
+  type: "keyvault"
+- key: TP_QUEUE_ADDRESS
+  value: "defra.trade.plp.parsed"

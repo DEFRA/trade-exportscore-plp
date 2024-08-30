@@ -5,7 +5,9 @@ const {
 } = require("../services/storage-account");
 const { createPackingList } = require("../packing-list");
 const { patchPackingListCheck } = require("../services/dynamics-service");
+const config = require("../config");
 const ParserModel = require("../services/parser-model");
+const { sendParsed } = require("../messaging/send-parsed-message");
 
 async function processPlpMessage(message, receiver) {
   try {
@@ -20,10 +22,20 @@ async function processPlpMessage(message, receiver) {
 
     if (packingList.parserModel !== ParserModel.NOMATCH) {
       await createPackingList(packingList, message.body.application_id);
-      await patchPackingListCheck(
-        message.body.application_id,
-        packingList.business_checks.all_required_fields_present,
+      console.info(
+        `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
       );
+      if (config.isDynamicsIntegration) {
+        await patchPackingListCheck(
+          message.body.application_id,
+          packingList.business_checks.all_required_fields_present,
+        );
+      } else {
+        await sendParsed(
+          message.body.application_id,
+          packingList.business_checks.all_required_fields_present,
+        );
+      }
     }
   } catch (err) {
     console.error("Unable to process message:", err);

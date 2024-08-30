@@ -37,9 +37,12 @@ value.isProd = value.env === production;
 
 value.dbConfig = dbConfig;
 value.plpSubscription = mqConfig.plpSubscription;
-value.parsedQueue = mqConfig.parsedQueue;
+value.tpQueue = mqConfig.tpQueue;
 value.dynamicsConfig = dynamicsConfig;
 
 value.plDir = path.join(process.cwd(), "/app/packing-lists/");
+
+// TP/IDCOMS toggle
+value.isDynamicsIntegration = process.env.IS_DYNAMICS_INTEGRATION === "true";
 
 module.exports = value;

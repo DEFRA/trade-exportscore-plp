@@ -4,3 +4,7 @@
   value: "preadpdbsps1401.postgres.database.azure.com"
 - key: POSTGRES_USERNAME
   value: "preadpinfmi1401-trade-exportscore-plp"
+- key: TP_QUEUE_HOST
+  value: "PRETREINFSB1001.servicebus.windows.net"
+- key: TP_TENANT_ID
+  value: "9e1ba897-3a49-4461-b406-377db4ec2959"
