@@ -34,11 +34,14 @@ const TescosMatcher3 = require("../services/matchers/tescos/model3/matcher");
 const TescosParser3 = require("../services/parsers/tescos/model3/parser");
 const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
 const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
+const GiovanniMatcher = require("./matchers/giovanni/model1/matcher");
+const GiovanniParser = require("./parsers/giovanni/model1/parser");
 const CombineParser = require("./parser-combine");
 const JsonFile = require("../utilities/json-file");
 
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
+const isNullOrUndefined = (value) => value === null || value === undefined;
 function findParser(packingList, filename) {
   let parsedPackingList = failedParser();
 
@@ -151,6 +154,13 @@ function findParser(packingList, filename) {
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
   } else if (
+    GiovanniMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    parsedPackingList = GiovanniParser.parse(
+      sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
+    );
+  } else if (
     KepakMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
@@ -160,21 +170,11 @@ function findParser(packingList, filename) {
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
-
   if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
     parsedPackingList.items = parsedPackingList.items.filter(
-      (x) =>
-        !(
-          x.description === null &&
-          x.nature_of_products === null &&
-          x.type_of_treatment === null &&
-          x.commodity_code === null &&
-          x.number_of_packages === null &&
-          x.total_net_weight_kg === null
-        ),
+      (x) => !Object.values(x).every(isNullOrUndefined),
     );
     parsedPackingList.items = checkType(parsedPackingList.items);
-
     parsedPackingList.business_checks.all_required_fields_present =
       checkRequiredData(parsedPackingList);
   }
