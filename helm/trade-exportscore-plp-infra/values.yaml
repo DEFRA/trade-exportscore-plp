@@ -14,11 +14,6 @@ namespaceTopics:
     topicSubscriptions:
       - name: plp-subscription-01
 
-namespaceQueues:
-  - name: parsed
-    roleAssignments:
-      - roleName: 'QueueSender'
-
 storageAccounts:
   - name: tradeplp
     roleAssignments:
