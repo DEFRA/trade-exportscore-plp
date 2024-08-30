@@ -108,4 +108,24 @@ module.exports = {
     registration_approval_number: "RMS-GB-000153",
     parserModel: ParserModel.GIOVANNI1,
   },
+  incorrectEstablishmentNumber: {
+    RANA: [
+      {
+        A: "INCORRECT",
+      },
+    ],
+  },
+  incorrectHeader: {
+    RANA: [
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "NOT",
+        G: "CORRECT",
+        H: "HEADER",
+        E: "Commodity Code",
+      },
+    ],
+  },
 };
