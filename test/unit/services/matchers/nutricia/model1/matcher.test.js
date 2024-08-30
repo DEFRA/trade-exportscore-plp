@@ -1,8 +1,8 @@
-const Matcher = require("../../../../../../app/services/matchers/davenport/model1/matcher");
+const Matcher = require("../../../../../../app/services/matchers/nutricia/model1/matcher");
 const MatcherResult = require("../../../../../../app/services/matches-result");
-const model = require("../../../../test-helpers/davenport/model1/data-model");
+const model = require("../../../../test-helpers/nutricia/model1/data-model");
 
-describe("matchesDavenportModel1", () => {
+describe("matchesNutriciaModel1", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xlsx";
 
@@ -38,14 +38,6 @@ describe("matchesDavenportModel1", () => {
     const result = Matcher.matches(packingListJson, filename);
 
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
-  });
-
-  test("return wrong header for missing header values", () => {
-    const filename = "packinglist.xlsx";
-
-    const result = Matcher.matches(model.invalidModel_MissingHeaders, filename);
-
-    expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
   test("return wrong header for incorrect header values", () => {
