@@ -16,8 +16,7 @@ function matches(packingList, filename) {
 
     const establishmentNumber =
       packingList[sheet][establishmentNumberRow + 1].A;
-    const regex = /^RMS-GB-000153/;
-    if (!regex.test(establishmentNumber)) {
+    if (!establishmentNumber.startsWith("RMS-GB-000153")) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
