@@ -32,7 +32,7 @@ function matches(packingList, filename) {
     const headerRow = packingList[sheet].findIndex(
       (x) => x.C === "DESCRIPTION",
     );
-    let result = matchesHeader(header, packingList[sheet][headerRow]);
+    const result = matchesHeader(header, packingList[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Giovanni Model 1 with filename: ",

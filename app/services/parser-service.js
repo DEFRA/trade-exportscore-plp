@@ -41,6 +41,7 @@ const JsonFile = require("../utilities/json-file");
 
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
+const isNullOrUndefined = (value) => value === null || value === undefined;
 function findParser(packingList, filename) {
   let parsedPackingList = failedParser();
 
@@ -171,18 +172,7 @@ function findParser(packingList, filename) {
   }
   if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
     parsedPackingList.items = parsedPackingList.items.filter(
-      (x) =>
-        !(
-          (x.description === null || x.description === undefined) &&
-          (x.nature_of_products === null ||
-            x.nature_of_products === undefined) &&
-          (x.type_of_treatment === null || x.type_of_treatment === undefined) &&
-          (x.commodity_code === null || x.commodity_code === undefined) &&
-          (x.number_of_packages === null ||
-            x.number_of_packages === undefined) &&
-          (x.total_net_weight_kg === null ||
-            x.total_net_weight_kg === undefined)
-        ),
+      (x) => !Object.values(x).every(isNullOrUndefined),
     );
     parsedPackingList.items = checkType(parsedPackingList.items);
     parsedPackingList.business_checks.all_required_fields_present =
