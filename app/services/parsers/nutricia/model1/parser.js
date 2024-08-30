@@ -2,8 +2,10 @@ const ParserModel = require("../../../parser-model");
 const CombineParser = require("../../../parser-combine");
 
 function parse(packingListJson) {
-  const establishmentNumberRow = 12;
-  const dataRow = 21;
+  const establishmentNumberRow =
+    packingListJson.findIndex((x) => x.A === "NIRMS NUMBER") + 1;
+  const headerRow = packingListJson.findIndex((x) => x.C === "DESCRIPTION");
+  const dataRow = headerRow + 1;
 
   const establishmentNumber = packingListJson[establishmentNumberRow].A ?? null;
   const packingListContents = packingListJson.slice(dataRow).map((col) => ({
