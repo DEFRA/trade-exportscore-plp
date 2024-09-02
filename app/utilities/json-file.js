@@ -4,7 +4,7 @@ function sanitises(jsonString) {
     const jsonObj = JSON.parse(jsonString);
     // Recursively sanitise the JSON object
     function sanitiseObject(obj) {
-      for (let key in obj) {
+      for (const key in obj) {
         // Ensure only properties directly on the object are being processed
         if (obj.hasOwnProperty(key)) {
           let value = obj[key];

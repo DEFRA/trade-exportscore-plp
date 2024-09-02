@@ -25,7 +25,10 @@ function matches(packingListJson, filename) {
       G: "[Net Weight]",
     };
 
-    let result = matchesHeader(header, packingListJson.PackingList_Extract[0]);
+    const result = matchesHeader(
+      header,
+      packingListJson.PackingList_Extract[0],
+    );
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Asda Model 1 with filename: ",

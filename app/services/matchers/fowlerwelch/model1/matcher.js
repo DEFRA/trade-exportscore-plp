@@ -19,7 +19,7 @@ function matches(packingList, filename) {
       throw new Error("generic error");
     }
 
-    for (let sheet of sheets) {
+    for (const sheet of sheets) {
       headerRow = packingList[sheet].findIndex(
         (x) => x.F === "Description of goods",
       );
