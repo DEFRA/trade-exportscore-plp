@@ -74,10 +74,10 @@ describe("parseWarrensModel1", () => {
       packingListJson["sheet"][2].H,
     );
     expect(result.items[0].total_net_weight_kg).toBe(
-      packingListJson["sheet"][1].L,
+      packingListJson["sheet"][1].K,
     );
     expect(result.items[1].total_net_weight_kg).toBe(
-      packingListJson["sheet"][2].L,
+      packingListJson["sheet"][2].K,
     );
     expect(result.items[0].type_of_treatment).toBe(
       packingListJson["sheet"][1].N,
@@ -213,10 +213,10 @@ describe("parseWarrensModel1", () => {
       packingListJson["sheet"][2].H,
     );
     expect(result.items[0].total_net_weight_kg).toBe(
-      packingListJson["sheet"][1].L,
+      packingListJson["sheet"][1].K,
     );
     expect(result.items[1].total_net_weight_kg).toBe(
-      packingListJson["sheet"][2].L,
+      packingListJson["sheet"][2].K,
     );
     expect(result.items[0].type_of_treatment).toBe(
       packingListJson["sheet"][1].N,
@@ -236,10 +236,10 @@ describe("parseWarrensModel1", () => {
       packingListJson["sheet2"][2].H,
     );
     expect(result.items[2].total_net_weight_kg).toBe(
-      packingListJson["sheet2"][1].L,
+      packingListJson["sheet2"][1].K,
     );
     expect(result.items[3].total_net_weight_kg).toBe(
-      packingListJson["sheet2"][2].L,
+      packingListJson["sheet2"][2].K,
     );
     expect(result.items[2].type_of_treatment).toBe(
       packingListJson["sheet2"][1].N,

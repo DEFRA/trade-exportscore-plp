@@ -63,7 +63,12 @@ function matchesModel(packingList, filename, remosNumber, trader) {
 }
 
 function matches(packingList, filename) {
-  return matchesModel(packingList, filename, /^RMS-GB-000216-\d{3}$/, "Fowler Welch")
+  return matchesModel(
+    packingList,
+    filename,
+    /^RMS-GB-000216-\d{3}$/,
+    "Fowler Welch",
+  );
 }
 
 module.exports = { matches, matchesModel };

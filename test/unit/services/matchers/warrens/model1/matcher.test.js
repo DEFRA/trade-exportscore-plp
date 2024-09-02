@@ -39,7 +39,7 @@ describe("matchesWarrens1", () => {
           C: "Commodity code",
           F: "Description of goods",
           H: "No. of pkgs",
-          L: "Item value",
+          K: "Item Net Weight (kgs)",
           N: "Treatment Type (Chilled /Ambient)",
         },
         {
@@ -68,7 +68,7 @@ describe("matchesWarrens1", () => {
           C: "Incorrect",
           F: "Description of goods",
           H: "No. of pkgs",
-          L: "Item value",
+          K: "Item Net Weight (kgs)",
           N: "Treatment Type (Chilled /Ambient)",
         },
         {
@@ -88,7 +88,7 @@ describe("matchesWarrens1", () => {
           C: "Commodity code",
           F: "Description of goods",
           H: "No. of pkgs",
-          L: "Item value",
+          K: "Item Net Weight (kgs)",
           N: "Treatment Type (Chilled /Ambient)",
         },
         {
@@ -100,7 +100,7 @@ describe("matchesWarrens1", () => {
           C: "Incorrect",
           F: "Description of goods",
           H: "No. of pkgs",
-          L: "Item value",
+          K: "Item Net Weight (kgs)",
           N: "Treatment Type (Chilled /Ambient)",
         },
         {
@@ -120,7 +120,7 @@ describe("matchesWarrens1", () => {
           C: "Commodity code",
           F: "Description of goods",
           H: "No. of pkgs",
-          L: "Item value",
+          K: "Item Net Weight (kgs)",
           N: "Treatment Type (Chilled /Ambient)",
         },
         {
@@ -140,7 +140,7 @@ describe("matchesWarrens1", () => {
           C: "Commodity code",
           F: "Description of goods",
           H: "No. of pkgs",
-          L: "Item value",
+          K: "Item Net Weight (kgs)",
           N: "Treatment Type (Chilled /Ambient)",
         },
         {
@@ -152,7 +152,7 @@ describe("matchesWarrens1", () => {
           C: "Commodity code",
           F: "Description of goods",
           H: "No. of pkgs",
-          L: "Item value",
+          K: "Item Net Weight (kgs)",
           N: "Treatment Type (Chilled /Ambient)",
         },
         {

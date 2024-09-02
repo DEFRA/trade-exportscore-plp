@@ -41,7 +41,7 @@ function parseModel(packingListJson, model) {
 }
 
 function parse(packingListJson) {
-  return parseModel(packingListJson, ParserModel.FOWLERWELCH1)
+  return parseModel(packingListJson, ParserModel.FOWLERWELCH1);
 }
 
 module.exports = { parse, parseModel };
