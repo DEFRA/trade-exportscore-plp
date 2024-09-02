@@ -1,7 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 
-function matches(packingList, filename) {
+function matchesModel(packingList, filename, remosNumber, trader) {
   let headerRow = 0;
 
   try {
@@ -24,8 +24,8 @@ function matches(packingList, filename) {
         (x) => x.F === "Description of goods",
       );
       const establishmentNumber = packingList[sheet][headerRow + 1].M;
-      const regex = /^RMS-GB-000216-\d{3}$/;
-      if (!regex.test(establishmentNumber)) {
+      //const remosNumber = /^RMS-GB-000216-\d{3}$/;
+      if (!remosNumber.test(establishmentNumber)) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
@@ -55,11 +55,15 @@ function matches(packingList, filename) {
       }
     }
 
-    console.info("Packing list matches Fowler Welch with filename: ", filename);
+    console.info(`Packing list matches ${trader} with filename: ${filename}`);
     return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
 }
 
-module.exports = { matches };
+function matches(packingList, filename) {
+  return matchesModel(packingList, filename, /^RMS-GB-000216-\d{3}$/, "Fowler Welch")
+}
+
+module.exports = { matches, matchesModel };
