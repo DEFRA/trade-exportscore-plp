@@ -1,7 +1,7 @@
 const MatcherResult = require("../../../../../../app/services/matches-result");
 const fowlerWelchMatcher = require("../../../../../../app/services/matchers/fowlerwelch/model1/matcher");
 
-describe("matchesFowlerWelch2", () => {
+describe("matchesFowlerWelch", () => {
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
