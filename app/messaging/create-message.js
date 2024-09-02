@@ -8,9 +8,9 @@ function createMessage(parsedResult, applicationId) {
     },
     type: "uk.gov.trade.plp",
     source: "trade-exportscore-plp",
-    MessageId: v4(),
-    CorrelationId: v4(),
-    Label: "plp.idcoms.parsed",
+    messageId: v4(),
+    correlationId: v4(),
+    label: "plp.idcoms.parsed",
     applicationProperties: {
       ContentType: "application/json",
       EntityKey: applicationId,
