@@ -1,5 +1,5 @@
 const config = require("../config");
-const excelToJson = require("convert-excel-to-json");
+const excelToJson = require("@boterop/convert-excel-to-json");
 const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const { StatusCodes } = require("http-status-codes");

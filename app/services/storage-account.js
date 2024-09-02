@@ -1,4 +1,4 @@
-const excelToJson = require("convert-excel-to-json");
+const excelToJson = require("@boterop/convert-excel-to-json");
 const { BlobClient } = require("@azure/storage-blob");
 const { DefaultAzureCredential } = require("@azure/identity");
 
