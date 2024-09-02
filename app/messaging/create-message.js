@@ -19,7 +19,7 @@ function createMessage(parsedResult, applicationId) {
       Type: "Internal",
       Status: "Complete",
       TimestampUtc: Date.now(),
-    }
+    },
   };
 }
 
