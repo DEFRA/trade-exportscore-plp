@@ -14,11 +14,9 @@ function matches(packingList, filename) {
     const establishmentNumber =
       packingList[sheet][establishmentNumberRow].A ?? [];
 
-    const regex = /^RMS-GB-000280$/;
-    if (!regex.test(establishmentNumber)) {
+    if (!establishmentNumber.startsWith("RMS-GB-000280")) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
-
     // check for header values
     const headerRow = 20;
     const header = {
@@ -28,7 +26,7 @@ function matches(packingList, filename) {
       H: "Net Weight (KG)",
     };
 
-    let result = matchesHeader(header, packingList[sheet][headerRow]);
+    const result = matchesHeader(header, packingList[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Kepak Model 1 with filename: ",

@@ -50,9 +50,9 @@ function findParser(packingList, filename) {
   let parsedPackingList = failedParser();
 
   // Sanitised packing list (i.e. emove trailing spaces and empty cells)
-  let packingListJson = JSON.stringify(packingList);
-  let sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
-  let sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+  const packingListJson = JSON.stringify(packingList);
+  const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
+  const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
 
   if (
     TjMorrisMatcher.matches(sanitisedPackingList, filename) ===
@@ -226,12 +226,12 @@ function checkRequiredData(packingList) {
   );
 }
 function checkType(packingList) {
-  for (let i = 0; i < packingList.length; i++) {
-    if (isNaN(Number(packingList[i].number_of_packages))) {
-      packingList[i].number_of_packages = null;
+  for (const x of packingList) {
+    if (isNaN(Number(x.number_of_packages))) {
+      x.number_of_packages = null;
     }
-    if (isNaN(Number(packingList[i].total_net_weight_kg))) {
-      packingList[i].total_net_weight_kg = null;
+    if (isNaN(Number(x.total_net_weight_kg))) {
+      x.total_net_weight_kg = null;
     }
   }
   return packingList;

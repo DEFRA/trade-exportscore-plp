@@ -16,8 +16,7 @@ function matches(packingList, filename) {
     const establishmentNumber =
       packingList[sheet][establishmentNumberRow].A ?? [];
 
-    const regex = /^RMS-GB-000133$/;
-    if (!regex.test(establishmentNumber)) {
+    if (!establishmentNumber.startsWith("RMS-GB-000133")) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
@@ -32,7 +31,7 @@ function matches(packingList, filename) {
       H: "Net Weight (KG)",
     };
 
-    let result = matchesHeader(header, packingList[sheet][headerRow]);
+    const result = matchesHeader(header, packingList[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Nutricia Model 1 with filename: ",

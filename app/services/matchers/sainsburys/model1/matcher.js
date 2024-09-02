@@ -28,7 +28,7 @@ function matches(packingListJson, filename) {
       O: "Commodity Code",
     };
 
-    let result = matchesHeader(header, packingListJson.Sheet1[0]);
+    const result = matchesHeader(header, packingListJson.Sheet1[0]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Sainsburys Model 1 with filename: ",

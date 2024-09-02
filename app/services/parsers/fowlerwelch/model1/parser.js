@@ -13,12 +13,12 @@ function parseModel(packingListJson, model) {
   const establishmentNumber =
     packingListJson[sheets[0]][headerRow + 1].M ?? null;
 
-  for (let i = 0; i < sheets.length; i++) {
-    headerRow = packingListJson[sheets[i]].findIndex(
+  for (const sheet of sheets) {
+    headerRow = packingListJson[sheet].findIndex(
       (x) => x.M === "NIIRMS Dispatch number",
     );
 
-    packingListContentsTemp = packingListJson[sheets[i]]
+    packingListContentsTemp = packingListJson[sheet]
       .slice(headerRow + 1)
       .map((col) => ({
         description: col.F ?? null,

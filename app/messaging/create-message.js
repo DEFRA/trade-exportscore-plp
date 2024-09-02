@@ -8,16 +8,18 @@ function createMessage(parsedResult, applicationId) {
     },
     type: "uk.gov.trade.plp",
     source: "trade-exportscore-plp",
-    MessageId: v4(),
-    CorrelationId: v4(),
-    ContentType: "application/json",
-    EntityKey: applicationId,
-    PublisherId: "PLP",
-    SchemaVersion: 1,
-    Type: "Internal",
-    Status: "Complete",
-    TimestampUtc: Date.now(),
-    Label: "plp.idcoms.parsed",
+    messageId: v4(),
+    correlationId: v4(),
+    subject: "plp.idcoms.parsed",
+    contentType: "application/json",
+    applicationProperties: {
+      EntityKey: applicationId,
+      PublisherId: "PLP",
+      SchemaVersion: 1,
+      Type: "Internal",
+      Status: "Complete",
+      TimestampUtc: Date.now(),
+    },
   };
 }
 
