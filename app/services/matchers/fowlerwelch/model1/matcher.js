@@ -24,7 +24,6 @@ function matchesModel(packingList, filename, remosNumber, trader) {
         (x) => x.F === "Description of goods",
       );
       const establishmentNumber = packingList[sheet][headerRow + 1].M;
-      //const remosNumber = /^RMS-GB-000216-\d{3}$/;
       if (!remosNumber.test(establishmentNumber)) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
