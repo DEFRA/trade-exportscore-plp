@@ -1,5 +1,5 @@
 const nonai = require("../../../app/routes/non-ai");
-jest.mock("convert-excel-to-json");
+jest.mock("@boterop/convert-excel-to-json");
 
 describe("/non-ai", () => {
   test("should return success", async () => {
