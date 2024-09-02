@@ -10,9 +10,9 @@ function createMessage(parsedResult, applicationId) {
     source: "trade-exportscore-plp",
     messageId: v4(),
     correlationId: v4(),
-    label: "plp.idcoms.parsed",
+    subject: "plp.idcoms.parsed",
+    contentType: "application/json",
     applicationProperties: {
-      ContentType: "application/json",
       EntityKey: applicationId,
       PublisherId: "PLP",
       SchemaVersion: 1,
