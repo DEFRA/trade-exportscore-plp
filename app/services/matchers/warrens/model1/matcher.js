@@ -17,12 +17,12 @@ function matches(packingList, filename) {
       throw new Error("generic error");
     }
 
-    for (let sheet of sheets) {
+    for (const sheet of sheets) {
       headerRow = packingList[sheet].findIndex(
         (x) => x.F === "Description of goods",
       );
 
-      let establishmentNumber = packingList[sheet][headerRow + 1].M;
+      const establishmentNumber = packingList[sheet][headerRow + 1].M;
       const regex = /^RMS-GB-000174-\d{3}$/;
       if (!regex.test(establishmentNumber)) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
