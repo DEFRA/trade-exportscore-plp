@@ -7,6 +7,9 @@ describe("matchesWarrensModel1", () => {
   test("matches valid Warrens Model 1 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(model.validModel, filename);
 
+    expect(result.registration_approval_number).toEqual(
+      model.validTestResult.registration_approval_number,
+    );
     expect(result).toEqual(model.validTestResult);
   });
 

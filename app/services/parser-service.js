@@ -186,6 +186,7 @@ function findParser(packingList, filename) {
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
+
   if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
     parsedPackingList.items = parsedPackingList.items.filter(
       (x) => !Object.values(x).every(isNullOrUndefined),

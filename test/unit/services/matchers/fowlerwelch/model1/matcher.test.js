@@ -43,7 +43,7 @@ describe("matchesFowlerWelch", () => {
     );
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
-  
+
   test("returns wrong header for incorrect header values of multiple sheets", () => {
     const filename = "packinglist.xlsx";
     const result = fowlerWelchMatcher.matches(
