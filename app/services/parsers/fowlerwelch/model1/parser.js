@@ -1,7 +1,7 @@
 const CombineParser = require("../../../parser-combine");
 const ParserModel = require("../../../parser-model");
 
-function parse(packingListJson) {
+function parseModel(packingListJson, model) {
   const sheets = Object.keys(packingListJson);
   let packingListContents = [];
   let packingListContentsTemp = [];
@@ -36,8 +36,12 @@ function parse(packingListJson) {
     establishmentNumber,
     packingListContents,
     true,
-    ParserModel.FOWLERWELCH1,
+    model,
   );
 }
 
-module.exports = { parse };
+function parse(packingListJson) {
+  return parseModel(packingListJson, ParserModel.FOWLERWELCH1);
+}
+
+module.exports = { parse, parseModel };

@@ -38,6 +38,8 @@ const TjMorrisMatcher = require("../services/matchers/tjmorris/model1/matcher");
 const TjMorrisParser = require("../services/parsers/tjmorris/model1/parser");
 const GiovanniMatcher = require("./matchers/giovanni/model1/matcher");
 const GiovanniParser = require("./parsers/giovanni/model1/parser");
+const WarrensMatcher = require("../services/matchers/warrens/model1/matcher");
+const WarrensParser = require("../services/parsers/warrens/model1/parser");
 const CombineParser = require("./parser-combine");
 const JsonFile = require("../utilities/json-file");
 
@@ -176,9 +178,15 @@ function findParser(packingList, filename) {
     parsedPackingList = NutriciaParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
+  } else if (
+    WarrensMatcher.matches(sanitisedPackingList, filename) ===
+    MatcherResult.CORRECT
+  ) {
+    parsedPackingList = WarrensParser.parse(sanitisedPackingList);
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
+
   if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
     parsedPackingList.items = parsedPackingList.items.filter(
       (x) => !Object.values(x).every(isNullOrUndefined),

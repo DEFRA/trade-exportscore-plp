@@ -19,6 +19,7 @@ const ParserModel = {
   GIOVANNI1: "giovanni-1",
   KEPAK1: "kepak-1",
   NUTRICIA1: "nutricia-1",
+  WARRENS1: "warrens-1",
 };
 
 module.exports = ParserModel;
