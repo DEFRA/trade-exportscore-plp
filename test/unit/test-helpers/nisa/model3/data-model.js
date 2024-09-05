@@ -128,4 +128,12 @@ module.exports = {
     registration_approval_number: "RMS-GB-000025-003",
     parserModel: ParserModel.NISA3,
   },
+  emptyTestResult: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [],
+    registration_approval_number: null,
+    parserModel: ParserModel.NISA3,
+  },
 };
