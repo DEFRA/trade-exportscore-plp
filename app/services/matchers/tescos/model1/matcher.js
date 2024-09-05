@@ -28,7 +28,11 @@ function matches(packingListJson, filename) {
       BU: "Net Weight",
     };
 
-    let result = matchesHeader(header, packingListJson[INPUT_DATA_SHEET][4]);
+    const headerRow = 4;
+    const result = matchesHeader(
+      header,
+      packingListJson[INPUT_DATA_SHEET][headerRow],
+    );
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Tesco Model 1 with filename: ",

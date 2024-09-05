@@ -1,6 +1,6 @@
 {
   "name": "trade-exportscore-plp",
-  "version": "2.0.8",
+  "version": "3.0.11",
   "description": "",
   "homepage": "github.com?owner=defra&repo=trade-exportscore-plp&organization=defra",
   "main": "app/index.js",
@@ -21,18 +21,20 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/identity": "^4.2.1",
+    "@azure/service-bus": "^7.9.5",
     "@azure/storage-blob": "^12.23.0",
     "@hapi/hapi": "21.3.2",
     "adp-messaging": "^2.9.0",
     "applicationinsights": "2.8.0",
     "blipp": "^4.0.2",
-    "convert-excel-to-json": "^1.7.0",
+    "@boterop/convert-excel-to-json": "^2.0.0",
     "http-status-codes": "^2.3.0",
     "import-local": "^3.1.0",
     "joi": "^17.13.1",
     "pg": "^8.12.0",
     "sequelize": "^6.37.3",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/jest": "29.5.11",

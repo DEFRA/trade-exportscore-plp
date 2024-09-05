@@ -9,9 +9,10 @@ function matches(packingListJson, filename) {
     if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
-
+    const establishmentNumberRow = 3;
     // check for correct establishment number
-    const establishmentNumber = packingListJson[INPUT_DATA_SHEET][3].E;
+    const establishmentNumber =
+      packingListJson[INPUT_DATA_SHEET][establishmentNumberRow].E;
     const regex = /^RMS-GB-000022-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -24,8 +25,11 @@ function matches(packingListJson, filename) {
       E: "Packages",
       G: "Net Weight",
     };
-
-    let result = matchesHeader(header, packingListJson[INPUT_DATA_SHEET][4]);
+    const headerRow = 4;
+    const result = matchesHeader(
+      header,
+      packingListJson[INPUT_DATA_SHEET][headerRow],
+    );
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Tesco Model 3 with filename: ",

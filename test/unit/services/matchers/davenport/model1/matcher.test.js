@@ -21,63 +21,12 @@ describe("matchesDavenportModel1", () => {
   });
 
   test("returns wrong establishment number for missing establishment number", () => {
-    const packingListJson = {
-      PackingList_Extract: [
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        { C: "INCORRECT" },
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {
-          C: "Commodity Code",
-          F: "Description of Goods",
-          H: "No. of Pkgs(X)",
-          K: "Total Net Weight(X)",
-        },
-      ],
-    };
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(
+      model.invalidModel_IncorrectEstablishmentNumber,
+      filename,
+    );
 
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
@@ -91,63 +40,21 @@ describe("matchesDavenportModel1", () => {
     expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
   });
 
+  test("return wrong header for missing header values", () => {
+    const filename = "packinglist.xlsx";
+
+    const result = Matcher.matches(model.invalidModel_MissingHeaders, filename);
+
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
-    const packingListJson = {
-      PackingList_Extract: [
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        { C: "RMS-GB-000323-001" },
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {
-          A: "NOT",
-          B: "CORRECT",
-          C: "HEADER",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(
+      model.invalidModel_IncorrectHeaders,
+      filename,
+    );
 
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });

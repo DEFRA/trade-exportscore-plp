@@ -4,3 +4,7 @@
   value: "devadpdbsps1401.postgres.database.azure.com"
 - key: POSTGRES_USERNAME
   value: "devadpinfmi1401-trade-exportscore-plp"
+- key: TP_QUEUE_HOST
+  value: "DEVTREINFSB1001.servicebus.windows.net"
+- key: TP_TENANT_ID
+  value: "c9d74090-b4e6-4b04-981d-e6757a160812"

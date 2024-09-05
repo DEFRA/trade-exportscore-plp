@@ -1,7 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 
-function matches(packingList, filename) {
+function matchesModel(packingList, filename, remosNumber, trader) {
   let headerRow = 0;
 
   try {
@@ -19,13 +19,12 @@ function matches(packingList, filename) {
       throw new Error("generic error");
     }
 
-    for (let sheet of sheets) {
+    for (const sheet of sheets) {
       headerRow = packingList[sheet].findIndex(
         (x) => x.F === "Description of goods",
       );
       const establishmentNumber = packingList[sheet][headerRow + 1].M;
-      const regex = /^RMS-GB-000216-\d{3}$/;
-      if (!regex.test(establishmentNumber)) {
+      if (!remosNumber.test(establishmentNumber)) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
@@ -42,20 +41,33 @@ function matches(packingList, filename) {
       for (const key in header) {
         if (
           (key === "K" &&
-            !packingList[sheet][headerRow][key].includes("Net Weight")) ||
+            !packingList[sheet][headerRow][key]
+              .toLowerCase()
+              .includes("net weight")) ||
           (key !== "K" &&
-            !packingList[sheet][headerRow][key].startsWith(header[key]))
+            !packingList[sheet][headerRow][key]
+              .toLowerCase()
+              .startsWith(header[key].toLowerCase()))
         ) {
           return MatcherResult.WRONG_HEADER;
         }
       }
     }
 
-    console.info("Packing list matches Fowler Welch with filename: ", filename);
+    console.info(`Packing list matches ${trader} with filename: ${filename}`);
     return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
 }
 
-module.exports = { matches };
+function matches(packingList, filename) {
+  return matchesModel(
+    packingList,
+    filename,
+    /^RMS-GB-000216-\d{3}$/,
+    "Fowler Welch",
+  );
+}
+
+module.exports = { matches, matchesModel };
