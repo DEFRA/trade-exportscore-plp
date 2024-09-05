@@ -110,6 +110,7 @@ module.exports = {
         L: "Total Line Value",
         M: "GB Establishment RMS Number",
       },
+      {},
       {
         M: null,
       },
