@@ -110,6 +110,7 @@ module.exports = {
         L: "Total Line Value",
         M: "GB Establishment RMS Number",
       },
+      {},
       {
         M: null,
       },
@@ -163,6 +164,23 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000015-009",
+    parserModel: ParserModel.TESCO2,
+  },
+  emptyTestResult: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: null,
+        description: null,
+        nature_of_products: null,
+        number_of_packages: null,
+        total_net_weight_kg: null,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: null,
     parserModel: ParserModel.TESCO2,
   },
 };

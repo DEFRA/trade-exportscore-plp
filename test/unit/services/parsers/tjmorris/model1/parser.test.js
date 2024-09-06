@@ -2,7 +2,7 @@ const Parser = require("../../../../../../app/services/parsers/tjmorris/model1/p
 const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseTjmorrisModel1", () => {
-  test("parses json", () => {
+  test("parses valid json", () => {
     const packingListJson = [
       {
         A: "Consignor / Place o f Despatch",
@@ -50,7 +50,7 @@ describe("parseTjmorrisModel1", () => {
     expect(result.parserModel).toBe(ParserModel.TJMORRIS1);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = [
       {
         A: "Consignor / Place o f Despatch",

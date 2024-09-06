@@ -2,7 +2,7 @@ const Parser = require("../../../../../../app/services/parsers/fowlerwelch/model
 const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseFowlerWelchModel1", () => {
-  test("parses json", () => {
+  test("parses valid json", () => {
     const packingListJson = {
       "Cust Ord": [
         {},
@@ -390,7 +390,7 @@ describe("parseFowlerWelchModel1", () => {
     expect(result.parserModel).toBe(ParserModel.FOWLERWELCH1);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = {
       "Cust Ord": [
         {},
