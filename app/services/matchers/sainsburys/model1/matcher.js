@@ -23,7 +23,7 @@ function matches(packingListJson, filename) {
       C: "Product Type / Category",
       E: "Product / Part Number Description",
       G: "Packages",
-      H: "Net\r\nWeight / Package KG",
+      H: "Net\nWeight / Package KG",
       J: "Packaging Type",
       O: "Commodity Code",
     };

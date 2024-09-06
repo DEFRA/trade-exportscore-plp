@@ -32,11 +32,11 @@ function parse(packingListJson) {
 function isEndOfRow(x) {
   const isTotal = x.F !== null && x.G !== null && x.H !== null;
   const isEmpty =
-    x.A === null &&
-    x.B === null &&
-    x.C === null &&
-    x.D === null &&
-    x.E === null;
+    (x.A === null || x.A === undefined) &&
+    (x.B === null || x.B === undefined) &&
+    (x.C === null || x.C === undefined) &&
+    (x.D === null || x.D === undefined) &&
+    (x.E === null || x.E === undefined);
   return isTotal && isEmpty;
 }
 
