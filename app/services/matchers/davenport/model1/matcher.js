@@ -1,5 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { matchesHeader } = require("../../../matches-header");
+const { rowFinder } = require("../../../../utilities/row-finder");
 
 function matches(packingList, filename) {
   try {
@@ -26,19 +28,28 @@ function matches(packingList, filename) {
       K: "Total Net Weight",
     };
 
-    const headerRow = 44;
+    function callback(x) {
+      return x.F === "Description of Goods";
+    }
+    const headerRow = rowFinder(packingList[sheet], callback);
+    if (headerRow === -1) {
+      return MatcherResult.WRONG_HEADER;
+    }
+
     if (!packingList[sheet][headerRow]) {
       return MatcherResult.WRONG_HEADER;
     }
+
     // Check if packing list CONTAINS expected header
+
     for (const key in header) {
       if (packingList[sheet][headerRow][key].indexOf(header[key]) === -1) {
         return MatcherResult.WRONG_HEADER;
       }
     }
-
     return MatcherResult.CORRECT;
   } catch (err) {
+    console.log(err);
     return MatcherResult.GENERIC_ERROR;
   }
 }

@@ -61,7 +61,7 @@ describe("matchesFowlerWelch", () => {
         {},
         {},
         {},
-        {},
+        { F: "Description of goods" },
         {
           M: "Incorrect",
         },
@@ -118,7 +118,7 @@ describe("matchesFowlerWelch", () => {
         {},
         {},
         {},
-        {},
+        { F: "Description of goods" },
         {
           M: "Incorrect",
         },
@@ -168,7 +168,7 @@ describe("matchesFowlerWelch", () => {
         {},
         {},
         {},
-        {},
+        { F: "Description of goods" },
         {
           M: "RMS-GB-000216-001",
         },

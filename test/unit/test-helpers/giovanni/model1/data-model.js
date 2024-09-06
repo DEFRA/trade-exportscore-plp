@@ -121,7 +121,7 @@ module.exports = {
         A: "RMS-GB-000153",
       },
       {
-        C: "NOT",
+        C: "DESCRIPTION",
         G: "CORRECT",
         H: "HEADER",
         E: "Commodity Code",

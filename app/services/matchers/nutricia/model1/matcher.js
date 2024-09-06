@@ -1,7 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
-
+const { rowFinder } = require("../../../../utilities/row-finder");
 function matches(packingList, filename) {
   try {
     if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
@@ -21,16 +21,21 @@ function matches(packingList, filename) {
     }
 
     // check for header values
-    const headerRow = packingList[sheet].findIndex(
-      (x) => x.C === "DESCRIPTION",
-    );
+
     const header = {
       C: "DESCRIPTION",
       E: "Commodity Code",
       G: "Quantity",
       H: "Net Weight (KG)",
     };
+    function callback(x) {
+      return x.C === "DESCRIPTION";
+    }
 
+    const headerRow = rowFinder(packingList[sheet], callback);
+    if (headerRow === -1) {
+      return MatcherResult.WRONG_HEADER;
+    }
     const result = matchesHeader(header, packingList[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(

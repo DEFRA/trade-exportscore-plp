@@ -1,13 +1,13 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
-
+const { rowFinder } = require("../../../../utilities/row-finder");
 function matches(packingListJson, filename) {
   try {
     if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
-
+    const sheet = Object.keys(packingListJson)[0];
     // check for correct establishment number
     const traderRow = packingListJson.Sheet1.findIndex(
       (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
@@ -19,9 +19,7 @@ function matches(packingListJson, filename) {
     }
 
     // check for header values
-    const headerRow = packingListJson.Sheet1.findIndex(
-      (x) => x.D === "COMMODITY CODE",
-    );
+
     const header = {
       C: "ITEM DESCRIPTION",
       D: "COMMODITY CODE",
@@ -29,7 +27,15 @@ function matches(packingListJson, filename) {
       G: "NET WEIGHT",
     };
 
-    const result = matchesHeader(header, packingListJson.Sheet1[headerRow]);
+    function callback(x) {
+      return x.C === "ITEM DESCRIPTION";
+    }
+
+    const headerRow = rowFinder(packingListJson[sheet], callback);
+    if (headerRow === -1) {
+      return MatcherResult.WRONG_HEADER;
+    }
+    const result = matchesHeader(header, packingListJson[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches BandM Model 1 with filename: ",

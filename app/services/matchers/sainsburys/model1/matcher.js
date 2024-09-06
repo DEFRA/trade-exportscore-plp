@@ -1,6 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
+const { rowFinder } = require("../../../../utilities/row-finder");
 
 function matches(packingListJson, filename) {
   try {
@@ -8,6 +9,7 @@ function matches(packingListJson, filename) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
 
+    const sheet = Object.keys(packingListJson)[0];
     // check for correct establishment number
     const establishmentNumber = packingListJson.Sheet1[1]?.N.replace(
       /\u200B/g,
@@ -28,7 +30,15 @@ function matches(packingListJson, filename) {
       O: "Commodity Code",
     };
 
-    const result = matchesHeader(header, packingListJson.Sheet1[0]);
+    function callback(x) {
+      return x.G === "Packages";
+    }
+
+    const headerRow = rowFinder(packingListJson[sheet], callback);
+    if (headerRow === -1) {
+      return MatcherResult.WRONG_HEADER;
+    }
+    const result = matchesHeader(header, packingListJson[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Sainsburys Model 1 with filename: ",

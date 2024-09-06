@@ -1,6 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
+const { rowFinder } = require("../../../../utilities/row-finder");
 
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
@@ -10,7 +11,7 @@ function matches(packingListJson, filename) {
     if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
       return MatcherResult.WRONG_EXTENSIONS;
     }
-
+    const sheet = Object.keys(packingListJson)[0];
     // check for correct establishment number
     const establishmentNumber =
       packingListJson[INPUT_DATA_SHEET][establishmentNumberRow].AT;
@@ -28,11 +29,15 @@ function matches(packingListJson, filename) {
       BU: "Net Weight",
     };
 
-    const headerRow = 4;
-    const result = matchesHeader(
-      header,
-      packingListJson[INPUT_DATA_SHEET][headerRow],
-    );
+    function callback(x) {
+      return x.BR === "Packages";
+    }
+
+    const headerRow = rowFinder(packingListJson[sheet], callback);
+    if (headerRow === -1) {
+      return MatcherResult.WRONG_HEADER;
+    }
+    const result = matchesHeader(header, packingListJson[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Tesco Model 1 with filename: ",
