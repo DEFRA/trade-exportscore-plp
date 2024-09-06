@@ -1,6 +1,8 @@
 const CombineParser = require("../../../parser-combine");
 const ParserModel = require("../../../parser-model");
 
+const isNullOrUndefined = (value) => value === null || value === undefined;
+
 function parse(packingListJson) {
   const traderRow = packingListJson.findIndex(
     (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
@@ -32,14 +34,14 @@ function parse(packingListJson) {
 function isEndOfRow(x) {
   const isTotal = x.F !== null && x.G !== null && x.H !== null;
   const isEmpty =
-    (x.A === null || x.A === undefined) &&
-    (x.B === null || x.B === undefined) &&
-    (x.C === null || x.C === undefined) &&
-    (x.D === null || x.D === undefined) &&
-    (x.E === null || x.E === undefined);
+    (isNullOrUndefined(x.A)) &&
+    (isNullOrUndefined(x.B)) &&
+    (isNullOrUndefined(x.C)) &&
+    (isNullOrUndefined(x.D)) &&
+    (isNullOrUndefined(x.E));
   return isTotal && isEmpty;
 }
 
 module.exports = {
-  parse,
+  parse, isEndOfRow
 };
