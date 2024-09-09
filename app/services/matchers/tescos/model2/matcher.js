@@ -10,7 +10,7 @@ function matches(packingListJson, filename) {
     // check for correct establishment number
     const establishmentNumberRow = 2;
     const establishmentNumber =
-      packingListJson.Sheet2[establishmentNumberRow].M;
+      packingListJson[sheet][establishmentNumberRow].M;
     const regex = /^RMS-GB-000015-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;

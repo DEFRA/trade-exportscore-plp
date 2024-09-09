@@ -9,10 +9,10 @@ function matches(packingListJson, filename) {
     }
     const sheet = Object.keys(packingListJson)[0];
     // check for correct establishment number
-    const traderRow = packingListJson.Sheet1.findIndex(
+    const traderRow = packingListJson[sheet].findIndex(
       (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
     );
-    const establishmentNumber = packingListJson.Sheet1[traderRow].I;
+    const establishmentNumber = packingListJson[sheet][traderRow].I;
     const regex = /^RMS-GB-000005-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;

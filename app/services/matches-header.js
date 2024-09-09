@@ -9,10 +9,7 @@ function matchesHeader(matchHeader, packingListSheet, callback) {
     }
 
     for (const key in matchHeader) {
-      if (
-        !packingListSheet[headerRow][key] ||
-        !packingListSheet[headerRow][key].startsWith(matchHeader[key])
-      ) {
+      if (!packingListSheet[headerRow][key]?.startsWith(matchHeader[key])) {
         return MatcherResult.WRONG_HEADER;
       }
     }

@@ -11,8 +11,7 @@ function matches(packingListJson, filename) {
     const sheet = Object.keys(packingListJson)[0];
 
     // check for correct establishment number
-    const establishmentNumber =
-      packingListJson.PackingList_Extract[1].D ?? null;
+    const establishmentNumber = packingListJson[sheet][1].D ?? null;
     const regex = /^RMS-GB-000015-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
