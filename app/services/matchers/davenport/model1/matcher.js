@@ -1,12 +1,7 @@
 const MatcherResult = require("../../../matches-result");
-const FileExtension = require("../../../../utilities/file-extension");
 
 function matches(packingList, filename) {
   try {
-    if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
-
     const sheet = Object.keys(packingList)[0];
     // check for correct establishment number
     const establishmentNumberRow = 18;
@@ -36,7 +31,10 @@ function matches(packingList, filename) {
         return MatcherResult.WRONG_HEADER;
       }
     }
-
+    console.info(
+      "Packing list matches Davenport Model 1 with filename: ",
+      filename,
+    );
     return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;

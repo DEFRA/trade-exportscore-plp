@@ -26,13 +26,6 @@ describe("matchesGiovanni", () => {
 
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
-  test("return wrong extension for incorrect file extension", () => {
-    const filename = "packinglist.pdf";
-
-    const result = Matcher.matches(model.emptyModel, filename);
-
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
-  });
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
 

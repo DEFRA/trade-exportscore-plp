@@ -11,15 +11,6 @@ describe("matchesTjmorris", () => {
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
-  test("returns wrong extension for incorrect file extension", () => {
-    const filename = "packinglist.pdf";
-    const packingListJson = {};
-
-    const result = Matcher.matches(packingListJson, filename);
-
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
-  });
-
   test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
       Sheet1: [

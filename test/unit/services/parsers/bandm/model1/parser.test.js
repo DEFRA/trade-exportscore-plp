@@ -25,11 +25,11 @@ describe("parseBandMModel1", () => {
 });
 
 describe("isEndOfRow", () => {
-  test("returns true for undefined", ()=> {
+  test("returns true for undefined", () => {
     const row = {
       F: "end",
       G: "of",
-      H: "file"
+      H: "file",
     };
 
     const result = parser.isEndOfRow(row);
@@ -37,7 +37,7 @@ describe("isEndOfRow", () => {
     expect(result).toBeTruthy();
   });
 
-  test("returns true for null", ()=> {
+  test("returns true for null", () => {
     const row = {
       A: null,
       B: null,
@@ -46,7 +46,7 @@ describe("isEndOfRow", () => {
       E: null,
       F: "end",
       G: "of",
-      H: "file"
+      H: "file",
     };
 
     const result = parser.isEndOfRow(row);
@@ -54,16 +54,16 @@ describe("isEndOfRow", () => {
     expect(result).toBeTruthy();
   });
 
-  test("returns false for data", ()=> {
+  test("returns false for data", () => {
     const row = {
       A: "not",
       F: "end",
       G: "of",
-      H: "file"
+      H: "file",
     };
 
     const result = parser.isEndOfRow(row);
 
     expect(result).toBeFalsy();
   });
-})
+});
