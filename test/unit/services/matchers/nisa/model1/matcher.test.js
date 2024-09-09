@@ -36,15 +36,6 @@ describe("matchesNisa", () => {
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("return wrong extensions for incorrect file extension", () => {
-    const filename = "packinglist.pdf";
-    const packingListJson = {};
-
-    const result = Matcher.matches(packingListJson, filename);
-
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
-  });
-
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {

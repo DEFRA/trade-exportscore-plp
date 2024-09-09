@@ -249,6 +249,14 @@ describe("findParser", () => {
     const result = parserService.findParser(packingListJson, filename);
     expect(result.items).toHaveLength(2);
   });
+
+  test("Not matched Excel file", () => {
+    const packingListJson = {};
+    const filename = "packinglist.xls";
+
+    const result = parserService.findParser(packingListJson, filename);
+    expect(result.parserModel).toBe(ParserModel.NOMATCH);
+  });
 });
 
 describe("checkType", () => {

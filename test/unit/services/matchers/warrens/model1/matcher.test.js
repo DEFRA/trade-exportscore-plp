@@ -10,13 +10,6 @@ describe("matchesWarrens1", () => {
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
-  test("returns wrong extension for incorrect file extension", () => {
-    const filename = "packinglist.xls";
-    const packingListJson = {};
-    const result = warrensMatcher.matches(packingListJson, filename);
-    expect(result).toBe(MatcherResult.WRONG_EXTENSIONS);
-  });
-
   test("returns wrong establishment number for missing establishment number for one sheet", () => {
     const filename = "packinglist.xlsx";
     const result = warrensMatcher.matches(

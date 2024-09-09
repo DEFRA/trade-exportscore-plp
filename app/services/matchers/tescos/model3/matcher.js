@@ -1,14 +1,10 @@
 const MatcherResult = require("../../../matches-result");
-const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
 
 const INPUT_DATA_SHEET = "Input Data Sheet";
 
 function matches(packingListJson, filename) {
   try {
-    if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
     const establishmentNumberRow = 3;
     // check for correct establishment number
     const establishmentNumber =

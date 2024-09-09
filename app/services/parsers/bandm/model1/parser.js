@@ -34,14 +34,15 @@ function parse(packingListJson) {
 function isEndOfRow(x) {
   const isTotal = x.F !== null && x.G !== null && x.H !== null;
   const isEmpty =
-    (isNullOrUndefined(x.A)) &&
-    (isNullOrUndefined(x.B)) &&
-    (isNullOrUndefined(x.C)) &&
-    (isNullOrUndefined(x.D)) &&
-    (isNullOrUndefined(x.E));
+    isNullOrUndefined(x.A) &&
+    isNullOrUndefined(x.B) &&
+    isNullOrUndefined(x.C) &&
+    isNullOrUndefined(x.D) &&
+    isNullOrUndefined(x.E);
   return isTotal && isEmpty;
 }
 
 module.exports = {
-  parse, isEndOfRow
+  parse,
+  isEndOfRow,
 };

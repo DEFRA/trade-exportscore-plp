@@ -4,6 +4,9 @@ module.exports = {
   validModel: {
     RANA: [
       {
+        A: "NIRMS NUMBER",
+      },
+      {
         A: "RMS-GB-000153",
       },
       {
@@ -66,18 +69,14 @@ module.exports = {
       {
         commodity_code: "1902209990",
         description: "SPINACH AND RICOTTA TORT",
-        nature_of_products: null,
         number_of_packages: 17,
         total_net_weight_kg: 40.8,
-        type_of_treatment: null,
       },
       {
         commodity_code: "1902209990",
         description: "FOUR CHEESE TORT",
-        nature_of_products: null,
         number_of_packages: 10,
         total_net_weight_kg: 24,
-        type_of_treatment: null,
       },
     ],
     registration_approval_number: "RMS-GB-000153",
@@ -91,18 +90,14 @@ module.exports = {
       {
         commodity_code: "1902209990",
         description: "SPINACH AND RICOTTA TORT",
-        nature_of_products: null,
-        number_of_packages: 17,
-        total_net_weight_kg: null,
-        type_of_treatment: null,
+        number_of_packages: null,
+        total_net_weight_kg: 40.8,
       },
       {
         commodity_code: "1902209990",
         description: "FOUR CHEESE TORT",
-        nature_of_products: null,
-        number_of_packages: null,
-        total_net_weight_kg: 24,
-        type_of_treatment: null,
+        number_of_packages: 10,
+        total_net_weight_kg: null,
       },
     ],
     registration_approval_number: "RMS-GB-000153",
