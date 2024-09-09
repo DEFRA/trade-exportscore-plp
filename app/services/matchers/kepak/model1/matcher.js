@@ -1,6 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
+const { rowFinder } = require("../../../../utilities/row-finder");
 
 function matches(packingList, filename) {
   try {
@@ -18,7 +19,14 @@ function matches(packingList, filename) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
     // check for header values
-    const headerRow = 20;
+    function callback(x) {
+      return x.C === "DESCRIPTION";
+    }
+
+    const headerRow = rowFinder(packingList[sheet], callback);
+    if (headerRow === -1) {
+      return MatcherResult.WRONG_HEADER;
+    }
     const header = {
       C: "DESCRIPTION",
       E: "Commodity Code",

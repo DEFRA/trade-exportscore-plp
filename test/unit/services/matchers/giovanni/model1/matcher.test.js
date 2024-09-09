@@ -37,7 +37,6 @@ describe("matchesGiovanni", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(model.incorrectHeader, filename);
-
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });

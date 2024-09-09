@@ -1,5 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
+const { rowFinder } = require("../../../../utilities/row-finder");
 
 function matchesModel(packingList, filename, remosNumber, trader) {
   let headerRow = 0;
@@ -20,9 +21,15 @@ function matchesModel(packingList, filename, remosNumber, trader) {
     }
 
     for (const sheet of sheets) {
-      headerRow = packingList[sheet].findIndex(
-        (x) => x.F === "Description of goods",
-      );
+      function callback(x) {
+        return x.F === "Description of goods";
+      }
+
+      headerRow = rowFinder(packingList[sheet], callback);
+      if (headerRow === -1) {
+        console.log(headerRow);
+        return MatcherResult.WRONG_HEADER;
+      }
       const establishmentNumber = packingList[sheet][headerRow + 1].M;
       if (!remosNumber.test(establishmentNumber)) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -57,6 +64,7 @@ function matchesModel(packingList, filename, remosNumber, trader) {
     console.info(`Packing list matches ${trader} with filename: ${filename}`);
     return MatcherResult.CORRECT;
   } catch (err) {
+    console.log(err);
     return MatcherResult.GENERIC_ERROR;
   }
 }
