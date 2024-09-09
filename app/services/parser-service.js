@@ -153,10 +153,6 @@ function findParser(packingList, filename) {
       DavenportMatcher.matches(sanitisedPackingList, filename) ===
       MatcherResult.CORRECT
     ) {
-      console.info(
-        "Packing list matches Davenport Model 1 with filename: ",
-        filename,
-      );
       parsedPackingList = DavenportParser.parse(
         sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
       );
