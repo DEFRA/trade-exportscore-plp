@@ -1,7 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
-const { rowFinder } = require("../../../../utilities/row-finder");
 
 function matches(packingListJson, filename) {
   try {
