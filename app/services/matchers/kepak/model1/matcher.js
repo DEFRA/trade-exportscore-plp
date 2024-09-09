@@ -1,42 +1,7 @@
-const MatcherResult = require("../../../matches-result");
-const { matchesHeader } = require("../../../matches-header");
+const { matchesModel } = require("../../giovanni/model1/matcher");
 
 function matches(packingList, filename) {
-  try {
-    const sheet = Object.keys(packingList)[0];
-    // check for correct establishment number
-    const establishmentNumberRow = 12;
-    const establishmentNumber =
-      packingList[sheet][establishmentNumberRow].A ?? [];
-
-    if (!establishmentNumber.startsWith("RMS-GB-000280")) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
-    }
-
-    // check for header values
-    const header = {
-      C: "DESCRIPTION",
-      E: "Commodity Code",
-      G: "Quantity",
-      H: "Net Weight (KG)",
-    };
-
-    const result = matchesHeader(header, packingList[sheet], callback);
-
-    if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches Kepak Model 1 with filename: ",
-        filename,
-      );
-    }
-    return result;
-  } catch (err) {
-    return MatcherResult.GENERIC_ERROR;
-  }
-}
-
-function callback(x) {
-  return x.C === "DESCRIPTION";
+  return matchesModel(packingList, filename, "RMS-GB-000280", "Kepak Model 1");
 }
 
 module.exports = {
