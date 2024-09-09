@@ -1,13 +1,8 @@
 const MatcherResult = require("../../../matches-result");
-const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingList, filename) {
   try {
-    if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
-
     const sheet = Object.keys(packingList)[0];
 
     // check for correct establishment number

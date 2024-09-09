@@ -1,19 +1,11 @@
 const MatcherResult = require("../../../matches-result");
-const FileExtension = require("../../../../utilities/file-extension");
 const { rowFinder } = require("../../../../utilities/row-finder");
 
 function matchesModel(packingList, filename, remosNumber, trader) {
   let headerRow = 0;
 
   try {
-    // check for correct extension
-
-    if (FileExtension.matches(filename, "xlsx") !== MatcherResult.CORRECT) {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
-
     //check for correct establishment number
-
     const sheets = Object.keys(packingList);
 
     if (sheets.length === 0) {

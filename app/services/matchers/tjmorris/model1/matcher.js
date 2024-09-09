@@ -1,13 +1,10 @@
 const MatcherResult = require("../../../matches-result");
-const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
-    if (FileExtension.matches(filename, "xls") !== MatcherResult.CORRECT) {
-      return MatcherResult.WRONG_EXTENSIONS;
-    }
     const sheet = Object.keys(packingListJson)[0];
+
     // check for correct establishment number
     const establishmentNumber = packingListJson[sheet][1]?.A;
     const regex = /^RMS-GB-000010-\d{3}$/;

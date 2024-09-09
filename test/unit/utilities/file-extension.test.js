@@ -13,9 +13,22 @@ describe("file-extension-check", () => {
     ["car", "xls", MatcherResult.WRONG_EXTENSIONS],
     ["car.abc", "xls", MatcherResult.WRONG_EXTENSIONS],
   ])(
-    "when the input is '%s' and the extension is '%s', then the numeric result is as expected",
+    "matches: when the input is '%s' and the extension is '%s', the result should be '%s'",
     (filename, extension, expected) => {
       expect(FileExtension.matches(filename, extension)).toBe(expected);
+    },
+  );
+  test.each([
+    ["test-file.xls", true],
+    ["test-file.xlsx", true],
+    ["test-file.csv", false],
+    ["test-file.pdf", false],
+    ["test-file.abc", false],
+    ["test-file", false],
+  ])(
+    "isExcel: when the input is '%s', the result should be '%s'",
+    (filename, expected) => {
+      expect(FileExtension.isExcel(filename)).toBe(expected);
     },
   );
 });

@@ -9,6 +9,15 @@ function matches(filename, extension) {
   }
 }
 
+function isExcel(filename) {
+  // Check for both 'xls' and 'xlsx' extensions
+  return (
+    matches(filename, "xls") === MatcherResult.CORRECT ||
+    matches(filename, "xlsx") === MatcherResult.CORRECT
+  );
+}
+
 module.exports = {
   matches,
+  isExcel,
 };
