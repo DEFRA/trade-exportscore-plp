@@ -1,7 +1,7 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
-const { rowFinder } = require("../../../../utilities/row-finder");
+
 function matches(packingList, filename) {
   const establishmentNumberRow = 1;
   try {
@@ -24,15 +24,8 @@ function matches(packingList, filename) {
       S: "NW total",
     };
 
-    function callback(x) {
-      return x.O === "Product/ Part Number description";
-    }
+    const result = matchesHeader(header, packingList[sheet], callback);
 
-    const headerRow = rowFinder(packingList[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
-    const result = matchesHeader(header, packingList[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Co-op Model 1 with filename: ",
@@ -43,6 +36,10 @@ function matches(packingList, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.O === "Product/ Part Number description";
 }
 
 module.exports = {

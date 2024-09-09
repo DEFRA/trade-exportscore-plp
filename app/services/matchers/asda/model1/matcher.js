@@ -28,16 +28,8 @@ function matches(packingListJson, filename) {
       G: "[Net Weight]",
     };
 
-    function callback(x) {
-      return x.A === "[Description Of All Retail Goods]";
-    }
+    const result = matchesHeader(header, packingListJson[sheet], callback);
 
-    const headerRow = rowFinder(packingListJson[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
-
-    const result = matchesHeader(header, packingListJson[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Asda Model 1 with filename: ",
@@ -48,6 +40,10 @@ function matches(packingListJson, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.A === "[Description Of All Retail Goods]";
 }
 
 module.exports = {

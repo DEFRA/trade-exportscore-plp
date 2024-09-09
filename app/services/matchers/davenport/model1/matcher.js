@@ -28,30 +28,24 @@ function matches(packingList, filename) {
       K: "Total Net Weight",
     };
 
-    function callback(x) {
-      return x.F === "Description of Goods";
-    }
-    const headerRow = rowFinder(packingList[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
-
-    if (!packingList[sheet][headerRow]) {
-      return MatcherResult.WRONG_HEADER;
-    }
-
     // Check if packing list CONTAINS expected header
+    const result = matchesHeader(header, packingList[sheet], callback);
 
-    for (const key in header) {
-      if (packingList[sheet][headerRow][key].indexOf(header[key]) === -1) {
-        return MatcherResult.WRONG_HEADER;
-      }
+    if (result === MatcherResult.CORRECT) {
+      console.info(
+        "Packing list matches davenport 1 with filename: ",
+        filename,
+      );
     }
-    return MatcherResult.CORRECT;
+
+    return result;
   } catch (err) {
-    console.log(err);
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.F === "Description of Goods";
 }
 
 module.exports = {

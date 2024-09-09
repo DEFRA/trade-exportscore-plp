@@ -28,15 +28,9 @@ function matches(packingList, filename) {
       G: "Quantity",
       H: "Net Weight (KG)",
     };
-    function callback(x) {
-      return x.C === "DESCRIPTION";
-    }
 
-    const headerRow = rowFinder(packingList[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
-    const result = matchesHeader(header, packingList[sheet][headerRow]);
+    const result = matchesHeader(header, packingList[sheet], callback);
+
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Nutricia Model 1 with filename: ",
@@ -47,6 +41,10 @@ function matches(packingList, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.C === "DESCRIPTION";
 }
 
 module.exports = {

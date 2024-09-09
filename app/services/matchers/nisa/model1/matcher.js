@@ -25,15 +25,8 @@ function matches(packingList, filename) {
       I: "PRODUCT_TYPE_CATEGORY",
     };
 
-    function callback(x) {
-      return x.O === "NET_WEIGHT_TOTAL";
-    }
+    const result = matchesHeader(header, packingList[sheet], callback);
 
-    const headerRow = rowFinder(packingList[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
-    const result = matchesHeader(header, packingList[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Nisa Model 1 with filename: ",
@@ -44,6 +37,10 @@ function matches(packingList, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.K === "PART_NUMBER_DESCRIPTION";
 }
 
 module.exports = { matches };

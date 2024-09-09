@@ -1,7 +1,6 @@
 const MatcherResult = require("../../../matches-result");
 const FileExtension = require("../../../../utilities/file-extension");
 const { matchesHeader } = require("../../../matches-header");
-const { rowFinder } = require("../../../../utilities/row-finder");
 
 function matches(packingList, filename) {
   try {
@@ -14,7 +13,6 @@ function matches(packingList, filename) {
     );
 
     // check for correct establishment number
-
     const establishmentNumber =
       packingList[sheet][establishmentNumberRow + 1].A;
     if (!establishmentNumber.startsWith("RMS-GB-000153")) {
@@ -29,16 +27,8 @@ function matches(packingList, filename) {
       E: "Commodity Code",
     };
 
-    function callback(x) {
-      return x.C === "DESCRIPTION";
-    }
+    const result = matchesHeader(header, packingList[sheet], callback);
 
-    const headerRow = rowFinder(packingList[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
-
-    const result = matchesHeader(header, packingList[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Giovanni Model 1 with filename: ",
@@ -49,6 +39,10 @@ function matches(packingList, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.C === "DESCRIPTION";
 }
 
 module.exports = {

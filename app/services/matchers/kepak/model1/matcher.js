@@ -18,15 +18,8 @@ function matches(packingList, filename) {
     if (!establishmentNumber.startsWith("RMS-GB-000280")) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
-    // check for header values
-    function callback(x) {
-      return x.C === "DESCRIPTION";
-    }
 
-    const headerRow = rowFinder(packingList[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
+    // check for header values
     const header = {
       C: "DESCRIPTION",
       E: "Commodity Code",
@@ -34,7 +27,8 @@ function matches(packingList, filename) {
       H: "Net Weight (KG)",
     };
 
-    const result = matchesHeader(header, packingList[sheet][headerRow]);
+    const result = matchesHeader(header, packingList[sheet], callback);
+
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Kepak Model 1 with filename: ",
@@ -45,6 +39,10 @@ function matches(packingList, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.C === "DESCRIPTION";
 }
 
 module.exports = {

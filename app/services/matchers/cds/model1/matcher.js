@@ -31,15 +31,8 @@ function matches(packingList, filename) {
       J: "Treatment",
     };
 
-    function callback(x) {
-      return x.E === "# Packages";
-    }
+    const result = matchesHeader(header, packingList[sheet], callback);
 
-    const headerRow = rowFinder(packingList[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
-    const result = matchesHeader(header, packingList[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches CDS Model 1 with filename: ",
@@ -50,6 +43,10 @@ function matches(packingList, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.D === "Product";
 }
 
 module.exports = {

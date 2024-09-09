@@ -11,17 +11,23 @@ describe("matchesHeader", () => {
       D: "test",
     };
 
-    const packingListHeader = {
-      A: "this",
-      B: "is",
-      C: "a",
-      D: "test",
-      E: "with",
-      F: "optional",
-    };
+    const packingListSheet = [
+      {
+        A: "this",
+        B: "is",
+        C: "a",
+        D: "test",
+        E: "with",
+        F: "optional",
+      },
+    ];
+
+    function callback(x) {
+      return x.A === "this";
+    }
 
     // act
-    const result = matchesHeader(header, packingListHeader);
+    const result = matchesHeader(header, packingListSheet, callback);
 
     // assert
     expect(result).toBe(MatcherResult.CORRECT);
@@ -36,17 +42,23 @@ describe("matchesHeader", () => {
       D: "test",
     };
 
-    const packingListHeader = {
-      A: "this",
-      B: "is",
-      C: "incorrect",
-      D: "test",
-      E: "with",
-      F: "optional",
-    };
+    const packingListSheet = [
+      {
+        A: "this",
+        B: "is",
+        C: "incorrect",
+        D: "test",
+        E: "with",
+        F: "optional",
+      },
+    ];
+
+    function callback(x) {
+      return x.A === "this";
+    }
 
     // act
-    const result = matchesHeader(header, packingListHeader);
+    const result = matchesHeader(header, packingListSheet, callback);
 
     // assert
     expect(result).toBe(MatcherResult.WRONG_HEADER);
@@ -61,12 +73,38 @@ describe("matchesHeader", () => {
       D: "test",
     };
 
-    const packingListHeader = {};
+    const packingListSheet = [{}];
+
+    function callback(x) {
+      return x.A === "this";
+    }
 
     // act
-    const result = matchesHeader(header, packingListHeader);
+    const result = matchesHeader(header, packingListSheet, callback);
 
     // assert
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+
+  test("return incorrect header for -1 row", () => {
+    // arrange
+    const header = {
+      A: "wrong",
+    };
+
+    const packingListSheet = [
+      {
+        A: "header",
+      },
+    ];
+
+    function callback(x) {
+      return x.A === "header";
+    }
+
+    // act
+    const result = matchesHeader(header, packingListSheet, callback);
+
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });

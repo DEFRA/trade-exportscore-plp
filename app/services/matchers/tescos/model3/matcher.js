@@ -26,16 +26,9 @@ function matches(packingListJson, filename) {
       E: "Packages",
       G: "Net Weight",
     };
-    function callback(x) {
-      return x.E === "Packages";
-    }
 
-    const headerRow = rowFinder(packingListJson[sheet], callback);
-    if (headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
+    const result = matchesHeader(header, packingListJson[sheet], callback);
 
-    const result = matchesHeader(header, packingListJson[sheet][headerRow]);
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Tesco Model 3 with filename: ",
@@ -46,6 +39,10 @@ function matches(packingListJson, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.A === "Product/ Part Number description";
 }
 
 module.exports = {
