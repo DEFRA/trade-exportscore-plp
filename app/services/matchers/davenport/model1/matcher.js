@@ -1,4 +1,5 @@
 const MatcherResult = require("../../../matches-result");
+const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingList, filename) {
   try {
@@ -21,24 +22,24 @@ function matches(packingList, filename) {
       K: "Total Net Weight",
     };
 
-    const headerRow = 44;
-    if (!packingList[sheet][headerRow]) {
-      return MatcherResult.WRONG_HEADER;
-    }
     // Check if packing list CONTAINS expected header
-    for (const key in header) {
-      if (packingList[sheet][headerRow][key].indexOf(header[key]) === -1) {
-        return MatcherResult.WRONG_HEADER;
-      }
+    const result = matchesHeader(header, packingList[sheet], callback);
+
+    if (result === MatcherResult.CORRECT) {
+      console.info(
+        "Packing list matches Davenport Model 1 with filename: ",
+        filename,
+      );
     }
-    console.info(
-      "Packing list matches Davenport Model 1 with filename: ",
-      filename,
-    );
-    return MatcherResult.CORRECT;
+
+    return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.F === "Description of Goods";
 }
 
 module.exports = {

@@ -19,7 +19,8 @@ function matches(packingList, filename) {
       I: "PRODUCT_TYPE_CATEGORY",
     };
 
-    const result = matchesHeader(header, packingList[sheet][0]);
+    const result = matchesHeader(header, packingList[sheet], callback);
+
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Nisa Model 1 with filename: ",
@@ -30,6 +31,10 @@ function matches(packingList, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.K === "PART_NUMBER_DESCRIPTION";
 }
 
 module.exports = { matches };

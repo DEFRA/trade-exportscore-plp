@@ -3,8 +3,10 @@ const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
+    const sheet = Object.keys(packingListJson)[0];
+
     // check for correct establishment number
-    const establishmentNumber = packingListJson.Tabelle1[0].B;
+    const establishmentNumber = packingListJson[sheet][0].B;
     const regex = /^RMS-GB-000098-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -19,7 +21,8 @@ function matches(packingListJson, filename) {
       H: "Treatment Type (Chilled /Ambient)",
     };
 
-    const result = matchesHeader(header, packingListJson.Tabelle1[1]);
+    const result = matchesHeader(header, packingListJson[sheet], callback);
+
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Buffaload Model 1 with filename: ",
@@ -30,6 +33,10 @@ function matches(packingListJson, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.B === "Description of goods";
 }
 
 module.exports = {

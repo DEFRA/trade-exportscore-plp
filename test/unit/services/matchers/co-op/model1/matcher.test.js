@@ -45,6 +45,7 @@ describe("matchesCoopModel1", () => {
           A: "NOT",
           B: "CORRECT",
           E: "HEADER",
+          O: "Product/ Part Number description",
         },
         {
           E: "RMS-GB-000009-001",

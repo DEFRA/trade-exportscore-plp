@@ -1,14 +1,14 @@
 const MatcherResult = require("../../../matches-result");
 const { matchesHeader } = require("../../../matches-header");
 
-const INPUT_DATA_SHEET = "Input Data Sheet";
-
 function matches(packingListJson, filename) {
   const establishmentNumberRow = 3;
   try {
+    const sheet = Object.keys(packingListJson)[0];
+
     // check for correct establishment number
     const establishmentNumber =
-      packingListJson[INPUT_DATA_SHEET][establishmentNumberRow].AT;
+      packingListJson[sheet][establishmentNumberRow].AT;
     const regex = /^RMS-GB-000022-\d{3}$/;
     if (!regex.test(establishmentNumber)) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
@@ -23,11 +23,8 @@ function matches(packingListJson, filename) {
       BU: "Net Weight",
     };
 
-    const headerRow = 4;
-    const result = matchesHeader(
-      header,
-      packingListJson[INPUT_DATA_SHEET][headerRow],
-    );
+    const result = matchesHeader(header, packingListJson[sheet], callback);
+
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Tesco Model 1 with filename: ",
@@ -38,6 +35,10 @@ function matches(packingListJson, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.G === "Product/ Part Number description";
 }
 
 module.exports = {

@@ -3,8 +3,10 @@ const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingListJson, filename) {
   try {
+    const sheet = Object.keys(packingListJson)[0];
+
     // check for correct establishment number
-    const establishmentNumber = packingListJson.Sheet1[1]?.N.replace(
+    const establishmentNumber = packingListJson[sheet][1]?.N.replace(
       /\u200B/g,
       "",
     );
@@ -23,7 +25,8 @@ function matches(packingListJson, filename) {
       O: "Commodity Code",
     };
 
-    const result = matchesHeader(header, packingListJson.Sheet1[0]);
+    const result = matchesHeader(header, packingListJson[sheet], callback);
+
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Sainsburys Model 1 with filename: ",
@@ -34,6 +37,10 @@ function matches(packingListJson, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.E === "Product / Part Number Description";
 }
 
 module.exports = {

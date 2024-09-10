@@ -19,7 +19,8 @@ function matches(packingList, filename) {
       I: "NET WEIGHT TOTAL",
     };
 
-    const result = matchesHeader(header, packingList[sheet][2]);
+    const result = matchesHeader(header, packingList[sheet], callback);
+
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Nisa Model 3 with filename: ",
@@ -30,6 +31,10 @@ function matches(packingList, filename) {
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
+}
+
+function callback(x) {
+  return x.E === "PART NUMBER DESCRIPTION";
 }
 
 module.exports = { matches };

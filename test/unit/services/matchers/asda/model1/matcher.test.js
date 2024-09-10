@@ -26,7 +26,7 @@ describe("matchesAsdaModel1", () => {
         {},
         {},
         {
-          I: "INCORRECT",
+          D: "INCORRECT",
         },
       ],
     };
