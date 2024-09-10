@@ -1,17 +1,14 @@
 const MatcherResult = require("../../../matcher-result");
 const { matchesHeader } = require("../../../matches-header");
+const Regex = require("../../../../utilities/regex");
 
-function matches(packingListJson, filename) {
+function matches(packingList, filename) {
   try {
-    const sheet = Object.keys(packingListJson)[0];
+    const sheet = Object.keys(packingList)[0];
 
     // check for correct establishment number
-    const traderRow = packingListJson[sheet].findIndex(
-      (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
-    );
-    const establishmentNumber = packingListJson[sheet][traderRow].I;
-    const regex = /^RMS-GB-000005-\d{3}$/;
-    if (!regex.test(establishmentNumber)) {
+    const regex = /RMS-GB-000005-/;
+    if (!Regex.test(regex, packingList[sheet])) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
@@ -24,7 +21,7 @@ function matches(packingListJson, filename) {
       G: "NET WEIGHT",
     };
 
-    const result = matchesHeader(header, packingListJson[sheet], callback);
+    const result = matchesHeader(header, packingList[sheet], callback);
 
     if (result === MatcherResult.CORRECT) {
       console.info(

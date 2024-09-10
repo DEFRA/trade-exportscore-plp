@@ -1,19 +1,13 @@
 const MatcherResult = require("../../../matcher-result");
 const { matchesHeader } = require("../../../matches-header");
+const Regex = require("../../../../utilities/regex");
 
-function matchesModel(packingList, filename, remosNumber, trader) {
+function matchesModel(packingList, filename, regex, trader) {
   try {
     const sheet = Object.keys(packingList)[0];
 
     // check for correct establishment number
-    const establishmentNumberRow = packingList[sheet].findIndex((x) =>
-      x.A?.startsWith("RMS-GB-000"),
-    );
-
-    if (
-      establishmentNumberRow === -1 ||
-      packingList[sheet][establishmentNumberRow].A !== remosNumber
-    ) {
+    if (!Regex.test(regex, packingList[sheet])) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
@@ -45,7 +39,7 @@ function matches(packingList, filename) {
   return matchesModel(
     packingList,
     filename,
-    "RMS-GB-000153",
+    /RMS-GB-000153/,
     "Giovanni Model 1",
   );
 }
