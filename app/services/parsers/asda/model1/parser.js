@@ -2,7 +2,7 @@ const CombineParser = require("../../../parser-combine");
 const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
-  const establishmentNumber = packingListJson[1].D ?? null;
+  const establishmentNumber = packingListJson[1]?.D ?? null;
   const packingListContents = packingListJson.slice(1).map((col) => ({
     description: col.A ?? null,
     nature_of_products: col.B ?? null,

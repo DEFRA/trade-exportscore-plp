@@ -1,4 +1,4 @@
-const MatcherResult = require("./matches-result");
+const MatcherResult = require("./matcher-result");
 const ParserModel = require("./parser-model");
 const AsdaMatcher = require("../services/matchers/asda/model1/matcher");
 const AsdaParser = require("../services/parsers/asda/model1/parser");

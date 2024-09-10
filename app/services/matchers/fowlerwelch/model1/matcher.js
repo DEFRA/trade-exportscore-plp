@@ -1,4 +1,4 @@
-const MatcherResult = require("../../../matches-result");
+const MatcherResult = require("../../../matcher-result");
 const { rowFinder } = require("../../../../utilities/row-finder");
 
 function matchesModel(packingList, filename, remosNumber, trader) {

@@ -1,4 +1,4 @@
-const MatcherResult = require("../../../../../../app/services/matches-result");
+const MatcherResult = require("../../../../../../app/services/matcher-result");
 const fowlerWelchMatcher = require("../../../../../../app/services/matchers/fowlerwelch/model1/matcher");
 const model = require("../../../../test-helpers/fowlerwelch/model1/data-model");
 

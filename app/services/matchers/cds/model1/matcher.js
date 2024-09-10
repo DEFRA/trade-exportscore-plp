@@ -1,4 +1,4 @@
-const MatcherResult = require("../../../matches-result");
+const MatcherResult = require("../../../matcher-result");
 const { matchesHeader } = require("../../../matches-header");
 
 function matches(packingList, filename) {

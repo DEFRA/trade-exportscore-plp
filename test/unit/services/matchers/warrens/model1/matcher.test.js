@@ -1,4 +1,4 @@
-const MatcherResult = require("../../../../../../app/services/matches-result");
+const MatcherResult = require("../../../../../../app/services/matcher-result");
 const warrensMatcher = require("../../../../../../app/services/matchers/warrens/model1/matcher");
 const model = require("../../../../test-helpers/warrens/model1/data-model");
 

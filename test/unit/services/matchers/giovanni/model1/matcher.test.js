@@ -1,4 +1,4 @@
-const MatcherResult = require("../../../../../../app/services/matches-result");
+const MatcherResult = require("../../../../../../app/services/matcher-result");
 const Matcher = require("../../../../../../app/services/matchers/giovanni/model1/matcher");
 const model = require("../../../../test-helpers/giovanni/model1/data-model");
 
