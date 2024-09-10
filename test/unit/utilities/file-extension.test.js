@@ -1,5 +1,5 @@
 const FileExtension = require("../../../app/utilities/file-extension");
-const MatcherResult = require("../../../app/services/matches-result");
+const MatcherResult = require("../../../app/services/matcher-result");
 
 describe("file-extension-check", () => {
   test.each([

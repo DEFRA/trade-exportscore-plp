@@ -72,22 +72,49 @@ module.exports = {
       },
     ],
   },
-  emptyModel: {
+  wrongEstablishment: {
     PackingList_Extract: [
+      {},
+      {},
       {
-        A: "[Description Of All Retail Goods]",
-        B: "[Nature Of Product]",
-        C: "[Treatment Type]",
-        D: "[Number Of Establishment]",
-        E: "[Destination Store Establishment Number]",
-        F: "[Number of Packages]",
-        G: "[Net Weight]",
-        H: "[kilograms/grams]",
+        D: "INCORRECT",
       },
       {
-        D: null,
+        A: "169 STOREY TREEHOUSE",
+        B: null,
+        C: "GM",
+        D: "INVALID",
+        E: "INVALID",
+        F: 2,
+        G: 0.38,
+        H: "kgs",
       },
     ],
+  },
+  incorrectHeader: {
+    PackingList_Extract: [
+      {
+        A: "NOT",
+        B: "CORRECT",
+        C: "HEADER",
+      },
+      {
+        D: "INVALID",
+      },
+      {
+        A: "169 STOREY TREEHOUSE",
+        B: null,
+        C: "GM",
+        D: "INVALID",
+        E: "INVALID",
+        F: 2,
+        G: 0.38,
+        H: "kgs",
+      },
+    ],
+  },
+  emptyModel: {
+    PackingList_Extract: [{}],
   },
   validTestResult: {
     business_checks: {
