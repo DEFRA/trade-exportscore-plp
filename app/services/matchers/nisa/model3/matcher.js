@@ -3,7 +3,6 @@ const { matchesHeader } = require("../../../matches-header");
 const Regex = require("../../../../utilities/regex");
 
 function matches(packingList, filename) {
-  const establishmentNumberRow = 1;
   try {
     const sheet = Object.keys(packingList)[0];
 
