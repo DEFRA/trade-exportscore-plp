@@ -100,4 +100,13 @@ describe("matchesFowlerWelch", () => {
     const result = fowlerWelchMatcher.matches(packingListJson, filename);
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
+
+  test("if all reauired headers are missing, return wrong header", () => {
+    const filename = "packinglist.xlsx";
+    const result = fowlerWelchMatcher.matches(
+      model.invalidModel_MissingHeaders,
+      filename,
+    );
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
 });

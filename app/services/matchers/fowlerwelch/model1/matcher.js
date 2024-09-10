@@ -1,7 +1,8 @@
 const MatcherResult = require("../../../matcher-result");
 const { rowFinder } = require("../../../../utilities/row-finder");
+const Regex = require("../../../../utilities/regex");
 
-function matchesModel(packingList, filename, remosNumber, trader) {
+function matchesModel(packingList, filename, regex, trader) {
   let headerRow = 0;
 
   try {
@@ -13,17 +14,16 @@ function matchesModel(packingList, filename, remosNumber, trader) {
     }
 
     for (const sheet of sheets) {
-      headerRow = rowFinder(packingList[sheet], callback);
-      if (headerRow === -1) {
-        return MatcherResult.WRONG_HEADER;
-      }
-      const establishmentNumber = packingList[sheet][headerRow + 1].M;
-      if (!remosNumber.test(establishmentNumber)) {
+      // check for correct establishment number
+      if (!Regex.test(regex, packingList[sheet])) {
         return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
-
+      headerRow = rowFinder(packingList[sheet], callback);
+      if (headerRow === -1) {
+        return MatcherResult.WRONG_HEADER;
+      }
       const header = {
         C: "Commodity code",
         F: "Description of goods",
@@ -60,12 +60,7 @@ function callback(x) {
 }
 
 function matches(packingList, filename) {
-  return matchesModel(
-    packingList,
-    filename,
-    /^RMS-GB-000216-\d{3}$/,
-    "Fowler Welch",
-  );
+  return matchesModel(packingList, filename, /RMS-GB-000216/, "Fowler Welch");
 }
 
 module.exports = { matches, matchesModel };

@@ -12,7 +12,10 @@ describe("matchesAsdaModel1", () => {
   });
 
   test("returns generic error for empty json", () => {
-    const result = Matcher.matches(model.emptyModel, filename);
+    const packingListJson = {};
+    const filename = "packinglist.xls";
+
+    const result = Matcher.matches(packingListJson, filename);
 
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });

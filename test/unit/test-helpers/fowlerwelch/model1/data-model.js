@@ -227,6 +227,20 @@ module.exports = {
       },
     ],
   },
+  invalidModel_MissingHeaders: {
+    "Customer Order": [
+      {
+        A: "Item",
+        B: "Product code",
+        M: "NIIRMS Dispatch number",
+      },
+      {
+        A: "1",
+        B: "1582084",
+        M: "RMS-GB-000216-004",
+      },
+    ],
+  },
   emptyModel: {
     "Customer Order": [
       {

@@ -1,13 +1,14 @@
 const MatcherResult = require("../../../matcher-result");
 const { matchesHeader } = require("../../../matches-header");
+const Regex = require("../../../../utilities/regex");
 
 function matches(packingList, filename) {
-  const establishmentNumberRow = 1;
   try {
     const sheet = Object.keys(packingList)[0];
-    const establishmentNumber = packingList[sheet][establishmentNumberRow].A;
-    const regex = /^RMS-GB-000025-\d{3}$/;
-    if (!regex.test(establishmentNumber)) {
+
+    // check for correct establishment number
+    const regex = /RMS-GB-000025-/;
+    if (!Regex.test(regex, packingList[sheet])) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
