@@ -10,8 +10,8 @@ describe("file-extension-check", () => {
     ["test-file.csv", "csv", MatcherResult.CORRECT],
     ["test-file.Csv", "csv", MatcherResult.CORRECT],
     ["test-file.CsV", "cSV", MatcherResult.CORRECT],
-    ["car", "xls", MatcherResult.WRONG_EXTENSIONS],
-    ["car.abc", "xls", MatcherResult.WRONG_EXTENSIONS],
+    ["car", "xls", MatcherResult.WRONG_EXTENSION],
+    ["car.abc", "xls", MatcherResult.WRONG_EXTENSION],
   ])(
     "matches: when the input is '%s' and the extension is '%s', the result should be '%s'",
     (filename, extension, expected) => {
