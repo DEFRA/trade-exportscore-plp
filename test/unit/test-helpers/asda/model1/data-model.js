@@ -99,13 +99,13 @@ module.exports = {
         C: "HEADER",
       },
       {
-        D: "INVALID",
+        D: "RMS-GB-000015-006",
       },
       {
         A: "169 STOREY TREEHOUSE",
         B: null,
         C: "GM",
-        D: "INVALID",
+        D: "RMS-GB-000015-006",
         E: "INVALID",
         F: 2,
         G: 0.38,
@@ -170,16 +170,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: true,
     },
-    items: [
-      {
-        commodity_code: null,
-        description: null,
-        nature_of_products: null,
-        number_of_packages: null,
-        total_net_weight_kg: null,
-        type_of_treatment: null,
-      },
-    ],
+    items: [],
     registration_approval_number: null,
     parserModel: ParserModel.ASDA1,
   },
