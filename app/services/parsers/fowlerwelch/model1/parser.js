@@ -1,7 +1,5 @@
 const CombineParser = require("../../../parser-combine");
-const { mapParser } = require("../../../parser-map");
 const ParserModel = require("../../../parser-model");
-const headers = require("../../../model-headers");
 
 function parseModel(packingListJson, model) {
   const sheets = Object.keys(packingListJson);
