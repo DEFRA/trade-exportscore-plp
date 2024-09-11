@@ -33,7 +33,7 @@ describe("parseKepakModel1", () => {
     expect(result.parserModel).toBe(ParserModel.KEPAK1);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = model.emptyModel.KEPAK;
 
     const result = Parser.parse(packingListJson);

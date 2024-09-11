@@ -16,7 +16,7 @@ describe("parseWarrensModel1", () => {
     expect(result).toEqual(testResults.validTestResultMultiple);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = model.emptyModel;
 
     const result = Parser.parse(packingListJson);

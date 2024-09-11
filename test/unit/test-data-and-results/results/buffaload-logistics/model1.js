@@ -26,6 +26,21 @@ module.exports = {
     business_checks: { all_required_fields_present: true },
     parserModel: ParserModel.BUFFALOAD1,
   },
+  emptyModelResult: {
+    registration_approval_number: null,
+    items: [
+      {
+        description: null,
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: null,
+        number_of_packages: null,
+        total_net_weight_kg: null,
+      },
+    ],
+    business_checks: { all_required_fields_present: true },
+    parserModel: ParserModel.BUFFALOAD1,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

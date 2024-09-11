@@ -35,7 +35,7 @@ describe("parseNutricaModel1", () => {
     expect(result.parserModel).toBe(ParserModel.NUTRICIA1);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = model.emptyModel.DANONE;
 
     const result = Parser.parse(packingListJson);

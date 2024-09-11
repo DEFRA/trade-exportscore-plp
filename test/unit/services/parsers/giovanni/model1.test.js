@@ -19,7 +19,7 @@ describe("parseGiovanniModel1", () => {
     expect(result.parserModel).toBe(ParserModel.GIOVANNI1);
   });
 
-  test("parses null json", () => {
+  test("parses empty json", () => {
     const packingListJson = model.emptyModel.RANA;
 
     const result = Parser.parse(packingListJson);

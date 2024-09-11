@@ -1,7 +1,6 @@
 const MatcherResult = require("../../../../../app/services/matcher-result");
 const Matcher = require("../../../../../app/services/matchers/giovanni/model1");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
-const testResults = require("../../../test-data-and-results/results/giovanni/model1"); // todo - consume this!
 
 describe("matchesGiovanni", () => {
   test("returns generic error for empty json", () => {
