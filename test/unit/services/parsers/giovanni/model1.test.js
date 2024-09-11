@@ -1,6 +1,6 @@
-const Parser = require("../../../../../../app/services/parsers/giovanni/model1");
-const ParserModel = require("../../../../../../app/services/parser-model");
-const model = require("../../../../test-helpers/giovanni/model1/data-model");
+const Parser = require("../../../../../app/services/parsers/giovanni/model1");
+const ParserModel = require("../../../../../app/services/parser-model");
+const model = require("../../../test-helpers/giovanni/model1/data-model");
 
 describe("parseGiovanniModel1", () => {
   test("parses json", () => {

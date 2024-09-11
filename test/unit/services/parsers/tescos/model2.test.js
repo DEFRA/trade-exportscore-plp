@@ -1,5 +1,5 @@
-const parser = require("../../../../../../app/services/parsers/tescos/model2");
-const model = require("../../../../test-helpers/tescos/model2/data-model");
+const parser = require("../../../../../app/services/parsers/tescos/model2");
+const model = require("../../../test-helpers/tescos/model2/data-model");
 
 describe("parseTescoModel2", () => {
   test("parses populated json", () => {

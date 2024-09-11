@@ -1,8 +1,7 @@
-const parser = require("../../../../../../app/services/parsers/asda/model2");
+const parser = require("../../../../../app/services/parsers/sainsburys/model1");
+const model = require("../../../test-helpers/sainsburys/model1/data-model");
 
-const model = require("../../../../test-helpers/asda/model2/data-model");
-
-describe("parseAsdaModel2", () => {
+describe("parseSainsburysModel1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel.Sheet1);
 

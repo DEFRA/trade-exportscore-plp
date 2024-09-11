@@ -1,5 +1,5 @@
-const Parser = require("../../../../../../app/services/parsers/fowlerwelch/model1");
-const ParserModel = require("../../../../../../app/services/parser-model");
+const Parser = require("../../../../../app/services/parsers/fowlerwelch/model1");
+const ParserModel = require("../../../../../app/services/parser-model");
 
 describe("parseFowlerWelchModel1", () => {
   test("parses valid json", () => {

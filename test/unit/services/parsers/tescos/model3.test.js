@@ -1,5 +1,5 @@
-const Parser = require("../../../../../../app/services/parsers/tescos/model3");
-const ParserModel = require("../../../../../../app/services/parser-model");
+const Parser = require("../../../../../app/services/parsers/tescos/model3");
+const ParserModel = require("../../../../../app/services/parser-model");
 
 describe("parseTescoModel3", () => {
   test("parses valid json", () => {
