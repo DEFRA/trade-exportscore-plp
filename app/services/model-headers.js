@@ -1,3 +1,5 @@
+const description = "Product/ Part Number description";
+
 const headers = {
   ASDA1: {
     description: "[Description Of All Retail Goods]",
@@ -28,7 +30,7 @@ const headers = {
     nature_of_products: "NatureOfProduct",
   },
   COOP1: {
-    description: "Product/ Part Number description",
+    description: description,
     commodity_code: "Tariff Code EU",
     number_of_packages: "Packages",
     total_net_weight_kg: "NW total",
@@ -87,7 +89,7 @@ const headers = {
     type_of_treatment: "Packaging Type",
   },
   TESCO1: {
-    description: "Product/ Part Number description",
+    description: description,
     commodity_code: "Tariff Code UK",
     number_of_packages: "Packages",
     total_net_weight_kg: "Net Weight",
@@ -100,7 +102,7 @@ const headers = {
     total_net_weight_kg: "Total Net Weight",
   },
   TESCO3: {
-    description: "Product/ Part Number description",
+    description: description,
     commodity_code: "Tariff Code UK",
     number_of_packages: "Packages",
     total_net_weight_kg: "Net Weight",
