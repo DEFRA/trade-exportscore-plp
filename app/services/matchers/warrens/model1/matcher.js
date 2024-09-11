@@ -1,4 +1,4 @@
-const { matchesModel } = require("../../fowlerwelch/model1/matcher");
+const { matchesModel } = require("../../fowlerwelch/model1/model1");
 
 function matches(packingList, filename) {
   return matchesModel(

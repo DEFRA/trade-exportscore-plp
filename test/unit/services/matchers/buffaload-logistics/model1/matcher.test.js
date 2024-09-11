@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../../app/services/matchers/buffaload-logistics/model1/matcher");
+const Matcher = require("../../../../../../app/services/matchers/buffaload-logistics/model1/model1");
 const MatcherResult = require("../../../../../../app/services/matcher-result");
 const model = require("../../../../test-helpers/buffaload-logistics/model1/data-model");
 
