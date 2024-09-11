@@ -1,10 +1,10 @@
-const Matcher = require("../../../../../../app/services/matchers/nisa/model3");
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const model = require("../../../../test-helpers/nisa/model3/data-model");
+const Matcher = require("../../../../../app/services/matchers/tescos/model3");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const model = require("../../../test-helpers/tescos/model3/data-model");
 
-describe("matchesNisa3", () => {
+describe("matchesTescoModel3", () => {
   test("returns Correct", () => {
-    const filename = "PackingList.xlsx";
+    const filename = "PackingListTesco3.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);
 
@@ -22,10 +22,12 @@ describe("matchesNisa3", () => {
 
   test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
-      sheet: [
+      "Input Data Sheet": [
+        {},
+        {},
         {},
         {
-          A: "INCORRECT",
+          E: "INCORRECT",
         },
       ],
     };
@@ -39,14 +41,21 @@ describe("matchesNisa3", () => {
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
-      sheet: [
+      "Input Data Sheet": [
+        {},
+        {},
+        {},
         {
-          A: "NOT",
-          J: "CORRECT",
-          L: "HEADER",
+          E: "RMS-GB-000022-001",
         },
         {
-          A: "RMS-GB-000025-003",
+          A: "NOT",
+          B: "CORRECT",
+          C: "HEADER",
+          D: "Green Lane",
+          E: "Packages",
+          F: "Gross Weight",
+          G: "Net Weight",
         },
       ],
     };

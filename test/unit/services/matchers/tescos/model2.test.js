@@ -1,10 +1,10 @@
-const Matcher = require("../../../../../../app/services/matchers/co-op/model1");
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const model = require("../../../../test-helpers/co-op/model1/data-model");
+const Matcher = require("../../../../../app/services/matchers/tescos/model2");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const model = require("../../../test-helpers/tescos/model2/data-model");
 
-describe("matchesCoopModel1", () => {
+describe("matchesTescoModel2", () => {
   test("returns Correct", () => {
-    const filename = "packinglist.xlsx";
+    const filename = "PackingListTesco2.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);
 
@@ -22,11 +22,11 @@ describe("matchesCoopModel1", () => {
 
   test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
-      PackingList_Extract: [
+      Sheet2: [
         {},
         {},
         {
-          E: "INCORRECT",
+          M: "INCORRECT",
         },
       ],
     };
@@ -40,15 +40,15 @@ describe("matchesCoopModel1", () => {
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
-      PackingList_Extract: [
+      Sheet2: [
         {
           A: "NOT",
           B: "CORRECT",
-          E: "HEADER",
-          O: "Product/ Part Number description",
+          C: "HEADER",
         },
+        {},
         {
-          E: "RMS-GB-000009-001",
+          M: "RMS-GB-000015-009",
         },
       ],
     };

@@ -1,8 +1,8 @@
-const Matcher = require("../../../../../../app/services/matchers/kepak/model1");
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const model = require("../../../../test-helpers/kepak/model1/data-model");
+const Matcher = require("../../../../../app/services/matchers/davenport/model1");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const model = require("../../../test-helpers/davenport/model1/data-model");
 
-describe("matchesKepakModel1", () => {
+describe("matchesDavenportModel1", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xlsx";
 
@@ -29,6 +29,14 @@ describe("matchesKepakModel1", () => {
     );
 
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+  });
+
+  test("return wrong header for missing header values", () => {
+    const filename = "packinglist.xlsx";
+
+    const result = Matcher.matches(model.invalidModel_MissingHeaders, filename);
+
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
   test("return wrong header for incorrect header values", () => {

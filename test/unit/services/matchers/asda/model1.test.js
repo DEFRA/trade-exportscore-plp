@@ -1,6 +1,6 @@
-const Matcher = require("../../../../../../app/services/matchers/asda/model1");
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const model = require("../../../../test-helpers/asda/model1/data-model");
+const Matcher = require("../../../../../app/services/matchers/asda/model1");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const model = require("../../../test-helpers/asda/model1/data-model");
 
 const filename = "packinglist.xls";
 

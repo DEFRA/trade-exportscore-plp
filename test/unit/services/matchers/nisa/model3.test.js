@@ -1,8 +1,8 @@
-const Matcher = require("../../../../../../app/services/matchers/buffaload-logistics/model1");
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const model = require("../../../../test-helpers/buffaload-logistics/model1/data-model");
+const Matcher = require("../../../../../app/services/matchers/nisa/model3");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const model = require("../../../test-helpers/nisa/model3/data-model");
 
-describe("matchesBuffaloadLogisticsModel1", () => {
+describe("matchesNisa3", () => {
   test("returns Correct", () => {
     const filename = "PackingList.xlsx";
 
@@ -22,9 +22,10 @@ describe("matchesBuffaloadLogisticsModel1", () => {
 
   test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
-      Tabelle1: [
+      sheet: [
+        {},
         {
-          B: "INCORRECT",
+          A: "INCORRECT",
         },
       ],
     };
@@ -38,14 +39,14 @@ describe("matchesBuffaloadLogisticsModel1", () => {
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
-      Tabelle1: [
-        {
-          B: "RMS-GB-000098-001",
-        },
+      sheet: [
         {
           A: "NOT",
-          B: "CORRECT",
-          C: "HEADER",
+          J: "CORRECT",
+          L: "HEADER",
+        },
+        {
+          A: "RMS-GB-000025-003",
         },
       ],
     };

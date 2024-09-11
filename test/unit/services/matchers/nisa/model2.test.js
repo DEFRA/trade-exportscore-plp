@@ -1,10 +1,10 @@
-const Matcher = require("../../../../../../app/services/matchers/bandm/model1");
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const model = require("../../../../test-helpers/bandm/model1/data-model");
+const Matcher = require("../../../../../app/services/matchers/nisa/model2");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const model = require("../../../test-helpers/nisa/model2/data-model");
 
-describe("matchesBandMModel1", () => {
-  test("returns correct", () => {
-    const filename = "packinglist.xlsx";
+describe("matchesNisa2", () => {
+  test("returns Correct", () => {
+    const filename = "PackingList.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);
 
@@ -22,12 +22,10 @@ describe("matchesBandMModel1", () => {
 
   test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
-      Sheet1: [
-        {},
+      Something: [
         {},
         {
-          H: "WAREHOUSE SCHEME NUMBER:",
-          I: "INCORRECT",
+          A: "INCORRECT",
         },
       ],
     };
@@ -41,19 +39,14 @@ describe("matchesBandMModel1", () => {
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
-      Sheet1: [
-        {},
-        {},
+      Something: [
         {
-          H: "WAREHOUSE SCHEME NUMBER:",
-          I: "RMS-GB-000005-001",
+          B: "NOT",
+          J: "CORRECT",
+          L: "HEADER",
         },
-        {},
-        {},
         {
-          A: "NOT",
-          B: "CORRECT",
-          C: "HEADER",
+          B: "RMS-GB-000025-002",
         },
       ],
     };

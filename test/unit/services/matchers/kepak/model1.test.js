@@ -1,8 +1,8 @@
-const Matcher = require("../../../../../../app/services/matchers/cds/model1");
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const model = require("../../../../test-helpers/cds/model1/data-model");
+const Matcher = require("../../../../../app/services/matchers/kepak/model1");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const model = require("../../../test-helpers/kepak/model1/data-model");
 
-describe("matchesCdsModel1", () => {
+describe("matchesKepakModel1", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xlsx";
 
@@ -21,37 +21,23 @@ describe("matchesCdsModel1", () => {
   });
 
   test("returns wrong establishment number for missing establishment number", () => {
-    const packingListJson = {
-      PackingList_Extract: [
-        {},
-        {
-          K: "INCORRECT",
-        },
-      ],
-    };
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(
+      model.invalidModel_IncorrectEstablishmentNumber,
+      filename,
+    );
 
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
-    const packingListJson = {
-      PackingList_Extract: [
-        {
-          A: "NOT",
-          B: "CORRECT",
-          C: "HEADER",
-        },
-        {
-          K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
-        },
-      ],
-    };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = Matcher.matches(
+      model.invalidModel_IncorrectHeaders,
+      filename,
+    );
 
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });

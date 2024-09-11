@@ -1,10 +1,10 @@
-const Matcher = require("../../../../../../app/services/matchers/asda/model2");
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const model = require("../../../../test-helpers/asda/model2/data-model");
+const Matcher = require("../../../../../app/services/matchers/bandm/model1");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const model = require("../../../test-helpers/bandm/model1/data-model");
 
-describe("matchesAsdaModel2", () => {
-  test("returns Correct", () => {
-    const filename = "packinglist.xls";
+describe("matchesBandMModel1", () => {
+  test("returns correct", () => {
+    const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);
 
@@ -13,7 +13,7 @@ describe("matchesAsdaModel2", () => {
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
-    const filename = "packinglist.xls";
+    const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(packingListJson, filename);
 
@@ -24,12 +24,14 @@ describe("matchesAsdaModel2", () => {
     const packingListJson = {
       Sheet1: [
         {},
+        {},
         {
-          H: "INCORRECT",
+          H: "WAREHOUSE SCHEME NUMBER:",
+          I: "INCORRECT",
         },
       ],
     };
-    const filename = "packinglist.xls";
+    const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(packingListJson, filename);
 
@@ -37,16 +39,21 @@ describe("matchesAsdaModel2", () => {
   });
 
   test("return wrong header for incorrect header values", () => {
-    const filename = "packinglist.xls";
+    const filename = "packinglist.xlsx";
     const packingListJson = {
       Sheet1: [
+        {},
+        {},
         {
-          B: "NOT",
-          D: "CORRECT",
-          F: "HEADER",
+          H: "WAREHOUSE SCHEME NUMBER:",
+          I: "RMS-GB-000005-001",
         },
+        {},
+        {},
         {
-          H: "RMS-GB-000015-010",
+          A: "NOT",
+          B: "CORRECT",
+          C: "HEADER",
         },
       ],
     };

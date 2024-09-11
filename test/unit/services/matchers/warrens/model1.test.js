@@ -1,6 +1,6 @@
-const MatcherResult = require("../../../../../../app/services/matcher-result");
-const warrensMatcher = require("../../../../../../app/services/matchers/warrens/model1");
-const model = require("../../../../test-helpers/warrens/model1/data-model");
+const MatcherResult = require("../../../../../app/services/matcher-result");
+const warrensMatcher = require("../../../../../app/services/matchers/warrens/model1");
+const model = require("../../../test-helpers/warrens/model1/data-model");
 
 describe("matchesWarrens1", () => {
   test("returns generic error for empty json", () => {
