@@ -18,6 +18,7 @@ describe("parseGiovanniModel1", () => {
     expect(result.items[0].commodity_code).toBe(packingListJson[4].E);
     expect(result.parserModel).toBe(ParserModel.GIOVANNI1);
   });
+
   test("parses null json", () => {
     const packingListJson = model.emptyModel.RANA;
 

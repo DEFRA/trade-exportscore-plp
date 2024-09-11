@@ -1,16 +1,12 @@
 const CombineParser = require("../../../parser-combine");
 const ParserModel = require("../../../parser-model");
+const { mapParser } = require("../../../parser-map");
+const headers = require("../../../model-headers");
 
 function parse(packingListJson) {
   const establishmentNumber = packingListJson[1].H ?? null;
-  const packingListContents = packingListJson.slice(1).map((col) => ({
-    description: col.B ?? null,
-    nature_of_products: col.D ?? null,
-    type_of_treatment: col.F ?? null,
-    commodity_code: null,
-    number_of_packages: col.J ?? null,
-    total_net_weight_kg: col.N ?? null,
-  }));
+
+  const packingListContents = mapParser(packingListJson, 0, 1, headers.ASDA2);
 
   return CombineParser.combine(
     establishmentNumber,

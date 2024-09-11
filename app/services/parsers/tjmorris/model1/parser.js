@@ -3,6 +3,7 @@ const ParserModel = require("../../../parser-model");
 
 function parse(packingListJson) {
   const establishmentNumber = packingListJson[1].A ?? null;
+
   const packingListContents = packingListJson.slice(1).map((col) => ({
     description: col.N ?? null,
     nature_of_products: col.L ?? null,

@@ -83,6 +83,15 @@ module.exports = {
       {
         AT: null,
       },
+      {
+        G: "Product/ Part Number description",
+        L: "Tariff Code UK",
+        AS: "Treatment Type",
+        AT: "Green Lane",
+        BR: "Packages",
+        BT: "Gross Weight",
+        BU: "Net Weight",
+      },
     ],
   },
   validTestResult: {
