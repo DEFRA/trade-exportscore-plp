@@ -1,6 +1,8 @@
 const ParserModel = require("../../../../../app/services/parser-model");
 const Parser = require("../../../../../app/services/parsers/nutricia/model1");
 const model = require("../../../test-data-and-results/models/nutricia/model1");
+const testResults = require("../../../test-data-and-results/results/nutricia/model1"); // todo - use this
+
 describe("parseNutricaModel1", () => {
   test("parses json", () => {
     const packingListJson = model.validModel.DANONE;

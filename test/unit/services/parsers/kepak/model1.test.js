@@ -1,6 +1,8 @@
 const ParserModel = require("../../../../../app/services/parser-model");
 const Parser = require("../../../../../app/services/parsers/kepak/model1");
 const model = require("../../../test-data-and-results/models/kepak/model1");
+const testResults = require("../../../test-data-and-results/results/kepak/model1"); // todo - use this
+
 describe("parseKepakModel1", () => {
   test("parses json", () => {
     const packingListJson = model.validModel.KEPAK;

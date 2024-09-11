@@ -1,5 +1,6 @@
 const Parser = require("../../../../../app/services/parsers/tescos/model3");
 const ParserModel = require("../../../../../app/services/parser-model");
+const testResults = require("../../../test-data-and-results/results/tescos/model3"); // todo - use this
 
 describe("parseTescoModel3", () => {
   test("parses valid json", () => {

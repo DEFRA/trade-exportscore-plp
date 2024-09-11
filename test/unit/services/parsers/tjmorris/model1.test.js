@@ -1,5 +1,6 @@
 const Parser = require("../../../../../app/services/parsers/tjmorris/model1");
 const ParserModel = require("../../../../../app/services/parser-model");
+const testResults = require("../../../test-data-and-results/results/tjmorris/model1"); // todo - use this
 
 describe("parseTjmorrisModel1", () => {
   test("parses valid json", () => {

@@ -1,5 +1,6 @@
 const Parser = require("../../../../../app/services/parsers/buffaload-logistics/model1");
 const ParserModel = require("../../../../../app/services/parser-model");
+const testResults = require("../../../test-data-and-results/results/buffaload-logistics/model1"); // todo - use this!!!
 
 describe("parsesBuffaloadLogisticsModel1", () => {
   test("parses valid json", () => {

@@ -1,6 +1,7 @@
 const parser = require("../../../../../app/services/parsers/bandm/model1");
 const model = require("../../../test-data-and-results/models/bandm/model1");
 const JsonFile = require("../../../../../app/utilities/json-file");
+const testResults = require("../../../test-data-and-results/results/bandm/model1");
 
 describe("parseBandMModel1", () => {
   test("parses populated json", () => {
@@ -10,7 +11,7 @@ describe("parseBandMModel1", () => {
 
     const result = parser.parse(sanitisedPackingList);
 
-    expect(result).toEqual(model.validTestResult);
+    expect(result).toEqual(testResults.validTestResult);
   });
 
   test("parses empty json", () => {
@@ -20,7 +21,7 @@ describe("parseBandMModel1", () => {
 
     const result = parser.parse(sanitisedPackingList);
 
-    expect(result).toEqual(model.emptyTestResult);
+    expect(result).toEqual(testResults.emptyTestResult);
   });
 });
 

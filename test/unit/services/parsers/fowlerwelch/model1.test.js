@@ -1,5 +1,6 @@
 const Parser = require("../../../../../app/services/parsers/fowlerwelch/model1");
 const ParserModel = require("../../../../../app/services/parser-model");
+const testResults = require("../../../test-data-and-results/results/fowlerwelch/model1"); // todo - use this
 
 describe("parseFowlerWelchModel1", () => {
   test("parses valid json", () => {
@@ -102,7 +103,9 @@ describe("parseFowlerWelchModel1", () => {
         },
       ],
     };
+
     const result = Parser.parse(packingListJson);
+
     expect(result.registration_approval_number).toBe(
       packingListJson["Cust Ord"][45].M,
     );
