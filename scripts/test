@@ -71,4 +71,5 @@ compose() {
 
   # Clean up
   compose down -v
+  docker container prune --force
 )
