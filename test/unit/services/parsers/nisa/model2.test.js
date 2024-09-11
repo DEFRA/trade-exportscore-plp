@@ -1,5 +1,5 @@
 const parser = require("../../../../../app/services/parsers/nisa/model2");
-const model = require("../../../test-helpers/models/nisa/model2/data-model");
+const model = require("../../../test-helpers/models/nisa/model2/model2");
 
 describe("parseNisa2", () => {
   test("parses populated json", () => {

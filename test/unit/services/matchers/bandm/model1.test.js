@@ -1,6 +1,6 @@
 const Matcher = require("../../../../../app/services/matchers/bandm/model1");
 const MatcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-helpers/models/bandm/model1/data-model");
+const model = require("../../../test-helpers/models/bandm/model1/model1");
 
 describe("matchesBandMModel1", () => {
   test("returns correct", () => {
