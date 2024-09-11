@@ -1,5 +1,5 @@
 const parser = require("../../../../../app/services/parsers/bandm/model1");
-const model = require("../../../test-helpers/models/bandm/model1/model1");
+const model = require("../../../test-data-and-results/models/bandm/model1/model1");
 const JsonFile = require("../../../../../app/utilities/json-file");
 
 describe("parseBandMModel1", () => {

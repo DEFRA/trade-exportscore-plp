@@ -1,6 +1,6 @@
 const parser = require("../../../../../app/services/parsers/asda/model1");
 
-const model = require("../../../test-helpers/models/asda/model1/model1");
+const model = require("../../../test-data-and-results/models/asda/model1/model1");
 
 describe("parseAsdaModel1", () => {
   test("parses populated json", () => {

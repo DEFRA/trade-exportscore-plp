@@ -1,5 +1,5 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-helpers/models/tescos/model3/model3");
+const model = require("../../../test-data-and-results/models/tescos/model3/model3");
 const ParserModel = require("../../../../../app/services/parser-model");
 
 const filename = "PackingListTesco3.xlsx";
