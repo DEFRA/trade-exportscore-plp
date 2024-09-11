@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../../app/services/matchers/asda/model1/model1");
+const Matcher = require("../../../../../../app/services/matchers/asda/model1");
 const MatcherResult = require("../../../../../../app/services/matcher-result");
 const model = require("../../../../test-helpers/asda/model1/data-model");
 

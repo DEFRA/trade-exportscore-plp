@@ -1,6 +1,6 @@
-const MatcherResult = require("../../../matcher-result");
-const { matchesHeader } = require("../../../matches-header");
-const Regex = require("../../../../utilities/regex");
+const MatcherResult = require("../../matcher-result");
+const { matchesHeader } = require("../../matches-header");
+const Regex = require("../../../utilities/regex");
 
 function matches(packingList, filename) {
   try {
