@@ -1,4 +1,4 @@
-const parser = require("../../../../../../app/services/parsers/co-op/model1/parser");
+const parser = require("../../../../../../app/services/parsers/co-op/model1/model1");
 const model = require("../../../../test-helpers/co-op/model1/data-model");
 
 describe("parseCoopModel1", () => {

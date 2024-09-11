@@ -1,4 +1,4 @@
-const Parser = require("../../../../../../app/services/parsers/tescos/model3/parser");
+const Parser = require("../../../../../../app/services/parsers/tescos/model3/model3");
 const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parseTescoModel3", () => {

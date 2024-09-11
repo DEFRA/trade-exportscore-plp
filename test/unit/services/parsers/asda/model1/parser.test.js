@@ -1,4 +1,4 @@
-const parser = require("../../../../../../app/services/parsers/asda/model1/parser");
+const parser = require("../../../../../../app/services/parsers/asda/model1/model1");
 
 const model = require("../../../../test-helpers/asda/model1/data-model");
 

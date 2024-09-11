@@ -1,5 +1,5 @@
 const ParserModel = require("../../../parser-model");
-const { parseModel } = require("../../fowlerwelch/model1/parser");
+const { parseModel } = require("../../fowlerwelch/model1/model1");
 
 function parse(packingListJson) {
   return parseModel(packingListJson, ParserModel.WARRENS1);

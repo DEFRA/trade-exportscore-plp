@@ -1,4 +1,4 @@
-const parser = require("../../../../../../app/services/parsers/cds/model1/parser");
+const parser = require("../../../../../../app/services/parsers/cds/model1/model1");
 const model = require("../../../../test-helpers/cds/model1/data-model");
 
 describe("parseCdsModel1", () => {

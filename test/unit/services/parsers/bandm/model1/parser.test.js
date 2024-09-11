@@ -1,4 +1,4 @@
-const parser = require("../../../../../../app/services/parsers/bandm/model1/parser");
+const parser = require("../../../../../../app/services/parsers/bandm/model1/model1");
 const model = require("../../../../test-helpers/bandm/model1/data-model");
 const JsonFile = require("../../../../../../app/utilities/json-file");
 

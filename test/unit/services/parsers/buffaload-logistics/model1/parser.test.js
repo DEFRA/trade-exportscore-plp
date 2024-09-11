@@ -1,4 +1,4 @@
-const Parser = require("../../../../../../app/services/parsers/buffaload-logistics/model1/parser");
+const Parser = require("../../../../../../app/services/parsers/buffaload-logistics/model1/model1");
 const ParserModel = require("../../../../../../app/services/parser-model");
 
 describe("parsesBuffaloadLogisticsModel1", () => {

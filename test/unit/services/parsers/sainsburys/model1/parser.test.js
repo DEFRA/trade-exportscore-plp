@@ -1,4 +1,4 @@
-const parser = require("../../../../../../app/services/parsers/sainsburys/model1/parser");
+const parser = require("../../../../../../app/services/parsers/sainsburys/model1/model1");
 const model = require("../../../../test-helpers/sainsburys/model1/data-model");
 
 describe("parseSainsburysModel1", () => {

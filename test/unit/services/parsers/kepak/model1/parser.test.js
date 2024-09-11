@@ -1,5 +1,5 @@
 const ParserModel = require("../../../../../../app/services/parser-model");
-const Parser = require("../../../../../../app/services/parsers/kepak/model1/parser");
+const Parser = require("../../../../../../app/services/parsers/kepak/model1/model1");
 const model = require("../../../../test-helpers/kepak/model1/data-model");
 describe("parseKepakModel1", () => {
   test("parses json", () => {
