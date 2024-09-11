@@ -26,7 +26,6 @@ function matchesModel(packingList, filename, regex, trader) {
     }
     return result;
   } catch (err) {
-    console.log(err);
     return MatcherResult.GENERIC_ERROR;
   }
 }

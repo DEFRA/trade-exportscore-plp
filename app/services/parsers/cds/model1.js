@@ -1,5 +1,7 @@
-const ParserModel = require("../../parser-model");
-const CombineParser = require("../../parser-combine");
+const ParserModel = require("../../../parser-model");
+const CombineParser = require("../../../parser-combine");
+const headers = require("../../../model-headers");
+const { mapParser } = require("../../../parser-map");
 
 function parse(packingListJson) {
   const establishmentNumberRow = 1;
@@ -9,14 +11,13 @@ function parse(packingListJson) {
     packingListJson[establishmentNumberRow].K?.split("/") ?? [];
   const establishmentNumber =
     placeOfDispatchSplit.length > 1 ? placeOfDispatchSplit[1].trim() : null;
-  const packingListContents = packingListJson.slice(dataRow).map((col) => ({
-    description: col.D ?? null,
-    nature_of_products: col.I ?? null,
-    type_of_treatment: col.J ?? null,
-    commodity_code: null,
-    number_of_packages: col.E ?? null,
-    total_net_weight_kg: col.H ?? null,
-  }));
+
+  const packingListContents = mapParser(
+    packingListJson,
+    dataRow - 1,
+    dataRow,
+    headers.CDS1,
+  );
 
   return CombineParser.combine(
     establishmentNumber,
