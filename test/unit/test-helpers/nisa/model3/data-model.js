@@ -66,12 +66,11 @@ module.exports = {
   emptyModel: {
     sheet: [
       {
-        A: "RMS_ESTABLISHMENT_NO",
-        I: "PRODUCT_TYPE_CATEGORY",
-        K: "PART_NUMBER_DESCRIPTION",
-        L: "TARIFF_CODE_EU",
-        M: "PACKAGES",
-        O: "NET_WEIGHT_TOTAL",
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        I: "NET WEIGHT TOTAL",
       },
       {
         A: null,

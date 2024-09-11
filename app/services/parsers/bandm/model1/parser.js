@@ -1,9 +1,19 @@
+const { number } = require("joi");
 const CombineParser = require("../../../parser-combine");
 const ParserModel = require("../../../parser-model");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function parse(packingListJson) {
+  const header = {
+    description: "ITEM DESCRIPTION",
+    commodity_code: "COMMODITY CODE",
+    number_of_packages: "TOTAL NUMBER OF CASES",
+    total_net_weight_kg: "NET WEIGHT",
+  };
+
+  //TODO last row
+
   const traderRow = packingListJson.findIndex(
     (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
   );

@@ -1,5 +1,7 @@
 const CombineParser = require("../../../parser-combine");
+const { mapParser } = require("../../../parser-map");
 const ParserModel = require("../../../parser-model");
+const headers = require("../../../model-headers");
 
 function parseModel(packingListJson, model) {
   const sheets = Object.keys(packingListJson);
@@ -18,16 +20,11 @@ function parseModel(packingListJson, model) {
       (x) => x.M === "NIIRMS Dispatch number",
     );
 
-    packingListContentsTemp = packingListJson[sheet]
-      .slice(headerRow + 1)
-      .map((col) => ({
-        description: col.F ?? null,
-        nature_of_products: null,
-        type_of_treatment: col.N ?? null,
-        commodity_code: col.C ?? null,
-        number_of_packages: col.H ?? null,
-        total_net_weight_kg: col.K ?? null,
-      }));
+    packingListContentsTemp = mapParser(
+      packingListJson[sheet],
+      headerRow,
+      headers.FOWLERWELCH1,
+    );
 
     packingListContents = packingListContents.concat(packingListContentsTemp);
   }
