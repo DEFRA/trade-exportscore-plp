@@ -1,4 +1,4 @@
-const parser = require("../../../../../../app/services/parsers/nisa/model2/model2");
+const parser = require("../../../../../../app/services/parsers/nisa/model2");
 const model = require("../../../../test-helpers/nisa/model2/data-model");
 
 describe("parseNisa2", () => {

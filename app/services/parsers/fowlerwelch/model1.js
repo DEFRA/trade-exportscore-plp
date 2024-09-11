@@ -1,5 +1,5 @@
-const CombineParser = require("../../../parser-combine");
-const ParserModel = require("../../../parser-model");
+const CombineParser = require("../../parser-combine");
+const ParserModel = require("../../parser-model");
 
 function parseModel(packingListJson, model) {
   const sheets = Object.keys(packingListJson);

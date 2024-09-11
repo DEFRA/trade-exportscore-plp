@@ -1,5 +1,5 @@
 const ParserModel = require("../../../../../../app/services/parser-model");
-const Parser = require("../../../../../../app/services/parsers/nutricia/model1/model1");
+const Parser = require("../../../../../../app/services/parsers/nutricia/model1");
 const model = require("../../../../test-helpers/nutricia/model1/data-model");
 describe("parseNutricaModel1", () => {
   test("parses json", () => {
