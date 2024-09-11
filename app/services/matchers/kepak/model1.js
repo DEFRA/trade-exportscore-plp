@@ -1,4 +1,4 @@
-const { matchesModel } = require("../../giovanni/model1/model1");
+const { matchesModel } = require("../giovanni/model1");
 
 function matches(packingList, filename) {
   return matchesModel(packingList, filename, /RMS-GB-000280/, "Kepak Model 1");
