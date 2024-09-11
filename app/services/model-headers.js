@@ -13,6 +13,13 @@ const headers = {
     number_of_packages: "Cases",
     total_net_weight_kg: "NET Weight",
   },
+  BUFFALOAD1: {
+    description: "Description of goods",
+    type_of_treatment: "Treatment Type (Chilled /Ambient)",
+    number_of_packages: "No. of pkgs",
+    total_net_weight_kg: "Item Net Weight (kgs)",
+    commodity_code: "Commodity code",
+  },
   CDS1: {
     description: "Product",
     type_of_treatment: "Treatment",
@@ -27,7 +34,7 @@ const headers = {
     total_net_weight_kg: "NW total",
   },
   DAVENPORT1: {
-    description: "Description of goods",
+    description: "Description of Goods",
     commodity_code: "Commodity Code",
     number_of_packages: "No. of Pkgs",
     total_net_weight_kg: "Total Net Weight",
