@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../../app/services/matchers/kepak/model1/matcher");
+const Matcher = require("../../../../../../app/services/matchers/kepak/model1/model1");
 const MatcherResult = require("../../../../../../app/services/matcher-result");
 const model = require("../../../../test-helpers/kepak/model1/data-model");
 

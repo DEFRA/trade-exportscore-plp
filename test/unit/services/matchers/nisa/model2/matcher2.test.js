@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../../app/services/matchers/nisa/model2/matcher");
+const Matcher = require("../../../../../../app/services/matchers/nisa/model2/model2");
 const MatcherResult = require("../../../../../../app/services/matcher-result");
 const model = require("../../../../test-helpers/nisa/model2/data-model");
 

@@ -1,5 +1,5 @@
 const MatcherResult = require("../../../../../../app/services/matcher-result");
-const warrensMatcher = require("../../../../../../app/services/matchers/warrens/model1/matcher");
+const warrensMatcher = require("../../../../../../app/services/matchers/warrens/model1/model1");
 const model = require("../../../../test-helpers/warrens/model1/data-model");
 
 describe("matchesWarrens1", () => {
