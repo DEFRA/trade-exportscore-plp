@@ -1,6 +1,6 @@
-const MatcherResult = require("../../../matcher-result");
-const { matchesHeader } = require("../../../matches-header");
-const Regex = require("../../../../utilities/regex");
+const MatcherResult = require("../../matcher-result");
+const { matchesHeader } = require("../../matches-header");
+const Regex = require("../../../utilities/regex");
 
 function matches(packingList, filename) {
   try {
@@ -14,17 +14,18 @@ function matches(packingList, filename) {
 
     // check for header values
     const header = {
-      A: "Product/ Part Number description",
-      B: "Tariff Code UK",
-      E: "Packages",
-      G: "Net Weight",
+      G: "Product/ Part Number description",
+      L: "Tariff Code UK",
+      AS: "Treatment Type",
+      BR: "Packages",
+      BU: "Net Weight",
     };
 
     const result = matchesHeader(header, packingList[sheet], callback);
 
     if (result === MatcherResult.CORRECT) {
       console.info(
-        "Packing list matches Tesco Model 3 with filename: ",
+        "Packing list matches Tesco Model 1 with filename: ",
         filename,
       );
     }
@@ -35,7 +36,7 @@ function matches(packingList, filename) {
 }
 
 function callback(x) {
-  return x.A === "Product/ Part Number description";
+  return x.G === "Product/ Part Number description";
 }
 
 module.exports = {

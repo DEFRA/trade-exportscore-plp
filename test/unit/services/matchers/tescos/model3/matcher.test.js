@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../../app/services/matchers/tescos/model3/model3");
+const Matcher = require("../../../../../../app/services/matchers/tescos/model3");
 const MatcherResult = require("../../../../../../app/services/matcher-result");
 const model = require("../../../../test-helpers/tescos/model3/data-model");
 
