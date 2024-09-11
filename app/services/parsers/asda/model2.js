@@ -1,7 +1,7 @@
-const CombineParser = require("../../../parser-combine");
-const ParserModel = require("../../../parser-model");
-const { mapParser } = require("../../../parser-map");
-const headers = require("../../../model-headers");
+const CombineParser = require("../../parser-combine");
+const ParserModel = require("../../parser-model");
+const { mapParser } = require("../../parser-map");
+const headers = require("../../model-headers");
 
 function parse(packingListJson) {
   const establishmentNumber = packingListJson[1].H ?? null;
