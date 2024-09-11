@@ -1,5 +1,5 @@
 function findHeaderCols(header, packingListHeader) {
-  let headerCols = {};
+  const headerCols = {};
 
   for (const value in header) {
     headerCols[value] = Object.keys(packingListHeader).find((key) =>

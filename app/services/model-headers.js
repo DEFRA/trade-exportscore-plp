@@ -13,19 +13,6 @@ const headers = {
     number_of_packages: "Cases",
     total_net_weight_kg: "NET Weight",
   },
-  BANDM1: {
-    description: "ITEM DESCRIPTION",
-    commodity_code: "COMMODITY CODE",
-    number_of_packages: "TOTAL NUMBER OF CASES",
-    total_net_weight_kg: "NET WEIGHT",
-  },
-  BUFFALOAD1: {
-    description: "Description of goods",
-    type_of_treatment: "Treatment Type (Chilled /Ambient)",
-    number_of_packages: "No. of pkgs",
-    total_net_weight_kg: "Item Net Weight (kgs)",
-    commodity_code: "Commodity code",
-  },
   CDS1: {
     description: "Product",
     type_of_treatment: "Treatment",
@@ -40,17 +27,10 @@ const headers = {
     total_net_weight_kg: "NW total",
   },
   DAVENPORT1: {
-    description: "Description of Goods",
+    description: "Description of goods",
     commodity_code: "Commodity Code",
     number_of_packages: "No. of Pkgs",
     total_net_weight_kg: "Total Net Weight",
-  },
-  FOWLERWELCH1: {
-    description: "Description of goods",
-    type_of_treatment: "Treatment Type (Chilled /Ambient)",
-    number_of_packages: "No. of pkgs",
-    total_net_weight_kg: "Item Net Weight",
-    commodity_code: "Commodity code",
   },
   GIOVANNI1: {
     description: "DESCRIPTION",
@@ -118,21 +98,6 @@ const headers = {
     number_of_packages: "Packages",
     total_net_weight_kg: "Net Weight",
     type_of_treatment: "Treatment Type",
-  },
-  TJMORRIS1: {
-    description: "Description",
-    commodity_code: "Tariff/Commodity",
-    number_of_packages: "Cases",
-    total_net_weight_kg: "Net Weight Kg",
-    nature_of_products: "Description",
-    type_of_treatment: "TREATMENTTYPE",
-  },
-  WARRENS1: {
-    description: "Description of goods",
-    type_of_treatment: "Treatment Type (Chilled /Ambient)",
-    number_of_packages: "No. of pkgs",
-    total_net_weight_kg: "Item Net Weight",
-    commodity_code: "Commodity code",
   },
 };
 
