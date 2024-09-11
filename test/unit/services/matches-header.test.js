@@ -1,5 +1,5 @@
 const { matchesHeader } = require("../../../app/services/matches-header");
-const MatcherResult = require("../../../app/services/matches-result");
+const MatcherResult = require("../../../app/services/matcher-result");
 
 describe("matchesHeader", () => {
   test("returns correct header", () => {

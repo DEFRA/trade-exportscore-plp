@@ -1,4 +1,4 @@
-const MatcherResult = require("../../../../../../app/services/matches-result");
+const MatcherResult = require("../../../../../../app/services/matcher-result");
 const fowlerWelchMatcher = require("../../../../../../app/services/matchers/fowlerwelch/model1/matcher");
 const model = require("../../../../test-helpers/fowlerwelch/model1/data-model");
 
@@ -98,6 +98,15 @@ describe("matchesFowlerWelch", () => {
       ],
     };
     const result = fowlerWelchMatcher.matches(packingListJson, filename);
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+
+  test("if all reauired headers are missing, return wrong header", () => {
+    const filename = "packinglist.xlsx";
+    const result = fowlerWelchMatcher.matches(
+      model.invalidModel_MissingHeaders,
+      filename,
+    );
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });

@@ -1,9 +1,9 @@
-const MatcherResult = require("../services/matches-result");
+const MatcherResult = require("../services/matcher-result");
 
 function matches(filename, extension) {
   const fileExtension = filename.split(".").pop();
   if (fileExtension.toLowerCase() !== extension.toLowerCase()) {
-    return MatcherResult.WRONG_EXTENSIONS;
+    return MatcherResult.WRONG_EXTENSION;
   } else {
     return MatcherResult.CORRECT;
   }

@@ -1,5 +1,5 @@
 const Matcher = require("../../../../../../app/services/matchers/nutricia/model1/matcher");
-const MatcherResult = require("../../../../../../app/services/matches-result");
+const MatcherResult = require("../../../../../../app/services/matcher-result");
 const model = require("../../../../test-helpers/nutricia/model1/data-model");
 
 describe("matchesNutriciaModel1", () => {

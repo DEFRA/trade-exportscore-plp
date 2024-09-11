@@ -1,5 +1,5 @@
 const Matcher = require("../../../../../../app/services/matchers/nisa/model3/matcher");
-const MatcherResult = require("../../../../../../app/services/matches-result");
+const MatcherResult = require("../../../../../../app/services/matcher-result");
 const model = require("../../../../test-helpers/nisa/model3/data-model");
 
 describe("matchesNisa3", () => {

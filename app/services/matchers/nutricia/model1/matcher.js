@@ -4,7 +4,7 @@ function matches(packingList, filename) {
   return matchesModel(
     packingList,
     filename,
-    "RMS-GB-000133",
+    /RMS-GB-000133/,
     "Nutricia Model 1",
   );
 }

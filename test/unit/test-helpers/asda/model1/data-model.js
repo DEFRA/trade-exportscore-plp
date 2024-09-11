@@ -72,22 +72,49 @@ module.exports = {
       },
     ],
   },
-  emptyModel: {
+  wrongEstablishment: {
     PackingList_Extract: [
+      {},
+      {},
       {
-        A: "[Description Of All Retail Goods]",
-        B: "[Nature Of Product]",
-        C: "[Treatment Type]",
-        D: "[Number Of Establishment]",
-        E: "[Destination Store Establishment Number]",
-        F: "[Number of Packages]",
-        G: "[Net Weight]",
-        H: "[kilograms/grams]",
+        D: "INCORRECT",
       },
       {
-        D: null,
+        A: "169 STOREY TREEHOUSE",
+        B: null,
+        C: "GM",
+        D: "INVALID",
+        E: "INVALID",
+        F: 2,
+        G: 0.38,
+        H: "kgs",
       },
     ],
+  },
+  incorrectHeader: {
+    PackingList_Extract: [
+      {
+        A: "NOT",
+        B: "CORRECT",
+        C: "HEADER",
+      },
+      {
+        D: "RMS-GB-000015-006",
+      },
+      {
+        A: "169 STOREY TREEHOUSE",
+        B: null,
+        C: "GM",
+        D: "RMS-GB-000015-006",
+        E: "INVALID",
+        F: 2,
+        G: 0.38,
+        H: "kgs",
+      },
+    ],
+  },
+  emptyModel: {
+    PackingList_Extract: [{}],
   },
   validTestResult: {
     business_checks: {
@@ -143,16 +170,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: true,
     },
-    items: [
-      {
-        commodity_code: null,
-        description: null,
-        nature_of_products: null,
-        number_of_packages: null,
-        total_net_weight_kg: null,
-        type_of_treatment: null,
-      },
-    ],
+    items: [],
     registration_approval_number: null,
     parserModel: ParserModel.ASDA1,
   },
