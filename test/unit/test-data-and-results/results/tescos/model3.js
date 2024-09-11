@@ -1,4 +1,5 @@
 const ParserModel = require("../../../../../app/services/parser-model");
+const { emptyModelResult } = require("../nutricia/model1");
 
 module.exports = {
   validTestResult: {
@@ -49,6 +50,23 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000022-999",
+    parserModel: ParserModel.TESCO3,
+  },
+  emptyModelResult: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: null,
+        description: null,
+        nature_of_products: null,
+        number_of_packages: null,
+        total_net_weight_kg: null,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: null,
     parserModel: ParserModel.TESCO3,
   },
 };

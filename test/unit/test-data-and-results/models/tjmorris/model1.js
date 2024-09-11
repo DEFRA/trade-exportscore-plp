@@ -1,5 +1,3 @@
-const ParserModel = require("../../../../../app/services/parser-model");
-
 module.exports = {
   validModel: {
     Sheet1: [
@@ -33,7 +31,7 @@ module.exports = {
       {
         A: "RMS-GB-000010-001",
         J: "CHILLED",
-        L: "LETTUCE & BAGGED SALADS",
+        L: "Description",
         N: "Description",
         O: "0408192000",
         P: "2",

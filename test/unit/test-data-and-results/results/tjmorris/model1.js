@@ -9,7 +9,7 @@ module.exports = {
       {
         commodity_code: "0408192000",
         description: "Description",
-        nature_of_products: "LETTUCE & BAGGED SALADS",
+        nature_of_products: "Description",
         number_of_packages: "2",
         total_net_weight_kg: "1.4",
         type_of_treatment: "CHILLED",
@@ -49,6 +49,23 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000010-001",
+    parserModel: ParserModel.TJMORRIS1,
+  },
+  emptyModelResult: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: null,
+        description: null,
+        nature_of_products: null,
+        number_of_packages: null,
+        total_net_weight_kg: null,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: null,
     parserModel: ParserModel.TJMORRIS1,
   },
 };

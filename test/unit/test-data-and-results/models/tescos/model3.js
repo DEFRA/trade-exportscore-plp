@@ -80,6 +80,16 @@ module.exports = {
       {},
       {},
       {},
+      {},
+      {
+        A: "Product/ Part Number description",
+        B: "Tariff Code UK",
+        C: "Treatment Type",
+        D: "Green Lane",
+        E: "Packages",
+        F: "Gross Weight",
+        G: "Net Weight",
+      },
       {
         E: null,
       },
