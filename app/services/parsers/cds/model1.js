@@ -1,5 +1,5 @@
-const ParserModel = require("../../../parser-model");
-const CombineParser = require("../../../parser-combine");
+const ParserModel = require("../../parser-model");
+const CombineParser = require("../../parser-combine");
 
 function parse(packingListJson) {
   const establishmentNumberRow = 1;
