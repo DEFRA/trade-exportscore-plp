@@ -1,7 +1,6 @@
-const ParserModel = require("../../../../../app/services/parser-model");
 const Parser = require("../../../../../app/services/parsers/davenport/model1");
 const model = require("../../../test-data-and-results/models/davenport/model1");
-const testResults = require("../../../test-data-and-results/results/davenport/model1"); // todo - use this
+const testResults = require("../../../test-data-and-results/results/davenport/model1");
 
 describe("parseDavenportModel1", () => {
   test("parses json", () => {
