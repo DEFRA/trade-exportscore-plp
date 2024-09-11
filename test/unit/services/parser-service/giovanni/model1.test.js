@@ -1,5 +1,5 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-data-and-results/models/giovanni/model1/model1");
+const model = require("../../../test-data-and-results/models/giovanni/model1");
 const ParserModel = require("../../../../../app/services/parser-model");
 
 const filename = "packinglist-giovanni-model1.xlsx";

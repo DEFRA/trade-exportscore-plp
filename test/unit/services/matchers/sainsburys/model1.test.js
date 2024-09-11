@@ -1,6 +1,6 @@
 const Matcher = require("../../../../../app/services/matchers/sainsburys/model1");
 const MatcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-data-and-results/models/sainsburys/model1/model1");
+const model = require("../../../test-data-and-results/models/sainsburys/model1");
 
 describe("matchesSainsburysModel1", () => {
   test("returns generic error for empty json", () => {

@@ -1,4 +1,4 @@
-const ParserModel = require("../../../../../../app/services/parser-model");
+const ParserModel = require("../../../../../app/services/parser-model");
 
 module.exports = {
   validModel: {

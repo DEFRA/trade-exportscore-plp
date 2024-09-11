@@ -1,5 +1,5 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-data-and-results/models/asda/model2/model2");
+const model = require("../../../test-data-and-results/models/asda/model2");
 const ParserModel = require("../../../../../app/services/parser-model");
 
 const filename = "packinglist-asda-model2.xls";

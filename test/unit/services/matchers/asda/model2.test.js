@@ -1,6 +1,6 @@
 const Matcher = require("../../../../../app/services/matchers/asda/model2");
 const MatcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-data-and-results/models/asda/model2/model2");
+const model = require("../../../test-data-and-results/models/asda/model2");
 
 describe("matchesAsdaModel2", () => {
   test("returns Correct", () => {

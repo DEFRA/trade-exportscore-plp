@@ -1,5 +1,5 @@
 const parser = require("../../../../../app/services/parsers/co-op/model1");
-const model = require("../../../test-data-and-results/models/co-op/model1/model1");
+const model = require("../../../test-data-and-results/models/co-op/model1");
 
 describe("parseCoopModel1", () => {
   test("parses populated json", () => {

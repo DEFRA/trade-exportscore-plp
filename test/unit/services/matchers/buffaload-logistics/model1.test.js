@@ -1,6 +1,6 @@
 const Matcher = require("../../../../../app/services/matchers/buffaload-logistics/model1");
 const MatcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-data-and-results/models/buffaload-logistics/model1/model1");
+const model = require("../../../test-data-and-results/models/buffaload-logistics/model1");
 
 describe("matchesBuffaloadLogisticsModel1", () => {
   test("returns Correct", () => {

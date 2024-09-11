@@ -1,6 +1,6 @@
 const Matcher = require("../../../../../app/services/matchers/davenport/model1");
 const MatcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-data-and-results/models/davenport/model1/model1");
+const model = require("../../../test-data-and-results/models/davenport/model1");
 
 describe("matchesDavenportModel1", () => {
   test("returns Correct", () => {

@@ -1,6 +1,6 @@
 const Parser = require("../../../../../app/services/parsers/warrens/model1");
 const ParserModel = require("../../../../../app/services/parser-model");
-const model = require("../../../test-data-and-results/models/warrens/model1/model1");
+const model = require("../../../test-data-and-results/models/warrens/model1");
 
 describe("parseWarrensModel1", () => {
   test("parses json", () => {
