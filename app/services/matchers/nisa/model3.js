@@ -1,31 +1,30 @@
-const MatcherResult = require("../../../matcher-result");
-const { matchesHeader } = require("../../../matches-header");
-const Regex = require("../../../../utilities/regex");
+const MatcherResult = require("../../matcher-result");
+const { matchesHeader } = require("../../matches-header");
+const Regex = require("../../../utilities/regex");
 
 function matches(packingList, filename) {
   try {
     const sheet = Object.keys(packingList)[0];
 
     // check for correct establishment number
-    const regex = /RMS-GB-000098-/;
+    const regex = /RMS-GB-000025-/;
     if (!Regex.test(regex, packingList[sheet])) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
-    // check for header values
     const header = {
-      A: "Commodity code",
-      B: "Description of goods",
-      D: "No. of pkgs",
-      G: "Item Net Weight (kgs)",
-      H: "Treatment Type (Chilled /Ambient)",
+      C: "PRODUCT TYPE CATEGORY",
+      E: "PART NUMBER DESCRIPTION",
+      F: "TARIFF CODE EU",
+      G: "PACKAGES",
+      I: "NET WEIGHT TOTAL",
     };
 
     const result = matchesHeader(header, packingList[sheet], callback);
 
     if (result === MatcherResult.CORRECT) {
       console.info(
-        "Packing list matches Buffaload Model 1 with filename: ",
+        "Packing list matches Nisa Model 3 with filename: ",
         filename,
       );
     }
@@ -36,9 +35,7 @@ function matches(packingList, filename) {
 }
 
 function callback(x) {
-  return x.B === "Description of goods";
+  return x.E === "PART NUMBER DESCRIPTION";
 }
 
-module.exports = {
-  matches,
-};
+module.exports = { matches };

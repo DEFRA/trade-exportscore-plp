@@ -1,31 +1,29 @@
-const MatcherResult = require("../../../matcher-result");
-const { matchesHeader } = require("../../../matches-header");
-const Regex = require("../../../../utilities/regex");
+const MatcherResult = require("../../matcher-result");
+const { matchesHeader } = require("../../matches-header");
+const Regex = require("../../../utilities/regex");
 
 function matches(packingList, filename) {
   try {
     const sheet = Object.keys(packingList)[0];
 
     // check for correct establishment number
-    const regex = /RMS-GB-000252/;
+    const regex = /RMS-GB-000009-/;
     if (!Regex.test(regex, packingList[sheet])) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
-    // check for header values
     const header = {
-      D: "Product",
-      E: "# Packages",
-      H: "NetWeight",
-      I: "NatureOfProduct",
-      J: "Treatment",
+      O: "Product/ Part Number description",
+      P: "Tariff Code EU",
+      Q: "Packages",
+      S: "NW total",
     };
 
     const result = matchesHeader(header, packingList[sheet], callback);
 
     if (result === MatcherResult.CORRECT) {
       console.info(
-        "Packing list matches CDS Model 1 with filename: ",
+        "Packing list matches Co-op Model 1 with filename: ",
         filename,
       );
     }
@@ -36,7 +34,7 @@ function matches(packingList, filename) {
 }
 
 function callback(x) {
-  return x.D === "Product";
+  return x.O === "Product/ Part Number description";
 }
 
 module.exports = {

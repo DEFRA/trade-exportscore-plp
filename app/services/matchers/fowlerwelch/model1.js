@@ -1,6 +1,6 @@
-const MatcherResult = require("../../../matcher-result");
-const { rowFinder } = require("../../../../utilities/row-finder");
-const Regex = require("../../../../utilities/regex");
+const MatcherResult = require("../../matcher-result");
+const { rowFinder } = require("../../../utilities/row-finder");
+const Regex = require("../../../utilities/regex");
 
 function matchesModel(packingList, filename, regex, trader) {
   let headerRow = 0;

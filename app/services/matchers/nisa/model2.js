@@ -1,6 +1,6 @@
-const MatcherResult = require("../../../matcher-result");
-const { matchesHeader } = require("../../../matches-header");
-const Regex = require("../../../../utilities/regex");
+const MatcherResult = require("../../matcher-result");
+const { matchesHeader } = require("../../matches-header");
+const Regex = require("../../../utilities/regex");
 
 function matches(packingList, filename) {
   try {
@@ -13,18 +13,18 @@ function matches(packingList, filename) {
     }
 
     const header = {
-      C: "PRODUCT TYPE CATEGORY",
-      E: "PART NUMBER DESCRIPTION",
-      F: "TARIFF CODE EU",
-      G: "PACKAGES",
-      I: "NET WEIGHT TOTAL",
+      J: "PRODUCT_TYPE_CATEGORY",
+      L: "PART_NUMBER_DESCRIPTION",
+      M: "TARIFF_CODE_EU",
+      N: "PACKAGES",
+      P: "NET_WEIGHT_TOTAL",
     };
 
     const result = matchesHeader(header, packingList[sheet], callback);
 
     if (result === MatcherResult.CORRECT) {
       console.info(
-        "Packing list matches Nisa Model 3 with filename: ",
+        "Packing list matches Nisa Model 2 with filename: ",
         filename,
       );
     }
@@ -35,7 +35,7 @@ function matches(packingList, filename) {
 }
 
 function callback(x) {
-  return x.E === "PART NUMBER DESCRIPTION";
+  return x.L === "PART_NUMBER_DESCRIPTION";
 }
 
 module.exports = { matches };

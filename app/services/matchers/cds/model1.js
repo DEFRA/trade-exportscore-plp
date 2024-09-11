@@ -1,30 +1,31 @@
-const MatcherResult = require("../../../matcher-result");
-const { matchesHeader } = require("../../../matches-header");
-const Regex = require("../../../../utilities/regex");
+const MatcherResult = require("../../matcher-result");
+const { matchesHeader } = require("../../matches-header");
+const Regex = require("../../../utilities/regex");
 
 function matches(packingList, filename) {
   try {
     const sheet = Object.keys(packingList)[0];
 
     // check for correct establishment number
-    const regex = /RMS-GB-000025-/;
+    const regex = /RMS-GB-000252/;
     if (!Regex.test(regex, packingList[sheet])) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
+    // check for header values
     const header = {
-      K: "PART_NUMBER_DESCRIPTION",
-      L: "TARIFF_CODE_EU",
-      M: "PACKAGES",
-      O: "NET_WEIGHT_TOTAL",
-      I: "PRODUCT_TYPE_CATEGORY",
+      D: "Product",
+      E: "# Packages",
+      H: "NetWeight",
+      I: "NatureOfProduct",
+      J: "Treatment",
     };
 
     const result = matchesHeader(header, packingList[sheet], callback);
 
     if (result === MatcherResult.CORRECT) {
       console.info(
-        "Packing list matches Nisa Model 1 with filename: ",
+        "Packing list matches CDS Model 1 with filename: ",
         filename,
       );
     }
@@ -35,7 +36,9 @@ function matches(packingList, filename) {
 }
 
 function callback(x) {
-  return x.K === "PART_NUMBER_DESCRIPTION";
+  return x.D === "Product";
 }
 
-module.exports = { matches };
+module.exports = {
+  matches,
+};
