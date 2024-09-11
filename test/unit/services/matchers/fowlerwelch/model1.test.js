@@ -1,6 +1,6 @@
 const MatcherResult = require("../../../../../app/services/matcher-result");
 const fowlerWelchMatcher = require("../../../../../app/services/matchers/fowlerwelch/model1");
-const model = require("../../../test-helpers/fowlerwelch/model1/data-model");
+const model = require("../../../test-helpers/models/fowlerwelch/model1/data-model");
 
 describe("matchesFowlerWelch", () => {
   test("returns generic error for empty json", () => {

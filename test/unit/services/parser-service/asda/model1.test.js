@@ -1,5 +1,5 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-helpers/asda/model1/data-model");
+const model = require("../../../test-helpers/models/asda/model1/data-model");
 const ParserModel = require("../../../../../app/services/parser-model");
 
 describe("matchesAsdaModel1", () => {

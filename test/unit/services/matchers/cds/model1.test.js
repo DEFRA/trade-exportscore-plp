@@ -1,6 +1,6 @@
 const Matcher = require("../../../../../app/services/matchers/cds/model1");
 const MatcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-helpers/cds/model1/data-model");
+const model = require("../../../test-helpers/models/cds/model1/data-model");
 
 describe("matchesCdsModel1", () => {
   test("returns Correct", () => {

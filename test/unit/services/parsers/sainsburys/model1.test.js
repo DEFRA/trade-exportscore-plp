@@ -1,5 +1,5 @@
 const parser = require("../../../../../app/services/parsers/sainsburys/model1");
-const model = require("../../../test-helpers/sainsburys/model1/data-model");
+const model = require("../../../test-helpers/models/sainsburys/model1/data-model");
 
 describe("parseSainsburysModel1", () => {
   test("parses populated json", () => {

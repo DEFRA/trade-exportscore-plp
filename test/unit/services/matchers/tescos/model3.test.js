@@ -1,6 +1,6 @@
 const Matcher = require("../../../../../app/services/matchers/tescos/model3");
 const MatcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-helpers/tescos/model3/data-model");
+const model = require("../../../test-helpers/models/tescos/model3/data-model");
 
 describe("matchesTescoModel3", () => {
   test("returns Correct", () => {
