@@ -7,10 +7,11 @@ function parse(packingListJson) {
   const establishmentNumberRow = 1;
   const dataRowFirst = 3;
   const establishmentNumber = packingListJson[establishmentNumberRow].A ?? null;
-  console.log(headers.NISA3);
+
   const packingListContents = mapParser(
     packingListJson,
     dataRowFirst - 1,
+    dataRowFirst,
     headers.NISA3,
   );
 

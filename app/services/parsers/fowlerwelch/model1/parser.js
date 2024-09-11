@@ -20,11 +20,16 @@ function parseModel(packingListJson, model) {
       (x) => x.M === "NIIRMS Dispatch number",
     );
 
-    packingListContentsTemp = mapParser(
-      packingListJson[sheet],
-      headerRow,
-      headers.FOWLERWELCH1,
-    );
+    packingListContentsTemp = packingListJson[sheet]
+      .slice(headerRow + 1)
+      .map((col) => ({
+        description: col.F ?? null,
+        nature_of_products: null,
+        type_of_treatment: col.N ?? null,
+        commodity_code: col.C ?? null,
+        number_of_packages: col.H ?? null,
+        total_net_weight_kg: col.K ?? null,
+      }));
 
     packingListContents = packingListContents.concat(packingListContentsTemp);
   }

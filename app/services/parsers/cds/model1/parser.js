@@ -15,6 +15,7 @@ function parse(packingListJson) {
   const packingListContents = mapParser(
     packingListJson,
     dataRow - 1,
+    dataRow,
     headers.CDS1,
   );
 

@@ -10,6 +10,7 @@ function parse(packingListJson) {
   const packingListContents = mapParser(
     packingListJson,
     0,
+    1,
     headers.SAINSBURYS1,
   );
 

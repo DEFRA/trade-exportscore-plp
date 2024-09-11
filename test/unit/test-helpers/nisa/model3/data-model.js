@@ -65,6 +65,8 @@ module.exports = {
   },
   emptyModel: {
     sheet: [
+      {},
+      {},
       {
         C: "PRODUCT TYPE CATEGORY",
         E: "PART NUMBER DESCRIPTION",
@@ -131,7 +133,16 @@ module.exports = {
     business_checks: {
       all_required_fields_present: true,
     },
-    items: [],
+    items: [
+      {
+        commodity_code: null,
+        description: null,
+        nature_of_products: null,
+        number_of_packages: null,
+        total_net_weight_kg: null,
+        type_of_treatment: null,
+      },
+    ],
     registration_approval_number: null,
     parserModel: ParserModel.NISA3,
   },

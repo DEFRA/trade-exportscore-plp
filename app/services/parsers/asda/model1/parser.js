@@ -6,7 +6,7 @@ const headers = require("../../../model-headers");
 function parse(packingListJson) {
   const establishmentNumber = packingListJson[1].D ?? null;
 
-  const packingListContents = mapParser(packingListJson, 0, headers.ASDA1);
+  const packingListContents = mapParser(packingListJson, 0, 1, headers.ASDA1);
 
   return CombineParser.combine(
     establishmentNumber,

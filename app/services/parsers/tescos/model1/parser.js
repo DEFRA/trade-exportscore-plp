@@ -12,6 +12,7 @@ function parse(packingListJson) {
   const packingListContents = mapParser(
     packingListJson,
     packingListContentsRow - 1,
+    packingListContentsRow,
     headers.TESCO1,
   );
 

@@ -1,5 +1,3 @@
-const { models } = require("./database-service");
-
 const headers = {
   ASDA1: {
     description: "[Description Of All Retail Goods]",
@@ -35,7 +33,7 @@ const headers = {
     total_net_weight_kg: "NetWeight",
     nature_of_products: "NatureOfProduct",
   },
-  CDS1: {
+  COOP1: {
     description: "Product/ Part Number description",
     commodity_code: "Tariff Code EU",
     number_of_packages: "Packages",
@@ -51,7 +49,7 @@ const headers = {
     description: "Description of goods",
     type_of_treatment: "Treatment Type (Chilled /Ambient)",
     number_of_packages: "No. of pkgs",
-    total_net_weight_kg: "Item Net Weight (kgs)",
+    total_net_weight_kg: "Item Net Weight",
     commodity_code: "Commodity code",
   },
   GIOVANNI1: {
@@ -110,7 +108,7 @@ const headers = {
   },
   TESCO2: {
     description: "Description of goods",
-    commodity_code: "Commodity Code",
+    commodity_code: "Commodity code",
     number_of_packages: "No. of pkgs",
     total_net_weight_kg: "Total Net Weight",
   },
@@ -119,6 +117,7 @@ const headers = {
     commodity_code: "Tariff Code UK",
     number_of_packages: "Packages",
     total_net_weight_kg: "Net Weight",
+    type_of_treatment: "Treatment Type",
   },
   TJMORRIS1: {
     description: "Description",
@@ -132,7 +131,7 @@ const headers = {
     description: "Description of goods",
     type_of_treatment: "Treatment Type (Chilled /Ambient)",
     number_of_packages: "No. of pkgs",
-    total_net_weight_kg: "Item Net Weight (kgs)",
+    total_net_weight_kg: "Item Net Weight",
     commodity_code: "Commodity code",
   },
 };
