@@ -2,7 +2,7 @@ const fs = require('fs/promises')
 const path = require('path')
 const excelToJson = require('@boterop/convert-excel-to-json')
 
-const { moveDirectory } = require('./dependencies/move-dirs')
+const { copyDirectory } = require('./dependencies/copy-dirs')
 
 const directoryPath = path.join('/Volumes', 'T7 Shield', 'MEGA DUMP')
 
@@ -38,7 +38,7 @@ async function listFiles (gcApplications) {
       console.log('Copying:', dir.name)
       const srcDir = '/src/' + dir.name + '/'
       const destDir = './general-certificates/' + dir.name + '/'
-      moveDirectory(srcDir, destDir)
+      copyDirectory(srcDir, destDir)
     })
     console.log('Matched dirs:', matchingDirectories.length)
   } catch (err) {
