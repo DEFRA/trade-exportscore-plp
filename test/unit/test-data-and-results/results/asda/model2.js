@@ -52,7 +52,7 @@ module.exports = {
     parserModel: ParserModel.ASDA2,
   },
   incorrectEstablishmentNumber: {},
-  incorrectHeader,
+  incorrectHeader: {},
   emptyModel: {
     business_checks: {
       all_required_fields_present: true,

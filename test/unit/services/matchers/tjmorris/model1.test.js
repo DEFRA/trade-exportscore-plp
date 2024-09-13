@@ -69,7 +69,7 @@ describe("matchesTjmorris", () => {
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
-  test("returns Correct", () => {
+  test("returns 'Correct' for valid JSON", () => {
     const filename = "packinglist.xls";
     const packingListJson = {
       Sheet1: [

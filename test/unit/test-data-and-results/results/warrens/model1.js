@@ -26,7 +26,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000174-002",
     parserModel: ParserModel.WARRENS1,
   },
-  validModelMultiple: {
+  validModel_Multiple: {
     business_checks: {
       all_required_fields_present: true,
     },
@@ -78,7 +78,7 @@ module.exports = {
         nature_of_products: null,
         number_of_packages: "32",
         total_net_weight_kg: null,
-        type_of_treatment: "Chilled",
+        type_of_treatment: null,
       },
       {
         commodity_code: "0702000007",

@@ -30,10 +30,7 @@ describe("matchesWarrens1", () => {
 
   test("returns wrong header for incorrect header values of one sheet", () => {
     const filename = "packinglist.xlsx";
-    const result = warrensMatcher.matches(
-      model.incorrectHeader,
-      filename,
-    );
+    const result = warrensMatcher.matches(model.incorrectHeader, filename);
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 

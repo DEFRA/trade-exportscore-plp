@@ -3,7 +3,7 @@ const model = require("../../../test-data-and-results/models/nisa/model3");
 const testResults = require("../../../test-data-and-results/results/nisa/model3");
 
 describe("parseNisa3", () => {
-  test("parses populated json", () => {
+  test("parses valid Model 3 and returns all_required_fields_present as true", () => {
     const result = parser.parse(model.validModel.sheet);
 
     expect(result).toEqual(testResults.validModel);

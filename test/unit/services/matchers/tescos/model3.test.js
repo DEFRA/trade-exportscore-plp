@@ -3,7 +3,7 @@ const MatcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/tescos/model3");
 
 describe("matchesTescoModel3", () => {
-  test("returns Correct", () => {
+  test("returns 'Correct' for valid JSON", () => {
     const filename = "PackingListTesco3.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);

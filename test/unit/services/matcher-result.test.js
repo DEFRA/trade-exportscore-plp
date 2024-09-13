@@ -50,4 +50,14 @@ describe("matcherResultContainsCorrectValues", () => {
 
     expect(result).toBe(4);
   });
+
+  test("contains the 'Correct' definition", () => {
+    expect(MatcherResult.VALID_HEADER_NO_DATA).toBeDefined();
+  });
+
+  test("contains the 'Correct' value", () => {
+    var result = MatcherResult.VALID_HEADER_NO_DATA;
+
+    expect(result).toBe(5);
+  });
 });

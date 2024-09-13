@@ -3,7 +3,7 @@ const MatcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/kepak/model1");
 
 describe("matchesKepakModel1", () => {
-  test("returns Correct", () => {
+  test("returns 'Correct' for valid JSON", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);
@@ -34,10 +34,7 @@ describe("matchesKepakModel1", () => {
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(
-      model.incorrectHeader,
-      filename,
-    );
+    const result = Matcher.matches(model.incorrectHeader, filename);
 
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });

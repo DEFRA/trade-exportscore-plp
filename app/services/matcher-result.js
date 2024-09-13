@@ -6,6 +6,7 @@ const MatcherResult = Object.freeze({
   WRONG_HEADER: 2,
   GENERIC_ERROR: 3,
   CORRECT: 4,
+  VALID_HEADER_NO_DATA: 5,
 });
 
 module.exports = MatcherResult;

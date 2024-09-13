@@ -4,7 +4,7 @@ const model = require("../../../test-data-and-results/models/kepak/model1");
 const testResults = require("../../../test-data-and-results/results/kepak/model1");
 
 describe("parseKepakModel1", () => {
-  test("parses json", () => {
+  test("parses valid Model 1 and returns all_required_fields_present as true", () => {
     const result = Parser.parse(model.validModel.KEPAK);
 
     expect(result).toEqual(testResults.validModel);

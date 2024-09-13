@@ -3,7 +3,7 @@ const MatcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/asda/model2");
 
 describe("matchesAsdaModel2", () => {
-  test("returns Correct", () => {
+  test("returns 'Correct' for valid JSON", () => {
     const filename = "packinglist.xls";
 
     const result = Matcher.matches(model.validModel, filename);

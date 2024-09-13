@@ -5,12 +5,14 @@ const model = require("../../../test-data-and-results/models/giovanni/model1");
 describe("matchesGiovanni", () => {
   test("returns generic error for empty json", () => {
     const filename = "packinglist.xlsx";
+
     const result = Matcher.matches({}, filename);
+
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
-  test("returns Correct", () => {
-    const filename = "PackingList.xlsx";
+  test("returns 'Correct' for valid JSON", () => {
+    const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);
 
@@ -32,6 +34,7 @@ describe("matchesGiovanni", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(model.incorrectHeader, filename);
+
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 });

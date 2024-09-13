@@ -4,7 +4,7 @@ const model = require("../../../test-data-and-results/models/warrens/model1");
 const testResults = require("../../../test-data-and-results/results/warrens/model1");
 
 describe("parseWarrensModel1", () => {
-  test("parses json", () => {
+  test("parses valid Model 1 and returns all_required_fields_present as true", () => {
     const result = Parser.parse(model.validModel);
 
     expect(result).toEqual(testResults.validModel);
@@ -13,7 +13,7 @@ describe("parseWarrensModel1", () => {
   test("parses multiple sheets", () => {
     const result = Parser.parse(model.validModel_Multiple);
 
-    expect(result).toEqual(testResults.validModelMultiple);
+    expect(result).toEqual(testResults.validModel_Multiple);
   });
 
   test("parses empty json", () => {

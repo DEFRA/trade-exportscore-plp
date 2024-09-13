@@ -3,7 +3,7 @@ const model = require("../../../test-data-and-results/models/tjmorris/model1");
 const testResults = require("../../../test-data-and-results/results/tjmorris/model1");
 
 describe("parseTjmorrisModel1", () => {
-  test("parses valid json", () => {
+  test("parses valid Model 1 and returns all_required_fields_present as true", () => {
     const result = Parser.parse(model.validModel.Sheet1);
 
     expect(result).toEqual(testResults.validModel);

@@ -3,7 +3,7 @@ const MatcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/bandm/model1");
 
 describe("matchesBandMModel1", () => {
-  test("returns correct", () => {
+  test("returns 'Correct' for valid JSON", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);

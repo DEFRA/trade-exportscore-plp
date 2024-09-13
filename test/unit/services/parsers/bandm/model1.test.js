@@ -4,7 +4,7 @@ const JsonFile = require("../../../../../app/utilities/json-file");
 const testResults = require("../../../test-data-and-results/results/bandm/model1");
 
 describe("parseBandMModel1", () => {
-  test("parses populated json", () => {
+  test("parses valid Model 1 and returns all_required_fields_present as true", () => {
     const packingListJson = JSON.stringify(model.validModel.Sheet1);
     const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);

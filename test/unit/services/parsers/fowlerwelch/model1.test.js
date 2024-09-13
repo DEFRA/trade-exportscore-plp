@@ -4,7 +4,7 @@ const model = require("../../../test-data-and-results/models/fowlerwelch/model1"
 const testResults = require("../../../test-data-and-results/results/fowlerwelch/model1");
 
 describe("parseFowlerWelchModel1", () => {
-  test("parses valid json", () => {
+  test("parses valid Model 1 and returns all_required_fields_present as true", () => {
     const result = Parser.parse(model.validModel);
 
     expect(result).toEqual(testResults.validModel);

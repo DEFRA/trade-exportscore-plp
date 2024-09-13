@@ -60,7 +60,7 @@ describe("matchesSainsburysModel1", () => {
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
-  test("returns Correct", () => {
+  test("returns 'Correct' for valid JSON", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);

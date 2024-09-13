@@ -3,7 +3,7 @@ const ParserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 
 describe("parseGiovanniModel1", () => {
-  test("parses json", () => {
+  test("parses valid Model 1 and returns all_required_fields_present as true", () => {
     const packingListJson = model.validModel.RANA;
     const result = Parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[1].A);

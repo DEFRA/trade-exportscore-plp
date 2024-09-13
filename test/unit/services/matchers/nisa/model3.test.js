@@ -3,7 +3,7 @@ const MatcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/nisa/model3");
 
 describe("matchesNisa3", () => {
-  test("returns Correct", () => {
+  test("returns 'Correct' for valid JSON", () => {
     const filename = "PackingList.xlsx";
 
     const result = Matcher.matches(model.validModel, filename);

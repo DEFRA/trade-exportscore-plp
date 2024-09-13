@@ -5,7 +5,7 @@ const model = require("../../../test-data-and-results/models/asda/model1");
 const filename = "packinglist.xls";
 
 describe("matchesAsdaModel1", () => {
-  test("returns Correct", () => {
+  test("returns 'Correct' for valid JSON", () => {
     const result = Matcher.matches(model.validModel, filename);
 
     expect(result).toBe(MatcherResult.CORRECT);
@@ -13,7 +13,6 @@ describe("matchesAsdaModel1", () => {
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
-    const filename = "packinglist.xls";
 
     const result = Matcher.matches(packingListJson, filename);
 
