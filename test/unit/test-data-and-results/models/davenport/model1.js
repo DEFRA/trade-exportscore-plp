@@ -223,7 +223,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     Customer_Order: [
       {},
       {},

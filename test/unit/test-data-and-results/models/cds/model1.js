@@ -44,7 +44,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     PackingList_Extract: [
       {
         A: "TruckID",

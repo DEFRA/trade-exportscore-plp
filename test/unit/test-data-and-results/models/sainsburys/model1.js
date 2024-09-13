@@ -30,7 +30,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     Sheet1: [
       {
         C: "Product Type / Category",

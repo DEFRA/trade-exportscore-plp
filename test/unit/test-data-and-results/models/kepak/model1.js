@@ -75,7 +75,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     KEPAK: [
       {},
       {},

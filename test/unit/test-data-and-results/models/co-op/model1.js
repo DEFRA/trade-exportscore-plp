@@ -26,7 +26,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     "Input Packing Sheet": [
       {
         E: "Dispatch RMS Establishment",

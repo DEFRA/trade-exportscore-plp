@@ -32,7 +32,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     Sheet1: [
       {
         B: "[Description Of All Retail Go",

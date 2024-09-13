@@ -29,7 +29,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     RANA: [
       {
         A: "RMS-GB-000153",

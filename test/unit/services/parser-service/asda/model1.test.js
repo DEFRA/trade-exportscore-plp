@@ -14,7 +14,7 @@ describe("matchesAsdaModel1", () => {
   test("matches valid Asda Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
     const filename = "packinglist-asda-model1.xls";
     const result = parserService.findParser(
-      model.invalidModel_MissingColumnCells,
+      model.missingColumnData,
       filename,
     );
 

@@ -48,7 +48,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     Sheet1: [
       {
         A: "Consignor / Place o f Despatch",

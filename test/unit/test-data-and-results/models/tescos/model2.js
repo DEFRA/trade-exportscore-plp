@@ -47,7 +47,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     Sheet2: [
       {
         A: "Item",

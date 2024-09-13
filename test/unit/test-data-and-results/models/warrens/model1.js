@@ -227,7 +227,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     "Customer Order": [
       {
         A: "Item",

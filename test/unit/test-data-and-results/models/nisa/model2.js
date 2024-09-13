@@ -29,7 +29,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     "Customer Order": [
       {
         B: "RMS_ESTABLISHMENT_NO",

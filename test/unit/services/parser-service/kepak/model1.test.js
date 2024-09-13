@@ -14,7 +14,7 @@ describe("matchesKepakModel1", () => {
 
   test("matches valid Kepak Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
     const result = parserService.findParser(
-      model.invalidModel_MissingColumnCells,
+      model.missingColumnData,
       filename,
     );
 

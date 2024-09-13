@@ -38,7 +38,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     "Input Data Sheet": [
       {},
       {},

@@ -32,7 +32,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",

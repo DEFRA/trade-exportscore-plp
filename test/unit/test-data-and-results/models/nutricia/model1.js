@@ -89,7 +89,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     DANONE: [
       {},
       {},

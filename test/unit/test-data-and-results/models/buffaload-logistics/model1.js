@@ -44,7 +44,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingColumnCells: {
+  missingColumnData: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
