@@ -57,6 +57,8 @@ module.exports = {
       },
     ],
   },
+  incorrectEstablishmentNumber: {},
+  incorrectHeader: {},
   emptyModel: {
     "Customer Order": [
       {

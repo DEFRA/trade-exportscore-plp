@@ -87,6 +87,8 @@ module.exports = {
       },
     ],
   },
+  incorrectEstablishmentNumber: {},
+  incorrectHeader: {},
   emptyModel: {
     Tabelle1: [
       {

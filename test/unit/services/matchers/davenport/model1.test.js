@@ -24,7 +24,7 @@ describe("matchesDavenportModel1", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(
-      model.invalidModel_IncorrectEstablishmentNumber,
+      model.incorrectEstablishmentNumber,
       filename,
     );
 
@@ -34,7 +34,7 @@ describe("matchesDavenportModel1", () => {
   test("return wrong header for missing header values", () => {
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(model.invalidModel_MissingHeaders, filename);
+    const result = Matcher.matches(model.missingHeaders, filename);
 
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
@@ -43,7 +43,7 @@ describe("matchesDavenportModel1", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(
-      model.invalidModel_IncorrectHeaders,
+      model.incorrectHeader,
       filename,
     );
 

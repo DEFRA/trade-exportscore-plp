@@ -54,6 +54,8 @@ module.exports = {
       },
     ],
   },
+  incorrectEstablishmentNumber: {},
+  incorrectHeader: {},
   emptyModel: {
     RANA: [
       {

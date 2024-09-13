@@ -75,6 +75,8 @@ module.exports = {
       },
     ],
   },
+  incorrectEstablishmentNumber: {},
+  incorrectHeader: {},
   emptyModel: {
     "Input Data Sheet": [
       {},

@@ -13,7 +13,7 @@ describe("matchesWarrens1", () => {
   test("returns wrong establishment number for missing establishment number for one sheet", () => {
     const filename = "packinglist.xlsx";
     const result = warrensMatcher.matches(
-      model.invalid_Model_IncorrectEstablishmentNumber,
+      model.incorrectEstablishmentNumber,
       filename,
     );
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
@@ -31,7 +31,7 @@ describe("matchesWarrens1", () => {
   test("returns wrong header for incorrect header values of one sheet", () => {
     const filename = "packinglist.xlsx";
     const result = warrensMatcher.matches(
-      model.invalid_Model_IncorrectHeader,
+      model.incorrectHeader,
       filename,
     );
     expect(result).toBe(MatcherResult.WRONG_HEADER);

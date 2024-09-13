@@ -24,7 +24,7 @@ describe("matchesNutriciaModel1", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(
-      model.invalidModel_IncorrectEstablishmentNumber,
+      model.incorrectEstablishmentNumber,
       filename,
     );
 
@@ -35,7 +35,7 @@ describe("matchesNutriciaModel1", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(
-      model.invalidModel_IncorrectHeaders,
+      model.incorrectHeader,
       filename,
     );
 

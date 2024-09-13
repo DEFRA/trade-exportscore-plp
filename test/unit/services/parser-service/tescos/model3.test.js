@@ -13,10 +13,7 @@ describe("matchesTescosModel3", () => {
   });
 
   test("matches valid Tescos Model 3 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
-    const result = parserService.findParser(
-      model.missingColumnData,
-      filename,
-    );
+    const result = parserService.findParser(model.missingColumnData, filename);
 
     expect(result).toEqual(testResults.invalidTestResult_MissingCells);
   });

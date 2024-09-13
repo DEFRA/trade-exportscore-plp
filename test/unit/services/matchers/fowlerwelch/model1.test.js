@@ -13,7 +13,7 @@ describe("matchesFowlerWelch", () => {
   test("returns wrong establishment number for missing establishment number for one sheet", () => {
     const filename = "packinglist.xlsx";
     const result = fowlerWelchMatcher.matches(
-      model.invalid_Model_IncorrectEstablishmentNumber,
+      model.incorrectEstablishmentNumber,
       filename,
     );
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
@@ -31,7 +31,7 @@ describe("matchesFowlerWelch", () => {
   test("returns wrong header for incorrect header values of one sheet", () => {
     const filename = "packinglist.xlsx";
     const result = fowlerWelchMatcher.matches(
-      model.invalid_Model_IncorrectHeader,
+      model.incorrectHeader,
       filename,
     );
     expect(result).toBe(MatcherResult.WRONG_HEADER);
@@ -104,7 +104,7 @@ describe("matchesFowlerWelch", () => {
   test("if all reauired headers are missing, return wrong header", () => {
     const filename = "packinglist.xlsx";
     const result = fowlerWelchMatcher.matches(
-      model.invalidModel_MissingHeaders,
+      model.missingHeaders,
       filename,
     );
     expect(result).toBe(MatcherResult.WRONG_HEADER);

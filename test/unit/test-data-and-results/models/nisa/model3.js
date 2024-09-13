@@ -63,6 +63,8 @@ module.exports = {
       },
     ],
   },
+  incorrectEstablishmentNumber: {},
+  incorrectHeader: {},
   emptyModel: {
     sheet: [
       {},

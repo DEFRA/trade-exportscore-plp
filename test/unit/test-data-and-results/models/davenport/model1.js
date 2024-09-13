@@ -68,7 +68,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_IncorrectEstablishmentNumber: {
+  incorrectEstablishmentNumber: {
     PackingList_Extract: [
       {},
       {},
@@ -122,7 +122,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingHeaders: {
+  missingHeaders: {
     PackingList_Extract: [
       {},
       {},
@@ -170,7 +170,7 @@ module.exports = {
       {},
     ],
   },
-  invalidModel_IncorrectHeaders: {
+  incorrectHeader: {
     PackingList_Extract: [
       {},
       {},

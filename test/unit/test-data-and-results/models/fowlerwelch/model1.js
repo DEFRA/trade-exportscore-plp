@@ -124,7 +124,7 @@ module.exports = {
       },
     ],
   },
-  invalid_Model_IncorrectHeader: {
+  incorrectHeader: {
     sheet: [
       {
         C: "Incorrect",
@@ -164,7 +164,7 @@ module.exports = {
       },
     ],
   },
-  invalid_Model_IncorrectEstablishmentNumber: {
+  incorrectEstablishmentNumber: {
     sheet: [
       {
         F: "Description of goods",
@@ -260,7 +260,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_MissingHeaders: {
+  missingHeaders: {
     "Customer Order": [
       {
         A: "Item",

@@ -43,10 +43,10 @@ module.exports = {
       },
     ],
   },
-  invalidModel_IncorrectEstablishmentNumber: {
+  incorrectEstablishmentNumber: {
     KEPAK: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, { A: "INCORRECT" }],
   },
-  invalidModel_IncorrectHeaders: {
+  incorrectHeader: {
     KEPAK: [
       {},
       {},

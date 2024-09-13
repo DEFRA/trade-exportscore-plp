@@ -43,7 +43,7 @@ module.exports = {
       },
     ],
   },
-  invalidModel_IncorrectEstablishmentNumber: {
+  incorrectEstablishmentNumber: {
     DANONE: [
       {},
       {},
@@ -60,7 +60,7 @@ module.exports = {
       { A: "INCORRECT" },
     ],
   },
-  invalidModel_IncorrectHeaders: {
+  incorrectHeader: {
     DANONE: [
       {},
       {},
