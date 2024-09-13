@@ -8,12 +8,12 @@ describe("parseDavenportModel1", () => {
 
     const result = Parser.parse(packingListJson);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses empty json", () => {
     const result = Parser.parse(model.emptyModel.PackingList_Extract);
 
-    expect(result).toEqual(testResults.emptyModelResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });

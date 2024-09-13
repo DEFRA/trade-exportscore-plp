@@ -6,12 +6,12 @@ describe("parseTjmorrisModel1", () => {
   test("parses valid json", () => {
     const result = Parser.parse(model.validModel.Sheet1);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses empty json", () => {
     const result = Parser.parse(model.emptyModel.Sheet1);
 
-    expect(result).toEqual(testResults.emptyModelResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });

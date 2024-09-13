@@ -7,13 +7,13 @@ describe("parseKepakModel1", () => {
   test("parses json", () => {
     const result = Parser.parse(model.validModel.KEPAK);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses empty json", () => {
     const result = Parser.parse(model.emptyModel.KEPAK);
 
-    expect(result).toEqual(testResults.emptyModelResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });
 module.exports = {};

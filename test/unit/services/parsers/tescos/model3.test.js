@@ -6,12 +6,12 @@ describe("parseTescoModel3", () => {
   test("parses valid json", () => {
     const result = Parser.parse(model.validModel["Input Data Sheet"]);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses empty json", () => {
     const result = Parser.parse(model.emptyModel["Input Data Sheet"]);
 
-    expect(result).toEqual(testResults.emptyModelResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });

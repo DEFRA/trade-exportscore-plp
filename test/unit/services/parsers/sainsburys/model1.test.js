@@ -6,12 +6,12 @@ describe("parseSainsburysModel1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel.Sheet1);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel.Sheet1);
 
-    expect(result).toEqual(testResults.emptyTestResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });

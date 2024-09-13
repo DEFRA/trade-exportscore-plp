@@ -9,18 +9,18 @@ describe("matchesTescosModel3", () => {
   test("matches valid Tescos Model 3 file, calls parser and returns all_required_fields_present as true", () => {
     const result = parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("matches valid Tescos Model 3 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
     const result = parserService.findParser(model.missingColumnData, filename);
 
-    expect(result).toEqual(testResults.invalidTestResult_MissingCells);
+    expect(result).toEqual(testResults.missingColumnData);
   });
 
   test("wrong file extension", () => {
     const filename = "packinglist.pdf";
-    const invalidTestResult_NoMatch = {
+    const invalidModel_NoMatch = {
       business_checks: {
         all_required_fields_present: false,
       },
@@ -30,6 +30,6 @@ describe("matchesTescosModel3", () => {
     };
     const result = parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual(invalidTestResult_NoMatch);
+    expect(result).toEqual(invalidModel_NoMatch);
   });
 });

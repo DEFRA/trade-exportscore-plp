@@ -7,7 +7,7 @@ describe("parseFowlerWelchModel1", () => {
   test("parses valid json", () => {
     const result = Parser.parse(model.validModel);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses multiple sheets", () => {
@@ -267,6 +267,6 @@ describe("parseFowlerWelchModel1", () => {
   test("parses empty json", () => {
     const result = Parser.parse(model.emptyModel);
 
-    expect(result).toEqual(testResults.emptyModelResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });

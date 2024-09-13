@@ -1,7 +1,7 @@
 const ParserModel = require("../../../../../app/services/parser-model");
 
 module.exports = {
-  validTestResult: {
+  validModel: {
     business_checks: {
       all_required_fields_present: true,
     },
@@ -51,7 +51,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000015-006",
     parserModel: ParserModel.ASDA1,
   },
-  emptyTestResult: {
+  emptyModel: {
     business_checks: {
       all_required_fields_present: true,
     },
@@ -59,7 +59,9 @@ module.exports = {
     registration_approval_number: null,
     parserModel: ParserModel.ASDA1,
   },
-  invalidTestResult_MissingCells: {
+  incorrectEstablishmentNumber: {},
+  incorrectHeader,
+  missingColumnData: {
     business_checks: {
       all_required_fields_present: false,
     },

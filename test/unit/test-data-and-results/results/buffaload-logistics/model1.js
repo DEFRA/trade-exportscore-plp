@@ -1,7 +1,7 @@
 const ParserModel = require("../../../../../app/services/parser-model");
 
 module.exports = {
-  validTestResult: {
+  validModel: {
     registration_approval_number: "RMS-GB-000098-001",
     items: [
       {
@@ -26,22 +26,7 @@ module.exports = {
     business_checks: { all_required_fields_present: true },
     parserModel: ParserModel.BUFFALOAD1,
   },
-  emptyModelResult: {
-    registration_approval_number: null,
-    items: [
-      {
-        description: null,
-        nature_of_products: null,
-        type_of_treatment: null,
-        commodity_code: null,
-        number_of_packages: null,
-        total_net_weight_kg: null,
-      },
-    ],
-    business_checks: { all_required_fields_present: true },
-    parserModel: ParserModel.BUFFALOAD1,
-  },
-  invalidTestResult_MissingCells: {
+  missingColumnData: {
     business_checks: {
       all_required_fields_present: false,
     },
@@ -66,6 +51,23 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000098-001",
+    parserModel: ParserModel.BUFFALOAD1,
+  },
+  incorrectEstablishmentNumber: {},
+  incorrectHeader: {},
+  emptyModel: {
+    registration_approval_number: null,
+    items: [
+      {
+        description: null,
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: null,
+        number_of_packages: null,
+        total_net_weight_kg: null,
+      },
+    ],
+    business_checks: { all_required_fields_present: true },
     parserModel: ParserModel.BUFFALOAD1,
   },
 };

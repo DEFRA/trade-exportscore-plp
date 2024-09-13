@@ -6,12 +6,12 @@ describe("parseCoopModel1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel["Input Packing Sheet"]);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel["Input Packing Sheet"]);
 
-    expect(result).toEqual(testResults.emptyTestResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });

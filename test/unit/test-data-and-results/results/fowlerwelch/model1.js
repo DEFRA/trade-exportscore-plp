@@ -1,8 +1,8 @@
 const ParserModel = require("../../../../../app/services/parser-model");
-const { emptyModelResult } = require("../davenport/model1");
+const { emptyModel } = require("../davenport/model1");
 
 module.exports = {
-  validTestResult: {
+  validModel: {
     business_checks: {
       all_required_fields_present: true,
     },
@@ -27,7 +27,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000216-002",
     parserModel: ParserModel.FOWLERWELCH1,
   },
-  invalidTestResult_MissingCells: {
+  missingColumnData: {
     business_checks: {
       all_required_fields_present: false,
     },
@@ -52,7 +52,9 @@ module.exports = {
     registration_approval_number: "RMS-GB-000216-004",
     parserModel: ParserModel.FOWLERWELCH1,
   },
-  emptyModelResult: {
+  incorrectEstablishmentNumber: {},
+  incorrectHeader: {},
+  emptyModel: {
     business_checks: {
       all_required_fields_present: true,
     },

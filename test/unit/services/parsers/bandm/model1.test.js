@@ -11,7 +11,7 @@ describe("parseBandMModel1", () => {
 
     const result = parser.parse(sanitisedPackingList);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses empty json", () => {
@@ -21,7 +21,7 @@ describe("parseBandMModel1", () => {
 
     const result = parser.parse(sanitisedPackingList);
 
-    expect(result).toEqual(testResults.emptyTestResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });
 

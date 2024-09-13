@@ -6,12 +6,12 @@ describe("parseNisa1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel["Customer Order"]);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(testResults.validModel);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel["Customer Order"]);
 
-    expect(result).toEqual(testResults.emptyTestResult);
+    expect(result).toEqual(testResults.emptyModel);
   });
 });
