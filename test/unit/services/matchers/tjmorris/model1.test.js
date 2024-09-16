@@ -2,7 +2,7 @@ const Matcher = require("../../../../../app/services/matchers/tjmorris/model1");
 const MatcherResult = require("../../../../../app/services/matcher-result");
 
 describe("matchesTjmorris", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'generic error' for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xls";
 
@@ -11,7 +11,7 @@ describe("matchesTjmorris", () => {
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
-  test("returns wrong establishment number for missing establishment number", () => {
+  test("returns 'wrong establishment number' for missing establishment number", () => {
     const packingListJson = {
       Sheet1: [
         {},

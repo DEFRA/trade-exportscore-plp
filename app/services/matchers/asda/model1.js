@@ -4,12 +4,23 @@ const Regex = require("../../../utilities/regex");
 
 function matches(packingList, filename) {
   try {
+    console.log(
+      "Object.keys(packingList).length: ",
+      Object.keys(packingList).length,
+    );
+    if (Object.keys(packingList).length === 0) {
+      console.log("ASDA MODEL 1: ", sheet);
+      console.log("ASDA MODEL 1 length: ", sheet.length);
+      console.log("packingListJson.length: ", packingList.length);
+      console.log("1 filename: ", filename);
+    }
     const sheet = Object.keys(packingList)[0];
-
-    // check for correct establishment number
-    const regex = /RMS-GB-000015-/;
-    if (!Regex.test(regex, packingList[sheet])) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    if (sheet.length < 5) {
+      console.log("ASDA MODEL 1: ", sheet);
+      console.log("ASDA MODEL 1 length: ", sheet.length);
+      console.log("packingListJson.length: ", packingList.length);
+      console.log("2 filename: ", filename);
+      return MatcherResult.EMPTY_FILE;
     }
 
     // check for header values
@@ -20,6 +31,12 @@ function matches(packingList, filename) {
       F: "[Number of Packages]",
       G: "[Net Weight]",
     };
+
+    // check for correct establishment number
+    const regex = /RMS-GB-000015-/;
+    if (!Regex.test(regex, packingList[sheet])) {
+      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    }
 
     const result = matchesHeader(header, packingList[sheet], callback);
 

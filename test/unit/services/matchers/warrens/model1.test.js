@@ -3,7 +3,7 @@ const warrensMatcher = require("../../../../../app/services/matchers/warrens/mod
 const model = require("../../../test-data-and-results/models/warrens/model1");
 
 describe("matchesWarrens1", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'generic error' for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
     const result = warrensMatcher.matches(packingListJson, filename);

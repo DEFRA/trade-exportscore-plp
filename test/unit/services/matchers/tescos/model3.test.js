@@ -11,7 +11,7 @@ describe("matchesTescoModel3", () => {
     expect(result).toBe(MatcherResult.CORRECT);
   });
 
-  test("returns generic error for empty json", () => {
+  test("returns 'generic error' for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
 
@@ -20,7 +20,7 @@ describe("matchesTescoModel3", () => {
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
-  test("returns wrong establishment number for missing establishment number", () => {
+  test("returns 'wrong establishment number' for missing establishment number", () => {
     const packingListJson = {
       "Input Data Sheet": [
         {},
@@ -38,7 +38,7 @@ describe("matchesTescoModel3", () => {
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("return wrong header for incorrect header values", () => {
+  test("return 'wrong header' for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
       "Input Data Sheet": [

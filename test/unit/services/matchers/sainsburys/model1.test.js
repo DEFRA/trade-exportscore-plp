@@ -3,7 +3,7 @@ const MatcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/sainsburys/model1");
 
 describe("matchesSainsburysModel1", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'generic error' for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
 
@@ -12,7 +12,7 @@ describe("matchesSainsburysModel1", () => {
     expect(result).toBe(MatcherResult.GENERIC_ERROR);
   });
 
-  test("returns wrong establishment number for missing establishment number", () => {
+  test("returns 'wrong establishment number' for missing establishment number", () => {
     const packingListJson = {
       Sheet1: [
         {},

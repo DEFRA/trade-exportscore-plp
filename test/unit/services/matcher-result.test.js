@@ -51,13 +51,23 @@ describe("matcherResultContainsCorrectValues", () => {
     expect(result).toBe(4);
   });
 
-  test("contains the 'Correct' definition", () => {
+  test("contains the 'valid header but no data' definition", () => {
     expect(MatcherResult.VALID_HEADER_NO_DATA).toBeDefined();
   });
 
-  test("contains the 'Correct' value", () => {
+  test("contains the 'valid header but no data' value", () => {
     var result = MatcherResult.VALID_HEADER_NO_DATA;
 
     expect(result).toBe(5);
+  });
+
+  test("contains the 'empty file' definition", () => {
+    expect(MatcherResult.EMPTY_FILE).toBeDefined();
+  });
+
+  test("contains the 'empty file' value", () => {
+    var result = MatcherResult.EMPTY_FILE;
+
+    expect(result).toBe(6);
   });
 });

@@ -122,6 +122,20 @@ const incorrectHeader = {
     },
   ],
 };
+const headerButNoData = {
+  SheetNameHere: [
+    {
+      A: "[Description Of All Retail Goods]",
+      B: "[Nature Of Product]",
+      C: "[Treatment Type]",
+      D: "[Number Of Establishment]",
+      E: "[Destination Store Establishment Number]",
+      F: "[Number of Packages]",
+      G: "[Net Weight]",
+      H: "[kilograms/grams]",
+    },
+  ],
+};
 const emptyModel = {
   SheetNameHere: [
     {
@@ -142,5 +156,6 @@ module.exports = {
   missingColumnData,
   incorrectEstablishmentNumber,
   incorrectHeader,
+  headerButNoData,
   emptyModel,
 };

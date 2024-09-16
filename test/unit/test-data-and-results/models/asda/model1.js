@@ -83,8 +83,8 @@ module.exports = {
         A: "169 STOREY TREEHOUSE",
         B: null,
         C: "GM",
-        D: "INVALID",
-        E: "INVALID",
+        D: "INCORRECT",
+        E: "RMS-NI-000008-017",
         F: 2,
         G: 0.38,
         H: "kgs",
@@ -113,7 +113,19 @@ module.exports = {
       },
     ],
   },
-  emptyModel: {
-    PackingList_Extract: [{}],
+  emptyModel: {},
+  headerButNoData: {
+    PackingList_Extract: [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+        D: "[Number Of Establishment]",
+        E: "[Destination Store Establishment Number]",
+        F: "[Number of Packages]",
+        G: "[Net Weight]",
+        H: "[kilograms/grams]",
+      },
+    ],
   },
 };

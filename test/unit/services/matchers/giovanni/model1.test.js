@@ -3,7 +3,7 @@ const Matcher = require("../../../../../app/services/matchers/giovanni/model1");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 
 describe("matchesGiovanni", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'generic error' for empty json", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches({}, filename);
@@ -19,7 +19,7 @@ describe("matchesGiovanni", () => {
     expect(result).toBe(MatcherResult.CORRECT);
   });
 
-  test("returns wrong establishment number for missing establishment number", () => {
+  test("returns 'wrong establishment number' for missing establishment number", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(
@@ -30,7 +30,7 @@ describe("matchesGiovanni", () => {
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("return wrong header for incorrect header values", () => {
+  test("return 'wrong header' for incorrect header values", () => {
     const filename = "packinglist.xlsx";
 
     const result = Matcher.matches(model.incorrectHeader, filename);

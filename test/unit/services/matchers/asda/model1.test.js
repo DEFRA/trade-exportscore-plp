@@ -11,21 +11,28 @@ describe("matchesAsdaModel1", () => {
     expect(result).toBe(MatcherResult.CORRECT);
   });
 
-  test("returns generic error for empty json", () => {
-    const packingListJson = {};
+  test("returns 'empty file' for empty json", () => {
+    const result = Matcher.matches(model.emptyModel, "empty-" + filename);
 
-    const result = Matcher.matches(packingListJson, filename);
-
-    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+    expect(result).toBe(MatcherResult.EMPTY_FILE);
   });
 
-  test("returns wrong establishment number for missing establishment number", () => {
+  test("returns 'valid header but no data' for json with header only", () => {
+    const result = Matcher.matches(
+      model.headerButNoData,
+      "header-only-" + filename,
+    );
+
+    expect(result).toBe(MatcherResult.VALID_HEADER_NO_DATA);
+  });
+
+  test("returns 'wrong establishment number' for missing establishment number", () => {
     const result = Matcher.matches(model.wrongEstablishment, filename);
 
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("return wrong header for incorrect header values", () => {
+  test("return 'wrong header' for incorrect header values", () => {
     const result = Matcher.matches(model.incorrectHeader, filename);
 
     expect(result).toBe(MatcherResult.WRONG_HEADER);

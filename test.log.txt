@@ -1,0 +1,1357 @@
+#0 building with "default" instance using docker driver
+
+#1 [trade-exportscore-plp internal] load build definition from Dockerfile
+#1 transferring dockerfile: 822B done
+#1 DONE 0.0s
+
+#2 [trade-exportscore-plp internal] load metadata for docker.io/defradigital/node-development:2.1.2-node18.11.0
+#2 DONE 0.9s
+
+#3 [trade-exportscore-plp internal] load .dockerignore
+#3 transferring context: 219B done
+#3 DONE 0.0s
+
+#4 [trade-exportscore-plp development 1/4] FROM docker.io/defradigital/node-development:2.1.2-node18.11.0@sha256:3235b483dfda73620ef5cff490b0c67dcde3e523c80bbc4c8fabf99901f28a59
+#4 DONE 0.0s
+
+#5 [trade-exportscore-plp internal] load build context
+#5 transferring context: 1.42MB 0.2s done
+#5 DONE 0.2s
+
+#6 [trade-exportscore-plp development 2/4] COPY --chown=node:node package*.json ./
+#6 CACHED
+
+#7 [trade-exportscore-plp development 3/4] RUN npm install
+#7 CACHED
+
+#8 [trade-exportscore-plp development 4/4] COPY --chown=node:node . .
+#8 DONE 0.5s
+
+#9 [trade-exportscore-plp] exporting to image
+#9 exporting layers
+#9 exporting layers 0.4s done
+#9 writing image sha256:ef674d8747033ba5e2f47a45038a8fdbf3b80dd58bdb820d28b5767a98fb30a2 done
+#9 naming to docker.io/library/trade-exportscore-plp-development done
+#9 DONE 0.5s
+
+#10 [trade-exportscore-plp] resolving provenance for metadata file
+#10 DONE 0.0s
+db update on trade-exportscore-plp-postgres public as postgres
+waiting for postgres trade-exportscore-plp-postgres:5432
+.postgres server available
+postgres started
+
+UPDATE SUMMARY
+Run:                         17
+Previously run:               0
+Filtered out:                 0
+-------------------------------
+Total change sets:           17
+
+
+> trade-exportscore-plp@3.0.21 pretest
+> npm run test:lint
+
+
+> trade-exportscore-plp@3.0.21 test:lint
+> prettier . --write
+
+.azuredevops/build.yaml 53ms (unchanged)
+additional-info.md 53ms (unchanged)
+app/config/constants.js 55ms (unchanged)
+app/config/database-config.js 25ms (unchanged)
+app/config/dynamics-config.js 3ms (unchanged)
+app/config/index.js 18ms (unchanged)
+app/config/mq-config.js 7ms (unchanged)
+app/index.js 4ms (unchanged)
+app/messaging/create-message.js 6ms (unchanged)
+app/messaging/index.js 6ms (unchanged)
+app/messaging/process-plp-message.js 9ms (unchanged)
+app/messaging/send-parsed-message.js 10ms (unchanged)
+app/models/item.js 3ms (unchanged)
+app/models/packing-list.js 3ms (unchanged)
+app/packing-list/index.js 7ms (unchanged)
+app/plugins/router.js 2ms (unchanged)
+app/routes/healthy.js 7ms (unchanged)
+app/routes/healthz.js 2ms (unchanged)
+app/routes/non-ai.js 7ms (unchanged)
+app/routes/upsert-idcoms.js 4ms (unchanged)
+app/server.js 4ms (unchanged)
+app/services/app-insights.js 3ms (unchanged)
+app/services/database-service.js 6ms (unchanged)
+app/services/dynamics-service.js 11ms (unchanged)
+app/services/matcher-result.js 2ms (unchanged)
+app/services/matchers/asda/model1.js 8ms (unchanged)
+app/services/matchers/asda/model2.js 5ms (unchanged)
+app/services/matchers/bandm/model1.js 4ms (unchanged)
+app/services/matchers/buffaload-logistics/model1.js 3ms (unchanged)
+app/services/matchers/cds/model1.js 4ms (unchanged)
+app/services/matchers/co-op/model1.js 4ms (unchanged)
+app/services/matchers/davenport/model1.js 3ms (unchanged)
+app/services/matchers/fowlerwelch/model1.js 8ms (unchanged)
+app/services/matchers/giovanni/model1.js 4ms (unchanged)
+app/services/matchers/kepak/model1.js 1ms (unchanged)
+app/services/matchers/nisa/model1.js 3ms (unchanged)
+app/services/matchers/nisa/model2.js 3ms (unchanged)
+app/services/matchers/nisa/model3.js 3ms (unchanged)
+app/services/matchers/nutricia/model1.js 1ms (unchanged)
+app/services/matchers/sainsburys/model1.js 3ms (unchanged)
+app/services/matchers/tescos/model1.js 3ms (unchanged)
+app/services/matchers/tescos/model2.js 3ms (unchanged)
+app/services/matchers/tescos/model3.js 2ms (unchanged)
+app/services/matchers/tjmorris/model1.js 2ms (unchanged)
+app/services/matchers/warrens/model1.js 2ms (unchanged)
+app/services/matches-header.js 1ms (unchanged)
+app/services/model-headers.js 5ms (unchanged)
+app/services/parser-combine.js 1ms (unchanged)
+app/services/parser-map.js 3ms (unchanged)
+app/services/parser-model.js 1ms (unchanged)
+app/services/parser-service.js 13ms (unchanged)
+app/services/parsers/asda/model1.js 1ms (unchanged)
+app/services/parsers/asda/model2.js 1ms (unchanged)
+app/services/parsers/bandm/model1.js 5ms (unchanged)
+app/services/parsers/buffaload-logistics/model1.js 2ms (unchanged)
+app/services/parsers/cds/model1.js 2ms (unchanged)
+app/services/parsers/co-op/model1.js 1ms (unchanged)
+app/services/parsers/davenport/model1.js 4ms (unchanged)
+app/services/parsers/fowlerwelch/model1.js 3ms (unchanged)
+app/services/parsers/giovanni/model1.js 4ms (unchanged)
+app/services/parsers/kepak/model1.js 2ms (unchanged)
+app/services/parsers/nisa/model1.js 2ms (unchanged)
+app/services/parsers/nisa/model2.js 1ms (unchanged)
+app/services/parsers/nisa/model3.js 2ms (unchanged)
+app/services/parsers/nutricia/model1.js 3ms (unchanged)
+app/services/parsers/sainsburys/model1.js 2ms (unchanged)
+app/services/parsers/tescos/model1.js 3ms (unchanged)
+app/services/parsers/tescos/model2.js 3ms (unchanged)
+app/services/parsers/tescos/model3.js 2ms (unchanged)
+app/services/parsers/tjmorris/model1.js 2ms (unchanged)
+app/services/parsers/warrens/model1.js 1ms (unchanged)
+app/services/storage-account.js 3ms (unchanged)
+app/utilities/file-extension.js 2ms (unchanged)
+app/utilities/json-file.js 2ms (unchanged)
+app/utilities/regex.js 3ms (unchanged)
+app/utilities/row-finder.js 1ms (unchanged)
+appConfig/appConfig.dev1.yaml 6ms (unchanged)
+appConfig/appConfig.prd1.yaml 3ms (unchanged)
+appConfig/appConfig.pre1.yaml 2ms (unchanged)
+appConfig/appConfig.snd3.yaml 2ms (unchanged)
+appConfig/appConfig.snd4.yaml 2ms (unchanged)
+appConfig/appConfig.tst1.yaml 2ms (unchanged)
+appConfig/appConfig.tst2.yaml 2ms (unchanged)
+appConfig/appConfig.yaml 6ms (unchanged)
+branching-and-linking.md 18ms (unchanged)
+catalog-info.yaml 6ms (unchanged)
+debugging.md 18ms (unchanged)
+jest.config.js 2ms (unchanged)
+jest.setup.js 1ms (unchanged)
+package-lock.json 171ms (unchanged)
+package.json 36ms (unchanged)
+pull_request_template.md 6ms (unchanged)
+test/integration/narrow/index.test.js 40ms (unchanged)
+test/integration/narrow/routes/healthy.test.js 5ms (unchanged)
+test/integration/narrow/routes/healthz.test.js 4ms (unchanged)
+test/integration/narrow/routes/non-ai.test.js 2ms (unchanged)
+test/unit/config/constants.test.js 2ms (unchanged)
+test/unit/config/database-config.test.js 4ms (unchanged)
+test/unit/config/index.test.js 7ms (unchanged)
+test/unit/index.test.js 6ms (unchanged)
+test/unit/messaging/create-message.test.js 2ms (unchanged)
+test/unit/messaging/index.test.js 5ms (unchanged)
+test/unit/messaging/process-plp-message.test.js 6ms (unchanged)
+test/unit/messaging/send-parsed-message.test.js 13ms (unchanged)
+test/unit/models/item.test.js 3ms (unchanged)
+test/unit/models/packing-list.test.js 2ms (unchanged)
+test/unit/packing-list/index.test.js 8ms (unchanged)
+test/unit/plugins/router.test.js 3ms (unchanged)
+test/unit/routes/healthy.test.js 3ms (unchanged)
+test/unit/routes/healthz.test.js 2ms (unchanged)
+test/unit/routes/non-ai.test.js 2ms (unchanged)
+test/unit/routes/upsert-idcoms.test.js 5ms (unchanged)
+test/unit/server.test.js 2ms (unchanged)
+test/unit/services/app-insights.test.js 4ms (unchanged)
+test/unit/services/database-service.test.js 4ms (unchanged)
+test/unit/services/dynamics-service.test.js 6ms (unchanged)
+test/unit/services/matcher-result.test.js 5ms (unchanged)
+test/unit/services/matchers/asda/model1.test.js 3ms (unchanged)
+test/unit/services/matchers/asda/model2.test.js 4ms (unchanged)
+test/unit/services/matchers/bandm/model1.test.js 3ms (unchanged)
+test/unit/services/matchers/buffaload-logistics/model1.test.js 2ms (unchanged)
+test/unit/services/matchers/cds/model1.test.js 6ms (unchanged)
+test/unit/services/matchers/co-op/model1.test.js 4ms (unchanged)
+test/unit/services/matchers/davenport/model1.test.js 7ms (unchanged)
+test/unit/services/matchers/fowlerwelch/model1.test.js 46ms (unchanged)
+test/unit/services/matchers/giovanni/model1.test.js 3ms (unchanged)
+test/unit/services/matchers/kepak/model1.test.js 5ms (unchanged)
+test/unit/services/matchers/nisa/model1.test.js 3ms (unchanged)
+test/unit/services/matchers/nisa/model2.test.js 5ms (unchanged)
+test/unit/services/matchers/nisa/model3.test.js 6ms (unchanged)
+test/unit/services/matchers/nutricia/model1.test.js 4ms (unchanged)
+test/unit/services/matchers/sainsburys/model1.test.js 14ms (unchanged)
+test/unit/services/matchers/tescos/model1.test.js 4ms (unchanged)
+test/unit/services/matchers/tescos/model2.test.js 5ms (unchanged)
+test/unit/services/matchers/tescos/model3.test.js 7ms (unchanged)
+test/unit/services/matchers/tjmorris/model1.test.js 4ms (unchanged)
+test/unit/services/matchers/warrens/model1.test.js 4ms (unchanged)
+test/unit/services/matches-header.test.js 4ms (unchanged)
+test/unit/services/parser-combine.test.js 1ms (unchanged)
+test/unit/services/parser-service.test.js 15ms (unchanged)
+test/unit/services/parser-service/asda/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/asda/model2.test.js 3ms (unchanged)
+test/unit/services/parser-service/bandm/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/buffaload-logistics/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/cds/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/co-op/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/davenport/model1.test.js 3ms (unchanged)
+test/unit/services/parser-service/fowlerwelch/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/giovanni/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/kepak/model1.test.js 3ms (unchanged)
+test/unit/services/parser-service/nisa/model1.test.js 3ms (unchanged)
+test/unit/services/parser-service/nisa/model2.test.js 3ms (unchanged)
+test/unit/services/parser-service/nisa/model3.test.js 2ms (unchanged)
+test/unit/services/parser-service/nutricia/model1.test.js 3ms (unchanged)
+test/unit/services/parser-service/sainsburys/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/tescos/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/tescos/model2.test.js 3ms (unchanged)
+test/unit/services/parser-service/tescos/model3.test.js 2ms (unchanged)
+test/unit/services/parser-service/tjmorris/model1.test.js 2ms (unchanged)
+test/unit/services/parser-service/warrens/model1.test.js 3ms (unchanged)
+test/unit/services/parsers/asda/model1.test.js 1ms (unchanged)
+test/unit/services/parsers/asda/model2.test.js 1ms (unchanged)
+test/unit/services/parsers/bandm/model1.test.js 3ms (unchanged)
+test/unit/services/parsers/buffaload-logistics/model1.test.js 1ms (unchanged)
+test/unit/services/parsers/cds/model1.test.js 1ms (unchanged)
+test/unit/services/parsers/co-op/model1.test.js 1ms (unchanged)
+test/unit/services/parsers/davenport/model1.test.js 2ms (unchanged)
+test/unit/services/parsers/fowlerwelch/model1.test.js 10ms (unchanged)
+test/unit/services/parsers/giovanni/model1.test.js 3ms (unchanged)
+test/unit/services/parsers/kepak/model1.test.js 2ms (unchanged)
+test/unit/services/parsers/nisa/model1.test.js 1ms (unchanged)
+test/unit/services/parsers/nisa/model2.test.js 2ms (unchanged)
+test/unit/services/parsers/nisa/model3.test.js 1ms (unchanged)
+test/unit/services/parsers/nutricia/model1.test.js 2ms (unchanged)
+test/unit/services/parsers/sainsburys/model1.test.js 1ms (unchanged)
+test/unit/services/parsers/tescos/model1.test.js 2ms (unchanged)
+test/unit/services/parsers/tescos/model2.test.js 1ms (unchanged)
+test/unit/services/parsers/tescos/model3.test.js 1ms (unchanged)
+test/unit/services/parsers/tjmorris/model1.test.js 1ms (unchanged)
+test/unit/services/parsers/warrens/model1.test.js 3ms (unchanged)
+test/unit/test-data-and-results/_templates/matcher-model1-template.js 3ms (unchanged)
+test/unit/test-data-and-results/_templates/shared-data-model1-template.js 4ms (unchanged)
+test/unit/test-data-and-results/_templates/shared-test-results-model1-template.js 3ms (unchanged)
+test/unit/test-data-and-results/models/asda/model1.js 3ms (unchanged)
+test/unit/test-data-and-results/models/asda/model2.js 2ms (unchanged)
+test/unit/test-data-and-results/models/bandm/model1.js 4ms (unchanged)
+test/unit/test-data-and-results/models/buffaload-logistics/model1.js 3ms (unchanged)
+test/unit/test-data-and-results/models/cds/model1.js 3ms (unchanged)
+test/unit/test-data-and-results/models/co-op/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/models/davenport/model1.js 6ms (unchanged)
+test/unit/test-data-and-results/models/fowlerwelch/model1.js 7ms (unchanged)
+test/unit/test-data-and-results/models/giovanni/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/models/kepak/model1.js 3ms (unchanged)
+test/unit/test-data-and-results/models/nisa/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/models/nisa/model2.js 3ms (unchanged)
+test/unit/test-data-and-results/models/nisa/model3.js 2ms (unchanged)
+test/unit/test-data-and-results/models/nutricia/model1.js 3ms (unchanged)
+test/unit/test-data-and-results/models/sainsburys/model1.js 6ms (unchanged)
+test/unit/test-data-and-results/models/tescos/model1.js 5ms (unchanged)
+test/unit/test-data-and-results/models/tescos/model2.js 3ms (unchanged)
+test/unit/test-data-and-results/models/tescos/model3.js 4ms (unchanged)
+test/unit/test-data-and-results/models/tjmorris/model1.js 5ms (unchanged)
+test/unit/test-data-and-results/models/warrens/model1.js 7ms (unchanged)
+test/unit/test-data-and-results/results/asda/model1.js 3ms (unchanged)
+test/unit/test-data-and-results/results/asda/model2.js 2ms (unchanged)
+test/unit/test-data-and-results/results/bandm/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/buffaload-logistics/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/cds/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/co-op/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/davenport/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/fowlerwelch/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/giovanni/model1.js 3ms (unchanged)
+test/unit/test-data-and-results/results/kepak/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/nisa/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/nisa/model2.js 1ms (unchanged)
+test/unit/test-data-and-results/results/nisa/model3.js 2ms (unchanged)
+test/unit/test-data-and-results/results/nutricia/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/sainsburys/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/tescos/model1.js 2ms (unchanged)
+test/unit/test-data-and-results/results/tescos/model2.js 3ms (unchanged)
+test/unit/test-data-and-results/results/tescos/model3.js 4ms (unchanged)
+test/unit/test-data-and-results/results/tjmorris/model1.js 3ms (unchanged)
+test/unit/test-data-and-results/results/warrens/model1.js 4ms (unchanged)
+test/unit/utilities/file-extension.test.js 2ms (unchanged)
+test/unit/utilities/json-file.test.js 3ms (unchanged)
+test/unit/utilities/regex.test.js 11ms (unchanged)
+test/unit/utilities/row-finder.test.js 2ms (unchanged)
+
+> trade-exportscore-plp@3.0.21 test
+> jest --runInBand --forceExit
+
+  console.info
+    Packing list matches TJ Morris Model 1 with filename:  packinglist.xls
+
+      at Object.info [as matches] (app/services/matchers/tjmorris/model1.js:28:15)
+
+  console.log
+    Object.keys(packingList).length:  0
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.xls
+
+      at Object.info [as findParser] (app/services/parser-service.js:186:15)
+
+  console.info
+    Saved packing list in database with application id:  123
+
+      at info (app/packing-list/index.js:11:13)
+
+  console.info
+    Packing list matches Fowler Welch with filename: packinglist.xlsx
+
+      at info (app/services/matchers/fowlerwelch/model1.js:51:13)
+
+  console.info
+    Packing list matches Fowler Welch with filename: packinglist.xlsx
+
+      at info (app/services/matchers/fowlerwelch/model1.js:51:13)
+
+  console.info
+    Sent message to TP queue for application id appid with parsed result true
+
+      at info (app/messaging/send-parsed-message.js:12:11)
+
+  console.info
+    Sent message to TP queue for application id true with parsed result 123
+
+      at info (app/messaging/send-parsed-message.js:31:15)
+
+  console.error
+    TypeError: specificMockImpl.apply is not a function
+        at /home/node/node_modules/jest-mock/build/index.js:397:39
+        at Object.<anonymous> (/home/node/node_modules/jest-mock/build/index.js:404:13)
+        at Object.mockConstructor [as sendMessages] (/home/node/node_modules/jest-mock/build/index.js:148:19)
+        at sendMessages (/home/node/app/messaging/send-parsed-message.js:30:20)
+        at Object.sendParsed (/home/node/test/unit/messaging/send-parsed-message.test.js:90:11)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      34 |       await sender.close();
+      35 |     } catch (err) {
+    > 36 |       console.error(err);
+         |               ^
+      37 |     } finally {
+      38 |       await sbClient.close();
+      39 |     }
+
+      at error (app/messaging/send-parsed-message.js:36:15)
+      at Object.sendParsed (test/unit/messaging/send-parsed-message.test.js:90:11)
+
+  console.info
+    Packing list matches TJ Morris Model 1 with filename:  packinglist.xls
+
+      at Object.info [as matches] (app/services/matchers/tjmorris/model1.js:28:15)
+
+  console.info
+    Received message:  { packing_list_blob: 'https://example.com/path/doesnt/matter' }
+
+      at info (app/messaging/process-plp-message.js:15:13)
+
+  console.info
+    Business checks for undefined: true
+
+      at info (app/messaging/process-plp-message.js:25:15)
+
+  console.error
+    Unable to process message: Error: Error
+        at Object.<anonymous> (/home/node/test/unit/messaging/process-plp-message.test.js:91:13)
+        at /home/node/node_modules/jest-mock/build/index.js:397:39
+        at Object.<anonymous> (/home/node/node_modules/jest-mock/build/index.js:404:13)
+        at Object.mockConstructor (/home/node/node_modules/jest-mock/build/index.js:148:19)
+        at completeMessage (/home/node/app/messaging/process-plp-message.js:14:20)
+        at Object.messageAction (/home/node/test/unit/messaging/process-plp-message.test.js:93:11)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      39 |     }
+      40 |   } catch (err) {
+    > 41 |     console.error("Unable to process message:", err);
+         |             ^
+      42 |     await receiver.abandonMessage(message);
+      43 |   }
+      44 | }
+
+      at error (app/messaging/process-plp-message.js:41:13)
+      at Object.messageAction (test/unit/messaging/process-plp-message.test.js:93:11)
+
+  console.info
+    Packing list matches Warrens with filename: packinglist.xlsx
+
+      at info (app/services/matchers/fowlerwelch/model1.js:51:13)
+
+  console.info
+    Packing list matches Warrens with filename: packinglist.xlsx
+
+      at info (app/services/matchers/fowlerwelch/model1.js:51:13)
+
+  console.info
+    Packing list matches Sainsburys Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/sainsburys/model1.js:28:15)
+
+  console.info
+    Packing list matches Tesco Model 1 with filename:  PackingListTesco1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model1.js:27:15)
+
+  console.info
+    Packing list matches Tesco Model 3 with filename:  PackingListTesco3.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model3.js:26:15)
+
+  console.info
+    Packing list matches BandM Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/bandm/model1.js:27:15)
+
+  console.info
+    Packing list matches Co-op Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/co-op/model1.js:25:15)
+
+  console.info
+    Packing list matches CDS Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/cds/model1.js:27:15)
+
+  console.info
+    Packing list matches Buffaload Model 1 with filename:  PackingList.xlsx
+
+      at Object.info [as matches] (app/services/matchers/buffaload-logistics/model1.js:27:15)
+
+  console.info
+    Packing list matches Tesco Model 2 with filename:  PackingListTesco2.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model2.js:26:15)
+
+  console.error
+    Response status: 400
+
+      28 |     return json.access_token;
+      29 |   } catch (error) {
+    > 30 |     console.error(error.message);
+         |             ^
+      31 |     return error.message;
+      32 |   }
+      33 | }
+
+      at Object.error [as bearerTokenRequest] (app/services/dynamics-service.js:30:13)
+      at Object.<anonymous> (test/unit/services/dynamics-service.test.js:46:20)
+
+  console.info
+    Upsert 123 with outcome true, status 200
+
+      at Object.info [as patchPackingListCheck] (app/services/dynamics-service.js:51:13)
+
+  console.error
+    Invalid JSON string provided: SyntaxError: Unexpected end of JSON input
+        at JSON.parse (<anonymous>)
+        at Object.parse [as sanitises] (/home/node/app/utilities/json-file.js:4:26)
+        at Object.sanitises (/home/node/test/unit/utilities/json-file.test.js:29:29)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      30 |     return JSON.stringify(jsonObj);
+      31 |   } catch (error) {
+    > 32 |     console.error("Invalid JSON string provided:", error);
+         |             ^
+      33 |     return null;
+      34 |   }
+      35 | }
+
+      at Object.error [as sanitises] (app/utilities/json-file.js:32:13)
+      at Object.sanitises (test/unit/utilities/json-file.test.js:29:29)
+
+  console.info
+    Packing list matches Nisa Model 2 with filename:  PackingList.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model2.js:26:15)
+
+  console.info
+    Packing list matches Nisa Model 1 with filename:  PackingList.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model1.js:26:15)
+
+  console.info
+    Packing list matches Asda Model 2 with filename:  packinglist.xls
+
+      at Object.info [as matches] (app/services/matchers/asda/model2.js:27:15)
+
+  console.info
+    Packing list matches Nisa Model 3 with filename:  PackingList.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model3.js:26:15)
+
+  console.info
+    Packing list matches Davenport Model 1 with filename:  packinglist.xlsx
+
+      at Object.info [as matches] (app/services/matchers/davenport/model1.js:27:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Asda Model 1 with filename:  packinglist-asda-model1.xls
+
+      at Object.info [as matches] (app/services/matchers/asda/model1.js:44:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Asda Model 1 with filename:  packinglist-asda-model1.xls
+
+      at Object.info [as matches] (app/services/matchers/asda/model1.js:44:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Buffaload Model 1 with filename:  PackingList-Buffaload-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/buffaload-logistics/model1.js:27:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Buffaload Model 1 with filename:  PackingList-Buffaload-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/buffaload-logistics/model1.js:27:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Sainsburys Model 1 with filename:  packinglist-sainsburys-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/sainsburys/model1.js:28:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Sainsburys Model 1 with filename:  packinglist-sainsburys-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/sainsburys/model1.js:28:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Davenport Model 1 with filename:  packinglist-davenport-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/davenport/model1.js:27:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Davenport Model 1 with filename:  packinglist-davenport-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/davenport/model1.js:27:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/routes/healthy.test.js:10:14)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/routes/healthy.test.js:10:14)
+
+  console.error
+    Error running healthy check Error: database connection timeout
+        at Object.<anonymous> (/home/node/test/integration/narrow/routes/healthy.test.js:34:13)
+        at /home/node/node_modules/jest-mock/build/index.js:397:39
+        at Object.<anonymous> (/home/node/node_modules/jest-mock/build/index.js:404:13)
+        at Object.mockConstructor [as authenticate] (/home/node/node_modules/jest-mock/build/index.js:148:19)
+        at authenticate (/home/node/app/routes/healthy.js:10:25)
+        at Object.<anonymous>.exports.Manager.execute (/home/node/node_modules/@hapi/hapi/lib/toolkit.js:57:29)
+        at Object.<anonymous>.internals.handler (/home/node/node_modules/@hapi/hapi/lib/handler.js:46:48)
+        at Object.<anonymous>.exports.execute (/home/node/node_modules/@hapi/hapi/lib/handler.js:31:36)
+        at Request._lifecycle (/home/node/node_modules/@hapi/hapi/lib/request.js:370:68)
+        at processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at Request._execute (/home/node/node_modules/@hapi/hapi/lib/request.js:280:9)
+
+      11 |         return h.response("ok").code(StatusCodes.OK);
+      12 |       } catch (err) {
+    > 13 |         console.error("Error running healthy check", err);
+         |                 ^
+      14 |         return h
+      15 |           .response(`Error running healthy check: ${err.message}`)
+      16 |           .code(StatusCodes.SERVICE_UNAVAILABLE);
+
+      at error (app/routes/healthy.js:13:17)
+      at Object.<anonymous>.exports.Manager.execute (node_modules/@hapi/hapi/lib/toolkit.js:57:29)
+      at Object.<anonymous>.internals.handler (node_modules/@hapi/hapi/lib/handler.js:46:48)
+      at Object.<anonymous>.exports.execute (node_modules/@hapi/hapi/lib/handler.js:31:36)
+      at Request._lifecycle (node_modules/@hapi/hapi/lib/request.js:370:68)
+      at Request._execute (node_modules/@hapi/hapi/lib/request.js:280:9)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.log
+    ASDA MODEL 1:  RANA
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:19:15)
+
+  console.log
+    ASDA MODEL 1 length:  4
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:20:15)
+
+  console.log
+    packingListJson.length:  undefined
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:21:15)
+
+  console.log
+    2 filename:  packinglist-giovanni-model1.xlsx
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:22:15)
+
+  console.info
+    Packing list matches Giovanni Model 1 with filename:  packinglist-giovanni-model1.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.log
+    ASDA MODEL 1:  RANA
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:19:15)
+
+  console.log
+    ASDA MODEL 1 length:  4
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:20:15)
+
+  console.log
+    packingListJson.length:  undefined
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:21:15)
+
+  console.log
+    2 filename:  packinglist-giovanni-model1.xlsx
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:22:15)
+
+  console.info
+    Packing list matches Giovanni Model 1 with filename:  packinglist-giovanni-model1.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.info
+    Packing list matches TJ Morris Model 1 with filename:  packinglist-tjmorris-model1.xls
+
+      at Object.info [as matches] (app/services/matchers/tjmorris/model1.js:28:15)
+
+  console.info
+    Packing list matches TJ Morris Model 1 with filename:  packinglist-tjmorris-model1.xls
+
+      at Object.info [as matches] (app/services/matchers/tjmorris/model1.js:28:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Nutricia Model 1 with filename:  packinglist-nutricia-model1.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Nutricia Model 1 with filename:  packinglist-nutricia-model1.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Fowler Welch with filename: packinglist.xlsx
+
+      at info (app/services/matchers/fowlerwelch/model1.js:51:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Fowler Welch with filename: packinglist.xlsx
+
+      at info (app/services/matchers/fowlerwelch/model1.js:51:13)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Kepak Model 1 with filename:  packinglist-kepak-model1.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Kepak Model 1 with filename:  packinglist-kepak-model1.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches BandM Model 1 with filename:  packinglist-bandm-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/bandm/model1.js:27:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches BandM Model 1 with filename:  packinglist-bandm-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/bandm/model1.js:27:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Co-op Model 1 with filename:  packinglist-co-op-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/co-op/model1.js:25:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Co-op Model 1 with filename:  packinglist-co-op-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/co-op/model1.js:25:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Tesco Model 3 with filename:  PackingListTesco3.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model3.js:26:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Tesco Model 3 with filename:  PackingListTesco3.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model3.js:26:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Tesco Model 2 with filename:  PackingListTesco2.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model2.js:26:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Tesco Model 2 with filename:  PackingListTesco2.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model2.js:26:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Tesco Model 1 with filename:  PackingListTesco1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model1.js:27:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Tesco Model 1 with filename:  PackingListTesco1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/tescos/model1.js:27:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Warrens with filename: packinglist.xlsx
+
+      at info (app/services/matchers/fowlerwelch/model1.js:51:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Warrens with filename: packinglist.xlsx
+
+      at info (app/services/matchers/fowlerwelch/model1.js:51:13)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Nisa Model 3 with filename:  packinglist-nisa-model3.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model3.js:26:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Nisa Model 3 with filename:  packinglist-nisa-model3.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model3.js:26:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Nisa Model 2 with filename:  packinglist-nisa-model2.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model2.js:26:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Nisa Model 2 with filename:  packinglist-nisa-model2.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model2.js:26:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Asda Model 2 with filename:  packinglist-asda-model2.xls
+
+      at Object.info [as matches] (app/services/matchers/asda/model2.js:27:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Asda Model 2 with filename:  packinglist-asda-model2.xls
+
+      at Object.info [as matches] (app/services/matchers/asda/model2.js:27:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Asda Model 1 with filename:  packinglist.xls
+
+      at Object.info [as matches] (app/services/matchers/asda/model1.js:44:15)
+
+  console.log
+    Object.keys(packingList).length:  0
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches CDS Model 1 with filename:  packinglist-cds-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/cds/model1.js:27:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches CDS Model 1 with filename:  packinglist-cds-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/cds/model1.js:27:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Nisa Model 1 with filename:  packinglist-nisa-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model1.js:26:15)
+
+  console.log
+    Object.keys(packingList).length:  1
+
+      at Object.log [as matches] (app/services/matchers/asda/model1.js:7:13)
+
+  console.info
+    Packing list matches Nisa Model 1 with filename:  packinglist-nisa-model1.xlsx
+
+      at Object.info [as matches] (app/services/matchers/nisa/model1.js:26:15)
+
+  console.info
+    Failed to parse packing list with filename:  packinglist.pdf
+
+      at Object.info [as findParser] (app/services/parser-service.js:189:13)
+
+  console.info
+    Ready to receive messages
+
+      at info (app/messaging/index.js:13:13)
+
+  console.info
+    Ready to receive messages
+
+      at info (app/messaging/index.js:13:13)
+
+  console.info
+    Packing list matches Nutricia Model 1 with filename:  packinglist.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.info
+    Packing list matches Kepak Model 1 with filename:  packinglist.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.info
+    Packing list matches Giovanni Model 1 with filename:  packinglist.xlsx
+
+      at info (app/services/matchers/giovanni/model1.js:25:15)
+
+  console.error
+    Error running healthy check Error: test error
+        at Object.<anonymous> (/home/node/test/unit/routes/healthy.test.js:31:19)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      11 |         return h.response("ok").code(StatusCodes.OK);
+      12 |       } catch (err) {
+    > 13 |         console.error("Error running healthy check", err);
+         |                 ^
+      14 |         return h
+      15 |           .response(`Error running healthy check: ${err.message}`)
+      16 |           .code(StatusCodes.SERVICE_UNAVAILABLE);
+
+      at Object.error [as handler] (app/routes/healthy.js:13:17)
+      at Object.<anonymous> (test/unit/routes/healthy.test.js:39:5)
+
+  console.info
+    App Insights Running
+
+      at Object.info [as setup] (app/services/app-insights.js:9:13)
+
+  console.info
+    App Insights Not Running!
+
+      at Object.info [as setup] (app/services/app-insights.js:14:13)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/index.test.js:14:14)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/index.test.js:27:14)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/routes/non-ai.test.js:7:14)
+
+  console.error
+    Error: ENOENT: no such file or directory, open '/home/node/app/packing-lists/abc'
+        at Object.openSync (node:fs:600:3)
+        at Object.readFileSync (node:fs:468:35)
+        at read_binary (/home/node/node_modules/@boterop/convert-excel-to-json/node_modules/xlsx/xlsx.js:3280:44)
+        at readSync (/home/node/node_modules/@boterop/convert-excel-to-json/node_modules/xlsx/xlsx.js:27122:69)
+        at Object.readFileSync (/home/node/node_modules/@boterop/convert-excel-to-json/node_modules/xlsx/xlsx.js:27167:9)
+        at convertExcelToJson (/home/node/node_modules/@boterop/convert-excel-to-json/lib/convert-excel-to-json.js:155:23)
+        at excelToJson (/home/node/app/routes/non-ai.js:15:16)
+        at Object.<anonymous>.exports.Manager.execute (/home/node/node_modules/@hapi/hapi/lib/toolkit.js:57:29)
+        at Object.<anonymous>.internals.handler (/home/node/node_modules/@hapi/hapi/lib/handler.js:46:48)
+        at Object.<anonymous>.exports.execute (/home/node/node_modules/@hapi/hapi/lib/handler.js:31:36)
+        at Request._lifecycle (/home/node/node_modules/@hapi/hapi/lib/request.js:370:68)
+        at processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at Request._execute (/home/node/node_modules/@hapi/hapi/lib/request.js:280:9) {
+      errno: -2,
+      syscall: 'open',
+      code: 'ENOENT',
+      path: '/home/node/app/packing-lists/abc'
+    }
+
+      15 |       result = excelToJson({ sourceFile: filename });
+      16 |     } catch (err) {
+    > 17 |       console.error(err);
+         |               ^
+      18 |     }
+      19 |
+      20 |     const packingList = findParser(result, filename);
+
+      at error (app/routes/non-ai.js:17:15)
+      at Object.<anonymous>.exports.Manager.execute (node_modules/@hapi/hapi/lib/toolkit.js:57:29)
+      at Object.<anonymous>.internals.handler (node_modules/@hapi/hapi/lib/handler.js:46:48)
+      at Object.<anonymous>.exports.execute (node_modules/@hapi/hapi/lib/handler.js:31:36)
+      at Request._lifecycle (node_modules/@hapi/hapi/lib/request.js:370:68)
+      at Request._execute (node_modules/@hapi/hapi/lib/request.js:280:9)
+
+  console.info
+    Failed to parse packing list with filename:  /home/node/app/packing-lists/abc
+
+      at info (app/services/parser-service.js:189:13)
+
+  console.error
+    Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.
+
+      13 |     console.info("Ready to receive messages");
+      14 |   } else {
+    > 15 |     console.error(
+         |             ^
+      16 |       "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
+      17 |     );
+      18 |   }
+
+      at Object.error (app/messaging/index.js:15:13)
+      at start (app/server.js:28:24)
+      at Object.<anonymous> (test/integration/narrow/routes/healthz.test.js:10:14)
+
+  console.error
+    Invalid JSON string provided: SyntaxError: Unexpected token u in JSON at position 0
+        at JSON.parse (<anonymous>)
+        at Object.parse [as sanitises] (/home/node/app/utilities/json-file.js:4:26)
+        at sanitises (/home/node/app/services/parser-service.js:55:45)
+        at Object.findParser [as handler] (/home/node/app/routes/non-ai.js:20:25)
+        at Object.handler (/home/node/test/unit/routes/non-ai.test.js:16:17)
+        at Promise.then.completed (/home/node/node_modules/jest-circus/build/utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (/home/node/node_modules/jest-circus/build/utils.js:231:10)
+        at _callCircusTest (/home/node/node_modules/jest-circus/build/run.js:316:40)
+        at _runTest (/home/node/node_modules/jest-circus/build/run.js:252:3)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:126:9)
+        at _runTestsForDescribeBlock (/home/node/node_modules/jest-circus/build/run.js:121:9)
+        at run (/home/node/node_modules/jest-circus/build/run.js:71:3)
+        at runAndTransformResultsToJestFormat (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+        at jestAdapter (/home/node/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+        at runTestInternal (/home/node/node_modules/jest-runner/build/runTest.js:367:16)
+        at runTest (/home/node/node_modules/jest-runner/build/runTest.js:444:34)
+
+      30 |     return JSON.stringify(jsonObj);
+      31 |   } catch (error) {
+    > 32 |     console.error("Invalid JSON string provided:", error);
+         |             ^
+      33 |     return null;
+      34 |   }
+      35 | }
+
+      at Object.error [as sanitises] (app/utilities/json-file.js:32:13)
+      at sanitises (app/services/parser-service.js:55:45)
+      at Object.findParser [as handler] (app/routes/non-ai.js:20:25)
+      at Object.handler (test/unit/routes/non-ai.test.js:16:17)
+
+  console.info
+    Failed to parse packing list with filename:  /home/node/app/packing-lists/undefined
+
+      at info (app/services/parser-service.js:189:13)
+
+
+=============================== Coverage summary ===============================
+Statements   : 96.83% ( 917/947 )
+Branches     : 93.44% ( 285/305 )
+Functions    : 92.7% ( 127/137 )
+Lines        : 96.9% ( 907/936 )
+================================================================================
