@@ -2,17 +2,20 @@ const CombineParser = require("../../parser-combine");
 const ParserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const { mapParser } = require("../../parser-map");
+const Regex = require("../../../utilities/regex");
 
 function parse(packingListJson) {
-  const establishmentNumberRow = 3;
-  const dataRow = 5;
-  const establishmentNumber = packingListJson[establishmentNumberRow].E ?? null;
+  const establishmentNumber = Regex.findMatch(
+    headers.TESCO3.establishmentNumber.regex,
+    packingListJson,
+  );
 
+  const dataRow = 5;
   const packingListContents = mapParser(
     packingListJson,
     dataRow - 1,
     dataRow,
-    headers.TESCO3,
+    headers.TESCO3.headers,
   );
 
   return CombineParser.combine(

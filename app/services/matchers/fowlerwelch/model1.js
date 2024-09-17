@@ -1,6 +1,7 @@
 const MatcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
 const Regex = require("../../../utilities/regex");
+const headers = require("../../model-headers");
 
 function matchesModel(packingList, filename, regex, trader) {
   let headerRow = 0;
@@ -60,7 +61,12 @@ function callback(x) {
 }
 
 function matches(packingList, filename) {
-  return matchesModel(packingList, filename, /RMS-GB-000216/, "Fowler Welch");
+  return matchesModel(
+    packingList,
+    filename,
+    headers.FOWLERWELCH1.establishmentNumber.regex,
+    "Fowler Welch",
+  );
 }
 
 module.exports = { matches, matchesModel };

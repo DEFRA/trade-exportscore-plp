@@ -1,26 +1,21 @@
 const MatcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const Regex = require("../../../utilities/regex");
+const headers = require("../../model-headers");
 
 function matches(packingList, filename) {
   try {
     const sheet = Object.keys(packingList)[0];
 
     // check for correct establishment number
-    const regex = /RMS-GB-000022-/;
-    if (!Regex.test(regex, packingList[sheet])) {
+    if (
+      !Regex.test(headers.TESCO3.establishmentNumber.regex, packingList[sheet])
+    ) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
     // check for header values
-    const header = {
-      A: "Product/ Part Number description",
-      B: "Tariff Code UK",
-      E: "Packages",
-      G: "Net Weight",
-    };
-
-    const result = matchesHeader(header, packingList[sheet], callback);
+    const result = matchesHeader(headers.TESCO3.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
       console.info(

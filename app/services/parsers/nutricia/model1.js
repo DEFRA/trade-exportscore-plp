@@ -2,20 +2,21 @@ const ParserModel = require("../../parser-model");
 const CombineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
+const Regex = require("../../../utilities/regex");
 
 function parse(packingListJson) {
-  const establishmentNumberRow =
-    packingListJson.findIndex((x) => x.A === "NIRMS NUMBER") + 1;
+  const establishmentNumber = Regex.findMatch(
+    headers.NUTRICIA1.establishmentNumber.regex,
+    packingListJson,
+  );
+
   const headerRow = packingListJson.findIndex((x) => x.C === "DESCRIPTION");
   const dataRow = headerRow + 1;
-
-  const establishmentNumber = packingListJson[establishmentNumberRow].A ?? null;
-
   const packingListContents = mapParser(
     packingListJson,
     headerRow,
     dataRow,
-    headers.NUTRICIA1,
+    headers.NUTRICIA1.headers,
   );
 
   return CombineParser.combine(

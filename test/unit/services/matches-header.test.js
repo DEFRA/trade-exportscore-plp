@@ -4,12 +4,7 @@ const MatcherResult = require("../../../app/services/matcher-result");
 describe("matchesHeader", () => {
   test("returns correct header", () => {
     // arrange
-    const header = {
-      A: "this",
-      B: "is",
-      C: "a",
-      D: "test",
-    };
+    const header = [/this/, /is/, /a/, /test/];
 
     const packingListSheet = [
       {
@@ -22,12 +17,8 @@ describe("matchesHeader", () => {
       },
     ];
 
-    function callback(x) {
-      return x.A === "this";
-    }
-
     // act
-    const result = matchesHeader(header, packingListSheet, callback);
+    const result = matchesHeader(header, packingListSheet);
 
     // assert
     expect(result).toBe(MatcherResult.CORRECT);
@@ -35,12 +26,7 @@ describe("matchesHeader", () => {
 
   test("returns incorrect header", () => {
     // arrange
-    const header = {
-      A: "this",
-      B: "is",
-      C: "a",
-      D: "test",
-    };
+    const header = [/this/, /is/, /wrong/];
 
     const packingListSheet = [
       {
@@ -53,12 +39,8 @@ describe("matchesHeader", () => {
       },
     ];
 
-    function callback(x) {
-      return x.A === "this";
-    }
-
     // act
-    const result = matchesHeader(header, packingListSheet, callback);
+    const result = matchesHeader(header, packingListSheet);
 
     // assert
     expect(result).toBe(MatcherResult.WRONG_HEADER);
@@ -66,21 +48,12 @@ describe("matchesHeader", () => {
 
   test("return incorrect header for null", () => {
     // arrange
-    const header = {
-      A: "this",
-      B: "is",
-      C: "a",
-      D: "test",
-    };
+    const header = [/this/, /is/, /a/, /test/];
 
     const packingListSheet = [{}];
 
-    function callback(x) {
-      return x.A === "this";
-    }
-
     // act
-    const result = matchesHeader(header, packingListSheet, callback);
+    const result = matchesHeader(header, packingListSheet);
 
     // assert
     expect(result).toBe(MatcherResult.WRONG_HEADER);
@@ -88,9 +61,7 @@ describe("matchesHeader", () => {
 
   test("return incorrect header for -1 row", () => {
     // arrange
-    const header = {
-      A: "wrong",
-    };
+    const header = [/wrong/];
 
     const packingListSheet = [
       {
@@ -98,12 +69,8 @@ describe("matchesHeader", () => {
       },
     ];
 
-    function callback(x) {
-      return x.A === "header";
-    }
-
     // act
-    const result = matchesHeader(header, packingListSheet, callback);
+    const result = matchesHeader(header, packingListSheet);
 
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });

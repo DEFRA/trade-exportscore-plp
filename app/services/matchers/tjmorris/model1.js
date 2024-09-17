@@ -1,14 +1,19 @@
 const MatcherResult = require("../../matcher-result");
-const { matchesHeader } = require("../../matches-header");
 const Regex = require("../../../utilities/regex");
+const { rowFinder } = require("../../../utilities/row-finder");
+const headers = require("../../model-headers");
 
 function matches(packingList, filename) {
   try {
     const sheet = Object.keys(packingList)[0];
 
     // check for correct establishment number
-    const regex = /RMS-GB-000010-/;
-    if (!Regex.test(regex, packingList[sheet])) {
+    if (
+      !Regex.test(
+        headers.TJMORRIS1.establishmentNumber.regex,
+        packingList[sheet],
+      )
+    ) {
       return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
@@ -22,15 +27,22 @@ function matches(packingList, filename) {
       R: "Net Weight Kg",
     };
 
-    const result = matchesHeader(header, packingList[sheet], callback);
-
-    if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches TJ Morris Model 1 with filename: ",
-        filename,
-      );
+    const headerRow = rowFinder(packingList[sheet], callback);
+    if (!packingList[sheet][headerRow] || headerRow === -1) {
+      return MatcherResult.WRONG_HEADER;
     }
-    return result;
+
+    for (const key in header) {
+      if (!packingList[sheet][headerRow][key]?.startsWith(header[key])) {
+        return MatcherResult.WRONG_HEADER;
+      }
+    }
+
+    console.info(
+      "Packing list matches TJ Morris Model 1 with filename: ",
+      filename,
+    );
+    return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }

@@ -2,16 +2,20 @@ const CombineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const ParserModel = require("../../parser-model");
 const headers = require("../../model-headers");
+const Regex = require("../../../utilities/regex");
 
 function parse(packingListJson) {
   const establishmentNumber =
-    packingListJson[1].N?.replace(/\u200B/g, "") ?? null;
+    Regex.findMatch(
+      headers.SAINSBURYS1.establishmentNumber.regex,
+      packingListJson,
+    )?.replace(/\u200B/g, "") ?? null;
 
   const packingListContents = mapParser(
     packingListJson,
     0,
     1,
-    headers.SAINSBURYS1,
+    headers.SAINSBURYS1.headers,
   );
 
   return CombineParser.combine(

@@ -1,10 +1,11 @@
 const { matchesModel } = require("../giovanni/model1");
+const headers = require("../../model-headers");
 
 function matches(packingList, filename) {
   return matchesModel(
     packingList,
     filename,
-    /RMS-GB-000133/,
+    headers.NUTRICIA1.establishmentNumber.regex,
     "Nutricia Model 1",
   );
 }

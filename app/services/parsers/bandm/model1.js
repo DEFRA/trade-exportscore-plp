@@ -1,13 +1,16 @@
 const CombineParser = require("../../parser-combine");
 const ParserModel = require("../../parser-model");
+const headers = require("../../model-headers");
+const Regex = require("../../../utilities/regex");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function parse(packingListJson) {
-  const traderRow = packingListJson.findIndex(
-    (x) => x.H === "WAREHOUSE SCHEME NUMBER:",
+  const establishmentNumber = Regex.findMatch(
+    headers.BANDM1.establishmentNumber.regex,
+    packingListJson,
   );
-  const establishmentNumber = packingListJson[traderRow].I ?? null;
+
   const headerRow = packingListJson.findIndex((x) => x.B === "PRISM");
   const lastRow =
     packingListJson.slice(headerRow + 1).findIndex((x) => isEndOfRow(x)) +

@@ -2,18 +2,20 @@ const ParserModel = require("../../parser-model");
 const CombineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
+const Regex = require("../../../utilities/regex");
 
 function parse(packingListJson) {
-  const establishmentNumberRow = 18;
+  const establishmentNumber = Regex.findMatch(
+    headers.DAVENPORT1.establishmentNumber.regex,
+    packingListJson,
+  );
+
   const dataRow = 45;
-
-  const establishmentNumber = packingListJson[establishmentNumberRow].C ?? null;
-
   const packingListContents = mapParser(
     packingListJson,
     dataRow - 1,
     dataRow,
-    headers.DAVENPORT1,
+    headers.DAVENPORT1.headers,
   );
 
   return CombineParser.combine(
