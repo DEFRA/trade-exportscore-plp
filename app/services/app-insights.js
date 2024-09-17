@@ -1,6 +1,6 @@
 const appInsights = require('applicationinsights')
 
-function setup() {
+function setup () {
   try {
     if (process.env.APPINSIGHTS_CONNECTIONSTRING) {
       appInsights.setup(process.env.APPINSIGHTS_CONNECTIONSTRING)
@@ -14,7 +14,7 @@ function setup() {
       console.info('App Insights Not Running!')
     }
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }
 

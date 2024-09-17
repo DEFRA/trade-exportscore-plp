@@ -3,7 +3,7 @@ const processPlpMessage = require('./process-plp-message')
 const { MessageReceiver } = require('adp-messaging')
 let plpReceiver
 
-async function start() {
+async function start () {
   try {
     const plpAction = message => processPlpMessage(message, plpReceiver)
     plpReceiver = new MessageReceiver(config.plpSubscription, plpAction)
@@ -11,11 +11,11 @@ async function start() {
 
     console.info('Ready to receive messages')
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }
 
-async function stop() {
+async function stop () {
   await plpReceiver.closeConnection()
 }
 

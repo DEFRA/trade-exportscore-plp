@@ -2,14 +2,14 @@ const excelToJson = require('convert-excel-to-json')
 const { BlobClient } = require('@azure/storage-blob')
 const { DefaultAzureCredential } = require('@azure/identity')
 
-function createStorageAccountClient(blobUri) {
+function createStorageAccountClient (blobUri) {
   return new BlobClient(
     blobUri,
     new DefaultAzureCredential()
   )
 }
 
-async function getXlsPackingListFromBlob(blobClient) {
+async function getXlsPackingListFromBlob (blobClient) {
   try {
     const downloadBlockBlobResponse = await blobClient.download()
     const downloaded = (
@@ -20,11 +20,11 @@ async function getXlsPackingListFromBlob(blobClient) {
     })
     return result
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }
 
-async function streamToBuffer(readableStream) {
+async function streamToBuffer (readableStream) {
   return new Promise((resolve, reject) => {
     const chunks = []
     readableStream.on('data', (data) => {

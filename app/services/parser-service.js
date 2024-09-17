@@ -4,7 +4,7 @@ const CUSTOMER_ORDER = 'Customer Order'
 const COUNTRY_OF_ORIGIN = 'Country of Origin'
 const INPUT_DATA_SHEET = 'Input Data Sheet'
 
-function findParser(result, filename) {
+function findParser (result, filename) {
   try {
     let parsedPackingList = failedParser()
     let isParsed = false
@@ -58,11 +58,11 @@ function findParser(result, filename) {
 
     return { packingList: parsedPackingList, isParsed }
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }
 
-function matchesBandM(packingListJson, filename) {
+function matchesBandM (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
@@ -94,7 +94,7 @@ function matchesBandM(packingListJson, filename) {
   }
 }
 
-function matchesAsda(packingListJson, filename) {
+function matchesAsda (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
@@ -124,7 +124,7 @@ function matchesAsda(packingListJson, filename) {
   }
 }
 
-function matchesTescoModel1(packingListJson, filename) {
+function matchesTescoModel1 (packingListJson, filename) {
   const establishmentNumberRow = 3
   try {
     // check for correct extension
@@ -160,7 +160,7 @@ function matchesTescoModel1(packingListJson, filename) {
   }
 }
 
-function matchesTescoModel2(packingListJson, filename) {
+function matchesTescoModel2 (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
@@ -195,7 +195,7 @@ function matchesTescoModel2(packingListJson, filename) {
   }
 }
 
-function parseBandM(packingListJson) {
+function parseBandM (packingListJson) {
   const traderRow = packingListJson.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
   const establishmentNumber = packingListJson[traderRow].I ?? null
   const headerRow = packingListJson.findIndex(x => x.B === 'PRISM')
@@ -212,13 +212,13 @@ function parseBandM(packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function isEndOfRow(x) {
+function isEndOfRow (x) {
   const isTotal = (x.F !== null) && (x.G !== null) && (x.H !== null)
   const isEmpty = (x.A === ' ') && (x.B === ' ') && (x.C === ' ') && (x.D === ' ') && (x.E === ' ')
   return isTotal && isEmpty
 }
 
-function combineParser(establishmentNumber, packingListContents, allRequiredFieldsPresent) {
+function combineParser (establishmentNumber, packingListContents, allRequiredFieldsPresent) {
   return {
     registration_approval_number: establishmentNumber,
     items: packingListContents,
@@ -229,11 +229,11 @@ function combineParser(establishmentNumber, packingListContents, allRequiredFiel
   }
 }
 
-function failedParser() {
+function failedParser () {
   return combineParser(null, [], false)
 }
 
-function parseAsda(packingListJson) {
+function parseAsda (packingListJson) {
   const establishmentNumber = packingListJson[1].D ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.A ?? null,
@@ -247,7 +247,7 @@ function parseAsda(packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function parseTescoModel1(packingListJson) {
+function parseTescoModel1 (packingListJson) {
   const packingListContentsRow = 5
   const establishmentNumberRow = 3
   const establishmentNumber = packingListJson[establishmentNumberRow].AT ?? null
@@ -263,7 +263,7 @@ function parseTescoModel1(packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function parseTescoModel2(packingListJson) {
+function parseTescoModel2 (packingListJson) {
   const establishmentNumber = packingListJson[2].M ?? null
   const packingListContents = packingListJson.slice(2).map(col => ({
     description: col.F ?? null,
@@ -277,7 +277,7 @@ function parseTescoModel2(packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function matchesSainsburys(packingListJson, filename) {
+function matchesSainsburys (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
@@ -314,7 +314,7 @@ function matchesSainsburys(packingListJson, filename) {
   }
 }
 
-function parseSainsburys(packingListJson) {
+function parseSainsburys (packingListJson) {
   const establishmentNumber = packingListJson[1].N?.replace(/\u200B/g, '') ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.E ?? null,
@@ -328,7 +328,7 @@ function parseSainsburys(packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function matchesTjmorris(packingListJson, filename) {
+function matchesTjmorris (packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop().toLowerCase()
@@ -375,7 +375,7 @@ function matchesTjmorris(packingListJson, filename) {
   }
 }
 
-function parseTjmorris(packingListJson) {
+function parseTjmorris (packingListJson) {
   const establishmentNumber = packingListJson[1].A ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.N ?? null,
@@ -389,7 +389,7 @@ function parseTjmorris(packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function matchesFowlerWelch(packingListJson, filename) {
+function matchesFowlerWelch (packingListJson, filename) {
   try {
     const headerRowNumber = 44
     const establishmentNumberRow = 45
@@ -440,7 +440,7 @@ function matchesFowlerWelch(packingListJson, filename) {
   }
 }
 
-function parseFowlerWelch(packingListJson) {
+function parseFowlerWelch (packingListJson) {
   const establishmentNumberRow = 45
   const establishmentNumber = packingListJson[establishmentNumberRow].M ?? null
   const packingListContents = packingListJson.slice(establishmentNumberRow).map(col => ({
@@ -455,7 +455,7 @@ function parseFowlerWelch(packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function matchesNisa(packingListJson, filename) {
+function matchesNisa (packingListJson, filename) {
   const establishmentNumberRow = 1
   try {
     // check for correct extension
@@ -491,7 +491,7 @@ function matchesNisa(packingListJson, filename) {
   }
 }
 
-function parseNisa(packingListJson) {
+function parseNisa (packingListJson) {
   const establishmentNumber = packingListJson[1].A ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.K ?? null,
@@ -505,7 +505,7 @@ function parseNisa(packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function checkRequiredData(packingList) {
+function checkRequiredData (packingList) {
   const hasCommodityCode = packingList.items.every(x => x.commodity_code !== null)
   const hasTreatmentOrNature = packingList.items.every(x => (x.nature_of_products !== null && x.type_of_treatment !== null))
   const hasDescription = packingList.items.every(x => x.description !== null)
