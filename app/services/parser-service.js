@@ -4,61 +4,65 @@ const CUSTOMER_ORDER = 'Customer Order'
 const COUNTRY_OF_ORIGIN = 'Country of Origin'
 const INPUT_DATA_SHEET = 'Input Data Sheet'
 
-function findParser (result, filename) {
-  let parsedPackingList = failedParser()
-  let isParsed = false
+function findParser(result, filename) {
+  try {
+    let parsedPackingList = failedParser()
+    let isParsed = false
 
-  if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches TJ Morris with filename: ', filename)
-    parsedPackingList = parseTjmorris(result.Sheet1)
-    isParsed = true
-  } else if (matchesAsda(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Asda with filename: ', filename)
-    parsedPackingList = parseAsda(result.PackingList_Extract)
-    isParsed = true
-  } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Sainsburys with filename: ', filename)
-    parsedPackingList = parseSainsburys(result.Sheet1)
-    isParsed = true
-  } else if (matchesBandM(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches BandM with filename: ', filename)
-    parsedPackingList = parseBandM(result.Sheet1)
-    isParsed = true
-  } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Tesco Model 1 with filename: ', filename)
-    parsedPackingList = parseTescoModel1(result[INPUT_DATA_SHEET])
-    isParsed = true
-  } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Tesco Model 2 with filename: ', filename)
-    parsedPackingList = parseTescoModel2(result.Sheet2)
-    isParsed = true
-  } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Fowler Welch with filename: ', filename)
-    parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER])
-    isParsed = true
-  } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Nisa with filename: ', filename)
-    parsedPackingList = parseNisa(result[Object.keys(result)[0]])
-    isParsed = true
-  } else {
-    console.info('Failed to parse packing list with filename: ', filename)
+    if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches TJ Morris with filename: ', filename)
+      parsedPackingList = parseTjmorris(result.Sheet1)
+      isParsed = true
+    } else if (matchesAsda(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Asda with filename: ', filename)
+      parsedPackingList = parseAsda(result.PackingList_Extract)
+      isParsed = true
+    } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Sainsburys with filename: ', filename)
+      parsedPackingList = parseSainsburys(result.Sheet1)
+      isParsed = true
+    } else if (matchesBandM(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches BandM with filename: ', filename)
+      parsedPackingList = parseBandM(result.Sheet1)
+      isParsed = true
+    } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Tesco Model 1 with filename: ', filename)
+      parsedPackingList = parseTescoModel1(result[INPUT_DATA_SHEET])
+      isParsed = true
+    } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Tesco Model 2 with filename: ', filename)
+      parsedPackingList = parseTescoModel2(result.Sheet2)
+      isParsed = true
+    } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Fowler Welch with filename: ', filename)
+      parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER])
+      isParsed = true
+    } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Nisa with filename: ', filename)
+      parsedPackingList = parseNisa(result[Object.keys(result)[0]])
+      isParsed = true
+    } else {
+      console.info('Failed to parse packing list with filename: ', filename)
+    }
+
+    if (isParsed) {
+      parsedPackingList.items = parsedPackingList.items.filter(x => !(x.description === null &&
+        x.nature_of_products === null &&
+        x.type_of_treatment === null &&
+        x.commodity_code === null &&
+        x.number_of_packages === null &&
+        x.total_net_weight_kg === null))
+
+      parsedPackingList.business_checks.all_required_fields_present = checkRequiredData(parsedPackingList)
+    }
+
+    return { packingList: parsedPackingList, isParsed }
+  } catch (err) {
+    console.error(err);
   }
-
-  if (isParsed) {
-    parsedPackingList.items = parsedPackingList.items.filter(x => !(x.description === null &&
-      x.nature_of_products === null &&
-      x.type_of_treatment === null &&
-      x.commodity_code === null &&
-      x.number_of_packages === null &&
-      x.total_net_weight_kg === null))
-
-    parsedPackingList.business_checks.all_required_fields_present = checkRequiredData(parsedPackingList)
-  }
-
-  return { packingList: parsedPackingList, isParsed }
 }
 
-function matchesBandM (packingListJson, filename) {
+function matchesBandM(packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
@@ -85,11 +89,12 @@ function matchesBandM (packingListJson, filename) {
     }
     if (JSON.stringify(packingListJson.Sheet1[headerRow]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
 
-function matchesAsda (packingListJson, filename) {
+function matchesAsda(packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
@@ -114,11 +119,12 @@ function matchesAsda (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.PackingList_Extract[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
 
-function matchesTescoModel1 (packingListJson, filename) {
+function matchesTescoModel1(packingListJson, filename) {
   const establishmentNumberRow = 3
   try {
     // check for correct extension
@@ -149,11 +155,12 @@ function matchesTescoModel1 (packingListJson, filename) {
 
     return MatcherResult.CORRECT
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
 
-function matchesTescoModel2 (packingListJson, filename) {
+function matchesTescoModel2(packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
@@ -183,11 +190,12 @@ function matchesTescoModel2 (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet2[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
 
-function parseBandM (packingListJson) {
+function parseBandM(packingListJson) {
   const traderRow = packingListJson.findIndex(x => x.H === 'WAREHOUSE SCHEME NUMBER:')
   const establishmentNumber = packingListJson[traderRow].I ?? null
   const headerRow = packingListJson.findIndex(x => x.B === 'PRISM')
@@ -204,13 +212,13 @@ function parseBandM (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function isEndOfRow (x) {
+function isEndOfRow(x) {
   const isTotal = (x.F !== null) && (x.G !== null) && (x.H !== null)
   const isEmpty = (x.A === ' ') && (x.B === ' ') && (x.C === ' ') && (x.D === ' ') && (x.E === ' ')
   return isTotal && isEmpty
 }
 
-function combineParser (establishmentNumber, packingListContents, allRequiredFieldsPresent) {
+function combineParser(establishmentNumber, packingListContents, allRequiredFieldsPresent) {
   return {
     registration_approval_number: establishmentNumber,
     items: packingListContents,
@@ -221,11 +229,11 @@ function combineParser (establishmentNumber, packingListContents, allRequiredFie
   }
 }
 
-function failedParser () {
+function failedParser() {
   return combineParser(null, [], false)
 }
 
-function parseAsda (packingListJson) {
+function parseAsda(packingListJson) {
   const establishmentNumber = packingListJson[1].D ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.A ?? null,
@@ -239,7 +247,7 @@ function parseAsda (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function parseTescoModel1 (packingListJson) {
+function parseTescoModel1(packingListJson) {
   const packingListContentsRow = 5
   const establishmentNumberRow = 3
   const establishmentNumber = packingListJson[establishmentNumberRow].AT ?? null
@@ -255,7 +263,7 @@ function parseTescoModel1 (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function parseTescoModel2 (packingListJson) {
+function parseTescoModel2(packingListJson) {
   const establishmentNumber = packingListJson[2].M ?? null
   const packingListContents = packingListJson.slice(2).map(col => ({
     description: col.F ?? null,
@@ -269,7 +277,7 @@ function parseTescoModel2 (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function matchesSainsburys (packingListJson, filename) {
+function matchesSainsburys(packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop()
@@ -301,11 +309,12 @@ function matchesSainsburys (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
 
-function parseSainsburys (packingListJson) {
+function parseSainsburys(packingListJson) {
   const establishmentNumber = packingListJson[1].N?.replace(/\u200B/g, '') ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.E ?? null,
@@ -319,7 +328,7 @@ function parseSainsburys (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function matchesTjmorris (packingListJson, filename) {
+function matchesTjmorris(packingListJson, filename) {
   try {
     // check for correct extension
     const fileExtension = filename.split('.').pop().toLowerCase()
@@ -361,11 +370,12 @@ function matchesTjmorris (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
 
-function parseTjmorris (packingListJson) {
+function parseTjmorris(packingListJson) {
   const establishmentNumber = packingListJson[1].A ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.N ?? null,
@@ -379,7 +389,7 @@ function parseTjmorris (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function matchesFowlerWelch (packingListJson, filename) {
+function matchesFowlerWelch(packingListJson, filename) {
   try {
     const headerRowNumber = 44
     const establishmentNumberRow = 45
@@ -425,11 +435,12 @@ function matchesFowlerWelch (packingListJson, filename) {
     }
     return MatcherResult.CORRECT
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
 
-function parseFowlerWelch (packingListJson) {
+function parseFowlerWelch(packingListJson) {
   const establishmentNumberRow = 45
   const establishmentNumber = packingListJson[establishmentNumberRow].M ?? null
   const packingListContents = packingListJson.slice(establishmentNumberRow).map(col => ({
@@ -444,7 +455,7 @@ function parseFowlerWelch (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function matchesNisa (packingListJson, filename) {
+function matchesNisa(packingListJson, filename) {
   const establishmentNumberRow = 1
   try {
     // check for correct extension
@@ -475,11 +486,12 @@ function matchesNisa (packingListJson, filename) {
 
     return MatcherResult.CORRECT
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
 
-function parseNisa (packingListJson) {
+function parseNisa(packingListJson) {
   const establishmentNumber = packingListJson[1].A ?? null
   const packingListContents = packingListJson.slice(1).map(col => ({
     description: col.K ?? null,
@@ -493,7 +505,7 @@ function parseNisa (packingListJson) {
   return combineParser(establishmentNumber, packingListContents, true)
 }
 
-function checkRequiredData (packingList) {
+function checkRequiredData(packingList) {
   const hasCommodityCode = packingList.items.every(x => x.commodity_code !== null)
   const hasTreatmentOrNature = packingList.items.every(x => (x.nature_of_products !== null && x.type_of_treatment !== null))
   const hasDescription = packingList.items.every(x => x.description !== null)

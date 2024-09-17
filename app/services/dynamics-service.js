@@ -5,7 +5,7 @@ const approvalStatus = {
   Rejected: 179640001
 }
 
-async function bearerTokenRequest () {
+async function bearerTokenRequest() {
   try {
     const response = await fetch(dsConfig.bearerTokenRequest.url, {
       method: 'POST',
@@ -26,13 +26,13 @@ async function bearerTokenRequest () {
 
     const json = await response.json()
     return json.access_token
-  } catch (error) {
-    console.error(error.message)
-    return error.message
+  } catch (err) {
+    console.error(err)
+    return err.message
   }
 }
 
-async function patchPackingListCheck (applicationId, isParsed) {
+async function patchPackingListCheck(applicationId, isParsed) {
   const token = 'Bearer ' + await bearerTokenRequest()
   const url = `${dsConfig.dynamicsUrl}/api/data/v9.1/trd_exportapplications(trd_applicationreference='${applicationId}')`
   const outcome = isParsed ? approvalStatus.Approved : approvalStatus.Rejected
@@ -49,9 +49,9 @@ async function patchPackingListCheck (applicationId, isParsed) {
     console.info(`Upsert ${applicationId} with outcome ${isParsed}, status ${status}`)
 
     return status
-  } catch (error) {
-    console.error(error.message)
-    return error.message
+  } catch (err) {
+    console.error(err)
+    return err.message
   }
 }
 

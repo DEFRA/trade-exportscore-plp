@@ -3,7 +3,7 @@ const config = require('./config')
 const { sequelize } = require('./services/database-service')
 const messageService = require('./messaging')
 
-async function createServer () {
+async function createServer() {
   await sequelize.authenticate()
 
   // Create the hapi server
