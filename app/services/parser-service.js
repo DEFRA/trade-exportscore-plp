@@ -7,41 +7,44 @@ const INPUT_DATA_SHEET = 'Input Data Sheet'
 function findParser (result, filename) {
   let parsedPackingList = failedParser()
   let isParsed = false
-
-  if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches TJ Morris with filename: ', filename)
-    parsedPackingList = parseTjmorris(result.Sheet1)
-    isParsed = true
-  } else if (matchesAsda(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Asda with filename: ', filename)
-    parsedPackingList = parseAsda(result.PackingList_Extract)
-    isParsed = true
-  } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Sainsburys with filename: ', filename)
-    parsedPackingList = parseSainsburys(result.Sheet1)
-    isParsed = true
-  } else if (matchesBandM(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches BandM with filename: ', filename)
-    parsedPackingList = parseBandM(result.Sheet1)
-    isParsed = true
-  } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Tesco Model 1 with filename: ', filename)
-    parsedPackingList = parseTescoModel1(result[INPUT_DATA_SHEET])
-    isParsed = true
-  } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Tesco Model 2 with filename: ', filename)
-    parsedPackingList = parseTescoModel2(result.Sheet2)
-    isParsed = true
-  } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Fowler Welch with filename: ', filename)
-    parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER])
-    isParsed = true
-  } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
-    console.info('Packing list matches Nisa with filename: ', filename)
-    parsedPackingList = parseNisa(result[Object.keys(result)[0]])
-    isParsed = true
-  } else {
-    console.info('Failed to parse packing list with filename: ', filename)
+  try {
+    if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches TJ Morris with filename: ', filename)
+      parsedPackingList = parseTjmorris(result.Sheet1)
+      isParsed = true
+    } else if (matchesAsda(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Asda with filename: ', filename)
+      parsedPackingList = parseAsda(result.PackingList_Extract)
+      isParsed = true
+    } else if (matchesSainsburys(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Sainsburys with filename: ', filename)
+      parsedPackingList = parseSainsburys(result.Sheet1)
+      isParsed = true
+    } else if (matchesBandM(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches BandM with filename: ', filename)
+      parsedPackingList = parseBandM(result.Sheet1)
+      isParsed = true
+    } else if (matchesTescoModel1(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Tesco Model 1 with filename: ', filename)
+      parsedPackingList = parseTescoModel1(result[INPUT_DATA_SHEET])
+      isParsed = true
+    } else if (matchesTescoModel2(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Tesco Model 2 with filename: ', filename)
+      parsedPackingList = parseTescoModel2(result.Sheet2)
+      isParsed = true
+    } else if (matchesFowlerWelch(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Fowler Welch with filename: ', filename)
+      parsedPackingList = parseFowlerWelch(result[CUSTOMER_ORDER])
+      isParsed = true
+    } else if (matchesNisa(result, filename) === MatcherResult.CORRECT) {
+      console.info('Packing list matches Nisa with filename: ', filename)
+      parsedPackingList = parseNisa(result[Object.keys(result)[0]])
+      isParsed = true
+    } else {
+      console.info('Failed to parse packing list with filename: ', filename)
+    }
+  } catch (err) {
+    console.error(err)
   }
 
   if (isParsed) {
@@ -85,6 +88,7 @@ function matchesBandM (packingListJson, filename) {
     }
     if (JSON.stringify(packingListJson.Sheet1[headerRow]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -114,6 +118,7 @@ function matchesAsda (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.PackingList_Extract[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -149,6 +154,7 @@ function matchesTescoModel1 (packingListJson, filename) {
 
     return MatcherResult.CORRECT
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -183,6 +189,7 @@ function matchesTescoModel2 (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet2[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -301,6 +308,7 @@ function matchesSainsburys (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -361,6 +369,7 @@ function matchesTjmorris (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -425,6 +434,7 @@ function matchesFowlerWelch (packingListJson, filename) {
     }
     return MatcherResult.CORRECT
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -475,6 +485,7 @@ function matchesNisa (packingListJson, filename) {
 
     return MatcherResult.CORRECT
   } catch (err) {
+    console.error(err)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -494,13 +505,18 @@ function parseNisa (packingListJson) {
 }
 
 function checkRequiredData (packingList) {
-  const hasCommodityCode = packingList.items.every(x => x.commodity_code !== null)
-  const hasTreatmentOrNature = packingList.items.every(x => (x.nature_of_products !== null && x.type_of_treatment !== null))
-  const hasDescription = packingList.items.every(x => x.description !== null)
-  const hasPackages = packingList.items.every(x => x.number_of_packages !== null)
-  const hasNetWeight = packingList.items.every(x => x.total_net_weight_kg !== null)
-  const hasRemos = packingList.registration_approval_number !== null
-  return ((hasCommodityCode || hasTreatmentOrNature) && hasDescription && hasPackages && hasNetWeight && hasRemos)
+  try {
+    const hasCommodityCode = packingList.items.every(x => x.commodity_code !== null)
+    const hasTreatmentOrNature = packingList.items.every(x => (x.nature_of_products !== null && x.type_of_treatment !== null))
+    const hasDescription = packingList.items.every(x => x.description !== null)
+    const hasPackages = packingList.items.every(x => x.number_of_packages !== null)
+    const hasNetWeight = packingList.items.every(x => x.total_net_weight_kg !== null)
+    const hasRemos = packingList.registration_approval_number !== null
+
+    return ((hasCommodityCode || hasTreatmentOrNature) && hasDescription && hasPackages && hasNetWeight && hasRemos)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 module.exports = {
