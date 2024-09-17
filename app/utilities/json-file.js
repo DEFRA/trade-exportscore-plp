@@ -1,4 +1,11 @@
-function sanitises(jsonString) {
+/**
+ * Summary. Sanitise JSON string
+ *
+ * Description. Applies the current rules for sanitising the JSON string: e.g. remove spaces and empty cells.
+ * @param {type}           jsonString The JSON string to sanitise.
+ */
+
+function sanitise(jsonString) {
   try {
     // Parse the JSON string into a JavaScript object
     const jsonObj = JSON.parse(jsonString);
@@ -35,5 +42,5 @@ function sanitises(jsonString) {
 }
 
 module.exports = {
-  sanitises,
+  sanitise,
 };

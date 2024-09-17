@@ -9,6 +9,12 @@ function matches(filename, extension) {
   }
 }
 
+/**
+ * Summary. Checks whether the filename is an Excel file.
+ *
+ * Description. Checks whether the filename is an Excel file - i.e.: XLS or XLSX.
+ * @param {type}           filename The name of the file that will be checked.
+ */
 function isExcel(filename) {
   // Check for both 'xls' and 'xlsx' extensions
   return (

@@ -6,14 +6,17 @@ function createStorageAccountClient(blobUri) {
   return new BlobClient(blobUri, new DefaultAzureCredential());
 }
 
-async function getXlsPackingListFromBlob(blobClient) {
-  const downloadBlockBlobResponse = await blobClient.download();
-  const downloaded = await streamToBuffer(
-    downloadBlockBlobResponse.readableStreamBody,
-  );
-  const result = excelToJson({
-    source: downloaded,
-  });
+/**
+ * Summary. Gets the Packing List from the blob storage.
+ *
+ * Description. Gets the Packing List from the blob storage via the supplied blob client and returns it as JSON.
+ * @param {object}         blobClient The Blob Client to connect to the blob storage with.
+ */
+async function getPackingListFromBlob(blobClient) {
+  const response = await blobClient.download();
+  const downloaded = await streamToBuffer(response.readableStreamBody);
+  const result = excelToJson({ source: downloaded });
+
   return result;
 }
 
@@ -30,4 +33,4 @@ async function streamToBuffer(readableStream) {
   });
 }
 
-module.exports = { createStorageAccountClient, getXlsPackingListFromBlob };
+module.exports = { createStorageAccountClient, getPackingListFromBlob };

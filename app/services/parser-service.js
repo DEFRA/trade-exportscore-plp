@@ -52,7 +52,7 @@ function findParser(packingList, filename) {
 
   // Sanitised packing list (i.e. emove trailing spaces and empty cells)
   const packingListJson = JSON.stringify(packingList);
-  const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
+  const sanitisedPackingListJson = JsonFile.sanitise(packingListJson);
   const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
   // Test for Excel spreadsheets
   if (FileExtension.isExcel(filename)) {

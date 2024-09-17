@@ -6,7 +6,7 @@ const testResults = require("../../../test-data-and-results/results/bandm/model1
 describe("parseBandMModel1", () => {
   test("parses populated json", () => {
     const packingListJson = JSON.stringify(model.validModel.Sheet1);
-    const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
+    const sanitisedPackingListJson = JsonFile.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
 
     const result = parser.parse(sanitisedPackingList);
@@ -16,7 +16,7 @@ describe("parseBandMModel1", () => {
 
   test("parses empty json", () => {
     const packingListJson = JSON.stringify(model.emptyModel.Sheet1);
-    const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
+    const sanitisedPackingListJson = JsonFile.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
 
     const result = parser.parse(sanitisedPackingList);
