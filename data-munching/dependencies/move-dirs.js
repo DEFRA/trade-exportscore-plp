@@ -18,9 +18,12 @@ async function moveDirectory (src, dest) {
         // Recursively move subdirectory
         await moveDirectory(srcPath, destPath)
       } else {
-        // Copy file
+        // Move directory
         await fs.copyFile(srcPath, destPath)
       }
+
+      // Remove the source directory after copying is complete
+      await fs.rm(src, { recursive: true, force: true })
     }
   } catch (err) {
     console.error(`Error moving directory from ${src} to ${dest}:`, err)
