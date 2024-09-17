@@ -23,6 +23,7 @@ function matchesModel(packingList, regex) {
 
     return result;
   } catch (err) {
+    console.error(err);
     return MatcherResult.GENERIC_ERROR;
   }
 }

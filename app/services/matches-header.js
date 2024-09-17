@@ -16,6 +16,7 @@ function matchesHeader(matchHeader, packingListSheet, callback) {
 
     return MatcherResult.CORRECT;
   } catch (err) {
+    console.error(err);
     return MatcherResult.GENERIC_ERROR;
   }
 }

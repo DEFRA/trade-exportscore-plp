@@ -26,9 +26,9 @@ async function bearerTokenRequest() {
 
     const json = await response.json();
     return json.access_token;
-  } catch (error) {
-    console.error(error.message);
-    return error.message;
+  } catch (err) {
+    console.error(err.message);
+    return err.message;
   }
 }
 
@@ -53,9 +53,9 @@ async function patchPackingListCheck(applicationId, isApproved) {
     );
 
     return status;
-  } catch (error) {
-    console.error(error.message);
-    return error.message;
+  } catch (err) {
+    console.error(err.message);
+    return err.message;
   }
 }
 

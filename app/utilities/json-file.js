@@ -34,8 +34,8 @@ function sanitise(jsonString) {
 
     // Convert the sanitised object back to a JSON string
     return JSON.stringify(jsonObj);
-  } catch (error) {
-    console.error("Invalid JSON string provided:", error);
+  } catch (err) {
+    console.error("Invalid JSON string provided:", err);
     return null;
   }
 }

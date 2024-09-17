@@ -48,9 +48,9 @@ function matchesModel(packingList, filename, regex, trader) {
       }
     }
 
-    console.info(`Packing list matches ${trader} with filename: ${filename}`);
     return MatcherResult.CORRECT;
   } catch (err) {
+    console.error(err);
     return MatcherResult.GENERIC_ERROR;
   }
 }

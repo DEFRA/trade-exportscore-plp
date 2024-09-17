@@ -26,6 +26,7 @@ function matches(packingList) {
 
     return result;
   } catch (err) {
+    console.error(err);
     return MatcherResult.GENERIC_ERROR;
   }
 }

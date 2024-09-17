@@ -40,8 +40,8 @@ async function createServer() {
     });
 
     return server;
-  } catch (error) {
-    console.error("createServer encountered an error: ", error);
+  } catch (err) {
+    console.error("createServer encountered an error: ", err);
   }
 }
 
