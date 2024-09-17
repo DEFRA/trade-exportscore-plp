@@ -5,10 +5,9 @@ const COUNTRY_OF_ORIGIN = 'Country of Origin'
 const INPUT_DATA_SHEET = 'Input Data Sheet'
 
 function findParser (result, filename) {
+  let parsedPackingList = failedParser()
+  let isParsed = false
   try {
-    let parsedPackingList = failedParser()
-    let isParsed = false
-
     if (matchesTjmorris(result, filename) === MatcherResult.CORRECT) {
       console.info('Packing list matches TJ Morris with filename: ', filename)
       parsedPackingList = parseTjmorris(result.Sheet1)
@@ -506,13 +505,18 @@ function parseNisa (packingListJson) {
 }
 
 function checkRequiredData (packingList) {
-  const hasCommodityCode = packingList.items.every(x => x.commodity_code !== null)
-  const hasTreatmentOrNature = packingList.items.every(x => (x.nature_of_products !== null && x.type_of_treatment !== null))
-  const hasDescription = packingList.items.every(x => x.description !== null)
-  const hasPackages = packingList.items.every(x => x.number_of_packages !== null)
-  const hasNetWeight = packingList.items.every(x => x.total_net_weight_kg !== null)
-  const hasRemos = packingList.registration_approval_number !== null
-  return ((hasCommodityCode || hasTreatmentOrNature) && hasDescription && hasPackages && hasNetWeight && hasRemos)
+  try {
+    const hasCommodityCode = packingList.items.every(x => x.commodity_code !== null)
+    const hasTreatmentOrNature = packingList.items.every(x => (x.nature_of_products !== null && x.type_of_treatment !== null))
+    const hasDescription = packingList.items.every(x => x.description !== null)
+    const hasPackages = packingList.items.every(x => x.number_of_packages !== null)
+    const hasNetWeight = packingList.items.every(x => x.total_net_weight_kg !== null)
+    const hasRemos = packingList.registration_approval_number !== null
+
+    return ((hasCommodityCode || hasTreatmentOrNature) && hasDescription && hasPackages && hasNetWeight && hasRemos)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 module.exports = {
