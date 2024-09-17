@@ -4,7 +4,6 @@
  * Description. Applies the current rules for sanitising the JSON string: e.g. remove spaces and empty cells.
  * @param {type}           jsonString The JSON string to sanitise.
  */
-
 function sanitise(jsonString) {
   try {
     // Parse the JSON string into a JavaScript object
