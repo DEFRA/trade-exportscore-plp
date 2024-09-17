@@ -46,57 +46,56 @@ function processExcelPackingList(sanitisedPackingList, filename) {
   const INPUT_DATA_SHEET = "Input Data Sheet";
   let parsedPackingList = failedParser();
 
-  if (
-    TjMorrisMatcher.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
-  ) {
+  if (TjMorrisMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT) {
+    logMatch(ParserModel.TJMORRIS1, filename);
     parsedPackingList = TjMorrisParser.parse(sanitisedPackingList.Sheet1);
   } else if (
-    AsdaMatcher.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    AsdaMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.ASDA1, filename);
     parsedPackingList = AsdaParser.parse(
       sanitisedPackingList.PackingList_Extract,
     );
   } else if (
-    AsdaMatcher2.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    AsdaMatcher2.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.ASDA2, filename);
     parsedPackingList = AsdaParser2.parse(sanitisedPackingList.Sheet1);
   } else if (
     SainsburysMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.SAINSBURYS1, filename);
     parsedPackingList = SainsburysParser.parse(sanitisedPackingList.Sheet1);
   } else if (
-    BandMMatcher.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    BandMMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.BANDM1, filename);
     parsedPackingList = BandMParser.parse(sanitisedPackingList.Sheet1);
     isParsed = true;
   } else if (
-    CoopMatcher.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    CoopMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.COOP1, filename);
     parsedPackingList = CoopParser.parse(
       sanitisedPackingList["Input Packing Sheet"],
     );
   } else if (
-    TescosMatcher.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    TescosMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.TESCO1, filename);
     parsedPackingList = TescosParser.parse(
       sanitisedPackingList[INPUT_DATA_SHEET],
     );
   } else if (
-    TescosMatcher2.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    TescosMatcher2.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.TESCO2, filename);
     parsedPackingList = TescosParser2.parse(sanitisedPackingList.Sheet2);
   } else if (
-    TescosMatcher3.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    TescosMatcher3.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.TESCO3, filename);
     parsedPackingList = TescosParser3.parse(
       sanitisedPackingList[INPUT_DATA_SHEET],
     );
@@ -104,44 +103,46 @@ function processExcelPackingList(sanitisedPackingList, filename) {
     FowlerWelchMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.FOWLERWELCH1, filename);
     parsedPackingList = FowlerWelchParser.parse(sanitisedPackingList);
   } else if (
-    NisaMatcher.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    NisaMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.NISA1, filename);
     parsedPackingList = NisaParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
   } else if (
-    NisaMatcher2.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    NisaMatcher2.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.NISA2, filename);
     parsedPackingList = NisaParser2.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
   } else if (
-    NisaMatcher3.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    NisaMatcher3.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.NISA3, filename);
     parsedPackingList = NisaParser3.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
   } else if (
-    BuffaloadMatcher.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    BuffaloadMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.BUFFALOAD1, filename);
     parsedPackingList = BuffaloadParser.parse(sanitisedPackingList.Tabelle1);
     isParsed = true;
   } else if (
-    CdsMatcher.matches(sanitisedPackingList, filename) === MatcherResult.CORRECT
+    CdsMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.CDS1, filename);
     parsedPackingList = CdsParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
   } else if (
-    DavenportMatcher.matches(sanitisedPackingList, filename) ===
-    MatcherResult.CORRECT
+    DavenportMatcher.matches(sanitisedPackingList) === MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.DAVENPORT1, filename);
     parsedPackingList = DavenportParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
@@ -149,6 +150,7 @@ function processExcelPackingList(sanitisedPackingList, filename) {
     GiovanniMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.GIOVANNI1, filename);
     parsedPackingList = GiovanniParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
@@ -156,6 +158,7 @@ function processExcelPackingList(sanitisedPackingList, filename) {
     KepakMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.KEPAK1, filename);
     parsedPackingList = KepakParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
@@ -163,6 +166,7 @@ function processExcelPackingList(sanitisedPackingList, filename) {
     NutriciaMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.NUTRICIA1, filename);
     parsedPackingList = NutriciaParser.parse(
       sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
     );
@@ -170,11 +174,16 @@ function processExcelPackingList(sanitisedPackingList, filename) {
     WarrensMatcher.matches(sanitisedPackingList, filename) ===
     MatcherResult.CORRECT
   ) {
+    logMatch(ParserModel.WARRENS1, filename);
     parsedPackingList = WarrensParser.parse(sanitisedPackingList);
   } else {
     console.info("Failed to parse packing list with filename: ", filename);
   }
   return parsedPackingList;
+}
+
+function logMatch(model, filename) {
+  console.info(`Packing list matches ${model} with filename: ${filename}`);
 }
 
 function failedParser() {

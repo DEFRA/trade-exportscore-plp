@@ -2,7 +2,7 @@ const MatcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const Regex = require("../../../utilities/regex");
 
-function matchesModel(packingList, filename, regex, trader) {
+function matchesModel(packingList, regex) {
   try {
     const sheet = Object.keys(packingList)[0];
 
@@ -21,9 +21,6 @@ function matchesModel(packingList, filename, regex, trader) {
 
     const result = matchesHeader(header, packingList[sheet], callback);
 
-    if (result === MatcherResult.CORRECT) {
-      console.info(`Packing list matches ${trader} with filename: `, filename);
-    }
     return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
@@ -35,12 +32,7 @@ function callback(x) {
 }
 
 function matches(packingList, filename) {
-  return matchesModel(
-    packingList,
-    filename,
-    /RMS-GB-000153/,
-    "Giovanni Model 1",
-  );
+  return matchesModel(packingList, /RMS-GB-000153/);
 }
 
 module.exports = {

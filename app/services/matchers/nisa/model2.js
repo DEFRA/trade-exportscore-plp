@@ -2,7 +2,7 @@ const MatcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const Regex = require("../../../utilities/regex");
 
-function matches(packingList, filename) {
+function matches(packingList) {
   try {
     const sheet = Object.keys(packingList)[0];
 
@@ -22,12 +22,6 @@ function matches(packingList, filename) {
 
     const result = matchesHeader(header, packingList[sheet], callback);
 
-    if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches Nisa Model 2 with filename: ",
-        filename,
-      );
-    }
     return result;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;

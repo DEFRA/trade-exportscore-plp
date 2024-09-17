@@ -1,18 +1,17 @@
-const ParserModel = require("./parser-model");
-const JsonFile = require("../utilities/json-file");
-const FileExtension = require("../utilities/file-extension");
+const parserModel = require("./parser-model");
+const jsonFile = require("../utilities/json-file");
+const fileExtension = require("../utilities/file-extension");
 const processExcelPackingList = require("./parse-excel-packing-list");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 function findParser(packingList, filename) {
   let parsedPackingList = processExcelPackingList.failedParser();
 
-  // Sanitised packing list (i.e. emove trailing spaces and empty cells)
   const packingListJson = JSON.stringify(packingList);
-  const sanitisedPackingListJson = JsonFile.sanitise(packingListJson);
+  const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
   const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
-  // Test for Excel spreadsheets
-  if (FileExtension.isExcel(filename)) {
+
+  if (fileExtension.isExcel(filename)) {
     parsedPackingList = processExcelPackingList.processExcelPackingList(
       sanitisedPackingList,
       filename,
@@ -21,7 +20,7 @@ function findParser(packingList, filename) {
     console.info("Failed to parse packing list with filename: ", filename);
   }
 
-  if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
+  if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
     parsedPackingList.items = parsedPackingList.items.filter(
       (x) => !Object.values(x).every(isNullOrUndefined),
     );
@@ -56,6 +55,7 @@ function checkRequiredData(packingList) {
     hasRemos
   );
 }
+
 function checkType(packingList) {
   for (const x of packingList) {
     if (isNaN(Number(x.number_of_packages))) {
