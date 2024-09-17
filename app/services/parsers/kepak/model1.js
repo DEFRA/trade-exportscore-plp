@@ -4,24 +4,31 @@ const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
 
 function parse(packingListJson) {
-  const establishmentNumberRow = 12;
-  const dataRow = 21;
+  try {
+    const establishmentNumberRow = 12;
+    const dataRow = 21;
 
-  const establishmentNumber = packingListJson[establishmentNumberRow].A ?? null;
+    const establishmentNumber =
+      packingListJson[establishmentNumberRow].A ?? null;
 
-  const packingListContents = mapParser(
-    packingListJson,
-    dataRow - 1,
-    dataRow,
-    headers.KEPAK1,
-  );
+    const packingListContents = mapParser(
+      packingListJson,
+      dataRow - 1,
+      dataRow,
+      headers.KEPAK1,
+    );
 
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.KEPAK1,
-  );
+    return CombineParser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      ParserModel.KEPAK1,
+    );
+  } catch (err) {
+    console.error(
+      `${ParserModel.KEPAK1} encountered: ${err} when parsing model`,
+    );
+  }
 }
 
 module.exports = {

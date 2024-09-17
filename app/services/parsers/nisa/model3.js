@@ -4,23 +4,30 @@ const ParserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 
 function parse(packingListJson) {
-  const establishmentNumberRow = 1;
-  const dataRowFirst = 3;
-  const establishmentNumber = packingListJson[establishmentNumberRow].A ?? null;
+  try {
+    const establishmentNumberRow = 1;
+    const dataRowFirst = 3;
+    const establishmentNumber =
+      packingListJson[establishmentNumberRow].A ?? null;
 
-  const packingListContents = mapParser(
-    packingListJson,
-    dataRowFirst - 1,
-    dataRowFirst,
-    headers.NISA3,
-  );
+    const packingListContents = mapParser(
+      packingListJson,
+      dataRowFirst - 1,
+      dataRowFirst,
+      headers.NISA3,
+    );
 
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.NISA3,
-  );
+    return CombineParser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      ParserModel.NISA3,
+    );
+  } catch (err) {
+    console.error(
+      `${ParserModel.NISA3} encountered: ${err} when parsing model`,
+    );
+  }
 }
 
 module.exports = {

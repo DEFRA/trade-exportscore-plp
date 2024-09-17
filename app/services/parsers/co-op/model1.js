@@ -4,16 +4,22 @@ const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
 
 function parse(packingListJson) {
-  const establishmentNumber = packingListJson[1].E ?? null;
+  try {
+    const establishmentNumber = packingListJson[1].E ?? null;
 
-  const packingListContents = mapParser(packingListJson, 0, 1, headers.COOP1);
+    const packingListContents = mapParser(packingListJson, 0, 1, headers.COOP1);
 
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.COOP1,
-  );
+    return CombineParser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      ParserModel.COOP1,
+    );
+  } catch (err) {
+    console.error(
+      `${ParserModel.COOP1} encountered: ${err} when parsing model`,
+    );
+  }
 }
 
 module.exports = {
