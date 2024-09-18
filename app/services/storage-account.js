@@ -20,7 +20,7 @@ async function getXlsPackingListFromBlob (blobClient) {
     })
     return result
   } catch (err) {
-    console.error(err)
+    console.error(`services.storage-account.getXlsPackingListFromBlob() failed with ${err}`)
   }
 }
 

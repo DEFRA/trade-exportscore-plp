@@ -14,7 +14,7 @@ function setup () {
       console.info('App Insights Not Running!')
     }
   } catch (err) {
-    console.error(err)
+    console.error(`App Insights setup failed with ${err}`)
   }
 }
 

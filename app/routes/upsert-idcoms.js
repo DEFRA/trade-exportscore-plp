@@ -13,7 +13,7 @@ module.exports = {
         }
         return h.response(checkStatus).code(StatusCodes.OK)
       } catch (err) {
-        console.error('Error running upsert: ', err)
+        console.error('routes.upsert-idcoms failed running upsert with: ', err)
       }
     }
   }

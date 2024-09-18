@@ -57,7 +57,7 @@ function findParser (result, filename) {
 
     return { packingList: parsedPackingList, isParsed }
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser() failed with ${err}`)
   }
 }
 
@@ -88,7 +88,7 @@ function matchesBandM (packingListJson, filename) {
     }
     if (JSON.stringify(packingListJson.Sheet1[headerRow]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser().matchesBandM() failed with ${err}`)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -118,7 +118,7 @@ function matchesAsda (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.PackingList_Extract[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser().matchesAsda() failed with ${err}`)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -154,7 +154,7 @@ function matchesTescoModel1 (packingListJson, filename) {
 
     return MatcherResult.CORRECT
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser().matchesTescoModel1() failed with ${err}`)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -189,7 +189,7 @@ function matchesTescoModel2 (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet2[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser().matchesTescoModel2() failed with ${err}`)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -308,7 +308,7 @@ function matchesSainsburys (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser().matchesSainsburys() failed with ${err}`)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -369,7 +369,7 @@ function matchesTjmorris (packingListJson, filename) {
 
     if (JSON.stringify(packingListJson.Sheet1[0]) !== JSON.stringify(header)) { return MatcherResult.WRONG_HEADER } else { return MatcherResult.CORRECT }
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser().matchesTjmorris() failed with ${err}`)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -434,7 +434,7 @@ function matchesFowlerWelch (packingListJson, filename) {
     }
     return MatcherResult.CORRECT
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser().matchesFowlerWelch() failed with ${err}`)
     return MatcherResult.GENERIC_ERROR
   }
 }
@@ -485,7 +485,7 @@ function matchesNisa (packingListJson, filename) {
 
     return MatcherResult.CORRECT
   } catch (err) {
-    console.error(err)
+    console.error(`services.parser-service.findParser().matchesNisa() failed with ${err}`)
     return MatcherResult.GENERIC_ERROR
   }
 }

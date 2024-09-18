@@ -10,7 +10,7 @@ async function sendParsed (parsedResult) {
     await parsedSender.closeConnection()
     console.info('Sent parsed result for: ', parsedResult)
   } catch (err) {
-    console.error(err)
+    console.error(`messaging.sendParsed() failed with: ${err}`)
   }
 }
 
