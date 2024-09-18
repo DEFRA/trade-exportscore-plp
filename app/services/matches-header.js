@@ -1,25 +1,18 @@
 const MatcherResult = require("./matcher-result");
-const { rowFinder } = require("../utilities/row-finder");
+const Regex = require("../utilities/regex");
 
-function matchesHeader(matchHeader, packingListSheet, callback) {
+function matchesHeader(regexHeader, packingListSheet) {
   try {
-    const headerRow = rowFinder(packingListSheet, callback);
-    if (!packingListSheet[headerRow] || headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
-    }
-
-    for (const key in matchHeader) {
-      if (!packingListSheet[headerRow][key]?.startsWith(matchHeader[key])) {
+    for (const header in regexHeader) {
+      if (!Regex.test(regexHeader[header], packingListSheet)) {
         return MatcherResult.WRONG_HEADER;
       }
     }
-
     return MatcherResult.CORRECT;
   } catch (err) {
     return MatcherResult.GENERIC_ERROR;
   }
 }
-
 module.exports = {
   matchesHeader,
 };

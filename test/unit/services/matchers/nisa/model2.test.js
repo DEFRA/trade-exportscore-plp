@@ -22,7 +22,7 @@ describe("matchesNisa2", () => {
 
   test("returns wrong establishment number for missing establishment number", () => {
     const packingListJson = {
-      Something: [
+      sheet: [
         {},
         {
           A: "INCORRECT",
@@ -39,14 +39,14 @@ describe("matchesNisa2", () => {
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
-      Something: [
+      sheet: [
         {
-          B: "NOT",
+          A: "NOT",
           J: "CORRECT",
           L: "HEADER",
         },
         {
-          B: "RMS-GB-000025-002",
+          A: "RMS-GB-000025-003",
         },
       ],
     };

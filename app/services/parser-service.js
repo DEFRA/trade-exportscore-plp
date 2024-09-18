@@ -22,8 +22,6 @@ const NisaMatcher = require("./matchers/nisa/model1");
 const NisaParser = require("./parsers/nisa/model1");
 const NisaMatcher2 = require("./matchers/nisa/model2");
 const NisaParser2 = require("./parsers/nisa/model2");
-const NisaMatcher3 = require("./matchers/nisa/model3");
-const NisaParser3 = require("./parsers/nisa/model3");
 const NutriciaMatcher = require("./matchers/nutricia/model1");
 const NutriciaParser = require("./parsers/nutricia/model1");
 const SainsburysMatcher = require("./matchers/sainsburys/model1");
@@ -32,8 +30,6 @@ const TescosMatcher = require("./matchers/tescos/model1");
 const TescosParser = require("./parsers/tescos/model1");
 const TescosMatcher2 = require("./matchers/tescos/model2");
 const TescosParser2 = require("./parsers/tescos/model2");
-const TescosMatcher3 = require("./matchers/tescos/model3");
-const TescosParser3 = require("./parsers/tescos/model3");
 const TjMorrisMatcher = require("./matchers/tjmorris/model1");
 const TjMorrisParser = require("./parsers/tjmorris/model1");
 const GiovanniMatcher = require("./matchers/giovanni/model1");
@@ -104,13 +100,6 @@ function findParser(packingList, filename) {
     ) {
       parsedPackingList = TescosParser2.parse(sanitisedPackingList.Sheet2);
     } else if (
-      TescosMatcher3.matches(sanitisedPackingList, filename) ===
-      MatcherResult.CORRECT
-    ) {
-      parsedPackingList = TescosParser3.parse(
-        sanitisedPackingList[INPUT_DATA_SHEET],
-      );
-    } else if (
       FowlerWelchMatcher.matches(sanitisedPackingList, filename) ===
       MatcherResult.CORRECT
     ) {
@@ -127,13 +116,6 @@ function findParser(packingList, filename) {
       MatcherResult.CORRECT
     ) {
       parsedPackingList = NisaParser2.parse(
-        sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
-      );
-    } else if (
-      NisaMatcher3.matches(sanitisedPackingList, filename) ===
-      MatcherResult.CORRECT
-    ) {
-      parsedPackingList = NisaParser3.parse(
         sanitisedPackingList[Object.keys(sanitisedPackingList)[0]],
       );
     } else if (

@@ -1,34 +1,53 @@
+// Helper function to validate string properties and create a search pattern
+function createSearchPattern(regex) {
+  return new RegExp(regex, "i"); // 'i' makes the search case-insensitive
+}
+
+function isValidStringProperty(obj, key) {
+  return obj.hasOwnProperty(key) && typeof obj[key] === "string";
+}
+
+// Test if any string in the array of objects matches the regex
 function test(regex, array) {
-  // Ensure the regex is a valid regular expression
-  const searchPattern = new RegExp(regex, "i"); // 'i' makes the search case-insensitive
+  const searchPattern = createSearchPattern(regex);
 
-  // Loop through each object in the array
   for (const obj of array) {
-    // Loop through the values of each object
-    for (const key in obj) {
-      // Skip inherited properties
-      if (!obj.hasOwnProperty(key)) {
-        continue;
-      }
+    const stringProperties = Object.keys(obj).filter((key) =>
+      isValidStringProperty(obj, key),
+    );
 
-      const value = obj[key];
-
-      // Skip non-string values
-      if (typeof value !== "string") {
-        continue;
-      }
-
-      // If the value matches the regular expression, return true
-      if (searchPattern.test(value)) {
+    for (const key of stringProperties) {
+      if (searchPattern.test(obj[key])) {
         return true;
       }
     }
   }
 
-  // If no match was found, return false
   return false;
+}
+
+// Find and return the matched substring in the array of objects
+function findMatch(regex, array) {
+  const searchPattern = createSearchPattern(regex);
+
+  for (const obj of array) {
+    const stringProperties = Object.keys(obj).filter((key) =>
+      isValidStringProperty(obj, key),
+    );
+
+    for (const key of stringProperties) {
+      const value = obj[key];
+      const match = value.match(searchPattern); // Use match to extract the part of the string that matches
+      if (match) {
+        return match[0]; // Return only the matching part of the string
+      }
+    }
+  }
+
+  return null;
 }
 
 module.exports = {
   test,
+  findMatch,
 };

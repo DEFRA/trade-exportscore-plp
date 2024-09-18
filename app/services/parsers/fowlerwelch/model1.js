@@ -1,7 +1,9 @@
 const CombineParser = require("../../parser-combine");
 const ParserModel = require("../../parser-model");
+const headers = require("../../model-headers");
+const Regex = require("../../../utilities/regex");
 
-function parseModel(packingListJson, model) {
+function parseModel(packingListJson, model, establishmentNumberRegex) {
   const sheets = Object.keys(packingListJson);
   let packingListContents = [];
   let packingListContentsTemp = [];
@@ -10,8 +12,10 @@ function parseModel(packingListJson, model) {
     (x) => x.M === "NIIRMS Dispatch number",
   );
 
-  const establishmentNumber =
-    packingListJson[sheets[0]][headerRow + 1].M ?? null;
+  const establishmentNumber = Regex.findMatch(
+    establishmentNumberRegex,
+    packingListJson[sheets[0]],
+  );
 
   for (const sheet of sheets) {
     headerRow = packingListJson[sheet].findIndex(
@@ -41,7 +45,11 @@ function parseModel(packingListJson, model) {
 }
 
 function parse(packingListJson) {
-  return parseModel(packingListJson, ParserModel.FOWLERWELCH1);
+  return parseModel(
+    packingListJson,
+    ParserModel.FOWLERWELCH1,
+    headers.FOWLERWELCH1.establishmentNumber.regex,
+  );
 }
 
 module.exports = { parse, parseModel };

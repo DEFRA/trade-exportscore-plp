@@ -1,6 +1,7 @@
 const MatcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const Regex = require("../../../utilities/regex");
+const headers = require("../../model-headers");
 
 function matchesModel(packingList, filename, regex, trader) {
   try {
@@ -12,14 +13,7 @@ function matchesModel(packingList, filename, regex, trader) {
     }
 
     // check for header values
-    const header = {
-      C: "DESCRIPTION",
-      G: "Quantity",
-      H: "Net Weight (KG)",
-      E: "Commodity Code",
-    };
-
-    const result = matchesHeader(header, packingList[sheet], callback);
+    const result = matchesHeader(headers.GIOVANNI1.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
       console.info(`Packing list matches ${trader} with filename: `, filename);
@@ -30,15 +24,11 @@ function matchesModel(packingList, filename, regex, trader) {
   }
 }
 
-function callback(x) {
-  return x.C === "DESCRIPTION";
-}
-
 function matches(packingList, filename) {
   return matchesModel(
     packingList,
     filename,
-    /RMS-GB-000153/,
+    headers.GIOVANNI1.establishmentNumber.regex,
     "Giovanni Model 1",
   );
 }

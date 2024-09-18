@@ -70,3 +70,86 @@ describe("test function", () => {
     expect(Regex.test("John", array)).toBe(true); // Matches 'John Doe'
   });
 });
+
+describe("findMatch function", () => {
+  it("should return the matching value when the regex matches a value in the object", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    expect(Regex.findMatch("John", array)).toBe("John"); // Matches 'John'
+    expect(Regex.findMatch("Doe", array)).toBe("Doe"); // Matches 'Doe'
+    expect(Regex.findMatch("Smith", array)).toBe("Smith"); // Matches 'Jane Smith'
+  });
+
+  it("should return the matching substring from a complex string", () => {
+    const array = [
+      { description: "THE RANGE / RMS-GB-000252-002 / DN8 4HT" },
+      { description: "OTHER PRODUCT / RMS-GB-000999 / LOCATION" },
+    ];
+
+    expect(Regex.findMatch(/RMS-GB-000252(-\d{3})?/, array)).toBe(
+      "RMS-GB-000252-002",
+    ); // Extracts and matches 'RMS-GB-000252-002'
+    expect(Regex.findMatch(/RMS-GB-000999/, array)).toBe("RMS-GB-000999"); // Extracts and matches 'RMS-GB-000999'
+  });
+
+  it("should return null when the regex does not match any value in the object", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    expect(Regex.findMatch("Berlin", array)).toBe(null); // No match
+    expect(Regex.findMatch("Michael", array)).toBe(null); // No match
+  });
+
+  it("should skip non-string values and return matching string values", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+      { job: "Engineer", salary: 50000, active: true },
+    ];
+
+    expect(Regex.findMatch("John", array)).toBe("John"); // Matches 'John'
+    expect(Regex.findMatch("Engineer", array)).toBe("Engineer"); // Matches 'Engineer'
+    expect(Regex.findMatch("50000", array)).toBe(null); // Should not match number values
+    expect(Regex.findMatch("true", array)).toBe(null); // Should not match boolean values
+  });
+
+  it("should return the first match it finds in the object", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    expect(Regex.findMatch("John", array)).toBe("John"); // Returns 'John' as the first match
+    expect(Regex.findMatch("London", array)).toBe("London"); // Matches 'London'
+  });
+
+  it("should return null if the array is empty", () => {
+    const array = [];
+    expect(Regex.findMatch("John", array)).toBe(null); // Empty array
+  });
+
+  it("should return null if no objects have matching properties", () => {
+    const array = [
+      { age: 30, active: true },
+      { age: 25, city: "Paris" },
+    ];
+
+    expect(Regex.findMatch("John", array)).toBe(null); // No string properties to match
+  });
+
+  it("should skip inherited properties and return the correct match", () => {
+    const parentObject = { name: "Parent Name" };
+    const array = [
+      Object.create(parentObject), // Inherited property
+      { name: "John Doe", age: 30, city: "London" },
+    ];
+
+    expect(Regex.findMatch("Parent Name", array)).toBe(null); // Should not match inherited property
+    expect(Regex.findMatch("John", array)).toBe("John"); // Matches 'John'
+  });
+});

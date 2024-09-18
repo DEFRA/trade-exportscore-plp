@@ -1,8 +1,13 @@
 const CombineParser = require("../../parser-combine");
 const ParserModel = require("../../parser-model");
+const headers = require("../../model-headers");
+const Regex = require("../../../utilities/regex");
 
 function parse(packingListJson) {
-  const establishmentNumber = packingListJson[1].A ?? null;
+  const establishmentNumber = Regex.findMatch(
+    headers.TJMORRIS1.establishmentNumber.regex,
+    packingListJson,
+  );
 
   const packingListContents = packingListJson.slice(1).map((col) => ({
     description: col.N ?? null,

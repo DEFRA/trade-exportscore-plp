@@ -23,7 +23,7 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    registration_approval_number: "RMS-GB-000025-001",
+    registration_approval_number: "RMS-GB-000025-003",
     parserModel: ParserModel.NISA2,
   },
   invalidTestResult_MissingCells: {
@@ -48,7 +48,7 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    registration_approval_number: "RMS-GB-000025-001",
+    registration_approval_number: "RMS-GB-000025-003",
     parserModel: ParserModel.NISA2,
   },
   emptyTestResult: {
