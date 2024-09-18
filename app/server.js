@@ -9,7 +9,7 @@ async function createServer () {
   try {
     await sequelize.authenticate()
   } catch (err) {
-    console.error(`sequelize.authenticate() failed with: ${err}`)
+    console.error(`sequelize.authenticate() in server.createServer() failed with: ${err}`)
   }
 
   try {
@@ -24,13 +24,13 @@ async function createServer () {
       }
     })
   } catch (err) {
-    console.error(`hapi.server() failed with: ${err}`)
+    console.error(`hapi.server() in server.createServer() failed with: ${err}`)
   }
 
   try {
     await server.register(require('./plugins/router'))
   } catch (err) {
-    console.error(`server.register() failed to register the plugins with: ${err}`)
+    console.error(`server.register() in server.createServer() failed to register the plugins with: ${err}`)
   }
 
   try {
@@ -38,13 +38,13 @@ async function createServer () {
       await server.register(require('blipp'))
     }
   } catch (err) {
-    console.error(`In Dev, server.register() failed to register the blipp with: ${err}`)
+    console.error(`In Dev, server.register() in server.createServer() failed to register the blipp with: ${err}`)
   }
 
   try {
     await messageService.start()
   } catch (err) {
-    console.error(`messageService.start() failed to start with: ${err}`)
+    console.error(`messageService.start() in server.createServer() failed to start with: ${err}`)
   }
 
   process.on('SIGTERM', async function () {
@@ -52,7 +52,7 @@ async function createServer () {
       await messageService.stop()
       process.exit(0)
     } catch (err) {
-      console.error(`process.on("SIGTERM") failed to stop with: ${err}`)
+      console.error(`process.on("SIGTERM") in server.createServer() failed to stop with: ${err}`)
     }
   })
 
@@ -61,7 +61,7 @@ async function createServer () {
       await messageService.stop()
       process.exit(0)
     } catch (err) {
-      console.error(`process.on("SIGINT") failed to stop with: ${err}`)
+      console.error(`process.on("SIGINT") in server.createServer() failed to stop with: ${err}`)
     }
   })
 

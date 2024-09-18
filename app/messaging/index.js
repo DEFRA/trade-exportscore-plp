@@ -19,7 +19,7 @@ async function stop () {
   try {
     await plpReceiver.closeConnection()
   } catch (err) {
-    console.error(`plpReceiver.closeConnection() in messaging.index failed with: ${err}`)
+    console.error(`plpReceiver.closeConnection() in messaging.index.stop() failed with: ${err}`)
   }
 }
 
