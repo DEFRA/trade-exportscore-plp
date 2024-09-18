@@ -11,12 +11,16 @@ async function start () {
 
     console.info('Ready to receive messages')
   } catch (err) {
-    console.error(err)
+    console.error(`messaging.start() failed with: ${err}`)
   }
 }
 
 async function stop () {
-  await plpReceiver.closeConnection()
+  try {
+    await plpReceiver.closeConnection()
+  } catch (err) {
+    console.error(`plpReceiver.closeConnection() in messaging.index failed with: ${err}`)
+  }
 }
 
 module.exports = { start, stop }
