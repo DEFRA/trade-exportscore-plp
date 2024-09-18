@@ -13,7 +13,7 @@ module.exports = {
     try {
       result = excelToJson({ sourceFile: filename })
     } catch (err) {
-      console.error(err)
+      console.error(`routes.non-ai.handler() failed with: ${err}`)
     }
 
     const parsed = findParser(result, filename)

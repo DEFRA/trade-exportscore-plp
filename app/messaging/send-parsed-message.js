@@ -3,11 +3,15 @@ const { MessageSender } = require('adp-messaging')
 const createMessage = require('./create-message')
 
 async function sendParsed (parsedResult) {
-  const message = createMessage(parsedResult)
-  const parsedSender = new MessageSender(config.parsedQueue)
-  await parsedSender.sendMessage(message)
-  await parsedSender.closeConnection()
-  console.info('Sent parsed result for: ', parsedResult)
+  try {
+    const message = createMessage(parsedResult)
+    const parsedSender = new MessageSender(config.parsedQueue)
+    await parsedSender.sendMessage(message)
+    await parsedSender.closeConnection()
+    console.info('Sent parsed result for: ', parsedResult)
+  } catch (err) {
+    console.error(`messaging.sendParsed() failed with: ${err}`)
+  }
 }
 
 module.exports = { sendParsed }

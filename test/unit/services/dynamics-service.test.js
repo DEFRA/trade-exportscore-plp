@@ -46,7 +46,7 @@ describe('bearerTokenRequest', () => {
     const result = await dynamicsService.bearerTokenRequest()
 
     // assert
-    expect(result).toBe('Response status: 400')
+    expect(result).toBe('services.dynamics-service.bearerTokenRequest() received: Response status: 400')
   })
 })
 

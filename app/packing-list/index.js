@@ -12,16 +12,20 @@ async function createPackingList (packingListJson, applicationId) {
       console.info('Saved packing list in database with application id: ', packingList.applicationId)
     })
   } catch (err) {
-    console.error(err)
+    console.error(`packing-list.index.createPackingList() failed with: ${err}`)
   }
 }
 
 function packingListMapper (packingListJson, applicationId) {
-  return {
-    applicationId,
-    registrationApprovalNumber: packingListJson.registration_approval_number,
-    allRequiredFieldsPresent: packingListJson.business_checks.all_required_fields_present,
-    item: packingListJson.items.map(n => itemsMapper(n, applicationId))
+  try {
+    return {
+      applicationId,
+      registrationApprovalNumber: packingListJson.registration_approval_number,
+      allRequiredFieldsPresent: packingListJson.business_checks.all_required_fields_present,
+      item: packingListJson.items.map(n => itemsMapper(n, applicationId))
+    }
+  } catch (err) {
+    console.error(`packing-list.index.packingListMapper() failed with: ${err}`)
   }
 }
 

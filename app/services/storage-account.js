@@ -10,14 +10,18 @@ function createStorageAccountClient (blobUri) {
 }
 
 async function getXlsPackingListFromBlob (blobClient) {
-  const downloadBlockBlobResponse = await blobClient.download()
-  const downloaded = (
-    await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)
-  )
-  const result = excelToJson({
-    source: downloaded
-  })
-  return result
+  try {
+    const downloadBlockBlobResponse = await blobClient.download()
+    const downloaded = (
+      await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)
+    )
+    const result = excelToJson({
+      source: downloaded
+    })
+    return result
+  } catch (err) {
+    console.error(`services.storage-account.getXlsPackingListFromBlob() failed with ${err}`)
+  }
 }
 
 async function streamToBuffer (readableStream) {

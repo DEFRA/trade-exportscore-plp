@@ -36,7 +36,7 @@ describe('upsert idcoms', () => {
     await upsertIdcoms.options.handler({}, mockHandler)
 
     expect(patchPackingListCheck).not.toHaveBeenCalled()
-    expect(console.error.mock.calls[0][0]).toBe('Error running upsert: ')
+    expect(console.error.mock.calls[0][0]).toBe('routes.upsert-idcoms failed running upsert with: ')
   })
 
   test('should perform the upsert when application id is specified and isParsed is true', async () => {

@@ -21,13 +21,13 @@ async function bearerTokenRequest () {
     })
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`)
+      throw new Error(`services.dynamics-service.bearerTokenRequest() received: Response status: ${response.status}`)
     }
 
     const json = await response.json()
     return json.access_token
   } catch (err) {
-    console.error(err)
+    console.error(`services.dynamics-service failed with: ${err}`)
     return err.message
   }
 }
@@ -50,7 +50,7 @@ async function patchPackingListCheck (applicationId, isParsed) {
 
     return status
   } catch (err) {
-    console.error(err)
+    console.error(`services.dynamics-service.patchPackingListCheck() failed with: ${err}`)
     return err.message
   }
 }
