@@ -7,26 +7,30 @@ const isNullOrUndefined = (value) => value === null || value === undefined;
 function findParser(packingList, filename) {
   let parsedPackingList = processExcelPackingList.failedParser();
 
-  const packingListJson = JSON.stringify(packingList);
-  const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
-  const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
-
-  if (fileExtension.isExcel(filename)) {
-    parsedPackingList = processExcelPackingList.processExcelPackingList(
-      sanitisedPackingList,
-      filename,
-    );
-  } else {
-    console.info("Failed to parse packing list with filename: ", filename);
-  }
-
-  if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
-    parsedPackingList.items = parsedPackingList.items.filter(
-      (x) => !Object.values(x).every(isNullOrUndefined),
-    );
-    parsedPackingList.items = checkType(parsedPackingList.items);
-    parsedPackingList.business_checks.all_required_fields_present =
-      checkRequiredData(parsedPackingList);
+  try {
+    const packingListJson = JSON.stringify(packingList);
+    const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
+    const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+  
+    if (fileExtension.isExcel(filename)) {
+      parsedPackingList = processExcelPackingList.processExcelPackingList(
+        sanitisedPackingList,
+        filename,
+      );
+    } else {
+      console.info("Failed to parse packing list with filename: ", filename);
+    }
+  
+    if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
+      parsedPackingList.items = parsedPackingList.items.filter(
+        (x) => !Object.values(x).every(isNullOrUndefined),
+      );
+      parsedPackingList.items = checkType(parsedPackingList.items);
+      parsedPackingList.business_checks.all_required_fields_present =
+        checkRequiredData(parsedPackingList);
+    }
+  } catch (err) {
+    console.error(`services.parser-service.findParser() failed with: ${err}`);
   }
 
   return parsedPackingList;
