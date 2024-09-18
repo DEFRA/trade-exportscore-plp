@@ -181,25 +181,6 @@ const headers = {
       regex: /RMS-GB-000025-(\d{3})?/,
     },
     headers: {
-      description: "PART_NUMBER_DESCRIPTION",
-      commodity_code: "TARIFF_CODE_EU",
-      number_of_packages: "PACKAGES",
-      total_net_weight_kg: "NET_WEIGHT_TOTAL",
-      nature_of_products: "PRODUCT_TYPE_CATEGORY",
-    },
-    regex: [
-      /PART_NUMBER_DESCRIPTION/,
-      /TARIFF_CODE_EU/,
-      /PACKAGES/,
-      /NET_WEIGHT_TOTAL/,
-      /PRODUCT_TYPE_CATEGORY/,
-    ],
-  },
-  NISA3: {
-    establishmentNumber: {
-      regex: /RMS-GB-000025-(\d{3})?/,
-    },
-    headers: {
       description: "PART NUMBER DESCRIPTION",
       commodity_code: "TARIFF CODE EU",
       number_of_packages: "PACKAGES",
@@ -281,25 +262,6 @@ const headers = {
       /Commodity code/,
       /No. of pkgs/,
       /Total Net Weight/,
-    ],
-  },
-  TESCO3: {
-    establishmentNumber: {
-      regex: /RMS-GB-000022-(\d{3})?/,
-    },
-    headers: {
-      description: description,
-      commodity_code: "Tariff Code UK",
-      number_of_packages: "Packages",
-      total_net_weight_kg: "Net Weight",
-      type_of_treatment: "Treatment Type",
-    },
-    regex: [
-      descriptionRegex,
-      /Tariff Code UK/,
-      /Packages/,
-      /Net Weight/,
-      /Treatment Type/,
     ],
   },
   TJMORRIS1: {

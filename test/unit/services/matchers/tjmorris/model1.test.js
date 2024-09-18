@@ -69,6 +69,26 @@ describe("matchesTjmorris", () => {
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
 
+  test("returns wrong header for invalid header values", () => {
+    const filename = "packinglist.xls";
+    const packingListJson = {
+      Sheet1: [
+        {
+          A: "NOT",
+          B: "CORRECT",
+          C: "HEADER",
+        },
+        {
+          A: "RMS-GB-000010-001",
+        },
+      ],
+    };
+
+    const result = Matcher.matches(packingListJson, filename);
+
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+
   test("returns Correct", () => {
     const filename = "packinglist.xls";
     const packingListJson = {

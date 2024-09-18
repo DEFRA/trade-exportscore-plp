@@ -1,73 +1,79 @@
-const ParserModel = require("../../../../../app/services/parser-model");
-
 module.exports = {
   validModel: {
-    "Customer Order": [
+    sheet: [
       {
-        B: "RMS_ESTABLISHMENT_NO",
-        J: "PRODUCT_TYPE_CATEGORY",
-        L: "PART_NUMBER_DESCRIPTION",
-        M: "TARIFF_CODE_EU",
-        N: "PACKAGES",
-        P: "NET_WEIGHT_TOTAL",
+        A: "RMS_ESTABLISHMENT_NO",
       },
       {
-        B: "RMS-GB-000025-001",
-        J: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        L: "DAIRYLEA DUNKERS JUMBO PM80P",
-        M: "2005995090",
-        N: 2,
-        P: 2.5,
+        A: "RMS-GB-000025-003",
       },
       {
-        B: "RMS-GB-000025-001",
-        J: "900 - VEGETABLES PREPACK-C",
-        L: "NISA BROCCOLI",
-        M: "0403209300",
-        N: 1,
-        P: 2,
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        I: "NET WEIGHT TOTAL",
+      },
+      {
+        C: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+        E: "DAIRYLEA DUNKERS JUMBO PM80P",
+        F: "2005995090",
+        G: 2,
+        I: 2.5,
+      },
+      {
+        C: "900 - VEGETABLES PREPACK-C",
+        E: "NISA BROCCOLI",
+        F: "0403209300",
+        G: 1,
+        I: 2,
       },
     ],
   },
   invalidModel_MissingColumnCells: {
-    "Customer Order": [
+    sheet: [
       {
-        B: "RMS_ESTABLISHMENT_NO",
-        J: "PRODUCT_TYPE_CATEGORY",
-        L: "PART_NUMBER_DESCRIPTION",
-        M: "TARIFF_CODE_EU",
-        N: "PACKAGES",
-        P: "NET_WEIGHT_TOTAL",
+        A: "RMS_ESTABLISHMENT_NO",
       },
       {
-        B: "RMS-GB-000025-001",
-        J: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        L: "DAIRYLEA DUNKERS JUMBO PM80P",
-        M: "2005995090",
-        N: 2,
-        P: null,
+        A: "RMS-GB-000025-003",
       },
       {
-        B: "RMS-GB-000025-001",
-        J: "900 - VEGETABLES PREPACK-C",
-        L: "NISA BROCCOLI",
-        M: null,
-        N: 1,
-        P: 2,
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        I: "NET WEIGHT TOTAL",
+      },
+      {
+        C: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+        E: "DAIRYLEA DUNKERS JUMBO PM80P",
+        F: "2005995090",
+        G: 2,
+        I: null,
+      },
+      {
+        C: "900 - VEGETABLES PREPACK-C",
+        E: "NISA BROCCOLI",
+        F: null,
+        G: 1,
+        I: 2,
       },
     ],
   },
   emptyModel: {
-    "Customer Order": [
+    sheet: [
+      {},
+      {},
       {
-        E: "Dispatch RMS Establishment",
-        O: "Product/ Part Number description",
-        P: "Tariff Code EU",
-        Q: "Packages",
-        S: "NW total",
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        I: "NET WEIGHT TOTAL",
       },
       {
-        E: null,
+        A: null,
       },
     ],
   },

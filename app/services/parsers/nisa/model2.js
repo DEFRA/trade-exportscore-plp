@@ -10,11 +10,12 @@ function parse(packingListJson) {
     packingListJson,
   );
 
+  const dataRowFirst = 3;
   const packingListContents = mapParser(
     packingListJson,
-    0,
-    1,
-    headers.NISA1.headers,
+    dataRowFirst - 1,
+    dataRowFirst,
+    headers.NISA2.headers,
   );
 
   return CombineParser.combine(

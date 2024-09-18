@@ -74,4 +74,16 @@ describe("matchesHeader", () => {
 
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });
+
+  test("returns generic error for empty json", () => {
+    // arrange
+    const header = [/header/];
+
+    const packingListSheet = {};
+
+    // act
+    const result = matchesHeader(header, packingListSheet);
+
+    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+  });
 });
