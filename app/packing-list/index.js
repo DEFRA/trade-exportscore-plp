@@ -1,7 +1,7 @@
 const { models, sequelize } = require('../services/database-service')
 const { v4: uuidv4 } = require('uuid')
 
-async function createPackingList(packingListJson, applicationId) {
+async function createPackingList (packingListJson, applicationId) {
   try {
     await sequelize.transaction(async (transaction) => {
       const packingList = packingListMapper(packingListJson, applicationId)
@@ -16,7 +16,7 @@ async function createPackingList(packingListJson, applicationId) {
   }
 }
 
-function packingListMapper(packingListJson, applicationId) {
+function packingListMapper (packingListJson, applicationId) {
   try {
     return {
       applicationId,
@@ -29,7 +29,7 @@ function packingListMapper(packingListJson, applicationId) {
   }
 }
 
-function itemsMapper(o, applicationId) {
+function itemsMapper (o, applicationId) {
   return {
     itemId: uuidv4(),
     description: o.description,
