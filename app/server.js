@@ -38,13 +38,13 @@ async function createServer () {
       await server.register(require('blipp'))
     }
   } catch (err) {
-    console.error(`In Dev, server.register() in server.createServer() failed to register the blipp with: ${err}`)
+    console.error(`In Dev, server.createServer().server.register() failed to register the blipp with: ${err}`)
   }
 
   try {
     await messageService.start()
   } catch (err) {
-    console.error(`messageService.start() in server.createServer() failed to start with: ${err}`)
+    console.error(`server.createServer().messageService.start() failed to start with: ${err}`)
   }
 
   process.on('SIGTERM', async function () {
@@ -52,7 +52,7 @@ async function createServer () {
       await messageService.stop()
       process.exit(0)
     } catch (err) {
-      console.error(`process.on("SIGTERM") in server.createServer() failed to stop with: ${err}`)
+      console.error(`server.createServer().process.on("SIGTERM") failed to stop with: ${err}`)
     }
   })
 
@@ -61,7 +61,7 @@ async function createServer () {
       await messageService.stop()
       process.exit(0)
     } catch (err) {
-      console.error(`process.on("SIGINT") in server.createServer() failed to stop with: ${err}`)
+      console.error(`server.createServer().process.on("SIGINT") failed to stop with: ${err}`)
     }
   })
 

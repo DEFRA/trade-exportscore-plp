@@ -28,18 +28,18 @@ async function processPlpMessage (message, receiver) {
 
     if (parsed.isParsed) {
       try {
-        await createPackingList(parsed.packingList, message.body.application_id) 
+        await createPackingList(parsed.packingList, message.body.application_id)
       } catch (err) {
-        console.error(`messaging.process-plp-message.processPlpMessage() createPackingList() failed with: ${err}`)
+        console.error(`messaging.process-plp-message.processPlpMessage.createPackingList() failed with: ${err}`)
       }
       try {
         await patchPackingListCheck(message.body.application_id, parsed.isParsed)
       } catch (err) {
-        console.error(`messaging.process-plp-message.processPlpMessage() patchPackingListCheck() failed with: ${err}`)
+        console.error(`messaging.process-plp-message.processPlpMessage.patchPackingListCheck() failed with: ${err}`)
       }
     }
   } catch (err) {
-    console.error('messaging.process-plp-message.processPlpMessage() Unable to process message:', err)
+    console.error('messaging.process-plp-message.processPlpMessage() was unable to process the message. Error was:', err)
     await receiver.abandonMessage(message)
   }
 }

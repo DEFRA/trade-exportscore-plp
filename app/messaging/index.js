@@ -11,7 +11,7 @@ async function start () {
 
     console.info('Ready to receive messages')
   } catch (err) {
-    console.error(`messaging.start() failed with: ${err}`)
+    console.error(`messaging.index.start() failed with: ${err}`)
   }
 }
 
@@ -19,7 +19,7 @@ async function stop () {
   try {
     await plpReceiver.closeConnection()
   } catch (err) {
-    console.error(`plpReceiver.closeConnection() in messaging.index.stop() failed with: ${err}`)
+    console.error(`messaging.index.stop()plpReceiver.closeConnection() failed with: ${err}`)
   }
 }
 
