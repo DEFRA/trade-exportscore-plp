@@ -9,6 +9,7 @@ const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function findParser(packingList, filename) {
   let parsedPackingList = failedParser();
+  let parserFound = false;
 
   // Sanitised packing list (i.e. emove trailing spaces and empty cells)
   const packingListJson = JSON.stringify(packingList);
@@ -21,6 +22,7 @@ function findParser(packingList, filename) {
         parsersExcel[key].matches(sanitisedPackingList, filename) ===
         MatcherResult.CORRECT
       ) {
+        parserFound = true;
         parsedPackingList = parsersExcel[key].parse(
           sanitisedPackingList,
           filename,
@@ -28,7 +30,7 @@ function findParser(packingList, filename) {
       }
     });
 
-    if (parsedPackingList != failedParser()) {
+    if (!parserFound) {
       console.info("Failed to parse packing list with filename: ", filename);
     }
   } else {
