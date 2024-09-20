@@ -2,6 +2,8 @@ const CombineParser = require("../../parser-combine");
 const ParserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const Regex = require("../../../utilities/regex");
+const MatcherResult = require("../../matcher-result");
+const { rowFinder } = require("../../../utilities/row-finder");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
@@ -11,7 +13,15 @@ function parse(packingListJson) {
     packingListJson,
   );
 
-  const headerRow = packingListJson.findIndex((x) => x.B === "PRISM");
+  const headerTitles = Object.values(headers.BANDM1.headers);
+  function callback(x) {
+    return Object.values(x).includes(headerTitles[0]);
+  }
+  const headerRow = rowFinder(packingListJson, callback);
+  if (!packingListJson[headerRow] || headerRow === -1) {
+    return MatcherResult.WRONG_HEADER;
+  }
+
   const lastRow =
     packingListJson.slice(headerRow + 1).findIndex((x) => isEndOfRow(x)) +
     headerRow;
