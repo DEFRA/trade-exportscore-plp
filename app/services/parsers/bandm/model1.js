@@ -4,44 +4,53 @@ const headers = require("../../model-headers");
 const Regex = require("../../../utilities/regex");
 const MatcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
+const logger = require("../../../utilities/logger");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function parse(packingListJson) {
-  const establishmentNumber = Regex.findMatch(
-    headers.BANDM1.establishmentNumber.regex,
-    packingListJson,
-  );
+  try {
+    const establishmentNumber = Regex.findMatch(
+      headers.BANDM1.establishmentNumber.regex,
+      packingListJson,
+    );
 
-  const headerTitles = Object.values(headers.BANDM1.headers);
-  function callback(x) {
-    return Object.values(x).includes(headerTitles[0]);
+    const headerTitles = Object.values(headers.BANDM1.headers);
+    function callback(x) {
+      return Object.values(x).includes(headerTitles[0]);
+    }
+    const headerRow = rowFinder(packingListJson, callback);
+    if (!packingListJson[headerRow] || headerRow === -1) {
+      return MatcherResult.WRONG_HEADER;
+    }
+
+    const lastRow =
+      packingListJson.slice(headerRow + 1).findIndex((x) => isEndOfRow(x)) +
+      headerRow;
+    const packingListContents = packingListJson
+      .slice(headerRow + 1, lastRow + 1)
+      .map((col) => ({
+        description: col.C ?? null,
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: col.D ?? null,
+        number_of_packages: col.F ?? null,
+        total_net_weight_kg: col.G ?? null,
+      }));
+
+    return CombineParser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      ParserModel.BANDM1,
+    );
+  } catch (err) {
+    logger.log_error(
+      "services > parsers > bandm > model1.js",
+      "matches()",
+      err,
+    );
   }
-  const headerRow = rowFinder(packingListJson, callback);
-  if (!packingListJson[headerRow] || headerRow === -1) {
-    return MatcherResult.WRONG_HEADER;
-  }
-
-  const lastRow =
-    packingListJson.slice(headerRow + 1).findIndex((x) => isEndOfRow(x)) +
-    headerRow;
-  const packingListContents = packingListJson
-    .slice(headerRow + 1, lastRow + 1)
-    .map((col) => ({
-      description: col.C ?? null,
-      nature_of_products: null,
-      type_of_treatment: null,
-      commodity_code: col.D ?? null,
-      number_of_packages: col.F ?? null,
-      total_net_weight_kg: col.G ?? null,
-    }));
-
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.BANDM1,
-  );
 }
 
 function isEndOfRow(x) {
