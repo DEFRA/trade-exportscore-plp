@@ -1,5 +1,6 @@
 const MatcherResult = require("./matcher-result");
 const Regex = require("../utilities/regex");
+const logger = require("../utilities/logger");
 
 function matchesHeader(regexHeader, packingListSheet) {
   try {
@@ -10,6 +11,7 @@ function matchesHeader(regexHeader, packingListSheet) {
     }
     return MatcherResult.CORRECT;
   } catch (err) {
+    logger.log_error("services > matches-header.js", "matchesHeader()", err);
     return MatcherResult.GENERIC_ERROR;
   }
 }

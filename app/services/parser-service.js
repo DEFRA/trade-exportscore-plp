@@ -4,49 +4,54 @@ const CombineParser = require("./parser-combine");
 const JsonFile = require("../utilities/json-file");
 const FileExtension = require("../utilities/file-extension");
 const { parsersExcel } = require("./model-parsers");
+const logger = require("../utilities/logger");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function findParser(packingList, filename) {
-  let parsedPackingList = failedParser();
-  let parserFound = false;
+  try {
+    let parsedPackingList = failedParser();
+    let parserFound = false;
 
-  // Sanitised packing list (i.e. emove trailing spaces and empty cells)
-  const packingListJson = JSON.stringify(packingList);
-  const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
-  const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
-  // Test for Excel spreadsheets
-  if (FileExtension.isExcel(filename)) {
-    Object.keys(parsersExcel).forEach((key) => {
-      if (
-        parsersExcel[key].matches(sanitisedPackingList, filename) ===
-        MatcherResult.CORRECT
-      ) {
-        parserFound = true;
-        parsedPackingList = parsersExcel[key].parse(
-          sanitisedPackingList,
-          filename,
-        );
+    // Sanitised packing list (i.e. emove trailing spaces and empty cells)
+    const packingListJson = JSON.stringify(packingList);
+    const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
+    const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+    // Test for Excel spreadsheets
+    if (FileExtension.isExcel(filename)) {
+      Object.keys(parsersExcel).forEach((key) => {
+        if (
+          parsersExcel[key].matches(sanitisedPackingList, filename) ===
+          MatcherResult.CORRECT
+        ) {
+          parserFound = true;
+          parsedPackingList = parsersExcel[key].parse(
+            sanitisedPackingList,
+            filename,
+          );
+        }
+      });
+
+      if (!parserFound) {
+        console.info("Failed to parse packing list with filename: ", filename);
       }
-    });
-
-    if (!parserFound) {
+    } else {
       console.info("Failed to parse packing list with filename: ", filename);
     }
-  } else {
-    console.info("Failed to parse packing list with filename: ", filename);
-  }
 
-  if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
-    parsedPackingList.items = parsedPackingList.items.filter(
-      (x) => !Object.values(x).every(isNullOrUndefined),
-    );
-    parsedPackingList.items = checkType(parsedPackingList.items);
-    parsedPackingList.business_checks.all_required_fields_present =
-      checkRequiredData(parsedPackingList);
-  }
+    if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
+      parsedPackingList.items = parsedPackingList.items.filter(
+        (x) => !Object.values(x).every(isNullOrUndefined),
+      );
+      parsedPackingList.items = checkType(parsedPackingList.items);
+      parsedPackingList.business_checks.all_required_fields_present =
+        checkRequiredData(parsedPackingList);
+    }
 
-  return parsedPackingList;
+    return parsedPackingList;
+  } catch (err) {
+    logger.log_error("services > parser-service.js", "findParser()", err);
+  }
 }
 
 function failedParser() {
