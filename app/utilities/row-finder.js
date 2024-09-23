@@ -1,5 +1,5 @@
-function rowFinder(packingListArr, callback) {
-  return packingListArr.findIndex(callback);
+function rowFinder(packingList, callback) {
+  return packingList.findIndex(callback);
 }
 
 module.exports = {
