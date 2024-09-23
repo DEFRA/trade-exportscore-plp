@@ -6,6 +6,7 @@ const Regex = require("../../../utilities/regex");
 const MatcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
 const { failedParser } = require("../../parser-service");
+
 function parse(packingListJson) {
   const headerTitles = Object.values(headers.GIOVANNI1.headers);
   function callback(x) {
