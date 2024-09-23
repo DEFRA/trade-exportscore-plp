@@ -2,6 +2,7 @@ const MatcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const Regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
+const logger = require("../../../utilities/logger");
 
 function matchesModel(packingList, filename, regex, trader) {
   try {
@@ -20,6 +21,11 @@ function matchesModel(packingList, filename, regex, trader) {
     }
     return result;
   } catch (err) {
+    logger.log_error(
+      "services > matchers > giovanni > model1.js",
+      "matches()",
+      err,
+    );
     return MatcherResult.GENERIC_ERROR;
   }
 }

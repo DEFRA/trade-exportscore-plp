@@ -2,6 +2,7 @@ const MatcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
 const Regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
+const logger = require("../../../utilities/logger");
 
 function matchesModel(packingList, filename, regex, trader) {
   let headerRow = 0;
@@ -52,6 +53,11 @@ function matchesModel(packingList, filename, regex, trader) {
     console.info(`Packing list matches ${trader} with filename: ${filename}`);
     return MatcherResult.CORRECT;
   } catch (err) {
+    logger.log_error(
+      "services > matchers > fowlerwelch > model1.js",
+      "matches()",
+      err,
+    );
     return MatcherResult.GENERIC_ERROR;
   }
 }

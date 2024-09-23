@@ -2,6 +2,7 @@ const MatcherResult = require("../../matcher-result");
 const Regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const headers = require("../../model-headers");
+const logger = require("../../../utilities/logger");
 
 function matches(packingList, filename) {
   try {
@@ -44,6 +45,11 @@ function matches(packingList, filename) {
     );
     return MatcherResult.CORRECT;
   } catch (err) {
+    logger.log_error(
+      "services > matchers > tjmorris > model1.js",
+      "matches()",
+      err,
+    );
     return MatcherResult.GENERIC_ERROR;
   }
 }
