@@ -11,9 +11,15 @@ async function start() {
       plpReceiver = new MessageReceiver(config.plpSubscription, plpAction);
       await plpReceiver.subscribe();
 
-      console.info("Ready to receive messages");
+      logger.log_info(
+        "messaging > index.js",
+        "start()",
+        "Ready to receive messages",
+      );
     } else {
-      console.error(
+      logger.log_error(
+        "messaging > index.js",
+        "start()",
         "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
       );
     }

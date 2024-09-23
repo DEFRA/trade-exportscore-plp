@@ -17,7 +17,11 @@ function matchesModel(packingList, filename, regex, trader) {
     const result = matchesHeader(headers.GIOVANNI1.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
-      console.info(`Packing list matches ${trader} with filename: `, filename);
+      logger.log_info(
+        "services > matchers > giovanni > model1.js",
+        "matches()",
+        `Packing list matches giovanni Model 1 with filename: ${filename}`,
+      );
     }
     return result;
   } catch (err) {

@@ -11,7 +11,9 @@ async function sendParsedAdp(parsedResult, applicationId) {
     const parsedSender = new MessageSender(config.tpQueue);
     await parsedSender.sendMessage(message);
     await parsedSender.closeConnection();
-    console.info(
+    logger.log_info(
+      "messaging > process-plp-message.js",
+      "sendParsedAdp()",
       `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
     );
   } catch (err) {
@@ -38,7 +40,9 @@ async function sendParsed(applicationId, parsedResult) {
 
       try {
         await sender.sendMessages(message);
-        console.info(
+        logger.log_info(
+          "messaging > process-plp-message.js",
+          "sendParsed()",
           `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
         );
         await sender.close();

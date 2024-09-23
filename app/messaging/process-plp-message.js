@@ -13,7 +13,13 @@ const logger = require("./../utilities/logger");
 async function processPlpMessage(message, receiver) {
   try {
     await receiver.completeMessage(message);
-    console.info("Received message: ", message.body);
+    logger.log_info(
+      "messaging > process-plp-message.js",
+      "processPlpMessage()",
+      "Received message: ",
+      message.body,
+    );
+
     const blobClient = createStorageAccountClient(
       message.body.packing_list_blob,
     );
@@ -43,7 +49,10 @@ async function processPlpMessage(message, receiver) {
     if (packingList.parserModel !== ParserModel.NOMATCH) {
       try {
         await createPackingList(packingList, message.body.application_id);
-        console.info(
+        logger.log_info(
+          "messaging > process-plp-message.js",
+          "processPlpMessage()",
+          "Received message: ",
           `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
         );
       } catch (err) {

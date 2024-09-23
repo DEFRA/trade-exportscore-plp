@@ -22,9 +22,10 @@ function matches(packingList, filename) {
     const result = matchesHeader(headers.BUFFALOAD1.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches Buffaload Model 1 with filename: ",
-        filename,
+      logger.log_info(
+        "services > matchers > buffaload-logistics > model1.js",
+        "matches()",
+        `Packing list matches buffaload-logistics Model 1 with filename: ${filename}`,
       );
     }
     return result;

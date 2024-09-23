@@ -19,9 +19,10 @@ function matches(packingList, filename) {
     const result = matchesHeader(headers.TESCO1.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches Tesco Model 1 with filename: ",
-        filename,
+      logger.log_info(
+        "services > matchers > tescos > model1.js",
+        "matches()",
+        `Packing list matches tescos Model 1 with filename: ${filename}`,
       );
     }
     return result;

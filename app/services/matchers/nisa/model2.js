@@ -18,9 +18,10 @@ function matches(packingList, filename) {
     const result = matchesHeader(headers.NISA2.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches Nisa Model 2 with filename: ",
-        filename,
+      logger.log_info(
+        "services > matchers > nisa > model2.js",
+        "matches()",
+        `Packing list matches nisa Model 2 with filename: ${filename}`,
       );
     }
     return result;

@@ -39,9 +39,10 @@ function matches(packingList, filename) {
       }
     }
 
-    console.info(
-      "Packing list matches TJ Morris Model 1 with filename: ",
-      filename,
+    logger.log_info(
+      "services > matchers > tjmorris > model1.js",
+      "matches()",
+      `Packing list matches tjmorris Model 1 with filename: ${filename}`,
     );
     return MatcherResult.CORRECT;
   } catch (err) {

@@ -10,9 +10,10 @@ async function createPackingList(packingListJson, applicationId) {
         transaction,
       });
       await models.item.bulkCreate(packingList.item, { transaction });
-      console.info(
-        "Saved packing list in database with application id: ",
-        packingList.applicationId,
+      logger.log_info(
+        "packing-list > index.js",
+        "createPackingList()",
+        `Saved packing list in database with application id: ${packingList.applicationId}`,
       );
     });
   } catch (err) {

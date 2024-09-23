@@ -18,9 +18,10 @@ function matches(packingList, filename) {
     const result = matchesHeader(headers.COOP1.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches Co-op Model 1 with filename: ",
-        filename,
+      logger.log_info(
+        "services > matchers > co-op > model1.js",
+        "matches()",
+        `Packing list matches co-op Model 1 with filename: ${filename}`,
       );
     }
     return result;

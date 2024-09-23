@@ -19,9 +19,10 @@ function matches(packingList, filename) {
     const result = matchesHeader(headers.BANDM1.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches BandM Model 1 with filename: ",
-        filename,
+      logger.log_info(
+        "services > matchers > bandm > model1.js",
+        "matches()",
+        `Packing list matches bandm Model 1 with filename: ${filename}`,
       );
     }
     return result;

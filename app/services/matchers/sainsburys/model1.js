@@ -22,9 +22,10 @@ function matches(packingList, filename) {
     const result = matchesHeader(headers.SAINSBURYS1.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches Sainsburys Model 1 with filename: ",
-        filename,
+      logger.log_info(
+        "services > matchers > sainsburys > model1.js",
+        "matches()",
+        `Packing list matches sainsburys Model 1 with filename: ${filename}`,
       );
     }
     return result;

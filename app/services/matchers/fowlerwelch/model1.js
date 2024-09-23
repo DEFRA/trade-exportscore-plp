@@ -50,7 +50,11 @@ function matchesModel(packingList, filename, regex, trader) {
       }
     }
 
-    console.info(`Packing list matches ${trader} with filename: ${filename}`);
+    logger.log_info(
+      "services > matchers > fowlerwelch > model1.js",
+      "matches()",
+      `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
+    );
     return MatcherResult.CORRECT;
   } catch (err) {
     logger.log_error(

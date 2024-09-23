@@ -1,5 +1,6 @@
 const config = require("../config");
 const logger = require("../utilities/logger");
+
 const dsConfig = config.dynamicsConfig;
 const approvalStatus = {
   Approved: 179640000,
@@ -54,7 +55,9 @@ async function patchPackingListCheck(applicationId, isApproved) {
       body: JSON.stringify({ rms_automatedpackinglistcheck: outcome }),
     });
     const status = (await response).status;
-    console.info(
+    logger.log_info(
+      "services > dynamics-service.js",
+      "patchPackingListCheck()",
       `Upsert ${applicationId} with outcome ${isApproved}, status ${status}`,
     );
 

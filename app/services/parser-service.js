@@ -33,10 +33,18 @@ function findParser(packingList, filename) {
       });
 
       if (!parserFound) {
-        console.info("Failed to parse packing list with filename: ", filename);
+        logger.log_info(
+          "services > parser-service.js",
+          "findParser()",
+          `Failed to parse packing list with filename: ${filename}`,
+        );
       }
     } else {
-      console.info("Failed to parse packing list with filename: ", filename);
+      logger.log_info(
+        "services > parser-service.js",
+        "findParser()",
+        `Failed to parse packing list with filename: ${filename}`,
+      );
     }
 
     if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {

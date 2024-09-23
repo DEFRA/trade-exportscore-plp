@@ -19,9 +19,10 @@ function matches(packingList, filename) {
     const result = matchesHeader(headers.ASDA1.regex, packingList[sheet]);
 
     if (result === MatcherResult.CORRECT) {
-      console.info(
-        "Packing list matches Asda Model 1 with filename: ",
-        filename,
+      logger.log_info(
+        "services > matchers > asda > model1.js",
+        "matches()",
+        `Packing list matches Asda Model 1 with filename: ${filename}`,
       );
     }
     return result;
@@ -31,6 +32,7 @@ function matches(packingList, filename) {
       "matches()",
       err,
     );
+
     return MatcherResult.GENERIC_ERROR;
   }
 }
