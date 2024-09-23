@@ -4,6 +4,7 @@ const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const { StatusCodes } = require("http-status-codes");
 const ParserModel = require("../services/parser-model");
+const logger = require("./../utilities/logger");
 
 module.exports = {
   method: "GET",
@@ -14,15 +15,24 @@ module.exports = {
     try {
       result = excelToJson({ sourceFile: filename });
     } catch (err) {
-      console.error(err);
+      logger.log_error("routes > non-ai.js", "get() > excelToJson", err);
     }
 
-    const packingList = findParser(result, filename);
-    if (packingList.parserModel !== ParserModel.NOMATCH) {
-      const randomInt = Math.floor(
-        Math.random() * (10000000 - 1 + 1) + 1,
-      ).toString();
-      await createPackingList(packingList, randomInt);
+    let packingList;
+    try {
+      packingList = findParser(result, filename);
+      if (packingList.parserModel !== ParserModel.NOMATCH) {
+        const randomInt = Math.floor(
+          Math.random() * (10000000 - 1 + 1) + 1,
+        ).toString();
+        await createPackingList(packingList, randomInt);
+      }
+    } catch (err) {
+      logger.log_error(
+        "routes > non-ai.js",
+        "get() > findParser / createPackingList",
+        err,
+      );
     }
 
     return h.response(packingList).code(StatusCodes.OK);

@@ -8,6 +8,7 @@ const { patchPackingListCheck } = require("../services/dynamics-service");
 const config = require("../config");
 const ParserModel = require("../services/parser-model");
 const { sendParsed } = require("../messaging/send-parsed-message");
+const logger = require("./../utilities/logger");
 
 async function processPlpMessage(message, receiver) {
   try {
@@ -16,29 +17,77 @@ async function processPlpMessage(message, receiver) {
     const blobClient = createStorageAccountClient(
       message.body.packing_list_blob,
     );
+
     let result = {};
-    result = await getXlsPackingListFromBlob(blobClient);
-    const packingList = findParser(result, message.body.packing_list_blob);
+    try {
+      result = await getXlsPackingListFromBlob(blobClient);
+    } catch (err) {
+      logger.log_error(
+        "messaging > process-plp-message.js",
+        "processPlpMessage() > getXlsPackingListFromBlob",
+        err,
+      );
+    }
+
+    let packingList = {};
+    try {
+      packingList = findParser(result, message.body.packing_list_blob);
+    } catch (err) {
+      logger.log_error(
+        "messaging > process-plp-message.js",
+        "processPlpMessage() > findParser",
+        err,
+      );
+    }
 
     if (packingList.parserModel !== ParserModel.NOMATCH) {
-      await createPackingList(packingList, message.body.application_id);
-      console.info(
-        `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
-      );
+      try {
+        await createPackingList(packingList, message.body.application_id);
+        console.info(
+          `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
+        );
+      } catch (err) {
+        logger.log_error(
+          "messaging > process-plp-message.js",
+          "processPlpMessage() > createPackingList",
+          err,
+        );
+      }
+
       if (config.isDynamicsIntegration) {
-        await patchPackingListCheck(
-          message.body.application_id,
-          packingList.business_checks.all_required_fields_present,
-        );
+        try {
+          await patchPackingListCheck(
+            message.body.application_id,
+            packingList.business_checks.all_required_fields_present,
+          );
+        } catch (err) {
+          logger.log_error(
+            "messaging > process-plp-message.js",
+            "processPlpMessage() > patchPackingListCheck",
+            err,
+          );
+        }
       } else {
-        await sendParsed(
-          message.body.application_id,
-          packingList.business_checks.all_required_fields_present,
-        );
+        try {
+          await sendParsed(
+            message.body.application_id,
+            packingList.business_checks.all_required_fields_present,
+          );
+        } catch (err) {
+          logger.log_error(
+            "messaging > process-plp-message.js",
+            "processPlpMessage() > sendParsed",
+            err,
+          );
+        }
       }
     }
   } catch (err) {
-    console.error("Unable to process message:", err);
+    logger.log_error(
+      "messaging > process-plp-message.js",
+      "processPlpMessage()",
+      err,
+    );
     await receiver.abandonMessage(message);
   }
 }

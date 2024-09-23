@@ -2,9 +2,18 @@ const hapi = require("@hapi/hapi");
 const config = require("./config");
 const { sequelize } = require("./services/database-service");
 const messageService = require("./messaging");
+const logger = require("./utilities/logger");
 
 async function createServer() {
-  await sequelize.authenticate();
+  try {
+    await sequelize.authenticate();
+  } catch (err) {
+    logger.log_error(
+      "server.js",
+      "createServer > sequelize.authenticate()",
+      err,
+    );
+  }
 
   // Create the hapi server
   const server = hapi.server({
