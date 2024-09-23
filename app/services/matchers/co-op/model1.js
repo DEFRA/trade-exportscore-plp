@@ -1,4 +1,4 @@
-const matcherResult = require("../../matcher-result");
+const matcher_result = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -12,12 +12,12 @@ function matches(packingList, filename) {
     if (
       !regex.test(headers.COOP1.establishmentNumber.regex, packingList[sheet])
     ) {
-      return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
     }
 
     const result = matchesHeader(headers.COOP1.regex, packingList[sheet]);
 
-    if (result === matcherResult.CORRECT) {
+    if (result === matcher_result.CORRECT) {
       logger.log_info(
         "services > matchers > co-op > model1.js",
         "matches()",
@@ -31,7 +31,7 @@ function matches(packingList, filename) {
       "matches()",
       err,
     );
-    return matcherResult.GENERIC_ERROR;
+    return matcher_result.GENERIC_ERROR;
   }
 }
 

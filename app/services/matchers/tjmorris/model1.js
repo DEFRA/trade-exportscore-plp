@@ -1,4 +1,4 @@
-const matcherResult = require("../../matcher-result");
+const matcher_result = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const headers = require("../../model-headers");
@@ -15,7 +15,7 @@ function matches(packingList, filename) {
         packingList[sheet],
       )
     ) {
-      return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
     }
 
     // check for header values
@@ -30,12 +30,12 @@ function matches(packingList, filename) {
 
     const headerRow = rowFinder(packingList[sheet], callback);
     if (!packingList[sheet][headerRow] || headerRow === -1) {
-      return matcherResult.WRONG_HEADER;
+      return matcher_result.WRONG_HEADER;
     }
 
     for (const key in header) {
       if (!packingList[sheet][headerRow][key]?.startsWith(header[key])) {
-        return matcherResult.WRONG_HEADER;
+        return matcher_result.WRONG_HEADER;
       }
     }
 
@@ -44,14 +44,14 @@ function matches(packingList, filename) {
       "matches()",
       `Packing list matches tjmorris Model 1 with filename: ${filename}`,
     );
-    return matcherResult.CORRECT;
+    return matcher_result.CORRECT;
   } catch (err) {
     logger.log_error(
       "services > matchers > tjmorris > model1.js",
       "matches()",
       err,
     );
-    return matcherResult.GENERIC_ERROR;
+    return matcher_result.GENERIC_ERROR;
   }
 }
 

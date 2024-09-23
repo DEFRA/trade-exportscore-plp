@@ -1,4 +1,4 @@
-const matcherResult = require("../../matcher-result");
+const matcher_result = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -15,13 +15,13 @@ function matches(packingList, filename) {
         packingList[sheet],
       )
     ) {
-      return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
     }
 
     // check for header values
     const result = matchesHeader(headers.SAINSBURYS1.regex, packingList[sheet]);
 
-    if (result === matcherResult.CORRECT) {
+    if (result === matcher_result.CORRECT) {
       logger.log_info(
         "services > matchers > sainsburys > model1.js",
         "matches()",
@@ -35,7 +35,7 @@ function matches(packingList, filename) {
       "matches()",
       err,
     );
-    return matcherResult.GENERIC_ERROR;
+    return matcher_result.GENERIC_ERROR;
   }
 }
 

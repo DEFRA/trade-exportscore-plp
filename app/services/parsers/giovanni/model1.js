@@ -3,7 +3,7 @@ const parser_model = require("../../parser-model");
 const headers = require("../../model-headers");
 const { mapParser } = require("../../parser-map");
 const regex = require("../../../utilities/regex");
-const matcherResult = require("../../matcher-result");
+const matcher_result = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 
@@ -15,7 +15,7 @@ function parse(packingListJson) {
     }
     const headerRow = rowFinder(packingListJson, callback);
     if (!packingListJson[headerRow] || headerRow === -1) {
-      return matcherResult.WRONG_HEADER;
+      return matcher_result.WRONG_HEADER;
     }
 
     const establishmentNumber = regex.findMatch(

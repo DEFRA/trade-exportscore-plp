@@ -1,4 +1,4 @@
-const mqConfig = {
+const mq_config = {
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
     useCredentialChain: process.env.NODE_ENV === "production",
@@ -18,8 +18,8 @@ const mqConfig = {
 };
 
 const plpSubscription = {
-  ...mqConfig.messageQueue,
-  ...mqConfig.plpSubscription,
+  ...mq_config.messageQueue,
+  ...mq_config.plpSubscription,
 };
 
 const tpQueue = {
