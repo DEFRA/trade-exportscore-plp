@@ -18,7 +18,7 @@ function parse(packingListJson) {
   }
   const headerRow = rowFinder(packingListJson, callback);
   if (!packingListJson[headerRow] || headerRow === -1) {
-    return MatcherResult.WRONG_HEADER;
+    return failedParser();
   }
   const dataRow = headerRow + 1;
   const packingListContents = mapParser(

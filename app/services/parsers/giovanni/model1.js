@@ -5,6 +5,7 @@ const { mapParser } = require("../../parser-map");
 const Regex = require("../../../utilities/regex");
 const MatcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
+const { failedParser } = require("../../parser-service");
 function parse(packingListJson) {
   const headerTitles = Object.values(headers.GIOVANNI1.headers);
   function callback(x) {
@@ -12,7 +13,7 @@ function parse(packingListJson) {
   }
   const headerRow = rowFinder(packingListJson, callback);
   if (!packingListJson[headerRow] || headerRow === -1) {
-    return MatcherResult.WRONG_HEADER;
+    return failedParser();
   }
 
   const establishmentNumber = Regex.findMatch(
