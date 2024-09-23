@@ -1,6 +1,6 @@
-const MatcherResult = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
 
@@ -10,15 +10,15 @@ function matches(packingList, filename) {
 
     // check for correct establishment number
     if (
-      !Regex.test(headers.CDS1.establishmentNumber.regex, packingList[sheet])
+      !regex.test(headers.CDS1.establishmentNumber.regex, packingList[sheet])
     ) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
     // check for header values
     const result = matchesHeader(headers.CDS1.regex, packingList[sheet]);
 
-    if (result === MatcherResult.CORRECT) {
+    if (result === matcherResult.CORRECT) {
       logger.log_info(
         "services > matchers > cds > model1.js",
         "matches()",
@@ -28,7 +28,7 @@ function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.log_error("services > matchers > cds > model1.js", "matches()", err);
-    return MatcherResult.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

@@ -1,8 +1,8 @@
-const CombineParser = require("../../parser-combine");
-const ParserModel = require("../../parser-model");
+const combine_parser = require("../../parser-combine");
+const parser_model = require("../../parser-model");
 const headers = require("../../model-headers");
-const Regex = require("../../../utilities/regex");
-const MatcherResult = require("../../matcher-result");
+const regex = require("../../../utilities/regex");
+const matcher_result = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 
@@ -10,7 +10,7 @@ const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function parse(packingListJson) {
   try {
-    const establishmentNumber = Regex.findMatch(
+    const establishmentNumber = regex.findMatch(
       headers.BANDM1.establishmentNumber.regex,
       packingListJson,
     );
@@ -21,7 +21,7 @@ function parse(packingListJson) {
     }
     const headerRow = rowFinder(packingListJson, callback);
     if (!packingListJson[headerRow] || headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
+      return matcher_result.WRONG_HEADER;
     }
 
     const lastRow =
@@ -38,11 +38,11 @@ function parse(packingListJson) {
         total_net_weight_kg: col.G ?? null,
       }));
 
-    return CombineParser.combine(
+    return combine_parser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      ParserModel.BANDM1,
+      parser_model.BANDM1,
     );
   } catch (err) {
     logger.log_error(

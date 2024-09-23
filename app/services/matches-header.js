@@ -1,18 +1,18 @@
-const MatcherResult = require("./matcher-result");
-const Regex = require("../utilities/regex");
+const matcher_result = require("./matcher-result");
+const regex = require("../utilities/regex");
 const logger = require("../utilities/logger");
 
 function matchesHeader(regexHeader, packingListSheet) {
   try {
     for (const header in regexHeader) {
-      if (!Regex.test(regexHeader[header], packingListSheet)) {
-        return MatcherResult.WRONG_HEADER;
+      if (!regex.test(regexHeader[header], packingListSheet)) {
+        return matcher_result.WRONG_HEADER;
       }
     }
-    return MatcherResult.CORRECT;
+    return matcher_result.CORRECT;
   } catch (err) {
     logger.log_error("services > matches-header.js", "matchesHeader()", err);
-    return MatcherResult.GENERIC_ERROR;
+    return matcher_result.GENERIC_ERROR;
   }
 }
 module.exports = {

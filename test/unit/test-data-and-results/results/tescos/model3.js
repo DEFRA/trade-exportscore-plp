@@ -1,4 +1,4 @@
-const ParserModel = require("../../../../../app/services/parser-model");
+const parser_model = require("../../../../../app/services/parser-model");
 const { emptyModelResult } = require("../nutricia/model1");
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000022-999",
-    parserModel: ParserModel.TESCO3,
+    parserModel: parser_model.TESCO3,
   },
   invalidTestResult_MissingCells: {
     business_checks: {
@@ -50,7 +50,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000022-999",
-    parserModel: ParserModel.TESCO3,
+    parserModel: parser_model.TESCO3,
   },
   emptyModelResult: {
     business_checks: {
@@ -67,6 +67,6 @@ module.exports = {
       },
     ],
     registration_approval_number: null,
-    parserModel: ParserModel.TESCO3,
+    parserModel: parser_model.TESCO3,
   },
 };

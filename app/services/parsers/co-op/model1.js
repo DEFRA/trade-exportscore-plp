@@ -1,13 +1,13 @@
-const ParserModel = require("../../parser-model");
-const CombineParser = require("../../parser-combine");
+const parser_model = require("../../parser-model");
+const combine_parser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
   try {
-    const establishmentNumber = Regex.findMatch(
+    const establishmentNumber = regex.findMatch(
       headers.COOP1.establishmentNumber.regex,
       packingListJson,
     );
@@ -19,11 +19,11 @@ function parse(packingListJson) {
       headers.COOP1.headers,
     );
 
-    return CombineParser.combine(
+    return combine_parser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      ParserModel.COOP1,
+      parser_model.COOP1,
     );
   } catch (err) {
     logger.log_error(

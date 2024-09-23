@@ -1,12 +1,12 @@
-const CombineParser = require("../../parser-combine");
-const ParserModel = require("../../parser-model");
+const combine_parser = require("../../parser-combine");
+const parser_model = require("../../parser-model");
 const headers = require("../../model-headers");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
   try {
-    const establishmentNumber = Regex.findMatch(
+    const establishmentNumber = regex.findMatch(
       headers.TJMORRIS1.establishmentNumber.regex,
       packingListJson,
     );
@@ -20,11 +20,11 @@ function parse(packingListJson) {
       total_net_weight_kg: col.R ?? null,
     }));
 
-    return CombineParser.combine(
+    return combine_parser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      ParserModel.TJMORRIS1,
+      parser_model.TJMORRIS1,
     );
   } catch (err) {
     logger.log_error(

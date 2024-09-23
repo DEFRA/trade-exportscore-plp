@@ -1,9 +1,9 @@
-const CombineParser = require("../../parser-combine");
-const ParserModel = require("../../parser-model");
+const combine_parser = require("../../parser-combine");
+const parser_model = require("../../parser-model");
 const headers = require("../../model-headers");
 const { mapParser } = require("../../parser-map");
-const Regex = require("../../../utilities/regex");
-const MatcherResult = require("../../matcher-result");
+const regex = require("../../../utilities/regex");
+const matcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 
@@ -15,10 +15,10 @@ function parse(packingListJson) {
     }
     const headerRow = rowFinder(packingListJson, callback);
     if (!packingListJson[headerRow] || headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
+      return matcherResult.WRONG_HEADER;
     }
 
-    const establishmentNumber = Regex.findMatch(
+    const establishmentNumber = regex.findMatch(
       headers.GIOVANNI1.establishmentNumber.regex,
       packingListJson,
     );
@@ -30,11 +30,11 @@ function parse(packingListJson) {
       headers.GIOVANNI1.headers,
     );
 
-    return CombineParser.combine(
+    return combine_parser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      ParserModel.GIOVANNI1,
+      parser_model.GIOVANNI1,
     );
   } catch (err) {
     logger.log_error(

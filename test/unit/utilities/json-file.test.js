@@ -1,17 +1,17 @@
-const JsonFile = require("../../../app/utilities/json-file");
+const json_file = require("../../../app/utilities/json-file");
 
 describe("json-checks", () => {
   test("should replace empty string values with null", () => {
     const input = '{"name": "", "age": "25", "address": " " }';
     const expectedOutput = '{"name":null,"age":"25","address":null}';
-    const result = JsonFile.sanitises(input);
+    const result = json_file.sanitises(input);
     expect(result).toBe(expectedOutput);
   });
 
   test("should trim trailing and leading whitespaces from non-empty string values", () => {
     const input = '{"name": " John Doe ", "age": " 30 " }';
     const expectedOutput = '{"name":"John Doe","age":"30"}';
-    const result = JsonFile.sanitises(input);
+    const result = json_file.sanitises(input);
     expect(result).toBe(expectedOutput);
   });
 
@@ -20,13 +20,13 @@ describe("json-checks", () => {
       '{"user": {"name": " Jane Doe ", "nickname": ""}, "tags": ["  tag1 ", "  "]}';
     const expectedOutput =
       '{"user":{"name":"Jane Doe","nickname":null},"tags":["tag1",null]}';
-    const result = JsonFile.sanitises(input);
+    const result = json_file.sanitises(input);
     expect(result).toBe(expectedOutput);
   });
 
   test("should return null for invalid JSON string", () => {
     const input = '{"name": "John Doe", "age": 30'; // Invalid JSON
-    const result = JsonFile.sanitises(input);
+    const result = json_file.sanitises(input);
     expect(result).toBeNull();
   });
 
@@ -34,7 +34,7 @@ describe("json-checks", () => {
     const input = '{"age": 25, "isActive": true, "details": {"height": 180}}';
     const expectedOutput =
       '{"age":25,"isActive":true,"details":{"height":180}}';
-    const result = JsonFile.sanitises(input);
+    const result = json_file.sanitises(input);
     expect(result).toBe(expectedOutput);
   });
 });

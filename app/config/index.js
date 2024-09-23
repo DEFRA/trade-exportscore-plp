@@ -1,15 +1,15 @@
-const Joi = require("joi");
+const joi = require("joi");
 const path = require("path");
-const mqConfig = require("./mq-config");
-const dbConfig = require("./database-config");
-const dynamicsConfig = require("./dynamics-config");
+const mq_config = require("./mq-config");
+const db_config = require("./database-config");
+const dynamics_config = require("./dynamics-config");
 const { development, production, test } = require("./constants").environments;
-const schemaDefaultPort = 3004;
+const schema_default_port = 3004;
 
 // Define config schema
-const schema = Joi.object({
-  port: Joi.number().default(schemaDefaultPort),
-  env: Joi.string().valid(development, test, production).default(development),
+const schema = joi.object({
+  port: joi.number().default(schema_default_port),
+  env: joi.string().valid(development, test, production).default(development),
 });
 
 // Build config
@@ -35,10 +35,10 @@ const value = result.value;
 value.isDev = value.env === development;
 value.isProd = value.env === production;
 
-value.dbConfig = dbConfig;
-value.plpSubscription = mqConfig.plpSubscription;
-value.tpQueue = mqConfig.tpQueue;
-value.dynamicsConfig = dynamicsConfig;
+value.dbConfig = db_config;
+value.plpSubscription = mq_config.plpSubscription;
+value.tpQueue = mq_config.tpQueue;
+value.dynamicsConfig = dynamics_config;
 
 value.plDir = path.join(process.cwd(), "/app/packing-lists/");
 

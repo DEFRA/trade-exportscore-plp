@@ -6,7 +6,7 @@ const {
 const { createPackingList } = require("../packing-list");
 const { patchPackingListCheck } = require("../services/dynamics-service");
 const config = require("../config");
-const ParserModel = require("../services/parser-model");
+const parser_model = require("../services/parser-model");
 const { sendParsed } = require("../messaging/send-parsed-message");
 const logger = require("./../utilities/logger");
 
@@ -46,7 +46,7 @@ async function processPlpMessage(message, receiver) {
       );
     }
 
-    if (packingList.parserModel !== ParserModel.NOMATCH) {
+    if (packingList.parserModel !== parser_model.NOMATCH) {
       try {
         await createPackingList(packingList, message.body.application_id);
         logger.log_info(

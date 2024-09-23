@@ -1,5 +1,5 @@
-const MatcherResult = require("../../matcher-result");
-const Regex = require("../../../utilities/regex");
+const matcherResult = require("../../matcher-result");
+const regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
@@ -10,12 +10,12 @@ function matches(packingList, filename) {
 
     // check for correct establishment number
     if (
-      !Regex.test(
+      !regex.test(
         headers.TJMORRIS1.establishmentNumber.regex,
         packingList[sheet],
       )
     ) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 
     // check for header values
@@ -30,12 +30,12 @@ function matches(packingList, filename) {
 
     const headerRow = rowFinder(packingList[sheet], callback);
     if (!packingList[sheet][headerRow] || headerRow === -1) {
-      return MatcherResult.WRONG_HEADER;
+      return matcherResult.WRONG_HEADER;
     }
 
     for (const key in header) {
       if (!packingList[sheet][headerRow][key]?.startsWith(header[key])) {
-        return MatcherResult.WRONG_HEADER;
+        return matcherResult.WRONG_HEADER;
       }
     }
 
@@ -44,14 +44,14 @@ function matches(packingList, filename) {
       "matches()",
       `Packing list matches tjmorris Model 1 with filename: ${filename}`,
     );
-    return MatcherResult.CORRECT;
+    return matcherResult.CORRECT;
   } catch (err) {
     logger.log_error(
       "services > matchers > tjmorris > model1.js",
       "matches()",
       err,
     );
-    return MatcherResult.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

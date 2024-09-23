@@ -1,10 +1,10 @@
-const MatcherResult = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
 
-function matchesModel(packingList, filename, regex, trader) {
+function matchesModel(packingList, filename, regex_expression, trader) {
   let headerRow = 0;
 
   try {
@@ -17,14 +17,14 @@ function matchesModel(packingList, filename, regex, trader) {
 
     for (const sheet of sheets) {
       // check for correct establishment number
-      if (!Regex.test(regex, packingList[sheet])) {
-        return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      if (!regex.test(regex_expression, packingList[sheet])) {
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
       headerRow = rowFinder(packingList[sheet], callback);
       if (headerRow === -1) {
-        return MatcherResult.WRONG_HEADER;
+        return matcherResult.WRONG_HEADER;
       }
       const header = {
         C: "Commodity code",
@@ -45,7 +45,7 @@ function matchesModel(packingList, filename, regex, trader) {
               .toLowerCase()
               .startsWith(header[key].toLowerCase()))
         ) {
-          return MatcherResult.WRONG_HEADER;
+          return matcherResult.WRONG_HEADER;
         }
       }
     }
@@ -55,14 +55,14 @@ function matchesModel(packingList, filename, regex, trader) {
       "matches()",
       `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
     );
-    return MatcherResult.CORRECT;
+    return matcherResult.CORRECT;
   } catch (err) {
     logger.log_error(
       "services > matchers > fowlerwelch > model1.js",
       "matches()",
       err,
     );
-    return MatcherResult.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 
