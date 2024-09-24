@@ -13,9 +13,6 @@ function parse(packingListJson) {
     return Object.values(x).includes(headerTitles[0]);
   }
   const headerRow = rowFinder(packingListJson, callback);
-  if (!packingListJson[headerRow] || headerRow === -1) {
-    return failedParser();
-  }
 
   const establishmentNumber = Regex.findMatch(
     headers.GIOVANNI1.establishmentNumber.regex,

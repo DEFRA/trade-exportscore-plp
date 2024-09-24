@@ -19,10 +19,6 @@ function parse(packingListJson) {
     return Object.values(x).includes(headerTitles[0]);
   }
   const headerRow = rowFinder(packingListJson, callback);
-  if (!packingListJson[headerRow] || headerRow === -1) {
-    return failedParser();
-  }
-
   const lastRow =
     packingListJson.slice(headerRow + 1).findIndex((x) => isEndOfRow(x)) +
     headerRow;
