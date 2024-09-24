@@ -27,24 +27,22 @@ async function getXlsPackingListFromBlob(blobClient) {
 }
 
 async function streamToBuffer(readableStream) {
-  try {
-    return new Promise((resolve, reject) => {
-      const chunks = [];
-      readableStream.on("data", (data) => {
-        chunks.push(data instanceof Buffer ? data : Buffer.from(data));
-      });
-      readableStream.on("end", () => {
-        resolve(Buffer.concat(chunks));
-      });
-      readableStream.on("error", reject);
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    readableStream.on("data", (data) => {
+      chunks.push(data instanceof Buffer ? data : Buffer.from(data));
     });
-  } catch (err) {
+    readableStream.on("end", () => {
+      resolve(Buffer.concat(chunks));
+    });
+    readableStream.on("error", reject);
+  }).catch((err) => {
     logger.log_error(
       "app/services/storage-account.js",
       "streamToBuffer()",
       err,
     );
-  }
+  });
 }
 
 module.exports = { createStorageAccountClient, getXlsPackingListFromBlob };
