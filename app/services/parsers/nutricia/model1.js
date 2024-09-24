@@ -3,9 +3,7 @@ const CombineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
 const Regex = require("../../../utilities/regex");
-const MatcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
-const { failedParser } = require("../../parser-service");
 
 function parse(packingListJson) {
   const establishmentNumber = Regex.findMatch(

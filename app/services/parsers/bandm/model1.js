@@ -2,9 +2,7 @@ const CombineParser = require("../../parser-combine");
 const ParserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const Regex = require("../../../utilities/regex");
-const MatcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
-const { failedParser } = require("../../parser-service");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
