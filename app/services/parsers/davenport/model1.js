@@ -28,7 +28,7 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.log_error(
-      "services > parsers > davenport > model1.js",
+      "app/services/parsers/davenport/model1.js",
       "matches()",
       err,
     );

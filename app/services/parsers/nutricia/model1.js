@@ -38,7 +38,7 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.log_error(
-      "services > parsers > nutrica > model1.js",
+      "app/services/parsers/nutricia/model1.js",
       "matches()",
       err,
     );

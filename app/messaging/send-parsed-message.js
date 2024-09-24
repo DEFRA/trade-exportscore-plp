@@ -63,7 +63,11 @@ async function sendParsed(applicationId, parsedResult) {
       );
     }
   } catch (err) {
-    logger.log_error("app/messaging/send-parsed-message.js", "sendParsed()", err);
+    logger.log_error(
+      "app/messaging/send-parsed-message.js",
+      "sendParsed()",
+      err,
+    );
   }
 }
 

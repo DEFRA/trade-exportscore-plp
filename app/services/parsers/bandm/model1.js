@@ -45,11 +45,7 @@ function parse(packingListJson) {
       parser_model.BANDM1,
     );
   } catch (err) {
-    logger.log_error(
-      "app/services/parsers/bandm/model1.js",
-      "matches()",
-      err,
-    );
+    logger.log_error("app/services/parsers/bandm/model1.js", "matches()", err);
   }
 }
 

@@ -30,7 +30,7 @@ async function bearerTokenRequest() {
     return json.access_token;
   } catch (err) {
     logger.log_error(
-      "services > dynamics-service.js",
+      "app/services/dynamics-service.js",
       "bearerTokenRequest()",
       err,
     );
@@ -56,7 +56,7 @@ async function patchPackingListCheck(applicationId, isApproved) {
     });
     const status = (await response).status;
     logger.log_info(
-      "services > dynamics-service.js",
+      "app/services/dynamics-service.js",
       "patchPackingListCheck()",
       `Upsert ${applicationId} with outcome ${isApproved}, status ${status}`,
     );
@@ -64,7 +64,7 @@ async function patchPackingListCheck(applicationId, isApproved) {
     return status;
   } catch (err) {
     logger.log_error(
-      "services > dynamics-service.js",
+      "app/services/dynamics-service.js",
       "patchPackingListCheck()",
       err,
     );

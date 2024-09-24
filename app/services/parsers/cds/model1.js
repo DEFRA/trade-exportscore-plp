@@ -27,7 +27,7 @@ function parse(packingListJson) {
       parser_model.CDS1,
     );
   } catch (err) {
-    logger.log_error("services > parsers > cds > model1.js", "matches()", err);
+    logger.log_error("app/services/parsers/cds/model1.js", "matches()", err);
   }
 }
 

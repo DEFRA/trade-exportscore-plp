@@ -30,7 +30,7 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.log_error(
-      "services > parsers > sainsburys > model1.js",
+      "app/services/parsers/sainsburys/model1.js",
       "matches()",
       err,
     );

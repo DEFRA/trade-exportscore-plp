@@ -38,7 +38,7 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.log_error(
-      "services > parsers > giovanni > model1.js",
+      "app/services/parsers/giovanni/model1.js",
       "matches()",
       err,
     );

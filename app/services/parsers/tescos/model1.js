@@ -27,11 +27,7 @@ function parse(packingListJson) {
       parser_model.TESCO1,
     );
   } catch (err) {
-    logger.log_error(
-      "services > parsers > tescos > model1.js",
-      "matches()",
-      err,
-    );
+    logger.log_error("app/services/parsers/tescos/model1.js", "matches()", err);
   }
 }
 

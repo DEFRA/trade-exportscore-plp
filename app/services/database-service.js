@@ -36,6 +36,10 @@ module.exports = (() => {
       sequelize,
     };
   } catch (err) {
-    logger.log_error("services > database-service.js", "module.exports()", err);
+    logger.log_error(
+      "app/services/database-service.js",
+      "module.exports()",
+      err,
+    );
   }
 })();

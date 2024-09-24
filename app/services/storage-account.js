@@ -19,7 +19,7 @@ async function getXlsPackingListFromBlob(blobClient) {
     return result;
   } catch (err) {
     logger.log_error(
-      "services > storage-account.js",
+      "app/services/storage-account.js",
       "getXlsPackingListFromBlob()",
       err,
     );
@@ -39,7 +39,11 @@ async function streamToBuffer(readableStream) {
       readableStream.on("error", reject);
     });
   } catch (err) {
-    logger.log_error("services > storage-account.js", "streamToBuffer()", err);
+    logger.log_error(
+      "app/services/storage-account.js",
+      "streamToBuffer()",
+      err,
+    );
   }
 }
 

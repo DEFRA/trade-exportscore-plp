@@ -27,11 +27,7 @@ function parse(packingListJson) {
       parser_model.KEPAK1,
     );
   } catch (err) {
-    logger.log_error(
-      "services > parsers > kepak > model1.js",
-      "matches()",
-      err,
-    );
+    logger.log_error("app/services/parsers/kepak/model1.js", "matches()", err);
   }
 }
 

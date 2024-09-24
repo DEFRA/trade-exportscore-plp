@@ -26,11 +26,7 @@ function parse(packingListJson) {
       parser_model.COOP1,
     );
   } catch (err) {
-    logger.log_error(
-      "services > parsers > co-op > model1.js",
-      "matches()",
-      err,
-    );
+    logger.log_error("app/services/parsers/co-op/model1.js", "matches()", err);
   }
 }
 

@@ -12,12 +12,24 @@ function setup() {
       const cloudRoleTag = appInsights.defaultClient.context.keys.cloudRole;
       const appName = process.env.APPINSIGHTS_CLOUDROLE;
       appInsights.defaultClient.context.tags[cloudRoleTag] = appName;
-      logger.log_info("app/services/app-insights.js", "setup()", "App Insights is running!");
+      logger.log_info(
+        "app/services/app-insights.js",
+        "setup()",
+        "App Insights is running!",
+      );
     } else {
-      logger.log_error("app/services/app-insights.js", "setup()", "App Insights is not running!");
+      logger.log_error(
+        "app/services/app-insights.js",
+        "setup()",
+        "App Insights is not running!",
+      );
     }
   } catch (err) {
-    logger.log_error("app/services/app-insights.js", "setup()", `App Insights Setup encountered: ${err}`);
+    logger.log_error(
+      "app/services/app-insights.js",
+      "setup()",
+      `App Insights Setup encountered: ${err}`,
+    );
   }
 }
 

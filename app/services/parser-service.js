@@ -15,7 +15,7 @@ function findParser(packingList, filename) {
 
     // Sanitised packing list (i.e. emove trailing spaces and empty cells)
     const packingListJson = JSON.stringify(packingList);
-    const sanitisedPackingListJson = json_file.sanitises(packingListJson);
+    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
     // Test for Excel spreadsheets
     if (file_extension.isExcel(filename)) {
@@ -34,14 +34,14 @@ function findParser(packingList, filename) {
 
       if (!parserFound) {
         logger.log_info(
-          "services > parser-service.js",
+          "app/services/parser-service.js",
           "findParser()",
           `Failed to parse packing list with filename: ${filename}`,
         );
       }
     } else {
       logger.log_info(
-        "services > parser-service.js",
+        "app/services/parser-service.js",
         "findParser()",
         `Failed to parse packing list with filename: ${filename}`,
       );
@@ -58,7 +58,7 @@ function findParser(packingList, filename) {
 
     return parsedPackingList;
   } catch (err) {
-    logger.log_error("services > parser-service.js", "findParser()", err);
+    logger.log_error("app/services/parser-service.js", "findParser()", err);
   }
 }
 

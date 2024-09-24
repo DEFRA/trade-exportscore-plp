@@ -57,7 +57,7 @@ describe("upsert idcoms", () => {
 
     expect(patchPackingListCheck).not.toHaveBeenCalled();
     expect(console.error.mock.calls[0][0]).toBe(
-      "Whilst running the 'get()' method in 'routes > upsert-idcoms.js', the PLP application encounterd: TypeError: Cannot read properties of undefined (reading 'applicationId')",
+      "Whilst running the 'get()' method in 'app/routes/upsert-idcoms.js', the PLP application encounterd: TypeError: Cannot read properties of undefined (reading 'applicationId')",
     );
   });
 

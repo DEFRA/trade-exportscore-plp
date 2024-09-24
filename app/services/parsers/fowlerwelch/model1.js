@@ -46,7 +46,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     );
   } catch (err) {
     logger.log_error(
-      "services > parsers > fowlerwelch > model1.js",
+      "app/services/parsers/fowlerwelch/model1.js",
       "matches()",
       err,
     );

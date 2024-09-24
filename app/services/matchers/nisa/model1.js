@@ -26,11 +26,7 @@ function matches(packingList, filename) {
     }
     return result;
   } catch (err) {
-    logger.log_error(
-      "app/services/matchers/nisa/model1.js",
-      "matches()",
-      err,
-    );
+    logger.log_error("app/services/matchers/nisa/model1.js", "matches()", err);
     return matcher_result.GENERIC_ERROR;
   }
 }

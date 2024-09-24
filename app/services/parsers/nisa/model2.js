@@ -27,7 +27,7 @@ function parse(packingListJson) {
       parser_model.NISA2,
     );
   } catch (err) {
-    logger.log_error("services > parsers > nisa > model2.js", "matches()", err);
+    logger.log_error("app/services/parsers/nisa/model2.js", "matches()", err);
   }
 }
 
