@@ -23,7 +23,7 @@ function matches(packingList, filename) {
 
     if (result === matcher_result.CORRECT) {
       logger.log_info(
-        "services > matchers > buffaload-logistics > model1.js",
+        "app/services/matchers/buffaload-logistics/model1.js",
         "matches()",
         `Packing list matches buffaload-logistics Model 1 with filename: ${filename}`,
       );
@@ -31,7 +31,7 @@ function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.log_error(
-      "services > matchers > buffaload-logistics > model1.js",
+      "app/services/matchers/buffaload-logistics/model1.js",
       "matches()",
       err,
     );

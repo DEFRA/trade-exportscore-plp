@@ -9,7 +9,7 @@ async function createServer() {
     await sequelize.authenticate();
   } catch (err) {
     logger.log_error(
-      "server.js",
+      "app/server.js",
       "createServer > sequelize.authenticate()",
       err,
     );

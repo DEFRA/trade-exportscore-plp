@@ -20,7 +20,7 @@ function matches(packingList, filename) {
 
     if (result === matcher_result.CORRECT) {
       logger.log_info(
-        "services > matchers > asda > model2.js",
+        "app/services/matchers/asda/model2.js",
         "matches()",
         `Packing list matches Asda Model 2 with filename: ${filename}`,
       );
@@ -28,7 +28,7 @@ function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.log_error(
-      "services > matchers > asda > model2.js",
+      "app/services/matchers/asda/model2.js",
       "matches()",
       err,
     );

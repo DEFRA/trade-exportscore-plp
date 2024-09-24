@@ -19,7 +19,7 @@ function matches(packingList, filename) {
 
     if (result === matcher_result.CORRECT) {
       logger.log_info(
-        "services > matchers > nisa > model2.js",
+        "app/services/matchers/nisa/model2.js",
         "matches()",
         `Packing list matches nisa Model 2 with filename: ${filename}`,
       );
@@ -27,7 +27,7 @@ function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.log_error(
-      "services > matchers > nisa > model2.js",
+      "app/services/matchers/nisa/model2.js",
       "matches()",
       err,
     );

@@ -20,14 +20,14 @@ function matches(packingList, filename) {
 
     if (result === matcher_result.CORRECT) {
       logger.log_info(
-        "services > matchers > cds > model1.js",
+        "app/services/matchers/cds/model1.js",
         "matches()",
         `Packing list matches cds Model 1 with filename: ${filename}`,
       );
     }
     return result;
   } catch (err) {
-    logger.log_error("services > matchers > cds > model1.js", "matches()", err);
+    logger.log_error("app/services/matchers/cds/model1.js", "matches()", err);
     return matcher_result.GENERIC_ERROR;
   }
 }

@@ -20,7 +20,7 @@ function matches(packingList, filename) {
 
     if (result === matcher_result.CORRECT) {
       logger.log_info(
-        "services > matchers > tescos > model1.js",
+        "app/services/matchers/tescos/model1.js",
         "matches()",
         `Packing list matches tescos Model 1 with filename: ${filename}`,
       );
@@ -28,7 +28,7 @@ function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.log_error(
-      "services > matchers > tescos > model1.js",
+      "app/services/matchers/tescos/model1.js",
       "matches()",
       err,
     );

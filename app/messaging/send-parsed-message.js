@@ -12,13 +12,13 @@ async function sendParsedAdp(parsedResult, applicationId) {
     await parsedSender.sendMessage(message);
     await parsedSender.closeConnection();
     logger.log_info(
-      "messaging > process-plp-message.js",
+      "app/messaging/send-parsed-message.js",
       "sendParsedAdp()",
       `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
     );
   } catch (err) {
     logger.log_error(
-      "messaging > send-parsed-message.js",
+      "app/messaging/send-parsed-message.js",
       "sendParsedAdp()",
       err,
     );
@@ -41,14 +41,14 @@ async function sendParsed(applicationId, parsedResult) {
       try {
         await sender.sendMessages(message);
         logger.log_info(
-          "messaging > process-plp-message.js",
+          "app/messaging/send-parsed-message.js",
           "sendParsed()",
           `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
         );
         await sender.close();
       } catch (err) {
         logger.log_error(
-          "messaging > send-parsed-message.js",
+          "app/messaging/send-parsed-message.js",
           "sendParsed() > sender.sendMessages",
           err,
         );
@@ -57,13 +57,13 @@ async function sendParsed(applicationId, parsedResult) {
       }
     } else {
       logger.log_error(
-        "messaging > send-parsed-message.js",
+        "app/messaging/send-parsed-message.js",
         "sendParsed() > sender.sendMessages",
         "Service Bus connection to TP has not been initialised because 'config.tpQueue.managedIdentityClientId' is missing.",
       );
     }
   } catch (err) {
-    logger.log_error("messaging > send-parsed-message.js", "sendParsed()", err);
+    logger.log_error("app/messaging/send-parsed-message.js", "sendParsed()", err);
   }
 }
 

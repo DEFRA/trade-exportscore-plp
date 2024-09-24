@@ -11,13 +11,13 @@ async function createPackingList(packingListJson, applicationId) {
       });
       await models.item.bulkCreate(packingList.item, { transaction });
       logger.log_info(
-        "packing-list > index.js",
+        "app/packing-list/index.js",
         "createPackingList()",
         `Saved packing list in database with application id: ${packingList.applicationId}`,
       );
     });
   } catch (err) {
-    logger.log_error("packing-list > index.js", "createPackingList()", err);
+    logger.log_error("app/packing-list/index.js", "createPackingList()", err);
   }
 }
 
@@ -32,7 +32,7 @@ function packingListMapper(packingListJson, applicationId) {
       parserModel: packingListJson.parserModel,
     };
   } catch (err) {
-    logger.log_error("packing-list > index.js", "packingListMapper()", err);
+    logger.log_error("app/packing-list/index.js", "packingListMapper()", err);
   }
 }
 
@@ -49,7 +49,7 @@ function itemsMapper(o, applicationId) {
       applicationId,
     };
   } catch (err) {
-    logger.log_error("packing-list > index.js", "itemsMapper()", err);
+    logger.log_error("app/packing-list/index.js", "itemsMapper()", err);
   }
 }
 

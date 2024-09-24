@@ -51,14 +51,14 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     }
 
     logger.log_info(
-      "services > matchers > fowlerwelch > model1.js",
+      "app/services/matchers/fowlerwelch/model1.js",
       "matches()",
       `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
     );
     return matcher_result.CORRECT;
   } catch (err) {
     logger.log_error(
-      "services > matchers > fowlerwelch > model1.js",
+      "app/services/matchers/fowlerwelch/model1.js",
       "matches()",
       err,
     );

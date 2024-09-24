@@ -12,19 +12,19 @@ async function start() {
       await plpReceiver.subscribe();
 
       logger.log_info(
-        "messaging > index.js",
+        "app/messaging/index.js",
         "start()",
         "Ready to receive messages",
       );
     } else {
       logger.log_error(
-        "messaging > index.js",
+        "app/messaging/index.js",
         "start()",
         "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
       );
     }
   } catch (err) {
-    logger.log_error("messaging > index.js", "start()", err);
+    logger.log_error("app/messaging/index.js", "start()", err);
   }
 }
 
@@ -34,7 +34,7 @@ async function stop() {
       await plpReceiver.closeConnection();
     }
   } catch (err) {
-    logger.log_error("messaging > index.js", "stop()", err);
+    logger.log_error("app/messaging/index.js", "stop()", err);
   }
 }
 

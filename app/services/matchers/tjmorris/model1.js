@@ -40,14 +40,14 @@ function matches(packingList, filename) {
     }
 
     logger.log_info(
-      "services > matchers > tjmorris > model1.js",
+      "app/services/matchers/tjmorris/model1.js",
       "matches()",
       `Packing list matches tjmorris Model 1 with filename: ${filename}`,
     );
     return matcher_result.CORRECT;
   } catch (err) {
     logger.log_error(
-      "services > matchers > tjmorris > model1.js",
+      "app/services/matchers/tjmorris/model1.js",
       "matches()",
       err,
     );

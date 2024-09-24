@@ -19,7 +19,7 @@ function matches(packingList, filename) {
 
     if (result === matcher_result.CORRECT) {
       logger.log_info(
-        "services > matchers > co-op > model1.js",
+        "app/services/matchers/co-op/model1.js",
         "matches()",
         `Packing list matches co-op Model 1 with filename: ${filename}`,
       );
@@ -27,7 +27,7 @@ function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.log_error(
-      "services > matchers > co-op > model1.js",
+      "app/services/matchers/co-op/model1.js",
       "matches()",
       err,
     );

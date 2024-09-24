@@ -18,7 +18,7 @@ function matchesModel(packingList, filename, regex_expression, trader) {
 
     if (result === matcher_result.CORRECT) {
       logger.log_info(
-        "services > matchers > giovanni > model1.js",
+        "app/services/matchers/giovanni/model1.js",
         "matches()",
         `Packing list matches giovanni Model 1 with filename: ${filename}`,
       );
@@ -26,7 +26,7 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     return result;
   } catch (err) {
     logger.log_error(
-      "services > matchers > giovanni > model1.js",
+      "app/services/matchers/giovanni/model1.js",
       "matches()",
       err,
     );

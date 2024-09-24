@@ -15,7 +15,7 @@ module.exports = {
     try {
       result = excelToJson({ sourceFile: filename });
     } catch (err) {
-      logger.log_error("routes > non-ai.js", "get() > excelToJson", err);
+      logger.log_error("app/routes/non-ai.js", "get() > excelToJson", err);
     }
 
     let packingList;
@@ -29,7 +29,7 @@ module.exports = {
       }
     } catch (err) {
       logger.log_error(
-        "routes > non-ai.js",
+        "app/routes/non-ai.js",
         "get() > findParser / createPackingList",
         err,
       );

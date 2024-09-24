@@ -20,7 +20,7 @@ module.exports = {
               );
             } catch (err) {
               logger.log_error(
-                "routes > upsert-idcoms.js",
+                "app/routes/upsert-idcoms.js",
                 "get() > patchPackingListCheck",
                 err,
               );
@@ -34,7 +34,7 @@ module.exports = {
               checkStatus = StatusCodes.OK;
             } catch (err) {
               logger.log_error(
-                "routes > upsert-idcoms.js",
+                "app/routes/upsert-idcoms.js",
                 "get() > sendParsed",
                 err,
               );
@@ -43,7 +43,7 @@ module.exports = {
         }
         return h.response(checkStatus).code(StatusCodes.OK);
       } catch (err) {
-        logger.log_error("routes > upsert-idcoms.js", "get()", err);
+        logger.log_error("app/routes/upsert-idcoms.js", "get()", err);
       }
     },
   },

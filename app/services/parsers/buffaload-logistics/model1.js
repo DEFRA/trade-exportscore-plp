@@ -27,7 +27,7 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.log_error(
-      "services > parsers > buffaload-logistics > model1.js",
+      "app/services/parsers/buffaload-logistics/model1.js",
       "matches()",
       err,
     );
