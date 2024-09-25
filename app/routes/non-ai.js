@@ -4,6 +4,14 @@ const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const { StatusCodes } = require("http-status-codes");
 const parser_model = require("../services/parser-model");
+const crypto = require("crypto");
+
+function getRandomInt(min = 1, max = 10000000) {
+  const range = max - min + 1;
+  const randomBuffer = crypto.randomBytes(4); // Get 4 bytes of random data
+  const randomValue = randomBuffer.readUInt32BE(0); // Read an unsigned 32-bit integer from the buffer
+  return (randomValue % range) + min; // Limit to the specified range
+}
 const logger = require("./../utilities/logger");
 
 module.exports = {
@@ -18,21 +26,12 @@ module.exports = {
       logger.log_error("app/routes/non-ai.js", "get() > excelToJson", err);
     }
 
-    let packingList;
-    try {
-      packingList = findParser(result, filename);
-      if (packingList.parserModel !== parser_model.NOMATCH) {
-        const randomInt = Math.floor(
-          Math.random() * (10000000 - 1 + 1) + 1,
-        ).toString();
-        await createPackingList(packingList, randomInt);
-      }
-    } catch (err) {
-      logger.log_error(
-        "app/routes/non-ai.js",
-        "get() > findParser / createPackingList",
-        err,
-      );
+    const packingList = findParser(result, filename);
+    if (packingList.parserModel !== parser_model.NOMATCH) {
+      const randomInt = Math.floor(
+        Math.random() * (10000000 - 1 + 1) + 1,
+      ).toString();
+      await createPackingList(packingList, randomInt);
     }
 
     return h.response(packingList).code(StatusCodes.OK);
