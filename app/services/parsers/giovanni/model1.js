@@ -3,17 +3,14 @@ const ParserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const { mapParser } = require("../../parser-map");
 const Regex = require("../../../utilities/regex");
-const MatcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
+
 function parse(packingListJson) {
   const headerTitles = Object.values(headers.GIOVANNI1.headers);
   function callback(x) {
     return Object.values(x).includes(headerTitles[0]);
   }
   const headerRow = rowFinder(packingListJson, callback);
-  if (!packingListJson[headerRow] || headerRow === -1) {
-    return MatcherResult.WRONG_HEADER;
-  }
 
   const establishmentNumber = Regex.findMatch(
     headers.GIOVANNI1.establishmentNumber.regex,
