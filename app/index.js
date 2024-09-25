@@ -6,7 +6,6 @@ const createServer = require("./server");
 createServer()
   .then((server) => server.start())
   .catch((err) => {
-    logger.log_error("app/index.js", "createServer()", error);
-    console.error(err);
+    logger.log_error("app/index.js", "createServer()", err);
     process.exit(1);
   });

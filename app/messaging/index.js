@@ -2,6 +2,7 @@ const config = require("../config");
 const processPlpMessage = require("./process-plp-message");
 const { MessageReceiver } = require("adp-messaging");
 const logger = require("./../utilities/logger");
+
 let plpReceiver;
 
 async function start() {
