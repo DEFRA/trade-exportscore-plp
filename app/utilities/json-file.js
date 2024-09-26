@@ -1,4 +1,6 @@
-function sanitises(jsonString) {
+const logger = require("../utilities/logger");
+
+function sanitise(jsonString) {
   try {
     // Parse the JSON string into a JavaScript object
     const jsonObj = JSON.parse(jsonString);
@@ -28,12 +30,16 @@ function sanitises(jsonString) {
 
     // Convert the sanitised object back to a JSON string
     return JSON.stringify(jsonObj);
-  } catch (error) {
-    console.error("Invalid JSON string provided:", error);
+  } catch (err) {
+    logger.log_error(
+      "app/utilities/json-file.js",
+      "sanitise()",
+      `Invalid JSON string provided: ${err}`,
+    );
     return null;
   }
 }
 
 module.exports = {
-  sanitises,
+  sanitise,
 };

@@ -2,39 +2,91 @@ const hapi = require("@hapi/hapi");
 const config = require("./config");
 const { sequelize } = require("./services/database-service");
 const messageService = require("./messaging");
+const logger = require("./utilities/logger");
 
 async function createServer() {
-  await sequelize.authenticate();
-
-  // Create the hapi server
-  const server = hapi.server({
-    port: config.port,
-    routes: {
-      validate: {
-        options: {
-          abortEarly: false,
-        },
-      },
-    },
-  });
-
-  // Register the plugins
-  await server.register(require("./plugins/router"));
-
-  if (config.isDev) {
-    await server.register(require("blipp"));
+  try {
+    await sequelize.authenticate();
+  } catch (err) {
+    logger.log_error(
+      "app/server.js",
+      "createServer > sequelize.authenticate()",
+      err,
+    );
   }
 
-  await messageService.start();
+  let server;
+  try {
+    // Create the hapi server
+    server = hapi.server({
+      port: config.port,
+      routes: {
+        validate: {
+          options: {
+            abortEarly: false,
+          },
+        },
+      },
+    });
+  } catch (err) {
+    logger.log_error("app/server.js", "createServer > hapi.server()", err);
+  }
+
+  try {
+    // Register the plugins
+    await server.register(require("./plugins/router"));
+  } catch (err) {
+    logger.log_error("app/server.js", "createServer > server.register()", err);
+  }
+
+  try {
+    if (config.isDev) {
+      await server.register(require("blipp"));
+    }
+  } catch (err) {
+    logger.log_error(
+      "app/server.js",
+      "createServer > server.register() [DEV]",
+      err,
+    );
+  }
+
+  try {
+    await messageService.start();
+  } catch (err) {
+    logger.log_error(
+      "app/server.js",
+      "createServer > messageService.start()",
+      err,
+    );
+  }
 
   process.on("SIGTERM", async function () {
+    try {
+      await messageService.start();
+    } catch (err) {
+      logger.log_error(
+        "app/server.js",
+        "createServer > messageService.start()",
+        err,
+      );
+    }
     await messageService.stop();
     process.exit(0);
   });
 
   process.on("SIGINT", async function () {
-    await messageService.stop();
-    process.exit(0);
+    try {
+      await messageService.stop();
+    } catch (err) {
+      logger.log_error(
+        "app/server.js",
+        "createServer > messageService.stop()",
+        err,
+      );
+    } finally {
+      process.exit(0);
+    }
   });
 
   return server;

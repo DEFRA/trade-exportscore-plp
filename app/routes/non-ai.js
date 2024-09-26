@@ -3,7 +3,7 @@ const excelToJson = require("@boterop/convert-excel-to-json");
 const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const { StatusCodes } = require("http-status-codes");
-const ParserModel = require("../services/parser-model");
+const parser_model = require("../services/parser-model");
 const crypto = require("crypto");
 
 function getRandomInt(min = 1, max = 10000000) {
@@ -12,6 +12,7 @@ function getRandomInt(min = 1, max = 10000000) {
   const randomValue = randomBuffer.readUInt32BE(0); // Read an unsigned 32-bit integer from the buffer
   return (randomValue % range) + min; // Limit to the specified range
 }
+const logger = require("./../utilities/logger");
 
 module.exports = {
   method: "GET",
@@ -22,12 +23,14 @@ module.exports = {
     try {
       result = excelToJson({ sourceFile: filename });
     } catch (err) {
-      console.error(err);
+      logger.log_error("app/routes/non-ai.js", "get() > excelToJson", err);
     }
 
     const packingList = findParser(result, filename);
-    if (packingList.parserModel !== ParserModel.NOMATCH) {
-      const randomInt = getRandomInt().toString();
+    if (packingList.parserModel !== parser_model.NOMATCH) {
+      const randomInt = Math.floor(
+        Math.random() * (10000000 - 1 + 1) + 1,
+      ).toString();
       await createPackingList(packingList, randomInt);
     }
 

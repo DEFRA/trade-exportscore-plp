@@ -44,7 +44,7 @@ describe("upsert idcoms", () => {
     mockIsDynamicsIntegration = true;
   });
 
-  test("should not call the upsert when application id not is specified", async () => {
+  test("should not call the upsert when application id is not specified", async () => {
     const mockHandler = {};
 
     await upsertIdcoms.options.handler({}, mockHandler);
@@ -56,7 +56,9 @@ describe("upsert idcoms", () => {
     await upsertIdcoms.options.handler({}, mockHandler);
 
     expect(patchPackingListCheck).not.toHaveBeenCalled();
-    expect(console.error.mock.calls[0][0]).toBe("Error running upsert: ");
+    expect(console.error.mock.calls[0][0]).toBe(
+      "Whilst running the 'get()' method in 'app/routes/upsert-idcoms.js', the PLP application encounterd: TypeError: Cannot read properties of undefined (reading 'applicationId')",
+    );
   });
 
   test("should perform the upsert when application id is specified and isApproved is true", async () => {

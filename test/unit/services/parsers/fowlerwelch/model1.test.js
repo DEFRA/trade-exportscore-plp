@@ -1,13 +1,13 @@
-const Parser = require("../../../../../app/services/parsers/fowlerwelch/model1");
-const ParserModel = require("../../../../../app/services/parser-model");
+const parser = require("../../../../../app/services/parsers/fowlerwelch/model1");
+const parser_model = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/fowlerwelch/model1");
-const testResults = require("../../../test-data-and-results/results/fowlerwelch/model1");
+const test_results = require("../../../test-data-and-results/results/fowlerwelch/model1");
 
 describe("parseFowlerWelchModel1", () => {
   test("parses valid json", () => {
-    const result = Parser.parse(model.validModel);
+    const result = parser.parse(model.validModel);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toEqual(test_results.validTestResult);
   });
 
   test("parses multiple sheets", () => {
@@ -207,7 +207,7 @@ describe("parseFowlerWelchModel1", () => {
         },
       ],
     };
-    const result = Parser.parse(packingListJson);
+    const result = parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(
       packingListJson["Cust Ord"][45].M,
     );
@@ -261,12 +261,12 @@ describe("parseFowlerWelchModel1", () => {
     expect(result.items[3].type_of_treatment).toBe(
       packingListJson["ARGO"][46].N,
     );
-    expect(result.parserModel).toBe(ParserModel.FOWLERWELCH1);
+    expect(result.parserModel).toBe(parser_model.FOWLERWELCH1);
   });
 
   test("parses empty json", () => {
-    const result = Parser.parse(model.emptyModel);
+    const result = parser.parse(model.emptyModel);
 
-    expect(result).toEqual(testResults.emptyModelResult);
+    expect(result).toEqual(test_results.emptyModelResult);
   });
 });

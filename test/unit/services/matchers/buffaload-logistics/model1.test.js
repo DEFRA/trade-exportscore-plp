@@ -1,5 +1,5 @@
 const Matcher = require("../../../../../app/services/matchers/buffaload-logistics/model1");
-const MatcherResult = require("../../../../../app/services/matcher-result");
+const matcher_result = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/buffaload-logistics/model1");
 
 describe("matchesBuffaloadLogisticsModel1", () => {
@@ -8,7 +8,7 @@ describe("matchesBuffaloadLogisticsModel1", () => {
 
     const result = Matcher.matches(model.validModel, filename);
 
-    expect(result).toBe(MatcherResult.CORRECT);
+    expect(result).toBe(matcher_result.CORRECT);
   });
 
   test("returns generic error for empty json", () => {
@@ -17,7 +17,7 @@ describe("matchesBuffaloadLogisticsModel1", () => {
 
     const result = Matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+    expect(result).toBe(matcher_result.GENERIC_ERROR);
   });
 
   test("returns wrong establishment number for missing establishment number", () => {
@@ -32,7 +32,7 @@ describe("matchesBuffaloadLogisticsModel1", () => {
 
     const result = Matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return wrong header for incorrect header values", () => {
@@ -52,6 +52,6 @@ describe("matchesBuffaloadLogisticsModel1", () => {
 
     const result = Matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(MatcherResult.WRONG_HEADER);
+    expect(result).toBe(matcher_result.WRONG_HEADER);
   });
 });

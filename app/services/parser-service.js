@@ -1,56 +1,69 @@
-const MatcherResult = require("./matcher-result");
-const ParserModel = require("./parser-model");
-const CombineParser = require("./parser-combine");
-const JsonFile = require("../utilities/json-file");
-const FileExtension = require("../utilities/file-extension");
+const matcher_result = require("./matcher-result");
+const parser_model = require("./parser-model");
+const combine_parser = require("./parser-combine");
+const json_file = require("../utilities/json-file");
+const file_extension = require("../utilities/file-extension");
 const { parsersExcel } = require("./model-parsers");
+const logger = require("../utilities/logger");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function findParser(packingList, filename) {
-  let parsedPackingList = failedParser();
-  let parserFound = false;
+  try {
+    let parsedPackingList = failedParser();
+    let parserFound = false;
 
-  // Sanitised packing list (i.e. emove trailing spaces and empty cells)
-  const packingListJson = JSON.stringify(packingList);
-  const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
-  const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
-  // Test for Excel spreadsheets
-  if (FileExtension.isExcel(filename)) {
-    Object.keys(parsersExcel).forEach((key) => {
-      if (
-        parsersExcel[key].matches(sanitisedPackingList, filename) ===
-        MatcherResult.CORRECT
-      ) {
-        parserFound = true;
-        parsedPackingList = parsersExcel[key].parse(
-          sanitisedPackingList,
-          filename,
+    // Sanitised packing list (i.e. emove trailing spaces and empty cells)
+    const packingListJson = JSON.stringify(packingList);
+    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
+    const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+    // Test for Excel spreadsheets
+    if (file_extension.isExcel(filename)) {
+      Object.keys(parsersExcel).forEach((key) => {
+        if (
+          parsersExcel[key].matches(sanitisedPackingList, filename) ===
+          matcher_result.CORRECT
+        ) {
+          parserFound = true;
+          parsedPackingList = parsersExcel[key].parse(
+            sanitisedPackingList,
+            filename,
+          );
+        }
+      });
+
+      if (!parserFound) {
+        logger.log_info(
+          "app/services/parser-service.js",
+          "findParser()",
+          `Failed to parse packing list with filename: ${filename}`,
         );
       }
-    });
-
-    if (!parserFound) {
-      console.info("Failed to parse packing list with filename: ", filename);
+    } else {
+      logger.log_info(
+        "app/services/parser-service.js",
+        "findParser()",
+        `Failed to parse packing list with filename: ${filename}`,
+      );
     }
-  } else {
-    console.info("Failed to parse packing list with filename: ", filename);
-  }
 
-  if (parsedPackingList.parserModel !== ParserModel.NOMATCH) {
-    parsedPackingList.items = parsedPackingList.items.filter(
-      (x) => !Object.values(x).every(isNullOrUndefined),
-    );
-    parsedPackingList.items = checkType(parsedPackingList.items);
-    parsedPackingList.business_checks.all_required_fields_present =
-      checkRequiredData(parsedPackingList);
-  }
+    if (parsedPackingList.parserModel !== parser_model.NOMATCH) {
+      parsedPackingList.items = parsedPackingList.items.filter(
+        (x) => !Object.values(x).every(isNullOrUndefined),
+      );
+      parsedPackingList.items = checkType(parsedPackingList.items);
+      parsedPackingList.business_checks.all_required_fields_present =
+        checkRequiredData(parsedPackingList);
+    }
 
-  return parsedPackingList;
+    return parsedPackingList;
+  } catch (err) {
+    logger.log_error("app/services/parser-service.js", "findParser()", err);
+  }
 }
 
 function failedParser() {
-  return CombineParser.combine(null, [], false, ParserModel.NOMATCH);
+  return combine_parser.combine(null, [], false, parser_model.NOMATCH);
 }
 
 function checkRequiredData(packingList) {

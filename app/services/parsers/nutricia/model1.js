@@ -4,32 +4,41 @@ const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
 const Regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
+const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
-  const establishmentNumber = Regex.findMatch(
-    headers.NUTRICIA1.establishmentNumber.regex,
-    packingListJson,
-  );
+  try {
+    const establishmentNumber = Regex.findMatch(
+      headers.NUTRICIA1.establishmentNumber.regex,
+      packingListJson,
+    );
 
-  const headerTitles = Object.values(headers.NUTRICIA1.headers);
-  function callback(x) {
-    return Object.values(x).includes(headerTitles[0]);
+    const headerTitles = Object.values(headers.NUTRICIA1.headers);
+    function callback(x) {
+      return Object.values(x).includes(headerTitles[0]);
+    }
+    const headerRow = rowFinder(packingListJson, callback);
+    const dataRow = headerRow + 1;
+    const packingListContents = mapParser(
+      packingListJson,
+      headerRow,
+      dataRow,
+      headers.NUTRICIA1.headers,
+    );
+
+    return CombineParser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      ParserModel.NUTRICIA1,
+    );
+  } catch (err) {
+    logger.log_error(
+      "app/services/parsers/nutricia/model1.js",
+      "matches()",
+      err,
+    );
   }
-  const headerRow = rowFinder(packingListJson, callback);
-  const dataRow = headerRow + 1;
-  const packingListContents = mapParser(
-    packingListJson,
-    headerRow,
-    dataRow,
-    headers.NUTRICIA1.headers,
-  );
-
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.NUTRICIA1,
-  );
 }
 
 module.exports = {
