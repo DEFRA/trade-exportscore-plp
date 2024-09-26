@@ -32,6 +32,11 @@ async function start() {
 async function stop() {
   try {
     if (config.plpSubscription.name) {
+      logger.log_info(
+        "app/messaging/index.js",
+        "stop()",
+        "Stopped receiving messages",
+      );
       await plpReceiver.closeConnection();
     }
   } catch (err) {

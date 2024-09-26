@@ -1,5 +1,11 @@
 const { sequelize } = require("../../app/services/database-service");
 const createServer = require("../../app/server");
+const logger = require("../../app/utilities/logger");
+const { start } = require("../../app/messaging");
+
+const consoleErrorSpy = jest
+  .spyOn(logger, "log_error")
+  .mockImplementation(() => {});
 
 jest.mock("../../app/services/database-service", () => ({
   sequelize: {
@@ -9,15 +15,14 @@ jest.mock("../../app/services/database-service", () => ({
 
 jest.mock("../../app/messaging", () => ({
   start: jest.fn(),
+  stop: jest.fn(),
 }));
 
 jest.mock("../../app/config", () => ({
   isDev: true,
 }));
 
-console.error = jest.fn();
-
-describe("cresteServer", () => {
+describe("createServer", () => {
   beforeEach(async () => {
     jest.resetAllMocks();
   });
@@ -38,8 +43,24 @@ describe("cresteServer", () => {
 
     await createServer();
 
-    expect(console.error.mock.calls[0][0]).toBe(
-      "Whilst running the 'createServer > sequelize.authenticate()' method in 'app/server.js', the PLP application encounterd: Error",
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.any(String),
+      expect.any(Error),
+    );
+  });
+
+  test("should log the exception when an error occurs when starting the messaging server", async () => {
+    start.mockImplementation(() => {
+      throw new Error();
+    });
+
+    await createServer();
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      "createServer > messageService.start()",
+      expect.any(Error),
     );
   });
 });

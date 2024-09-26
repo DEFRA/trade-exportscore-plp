@@ -9,9 +9,6 @@ const logger = require("../../../app/utilities/logger");
 jest.mock("@boterop/convert-excel-to-json");
 jest.mock("../../../app/services/parser-service"); // Mock the entire parser-service module
 jest.mock("../../../app/packing-list"); // Mock the entire packing-list module
-jest.mock(".../../../app/utilities/logger");
-
-console.error = jest.fn();
 
 describe("/non-ai route handler", () => {
   let mockRequest;

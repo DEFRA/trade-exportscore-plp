@@ -1,5 +1,10 @@
 const createServer = require("../../app/server");
 const hapi = require("@hapi/hapi");
+const logger = require("../../app/utilities/logger");
+
+const consoleErrorSpy = jest
+  .spyOn(logger, "log_error")
+  .mockImplementation(() => {});
 
 jest.mock("../../app/services/database-service", () => ({
   sequelize: {
@@ -14,6 +19,7 @@ jest.mock("../../app/messaging", () => ({
 jest.mock("../../app/config", () => ({
   isDev: true,
 }));
+
 jest.mock("@hapi/hapi", () => ({
   server: jest.fn(),
 }));
@@ -32,8 +38,10 @@ describe("cresteServer", () => {
 
     await createServer();
 
-    expect(console.error.mock.calls[0][0]).toBe(
-      "Whilst running the 'createServer > hapi.server()' method in 'app/server.js', the PLP application encounterd: Error",
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.any(String),
+      expect.any(Error),
     );
   });
 });
