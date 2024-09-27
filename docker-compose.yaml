@@ -4,14 +4,6 @@ services:
       context: .
       target: production
     image: trade-exportscore-plp
-    deploy:
-      resources:
-        requests:
-          cpu: 150m
-          memory: 1000Mi
-        limits:
-          cpu: 150m
-          memory: 1000Mi
     container_name: trade-exportscore-plp
     depends_on:
       - trade-exportscore-plp-postgres
