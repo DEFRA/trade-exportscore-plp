@@ -45,14 +45,22 @@ async function findParser(packingList, filename) {
     } else if (file_extension.isPdf(filename)) {
       for (const key in parsersPdf) {
         const result = await parsersPdf[key].matches(packingList, filename);
-        console.log(result);
-        // if (result.isMatched === matcher_result.CORRECT) {
-        //   parserFound = true;
-        //   parsedPackingList = parsersPdf[key].parse(
-        //     result.document,
-        //     filename,
-        //   )
-        // }
+
+        if (result.isMatched === matcher_result.CORRECT) {
+          parserFound = true;
+          parsedPackingList = parsersPdf[key].parse(
+            result.document,
+            filename,
+          )
+        }
+      }
+
+      if (!parserFound) {
+        logger.log_info(
+          "app/services/parser-service.js",
+          "findParser()",
+          `Failed to parse packing list with filename: ${filename}`,
+        );
       }
     } else {
       logger.log_info(

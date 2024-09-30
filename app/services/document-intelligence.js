@@ -6,17 +6,11 @@ const {
 
 function createDocumentIntelligenceClient() {
   const credential = new AzureKeyCredential(config.formRecognizerApiKey);
-  return new DocumentAnalysisClient(
-    config.formRecognizerEndpoint,
-    credential,
-  );
+  return new DocumentAnalysisClient(config.formRecognizerEndpoint, credential);
 }
 
 async function runAnalysis(client, modelId, fileBuffer) {
-  const poller = await client.beginAnalyzeDocument(
-    modelId,
-    fileBuffer,
-  );
+  const poller = await client.beginAnalyzeDocument(modelId, fileBuffer);
 
   const {
     documents: [document],
@@ -29,4 +23,4 @@ async function runAnalysis(client, modelId, fileBuffer) {
   return document;
 }
 
-module.exports = {createDocumentIntelligenceClient, runAnalysis};
+module.exports = { createDocumentIntelligenceClient, runAnalysis };
