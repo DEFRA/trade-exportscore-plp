@@ -30,6 +30,47 @@ module.exports = {
       },
     ],
   },
+  wrongEstablishment: {
+    PackingList_Extract: [
+      {},
+      {},
+      {
+        H: "INCORRECT",
+      },
+      {
+        A: "169 STOREY TREEHOUSE",
+        B: null,
+        C: "GM",
+        D: "INVALID",
+        E: "INVALID",
+        F: 2,
+        G: 0.38,
+        H: "kgs",
+      },
+    ],
+  },
+  incorrectHeader: {
+    PackingList_Extract: [
+      {
+        A: "NOT",
+        B: "CORRECT",
+        C: "HEADER",
+      },
+      {
+        D: "RMS-GB-000015-006",
+      },
+      {
+        A: "169 STOREY TREEHOUSE",
+        B: null,
+        C: "GM",
+        D: "RMS-GB-000015-006",
+        E: "INVALID",
+        F: 2,
+        G: 0.38,
+        H: "kgs",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     Sheet1: [
       {

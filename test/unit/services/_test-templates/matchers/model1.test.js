@@ -1,10 +1,10 @@
-const matcher = require("../../../../../app/services/matchers/nisa/model2");
+const matcher = require("../../../../../app/services/matchers/asda/model1");
 const matcher_result = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-data-and-results/models/nisa/model2");
+const model = require("../../../test-data-and-results/models/asda/model1");
 
-const filename = "packingListNisa2.xlsx";
+const filename = "packinglist.xls";
 
-describe("matchesNisa2", () => {
+describe("matchesAsdaModel1", () => {
   test("returns 'Correct' for valid model", () => {
     const result = matcher.matches(model.validModel, filename);
 
@@ -20,35 +20,13 @@ describe("matchesNisa2", () => {
   });
 
   test("returns 'Wrong Establishment Number' for missing establishment number", () => {
-    const packingListJson = {
-      sheet: [
-        {},
-        {
-          A: "INCORRECT",
-        },
-      ],
-    };
-
-    const result = matcher.matches(packingListJson, filename);
+    const result = matcher.matches(model.wrongEstablishment, filename);
 
     expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return 'Wrong Header' for incorrect header values", () => {
-    const packingListJson = {
-      sheet: [
-        {
-          A: "NOT",
-          J: "CORRECT",
-          L: "HEADER",
-        },
-        {
-          A: "RMS-GB-000025-003",
-        },
-      ],
-    };
-
-    const result = matcher.matches(packingListJson, filename);
+    const result = matcher.matches(model.incorrectHeader, filename);
 
     expect(result).toBe(matcher_result.WRONG_HEADER);
   });

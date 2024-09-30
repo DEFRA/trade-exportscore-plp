@@ -2,17 +2,18 @@ const matcher = require("../../../../../app/services/matchers/sainsburys/model1"
 const matcher_result = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/sainsburys/model1");
 
+const filename = "packinglistSainsburys1.xlsx";
+
 describe("matchesSainsburysModel1", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'Generic Error' for empty json", () => {
     const packingListJson = {};
-    const filename = "packinglist.xlsx";
 
     const result = matcher.matches(packingListJson, filename);
 
     expect(result).toBe(matcher_result.GENERIC_ERROR);
   });
 
-  test("returns wrong establishment number for missing establishment number", () => {
+  test("returns 'Wrong Establishment Number' for missing establishment number", () => {
     const packingListJson = {
       Sheet1: [
         {},
@@ -21,7 +22,6 @@ describe("matchesSainsburysModel1", () => {
         },
       ],
     };
-    const filename = "packinglist.xlsx";
 
     const result = matcher.matches(packingListJson, filename);
 
@@ -29,7 +29,6 @@ describe("matchesSainsburysModel1", () => {
   });
 
   test("returns wrong header for incorrect header values", () => {
-    const filename = "packinglist.xlsx";
     const packingListJson = {
       Sheet1: [
         {
@@ -60,9 +59,7 @@ describe("matchesSainsburysModel1", () => {
     expect(result).toBe(matcher_result.WRONG_HEADER);
   });
 
-  test("returns Correct", () => {
-    const filename = "packinglist.xlsx";
-
+  test("returns 'Correct' for valid model", () => {
     const result = matcher.matches(model.validModel, filename);
 
     expect(result).toBe(matcher_result.CORRECT);

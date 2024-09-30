@@ -2,25 +2,24 @@ const matcher = require("../../../../../app/services/matchers/tescos/model1");
 const matcher_result = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/tescos/model1");
 
-describe("matchesTescoModel1", () => {
-  test("returns Correct", () => {
-    const filename = "PackingListTesco1.xlsx";
+const filename = "PackingListTescos1.xlsx";
 
+describe("matchesTescoModel1", () => {
+  test("returns 'Correct' for valid model", () => {
     const result = matcher.matches(model.validModel, filename);
 
     expect(result).toBe(matcher_result.CORRECT);
   });
 
-  test("returns generic error for empty json", () => {
+  test("returns 'Generic Error' for empty json", () => {
     const packingListJson = {};
-    const filename = "packinglist.xlsx";
 
     const result = matcher.matches(packingListJson, filename);
 
     expect(result).toBe(matcher_result.GENERIC_ERROR);
   });
 
-  test("returns wrong establishment number for missing establishment number", () => {
+  test("returns 'Wrong Establishment Number' for missing establishment number", () => {
     const packingListJson = {
       "Input Data Sheet": [
         {},
@@ -31,15 +30,13 @@ describe("matchesTescoModel1", () => {
         },
       ],
     };
-    const filename = "packinglist.xlsx";
 
     const result = matcher.matches(packingListJson, filename);
 
     expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("return wrong header for incorrect header values", () => {
-    const filename = "packinglist.xlsx";
+  test("return 'Wrong Header' for incorrect header values", () => {
     const packingListJson = {
       "Input Data Sheet": [
         {},

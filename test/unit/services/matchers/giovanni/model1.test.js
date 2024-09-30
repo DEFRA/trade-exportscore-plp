@@ -2,24 +2,21 @@ const matcher_result = require("../../../../../app/services/matcher-result");
 const matcher = require("../../../../../app/services/matchers/giovanni/model1");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 
+const filename = "packingListGiovanni1.xlsx";
+
 describe("matchesGiovanni", () => {
-  test("returns generic error for empty json", () => {
-    const filename = "packinglist.xlsx";
-    const result = matcher.matches({}, filename);
-    expect(result).toBe(matcher_result.GENERIC_ERROR);
-  });
-
-  test("returns Correct", () => {
-    const filename = "PackingList.xlsx";
-
+  test("returns 'Correct' for valid model", () => {
     const result = matcher.matches(model.validModel, filename);
 
     expect(result).toBe(matcher_result.CORRECT);
   });
 
-  test("returns wrong establishment number for missing establishment number", () => {
-    const filename = "packinglist.xlsx";
+  test("returns 'Generic Error' for empty json", () => {
+    const result = matcher.matches({}, filename);
 
+    expect(result).toBe(matcher_result.GENERIC_ERROR);
+  });
+  test("returns 'Wrong Establishment Number' for missing establishment number", () => {
     const result = matcher.matches(
       model.incorrectEstablishmentNumber,
       filename,
@@ -28,10 +25,9 @@ describe("matchesGiovanni", () => {
     expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("return wrong header for incorrect header values", () => {
-    const filename = "packinglist.xlsx";
-
+  test("return 'Wrong Header' for incorrect header values", () => {
     const result = matcher.matches(model.incorrectHeader, filename);
+
     expect(result).toBe(matcher_result.WRONG_HEADER);
   });
 });
