@@ -3,22 +3,23 @@ const parser_model = require("./parser-model");
 const combine_parser = require("./parser-combine");
 const json_file = require("../utilities/json-file");
 const file_extension = require("../utilities/file-extension");
-const { parsersExcel } = require("./model-parsers");
+const { parsersExcel, parsersPdf } = require("./model-parsers");
 const logger = require("../utilities/logger");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
-function findParser(packingList, filename) {
+async function findParser(packingList, filename) {
   try {
     let parsedPackingList = failedParser();
     let parserFound = false;
 
-    // Sanitised packing list (i.e. emove trailing spaces and empty cells)
-    const packingListJson = JSON.stringify(packingList);
-    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
-    const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
     // Test for Excel spreadsheets
     if (file_extension.isExcel(filename)) {
+      // Sanitised packing list (i.e. emove trailing spaces and empty cells)
+      const packingListJson = JSON.stringify(packingList);
+      const sanitisedPackingListJson = json_file.sanitise(packingListJson);
+      const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+
       Object.keys(parsersExcel).forEach((key) => {
         if (
           parsersExcel[key].matches(sanitisedPackingList, filename) ===
@@ -38,6 +39,20 @@ function findParser(packingList, filename) {
           "findParser()",
           `Failed to parse packing list with filename: ${filename}`,
         );
+      }
+
+      // Test for PDF spreadsheets
+    } else if (file_extension.isPdf(filename)) {
+      for (const key in parsersPdf) {
+        const result = await parsersPdf[key].matches(packingList, filename);
+        console.log(result);
+        // if (result.isMatched === matcher_result.CORRECT) {
+        //   parserFound = true;
+        //   parsedPackingList = parsersPdf[key].parse(
+        //     result.document,
+        //     filename,
+        //   )
+        // }
       }
     } else {
       logger.log_info(

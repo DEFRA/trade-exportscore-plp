@@ -34,6 +34,7 @@ const tjMorrisMatcher = require("./matchers/tjmorris/model1");
 const tjMorrisParser = require("./parsers/tjmorris/model1");
 const warrensMatcher = require("./matchers/warrens/model1");
 const warrensParser = require("./parsers/warrens/model1");
+const icelandMatcher = require("./matchers/iceland/model1");
 
 const parsersExcel = {
   ASDA1: {
@@ -146,4 +147,11 @@ const parsersExcel = {
   },
 };
 
-module.exports = { parsersExcel };
+const parsersPdf = {
+  ICELAND: {
+    matches: (packingList, filename) =>
+      icelandMatcher.matches(packingList, filename),
+  },
+};
+
+module.exports = { parsersExcel, parsersPdf };

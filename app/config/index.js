@@ -40,6 +40,11 @@ value.plpSubscription = mq_config.plpSubscription;
 value.tpQueue = mq_config.tpQueue;
 value.dynamicsConfig = dynamics_config;
 
+// AI values
+value.formRecognizerEndpoint = process.env.FORM_RECOGNIZER_ENDPOINT;
+value.formRecognizerApiKey = process.env.FORM_RECOGNIZER_API_KEY;
+value.formRecognizerModelID = process.env.FORM_RECOGNIZER_CUSTOM_MODEL_ID;
+
 value.plDir = path.join(process.cwd(), "/app/packing-lists/");
 
 // TP/IDCOMS toggle
