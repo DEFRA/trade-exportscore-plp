@@ -18,7 +18,7 @@ async function start() {
       logger.log_error(
         logIndexPath,
         "start()",
-        "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing."
+        "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
       );
     }
   } catch (err) {

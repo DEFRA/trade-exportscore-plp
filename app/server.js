@@ -12,7 +12,7 @@ async function createServer() {
     logger.log_error(
       logServerPath,
       "createServer > sequelize.authenticate()",
-      err
+      err,
     );
   }
 
@@ -48,7 +48,7 @@ async function createServer() {
     logger.log_error(
       logServerPath,
       "createServer > server.register() [DEV]",
-      err
+      err,
     );
   }
 
@@ -58,7 +58,7 @@ async function createServer() {
     logger.log_error(
       logServerPath,
       "createServer > messageService.start()",
-      err
+      err,
     );
   }
 
@@ -69,7 +69,7 @@ async function createServer() {
       logger.log_error(
         logServerPath,
         "createServer > messageService.start()",
-        err
+        err,
       );
     }
     await messageService.stop();
@@ -83,7 +83,7 @@ async function createServer() {
       logger.log_error(
         logServerPath,
         "createServer > messageService.stop()",
-        err
+        err,
       );
     } finally {
       process.exit(0);

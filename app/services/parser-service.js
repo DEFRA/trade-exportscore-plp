@@ -29,7 +29,7 @@ function findParser(packingList, filename) {
           parserFound = true;
           parsedPackingList = parsersExcel[key].parse(
             sanitisedPackingList,
-            filename
+            filename,
           );
         }
       });
@@ -38,20 +38,20 @@ function findParser(packingList, filename) {
         logger.log_info(
           logParserServicePath,
           logParserServiceFunction,
-          `Failed to parse packing list with filename: ${filename}`
+          `Failed to parse packing list with filename: ${filename}`,
         );
       }
     } else {
       logger.log_info(
         logParserServicePath,
         logParserServiceFunction,
-        `Failed to parse packing list with filename: ${filename}`
+        `Failed to parse packing list with filename: ${filename}`,
       );
     }
 
     if (parsedPackingList.parserModel !== parser_model.NOMATCH) {
       parsedPackingList.items = parsedPackingList.items.filter(
-        (x) => !Object.values(x).every(isNullOrUndefined)
+        (x) => !Object.values(x).every(isNullOrUndefined),
       );
       parsedPackingList.items = checkType(parsedPackingList.items);
       parsedPackingList.business_checks.all_required_fields_present =
@@ -70,17 +70,17 @@ function failedParser() {
 
 function checkRequiredData(packingList) {
   const hasCommodityCode = packingList.items.every(
-    (x) => x.commodity_code !== null
+    (x) => x.commodity_code !== null,
   );
   const hasTreatmentOrNature = packingList.items.every(
-    (x) => x.nature_of_products !== null && x.type_of_treatment !== null
+    (x) => x.nature_of_products !== null && x.type_of_treatment !== null,
   );
   const hasDescription = packingList.items.every((x) => x.description !== null);
   const hasPackages = packingList.items.every(
-    (x) => x.number_of_packages !== null
+    (x) => x.number_of_packages !== null,
   );
   const hasNetWeight = packingList.items.every(
-    (x) => x.total_net_weight_kg !== null
+    (x) => x.total_net_weight_kg !== null,
   );
   const hasRemos = packingList.registration_approval_number !== null;
   return (

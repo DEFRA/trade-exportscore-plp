@@ -17,20 +17,20 @@ module.exports = {
             try {
               checkStatus = await patchPackingListCheck(
                 request.query.applicationId,
-                request.query.isApproved
+                request.query.isApproved,
               );
             } catch (err) {
               logger.log_error(
                 logUpsertIdcomsPath,
                 "get() > patchPackingListCheck",
-                err
+                err,
               );
             }
           } else {
             try {
               await sendParsed(
                 request.query.applicationId,
-                request.query.isApproved
+                request.query.isApproved,
               );
               checkStatus = StatusCodes.OK;
             } catch (err) {

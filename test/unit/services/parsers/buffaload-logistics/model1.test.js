@@ -1,4 +1,5 @@
 const parser = require("../../../../../app/services/parsers/buffaload-logistics/model1");
+const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/buffaload-logistics/model1");
 const test_results = require("../../../test-data-and-results/results/buffaload-logistics/model1");
 
@@ -13,5 +14,14 @@ describe("parsesBuffaloadLogisticsModel1", () => {
     const result = parser.parse(model.emptyModel.Tabelle1);
 
     expect(result).toEqual(test_results.emptyModelResult);
+  });
+
+  test("should call logger.log_error when an error is thrown", () => {
+    // Spy on the log_error method
+    const logErrorSpy = jest.spyOn(logger, "log_error");
+    // Call the parse function with null data
+    const result = parser.parse(null);
+    // Check if logger.log_error has been called
+    expect(logErrorSpy).toHaveBeenCalled();
   });
 });

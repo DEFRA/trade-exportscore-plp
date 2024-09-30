@@ -14,7 +14,7 @@ async function createPackingList(packingListJson, applicationId) {
       logger.log_info(
         logIndexPath,
         "createPackingList()",
-        `Saved packing list in database with application id: ${packingList.applicationId}`
+        `Saved packing list in database with application id: ${packingList.applicationId}`,
       );
     });
   } catch (err) {

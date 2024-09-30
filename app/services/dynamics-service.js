@@ -55,7 +55,7 @@ async function patchPackingListCheck(applicationId, isApproved) {
     logger.log_info(
       logDynamicsService,
       "patchPackingListCheck()",
-      `Upsert ${applicationId} with outcome ${isApproved}, status ${status}`
+      `Upsert ${applicationId} with outcome ${isApproved}, status ${status}`,
     );
 
     return status;

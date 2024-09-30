@@ -19,11 +19,11 @@ async function processPlpMessage(message, receiver) {
       logProcessPlpMessagePath,
       logProcessPlpMessageFunction,
       "Received message: ",
-      message.body
+      message.body,
     );
 
     const blobClient = createStorageAccountClient(
-      message.body.packing_list_blob
+      message.body.packing_list_blob,
     );
 
     let result = {};
@@ -33,7 +33,7 @@ async function processPlpMessage(message, receiver) {
       logger.log_error(
         logProcessPlpMessagePath,
         "processPlpMessage() > getXlsPackingListFromBlob",
-        err
+        err,
       );
     }
 
@@ -44,7 +44,7 @@ async function processPlpMessage(message, receiver) {
       logger.log_error(
         logProcessPlpMessagePath,
         "processPlpMessage() > findParser",
-        err
+        err,
       );
     }
 
@@ -55,13 +55,13 @@ async function processPlpMessage(message, receiver) {
           logProcessPlpMessagePath,
           logProcessPlpMessageFunction,
           "Received message: ",
-          `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`
+          `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
         );
       } catch (err) {
         logger.log_error(
           logProcessPlpMessagePath,
           "processPlpMessage() > createPackingList",
-          err
+          err,
         );
       }
 
@@ -69,26 +69,26 @@ async function processPlpMessage(message, receiver) {
         try {
           await patchPackingListCheck(
             message.body.application_id,
-            packingList.business_checks.all_required_fields_present
+            packingList.business_checks.all_required_fields_present,
           );
         } catch (err) {
           logger.log_error(
             logProcessPlpMessagePath,
             "processPlpMessage() > patchPackingListCheck",
-            err
+            err,
           );
         }
       } else {
         try {
           await sendParsed(
             message.body.application_id,
-            packingList.business_checks.all_required_fields_present
+            packingList.business_checks.all_required_fields_present,
           );
         } catch (err) {
           logger.log_error(
             logProcessPlpMessagePath,
             "processPlpMessage() > sendParsed",
-            err
+            err,
           );
         }
       }
@@ -97,7 +97,7 @@ async function processPlpMessage(message, receiver) {
     logger.log_error(
       logProcessPlpMessagePath,
       logProcessPlpMessageFunction,
-      err
+      err,
     );
     await receiver.abandonMessage(message);
   }

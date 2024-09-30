@@ -15,7 +15,7 @@ async function sendParsedAdp(parsedResult, applicationId) {
     logger.log_info(
       logSendParsedMessagePath,
       "sendParsedAdp()",
-      `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`
+      `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
     );
   } catch (err) {
     logger.log_error(logSendParsedMessagePath, "sendParsedAdp()", err);
@@ -40,14 +40,14 @@ async function sendParsed(applicationId, parsedResult) {
         logger.log_info(
           logSendParsedMessagePath,
           "sendParsed()",
-          `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`
+          `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
         );
         await sender.close();
       } catch (err) {
         logger.log_error(
           logSendParsedMessagePath,
           "sendParsed() > sender.sendMessages",
-          err
+          err,
         );
       } finally {
         await sbClient.close();
@@ -56,7 +56,7 @@ async function sendParsed(applicationId, parsedResult) {
       logger.log_error(
         logSendParsedMessagePath,
         "sendParsed() > sender.sendMessages",
-        "Service Bus connection to TP has not been initialised because 'config.tpQueue.managedIdentityClientId' is missing."
+        "Service Bus connection to TP has not been initialised because 'config.tpQueue.managedIdentityClientId' is missing.",
       );
     }
   } catch (err) {

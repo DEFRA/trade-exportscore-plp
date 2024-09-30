@@ -16,20 +16,20 @@ function setup() {
       logger.log_info(
         logAppInsightsPath,
         "setup()",
-        "App Insights is running!"
+        "App Insights is running!",
       );
     } else {
       logger.log_error(
         logAppInsightsPath,
         "setup()",
-        "App Insights is not running!"
+        "App Insights is not running!",
       );
     }
   } catch (err) {
     logger.log_error(
       logAppInsightsPath,
       "setup()",
-      `App Insights Setup encountered: ${err}`
+      `App Insights Setup encountered: ${err}`,
     );
   }
 }
