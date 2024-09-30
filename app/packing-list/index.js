@@ -1,6 +1,7 @@
 const { models, sequelize } = require("../services/database-service");
 const { v4: uuidv4 } = require("uuid");
 const logger = require("./../utilities/logger");
+const logIndexPath = "app/packing-list/index.js";
 
 async function createPackingList(packingListJson, applicationId) {
   try {
@@ -11,13 +12,13 @@ async function createPackingList(packingListJson, applicationId) {
       });
       await models.item.bulkCreate(packingList.item, { transaction });
       logger.log_info(
-        "app/packing-list/index.js",
+        logIndexPath,
         "createPackingList()",
-        `Saved packing list in database with application id: ${packingList.applicationId}`,
+        `Saved packing list in database with application id: ${packingList.applicationId}`
       );
     });
   } catch (err) {
-    logger.log_error("app/packing-list/index.js", "createPackingList()", err);
+    logger.log_error(logIndexPath, "createPackingList()", err);
   }
 }
 
@@ -32,7 +33,7 @@ function packingListMapper(packingListJson, applicationId) {
       parserModel: packingListJson.parserModel,
     };
   } catch (err) {
-    logger.log_error("app/packing-list/index.js", "packingListMapper()", err);
+    logger.log_error(logIndexPath, "packingListMapper()", err);
   }
 }
 
@@ -49,7 +50,7 @@ function itemsMapper(o, applicationId) {
       applicationId,
     };
   } catch (err) {
-    logger.log_error("app/packing-list/index.js", "itemsMapper()", err);
+    logger.log_error(logIndexPath, "itemsMapper()", err);
   }
 }
 

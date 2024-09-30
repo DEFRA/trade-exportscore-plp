@@ -5,6 +5,8 @@ const json_file = require("../utilities/json-file");
 const file_extension = require("../utilities/file-extension");
 const { parsersExcel } = require("./model-parsers");
 const logger = require("../utilities/logger");
+const logParserServicePath = "app/services/parser-service.js";
+const logParserServiceFunction = "findParser()";
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
@@ -27,29 +29,29 @@ function findParser(packingList, filename) {
           parserFound = true;
           parsedPackingList = parsersExcel[key].parse(
             sanitisedPackingList,
-            filename,
+            filename
           );
         }
       });
 
       if (!parserFound) {
         logger.log_info(
-          "app/services/parser-service.js",
-          "findParser()",
-          `Failed to parse packing list with filename: ${filename}`,
+          logParserServicePath,
+          logParserServiceFunction,
+          `Failed to parse packing list with filename: ${filename}`
         );
       }
     } else {
       logger.log_info(
-        "app/services/parser-service.js",
-        "findParser()",
-        `Failed to parse packing list with filename: ${filename}`,
+        logParserServicePath,
+        logParserServiceFunction,
+        `Failed to parse packing list with filename: ${filename}`
       );
     }
 
     if (parsedPackingList.parserModel !== parser_model.NOMATCH) {
       parsedPackingList.items = parsedPackingList.items.filter(
-        (x) => !Object.values(x).every(isNullOrUndefined),
+        (x) => !Object.values(x).every(isNullOrUndefined)
       );
       parsedPackingList.items = checkType(parsedPackingList.items);
       parsedPackingList.business_checks.all_required_fields_present =
@@ -58,7 +60,7 @@ function findParser(packingList, filename) {
 
     return parsedPackingList;
   } catch (err) {
-    logger.log_error("app/services/parser-service.js", "findParser()", err);
+    logger.log_error(logParserServicePath, logParserServiceFunction, err);
   }
 }
 
@@ -68,17 +70,17 @@ function failedParser() {
 
 function checkRequiredData(packingList) {
   const hasCommodityCode = packingList.items.every(
-    (x) => x.commodity_code !== null,
+    (x) => x.commodity_code !== null
   );
   const hasTreatmentOrNature = packingList.items.every(
-    (x) => x.nature_of_products !== null && x.type_of_treatment !== null,
+    (x) => x.nature_of_products !== null && x.type_of_treatment !== null
   );
   const hasDescription = packingList.items.every((x) => x.description !== null);
   const hasPackages = packingList.items.every(
-    (x) => x.number_of_packages !== null,
+    (x) => x.number_of_packages !== null
   );
   const hasNetWeight = packingList.items.every(
-    (x) => x.total_net_weight_kg !== null,
+    (x) => x.total_net_weight_kg !== null
   );
   const hasRemos = packingList.registration_approval_number !== null;
   return (

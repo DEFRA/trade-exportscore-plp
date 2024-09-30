@@ -4,6 +4,7 @@ const createMessage = require("./create-message");
 const { ServiceBusClient } = require("@azure/service-bus");
 const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("./../utilities/logger");
+const logSendParsedMessagePath = "app/messaging/send-parsed-message.js";
 
 async function sendParsedAdp(parsedResult, applicationId) {
   try {
@@ -12,16 +13,12 @@ async function sendParsedAdp(parsedResult, applicationId) {
     await parsedSender.sendMessage(message);
     await parsedSender.closeConnection();
     logger.log_info(
-      "app/messaging/send-parsed-message.js",
+      logSendParsedMessagePath,
       "sendParsedAdp()",
-      `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
+      `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`
     );
   } catch (err) {
-    logger.log_error(
-      "app/messaging/send-parsed-message.js",
-      "sendParsedAdp()",
-      err,
-    );
+    logger.log_error(logSendParsedMessagePath, "sendParsedAdp()", err);
   }
 }
 
@@ -41,33 +38,29 @@ async function sendParsed(applicationId, parsedResult) {
       try {
         await sender.sendMessages(message);
         logger.log_info(
-          "app/messaging/send-parsed-message.js",
+          logSendParsedMessagePath,
           "sendParsed()",
-          `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
+          `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`
         );
         await sender.close();
       } catch (err) {
         logger.log_error(
-          "app/messaging/send-parsed-message.js",
+          logSendParsedMessagePath,
           "sendParsed() > sender.sendMessages",
-          err,
+          err
         );
       } finally {
         await sbClient.close();
       }
     } else {
       logger.log_error(
-        "app/messaging/send-parsed-message.js",
+        logSendParsedMessagePath,
         "sendParsed() > sender.sendMessages",
-        "Service Bus connection to TP has not been initialised because 'config.tpQueue.managedIdentityClientId' is missing.",
+        "Service Bus connection to TP has not been initialised because 'config.tpQueue.managedIdentityClientId' is missing."
       );
     }
   } catch (err) {
-    logger.log_error(
-      "app/messaging/send-parsed-message.js",
-      "sendParsed()",
-      err,
-    );
+    logger.log_error(logSendParsedMessagePath, "sendParsed()", err);
   }
 }
 
