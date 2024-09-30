@@ -155,6 +155,30 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    "Customer Order": [
+      {
+        A: "Item",
+        B: "Product code",
+        C: "Commodity code",
+        D: "Online Check",
+        E: "Meursing code",
+        F: "Description of goods",
+        G: "Country of Origin",
+        H: "No. of pkgs \n(1547)",
+        I: "Type of pkgs",
+        J: "Total Gross Weight \n(11015.700kgs)",
+        K: "Total Net Weight \n(7921.700kgs)",
+        L: "Total Line Value \n(41662.4)",
+        M: "NIIRMS Dispatch number",
+        N: "Treatment Type (Chilled /Ambient)",
+        O: "NIRMS Lane (R/G)",
+        P: "Secondary Qty",
+        Q: "Cert Type Req",
+        R: "Cert Number",
+      },
+    ],
+  },
   invalid_Model_IncorrectHeader: {
     sheet: [
       {

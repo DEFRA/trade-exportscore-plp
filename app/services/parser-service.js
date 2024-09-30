@@ -43,7 +43,7 @@ function findParser(packingList, filename) {
       logger.log_info(
         "app/services/parser-service.js",
         "findParser()",
-        `Failed to parse packing list with filename: ${filename}`,
+        `Failed to parse packing list with filename: ${filename} as it is not an Excel file.`,
       );
     }
 

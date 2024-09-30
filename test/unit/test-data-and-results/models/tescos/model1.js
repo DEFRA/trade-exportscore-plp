@@ -36,6 +36,25 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    "Input Data Sheet": [
+      {},
+      {},
+      {},
+      {
+        AT: "RMS-GB-000022-998",
+      },
+      {
+        G: "Product/ Part Number description",
+        L: "Tariff Code UK",
+        AS: "Treatment Type",
+        AT: "Green Lane",
+        BR: "Packages",
+        BT: "Gross Weight",
+        BU: "Net Weight",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     "Input Data Sheet": [
       {},

@@ -42,6 +42,27 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    Tabelle1: [
+      {
+        A: "NIIRMS Dispatch number",
+        B: "RMS-GB-000098-001",
+        C: "Dispatch address",
+        D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
+      },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient)",
+        I: "NIRMS Lane (R/G)",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     Tabelle1: [
       {

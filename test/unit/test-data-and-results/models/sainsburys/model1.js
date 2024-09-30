@@ -28,6 +28,19 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    Sheet1: [
+      {
+        C: "Product Type / Category",
+        E: "Product / Part Number Description",
+        G: "Packages",
+        H: "Net\nWeight / Package KG",
+        J: "Packaging Type",
+        N: "RMS Number (based on depot)",
+        O: "Commodity Code",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     Sheet1: [
       {

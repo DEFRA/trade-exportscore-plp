@@ -54,6 +54,29 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    Sheet1: [
+      {},
+      {},
+      {
+        H: "WAREHOUSE SCHEME NUMBER:",
+        I: "RMS-GB-000005-001",
+      },
+      {},
+      {},
+      {
+        A: "PRODUCT CODE (SHORT)",
+        B: "PRISM",
+        C: "ITEM DESCRIPTION",
+        D: "COMMODITY CODE",
+        E: "PLACE OF DISPATCH",
+        F: "TOTAL NUMBER OF CASES",
+        G: "NET WEIGHT",
+        H: "GROSS WEIGHT",
+        I: "ANIMAL ORIGIN",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     Sheet1: [
       {},

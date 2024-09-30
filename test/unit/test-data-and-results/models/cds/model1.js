@@ -42,6 +42,23 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    PackingList_Extract: [
+      {
+        A: "TruckID",
+        B: "Dept",
+        C: "SubDept",
+        D: "Product",
+        E: "# Packages",
+        F: "# Units",
+        G: "GrossWeight",
+        H: "NetWeight",
+        I: "NatureOfProduct",
+        J: "Treatment",
+        K: "PlaceOfDispatch",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     PackingList_Extract: [
       {

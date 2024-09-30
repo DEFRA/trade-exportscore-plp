@@ -30,6 +30,23 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    sheet: [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+      },
+      {
+        A: "RMS-GB-000025-003",
+      },
+      {
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        I: "NET WEIGHT TOTAL",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     sheet: [
       {

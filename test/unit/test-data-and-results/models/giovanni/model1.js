@@ -29,6 +29,22 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    RANA: [
+      {
+        A: "NIRMS NUMBER",
+      },
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "DESCRIPTION",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     RANA: [
       {
