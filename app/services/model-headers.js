@@ -277,7 +277,7 @@ const headers = {
   ICELAND1: {
     establishmentNumber: {
       regex: /RMS-GB-000040-/,
-      value: "RMS-GB-000040"
+      value: "RMS-GB-000040",
     },
     headers: {
       description: "Part Description",

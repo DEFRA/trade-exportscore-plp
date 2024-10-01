@@ -6,14 +6,14 @@ const test_results = require("../../../test-data-and-results/results/fowlerwelch
 const filename = "packinglist.xlsx";
 
 describe("matchesFowlerWelchModel1", () => {
-  test("matches valid FowlerWelch Model 1 file, calls parser and returns all_required_fields_present as true", () => {
-    const result = parserService.findParser(model.validModel, filename);
+  test("matches valid FowlerWelch Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
+    const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(test_results.validTestResult);
   });
 
-  test("matches valid FowlerWelch Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
-    const result = parserService.findParser(
+  test("matches valid FowlerWelch Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+    const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
     );
@@ -21,7 +21,7 @@ describe("matchesFowlerWelchModel1", () => {
     expect(result).toEqual(test_results.invalidTestResult_MissingCells);
   });
 
-  test("wrong file extension", () => {
+  test("wrong file extension", async () => {
     const filename = "packinglist.pdf";
     const invalidTestResult_NoMatch = {
       business_checks: {
@@ -31,7 +31,7 @@ describe("matchesFowlerWelchModel1", () => {
       registration_approval_number: null,
       parserModel: parser_model.NOMATCH,
     };
-    const result = parserService.findParser(model.validModel, filename);
+    const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(invalidTestResult_NoMatch);
   });

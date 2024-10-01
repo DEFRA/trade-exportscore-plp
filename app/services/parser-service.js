@@ -50,10 +50,7 @@ async function findParser(packingList, filename) {
 
         if (result.isMatched === matcher_result.CORRECT) {
           parserFound = true;
-          parsedPackingList = parsersPdf[key].parse(
-            result.document,
-            filename,
-          )
+          parsedPackingList = parsersPdf[key].parse(result.document, filename);
         }
       }
 

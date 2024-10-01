@@ -7,9 +7,13 @@ const regex = require("../../../utilities/regex");
 
 function parse(packingListDocument) {
   try {
-    if (regex.findMatch(headers.ICELAND1.establishmentNumber.regex, [packingListDocument.fields.PartialNIRMSNumber])) {
+    if (
+      regex.findMatch(headers.ICELAND1.establishmentNumber.regex, [
+        packingListDocument.fields.PartialNIRMSNumber,
+      ])
+    ) {
       establishmentNumber = headers.ICELAND1.establishmentNumber.value;
-    };
+    }
     const packingListContents = mapPdfParser(packingListDocument, "ICELAND1");
 
     return combine_parser.combine(
@@ -23,6 +27,6 @@ function parse(packingListDocument) {
   }
 }
 
-module.exports  = {
+module.exports = {
   parse,
-}
+};
