@@ -5,6 +5,8 @@ const json_file = require("../utilities/json-file");
 const file_extension = require("../utilities/file-extension");
 const { parsersExcel, parsersPdf } = require("./model-parsers");
 const logger = require("../utilities/logger");
+const logParserServicePath = "app/services/parser-service.js";
+const logParserServiceFunction = "findParser()";
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
@@ -35,8 +37,8 @@ async function findParser(packingList, filename) {
 
       if (!parserFound) {
         logger.log_info(
-          "app/services/parser-service.js",
-          "findParser()",
+          logParserServicePath,
+          logParserServiceFunction,
           `Failed to parse packing list with filename: ${filename}`,
         );
       }
@@ -64,8 +66,8 @@ async function findParser(packingList, filename) {
       }
     } else {
       logger.log_info(
-        "app/services/parser-service.js",
-        "findParser()",
+        logParserServicePath,
+        logParserServiceFunction,
         `Failed to parse packing list with filename: ${filename}`,
       );
     }
@@ -81,7 +83,7 @@ async function findParser(packingList, filename) {
 
     return parsedPackingList;
   } catch (err) {
-    logger.log_error("app/services/parser-service.js", "findParser()", err);
+    logger.log_error(logParserServicePath, logParserServiceFunction, err);
   }
 }
 
