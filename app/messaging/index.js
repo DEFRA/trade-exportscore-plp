@@ -2,6 +2,7 @@ const config = require("../config");
 const processPlpMessage = require("./process-plp-message");
 const { MessageReceiver } = require("adp-messaging");
 const logger = require("./../utilities/logger");
+const logIndexPath = "app/messaging/index.js";
 
 let plpReceiver;
 
@@ -12,35 +13,27 @@ async function start() {
       plpReceiver = new MessageReceiver(config.plpSubscription, plpAction);
       await plpReceiver.subscribe();
 
-      logger.log_info(
-        "app/messaging/index.js",
-        "start()",
-        "Ready to receive messages",
-      );
+      logger.log_info(logIndexPath, "start()", "Ready to receive messages");
     } else {
       logger.log_error(
-        "app/messaging/index.js",
+        logIndexPath,
         "start()",
         "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
       );
     }
   } catch (err) {
-    logger.log_error("app/messaging/index.js", "start()", err);
+    logger.log_error(logIndexPath, "start()", err);
   }
 }
 
 async function stop() {
   try {
     if (config.plpSubscription.name) {
-      logger.log_info(
-        "app/messaging/index.js",
-        "stop()",
-        "Stopped receiving messages",
-      );
+      logger.log_info(logIndexPath, "stop()", "Stopped receiving messages");
       await plpReceiver.closeConnection();
     }
   } catch (err) {
-    logger.log_error("app/messaging/index.js", "stop()", err);
+    logger.log_error(logIndexPath, "stop()", err);
   }
 }
 
