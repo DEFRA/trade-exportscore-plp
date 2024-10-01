@@ -92,4 +92,10 @@ module.exports = {
     registration_approval_number: "RMS-GB-000174-002",
     parserModel: parserModel.WARRENS1,
   },
+  emptyFile: {
+    business_checks: { all_required_fields_present: true },
+    items: [],
+    parserModel: "warrens-1",
+    registration_approval_number: null,
+  },
 };

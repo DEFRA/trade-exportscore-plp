@@ -4,7 +4,7 @@ const model = require("../../../test-data-and-results/models/nutricia/model1");
 const testResults = require("../../../test-data-and-results/results/nutricia/model1");
 
 describe("parseNutricaModel1", () => {
-  test("parses json", () => {
+  test("parses populated json", () => {
     const result = parser.parse(model.validModel.DANONE);
 
     expect(result).toEqual(testResults.validTestResult);

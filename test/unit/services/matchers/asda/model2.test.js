@@ -1,6 +1,7 @@
 const matcher = require("../../../../../app/services/matchers/asda/model2");
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/asda/model2");
+const logger = require("../../../../../app/utilities/logger");
 
 const filename = "packinglistAsda2.xls";
 
@@ -38,5 +39,13 @@ describe("matchesAsdaModel2", () => {
     const result = matcher.matches(model.incorrectHeader, filename);
 
     expect(result).toBe(matcherResult.WRONG_HEADER);
+  });
+
+  test("should call logger.log_error when an error is thrown", () => {
+    const logErrorSpy = jest.spyOn(logger, "log_error");
+
+    matcher.matches(null, null);
+
+    expect(logErrorSpy).toHaveBeenCalled();
   });
 });

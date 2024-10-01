@@ -1,6 +1,7 @@
 const matcher = require("../../../../../app/services/matchers/kepak/model1");
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/kepak/model1");
+const logger = require("../../../../../app/utilities/logger");
 
 const filename = "packinglistKepak1.xlsx";
 
@@ -39,5 +40,13 @@ describe("matchesKepakModel1", () => {
     );
 
     expect(result).toBe(matcherResult.WRONG_HEADER);
+  });
+
+  test("should call logger.log_error when an error is thrown", () => {
+    const logErrorSpy = jest.spyOn(logger, "log_error");
+
+    matcher.matches(null, null);
+
+    expect(logErrorSpy).toHaveBeenCalled();
   });
 });

@@ -2,6 +2,7 @@ const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/asda/model1");
 const parserModel = require("../../../../../app/services/parser-model");
 const testResults = require("../../../test-data-and-results/results/asda/model1");
+const logger = require("../../../../../app/utilities/logger");
 
 const filename = "packinglist-asda-model1.xls";
 
@@ -35,5 +36,13 @@ describe("matchesAsdaModel1", () => {
     const result = parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(invalidTestResult_NoMatch);
+  });
+
+  test("should call logger.log_error when an error is thrown", () => {
+    const logErrorSpy = jest.spyOn(logger, "log_error");
+
+    parserService.findParser(null, null);
+
+    expect(logErrorSpy).toHaveBeenCalled();
   });
 });

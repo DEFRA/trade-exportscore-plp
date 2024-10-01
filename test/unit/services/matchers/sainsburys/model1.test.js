@@ -1,6 +1,7 @@
 const matcher = require("../../../../../app/services/matchers/sainsburys/model1");
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/sainsburys/model1");
+const logger = require("../../../../../app/utilities/logger");
 
 const filename = "packinglistSainsburys1.xlsx";
 
@@ -72,5 +73,13 @@ describe("matchesSainsburysModel1", () => {
     const result = matcher.matches(packingListJson, filename);
 
     expect(result).toBe(matcherResult.WRONG_HEADER);
+  });
+
+  test("should call logger.log_error when an error is thrown", () => {
+    const logErrorSpy = jest.spyOn(logger, "log_error");
+
+    matcher.matches(null, null);
+
+    expect(logErrorSpy).toHaveBeenCalled();
   });
 });

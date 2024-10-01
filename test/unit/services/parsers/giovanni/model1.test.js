@@ -1,10 +1,10 @@
 const parser = require("../../../../../app/services/parsers/giovanni/model1");
 const logger = require("../../../../../app/utilities/logger");
-const parser_model = require("../../../../../app/services/parser-model");
+const parserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 
 describe("parseGiovanniModel1", () => {
-  test("parses json", () => {
+  test("parses populated json", () => {
     const packingListJson = model.validModel.RANA;
     const result = parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[1].A);

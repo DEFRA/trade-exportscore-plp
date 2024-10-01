@@ -4,7 +4,7 @@ const model = require("../../../test-data-and-results/models/davenport/model1");
 const testResults = require("../../../test-data-and-results/results/davenport/model1");
 
 describe("parseDavenportModel1", () => {
-  test("parses json", () => {
+  test("parses populated json", () => {
     const packingListJson = model.validModel.Customer_Order;
 
     const result = parser.parse(packingListJson);

@@ -1,6 +1,7 @@
 const matcherResult = require("../../../../../app/services/matcher-result");
 const matcher = require("../../../../../app/services/matchers/fowlerwelch/model1");
 const model = require("../../../test-data-and-results/models/fowlerwelch/model1");
+const logger = require("../../../../../app/utilities/logger");
 
 const filename = "packinglistFowlerWelch1.xlsx";
 
@@ -87,5 +88,13 @@ describe("matchesFowlerWelch", () => {
     const result = matcher.matches(model.invalidModel_MissingHeaders, filename);
 
     expect(result).toBe(matcherResult.WRONG_HEADER);
+  });
+
+  test("should call logger.log_error when an error is thrown", () => {
+    const logErrorSpy = jest.spyOn(logger, "log_error");
+
+    matcher.matches(null, null);
+
+    expect(logErrorSpy).toHaveBeenCalled();
   });
 });
