@@ -274,9 +274,10 @@ const headers = {
       regex: /^RMS-GB-000174-\d{3}$/,
     },
   },
-  ICELAND: {
+  ICELAND1: {
     establishmentNumber: {
-      regex: /.*RMS-GB-000040-.*/,
+      regex: /RMS-GB-000040-/,
+      value: "RMS-GB-000040"
     },
     headers: {
       description: "Part Description",

@@ -6,6 +6,7 @@ const {
 const config = require("../../../config");
 const matcher_result = require("../../matcher-result");
 const headers = require("../../model-headers");
+const regex = require("../../../utilities/regex");
 
 async function matches(packingList, filename) {
   const result = {
@@ -23,9 +24,7 @@ async function matches(packingList, filename) {
 
     // check for correct establishment number
     if (
-      !headers.ICELAND.establishmentNumber.regex.test(
-        document.fields.PartialNIRMSNumber.content,
-      )
+      !regex.findMatch(headers.ICELAND1.establishmentNumber.regex, [document.fields.PartialNIRMSNumber])
     ) {
       result.isMatched = matcher_result.WRONG_ESTABLISHMENT_NUMBER
       return result;

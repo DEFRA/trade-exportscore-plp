@@ -112,6 +112,7 @@ function checkRequiredData(packingList) {
     hasRemos
   );
 }
+
 function checkType(packingList) {
   for (const x of packingList) {
     if (isNaN(Number(x.number_of_packages))) {
