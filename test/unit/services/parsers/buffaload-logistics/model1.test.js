@@ -20,7 +20,7 @@ describe("parsesBuffaloadLogisticsModel1", () => {
     // Spy on the log_error method
     const logErrorSpy = jest.spyOn(logger, "log_error");
     // Call the parse function with null data
-    const result = parser.parse(null);
+    parser.parse(null);
     // Check if logger.log_error has been called
     expect(logErrorSpy).toHaveBeenCalled();
   });
