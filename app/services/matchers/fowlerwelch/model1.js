@@ -1,4 +1,4 @@
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -11,20 +11,31 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     //check for correct establishment number
     const sheets = Object.keys(packingList);
 
-    if (sheets.length === 0) {
-      throw new Error("generic error");
+    if (sheets?.length === 0) {
+      return matcherResult.EMPTY_FILE;
+    }
+
+    let lengthCheck = 2;
+    if (trader === "Warrens") {
+      lengthCheck = 3;
+    } else if (sheets.length === 1) {
+      lengthCheck = 46;
+    }
+
+    if (Object.values(packingList)[0].length < lengthCheck) {
+      return matcherResult.VALID_HEADERS_NO_DATA;
     }
 
     for (const sheet of sheets) {
       // check for correct establishment number
       if (!regex.test(regex_expression, packingList[sheet])) {
-        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
       headerRow = rowFinder(packingList[sheet], callback);
       if (headerRow === -1) {
-        return matcher_result.WRONG_HEADER;
+        return matcherResult.WRONG_HEADER;
       }
       const header = {
         C: "Commodity code",
@@ -45,7 +56,7 @@ function matchesModel(packingList, filename, regex_expression, trader) {
               .toLowerCase()
               .startsWith(header[key].toLowerCase()))
         ) {
-          return matcher_result.WRONG_HEADER;
+          return matcherResult.WRONG_HEADER;
         }
       }
     }
@@ -53,16 +64,16 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     logger.log_info(
       "app/services/matchers/fowlerwelch/model1.js",
       "matches()",
-      `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
+      `Packing list matches ${trader} Model 1 with filename: ${filename}`,
     );
-    return matcher_result.CORRECT;
+    return matcherResult.CORRECT;
   } catch (err) {
     logger.log_error(
       "app/services/matchers/fowlerwelch/model1.js",
       "matches()",
       err,
     );
-    return matcher_result.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

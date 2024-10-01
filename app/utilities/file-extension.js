@@ -1,19 +1,19 @@
-const matcher_result = require("../services/matcher-result");
+const matcherResult = require("../services/matcher-result");
 
 function matches(filename, extension) {
   const fileExtension = filename.split(".").pop();
   if (fileExtension.toLowerCase() !== extension.toLowerCase()) {
-    return matcher_result.WRONG_EXTENSION;
+    return matcherResult.WRONG_EXTENSION;
   } else {
-    return matcher_result.CORRECT;
+    return matcherResult.CORRECT;
   }
 }
 
 function isExcel(filename) {
   // Check for both 'xls' and 'xlsx' extensions
   return (
-    matches(filename, "xls") === matcher_result.CORRECT ||
-    matches(filename, "xlsx") === matcher_result.CORRECT
+    matches(filename, "xls") === matcherResult.CORRECT ||
+    matches(filename, "xlsx") === matcherResult.CORRECT
   );
 }
 

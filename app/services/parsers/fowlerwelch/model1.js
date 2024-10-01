@@ -1,5 +1,5 @@
-const combine_parser = require("../../parser-combine");
-const parser_model = require("../../parser-model");
+const combineParser = require("../../parser-combine");
+const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
@@ -38,7 +38,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
-    return combine_parser.combine(
+    return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,
@@ -56,7 +56,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
 function parse(packingListJson) {
   return parseModel(
     packingListJson,
-    parser_model.FOWLERWELCH1,
+    parserModel.FOWLERWELCH1,
     headers.FOWLERWELCH1.establishmentNumber.regex,
   );
 }

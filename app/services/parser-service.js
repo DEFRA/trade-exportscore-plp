@@ -1,8 +1,8 @@
-const matcher_result = require("./matcher-result");
-const parser_model = require("./parser-model");
-const combine_parser = require("./parser-combine");
-const json_file = require("../utilities/json-file");
-const file_extension = require("../utilities/file-extension");
+const matcherResult = require("./matcher-result");
+const parserModel = require("./parser-model");
+const combineParser = require("./parser-combine");
+const jsonFile = require("../utilities/json-file");
+const fileExtension = require("../utilities/file-extension");
 const { parsersExcel } = require("./model-parsers");
 const logger = require("../utilities/logger");
 
@@ -15,14 +15,14 @@ function findParser(packingList, filename) {
 
     // Sanitised packing list (i.e. emove trailing spaces and empty cells)
     const packingListJson = JSON.stringify(packingList);
-    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
+    const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
     // Test for Excel spreadsheets
-    if (file_extension.isExcel(filename)) {
+    if (fileExtension.isExcel(filename)) {
       Object.keys(parsersExcel).forEach((key) => {
         if (
           parsersExcel[key].matches(sanitisedPackingList, filename) ===
-          matcher_result.CORRECT
+          matcherResult.CORRECT
         ) {
           parserFound = true;
           parsedPackingList = parsersExcel[key].parse(
@@ -47,7 +47,7 @@ function findParser(packingList, filename) {
       );
     }
 
-    if (parsedPackingList.parserModel !== parser_model.NOMATCH) {
+    if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
       parsedPackingList.items = parsedPackingList.items.filter(
         (x) => !Object.values(x).every(isNullOrUndefined),
       );
@@ -63,7 +63,7 @@ function findParser(packingList, filename) {
 }
 
 function failedParser() {
-  return combine_parser.combine(null, [], false, parser_model.NOMATCH);
+  return combineParser.combine(null, [], false, parserModel.NOMATCH);
 }
 
 function checkRequiredData(packingList) {

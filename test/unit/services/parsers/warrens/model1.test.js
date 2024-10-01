@@ -1,19 +1,19 @@
 const parser = require("../../../../../app/services/parsers/warrens/model1");
-const parser_model = require("../../../../../app/services/parser-model");
+const parserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/warrens/model1");
-const test_results = require("../../../test-data-and-results/results/warrens/model1");
+const testResults = require("../../../test-data-and-results/results/warrens/model1");
 
 describe("parseWarrensModel1", () => {
   test("parses json", () => {
     const result = parser.parse(model.validModel);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toEqual(testResults.validTestResult);
   });
 
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModel_Multiple);
 
-    expect(result).toEqual(test_results.validTestResultMultiple);
+    expect(result).toEqual(testResults.validTestResultMultiple);
   });
 
   test("parses empty json", () => {
@@ -28,6 +28,6 @@ describe("parseWarrensModel1", () => {
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
     expect(result.items[0].type_of_treatment).toBeNull();
-    expect(result.parserModel).toBe(parser_model.WARRENS1);
+    expect(result.parserModel).toBe(parserModel.WARRENS1);
   });
 });

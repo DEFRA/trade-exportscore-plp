@@ -1,5 +1,5 @@
 const matcher = require("../../../../../app/services/matchers/co-op/model1");
-const matcher_result = require("../../../../../app/services/matcher-result");
+const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/co-op/model1");
 
 const filename = "packinglistCoop1.xlsx";
@@ -8,50 +8,35 @@ describe("matchesCoopModel1", () => {
   test("returns 'Correct' for valid model", () => {
     const result = matcher.matches(model.validModel, filename);
 
-    expect(result).toBe(matcher_result.CORRECT);
+    expect(result).toBe(matcherResult.CORRECT);
   });
 
-  test("returns 'Generic Error' for empty json", () => {
+  test("returns 'Empty File' for empty json", () => {
     const packingListJson = {};
 
-    const result = matcher.matches(packingListJson, filename);
+    const result = matcher.matches(
+      packingListJson,
+      `emptyfilename-${filename}`,
+    );
 
-    expect(result).toBe(matcher_result.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.EMPTY_FILE);
   });
 
-  test("returns 'Wrong Establishment Number' for missing establishment number", () => {
-    const packingListJson = {
-      PackingList_Extract: [
-        {},
-        {},
-        {
-          E: "INCORRECT",
-        },
-      ],
-    };
+  test("returns 'Valid Header, no data' for file without items", () => {
+    const result = matcher.matches(model.validHeadersNoData, filename);
 
-    const result = matcher.matches(packingListJson, filename);
+    expect(result).toBe(matcherResult.VALID_HEADERS_NO_DATA);
+  });
 
-    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
+  test("returns 'Wrong Establishment Number' for invalid establishment number", () => {
+    const result = matcher.matches(model.wrongEstablishment, filename);
+
+    expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return 'Wrong Header' for incorrect header values", () => {
-    const packingListJson = {
-      PackingList_Extract: [
-        {
-          A: "NOT",
-          B: "CORRECT",
-          E: "HEADER",
-          O: "Product/ Part Number description",
-        },
-        {
-          E: "RMS-GB-000009-001",
-        },
-      ],
-    };
+    const result = matcher.matches(model.incorrectHeader, filename);
 
-    const result = matcher.matches(packingListJson, filename);
-
-    expect(result).toBe(matcher_result.WRONG_HEADER);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 });

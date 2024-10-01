@@ -1,5 +1,5 @@
-const combine_parser = require("../../parser-combine");
-const parser_model = require("../../parser-model");
+const combineParser = require("../../parser-combine");
+const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const { mapParser } = require("../../parser-map");
 const regex = require("../../../utilities/regex");
@@ -19,11 +19,11 @@ function parse(packingListJson) {
       headers.BUFFALOAD1.headers,
     );
 
-    return combine_parser.combine(
+    return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      parser_model.BUFFALOAD1,
+      parserModel.BUFFALOAD1,
     );
   } catch (err) {
     logger.log_error(

@@ -1,5 +1,5 @@
 const parser = require("../../../../../app/services/parsers/giovanni/model1");
-const parser_model = require("../../../../../app/services/parser-model");
+const parserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 
 describe("parseGiovanniModel1", () => {
@@ -16,7 +16,7 @@ describe("parseGiovanniModel1", () => {
     expect(result.items[1].total_net_weight_kg).toBe(packingListJson[4].H);
     expect(result.items[0].commodity_code).toBe(packingListJson[3].E);
     expect(result.items[0].commodity_code).toBe(packingListJson[4].E);
-    expect(result.parserModel).toBe(parser_model.GIOVANNI1);
+    expect(result.parserModel).toBe(parserModel.GIOVANNI1);
   });
 
   test("parses empty json", () => {
@@ -29,6 +29,6 @@ describe("parseGiovanniModel1", () => {
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
     expect(result.items[0].commodity_code).toBeNull();
-    expect(result.parserModel).toBe(parser_model.GIOVANNI1);
+    expect(result.parserModel).toBe(parserModel.GIOVANNI1);
   });
 });

@@ -1,5 +1,5 @@
-const combine_parser = require("../../parser-combine");
-const parser_model = require("../../parser-model");
+const combineParser = require("../../parser-combine");
+const parserModel = require("../../parser-model");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
@@ -19,11 +19,11 @@ function parse(packingListJson) {
       headers.ASDA2.headers,
     );
 
-    return combine_parser.combine(
+    return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      parser_model.ASDA2,
+      parserModel.ASDA2,
     );
   } catch (err) {
     logger.log_error("app/services/parsers/asda/model2.js", "matches()", err);

@@ -1,5 +1,5 @@
-const combine_parser = require("../../parser-combine");
-const parser_model = require("../../parser-model");
+const combineParser = require("../../parser-combine");
+const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
@@ -20,11 +20,11 @@ function parse(packingListJson) {
       total_net_weight_kg: col.R ?? null,
     }));
 
-    return combine_parser.combine(
+    return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      parser_model.TJMORRIS1,
+      parserModel.TJMORRIS1,
     );
   } catch (err) {
     logger.log_error(

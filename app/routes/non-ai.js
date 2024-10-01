@@ -3,7 +3,7 @@ const excelToJson = require("@boterop/convert-excel-to-json");
 const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const { StatusCodes } = require("http-status-codes");
-const parser_model = require("../services/parser-model");
+const parserModel = require("../services/parser-model");
 const crypto = require("crypto");
 
 function getRandomInt(min = 1, max = 10000000) {
@@ -27,7 +27,7 @@ module.exports = {
     }
 
     const packingList = findParser(result, filename);
-    if (packingList.parserModel !== parser_model.NOMATCH) {
+    if (packingList.parserModel !== parserModel.NOMATCH) {
       const randomInt = Math.floor(
         Math.random() * (10000000 - 1 + 1) + 1,
       ).toString();

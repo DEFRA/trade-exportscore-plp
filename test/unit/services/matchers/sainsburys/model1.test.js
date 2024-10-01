@@ -1,19 +1,34 @@
 const matcher = require("../../../../../app/services/matchers/sainsburys/model1");
-const matcher_result = require("../../../../../app/services/matcher-result");
+const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/sainsburys/model1");
 
 const filename = "packinglistSainsburys1.xlsx";
 
 describe("matchesSainsburysModel1", () => {
-  test("returns 'Generic Error' for empty json", () => {
-    const packingListJson = {};
+  test("returns 'Correct' for valid model", () => {
+    const result = matcher.matches(model.validModel, filename);
 
-    const result = matcher.matches(packingListJson, filename);
-
-    expect(result).toBe(matcher_result.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.CORRECT);
   });
 
-  test("returns 'Wrong Establishment Number' for missing establishment number", () => {
+  test("returns 'Empty File' for empty json", () => {
+    const packingListJson = {};
+
+    const result = matcher.matches(
+      packingListJson,
+      `emptyfilename-${filename}`,
+    );
+
+    expect(result).toBe(matcherResult.EMPTY_FILE);
+  });
+
+  test("returns 'Valid Header, no data' for file without items", () => {
+    const result = matcher.matches(model.validHeadersNoData, filename);
+
+    expect(result).toBe(matcherResult.VALID_HEADERS_NO_DATA);
+  });
+
+  test("returns 'Wrong Establishment Number' for invalid establishment number", () => {
     const packingListJson = {
       Sheet1: [
         {},
@@ -25,7 +40,7 @@ describe("matchesSainsburysModel1", () => {
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
+    expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("returns wrong header for incorrect header values", () => {
@@ -56,12 +71,6 @@ describe("matchesSainsburysModel1", () => {
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcher_result.WRONG_HEADER);
-  });
-
-  test("returns 'Correct' for valid model", () => {
-    const result = matcher.matches(model.validModel, filename);
-
-    expect(result).toBe(matcher_result.CORRECT);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 });
