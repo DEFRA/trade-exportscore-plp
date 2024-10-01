@@ -5,6 +5,8 @@ const jsonFile = require("../utilities/json-file");
 const fileExtension = require("../utilities/file-extension");
 const { parsersExcel } = require("./model-parsers");
 const logger = require("../utilities/logger");
+const logParserServicePath = "app/services/parser-service.js";
+const logParserServiceFunction = "findParser()";
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
@@ -34,15 +36,15 @@ function findParser(packingList, filename) {
 
       if (!parserFound) {
         logger.log_info(
-          "app/services/parser-service.js",
-          "findParser()",
+          logParserServicePath,
+          logParserServiceFunction,
           `Failed to parse packing list with filename: ${filename}`,
         );
       }
     } else {
       logger.log_info(
-        "app/services/parser-service.js",
-        "findParser()",
+        logParserServicePath,
+        logParserServiceFunction,
         `Failed to parse packing list with filename: ${filename} as it is not an Excel file.`,
       );
     }
@@ -58,7 +60,7 @@ function findParser(packingList, filename) {
 
     return parsedPackingList;
   } catch (err) {
-    logger.log_error("app/services/parser-service.js", "findParser()", err);
+    logger.log_error(logParserServicePath, logParserServiceFunction, err);
   }
 }
 

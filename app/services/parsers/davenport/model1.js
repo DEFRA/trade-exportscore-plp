@@ -18,6 +18,7 @@ function parse(packingListJson) {
       dataRow - 1,
       dataRow,
       headers.DAVENPORT1.headers,
+      false,
     );
 
     return combineParser.combine(

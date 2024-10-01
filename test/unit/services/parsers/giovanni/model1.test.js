@@ -1,5 +1,6 @@
 const parser = require("../../../../../app/services/parsers/giovanni/model1");
-const parserModel = require("../../../../../app/services/parser-model");
+const logger = require("../../../../../app/utilities/logger");
+const parser_model = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 
 describe("parseGiovanniModel1", () => {
@@ -30,5 +31,14 @@ describe("parseGiovanniModel1", () => {
     expect(result.items[0].total_net_weight_kg).toBeNull();
     expect(result.items[0].commodity_code).toBeNull();
     expect(result.parserModel).toBe(parserModel.GIOVANNI1);
+  });
+
+  test("should call logger.log_error when an error is thrown", () => {
+    // Spy on the log_error method
+    const logErrorSpy = jest.spyOn(logger, "log_error");
+    // Call the parse function with null data
+    parser.parse(null);
+    // Check if logger.log_error has been called
+    expect(logErrorSpy).toHaveBeenCalled();
   });
 });
