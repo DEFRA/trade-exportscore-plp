@@ -2,18 +2,7 @@ const fs = require("fs");
 const { StatusCodes } = require("http-status-codes");
 const config = require("../config");
 const { findParser } = require("../services/parser-service");
-
-const {
-  AzureKeyCredential,
-  DocumentAnalysisClient,
-} = require("@azure/ai-form-recognizer");
 const logger = require("../utilities/logger");
-
-const credential = new AzureKeyCredential(config.formRecognizerApiKey);
-const client = new DocumentAnalysisClient(
-  config.formRecognizerEndpoint,
-  credential,
-);
 
 module.exports = {
   method: "GET",
