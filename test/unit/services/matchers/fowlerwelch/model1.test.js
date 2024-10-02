@@ -6,7 +6,7 @@ const logger = require("../../../../../app/utilities/logger");
 const trader = "Fowler-Welch";
 const modelNumber = 1;
 const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
-const filename = `packinglist${traderAndModelNumber}.xls`;
+const filename = `packinglist-${traderAndModelNumber}.xls`;
 
 describe(`matches-${traderAndModelNumber}`, () => {
   test("returns 'Correct' matcher result for correct headers for one sheet", () => {

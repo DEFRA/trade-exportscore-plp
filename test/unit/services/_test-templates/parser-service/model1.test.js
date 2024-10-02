@@ -1,13 +1,12 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-data-and-results/models/asda/model1");
+const model = require("../../../test-data-and-results/models/asda/model1"); // Update as required
+const testResults = require("../../../test-data-and-results/results/asda/model1"); // Update as required
+const incorrectFileExtension = require("../../../test-data-and-results/results/no-match-for-incorrect-file-extension");
 const parserModel = require("../../../../../app/services/parser-model");
-const testResults = require("../../../test-data-and-results/results/asda/model1");
 const logger = require("../../../../../app/utilities/logger");
 
-const trader = "update"; // update as required
-const modelNumber = 1; // update as required
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
-const filename = `packinglist${traderAndModelNumber}.xls`;
+const traderAndModelNumber = parserModel.ASDA1; // Update as required
+const filename = `packinglist-${traderAndModelNumber}.xls`;
 
 describe(`parser-service-parses-${traderAndModelNumber}`, () => {
   test(`matches valid ${traderAndModelNumber} file, calls parser and returns all_required_fields_present as true`, () => {
@@ -25,20 +24,12 @@ describe(`parser-service-parses-${traderAndModelNumber}`, () => {
     expect(result).toEqual(testResults.invalidTestResult_MissingCells);
   });
 
-  test("returns 'Wrong File Extension' for incorrect file extension", () => {
+  test("returns 'No Match' for incorrect file extension", () => {
     const filename = "packinglist.pdf";
-    const invalidTestResult_NoMatch = {
-      business_checks: {
-        all_required_fields_present: false,
-      },
-      items: [],
-      registration_approval_number: null,
-      parserModel: parserModel.NOMATCH,
-    };
 
     const result = parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual(invalidTestResult_NoMatch);
+    expect(result).toEqual(incorrectFileExtension.invalidFileExtension);
   });
 
   test("should call logger.log_error when an error is thrown", () => {

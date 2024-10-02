@@ -2,10 +2,9 @@ const parser = require("../../../../../app/services/parsers/nisa/model2");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/nisa/model2");
 const testResults = require("../../../test-data-and-results/results/nisa/model2");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "Nisa";
-const modelNumber = 2;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.NISA2;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {

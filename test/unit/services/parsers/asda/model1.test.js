@@ -1,11 +1,10 @@
 const parser = require("../../../../../app/services/parsers/asda/model1");
-const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/asda/model1");
 const testResults = require("../../../test-data-and-results/results/asda/model1");
+const logger = require("../../../../../app/utilities/logger");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "ASDA";
-const modelNumber = 1;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.ASDA1;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {

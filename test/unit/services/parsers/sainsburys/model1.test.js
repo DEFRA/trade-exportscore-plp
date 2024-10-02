@@ -2,10 +2,9 @@ const parser = require("../../../../../app/services/parsers/sainsburys/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/sainsburys/model1");
 const testResults = require("../../../test-data-and-results/results/sainsburys/model1");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "Sainsburys";
-const modelNumber = 1;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.SAINSBURYS1;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {

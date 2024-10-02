@@ -6,7 +6,7 @@ const logger = require("../../../../../app/utilities/logger");
 const trader = "Kepak";
 const modelNumber = 1;
 const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
-const filename = `packinglist${traderAndModelNumber}.xls`;
+const filename = `packinglist-${traderAndModelNumber}.xls`;
 
 describe(`matches-${traderAndModelNumber}`, () => {
   test("returns 'Correct' matcher result for valid model", () => {

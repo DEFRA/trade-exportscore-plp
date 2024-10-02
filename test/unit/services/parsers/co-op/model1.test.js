@@ -2,10 +2,9 @@ const parser = require("../../../../../app/services/parsers/co-op/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/co-op/model1");
 const testResults = require("../../../test-data-and-results/results/co-op/model1");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "Co-Op";
-const modelNumber = 1;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.COOP1;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {

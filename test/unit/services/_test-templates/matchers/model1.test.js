@@ -1,12 +1,12 @@
-const matcher = require("../../../../../app/services/matchers/asda/model1"); // update as required
-const model = require("../../../test-data-and-results/models/asda/model1"); // update as required
 const matcherResult = require("../../../../../app/services/matcher-result");
 const logger = require("../../../../../app/utilities/logger");
+const matcher = require("../../../../../app/services/matchers/asda/model1"); // update as required
+const model = require("../../../test-data-and-results/models/asda/model1"); // update as required
 
 const trader = "update"; // update as required
 const modelNumber = 1; // update as required
 const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
-const filename = `packinglist${traderAndModelNumber}.xls`;
+const filename = `packinglist-${traderAndModelNumber}.xls`;
 
 describe(`matches-${traderAndModelNumber}`, () => {
   test("returns 'Correct' matcher result for valid model", () => {

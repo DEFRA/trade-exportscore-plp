@@ -2,10 +2,9 @@ const parser = require("../../../../../app/services/parsers/tjmorris/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/tjmorris/model1");
 const testResults = require("../../../test-data-and-results/results/tjmorris/model1");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "TJ-Morris";
-const modelNumber = 1;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.TJMORRIS1;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {

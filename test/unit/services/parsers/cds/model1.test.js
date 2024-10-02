@@ -2,10 +2,9 @@ const parser = require("../../../../../app/services/parsers/cds/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/cds/model1");
 const testResults = require("../../../test-data-and-results/results/cds/model1");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "CDS";
-const modelNumber = 1;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.CDS1;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {
