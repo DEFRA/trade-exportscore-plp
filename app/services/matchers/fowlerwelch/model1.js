@@ -23,7 +23,8 @@ function matchesModel(packingList, filename, regexExpression, trader) {
     if (trader === "Warrens") {
       minimumLengthThatContainsData = minimumLengthThatContainsDataForWarrens;
     } else if (sheets.length === 1) {
-      minimumLengthThatContainsData = minimumLengthThatContainsDataForSingleFowlerWelchSheet;
+      minimumLengthThatContainsData =
+        minimumLengthThatContainsDataForSingleFowlerWelchSheet;
     } else {
       minimumLengthThatContainsData = 2;
     }
@@ -44,7 +45,7 @@ function matchesModel(packingList, filename, regexExpression, trader) {
         return matcherResult.WRONG_HEADER;
       }
       if (!areHeadersValid(packingList, sheet, headerRow)) {
-        return matcher_result.WRONG_HEADER;
+        return matcherResult.WRONG_HEADER;
       }
     }
 
