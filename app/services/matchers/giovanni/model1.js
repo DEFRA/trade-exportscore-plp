@@ -9,7 +9,7 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 function matchesModel(
   packingList,
   filename,
-  regex_expression,
+  regexExpression,
   trader,
   lengthCheck,
 ) {
@@ -23,7 +23,7 @@ function matchesModel(
       return matcherResult.VALID_HEADERS_NO_DATA;
     }
     // check for correct establishment number
-    if (!regex.test(regex_expression, packingList[sheet])) {
+    if (!regex.test(regexExpression, packingList[sheet])) {
       return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
     }
 

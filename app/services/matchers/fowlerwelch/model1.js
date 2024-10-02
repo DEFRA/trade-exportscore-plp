@@ -6,7 +6,7 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function matchesModel(packingList, filename, regex_expression, trader) {
+function matchesModel(packingList, filename, regexExpression, trader) {
   let headerRow = 0;
 
   try {
@@ -17,11 +17,15 @@ function matchesModel(packingList, filename, regex_expression, trader) {
       return matcherResult.EMPTY_FILE;
     }
 
-    let minimumLengthThatContainsData = 2;
+    const minimumLengthThatContainsDataForWarrens = 3;
+    const minimumLengthThatContainsDataForSingleFowlerWelchSheet = 46;
+    let minimumLengthThatContainsData;
     if (trader === "Warrens") {
-      minimumLengthThatContainsData = 3;
+      minimumLengthThatContainsData = minimumLengthThatContainsDataForWarrens;
     } else if (sheets.length === 1) {
-      minimumLengthThatContainsData = 46;
+      minimumLengthThatContainsData = minimumLengthThatContainsDataForSingleFowlerWelchSheet;
+    } else {
+      minimumLengthThatContainsData = 2;
     }
 
     if (Object.values(packingList)[0].length < minimumLengthThatContainsData) {
@@ -30,7 +34,7 @@ function matchesModel(packingList, filename, regex_expression, trader) {
 
     for (const sheet of sheets) {
       // check for correct establishment number
-      if (!regex.test(regex_expression, packingList[sheet])) {
+      if (!regex.test(regexExpression, packingList[sheet])) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
