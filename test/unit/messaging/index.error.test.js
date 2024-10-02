@@ -1,4 +1,4 @@
-const { start, stop } = require("../../../app/messaging/index");
+const { start } = require("../../../app/messaging/index");
 const processPlpMessage = require("../../../app/messaging/process-plp-message");
 const { MessageReceiver } = require("adp-messaging");
 const logger = require("../../../app/utilities/logger");

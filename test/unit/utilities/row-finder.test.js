@@ -11,6 +11,7 @@ describe("findHeaderRow", () => {
         G: "DESCRIPTION",
       },
     ];
+
     expect(rowFinder(input, (x) => x.G === header)).toBe(expected);
   });
 });
