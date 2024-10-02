@@ -6,6 +6,7 @@ const logger = require("./../utilities/logger");
 const logUpsertIdcomsPath = "app/routes/upsert-idcoms.js";
 
 async function upsertWithDynamics(checkStatus, request) {
+  let checkStatus = StatusCodes.NOT_FOUND;
   try {
     checkStatus = await patchPackingListCheck(
       request.query.applicationId,
@@ -18,6 +19,7 @@ async function upsertWithDynamics(checkStatus, request) {
 }
 
 async function upsert(request, checkStatus) {
+  let checkStatus = StatusCodes.NOT_FOUND;
   try {
     await sendParsed(request.query.applicationId, request.query.isApproved);
     checkStatus = StatusCodes.OK;
