@@ -53,8 +53,7 @@ function mapPdfParser(packingListDocument, key) {
         row[headers[key].headers.type_of_treatment]?.value ?? null,
       commodity_code: row[headers[key].headers.commodity_code]?.value ?? null,
       number_of_packages:
-        row[headers[key].headers.number_of_packages]?.value *
-          row.Packages?.value ?? null,
+        row[headers[key].headers.number_of_packages]?.value ?? null,
       total_net_weight_kg:
         row[headers[key].headers.total_net_weight_kg]?.content ?? null,
     };

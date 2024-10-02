@@ -10,17 +10,25 @@ function createDocumentIntelligenceClient() {
 }
 
 async function runAnalysis(client, modelId, fileBuffer) {
-  const poller = await client.beginAnalyzeDocument(modelId, fileBuffer);
+  try {
+    const poller = await client.beginAnalyzeDocument(modelId, fileBuffer);
 
-  const {
-    documents: [document],
-  } = await poller.pollUntilDone();
-
-  if (!document) {
-    throw new Error("Expected at least one document in the result.");
+    const {
+      documents: [document],
+    } = await poller.pollUntilDone();
+  
+    if (!document) {
+      throw new Error("Expected at least one document in the result.");
+    }
+  
+    return document;
+  } catch (err) {
+    logger.log_error(
+      "app/services/document-intelligence.js",
+      "runAnalysis()",
+      err,
+    );
   }
-
-  return document;
 }
 
 module.exports = { createDocumentIntelligenceClient, runAnalysis };

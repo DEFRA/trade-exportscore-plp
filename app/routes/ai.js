@@ -29,9 +29,14 @@ module.exports = {
       }
 
       return h.response(packingList).code(StatusCodes.OK);
-    } catch (error) {
-      console.error("Error analyzing document:", error);
-      return h.response(error.message).code(StatusCodes.SERVICE_UNAVAILABLE);
+      
+    } catch (err) {
+      logger.log_error(
+        "app/routes/ai.js",
+        "get()",
+        err,
+      );
+      return h.response(err.message).code(StatusCodes.SERVICE_UNAVAILABLE);
     }
   },
 };
