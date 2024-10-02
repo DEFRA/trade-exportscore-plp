@@ -61,7 +61,7 @@ function matches(packingList, filename) {
 }
 
 function areHeadersValid(packingList, sheet, headerRow) {
-  const headers = {
+  const validHeaders = {
     C: "Commodity code",
     F: "Description of goods",
     H: "No. of pkgs",
@@ -69,17 +69,18 @@ function areHeadersValid(packingList, sheet, headerRow) {
     N: "Treatment Type (Chilled /Ambient)",
   };
 
-  for (const key in headers) {
+  for (const key in validHeaders) {
+    if (!validHeaders.hasOwnProperty(key)) {
+      continue; // Skip if it's not the object's own property
+    }
+
     const cellValue = packingList[sheet][headerRow][key].toLowerCase();
 
-    if (key === "K") {
-      if (!cellValue.includes("net weight")) {
-        return false; // Return false if the "K" key doesn't match "net weight"
-      }
-    } else {
-      if (!cellValue.startsWith(headers[key].toLowerCase())) {
-        return false; // Return false if any other key doesn't start with the correct header
-      }
+    if (
+      (key === "K" && !cellValue.includes("net weight")) ||
+      (key !== "K" && !cellValue.startsWith(validHeaders[key].toLowerCase()))
+    ) {
+      return false; // Return false if any key doesn't match the expected header
     }
   }
 
