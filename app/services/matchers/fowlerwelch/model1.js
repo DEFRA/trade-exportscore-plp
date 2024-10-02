@@ -26,27 +26,8 @@ function matchesModel(packingList, filename, regex_expression, trader) {
       if (headerRow === -1) {
         return matcher_result.WRONG_HEADER;
       }
-      const header = {
-        C: "Commodity code",
-        F: "Description of goods",
-        H: "No. of pkgs",
-        K: "Item Net Weight (kgs)",
-        N: "Treatment Type (Chilled /Ambient)",
-      };
-
-      for (const key in header) {
-        if (
-          (key === "K" &&
-            !packingList[sheet][headerRow][key]
-              .toLowerCase()
-              .includes("net weight")) ||
-          (key !== "K" &&
-            !packingList[sheet][headerRow][key]
-              .toLowerCase()
-              .startsWith(header[key].toLowerCase()))
-        ) {
-          return matcher_result.WRONG_HEADER;
-        }
+      if (!areHeadersValid(packingList, sheet, headerRow)) {
+        return matcher_result.WRONG_HEADER;
       }
     }
 
@@ -77,6 +58,32 @@ function matches(packingList, filename) {
     headers.FOWLERWELCH1.establishmentNumber.regex,
     "Fowler Welch",
   );
+}
+
+function areHeadersValid(packingList, sheet, headerRow) {
+  const headers = {
+    C: "Commodity code",
+    F: "Description of goods",
+    H: "No. of pkgs",
+    K: "Item Net Weight (kgs)",
+    N: "Treatment Type (Chilled /Ambient)",
+  };
+
+  for (const key in headers) {
+    const cellValue = packingList[sheet][headerRow][key].toLowerCase();
+
+    if (key === "K") {
+      if (!cellValue.includes("net weight")) {
+        return false; // Return false if the "K" key doesn't match "net weight"
+      }
+    } else {
+      if (!cellValue.startsWith(headers[key].toLowerCase())) {
+        return false; // Return false if any other key doesn't start with the correct header
+      }
+    }
+  }
+
+  return true; // Return true if all headers match
 }
 
 module.exports = { matches, matchesModel };
