@@ -5,7 +5,7 @@ const config = require("../config");
 const logger = require("./../utilities/logger");
 const logUpsertIdcomsPath = "app/routes/upsert-idcoms.js";
 
-async function upsertWithDynamics(checkStatus, request) {
+async function upsertWithDynamics(request) {
   let checkStatus = StatusCodes.NOT_FOUND;
   try {
     checkStatus = await patchPackingListCheck(
@@ -18,7 +18,7 @@ async function upsertWithDynamics(checkStatus, request) {
   return checkStatus;
 }
 
-async function upsert(request, checkStatus) {
+async function upsert(request) {
   let checkStatus = StatusCodes.NOT_FOUND;
   try {
     await sendParsed(request.query.applicationId, request.query.isApproved);
@@ -38,9 +38,9 @@ module.exports = {
         let checkStatus = StatusCodes.NOT_FOUND;
         if (request.query.applicationId) {
           if (config.isDynamicsIntegration) {
-            checkStatus = await upsertWithDynamics(checkStatus, request);
+            checkStatus = await upsertWithDynamics(request);
           } else {
-            checkStatus = await upsert(request, checkStatus);
+            checkStatus = await upsert(request);
           }
         }
         return h.response(checkStatus).code(StatusCodes.OK);
