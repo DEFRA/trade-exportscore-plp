@@ -3,16 +3,19 @@ const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/co-op/model1");
 const logger = require("../../../../../app/utilities/logger");
 
-const filename = "packinglistCoop1.xlsx";
+const trader = "Co-Op";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+const filename = `packinglist${traderAndModelNumber}.xls`;
 
-describe("matchesCoopModel1", () => {
-  test("returns 'Correct' for valid model", () => {
+describe(`matches${traderAndModelNumber}`, () => {
+  test("returns 'Correct' matcher result for valid model", () => {
     const result = matcher.matches(model.validModel, filename);
 
     expect(result).toBe(matcherResult.CORRECT);
   });
 
-  test("returns 'Empty File' for empty json", () => {
+  test("returns 'Empty File' matcher result for empty json", () => {
     const packingListJson = {};
 
     const result = matcher.matches(
@@ -23,19 +26,19 @@ describe("matchesCoopModel1", () => {
     expect(result).toBe(matcherResult.EMPTY_FILE);
   });
 
-  test("returns 'Valid Header, no data' for file without items", () => {
+  test("returns 'Valid Header, no data' matcher result for file without items", () => {
     const result = matcher.matches(model.validHeadersNoData, filename);
 
     expect(result).toBe(matcherResult.VALID_HEADERS_NO_DATA);
   });
 
-  test("returns 'Wrong Establishment Number' for invalid establishment number", () => {
+  test("returns 'Wrong Establishment Number' matcher result for invalid establishment number", () => {
     const result = matcher.matches(model.wrongEstablishment, filename);
 
     expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("return 'Wrong Header' for incorrect header values", () => {
+  test("return 'Wrong Header' matcher result for incorrect header values", () => {
     const result = matcher.matches(model.incorrectHeader, filename);
 
     expect(result).toBe(matcherResult.WRONG_HEADER);

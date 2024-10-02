@@ -75,7 +75,7 @@ describe("matchesHeader", () => {
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
-  test("returns 'Empty File' for empty json", () => {
+  test("returns 'Empty File' matcher result for empty json", () => {
     // arrange
     const header = [/header/];
 
