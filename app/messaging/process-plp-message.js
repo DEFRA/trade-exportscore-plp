@@ -49,7 +49,7 @@ async function processPlpMessage(message, receiver) {
       );
     }
 
-    if (packingList.parserModel !== parserModel.NOMATCH) {
+    if (packingList.parserModel !== parser_model.NOMATCH) {
       try {
         await createPackingList(packingList, message.body.application_id);
         logger.log_info(

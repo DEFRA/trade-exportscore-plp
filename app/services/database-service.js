@@ -7,6 +7,14 @@ const dbConfig = config.dbConfig[config.env];
 const modelPath = path.join(__dirname, "..", "models");
 const logger = require("../utilities/logger");
 
+function associateModels(sequelize) {
+  for (const model of Object.values(sequelize.models)) {
+    if (model.associate) {
+      model.associate(sequelize.models);
+    }
+  }
+}
+
 module.exports = (() => {
   try {
     const sequelize = new Sequelize(
@@ -26,11 +34,7 @@ module.exports = (() => {
         require(path.join(modelPath, file))(sequelize, DataTypes),
       );
     if (sequelize.models) {
-      for (const model of Object.values(sequelize.models)) {
-        if (model.associate) {
-          model.associate(sequelize.models);
-        }
-      }
+      associateModels(sequelize);
     }
     return {
       models: sequelize.models,

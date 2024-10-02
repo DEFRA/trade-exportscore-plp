@@ -2,36 +2,40 @@ const logger = require("../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function sanitise(jsonString) {
-  try {
-    // Parse the JSON string into a JavaScript object
-    const jsonObj = JSON.parse(jsonString);
-    // Recursively sanitise the JSON object
-    function sanitiseObject(obj) {
-      for (const key in obj) {
-        // Ensure only properties directly on the object are being processed
-        if (obj.hasOwnProperty(key)) {
-          let value = obj[key];
+// Function to trim and replace empty strings with null
+function sanitiseValue(value) {
+  if (typeof value === "string") {
+    const trimmedValue = value.trim();
+    return trimmedValue === "" ? null : trimmedValue;
+  }
+  return value;
+}
 
-          if (typeof value === "string") {
-            // Trim trailing whitespaces
-            value = value.trim();
+// Function to recursively sanitise objects and arrays
+function sanitiseObject(obj) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
 
-            // Replace empty strings with null
-            obj[key] = value === "" ? null : value;
-          } else if (typeof value === "object" && value !== null) {
-            // Recursively sanitise nested objects or arrays
-            sanitiseObject(value);
-          }
-        }
+      if (typeof value === "object" && value !== null) {
+        // Recursively sanitise nested objects or arrays
+        sanitiseObject(value);
+      } else {
+        // Sanitise non-object values
+        obj[key] = sanitiseValue(value);
       }
     }
+  }
+}
 
-    // Start sanitising the object
-    sanitiseObject(jsonObj);
+// Main sanitise function to handle parsing and logging
+function sanitise(jsonString) {
+  try {
+    const jsonObj = JSON.parse(jsonString); // Parse the JSON string
 
-    // Convert the sanitised object back to a JSON string
-    return JSON.stringify(jsonObj);
+    sanitiseObject(jsonObj); // Sanitise the parsed object
+
+    return JSON.stringify(jsonObj); // Convert back to JSON string
   } catch (err) {
     logger.log_error(
       filenameForLogging,

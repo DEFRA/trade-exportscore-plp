@@ -6,6 +6,30 @@ const logger = require("./../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+async function upsertWithDynamics(request) {
+  let checkStatus = StatusCodes.NOT_FOUND;
+  try {
+    checkStatus = await patchPackingListCheck(
+      request.query.applicationId,
+      request.query.isApproved,
+    );
+  } catch (err) {
+    logger.log_error(filenameForLogging, "get() > patchPackingListCheck", err);
+  }
+  return checkStatus;
+}
+
+async function upsert(request) {
+  let checkStatus = StatusCodes.NOT_FOUND;
+  try {
+    await sendParsed(request.query.applicationId, request.query.isApproved);
+    checkStatus = StatusCodes.OK;
+  } catch (err) {
+    logger.log_error(filenameForLogging, "get() > sendParsed", err);
+  }
+  return checkStatus;
+}
+
 module.exports = {
   method: "GET",
   path: "/upsert-idcoms",
@@ -15,28 +39,9 @@ module.exports = {
         let checkStatus = StatusCodes.NOT_FOUND;
         if (request.query.applicationId) {
           if (config.isDynamicsIntegration) {
-            try {
-              checkStatus = await patchPackingListCheck(
-                request.query.applicationId,
-                request.query.isApproved,
-              );
-            } catch (err) {
-              logger.log_error(
-                filenameForLogging,
-                "get() > patchPackingListCheck",
-                err,
-              );
-            }
+            checkStatus = await upsertWithDynamics(request);
           } else {
-            try {
-              await sendParsed(
-                request.query.applicationId,
-                request.query.isApproved,
-              );
-              checkStatus = StatusCodes.OK;
-            } catch (err) {
-              logger.log_error(filenameForLogging, "get() > sendParsed", err);
-            }
+            checkStatus = await upsert(request);
           }
         }
         return h.response(checkStatus).code(StatusCodes.OK);
