@@ -2,10 +2,9 @@ const matcher = require("../../../../../app/services/matchers/buffaload-logistic
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/buffaload-logistics/model1");
 const logger = require("../../../../../app/utilities/logger");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "Buffaload-Logistics";
-const modelNumber = 1;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.BUFFALOAD1;
 const filename = `packinglist-${traderAndModelNumber}.xls`;
 
 describe(`matches-${traderAndModelNumber}`, () => {

@@ -2,10 +2,9 @@ const matcher = require("../../../../../app/services/matchers/cds/model1");
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/cds/model1");
 const logger = require("../../../../../app/utilities/logger");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "CDS";
-const modelNumber = 1;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.CDS1;
 const filename = `packinglist-${traderAndModelNumber}.xls`;
 
 describe(`matches-${traderAndModelNumber}`, () => {

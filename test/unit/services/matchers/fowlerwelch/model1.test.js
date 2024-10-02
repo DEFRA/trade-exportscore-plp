@@ -2,10 +2,9 @@ const matcherResult = require("../../../../../app/services/matcher-result");
 const matcher = require("../../../../../app/services/matchers/fowlerwelch/model1");
 const model = require("../../../test-data-and-results/models/fowlerwelch/model1");
 const logger = require("../../../../../app/utilities/logger");
+const parserModel = require("../../../../../app/services/parser-model");
 
-const trader = "Fowler-Welch";
-const modelNumber = 1;
-const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
+const traderAndModelNumber = parserModel.FOWLERWELCH1;
 const filename = `packinglist-${traderAndModelNumber}.xls`;
 
 describe(`matches-${traderAndModelNumber}`, () => {
