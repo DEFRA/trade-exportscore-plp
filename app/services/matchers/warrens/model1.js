@@ -1,5 +1,4 @@
 const { matchesModel } = require("../fowlerwelch/model1");
-const logger = require("../../../utilities/logger");
 
 function matches(packingList, filename) {
   return matchesModel(

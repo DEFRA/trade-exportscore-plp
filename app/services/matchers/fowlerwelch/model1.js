@@ -17,14 +17,14 @@ function matchesModel(packingList, filename, regex_expression, trader) {
       return matcherResult.EMPTY_FILE;
     }
 
-    let lengthCheck = 2;
+    let minimumLengthThatContainsData = 2;
     if (trader === "Warrens") {
-      lengthCheck = 3;
+      minimumLengthThatContainsData = 3;
     } else if (sheets.length === 1) {
-      lengthCheck = 46;
+      minimumLengthThatContainsData = 46;
     }
 
-    if (Object.values(packingList)[0].length < lengthCheck) {
+    if (Object.values(packingList)[0].length < minimumLengthThatContainsData) {
       return matcherResult.VALID_HEADERS_NO_DATA;
     }
 

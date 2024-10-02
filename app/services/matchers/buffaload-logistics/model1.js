@@ -13,7 +13,8 @@ function matches(packingList, filename) {
       return matcherResult.EMPTY_FILE;
     }
 
-    if (Object.values(packingList)[0].length < 3) {
+    const minimumLengthThatContainsData = 3;
+    if (Object.values(packingList)[0].length < minimumLengthThatContainsData) {
       return matcherResult.VALID_HEADERS_NO_DATA;
     }
 
