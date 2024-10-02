@@ -8,7 +8,7 @@ const modelNumber = 1;
 const traderAndModelNumber = `${trader}${modelNumber}`;
 const filename = `packinglist${traderAndModelNumber}.xls`;
 
-describe(`matches${traderAndModelNumber}`, () => {
+describe(`matches-${traderAndModelNumber}`, () => {
   test("returns 'Correct' matcher result for valid model", () => {
     const result = matcher.matches(model.validModel, filename);
 

@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/tescos/model1");
 const testResults = require("../../../test-data-and-results/results/tescos/model1");
 
-describe("parseTescoModel1", () => {
+const trader = "Tescos";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel["Input Data Sheet"]);
 

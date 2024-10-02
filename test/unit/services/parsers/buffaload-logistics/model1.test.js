@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/buffaload-logistics/model1");
 const testResults = require("../../../test-data-and-results/results/buffaload-logistics/model1");
 
-describe("parsesBuffaloadLogisticsModel1", () => {
+const trader = "Buffaload-Logistics";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid json", () => {
     const result = parser.parse(model.validModel.Tabelle1);
 

@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/co-op/model1");
 const testResults = require("../../../test-data-and-results/results/co-op/model1");
 
-describe("parseCoopModel1", () => {
+const trader = "Co-Op";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel["Input Packing Sheet"]);
 

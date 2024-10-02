@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/cds/model1");
 const testResults = require("../../../test-data-and-results/results/cds/model1");
 
-describe("parseCdsModel1", () => {
+const trader = "CDS";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel.PackingList_Extract);
 

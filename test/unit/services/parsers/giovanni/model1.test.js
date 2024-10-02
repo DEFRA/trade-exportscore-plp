@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const parserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 
-describe("parseGiovanniModel1", () => {
+const trader = "Giovanni";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const packingListJson = model.validModel.RANA;
     const result = parser.parse(packingListJson);

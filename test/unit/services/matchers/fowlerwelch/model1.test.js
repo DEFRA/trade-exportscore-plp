@@ -8,14 +8,14 @@ const modelNumber = 1;
 const traderAndModelNumber = `${trader}${modelNumber}`;
 const filename = `packinglist${traderAndModelNumber}.xls`;
 
-describe(`matches${traderAndModelNumber}`, () => {
-  test("returns correct for correct headers for one sheet", () => {
+describe(`matches-${traderAndModelNumber}`, () => {
+  test("returns 'Correct' matcher result for correct headers for one sheet", () => {
     const result = matcher.matches(model.validModel, filename);
 
     expect(result).toBe(matcherResult.CORRECT);
   });
 
-  test("returns correct for correct headers of multiple sheets", () => {
+  test("returns 'Correct' matcher result for correct headers of multiple sheets", () => {
     const result = matcher.matches(model.validModel_Multiple, filename);
 
     expect(result).toBe(matcherResult.CORRECT);

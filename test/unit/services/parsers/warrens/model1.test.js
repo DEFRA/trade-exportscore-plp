@@ -4,7 +4,11 @@ const parserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/warrens/model1");
 const testResults = require("../../../test-data-and-results/results/warrens/model1");
 
-describe("parseWarrensModel1", () => {
+const trader = "Warrens";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);
 

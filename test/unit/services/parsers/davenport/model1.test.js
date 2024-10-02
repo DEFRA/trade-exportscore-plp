@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/davenport/model1");
 const testResults = require("../../../test-data-and-results/results/davenport/model1");
 
-describe("parseDavenportModel1", () => {
+const trader = "Davenport";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const packingListJson = model.validModel.Customer_Order;
 

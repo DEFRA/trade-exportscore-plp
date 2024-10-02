@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/tjmorris/model1");
 const testResults = require("../../../test-data-and-results/results/tjmorris/model1");
 
-describe("parseTjmorrisModel1", () => {
+const trader = "TJ-Morris";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid json", () => {
     const result = parser.parse(model.validModel.Sheet1);
 

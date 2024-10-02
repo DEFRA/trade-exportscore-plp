@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/asda/model2");
 const testResults = require("../../../test-data-and-results/results/asda/model2");
 
-describe("parseAsdaModel2", () => {
+const trader = "ASDA";
+const modelNumber = 2;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel.Sheet1);
 

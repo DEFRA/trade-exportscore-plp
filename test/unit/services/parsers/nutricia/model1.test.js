@@ -3,7 +3,11 @@ const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/nutricia/model1");
 const testResults = require("../../../test-data-and-results/results/nutricia/model1");
 
-describe("parseNutricaModel1", () => {
+const trader = "Nutricia";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel.DANONE);
 
@@ -25,4 +29,3 @@ describe("parseNutricaModel1", () => {
     expect(logErrorSpy).toHaveBeenCalled();
   });
 });
-module.exports = {};

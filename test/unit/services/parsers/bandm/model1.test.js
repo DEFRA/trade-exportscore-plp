@@ -4,7 +4,11 @@ const model = require("../../../test-data-and-results/models/bandm/model1");
 const jsonFile = require("../../../../../app/utilities/json-file");
 const testResults = require("../../../test-data-and-results/results/bandm/model1");
 
-describe("parseBandMModel1", () => {
+const trader = "B&M";
+const modelNumber = 1;
+const traderAndModelNumber = `${trader}${modelNumber}`;
+
+describe(`parses-${traderAndModelNumber}`, () => {
   test("parses populated json", () => {
     const packingListJson = JSON.stringify(model.validModel.Sheet1);
     const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
