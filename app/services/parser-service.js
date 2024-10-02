@@ -7,6 +7,7 @@ const { parsersExcel, parsersPdf } = require("./model-parsers");
 const logger = require("../utilities/logger");
 const logParserServicePath = "app/services/parser-service.js";
 const logParserServiceFunction = "findParser()";
+const config = require("../config");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
@@ -44,7 +45,7 @@ async function findParser(packingList, filename) {
       }
 
       // Test for PDF spreadsheets
-    } else if (file_extension.isPdf(filename)) {
+    } else if (file_extension.isPdf(filename) && config.isDiEnabled) {
       for (const key in parsersPdf) {
         if (parsersPdf.hasOwnProperty(key)) {
           const result = await parsersPdf[key].matches(packingList, filename);

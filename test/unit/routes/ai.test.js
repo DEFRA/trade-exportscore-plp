@@ -6,7 +6,6 @@ const logger = require("../../../app/utilities/logger");
 const fs = require("fs");
 
 // Mocking the necessary modules
-jest.mock("fs");
 jest.mock("../../../app/services/parser-service"); // Mock the entire parser-service module
 jest.mock("../../../app/packing-list"); // Mock the entire packing-list module
 
@@ -42,9 +41,9 @@ describe("/ai route handler", () => {
   // Test case for successful execution
   test("should return success", async () => {
     // Mock readFileSync with successful data return
-    fs.readFileSync.mockImplementationOnce(() => {
-      return "parsedData";
-    });
+    // fs.readFileSync.mockImplementationOnce(() => {
+    //   return "parsedData";
+    // });
 
     // Call the handler with the mock request and mock response
     await ai.handler(mockRequest, mockH);
@@ -56,6 +55,7 @@ describe("/ai route handler", () => {
   // Test case for handling an readFileSync error
   test("should handle readFileSync error", async () => {
     // Mock readFileSync to throw an error
+    jest.mock("fs");
     fs.readFileSync.mockImplementationOnce(() => {
       throw new Error("Read file error"); // Simulate an error during read file
     });
@@ -79,5 +79,4 @@ describe("/ai route handler", () => {
     // Restore the original console.error after the test
     consoleErrorSpy.mockRestore();
   });
-
 });

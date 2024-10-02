@@ -50,4 +50,7 @@ value.plDir = path.join(process.cwd(), "/app/packing-lists/");
 // TP/IDCOMS toggle
 value.isDynamicsIntegration = process.env.IS_DYNAMICS_INTEGRATION === "true";
 
+// DI toggle
+value.isDiEnabled = process.env.IS_DOCUMENT_INTLELLIGENCE_ENABLED === "true";
+
 module.exports = value;

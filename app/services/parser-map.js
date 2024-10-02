@@ -43,9 +43,8 @@ function mapParser(
 
 function mapPdfParser(packingListDocument, key) {
   const packingListContents = [];
-  for (i of packingListDocument.fields.PackingListContents.values) {
-    const row =
-      packingListDocument.fields.PackingListContents.values[i].properties;
+  for (value of packingListDocument.fields.PackingListContents.values) {
+    const row = value.properties;
     const plRow = {
       description: row[headers[key].headers.description]?.value ?? null,
       nature_of_products:

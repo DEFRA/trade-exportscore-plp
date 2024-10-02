@@ -44,3 +44,14 @@
   type: "keyvault"
 - key: TP_QUEUE_ADDRESS
   value: "defra.trade.plp.parsed"
+- key: FORM_RECOGNIZER_ENDPOINT
+  value: "https://adpaipocuksdi.cognitiveservices.azure.com/"
+- key: FORM_RECOGNIZER_API_KEY
+  value: "{{servicename}}-FORM-RECOGNIZER-API-KEY"
+  type: "keyvault"
+- key: IS_DOCUMENT_INTLELLIGENCE_ENABLED
+  value: "{{servicename}}-IS-DOCUMENT-INTLELLIGENCE-ENABLED"
+  type: "keyvault"
+- key: FORM_RECOGNIZER_CUSTOM_MODEL_ID
+  value: "{{servicename}}-FORM-RECOGNIZER-CUSTOM-MODEL-ID"
+  type: "keyvault"

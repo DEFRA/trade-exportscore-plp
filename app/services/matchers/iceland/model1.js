@@ -32,8 +32,6 @@ async function matches(packingList, filename) {
       return result;
     }
 
-    // TODO check header
-
     result.isMatched = matcher_result.CORRECT;
     result.document = document;
 
