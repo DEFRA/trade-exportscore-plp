@@ -46,11 +46,16 @@ async function findParser(packingList, filename) {
       // Test for PDF spreadsheets
     } else if (file_extension.isPdf(filename)) {
       for (const key in parsersPdf) {
-        const result = await parsersPdf[key].matches(packingList, filename);
+        if (parsersPdf.hasOwnProperty(key)) {
+          const result = await parsersPdf[key].matches(packingList, filename);
 
-        if (result.isMatched === matcher_result.CORRECT) {
-          parserFound = true;
-          parsedPackingList = parsersPdf[key].parse(result.document, filename);
+          if (result.isMatched === matcher_result.CORRECT) {
+            parserFound = true;
+            parsedPackingList = parsersPdf[key].parse(
+              result.document,
+              filename,
+            );
+          }
         }
       }
 

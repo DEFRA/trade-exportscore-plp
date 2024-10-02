@@ -3,6 +3,8 @@ const { StatusCodes } = require("http-status-codes");
 const config = require("../config");
 const { findParser } = require("../services/parser-service");
 const logger = require("../utilities/logger");
+const { createPackingList } = require("../packing-list/index");
+const parser_model = require("../services/parser-model");
 
 module.exports = {
   method: "GET",
@@ -18,6 +20,13 @@ module.exports = {
       }
 
       const packingList = await findParser(result, filename);
+
+      if (packingList.parserModel !== parser_model.NOMATCH) {
+        const randomInt = Math.floor(
+          Math.random() * (10000000 - 1 + 1) + 1,
+        ).toString();
+        await createPackingList(packingList, randomInt);
+      }
 
       return h.response(packingList).code(StatusCodes.OK);
     } catch (error) {

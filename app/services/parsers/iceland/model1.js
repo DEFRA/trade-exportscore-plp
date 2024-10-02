@@ -7,6 +7,7 @@ const regex = require("../../../utilities/regex");
 
 function parse(packingListDocument) {
   try {
+    let establishmentNumber;
     if (
       regex.findMatch(headers.ICELAND1.establishmentNumber.regex, [
         packingListDocument.fields.PartialNIRMSNumber,
