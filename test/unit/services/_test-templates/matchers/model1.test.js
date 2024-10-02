@@ -5,7 +5,7 @@ const logger = require("../../../../../app/utilities/logger");
 
 const trader = "update"; // update as required
 const modelNumber = 1; // update as required
-const traderAndModelNumber = `${trader}${modelNumber}`;
+const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
 const filename = `packinglist${traderAndModelNumber}.xls`;
 
 describe(`matches-${traderAndModelNumber}`, () => {

@@ -5,7 +5,7 @@ const logger = require("../../../../../app/utilities/logger");
 
 const trader = "ASDA";
 const modelNumber = 1;
-const traderAndModelNumber = `${trader}${modelNumber}`;
+const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {

@@ -5,7 +5,7 @@ const testResults = require("../../../test-data-and-results/results/tescos/model
 
 const trader = "Tescos";
 const modelNumber = 2;
-const traderAndModelNumber = `${trader}${modelNumber}`;
+const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {

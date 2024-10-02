@@ -5,7 +5,7 @@ const testResults = require("../../../test-data-and-results/results/asda/model2"
 
 const trader = "ASDA";
 const modelNumber = 2;
-const traderAndModelNumber = `${trader}${modelNumber}`;
+const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
 
 describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {

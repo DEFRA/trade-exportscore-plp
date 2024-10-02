@@ -5,7 +5,7 @@ const logger = require("../../../../../app/utilities/logger");
 
 const trader = "Fowler-Welch";
 const modelNumber = 1;
-const traderAndModelNumber = `${trader}${modelNumber}`;
+const traderAndModelNumber = `${trader}-Model-${modelNumber}`;
 const filename = `packinglist${traderAndModelNumber}.xls`;
 
 describe(`matches-${traderAndModelNumber}`, () => {
