@@ -2,7 +2,7 @@ const parserModel = require("../../../app/services/parser-model");
 const parserService = require("../../../app/services/parser-service");
 
 describe("failedParser", () => {
-  test("parses valid json", () => {
+  test("parses valid populated json", () => {
     const packingListJson = {
       registration_approval_number: null,
       items: [],

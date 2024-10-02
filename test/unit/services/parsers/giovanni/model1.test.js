@@ -8,7 +8,7 @@ const modelNumber = 1;
 const traderAndModelNumber = `${trader}${modelNumber}`;
 
 describe(`parses-${traderAndModelNumber}`, () => {
-  test("parses populated json", () => {
+  test("parses valid populated json", () => {
     const packingListJson = model.validModel.RANA;
     const result = parser.parse(packingListJson);
     expect(result.registration_approval_number).toBe(packingListJson[1].A);

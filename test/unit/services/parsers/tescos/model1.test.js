@@ -8,7 +8,7 @@ const modelNumber = 1;
 const traderAndModelNumber = `${trader}${modelNumber}`;
 
 describe(`parses-${traderAndModelNumber}`, () => {
-  test("parses populated json", () => {
+  test("parses valid populated json", () => {
     const result = parser.parse(model.validModel["Input Data Sheet"]);
 
     expect(result).toEqual(testResults.validTestResult);
