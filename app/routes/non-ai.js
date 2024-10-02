@@ -5,6 +5,8 @@ const { createPackingList } = require("../packing-list/index");
 const { StatusCodes } = require("http-status-codes");
 const parserModel = require("../services/parser-model");
 const crypto = require("crypto");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function getRandomInt(min = 1, max = 10000000) {
   const range = max - min + 1;
@@ -23,7 +25,7 @@ module.exports = {
     try {
       result = excelToJson({ sourceFile: filename });
     } catch (err) {
-      logger.log_error("app/routes/non-ai.js", "get() > excelToJson", err);
+      logger.log_error(filenameForLogging, "get() > excelToJson", err);
     }
 
     const packingList = findParser(result, filename);

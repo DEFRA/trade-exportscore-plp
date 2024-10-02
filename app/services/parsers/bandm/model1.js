@@ -4,6 +4,8 @@ const headers = require("../../model-headers");
 const Regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
@@ -40,7 +42,7 @@ function parse(packingListJson) {
       ParserModel.BANDM1,
     );
   } catch (err) {
-    logger.log_error("app/services/parsers/bandm/model1.js", "matches()", err);
+    logger.log_error(filenameForLogging, "matches()", err);
   }
 }
 

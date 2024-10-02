@@ -9,14 +9,15 @@ const config = require("../config");
 const parserModel = require("../services/parser-model");
 const { sendParsed } = require("../messaging/send-parsed-message");
 const logger = require("./../utilities/logger");
-const logProcessPlpMessagePath = "app/messaging/process-plp-message.js";
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const logProcessPlpMessageFunction = "processPlpMessage()";
 
 async function processPlpMessage(message, receiver) {
   try {
     await receiver.completeMessage(message);
     logger.log_info(
-      logProcessPlpMessagePath,
+      filenameForLogging,
       logProcessPlpMessageFunction,
       "Received message: ",
       message.body,
@@ -31,7 +32,7 @@ async function processPlpMessage(message, receiver) {
       result = await getXlsPackingListFromBlob(blobClient);
     } catch (err) {
       logger.log_error(
-        logProcessPlpMessagePath,
+        filenameForLogging,
         "processPlpMessage() > getXlsPackingListFromBlob",
         err,
       );
@@ -42,7 +43,7 @@ async function processPlpMessage(message, receiver) {
       packingList = findParser(result, message.body.packing_list_blob);
     } catch (err) {
       logger.log_error(
-        logProcessPlpMessagePath,
+        filenameForLogging,
         "processPlpMessage() > findParser",
         err,
       );
@@ -52,14 +53,14 @@ async function processPlpMessage(message, receiver) {
       try {
         await createPackingList(packingList, message.body.application_id);
         logger.log_info(
-          logProcessPlpMessagePath,
+          filenameForLogging,
           logProcessPlpMessageFunction,
           "Received message: ",
           `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
         );
       } catch (err) {
         logger.log_error(
-          logProcessPlpMessagePath,
+          filenameForLogging,
           "processPlpMessage() > createPackingList",
           err,
         );
@@ -73,7 +74,7 @@ async function processPlpMessage(message, receiver) {
           );
         } catch (err) {
           logger.log_error(
-            logProcessPlpMessagePath,
+            filenameForLogging,
             "processPlpMessage() > patchPackingListCheck",
             err,
           );
@@ -86,7 +87,7 @@ async function processPlpMessage(message, receiver) {
           );
         } catch (err) {
           logger.log_error(
-            logProcessPlpMessagePath,
+            filenameForLogging,
             "processPlpMessage() > sendParsed",
             err,
           );
@@ -94,11 +95,7 @@ async function processPlpMessage(message, receiver) {
       }
     }
   } catch (err) {
-    logger.log_error(
-      logProcessPlpMessagePath,
-      logProcessPlpMessageFunction,
-      err,
-    );
+    logger.log_error(filenameForLogging, logProcessPlpMessageFunction, err);
     await receiver.abandonMessage(message);
   }
 }

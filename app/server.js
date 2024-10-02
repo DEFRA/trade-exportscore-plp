@@ -3,14 +3,15 @@ const config = require("./config");
 const { sequelize } = require("./services/database-service");
 const messageService = require("./messaging");
 const logger = require("./utilities/logger");
-const logServerPath = "app/server.js";
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function createServer() {
   try {
     await sequelize.authenticate();
   } catch (err) {
     logger.log_error(
-      logServerPath,
+      filenameForLogging,
       "createServer > sequelize.authenticate()",
       err,
     );
@@ -30,14 +31,18 @@ async function createServer() {
       },
     });
   } catch (err) {
-    logger.log_error(logServerPath, "createServer > hapi.server()", err);
+    logger.log_error(filenameForLogging, "createServer > hapi.server()", err);
   }
 
   try {
     // Register the plugins
     await server.register(require("./plugins/router"));
   } catch (err) {
-    logger.log_error(logServerPath, "createServer > server.register()", err);
+    logger.log_error(
+      filenameForLogging,
+      "createServer > server.register()",
+      err,
+    );
   }
 
   try {
@@ -46,7 +51,7 @@ async function createServer() {
     }
   } catch (err) {
     logger.log_error(
-      logServerPath,
+      filenameForLogging,
       "createServer > server.register() [DEV]",
       err,
     );
@@ -56,7 +61,7 @@ async function createServer() {
     await messageService.start();
   } catch (err) {
     logger.log_error(
-      logServerPath,
+      filenameForLogging,
       "createServer > messageService.start()",
       err,
     );
@@ -67,7 +72,7 @@ async function createServer() {
       await messageService.start();
     } catch (err) {
       logger.log_error(
-        logServerPath,
+        filenameForLogging,
         "createServer > messageService.start()",
         err,
       );
@@ -81,7 +86,7 @@ async function createServer() {
       await messageService.stop();
     } catch (err) {
       logger.log_error(
-        logServerPath,
+        filenameForLogging,
         "createServer > messageService.stop()",
         err,
       );

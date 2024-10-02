@@ -5,6 +5,8 @@ const headers = require("../../model-headers");
 const Regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function parse(packingListJson) {
   try {
@@ -33,11 +35,7 @@ function parse(packingListJson) {
       ParserModel.NUTRICIA1,
     );
   } catch (err) {
-    logger.log_error(
-      "app/services/parsers/nutricia/model1.js",
-      "matches()",
-      err,
-    );
+    logger.log_error(filenameForLogging, "matches()", err);
   }
 }
 

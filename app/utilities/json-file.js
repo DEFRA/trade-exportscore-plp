@@ -1,4 +1,6 @@
 const logger = require("../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function sanitise(jsonString) {
   try {
@@ -32,7 +34,7 @@ function sanitise(jsonString) {
     return JSON.stringify(jsonObj);
   } catch (err) {
     logger.log_error(
-      "app/utilities/json-file.js",
+      filenameForLogging,
       "sanitise()",
       `Invalid JSON string provided: ${err}`,
     );

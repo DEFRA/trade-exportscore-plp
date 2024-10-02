@@ -1,6 +1,7 @@
 const config = require("../config");
 const logger = require("../utilities/logger");
-const logDynamicsService = "app/services/dynamics-service.js";
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 const dsConfig = config.dynamicsConfig;
 const approvalStatus = {
@@ -30,7 +31,7 @@ async function bearerTokenRequest() {
     const json = await response.json();
     return json.access_token;
   } catch (err) {
-    logger.log_error(logDynamicsService, "bearerTokenRequest()", err);
+    logger.log_error(filenameForLogging, "bearerTokenRequest()", err);
     return err.message;
   }
 }
@@ -53,14 +54,14 @@ async function patchPackingListCheck(applicationId, isApproved) {
     });
     const status = (await response).status;
     logger.log_info(
-      logDynamicsService,
+      filenameForLogging,
       "patchPackingListCheck()",
       `Upsert ${applicationId} with outcome ${isApproved}, status ${status}`,
     );
 
     return status;
   } catch (err) {
-    logger.log_error(logDynamicsService, "patchPackingListCheck()", err);
+    logger.log_error(filenameForLogging, "patchPackingListCheck()", err);
     return err.message;
   }
 }

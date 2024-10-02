@@ -3,7 +3,8 @@ const { patchPackingListCheck } = require("../services/dynamics-service");
 const { StatusCodes } = require("http-status-codes");
 const config = require("../config");
 const logger = require("./../utilities/logger");
-const logUpsertIdcomsPath = "app/routes/upsert-idcoms.js";
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 module.exports = {
   method: "GET",
@@ -21,7 +22,7 @@ module.exports = {
               );
             } catch (err) {
               logger.log_error(
-                logUpsertIdcomsPath,
+                filenameForLogging,
                 "get() > patchPackingListCheck",
                 err,
               );
@@ -34,13 +35,13 @@ module.exports = {
               );
               checkStatus = StatusCodes.OK;
             } catch (err) {
-              logger.log_error(logUpsertIdcomsPath, "get() > sendParsed", err);
+              logger.log_error(filenameForLogging, "get() > sendParsed", err);
             }
           }
         }
         return h.response(checkStatus).code(StatusCodes.OK);
       } catch (err) {
-        logger.log_error(logUpsertIdcomsPath, "get()", err);
+        logger.log_error(filenameForLogging, "get()", err);
       }
     },
   },
