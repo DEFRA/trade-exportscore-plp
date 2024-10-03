@@ -4,6 +4,10 @@ const descriptionOfGoods = "Description of goods";
 const descriptionOfGoodsRegex = /Description of goods/;
 const commodityCode = "Commodity Code";
 const commodityCodeRegex = /Commodity Code/;
+const commodityCodeLowercase = "Commodity code";
+const commodityCodeLowercaseRegex = /Commodity code/;
+const noOfPackages = "No. of pkgs";
+const noOfPackagesRegex = /No. of pkgs/;
 const netWeight = "Net Weight (KG)";
 const netWeightRegex = /Net Weight \(KG\)/;
 
@@ -70,16 +74,16 @@ const headers = {
     headers: {
       description: descriptionOfGoods,
       type_of_treatment: "Treatment Type (Chilled /Ambient)",
-      number_of_packages: "No. of pkgs",
+      number_of_packages: noOfPackages,
       total_net_weight_kg: "Item Net Weight (kgs)",
-      commodity_code: "Commodity code",
+      commodity_code: commodityCodeLowercase,
     },
     regex: [
       descriptionOfGoodsRegex,
       /Treatment Type \(Chilled \/Ambient\)/,
-      /No. of pkgs/,
+      noOfPackagesRegex,
       /Item Net Weight \(kgs\)/,
-      /Commodity code/,
+      commodityCodeLowercaseRegex,
     ],
   },
   CDS1: {
@@ -133,8 +137,8 @@ const headers = {
   FOWLERWELCH1: {
     headers: {
       description: descriptionOfGoods,
-      commodity_code: "Commodity code",
-      number_of_packages: "No. of pkgs",
+      commodity_code: commodityCodeLowercase,
+      number_of_packages: noOfPackages,
       total_net_weight_kg: "Item Net Weight (kgs)",
     },
     establishmentNumber: {
@@ -261,14 +265,14 @@ const headers = {
     },
     headers: {
       description: descriptionOfGoods,
-      commodity_code: "Commodity code",
-      number_of_packages: "No. of pkgs",
+      commodity_code: commodityCodeLowercase,
+      number_of_packages: noOfPackages,
       total_net_weight_kg: "Total Net Weight",
     },
     regex: [
       descriptionOfGoodsRegex,
-      /Commodity code/,
-      /No. of pkgs/,
+      commodityCodeLowercaseRegex,
+      noOfPackagesRegex,
       /Total Net Weight/,
     ],
   },
