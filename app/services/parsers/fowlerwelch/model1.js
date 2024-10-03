@@ -11,9 +11,9 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     let packingListContentsTemp = [];
 
     let headerRow = packingListJson[sheets[0]].findIndex(
-      (x) => x.M === "NIIRMS Dispatch number",
+      (x) => x.F === headers.FOWLERWELCH1.headers.description,
     );
-
+    console.log(headerRow);
     const establishmentNumber = regex.findMatch(
       establishmentNumberRegex,
       packingListJson[sheets[0]],
@@ -21,7 +21,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
 
     for (const sheet of sheets) {
       headerRow = packingListJson[sheet].findIndex(
-        (x) => x.M === "NIIRMS Dispatch number",
+        (x) => x.F === headers.FOWLERWELCH1.headers.description,
       );
 
       packingListContentsTemp = packingListJson[sheet]

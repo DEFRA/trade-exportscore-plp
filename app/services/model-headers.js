@@ -129,6 +129,12 @@ const headers = {
     ],
   },
   FOWLERWELCH1: {
+    headers: {
+      description: "Description of goods",
+      commodity_code: "Commodity code",
+      number_of_packages: "No. of pkgs",
+      total_net_weight_kg: "Item Net Weight (kgs)",
+    },
     establishmentNumber: {
       regex: /RMS-GB-000216(-\d{3})?/,
     },
