@@ -70,6 +70,10 @@ function areHeadersValid(packingList, sheet, headerRow) {
   };
 
   for (const key in validHeaders) {
+    if (!validHeaders.hasOwnProperty(key)) {
+      continue; // Skip if it's not the object's own property
+    }
+
     const cellValue = packingList[sheet][headerRow][key].toLowerCase();
 
     if (

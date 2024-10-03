@@ -1,5 +1,7 @@
 const description = "Product/ Part Number description";
 const descriptionRegex = /Product\/ Part Number description/;
+const descriptionOfGoods = "Description of goods";
+const descriptionOfGoodsRegex = /Description of goods/;
 const commodityCode = "Commodity Code";
 const commodityCodeRegex = /Commodity Code/;
 const netWeight = "Net Weight (KG)";
@@ -66,14 +68,14 @@ const headers = {
       regex: /RMS-GB-000098-(\d{3})?/,
     },
     headers: {
-      description: "Description of goods",
+      description: descriptionOfGoods,
       type_of_treatment: "Treatment Type (Chilled /Ambient)",
       number_of_packages: "No. of pkgs",
       total_net_weight_kg: "Item Net Weight (kgs)",
       commodity_code: "Commodity code",
     },
     regex: [
-      /Description of goods/,
+      descriptionOfGoodsRegex,
       /Treatment Type \(Chilled \/Ambient\)/,
       /No. of pkgs/,
       /Item Net Weight \(kgs\)/,
@@ -130,7 +132,7 @@ const headers = {
   },
   FOWLERWELCH1: {
     headers: {
-      description: "Description of goods",
+      description: descriptionOfGoods,
       commodity_code: "Commodity code",
       number_of_packages: "No. of pkgs",
       total_net_weight_kg: "Item Net Weight (kgs)",
@@ -258,13 +260,13 @@ const headers = {
       regex: /RMS-GB-000015-(\d{3})?/,
     },
     headers: {
-      description: "Description of goods",
+      description: descriptionOfGoods,
       commodity_code: "Commodity code",
       number_of_packages: "No. of pkgs",
       total_net_weight_kg: "Total Net Weight",
     },
     regex: [
-      /Description of goods/,
+      descriptionOfGoodsRegex,
       /Commodity code/,
       /No. of pkgs/,
       /Total Net Weight/,
