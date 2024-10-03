@@ -24,6 +24,7 @@ async function matches(packingList, filename) {
 
     // check for correct establishment number
     if (
+      !document.fields.PartialNIRMSNumber ||
       !regex.findMatch(headers.ICELAND1.establishmentNumber.regex, [
         document.fields.PartialNIRMSNumber,
       ])
@@ -50,7 +51,7 @@ async function matches(packingList, filename) {
       "matches()",
       err,
     );
-    return matcher_result.GENERIC_ERROR;
+    return result;
   }
 }
 
