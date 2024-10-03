@@ -62,10 +62,10 @@ function matches(packingList, filename) {
 
 function areHeadersValid(packingList, sheet, headerRow) {
   const validHeaders = {
-    C: "Commodity code",
-    F: "Description of goods",
-    H: "No. of pkgs",
-    K: "Item Net Weight (kgs)",
+    C: headers.FOWLERWELCH1.headers.commodity_code,
+    F: headers.FOWLERWELCH1.headers.description,
+    H: headers.FOWLERWELCH1.headers.number_of_packages,
+    K: headers.FOWLERWELCH1.headers.total_net_weight_kg,
     N: "Treatment Type (Chilled /Ambient)",
   };
 
