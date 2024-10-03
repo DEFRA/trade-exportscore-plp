@@ -14,21 +14,19 @@ createDocumentIntelligenceClient.mockImplementation(() => {
 runAnalysis.mockImplementation(() => {
   return {
     fields: {
-      PartialNIRMSNumber: [
-        {
-          content: "RMS-GB-000040",
-        },
-      ],
+      PartialNIRMSNumber: {
+        content: "KingdomRMS_ESTABLISHMENT_NORMS-GB-000040-",
+      },
     },
   };
 });
 
 describe("matchesIceland", () => {
-  test("returns Correct", () => {
+  test("returns Correct", async () => {
     const filename = "PackingList.xlsx";
 
-    const result = matcher.matches("", filename);
+    const result = await matcher.matches("", filename);
 
-    expect(result).toBe(matcher_result.CORRECT);
+    expect(result.isMatched).toEqual(matcher_result.CORRECT);
   });
 });

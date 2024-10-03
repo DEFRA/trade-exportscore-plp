@@ -16,11 +16,11 @@ async function runAnalysis(client, modelId, fileBuffer) {
     const {
       documents: [document],
     } = await poller.pollUntilDone();
-  
+
     if (!document) {
       throw new Error("Expected at least one document in the result.");
     }
-  
+
     return document;
   } catch (err) {
     logger.log_error(

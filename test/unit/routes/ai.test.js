@@ -41,9 +41,9 @@ describe("/ai route handler", () => {
   // Test case for successful execution
   test("should return success", async () => {
     // Mock readFileSync with successful data return
-    // fs.readFileSync.mockImplementationOnce(() => {
-    //   return "parsedData";
-    // });
+    jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {
+      return "parsedData";
+    });
 
     // Call the handler with the mock request and mock response
     await ai.handler(mockRequest, mockH);
@@ -55,8 +55,7 @@ describe("/ai route handler", () => {
   // Test case for handling an readFileSync error
   test("should handle readFileSync error", async () => {
     // Mock readFileSync to throw an error
-    jest.mock("fs");
-    fs.readFileSync.mockImplementationOnce(() => {
+    jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {
       throw new Error("Read file error"); // Simulate an error during read file
     });
 
