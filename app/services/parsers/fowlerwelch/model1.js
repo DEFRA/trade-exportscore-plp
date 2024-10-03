@@ -13,7 +13,6 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     let headerRow = packingListJson[sheets[0]].findIndex(
       (x) => x.F === headers.FOWLERWELCH1.headers.description,
     );
-    console.log(headerRow);
     const establishmentNumber = regex.findMatch(
       establishmentNumberRegex,
       packingListJson[sheets[0]],
