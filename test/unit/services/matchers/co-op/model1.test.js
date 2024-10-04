@@ -37,6 +37,13 @@ describe("matchesCoopModel1", () => {
     expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
+  test("returns wrong establishment number for missing establishment numbers of multiple sheets", () => {
+    const filename = "packinglist.xlsx";
+    const result = Matcher.matches(model.wrongEstablishmentMultiple, filename);
+
+    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+  });
+
   test("return wrong header for incorrect header values", () => {
     const filename = "packinglist.xlsx";
     const packingListJson = {
@@ -54,6 +61,13 @@ describe("matchesCoopModel1", () => {
     };
 
     const result = Matcher.matches(packingListJson, filename);
+
+    expect(result).toBe(MatcherResult.WRONG_HEADER);
+  });
+
+  test("return wrong header for incorrect header values of multiple sheets", () => {
+    const filename = "packinglist.xlsx";
+    const result = Matcher.matches(model.incorrectHeaderMultiple, filename);
 
     expect(result).toBe(MatcherResult.WRONG_HEADER);
   });

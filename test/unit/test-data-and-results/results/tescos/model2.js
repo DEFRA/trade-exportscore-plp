@@ -26,6 +26,31 @@ module.exports = {
     registration_approval_number: "RMS-GB-000015-009",
     parserModel: ParserModel.TESCO2,
   },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: "709200010",
+        description: "TS Asp Bundles 180g",
+        nature_of_products: null,
+        number_of_packages: "144",
+        total_net_weight_kg: "25.92",
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "709200010",
+        description: "TS Asp Tips Exp 125g",
+        nature_of_products: null,
+        number_of_packages: "90",
+        total_net_weight_kg: "11.25",
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000015-009",
+    parserModel: ParserModel.TESCO2,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

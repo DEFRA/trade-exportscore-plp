@@ -26,6 +26,31 @@ module.exports = {
     registration_approval_number: "RMS-GB-000025-003",
     parserModel: ParserModel.NISA2,
   },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: "2004909880",
+        description: "GREEN ISLE BATTERED ONION RING",
+        nature_of_products: "500 - VEGETABLES - F",
+        number_of_packages: 9,
+        total_net_weight_kg: 63,
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "2004109900",
+        description: "MCCAIN READY BAKED JACKETS 4PK",
+        nature_of_products: "515 - F/P POTATOES - F",
+        number_of_packages: 28,
+        total_net_weight_kg: 176.4,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000025-003",
+    parserModel: ParserModel.NISA2,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

@@ -6,23 +6,29 @@ const Regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 
 function parse(packingListJson) {
+  const sheets = Object.keys(packingListJson);
+  let packingListContents = [];
+  let packingListContentsTemp = [];
   const headerTitles = Object.values(headers.GIOVANNI1.headers);
   function callback(x) {
     return Object.values(x).includes(headerTitles[0]);
   }
-  const headerRow = rowFinder(packingListJson, callback);
+  const headerRow = rowFinder(packingListJson[sheets[0]], callback);
 
   const establishmentNumber = Regex.findMatch(
     headers.GIOVANNI1.establishmentNumber.regex,
-    packingListJson,
+    packingListJson[sheets[0]],
   );
 
-  const packingListContents = mapParser(
-    packingListJson,
-    headerRow,
-    headerRow + 1,
-    headers.GIOVANNI1.headers,
-  );
+  for (const sheet of sheets) {
+    packingListContentsTemp = mapParser(
+      packingListJson[sheet],
+      headerRow,
+      headerRow + 1,
+      headers.GIOVANNI1.headers,
+    );
+    packingListContents = packingListContents.concat(packingListContentsTemp);
+  }
 
   return CombineParser.combine(
     establishmentNumber,

@@ -4,13 +4,17 @@ const testResults = require("../../../test-data-and-results/results/tjmorris/mod
 
 describe("parseTjmorrisModel1", () => {
   test("parses valid json", () => {
-    const result = Parser.parse(model.validModel.Sheet1);
+    const result = Parser.parse(model.validModel);
 
     expect(result).toEqual(testResults.validTestResult);
   });
+  test("parses multiple sheets", () => {
+    const result = Parser.parse(model.validModelMultipleSheets);
+    expect(result).toEqual(testResults.validTestResultForMultipleSheets);
+  });
 
   test("parses empty json", () => {
-    const result = Parser.parse(model.emptyModel.Sheet1);
+    const result = Parser.parse(model.emptyModel);
 
     expect(result).toEqual(testResults.emptyModelResult);
   });

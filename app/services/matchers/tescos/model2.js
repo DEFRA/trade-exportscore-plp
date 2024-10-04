@@ -5,18 +5,26 @@ const headers = require("../../model-headers");
 
 function matches(packingList, filename) {
   try {
-    const sheet = Object.keys(packingList)[0];
-
-    // check for correct establishment number
-    if (
-      !Regex.test(headers.TESCO2.establishmentNumber.regex, packingList[sheet])
-    ) {
-      return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    let result;
+    const sheets = Object.keys(packingList);
+    if (sheets.length === 0) {
+      throw new Error("generic error");
     }
 
-    // check for header values
-    const result = matchesHeader(headers.TESCO2.regex, packingList[sheet]);
+    for (const sheet of sheets) {
+      // check for correct establishment number
+      if (
+        !Regex.test(
+          headers.TESCO2.establishmentNumber.regex,
+          packingList[sheet],
+        )
+      ) {
+        return MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      }
 
+      // check for header values
+      result = matchesHeader(headers.TESCO2.regex, packingList[sheet]);
+    }
     if (result === MatcherResult.CORRECT) {
       console.info(
         "Packing list matches Tesco Model 2 with filename: ",

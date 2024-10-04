@@ -44,6 +44,64 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheets: {
+    Sheet1: [
+      {
+        A: "TruckID",
+        B: "Dept",
+        C: "SubDept",
+        D: "Product",
+        E: "# Packages",
+        F: "# Units",
+        G: "GrossWeight",
+        H: "NetWeight",
+        I: "NatureOfProduct",
+        J: "Treatment",
+        K: "PlaceOfDispatch",
+      },
+      {
+        A: "51270",
+        B: "0001 - Gardens",
+        C: "0101 - Garden Care",
+        D: "002541 - Tapered Slate Small Planter Ash",
+        E: "2",
+        F: "2",
+        G: "2",
+        H: "1.9",
+        I: "General Retail Goods",
+        J: "Ambient Goods",
+        K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "TruckID",
+        B: "Dept",
+        C: "SubDept",
+        D: "Product",
+        E: "# Packages",
+        F: "# Units",
+        G: "GrossWeight",
+        H: "NetWeight",
+        I: "NatureOfProduct",
+        J: "Treatment",
+        K: "PlaceOfDispatch",
+      },
+      {
+        A: "51270",
+        B: "0001 - Gardens",
+        C: "0101 - Garden Care",
+        D: "034581 - Carissa Planter Nest - Aqua",
+        E: "4",
+        F: "4",
+        G: "84",
+        H: "79.8",
+        I: "General Retail Goods",
+        J: "Ambient Goods",
+        K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     PackingList_Extract: [
       {
@@ -83,6 +141,42 @@ module.exports = {
         H: "24.7",
         I: "General Retail Goods",
         J: null,
+        K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
+      },
+    ],
+  },
+  wrongEstablishmentMultiple: {
+    sheet1: [
+      {},
+      {
+        K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
+      },
+    ],
+    sheet2: [
+      {},
+      {
+        K: "INCORRECT",
+      },
+    ],
+  },
+  incorrectHeaderMultiple: {
+    sheet1: [
+      {
+        D: "Product",
+        E: "# Packages",
+        H: "NetWeight",
+      },
+      {
+        K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
+      },
+    ],
+    sheet2: [
+      {
+        D: "NOT",
+        E: "CORRECT",
+        H: "HEADER",
+      },
+      {
         K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
       },
     ],

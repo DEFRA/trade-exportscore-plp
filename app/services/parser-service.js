@@ -23,6 +23,7 @@ function findParser(packingList, filename) {
         MatcherResult.CORRECT
       ) {
         parserFound = true;
+        //console.log(sanitisedPackingList)
         parsedPackingList = parsersExcel[key].parse(
           sanitisedPackingList,
           filename,

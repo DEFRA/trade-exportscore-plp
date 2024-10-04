@@ -12,7 +12,7 @@ function findHeaderCols(header, packingListHeader) {
 
 function mapParser(packingListJson, headerRow, dataRow, header) {
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
-
+  // console.log(headerCols);
   const packingListContents = packingListJson.slice(dataRow).map((col) => ({
     description: col[headerCols.description] ?? null,
     nature_of_products: col[headerCols.nature_of_products] ?? null,
@@ -21,7 +21,7 @@ function mapParser(packingListJson, headerRow, dataRow, header) {
     number_of_packages: col[headerCols.number_of_packages] ?? null,
     total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
   }));
-
+  // console.log(packingListContents)
   return packingListContents;
 }
 

@@ -44,6 +44,68 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheets: {
+    Sheet1: [
+      {
+        A: "NIIRMS Dispatch number",
+        B: "RMS-GB-000098-001",
+        C: "Dispatch address",
+        D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
+      },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient)",
+        I: "NIRMS Lane (R/G)",
+      },
+      {
+        A: "1905908000",
+        B: "60008347 - Take-Out Club Classic Crust Kickin' Meat Feast",
+        C: "Great Britain",
+        D: 6,
+        E: "Cases",
+        F: 3.782,
+        G: 3.552,
+        H: "Chilled",
+        I: "Green",
+      },
+    ],
+    sheet2: [
+      {
+        A: "NIIRMS Dispatch number",
+        B: "RMS-GB-000098-001",
+        C: "Dispatch address",
+        D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
+      },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient)",
+        I: "NIRMS Lane (R/G)",
+      },
+      {
+        A: "1905908000",
+        B: "51283907 - PizzaExpress 9 Classic American *4",
+        C: "Great Britain",
+        D: 1,
+        E: "Cases",
+        F: 3.182,
+        G: 3.08,
+        H: "Chilled",
+        I: "Green",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     Tabelle1: [
       {
@@ -84,6 +146,40 @@ module.exports = {
         G: null,
         H: "Chilled",
         I: "Green",
+      },
+    ],
+  },
+  wrongEstablishmentMultiple: {
+    sheet1: [
+      {
+        B: "RMS-GB-000098-001",
+      },
+    ],
+    sheet2: [
+      {
+        B: "INCORRECT",
+      },
+    ],
+  },
+  incorrectHeaderMultiple: {
+    sheet1: [
+      {
+        B: "RMS-GB-000098-001",
+      },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+      },
+    ],
+    sheet2: [
+      {
+        B: "RMS-GB-000098-001",
+      },
+      {
+        A: "NOT",
+        B: "CORRECT",
+        C: "HEADER",
       },
     ],
   },

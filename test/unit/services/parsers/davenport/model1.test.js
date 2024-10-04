@@ -4,15 +4,20 @@ const testResults = require("../../../test-data-and-results/results/davenport/mo
 
 describe("parseDavenportModel1", () => {
   test("parses json", () => {
-    const packingListJson = model.validModel.Customer_Order;
+    const packingListJson = model.validModel;
 
     const result = Parser.parse(packingListJson);
 
     expect(result).toEqual(testResults.validTestResult);
   });
 
+  test("parses multiple sheets", () => {
+    const result = Parser.parse(model.validModelMultipleSheets);
+    expect(result).toEqual(testResults.validTestResultForMultipleSheets);
+  });
+
   test("parses empty json", () => {
-    const result = Parser.parse(model.emptyModel.PackingList_Extract);
+    const result = Parser.parse(model.emptyModel);
 
     expect(result).toEqual(testResults.emptyModelResult);
   });

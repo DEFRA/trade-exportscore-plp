@@ -7,29 +7,37 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function parse(packingListJson) {
+  const sheets = Object.keys(packingListJson);
+  let packingListContents = [];
+  let packingListContentsTemp = [];
   const establishmentNumber = Regex.findMatch(
     headers.BANDM1.establishmentNumber.regex,
-    packingListJson,
+    packingListJson[sheets[0]],
   );
 
   const headerTitles = Object.values(headers.BANDM1.headers);
   function callback(x) {
     return Object.values(x).includes(headerTitles[0]);
   }
-  const headerRow = rowFinder(packingListJson, callback);
-  const lastRow =
-    packingListJson.slice(headerRow + 1).findIndex((x) => isEndOfRow(x)) +
-    headerRow;
-  const packingListContents = packingListJson
-    .slice(headerRow + 1, lastRow + 1)
-    .map((col) => ({
-      description: col.C ?? null,
-      nature_of_products: null,
-      type_of_treatment: null,
-      commodity_code: col.D ?? null,
-      number_of_packages: col.F ?? null,
-      total_net_weight_kg: col.G ?? null,
-    }));
+  const headerRow = rowFinder(packingListJson[sheets[0]], callback);
+
+  for (const sheet of sheets) {
+    const lastRow =
+      packingListJson[sheet]
+        .slice(headerRow + 1)
+        .findIndex((x) => isEndOfRow(x)) + headerRow;
+    packingListContentsTemp = packingListJson[sheet]
+      .slice(headerRow + 1, lastRow + 1)
+      .map((col) => ({
+        description: col.C ?? null,
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: col.D ?? null,
+        number_of_packages: col.F ?? null,
+        total_net_weight_kg: col.G ?? null,
+      }));
+    packingListContents = packingListContents.concat(packingListContentsTemp);
+  }
 
   return CombineParser.combine(
     establishmentNumber,

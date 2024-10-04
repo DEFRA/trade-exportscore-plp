@@ -29,6 +29,80 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheets: {
+    Sheet1: [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+        I: "PRODUCT_TYPE_CATEGORY",
+        K: "PART_NUMBER_DESCRIPTION",
+        L: "TARIFF_CODE_EU",
+        M: "PACKAGES",
+        O: "NET_WEIGHT_TOTAL",
+      },
+      {
+        A: "RMS-GB-000025-001",
+        I: "790 - PASTRY - C",
+        K: "CO OP BRITISH CHICKEN POPPERS",
+        L: "1602321990",
+        M: 4,
+        O: 2.4,
+      },
+    ],
+    Sheet2: [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+        I: "PRODUCT_TYPE_CATEGORY",
+        K: "PART_NUMBER_DESCRIPTION",
+        L: "TARIFF_CODE_EU",
+        M: "PACKAGES",
+        O: "NET_WEIGHT_TOTAL",
+      },
+      {
+        A: "RMS-GB-000025-001",
+        I: "710 - SANDWICHES - C",
+        K: "CO OP TUNA MAYONNAISE SANDWICH",
+        L: "1604207055",
+        M: 4,
+        O: 3.2,
+      },
+    ],
+  },
+  wrongEstablishmentMultiple: {
+    sheet1: [
+      {},
+      {
+        A: "RMS-GB-000025-001",
+      },
+    ],
+    Sheet2: [
+      {},
+      {
+        A: "INCORRECT",
+      },
+    ],
+  },
+  incorrectHeaderMultiple: {
+    sheet1: [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+        B: "DISPATCH_ADDRESS",
+        C: "DELIVERY_ADDRESS",
+      },
+      {
+        A: "RMS-GB-000025-009",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "NOT",
+        B: "CORRECT",
+        C: "HEADER",
+      },
+      {
+        A: "RMS-GB-000025-009",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     "Customer Order": [
       {

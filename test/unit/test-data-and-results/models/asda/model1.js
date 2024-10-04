@@ -35,6 +35,72 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheets: {
+    Sheet1: [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+        D: "[Number Of Establishment]",
+        E: "[Destination Store Establishment Number]",
+        F: "[Number of Packages]",
+        G: "[Net Weight]",
+        H: "[kilograms/grams]",
+      },
+      {
+        A: "A BESSIES APPLE PIE",
+        B: "DESSERTS & ICE CREAM",
+        C: "FROZEN",
+        D: "RMS-GB-000015-005",
+        E: "RMS-NI-000008-015",
+        F: 1,
+        G: 4.2,
+        H: "kgs",
+      },
+      {
+        A: "A BESSIES ROASTS",
+        B: "CHIPS/POTATOES & VEG",
+        C: "FROZEN",
+        D: "RMS-GB-000015-005",
+        E: "RMS-NI-000008-009",
+        F: 1,
+        G: 10.3,
+        H: "kgs",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+        D: "[Number Of Establishment]",
+        E: "[Destination Store Establishment Number]",
+        F: "[Number of Packages]",
+        G: "[Net Weight]",
+        H: "[kilograms/grams]",
+      },
+      {
+        A: "ASDA BROOKIE BITES",
+        B: "CAKES IS",
+        C: "FRESH",
+        D: "RMS-GB-000015-005",
+        E: "RMS-NI-000008-001",
+        F: 2,
+        G: 4.32,
+        H: "kgs",
+      },
+      {
+        A: "ASDA BROWNIE CAKE",
+        B: "CAKES/CHILLED BI",
+        C: "FRESH",
+        D: "RMS-GB-000015-005",
+        E: "RMS-NI-000008-001",
+        F: 1,
+        G: 2.68,
+        H: "kgs",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     PackingList_Extract: [
       {
@@ -91,6 +157,38 @@ module.exports = {
       },
     ],
   },
+  wrongEstablishmentMultiple: {
+    Sheet1: [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+        D: "[Number Of Establishment]",
+        E: "[Destination Store Establishment Number]",
+        F: "[Number of Packages]",
+        G: "[Net Weight]",
+        H: "[kilograms/grams]",
+      },
+      {
+        D: "RMS-GB-000015-005",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+        D: "[Number Of Establishment]",
+        E: "[Destination Store Establishment Number]",
+        F: "[Number of Packages]",
+        G: "[Net Weight]",
+        H: "[kilograms/grams]",
+      },
+      {
+        D: "INCORRECT",
+      },
+    ],
+  },
   incorrectHeader: {
     PackingList_Extract: [
       {
@@ -109,6 +207,42 @@ module.exports = {
         E: "INVALID",
         F: 2,
         G: 0.38,
+        H: "kgs",
+      },
+    ],
+  },
+  incorrectHeaderMultiple: {
+    Sheet1: [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+      },
+      {
+        A: "A BESSIES ROASTS",
+        B: "CHIPS/POTATOES & VEG",
+        C: "FROZEN",
+        D: "RMS-GB-000015-005",
+        E: "RMS-NI-000008-009",
+        F: 1,
+        G: 10.3,
+        H: "kgs",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "NOT",
+        B: "CORRECT",
+        C: "HEADER",
+      },
+      {
+        A: "ASDA BROOKIE BITES",
+        B: "CAKES IS",
+        C: "FRESH",
+        D: "RMS-GB-000015-005",
+        E: "RMS-NI-000008-001",
+        F: 2,
+        G: 4.32,
         H: "kgs",
       },
     ],
