@@ -21,12 +21,12 @@ describe("parseBandMModel1", () => {
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
     console.log(sanitisedPackingList);
     const result = parser.parse(sanitisedPackingList);
-    expect(result).toEqual(testResults.validTestResultForMultipleSheets);
+    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
   });
 
   test("parses multiple sheets", () => {
     const packingListJson = JSON.stringify(model.validModelMultipleSheets);
-    const sanitisedPackingListJson = JsonFile.sanitises(packingListJson);
+    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
     console.log(sanitisedPackingList);
     const result = parser.parse(sanitisedPackingList);

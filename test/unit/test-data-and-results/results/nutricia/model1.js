@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000133",
-    parserModel: ParserModel.NUTRICIA1,
+    parserModel: parser_model.NUTRICIA1,
   },
   invalidTestResult_MissingCells: {
     business_checks: {

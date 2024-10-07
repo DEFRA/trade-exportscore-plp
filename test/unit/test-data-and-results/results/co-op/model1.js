@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000009-001",
-    parserModel: ParserModel.COOP1,
+    parserModel: parser_model.COOP1,
   },
   invalidTestResult_MissingCells: {
     business_checks: {

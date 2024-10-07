@@ -13,7 +13,7 @@ describe("parseNisa1", () => {
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModelMultipleSheets);
 
-    expect(result).toEqual(testResults.validTestResultForMultipleSheets);
+    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
   });
 
   test("parses empty json", () => {

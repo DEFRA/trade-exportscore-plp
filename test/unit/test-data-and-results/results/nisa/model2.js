@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000025-003",
-    parserModel: ParserModel.NISA2,
+    parserModel: parser_model.NISA2,
   },
   invalidTestResult_MissingCells: {
     business_checks: {

@@ -65,7 +65,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000015-005",
-    parserModel: ParserModel.ASDA1,
+    parserModel: parser_model.ASDA1,
   },
   validParserResult: {
     business_checks: {

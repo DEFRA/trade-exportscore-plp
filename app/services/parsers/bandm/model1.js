@@ -1,51 +1,52 @@
-const CombineParser = require("../../parser-combine");
-const ParserModel = require("../../parser-model");
+const combine_parser = require("../../parser-combine");
+const parser_model = require("../../parser-model");
 const headers = require("../../model-headers");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
 function parse(packingListJson) {
-  const sheets = Object.keys(packingListJson);
-  let packingListContents = [];
-  let packingListContentsTemp = [];
   try {
-    const establishmentNumber = Regex.findMatch(
+    const sheets = Object.keys(packingListJson);
+    let packingListContents = [];
+    let packingListContentsTemp = [];
+
+    const establishmentNumber = regex.findMatch(
       headers.BANDM1.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
 
-  const headerTitles = Object.values(headers.BANDM1.headers);
-  function callback(x) {
-    return Object.values(x).includes(headerTitles[0]);
-  }
-  const headerRow = rowFinder(packingListJson[sheets[0]], callback);
+    const headerTitles = Object.values(headers.BANDM1.headers);
+    function callback(x) {
+      return Object.values(x).includes(headerTitles[0]);
+    }
+    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
 
-  for (const sheet of sheets) {
-    const lastRow =
-      packingListJson[sheet]
-        .slice(headerRow + 1)
-        .findIndex((x) => isEndOfRow(x)) + headerRow;
-    packingListContentsTemp = packingListJson[sheet]
-      .slice(headerRow + 1, lastRow + 1)
-      .map((col) => ({
-        description: col.C ?? null,
-        nature_of_products: null,
-        type_of_treatment: null,
-        commodity_code: col.D ?? null,
-        number_of_packages: col.F ?? null,
-        total_net_weight_kg: col.G ?? null,
-      }));
-    packingListContents = packingListContents.concat(packingListContentsTemp);
-  }
+    for (const sheet of sheets) {
+      const lastRow =
+        packingListJson[sheet]
+          .slice(headerRow + 1)
+          .findIndex((x) => isEndOfRow(x)) + headerRow;
+      packingListContentsTemp = packingListJson[sheet]
+        .slice(headerRow + 1, lastRow + 1)
+        .map((col) => ({
+          description: col.C ?? null,
+          nature_of_products: null,
+          type_of_treatment: null,
+          commodity_code: col.D ?? null,
+          number_of_packages: col.F ?? null,
+          total_net_weight_kg: col.G ?? null,
+        }));
+      packingListContents = packingListContents.concat(packingListContentsTemp);
+    }
 
-    return CombineParser.combine(
+    return combine_parser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      ParserModel.BANDM1,
+      parser_model.BANDM1,
     );
   } catch (err) {
     logger.log_error("app/services/parsers/bandm/model1.js", "matches()", err);

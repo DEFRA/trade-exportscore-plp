@@ -32,10 +32,10 @@ function matches(packingList, filename) {
         R: "Net Weight Kg",
       };
 
-    const headerRow = rowFinder(packingList[sheet], callback);
-    if (!packingList[sheet][headerRow] || headerRow === -1) {
-      return matcher_result.WRONG_HEADER;
-    }
+      const headerRow = rowFinder(packingList[sheet], callback);
+      if (!packingList[sheet][headerRow] || headerRow === -1) {
+        return matcher_result.WRONG_HEADER;
+      }
 
       for (const key in header) {
         if (!packingList[sheet][headerRow][key]?.startsWith(header[key])) {

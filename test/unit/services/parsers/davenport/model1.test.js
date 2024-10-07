@@ -17,8 +17,6 @@ describe("parseDavenportModel1", () => {
     expect(result).toEqual(test_results.validTestResultForMultipleSheets);
   });
 
-
-
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
 

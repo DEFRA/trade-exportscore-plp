@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000153",
-    parserModel: ParserModel.GIOVANNI1,
+    parserModel: parser_model.GIOVANNI1,
   },
   emptyTestResult: {
     business_checks: {
@@ -66,7 +66,7 @@ module.exports = {
       },
     ],
     registration_approval_number: null,
-    parserModel: ParserModel.GIOVANNI1,
+    parserModel: parser_model.GIOVANNI1,
   },
   invalidTestResult_MissingCells: {
     business_checks: {

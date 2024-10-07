@@ -6,23 +6,23 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
-  try{
-  const sheets = Object.keys(packingListJson);
-  let packingListContents = [];
-  let packingListContentsTemp = [];
-  const establishmentNumber = regex.findMatch(
-    headers.COOP1.establishmentNumber.regex,
-    packingListJson[sheets[0]],
-  );
-  for (const sheet of sheets) {
-    packingListContentsTemp = mapParser(
-      packingListJson[sheet],
-      0,
-      1,
-      headers.COOP1.headers,
+  try {
+    const sheets = Object.keys(packingListJson);
+    let packingListContents = [];
+    let packingListContentsTemp = [];
+    const establishmentNumber = regex.findMatch(
+      headers.COOP1.establishmentNumber.regex,
+      packingListJson[sheets[0]],
     );
-    packingListContents = packingListContents.concat(packingListContentsTemp);
-  }
+    for (const sheet of sheets) {
+      packingListContentsTemp = mapParser(
+        packingListJson[sheet],
+        0,
+        1,
+        headers.COOP1.headers,
+      );
+      packingListContents = packingListContents.concat(packingListContentsTemp);
+    }
 
     return combine_parser.combine(
       establishmentNumber,

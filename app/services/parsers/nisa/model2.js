@@ -8,24 +8,24 @@ const logger = require("../../../utilities/logger");
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
-  let packingListContents = [];
-  let packingListContentsTemp = [];
-  const establishmentNumber = regex.findMatch(
+    let packingListContents = [];
+    let packingListContentsTemp = [];
+    const establishmentNumber = regex.findMatch(
       headers.NISA2.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
 
-  const dataRowFirst = 3;
+    const dataRowFirst = 3;
 
-  for (const sheet of sheets) {
-    packingListContentsTemp = mapParser(
-      packingListJson[sheet],
-      dataRowFirst - 1,
-      dataRowFirst,
-      headers.NISA2.headers,
-    );
-    packingListContents = packingListContents.concat(packingListContentsTemp);
-  }
+    for (const sheet of sheets) {
+      packingListContentsTemp = mapParser(
+        packingListJson[sheet],
+        dataRowFirst - 1,
+        dataRowFirst,
+        headers.NISA2.headers,
+      );
+      packingListContents = packingListContents.concat(packingListContentsTemp);
+    }
 
     return combine_parser.combine(
       establishmentNumber,

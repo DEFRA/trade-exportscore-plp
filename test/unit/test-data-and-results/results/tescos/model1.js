@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000022-998",
-    parserModel: ParserModel.TESCO1,
+    parserModel: parser_model.TESCO1,
   },
   invalidTestResult_MissingCells: {
     business_checks: {

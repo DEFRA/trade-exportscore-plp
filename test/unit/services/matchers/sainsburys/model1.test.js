@@ -30,9 +30,9 @@ describe("matchesSainsburysModel1", () => {
 
   test("returns wrong establishment number for missing establishment numbers of multiple sheets", () => {
     const filename = "packinglist.xlsx";
-    const result = Matcher.matches(model.wrongEstablishmentMultiple, filename);
+    const result = matcher.matches(model.wrongEstablishmentMultiple, filename);
 
-    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("returns wrong header for incorrect header values", () => {
@@ -69,9 +69,9 @@ describe("matchesSainsburysModel1", () => {
 
   test("return wrong header for incorrect header values of multiple sheets", () => {
     const filename = "packinglist.xlsx";
-    const result = Matcher.matches(model.incorrectHeaderMultiple, filename);
+    const result = matcher.matches(model.incorrectHeaderMultiple, filename);
 
-    expect(result).toBe(MatcherResult.WRONG_HEADER);
+    expect(result).toBe(matcher_result.WRONG_HEADER);
   });
 
   test("returns Correct", () => {

@@ -48,7 +48,7 @@ module.exports = {
       },
     ],
     business_checks: { all_required_fields_present: true },
-    parserModel: ParserModel.BUFFALOAD1,
+    parserModel: parser_model.BUFFALOAD1,
   },
   emptyModelResult: {
     registration_approval_number: null,

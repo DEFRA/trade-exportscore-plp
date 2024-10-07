@@ -8,9 +8,9 @@ const logger = require("../../../utilities/logger");
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
-  let packingListContents = [];
-  let packingListContentsTemp = [];
-  const establishmentNumber =
+    let packingListContents = [];
+    let packingListContentsTemp = [];
+    const establishmentNumber =
       regex
         .findMatch(
           headers.SAINSBURYS1.establishmentNumber.regex,
@@ -18,15 +18,15 @@ function parse(packingListJson) {
         )
         ?.replace(/\u200B/g, "") ?? null;
 
-  for (const sheet of sheets) {
-    packingListContentsTemp = mapParser(
-      packingListJson[sheet],
-      0,
-      1,
-      headers.SAINSBURYS1.headers,
-    );
-    packingListContents = packingListContents.concat(packingListContentsTemp);
-  }
+    for (const sheet of sheets) {
+      packingListContentsTemp = mapParser(
+        packingListJson[sheet],
+        0,
+        1,
+        headers.SAINSBURYS1.headers,
+      );
+      packingListContents = packingListContents.concat(packingListContentsTemp);
+    }
 
     return combine_parser.combine(
       establishmentNumber,
