@@ -1,23 +1,23 @@
-const Matcher = require("../../../../../app/services/matchers/tescos/model2");
-const MatcherResult = require("../../../../../app/services/matcher-result");
+const matcher = require("../../../../../app/services/matchers/tescos/model2");
+const matcher_result = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/tescos/model2");
 
 describe("matchesTescoModel2", () => {
   test("returns Correct", () => {
     const filename = "PackingListTesco2.xlsx";
 
-    const result = Matcher.matches(model.validModel, filename);
+    const result = matcher.matches(model.validModel, filename);
 
-    expect(result).toBe(MatcherResult.CORRECT);
+    expect(result).toBe(matcher_result.CORRECT);
   });
 
   test("returns generic error for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+    expect(result).toBe(matcher_result.GENERIC_ERROR);
   });
 
   test("returns wrong establishment number for missing establishment number", () => {
@@ -32,9 +32,9 @@ describe("matchesTescoModel2", () => {
     };
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(MatcherResult.WRONG_ESTABLISHMENT_NUMBER);
+    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("returns wrong establishment number for missing establishment numbers of multiple sheets", () => {
@@ -60,9 +60,9 @@ describe("matchesTescoModel2", () => {
       ],
     };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(MatcherResult.WRONG_HEADER);
+    expect(result).toBe(matcher_result.WRONG_HEADER);
   });
   test("return wrong header for incorrect header values of multiple sheets", () => {
     const filename = "packinglist.xlsx";

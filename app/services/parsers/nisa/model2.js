@@ -1,17 +1,19 @@
-const CombineParser = require("../../parser-combine");
+const combine_parser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
-const ParserModel = require("../../parser-model");
+const parser_model = require("../../parser-model");
 const headers = require("../../model-headers");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
+const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
-  const sheets = Object.keys(packingListJson);
+  try {
+    const sheets = Object.keys(packingListJson);
   let packingListContents = [];
   let packingListContentsTemp = [];
-  const establishmentNumber = Regex.findMatch(
-    headers.NISA2.establishmentNumber.regex,
-    packingListJson[sheets[0]],
-  );
+  const establishmentNumber = regex.findMatch(
+      headers.NISA2.establishmentNumber.regex,
+      packingListJson[sheets[0]],
+    );
 
   const dataRowFirst = 3;
 
@@ -25,12 +27,15 @@ function parse(packingListJson) {
     packingListContents = packingListContents.concat(packingListContentsTemp);
   }
 
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.NISA2,
-  );
+    return combine_parser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      parser_model.NISA2,
+    );
+  } catch (err) {
+    logger.log_error("app/services/parsers/nisa/model2.js", "matches()", err);
+  }
 }
 
 module.exports = {

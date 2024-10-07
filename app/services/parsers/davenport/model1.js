@@ -1,35 +1,45 @@
-const ParserModel = require("../../parser-model");
-const CombineParser = require("../../parser-combine");
+const parser_model = require("../../parser-model");
+const combine_parser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
+const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
-  const sheets = Object.keys(packingListJson);
+  try {
+    const sheets = Object.keys(packingListJson);
   let packingListContents = [];
   let packingListContentsTemp = [];
-  const establishmentNumber = Regex.findMatch(
-    headers.DAVENPORT1.establishmentNumber.regex,
-    packingListJson[sheets[0]],
-  );
+  const establishmentNumber = regex.findMatch(
+      headers.DAVENPORT1.establishmentNumber.regex,
+      packingListJson[sheets[0]],
+    );
 
-  const dataRow = 45;
-  for (const sheet of sheets) {
+    const dataRow = 45;
+    for (const sheet of sheets) {
     packingListContentsTemp = mapParser(
-      packingListJson[sheet],
-      dataRow - 1,
-      dataRow,
-      headers.DAVENPORT1.headers,
+        packingListJson[sheet],
+        dataRow - 1,
+        dataRow,
+        headers.DAVENPORT1.headers,
+        false,
     );
     packingListContents = packingListContents.concat(packingListContentsTemp);
   }
 
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.DAVENPORT1,
-  );
+    return combine_parser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      parser_model.DAVENPORT1,
+    );
+  } catch (err) {
+    logger.log_error(
+      "app/services/parsers/davenport/model1.js",
+      "matches()",
+      err,
+    );
+  }
 }
 
 module.exports = {

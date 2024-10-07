@@ -1,52 +1,52 @@
-const MatcherResult = require("../../../app/services/matcher-result");
+const matcher_result = require("../../../app/services/matcher-result");
 
 describe("matcherResultContainsCorrectValues", () => {
   test("contains the Wrong Extension definition", () => {
-    expect(MatcherResult.WRONG_EXTENSION).toBeDefined();
+    expect(matcher_result.WRONG_EXTENSION).toBeDefined();
   });
 
   test("contains the Wrong Extension value", () => {
-    var result = MatcherResult.WRONG_EXTENSION;
+    var result = matcher_result.WRONG_EXTENSION;
 
     expect(result).toBe(0);
   });
 
   test("contains the Wrong Establishment Numder definition", () => {
-    expect(MatcherResult.WRONG_ESTABLISHMENT_NUMBER).toBeDefined();
+    expect(matcher_result.WRONG_ESTABLISHMENT_NUMBER).toBeDefined();
   });
 
   test("contains the Wrong Establishment Numder value", () => {
-    var result = MatcherResult.WRONG_ESTABLISHMENT_NUMBER;
+    var result = matcher_result.WRONG_ESTABLISHMENT_NUMBER;
 
     expect(result).toBe(1);
   });
 
   test("contains the Wrong Header definition", () => {
-    expect(MatcherResult.WRONG_HEADER).toBeDefined();
+    expect(matcher_result.WRONG_HEADER).toBeDefined();
   });
 
   test("contains the Wrong Header value", () => {
-    var result = MatcherResult.WRONG_HEADER;
+    var result = matcher_result.WRONG_HEADER;
 
     expect(result).toBe(2);
   });
 
   test("contains the Generic Error definition", () => {
-    expect(MatcherResult.GENERIC_ERROR).toBeDefined();
+    expect(matcher_result.GENERIC_ERROR).toBeDefined();
   });
 
   test("contains the Generic Error value", () => {
-    var result = MatcherResult.GENERIC_ERROR;
+    var result = matcher_result.GENERIC_ERROR;
 
     expect(result).toBe(3);
   });
 
   test("contains the 'Correct' definition", () => {
-    expect(MatcherResult.CORRECT).toBeDefined();
+    expect(matcher_result.CORRECT).toBeDefined();
   });
 
   test("contains the 'Correct' value", () => {
-    var result = MatcherResult.CORRECT;
+    var result = matcher_result.CORRECT;
 
     expect(result).toBe(4);
   });

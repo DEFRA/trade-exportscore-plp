@@ -1,4 +1,4 @@
-const ParserModel = require("../../../../../app/services/parser-model");
+const parser_model = require("../../../../../app/services/parser-model");
 
 module.exports = {
   validTestResult: {
@@ -24,7 +24,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000010-001",
-    parserModel: ParserModel.TJMORRIS1,
+    parserModel: parser_model.TJMORRIS1,
   },
   validTestResultForMultipleSheets: {
     business_checks: {
@@ -74,7 +74,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000010-001",
-    parserModel: ParserModel.TJMORRIS1,
+    parserModel: parser_model.TJMORRIS1,
   },
   emptyModelResult: {
     business_checks: {
@@ -91,6 +91,6 @@ module.exports = {
       },
     ],
     registration_approval_number: null,
-    parserModel: ParserModel.TJMORRIS1,
+    parserModel: parser_model.TJMORRIS1,
   },
 };

@@ -1,4 +1,4 @@
-const ParserModel = require("../../../../../app/services/parser-model");
+const parser_model = require("../../../../../app/services/parser-model");
 
 module.exports = {
   validTestResult: {
@@ -24,7 +24,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000015-010",
-    parserModel: ParserModel.ASDA2,
+    parserModel: parser_model.ASDA2,
   },
   validTestResultForMultipleSheets: {
     business_checks: {
@@ -74,7 +74,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000015-010",
-    parserModel: ParserModel.ASDA2,
+    parserModel: parser_model.ASDA2,
   },
 
   emptyTestResult: {
@@ -92,6 +92,6 @@ module.exports = {
       },
     ],
     registration_approval_number: null,
-    parserModel: ParserModel.ASDA2,
+    parserModel: parser_model.ASDA2,
   },
 };

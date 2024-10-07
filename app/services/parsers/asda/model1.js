@@ -1,17 +1,19 @@
-const CombineParser = require("../../parser-combine");
+const combine_parser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
-const ParserModel = require("../../parser-model");
+const parser_model = require("../../parser-model");
 const headers = require("../../model-headers");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
+const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
   const sheets = Object.keys(packingListJson);
   let packingListContents = [];
   let packingListContentsTemp = [];
-  const establishmentNumber = Regex.findMatch(
-    headers.ASDA1.establishmentNumber.regex,
-    packingListJson[sheets[0]],
-  );
+  try {
+    const establishmentNumber = regex.findMatch(
+      headers.ASDA1.establishmentNumber.regex,
+      packingListJson[sheets[0]],
+    );
 
   for (const sheet of sheets) {
     packingListContentsTemp = mapParser(
@@ -23,12 +25,15 @@ function parse(packingListJson) {
     packingListContents = packingListContents.concat(packingListContentsTemp);
   }
 
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.ASDA1,
-  );
+    return combine_parser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      parser_model.ASDA1,
+    );
+  } catch (err) {
+    logger.log_error("app/services/parsers/asda/model1.js", "matches()", err);
+  }
 }
 
 module.exports = {

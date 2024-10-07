@@ -1,14 +1,16 @@
-const ParserModel = require("../../parser-model");
-const CombineParser = require("../../parser-combine");
+const parser_model = require("../../parser-model");
+const combine_parser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
-const Regex = require("../../../utilities/regex");
+const regex = require("../../../utilities/regex");
+const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
+  try{
   const sheets = Object.keys(packingListJson);
   let packingListContents = [];
   let packingListContentsTemp = [];
-  const establishmentNumber = Regex.findMatch(
+  const establishmentNumber = regex.findMatch(
     headers.COOP1.establishmentNumber.regex,
     packingListJson[sheets[0]],
   );
@@ -22,12 +24,15 @@ function parse(packingListJson) {
     packingListContents = packingListContents.concat(packingListContentsTemp);
   }
 
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.COOP1,
-  );
+    return combine_parser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      parser_model.COOP1,
+    );
+  } catch (err) {
+    logger.log_error("app/services/parsers/co-op/model1.js", "matches()", err);
+  }
 }
 
 module.exports = {

@@ -1,18 +1,32 @@
-function findHeaderCols(header, packingListHeader) {
+function findHeaderCols(header, packingListHeader, isExact = true) {
   const headerCols = {};
 
   for (const value in header) {
-    headerCols[value] = Object.keys(packingListHeader).find((key) =>
-      packingListHeader[key].startsWith(header[value]),
-    );
+    headerCols[value] = Object.keys(packingListHeader).find((key) => {
+      if (isExact) {
+        return packingListHeader[key] === header[value]; // Exact match
+      } else {
+        return packingListHeader[key].startsWith(header[value]); // Starts with match
+      }
+    });
   }
 
   return headerCols;
 }
 
-function mapParser(packingListJson, headerRow, dataRow, header) {
-  const headerCols = findHeaderCols(header, packingListJson[headerRow]);
-  // console.log(headerCols);
+function mapParser(
+  packingListJson,
+  headerRow,
+  dataRow,
+  header,
+  isExact = true,
+) {
+  const headerCols = findHeaderCols(
+    header,
+    packingListJson[headerRow],
+    isExact,
+  );
+
   const packingListContents = packingListJson.slice(dataRow).map((col) => ({
     description: col[headerCols.description] ?? null,
     nature_of_products: col[headerCols.nature_of_products] ?? null,

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Item = sequelize.define(
+  const item = sequelize.define(
     "item",
     {
       itemId: { type: DataTypes.UUID, primaryKey: true },
@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true,
     },
   );
-  Item.associate = function (models) {
+  item.associate = function (models) {
     models.item.belongsTo(models.packingList, {
       foreignKey: "applicationId",
       targetKey: "applicationId",
     });
   };
-  return Item;
+  return item;
 };

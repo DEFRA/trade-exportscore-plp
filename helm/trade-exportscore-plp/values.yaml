@@ -13,7 +13,11 @@ deployment: {}
 
 # These may be changed. See here: https://github.com/DEFRA/adp-helm-library?tab=readme-ov-file#container-template
 container:
-  memCpuTier: L
+  memCpuTier: CUSTOM
+  requestMemory: 1000Mi
+  requestCpu: 150m
+  limitMemory: 1000Mi
+  limitCpu: 150m
   port: 3000
 
 # These may be changed. See here: https://github.com/DEFRA/adp-helm-library?tab=readme-ov-file#container-template

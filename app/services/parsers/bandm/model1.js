@@ -3,6 +3,7 @@ const ParserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const Regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
+const logger = require("../../../utilities/logger");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
@@ -10,10 +11,11 @@ function parse(packingListJson) {
   const sheets = Object.keys(packingListJson);
   let packingListContents = [];
   let packingListContentsTemp = [];
-  const establishmentNumber = Regex.findMatch(
-    headers.BANDM1.establishmentNumber.regex,
-    packingListJson[sheets[0]],
-  );
+  try {
+    const establishmentNumber = Regex.findMatch(
+      headers.BANDM1.establishmentNumber.regex,
+      packingListJson[sheets[0]],
+    );
 
   const headerTitles = Object.values(headers.BANDM1.headers);
   function callback(x) {
@@ -39,12 +41,15 @@ function parse(packingListJson) {
     packingListContents = packingListContents.concat(packingListContentsTemp);
   }
 
-  return CombineParser.combine(
-    establishmentNumber,
-    packingListContents,
-    true,
-    ParserModel.BANDM1,
-  );
+    return CombineParser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      ParserModel.BANDM1,
+    );
+  } catch (err) {
+    logger.log_error("app/services/parsers/bandm/model1.js", "matches()", err);
+  }
 }
 
 function isEndOfRow(x) {

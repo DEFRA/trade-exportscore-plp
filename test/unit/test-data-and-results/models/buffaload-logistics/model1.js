@@ -1,5 +1,3 @@
-const ParserModel = require("../../../../../app/services/parser-model");
-
 module.exports = {
   validModel: {
     Tabelle1: [

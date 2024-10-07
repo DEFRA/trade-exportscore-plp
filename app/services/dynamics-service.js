@@ -1,4 +1,7 @@
 const config = require("../config");
+const logger = require("../utilities/logger");
+const logDynamicsService = "app/services/dynamics-service.js";
+
 const dsConfig = config.dynamicsConfig;
 const approvalStatus = {
   Approved: 179640000,
@@ -26,9 +29,9 @@ async function bearerTokenRequest() {
 
     const json = await response.json();
     return json.access_token;
-  } catch (error) {
-    console.error(error.message);
-    return error.message;
+  } catch (err) {
+    logger.log_error(logDynamicsService, "bearerTokenRequest()", err);
+    return err.message;
   }
 }
 
@@ -38,6 +41,7 @@ async function patchPackingListCheck(applicationId, isApproved) {
   const outcome = isApproved
     ? approvalStatus.Approved
     : approvalStatus.Rejected;
+
   try {
     const response = fetch(encodeURI(url), {
       method: "PATCH",
@@ -48,14 +52,16 @@ async function patchPackingListCheck(applicationId, isApproved) {
       body: JSON.stringify({ rms_automatedpackinglistcheck: outcome }),
     });
     const status = (await response).status;
-    console.info(
+    logger.log_info(
+      logDynamicsService,
+      "patchPackingListCheck()",
       `Upsert ${applicationId} with outcome ${isApproved}, status ${status}`,
     );
 
     return status;
-  } catch (error) {
-    console.error(error.message);
-    return error.message;
+  } catch (err) {
+    logger.log_error(logDynamicsService, "patchPackingListCheck()", err);
+    return err.message;
   }
 }
 

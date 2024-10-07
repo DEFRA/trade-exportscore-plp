@@ -3,6 +3,7 @@ const nonai = require("../../../app/routes/non-ai");
 const excelToJson = require("@boterop/convert-excel-to-json");
 const { findParser } = require("../../../app/services/parser-service");
 const { createPackingList } = require("../../../app/packing-list/index");
+const logger = require("../../../app/utilities/logger");
 
 // Mocking the necessary modules
 jest.mock("@boterop/convert-excel-to-json");
@@ -62,7 +63,7 @@ describe("/non-ai route handler", () => {
 
     // Spy on console.error to check if errors are being logged
     const consoleErrorSpy = jest
-      .spyOn(console, "error")
+      .spyOn(logger, "log_error")
       .mockImplementation(() => {}); // Prevent actual error logging during tests
 
     // Call the handler with the mock request and mock response
@@ -70,8 +71,11 @@ describe("/non-ai route handler", () => {
 
     // Verify that the response function was called even when an error occurred
     expect(mockH.response).toHaveBeenCalled();
-    // Verify that console.error was called with the expected error
-    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.any(Error));
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.any(String),
+      expect.any(Error),
+    );
 
     // Restore the original console.error after the test
     consoleErrorSpy.mockRestore();

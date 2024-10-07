@@ -1,4 +1,4 @@
-const ParserModel = require("../../../../../app/services/parser-model");
+const parser_model = require("../../../../../app/services/parser-model");
 
 module.exports = {
   validTestResult: {
@@ -24,7 +24,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000153",
-    parserModel: ParserModel.GIOVANNI1,
+    parserModel: parser_model.GIOVANNI1,
   },
   validTestResultForMultipleSheets: {
     business_checks: {
@@ -91,7 +91,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000153",
-    parserModel: ParserModel.GIOVANNI1,
+    parserModel: parser_model.GIOVANNI1,
   },
   incorrectEstablishmentNumber: {
     RANA: [

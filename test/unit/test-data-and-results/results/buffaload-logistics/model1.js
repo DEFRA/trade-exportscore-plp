@@ -1,4 +1,4 @@
-const ParserModel = require("../../../../../app/services/parser-model");
+const parser_model = require("../../../../../app/services/parser-model");
 
 module.exports = {
   validTestResult: {
@@ -24,7 +24,7 @@ module.exports = {
       },
     ],
     business_checks: { all_required_fields_present: true },
-    parserModel: ParserModel.BUFFALOAD1,
+    parserModel: parser_model.BUFFALOAD1,
   },
   validTestResultForMultipleSheets: {
     registration_approval_number: "RMS-GB-000098-001",
@@ -63,7 +63,7 @@ module.exports = {
       },
     ],
     business_checks: { all_required_fields_present: true },
-    parserModel: ParserModel.BUFFALOAD1,
+    parserModel: parser_model.BUFFALOAD1,
   },
   invalidTestResult_MissingCells: {
     business_checks: {
@@ -90,6 +90,6 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000098-001",
-    parserModel: ParserModel.BUFFALOAD1,
+    parserModel: parser_model.BUFFALOAD1,
   },
 };

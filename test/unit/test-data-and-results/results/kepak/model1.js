@@ -1,4 +1,4 @@
-const ParserModel = require("../../../../../app/services/parser-model");
+const parser_model = require("../../../../../app/services/parser-model");
 const { emptyModelResult } = require("../davenport/model1");
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000280",
-    parserModel: ParserModel.KEPAK1,
+    parserModel: parser_model.KEPAK1,
   },
   validTestResultForMultipleSheets: {
     business_checks: {
@@ -75,7 +75,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000280",
-    parserModel: ParserModel.KEPAK1,
+    parserModel: parser_model.KEPAK1,
   },
   emptyModelResult: {
     business_checks: {
@@ -92,6 +92,6 @@ module.exports = {
       },
     ],
     registration_approval_number: null,
-    parserModel: ParserModel.KEPAK1,
+    parserModel: parser_model.KEPAK1,
   },
 };
