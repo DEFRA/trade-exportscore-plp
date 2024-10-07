@@ -6,6 +6,13 @@ const logger = require("../utilities/logger");
 const { createPackingList } = require("../packing-list/index");
 const parser_model = require("../services/parser-model");
 
+function getRandomInt(min = 1, max = 10000000) {
+  const range = max - min + 1;
+  const randomBuffer = crypto.randomBytes(4); // Get 4 bytes of random data
+  const randomValue = randomBuffer.readUInt32BE(0); // Read an unsigned 32-bit integer from the buffer
+  return (randomValue % range) + min; // Limit to the specified range
+}
+
 module.exports = {
   method: "GET",
   path: "/ai",
@@ -22,9 +29,7 @@ module.exports = {
       const packingList = await findParser(result, filename);
 
       if (packingList.parserModel !== parser_model.NOMATCH) {
-        const randomInt = Math.floor(
-          Math.random() * (10000000 - 1 + 1) + 1,
-        ).toString();
+        const randomInt = getRandomInt();
         await createPackingList(packingList, randomInt);
       }
 

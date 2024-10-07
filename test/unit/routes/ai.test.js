@@ -24,16 +24,6 @@ describe("/ai route handler", () => {
     };
     mockRequest.query = { filename: "test" };
 
-    // Mock findParser's default behaviour
-    findParser.mockImplementation(() => {
-      return {
-        parserModel: ParserModel.ICELAND1, // Simulate a successful match with NISA1 parser
-        business_checks: {
-          all_required_fields_present: true,
-        },
-      };
-    });
-
     // Mock createPackingList's default behaviour
     createPackingList.mockImplementation(() => jest.fn()); // Simulate the packing list creation
   });
@@ -43,6 +33,38 @@ describe("/ai route handler", () => {
     // Mock readFileSync with successful data return
     jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {
       return "parsedData";
+    });
+
+    findParser.mockImplementationOnce(() => {
+      return {
+        parserModel: ParserModel.ICELAND1, // Simulate a successful match with NISA1 parser
+        business_checks: {
+          all_required_fields_present: true,
+        },
+      };
+    });
+
+    // Call the handler with the mock request and mock response
+    await ai.handler(mockRequest, mockH);
+
+    // Verify that the response function was called
+    expect(mockH.response).toHaveBeenCalled();
+  });
+
+  // Test case for not parsed
+  test("should return no match", async () => {
+    // Mock readFileSync with successful data return
+    jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {
+      return "parsedData";
+    });
+
+    findParser.mockImplementationOnce(() => {
+      return {
+        parserModel: ParserModel.NOMATCH, // Simulate a successful match with NISA1 parser
+        business_checks: {
+          all_required_fields_present: false,
+        },
+      };
     });
 
     // Call the handler with the mock request and mock response
