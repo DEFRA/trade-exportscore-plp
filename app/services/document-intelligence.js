@@ -3,6 +3,7 @@ const {
   AzureKeyCredential,
   DocumentAnalysisClient,
 } = require("@azure/ai-form-recognizer");
+const logger = require("../utilities/logger");
 
 function createDocumentIntelligenceClient() {
   const credential = new AzureKeyCredential(config.formRecognizerApiKey);
@@ -28,6 +29,7 @@ async function runAnalysis(client, modelId, fileBuffer) {
       "runAnalysis()",
       err,
     );
+    return {};
   }
 }
 

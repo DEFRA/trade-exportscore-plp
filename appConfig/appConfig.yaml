@@ -52,6 +52,3 @@
 - key: IS_DOCUMENT_INTLELLIGENCE_ENABLED
   value: "{{servicename}}-IS-DOCUMENT-INTLELLIGENCE-ENABLED"
   type: "keyvault"
-- key: FORM_RECOGNIZER_CUSTOM_MODEL_ID
-  value: "{{servicename}}-FORM-RECOGNIZER-CUSTOM-MODEL-ID"
-  type: "keyvault"

@@ -4,7 +4,7 @@ const config = require("../config");
 const { findParser } = require("../services/parser-service");
 const logger = require("../utilities/logger");
 const { createPackingList } = require("../packing-list/index");
-const parser_model = require("../services/parser-model");
+const parserModel = require("../services/parser-model");
 
 function getRandomInt(min = 1, max = 10000000) {
   const range = max - min + 1;
@@ -28,7 +28,7 @@ module.exports = {
 
       const packingList = await findParser(result, filename);
 
-      if (packingList.parserModel !== parser_model.NOMATCH) {
+      if (packingList.parserModel !== parserModel.NOMATCH) {
         const randomInt = getRandomInt();
         await createPackingList(packingList, randomInt);
       }

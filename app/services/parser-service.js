@@ -87,6 +87,7 @@ async function findParser(packingList, filename) {
     return parsedPackingList;
   } catch (err) {
     logger.log_error(logParserServicePath, logParserServiceFunction, err);
+    return {};
   }
 }
 

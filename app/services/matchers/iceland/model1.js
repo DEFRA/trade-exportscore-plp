@@ -3,14 +3,13 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../document-intelligence");
-const config = require("../../../config");
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 
 async function matches(packingList, filename) {
   const result = {
-    isMatched: matcher_result.GENERIC_ERROR,
+    isMatched: matcherResult.GENERIC_ERROR,
     document: {},
   };
 
@@ -18,7 +17,7 @@ async function matches(packingList, filename) {
     const client = createDocumentIntelligenceClient();
     const document = await runAnalysis(
       client,
-      config.formRecognizerModelID,
+      headers.ICELAND1.modelId,
       packingList,
     );
 
@@ -29,14 +28,14 @@ async function matches(packingList, filename) {
         document.fields.PartialNIRMSNumber,
       ])
     ) {
-      result.isMatched = matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+      result.isMatched = matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       return result;
     }
 
-    result.isMatched = matcher_result.CORRECT;
+    result.isMatched = matcherResult.CORRECT;
     result.document = document;
 
-    if (result.isMatched === matcher_result.CORRECT) {
+    if (result.isMatched === matcherResult.CORRECT) {
       logger.log_info(
         "app/services/matchers/iceland/model1.js",
         "matches()",
