@@ -3,6 +3,7 @@ const regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
+const { start } = require("applicationinsights");
 
 function matches(packingList, filename) {
   try {
@@ -33,14 +34,13 @@ function matches(packingList, filename) {
       };
 
       const headerRow = rowFinder(packingList[sheet], callback);
-      if (!packingList[sheet][headerRow] || headerRow === -1) {
-        return matcher_result.WRONG_HEADER;
-      }
 
-      for (const key in header) {
-        if (!packingList[sheet][headerRow][key]?.startsWith(header[key])) {
-          return matcher_result.WRONG_HEADER;
-        }
+      if (
+        !packingList[sheet][headerRow] ||
+        headerRow === -1 ||
+        !isHeaderMatching(packingList[sheet], header, headerRow)
+      ) {
+        return matcher_result.WRONG_HEADER;
       }
     }
     logger.log_info(
@@ -61,6 +61,15 @@ function matches(packingList, filename) {
 
 function callback(x) {
   return x.L === "Description";
+}
+
+function isHeaderMatching(packingListSheet, header, headerRow) {
+  for (const key in header) {
+    if (!packingListSheet[headerRow][key]?.startsWith(header[key])) {
+      return false;
+    }
+  }
+  return true;
 }
 
 module.exports = {

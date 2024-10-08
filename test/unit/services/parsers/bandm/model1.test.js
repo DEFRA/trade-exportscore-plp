@@ -19,16 +19,6 @@ describe("parseBandMModel1", () => {
     const packingListJson = JSON.stringify(model.validModelMultipleSheets);
     const sanitisedPackingListJson = json_file.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
-    console.log(sanitisedPackingList);
-    const result = parser.parse(sanitisedPackingList);
-    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
-  });
-
-  test("parses multiple sheets", () => {
-    const packingListJson = JSON.stringify(model.validModelMultipleSheets);
-    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
-    const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
-    console.log(sanitisedPackingList);
     const result = parser.parse(sanitisedPackingList);
     expect(result).toEqual(test_results.validTestResultForMultipleSheets);
   });
