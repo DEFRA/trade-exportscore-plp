@@ -26,6 +26,31 @@ module.exports = {
     registration_approval_number: "RMS-GB-000025-001",
     parserModel: parser_model.NISA1,
   },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: "1602321990",
+        description: "CO OP BRITISH CHICKEN POPPERS",
+        nature_of_products: "790 - PASTRY - C",
+        number_of_packages: 4,
+        total_net_weight_kg: 2.4,
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "1604207055",
+        description: "CO OP TUNA MAYONNAISE SANDWICH",
+        nature_of_products: "710 - SANDWICHES - C",
+        number_of_packages: 4,
+        total_net_weight_kg: 3.2,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000025-001",
+    parserModel: parser_model.NISA1,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

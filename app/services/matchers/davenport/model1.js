@@ -6,21 +6,25 @@ const logger = require("../../../utilities/logger");
 
 function matches(packingList, filename) {
   try {
-    const sheet = Object.keys(packingList)[0];
-
-    // check for correct establishment number
-    if (
-      !regex.test(
-        headers.DAVENPORT1.establishmentNumber.regex,
-        packingList[sheet],
-      )
-    ) {
-      return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+    let result;
+    const sheets = Object.keys(packingList);
+    if (sheets.length === 0) {
+      throw new Error("generic error");
     }
 
-    // check for header values
-    const result = matchesHeader(headers.DAVENPORT1.regex, packingList[sheet]);
-
+    for (const sheet of sheets) {
+      // check for correct establishment number
+      if (
+        !regex.test(
+          headers.DAVENPORT1.establishmentNumber.regex,
+          packingList[sheet],
+        )
+      ) {
+        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+      }
+      // check for header values
+      result = matchesHeader(headers.DAVENPORT1.regex, packingList[sheet]);
+    }
     if (result === matcher_result.CORRECT) {
       logger.log_info(
         "app/services/matchers/davenport/model1.js",
@@ -28,7 +32,6 @@ function matches(packingList, filename) {
         `Packing list matches davenport Model 1 with filename: ${filename}`,
       );
     }
-
     return result;
   } catch (err) {
     logger.log_error(

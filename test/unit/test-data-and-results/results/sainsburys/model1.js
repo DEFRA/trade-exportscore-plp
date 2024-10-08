@@ -26,6 +26,31 @@ module.exports = {
     registration_approval_number: "RMS-GB-000094-002",
     parserModel: parser_model.SAINSBURYS1,
   },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: "1905903000",
+        description: "Jason's Sourdough The Great White 450g",
+        nature_of_products: "Bread",
+        number_of_packages: 1,
+        total_net_weight_kg: 3.15,
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "1602323090",
+        description: "JS Chicken Korma 400g",
+        nature_of_products: "Chilled Indian Meals",
+        number_of_packages: 1,
+        total_net_weight_kg: 2.4,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000094-002",
+    parserModel: parser_model.SAINSBURYS1,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

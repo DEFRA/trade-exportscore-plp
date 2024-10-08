@@ -5,13 +5,17 @@ const test_results = require("../../../test-data-and-results/results/asda/model2
 
 describe("parseAsdaModel2", () => {
   test("parses populated json", () => {
-    const result = parser.parse(model.validModel.Sheet1);
+    const result = parser.parse(model.validModel);
 
     expect(result).toEqual(test_results.validTestResult);
   });
+  test("parses multiple sheets", () => {
+    const result = parser.parse(model.validModelMultipleSheets);
+    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+  });
 
   test("parses empty json", () => {
-    const result = parser.parse(model.emptyModel.Sheet1);
+    const result = parser.parse(model.emptyModel);
 
     expect(result).toEqual(test_results.emptyTestResult);
   });

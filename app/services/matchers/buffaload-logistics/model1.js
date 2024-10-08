@@ -6,21 +6,25 @@ const logger = require("../../../utilities/logger");
 
 function matches(packingList, filename) {
   try {
-    const sheet = Object.keys(packingList)[0];
-
-    // check for correct establishment number
-    if (
-      !regex.test(
-        headers.BUFFALOAD1.establishmentNumber.regex,
-        packingList[sheet],
-      )
-    ) {
-      return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+    let result;
+    const sheets = Object.keys(packingList);
+    if (sheets.length === 0) {
+      throw new Error("generic error");
     }
+    for (const sheet of sheets) {
+      // check for correct establishment number
+      if (
+        !regex.test(
+          headers.BUFFALOAD1.establishmentNumber.regex,
+          packingList[sheet],
+        )
+      ) {
+        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+      }
 
-    // check for header values
-    const result = matchesHeader(headers.BUFFALOAD1.regex, packingList[sheet]);
-
+      // check for header values
+      result = matchesHeader(headers.BUFFALOAD1.regex, packingList[sheet]);
+    }
     if (result === matcher_result.CORRECT) {
       logger.log_info(
         "app/services/matchers/buffaload-logistics/model1.js",
