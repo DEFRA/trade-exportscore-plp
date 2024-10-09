@@ -4,9 +4,11 @@ const {
   DocumentAnalysisClient,
 } = require("@azure/ai-form-recognizer");
 const logger = require("../utilities/logger");
+const { DefaultAzureCredential } = require("@azure/identity");
 
 function createDocumentIntelligenceClient() {
-  const credential = new AzureKeyCredential(config.formRecognizerApiKey);
+  //const credential = new AzureKeyCredential(config.formRecognizerApiKey);
+  const credential = new DefaultAzureCredential();
   return new DocumentAnalysisClient(config.formRecognizerEndpoint, credential);
 }
 

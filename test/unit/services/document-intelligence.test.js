@@ -7,7 +7,46 @@ const {
   DocumentAnalysisClient,
 } = require("@azure/ai-form-recognizer");
 
-const document = {test: "this is a test"};
+const document = { test: "this is a test" };
+
+jest.mock("@azure/ai-form-recognizer", () => {
+  return {
+    AzureKeyCredential: jest.fn(),
+    DocumentAnalysisClient: jest.fn().mockImplementation(() => {
+      return {
+        beginAnalyzeDocument: jest.fn().mockImplementation(() => {
+          return {
+            pollUntilDone: jest.fn().mockImplementation(() => {
+              return {
+                documents: [document],
+              };
+            }),
+          };
+        }),
+      };
+    }),
+  };
+});
+
+
+jest.mock("@azure/ai-form-recognizer", () => {
+  return {
+    AzureKeyCredential: jest.fn(),
+    DocumentAnalysisClient: jest.fn().mockImplementation(() => {
+      return {
+        beginAnalyzeDocument: jest.fn().mockImplementation(() => {
+          return {
+            pollUntilDone: jest.fn().mockImplementation(() => {
+              return {
+                documents: [document],
+              };
+            }),
+          };
+        }),
+      };
+    }),
+  };
+});
 
 describe("createDocumentIntelligenceClient", () => {
   test("creates client", () => {
@@ -20,25 +59,6 @@ describe("createDocumentIntelligenceClient", () => {
 
 describe("runAnalysis", () => {
   test("returns document", async () => {
-    jest.mock("@azure/ai-form-recognizer", () => {
-      return {
-        AzureKeyCredential: jest.fn(),
-        DocumentAnalysisClient: jest.fn().mockImplementation(() => {
-          return {
-            beginAnalyzeDocument: jest.fn().mockImplementation(() => {
-              return {
-                pollUntilDone: jest.fn().mockImplementation(() => {
-                  return {
-                    documents: [document],
-                  };
-                }),
-              };
-            }),
-          };
-        }),
-      };
-    });
-    
     const result = await runAnalysis(
       createDocumentIntelligenceClient(),
       "ICELAND1",
@@ -49,8 +69,11 @@ describe("runAnalysis", () => {
   });
 
   test("returns error", async () => {
-    const result = await runAnalysis(createDocumentIntelligenceClient(), "ICELAND1", "");
 
-
-  })
+    const result = await runAnalysis(
+      createDocumentIntelligenceClient(),
+      "ICELAND1",
+      "",
+    );
+  });
 });
