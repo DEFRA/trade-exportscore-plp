@@ -9,7 +9,7 @@ module.exports = {
       try {
         return h.response("ok").code(StatusCodes.OK);
       } catch (err) {
-        logger.log_error(
+        logger.logError(
           "app/routes/healthz.js",
           "get()",
           `Error running healthy check: ${err}`,

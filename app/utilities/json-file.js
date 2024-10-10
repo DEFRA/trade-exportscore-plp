@@ -35,7 +35,7 @@ function sanitise(jsonString) {
 
     return JSON.stringify(jsonObj); // Convert back to JSON string
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/utilities/json-file.js",
       "sanitise()",
       `Invalid JSON string provided: ${err}`,

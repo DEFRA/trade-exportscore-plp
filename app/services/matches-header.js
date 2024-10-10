@@ -11,7 +11,7 @@ function matchesHeader(regexHeader, packingListSheet) {
     }
     return matcher_result.CORRECT;
   } catch (err) {
-    logger.log_error("app/services/matches-header.js", "matchesHeader()", err);
+    logger.logError("app/services/matches-header.js", "matchesHeader()", err);
     return matcher_result.GENERIC_ERROR;
   }
 }

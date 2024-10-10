@@ -9,7 +9,7 @@ async function createServer() {
   try {
     await sequelize.authenticate();
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       logServerPath,
       "createServer > sequelize.authenticate()",
       err,
@@ -30,14 +30,14 @@ async function createServer() {
       },
     });
   } catch (err) {
-    logger.log_error(logServerPath, "createServer > hapi.server()", err);
+    logger.logError(logServerPath, "createServer > hapi.server()", err);
   }
 
   try {
     // Register the plugins
     await server.register(require("./plugins/router"));
   } catch (err) {
-    logger.log_error(logServerPath, "createServer > server.register()", err);
+    logger.logError(logServerPath, "createServer > server.register()", err);
   }
 
   try {
@@ -45,7 +45,7 @@ async function createServer() {
       await server.register(require("blipp"));
     }
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       logServerPath,
       "createServer > server.register() [DEV]",
       err,
@@ -55,7 +55,7 @@ async function createServer() {
   try {
     await messageService.start();
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       logServerPath,
       "createServer > messageService.start()",
       err,
@@ -66,7 +66,7 @@ async function createServer() {
     try {
       await messageService.start();
     } catch (err) {
-      logger.log_error(
+      logger.logError(
         logServerPath,
         "createServer > messageService.start()",
         err,
@@ -80,7 +80,7 @@ async function createServer() {
     try {
       await messageService.stop();
     } catch (err) {
-      logger.log_error(
+      logger.logError(
         logServerPath,
         "createServer > messageService.stop()",
         err,

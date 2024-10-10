@@ -63,7 +63,7 @@ describe("/non-ai route handler", () => {
 
     // Spy on console.error to check if errors are being logged
     const consoleErrorSpy = jest
-      .spyOn(logger, "log_error")
+      .spyOn(logger, "logError")
       .mockImplementation(() => {}); // Prevent actual error logging during tests
 
     // Call the handler with the mock request and mock response

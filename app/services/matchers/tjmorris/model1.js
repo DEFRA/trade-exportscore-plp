@@ -50,7 +50,7 @@ function matches(packingList, filename) {
     );
     return matcher_result.CORRECT;
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/matchers/tjmorris/model1.js",
       "matches()",
       err,

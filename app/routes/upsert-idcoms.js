@@ -13,7 +13,7 @@ async function upsertWithDynamics(request) {
       request.query.isApproved,
     );
   } catch (err) {
-    logger.log_error(logUpsertIdcomsPath, "get() > patchPackingListCheck", err);
+    logger.logError(logUpsertIdcomsPath, "get() > patchPackingListCheck", err);
   }
   return checkStatus;
 }
@@ -24,7 +24,7 @@ async function upsert(request) {
     await sendParsed(request.query.applicationId, request.query.isApproved);
     checkStatus = StatusCodes.OK;
   } catch (err) {
-    logger.log_error(logUpsertIdcomsPath, "get() > sendParsed", err);
+    logger.logError(logUpsertIdcomsPath, "get() > sendParsed", err);
   }
   return checkStatus;
 }
@@ -45,7 +45,7 @@ module.exports = {
         }
         return h.response(checkStatus).code(StatusCodes.OK);
       } catch (err) {
-        logger.log_error(logUpsertIdcomsPath, "get()", err);
+        logger.logError(logUpsertIdcomsPath, "get()", err);
       }
     },
   },

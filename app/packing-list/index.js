@@ -18,7 +18,7 @@ async function createPackingList(packingListJson, applicationId) {
       );
     });
   } catch (err) {
-    logger.log_error(logIndexPath, "createPackingList()", err);
+    logger.logError(logIndexPath, "createPackingList()", err);
   }
 }
 
@@ -33,7 +33,7 @@ function packingListMapper(packingListJson, applicationId) {
       parserModel: packingListJson.parserModel,
     };
   } catch (err) {
-    logger.log_error(logIndexPath, "packingListMapper()", err);
+    logger.logError(logIndexPath, "packingListMapper()", err);
   }
 }
 
@@ -50,7 +50,7 @@ function itemsMapper(o, applicationId) {
       applicationId,
     };
   } catch (err) {
-    logger.log_error(logIndexPath, "itemsMapper()", err);
+    logger.logError(logIndexPath, "itemsMapper()", err);
   }
 }
 

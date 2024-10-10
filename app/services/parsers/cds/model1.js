@@ -1,4 +1,4 @@
-const parser_model = require("../../parser-model");
+const parserModel = require("../../parser-model");
 const combine_parser = require("../../parser-combine");
 const headers = require("../../model-headers");
 const { mapParser } = require("../../parser-map");
@@ -29,10 +29,10 @@ function parse(packingListJson) {
       establishmentNumber,
       packingListContents,
       true,
-      parser_model.CDS1,
+      parserModel.CDS1,
     );
   } catch (err) {
-    logger.log_error("app/services/parsers/cds/model1.js", "matches()", err);
+    logger.logError("app/services/parsers/cds/model1.js", "matches()", err);
   }
 }
 

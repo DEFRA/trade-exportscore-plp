@@ -1,6 +1,6 @@
 const combine_parser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
-const parser_model = require("../../parser-model");
+const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
@@ -32,10 +32,10 @@ function parse(packingListJson) {
       establishmentNumber,
       packingListContents,
       true,
-      parser_model.SAINSBURYS1,
+      parserModel.SAINSBURYS1,
     );
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/parsers/sainsburys/model1.js",
       "matches()",
       err,

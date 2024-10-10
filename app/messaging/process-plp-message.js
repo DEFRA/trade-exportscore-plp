@@ -19,7 +19,7 @@ async function processBlob(message) {
   try {
     result = await getXlsPackingListFromBlob(blobClient);
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       logProcessPlpMessagePath,
       "processPlpMessage() > getXlsPackingListFromBlob",
       err,
@@ -33,7 +33,7 @@ function getPackinList(result, message) {
   try {
     packingList = findParser(result, message.body.packing_list_blob);
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       logProcessPlpMessagePath,
       "processPlpMessage() > findParser",
       err,
@@ -53,7 +53,7 @@ async function processPackingList(packingList, message) {
         `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
       );
     } catch (err) {
-      logger.log_error(
+      logger.logError(
         logProcessPlpMessagePath,
         "processPlpMessage() > createPackingList",
         err,
@@ -67,7 +67,7 @@ async function processPackingList(packingList, message) {
           packingList.business_checks.all_required_fields_present,
         );
       } catch (err) {
-        logger.log_error(
+        logger.logError(
           logProcessPlpMessagePath,
           "processPlpMessage() > patchPackingListCheck",
           err,
@@ -80,7 +80,7 @@ async function processPackingList(packingList, message) {
           packingList.business_checks.all_required_fields_present,
         );
       } catch (err) {
-        logger.log_error(
+        logger.logError(
           logProcessPlpMessagePath,
           "processPlpMessage() > sendParsed",
           err,
@@ -104,7 +104,7 @@ async function processPlpMessage(message, receiver) {
     const packingList = getPackinList(result, message);
     await processPackingList(packingList, message);
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       logProcessPlpMessagePath,
       logProcessPlpMessageFunction,
       err,
