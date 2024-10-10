@@ -4,7 +4,8 @@ const createMessage = require("./create-message");
 const { ServiceBusClient } = require("@azure/service-bus");
 const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("./../utilities/logger");
-const logSendParsedMessagePath = "app/messaging/send-parsed-message.js";
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function sendParsedAdp(parsedResult, applicationId) {
   try {
@@ -13,12 +14,12 @@ async function sendParsedAdp(parsedResult, applicationId) {
     await parsedSender.sendMessage(message);
     await parsedSender.closeConnection();
     logger.log_info(
-      logSendParsedMessagePath,
+      filenameForLogging,
       "sendParsedAdp()",
       `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
     );
   } catch (err) {
-    logger.logError(logSendParsedMessagePath, "sendParsedAdp()", err);
+    logger.logError(filenameForLogging, "sendParsedAdp()", err);
   }
 }
 
@@ -38,14 +39,14 @@ async function sendParsed(applicationId, parsedResult) {
       try {
         await sender.sendMessages(message);
         logger.log_info(
-          logSendParsedMessagePath,
+          filenameForLogging,
           "sendParsed()",
           `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
         );
         await sender.close();
       } catch (err) {
         logger.logError(
-          logSendParsedMessagePath,
+          filenameForLogging,
           "sendParsed() > sender.sendMessages",
           err,
         );
@@ -54,13 +55,13 @@ async function sendParsed(applicationId, parsedResult) {
       }
     } else {
       logger.logError(
-        logSendParsedMessagePath,
+        filenameForLogging,
         "sendParsed() > sender.sendMessages",
         "Service Bus connection to TP has not been initialised because 'config.tpQueue.managedIdentityClientId' is missing.",
       );
     }
   } catch (err) {
-    logger.logError(logSendParsedMessagePath, "sendParsed()", err);
+    logger.logError(filenameForLogging, "sendParsed()", err);
   }
 }
 
