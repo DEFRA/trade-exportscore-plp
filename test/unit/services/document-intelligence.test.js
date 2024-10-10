@@ -28,35 +28,6 @@ jest.mock("@azure/ai-form-recognizer", () => {
   };
 });
 
-
-jest.mock("@azure/ai-form-recognizer", () => {
-  return {
-    AzureKeyCredential: jest.fn(),
-    DocumentAnalysisClient: jest.fn().mockImplementation(() => {
-      return {
-        beginAnalyzeDocument: jest.fn().mockImplementation(() => {
-          return {
-            pollUntilDone: jest.fn().mockImplementation(() => {
-              return {
-                documents: [document],
-              };
-            }),
-          };
-        }),
-      };
-    }),
-  };
-});
-
-describe("createDocumentIntelligenceClient", () => {
-  test("creates client", () => {
-    createDocumentIntelligenceClient();
-
-    expect(AzureKeyCredential).toHaveBeenCalled();
-    expect(DocumentAnalysisClient).toHaveBeenCalled();
-  });
-});
-
 describe("runAnalysis", () => {
   test("returns document", async () => {
     const result = await runAnalysis(
@@ -69,11 +40,20 @@ describe("runAnalysis", () => {
   });
 
   test("returns error", async () => {
-
+    // set error??
     const result = await runAnalysis(
       createDocumentIntelligenceClient(),
       "ICELAND1",
       "",
     );
+  });
+});
+
+describe("createDocumentIntelligenceClient", () => {
+  test("creates client", () => {
+    createDocumentIntelligenceClient();
+
+    expect(AzureKeyCredential).toHaveBeenCalled();
+    expect(DocumentAnalysisClient).toHaveBeenCalled();
   });
 });
