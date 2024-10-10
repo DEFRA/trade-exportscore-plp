@@ -5,6 +5,7 @@ const { findParser } = require("../services/parser-service");
 const logger = require("../utilities/logger");
 const { createPackingList } = require("../packing-list/index");
 const parserModel = require("../services/parser-model");
+const crypto = require("crypto");
 
 function getRandomInt(min = 1, max = 10000000) {
   const range = max - min + 1;

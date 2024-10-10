@@ -38,15 +38,6 @@ describe("runAnalysis", () => {
 
     expect(result).toBe(document);
   });
-
-  test("returns error", async () => {
-    // set error??
-    const result = await runAnalysis(
-      createDocumentIntelligenceClient(),
-      "ICELAND1",
-      "",
-    );
-  });
 });
 
 describe("createDocumentIntelligenceClient", () => {

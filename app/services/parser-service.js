@@ -46,21 +46,9 @@ async function findParser(packingList, filename) {
 
       // Test for PDF spreadsheets
     } else if (file_extension.isPdf(filename) && config.isDiEnabled) {
-      for (const key in parsersPdf) {
-        if (parsersPdf.hasOwnProperty(key)) {
-          const result = await parsersPdf[key].matches(packingList, filename);
+      parsedPackingList = await matchAndParsePdf(packingList, filename, parsedPackingList);
 
-          if (result.isMatched === matcher_result.CORRECT) {
-            parserFound = true;
-            parsedPackingList = parsersPdf[key].parse(
-              result.document,
-              filename,
-            );
-          }
-        }
-      }
-
-      if (!parserFound) {
+      if (parsedPackingList.parserModel === matcher_result.NOMATCH) {
         logger.log_info(
           "app/services/parser-service.js",
           "findParser()",
@@ -130,6 +118,23 @@ function checkType(packingList) {
   }
   return packingList;
 }
+
+async function matchAndParsePdf(packingList, filename, parsedPackingList) {
+  for (const key in parsersPdf) {
+    if (parsersPdf.hasOwnProperty(key)) {
+      const result = await parsersPdf[key].matches(packingList, filename);
+
+      if (result.isMatched === matcher_result.CORRECT) {
+        parsedPackingList = parsersPdf[key].parse(
+          result.document,
+          filename,
+        );
+      }
+    }
+  }
+  return parsedPackingList;
+}
+
 module.exports = {
   failedParser,
   findParser,
