@@ -4,6 +4,8 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
 const { start } = require("applicationinsights");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matches(packingList, filename) {
   try {
@@ -44,17 +46,13 @@ function matches(packingList, filename) {
       }
     }
     logger.log_info(
-      "app/services/matchers/tjmorris/model1.js",
+      filenameForLogging,
       "matches()",
       `Packing list matches tjmorris Model 1 with filename: ${filename}`,
     );
     return matcher_result.CORRECT;
   } catch (err) {
-    logger.logError(
-      "app/services/matchers/tjmorris/model1.js",
-      "matches()",
-      err,
-    );
+    logger.logError(filenameForLogging, "matches()", err);
     return matcher_result.GENERIC_ERROR;
   }
 }
