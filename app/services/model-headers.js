@@ -286,6 +286,19 @@ const headers = {
       regex: /^RMS-GB-000174-\d{3}$/,
     },
   },
+  ICELAND1: {
+    establishmentNumber: {
+      regex: /^KingdomRMS_ESTABLISHMENT_NORMS-GB-000040-/,
+      value: "RMS-GB-000040",
+    },
+    headers: {
+      description: "Part Description",
+      commodity_code: "Tariff Code",
+      number_of_packages: "Unit Qty",
+      total_net_weight_kg: "Net Weight (KG)",
+    },
+    modelId: "iceland-requireddataonly-stringsintsandnumbers",
+  },
 };
 
 module.exports = headers;

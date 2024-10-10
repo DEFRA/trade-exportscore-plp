@@ -3,24 +3,26 @@ const parser_model = require("./parser-model");
 const combine_parser = require("./parser-combine");
 const json_file = require("../utilities/json-file");
 const file_extension = require("../utilities/file-extension");
-const { parsersExcel } = require("./model-parsers");
+const { parsersExcel, parsersPdf } = require("./model-parsers");
 const logger = require("../utilities/logger");
 const logParserServicePath = "app/services/parser-service.js";
 const logParserServiceFunction = "findParser()";
+const config = require("../config");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
 
-function findParser(packingList, filename) {
+async function findParser(packingList, filename) {
   try {
     let parsedPackingList = failedParser();
     let parserFound = false;
 
-    // Sanitised packing list (i.e. emove trailing spaces and empty cells)
-    const packingListJson = JSON.stringify(packingList);
-    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
-    const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
     // Test for Excel spreadsheets
     if (file_extension.isExcel(filename)) {
+      // Sanitised packing list (i.e. emove trailing spaces and empty cells)
+      const packingListJson = JSON.stringify(packingList);
+      const sanitisedPackingListJson = json_file.sanitise(packingListJson);
+      const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+
       Object.keys(parsersExcel).forEach((key) => {
         if (
           parsersExcel[key].matches(sanitisedPackingList, filename) ===
@@ -38,6 +40,22 @@ function findParser(packingList, filename) {
         logger.log_info(
           logParserServicePath,
           logParserServiceFunction,
+          `Failed to parse packing list with filename: ${filename}`,
+        );
+      }
+
+      // Test for PDF spreadsheets
+    } else if (file_extension.isPdf(filename) && config.isDiEnabled) {
+      parsedPackingList = await matchAndParsePdf(
+        packingList,
+        filename,
+        parsedPackingList,
+      );
+
+      if (parsedPackingList.parserModel === matcher_result.NOMATCH) {
+        logger.log_info(
+          "app/services/parser-service.js",
+          "findParser()",
           `Failed to parse packing list with filename: ${filename}`,
         );
       }
@@ -61,6 +79,7 @@ function findParser(packingList, filename) {
     return parsedPackingList;
   } catch (err) {
     logger.log_error(logParserServicePath, logParserServiceFunction, err);
+    return {};
   }
 }
 
@@ -91,6 +110,7 @@ function checkRequiredData(packingList) {
     hasRemos
   );
 }
+
 function checkType(packingList) {
   for (const x of packingList) {
     if (isNaN(Number(x.number_of_packages))) {
@@ -102,6 +122,20 @@ function checkType(packingList) {
   }
   return packingList;
 }
+
+async function matchAndParsePdf(packingList, filename, parsedPackingList) {
+  for (const key in parsersPdf) {
+    if (parsersPdf.hasOwnProperty(key)) {
+      const result = await parsersPdf[key].matches(packingList, filename);
+
+      if (result.isMatched === matcher_result.CORRECT) {
+        parsedPackingList = parsersPdf[key].parse(result.document, filename);
+      }
+    }
+  }
+  return parsedPackingList;
+}
+
 module.exports = {
   failedParser,
   findParser,

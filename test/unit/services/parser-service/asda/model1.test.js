@@ -4,16 +4,16 @@ const parser_model = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/asda/model1");
 
 describe("matchesAsdaModel1", () => {
-  test("matches valid Asda Model 1 file, calls parser and returns all_required_fields_present as true", () => {
+  test("matches valid Asda Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
     const filename = "packinglist-asda-model1.xls";
-    const result = parserService.findParser(model.validModel, filename);
+    const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(test_results.validTestResult);
   });
 
-  test("matches valid Asda Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
+  test("matches valid Asda Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
     const filename = "packinglist-asda-model1.xls";
-    const result = parserService.findParser(
+    const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
     );
@@ -21,7 +21,7 @@ describe("matchesAsdaModel1", () => {
     expect(result).toEqual(test_results.invalidTestResult_MissingCells);
   });
 
-  test("wrong file extension", () => {
+  test("wrong file extension", async () => {
     const filename = "packinglist.pdf";
     const invalidTestResult_NoMatch = {
       business_checks: {
@@ -31,7 +31,7 @@ describe("matchesAsdaModel1", () => {
       registration_approval_number: null,
       parserModel: parser_model.NOMATCH,
     };
-    const result = parserService.findParser(model.validModel, filename);
+    const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(invalidTestResult_NoMatch);
   });

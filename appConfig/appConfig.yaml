@@ -44,3 +44,9 @@
   type: "keyvault"
 - key: TP_QUEUE_ADDRESS
   value: "defra.trade.plp.parsed"
+- key: FORM_RECOGNIZER_API_KEY
+  value: "{{servicename}}-FORM-RECOGNIZER-API-KEY"
+  type: "keyvault"
+- key: IS_DOCUMENT_INTLELLIGENCE_ENABLED
+  value: "{{servicename}}-IS-DOCUMENT-INTLELLIGENCE-ENABLED"
+  type: "keyvault"

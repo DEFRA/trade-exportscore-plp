@@ -26,7 +26,7 @@ module.exports = {
       logger.log_error("app/routes/non-ai.js", "get() > excelToJson", err);
     }
 
-    const packingList = findParser(result, filename);
+    const packingList = await findParser(result, filename);
     if (packingList.parserModel !== parser_model.NOMATCH) {
       const randomInt = getRandomInt();
       await createPackingList(packingList, randomInt);

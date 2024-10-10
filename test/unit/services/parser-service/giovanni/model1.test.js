@@ -6,14 +6,14 @@ const test_results = require("../../../test-data-and-results/results/giovanni/mo
 const filename = "packinglist-giovanni-model1.xlsx";
 
 describe("matchesGiovanniModel1", () => {
-  test("matches valid Giovanni Model 1 file, calls parser and returns all_required_fields_present as true", () => {
-    const result = parserService.findParser(model.validModel, filename);
+  test("matches valid Giovanni Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
+    const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(test_results.validTestResult);
   });
 
-  test("matches valid Giovanni Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", () => {
-    const result = parserService.findParser(
+  test("matches valid Giovanni Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+    const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
     );
@@ -21,7 +21,7 @@ describe("matchesGiovanniModel1", () => {
     expect(result).toEqual(test_results.invalidTestResult_MissingCells);
   });
 
-  test("wrong file extension", () => {
+  test("wrong file extension", async () => {
     const filename = "packinglist.pdf";
     const invalidTestResult_NoMatch = {
       business_checks: {
@@ -32,7 +32,7 @@ describe("matchesGiovanniModel1", () => {
       parserModel: parser_model.NOMATCH,
     };
 
-    const result = parserService.findParser(model.validModel, filename);
+    const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(invalidTestResult_NoMatch);
   });
