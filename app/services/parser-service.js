@@ -46,7 +46,11 @@ async function findParser(packingList, filename) {
 
       // Test for PDF spreadsheets
     } else if (file_extension.isPdf(filename) && config.isDiEnabled) {
-      parsedPackingList = await matchAndParsePdf(packingList, filename, parsedPackingList);
+      parsedPackingList = await matchAndParsePdf(
+        packingList,
+        filename,
+        parsedPackingList,
+      );
 
       if (parsedPackingList.parserModel === matcher_result.NOMATCH) {
         logger.log_info(
@@ -125,10 +129,7 @@ async function matchAndParsePdf(packingList, filename, parsedPackingList) {
       const result = await parsersPdf[key].matches(packingList, filename);
 
       if (result.isMatched === matcher_result.CORRECT) {
-        parsedPackingList = parsersPdf[key].parse(
-          result.document,
-          filename,
-        );
+        parsedPackingList = parsersPdf[key].parse(result.document, filename);
       }
     }
   }
