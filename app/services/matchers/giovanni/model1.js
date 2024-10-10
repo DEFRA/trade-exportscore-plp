@@ -1,4 +1,4 @@
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -17,13 +17,13 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     for (const sheet of sheets) {
       // check for correct establishment number
       if (!regex.test(regex_expression, packingList[sheet])) {
-        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
       result = matchesHeader(headers.GIOVANNI1.regex, packingList[sheet]);
     }
-    if (result === matcher_result.CORRECT) {
+    if (result === matcherResult.CORRECT) {
       logger.log_info(
         filenameForLogging,
         "matches()",
@@ -33,7 +33,7 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return matcher_result.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

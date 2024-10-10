@@ -1,5 +1,5 @@
 const matcher = require("../../../../../app/services/matchers/tjmorris/model1");
-const matcher_result = require("../../../../../app/services/matcher-result");
+const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/tjmorris/model1");
 
 describe("matchesTjmorris", () => {
@@ -9,7 +9,7 @@ describe("matchesTjmorris", () => {
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcher_result.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.GENERIC_ERROR);
   });
 
   test("returns wrong establishment number for missing establishment number", () => {
@@ -25,14 +25,14 @@ describe("matchesTjmorris", () => {
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
+    expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("returns wrong establishment number for missing establishment numbers of multiple sheets", () => {
     const filename = "packinglist.xls";
     const result = matcher.matches(model.wrongEstablishmentMultiple, filename);
 
-    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
+    expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("returns wrong header for incorrect header values", () => {
@@ -74,7 +74,7 @@ describe("matchesTjmorris", () => {
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcher_result.WRONG_HEADER);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
   test("returns wrong header for invalid header values", () => {
@@ -94,14 +94,14 @@ describe("matchesTjmorris", () => {
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcher_result.WRONG_HEADER);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
   test("return wrong header for incorrect header values of multiple sheets", () => {
     const filename = "packinglist.xls";
     const result = matcher.matches(model.incorrectHeaderMultiple, filename);
 
-    expect(result).toBe(matcher_result.WRONG_HEADER);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
   test("returns Correct", () => {
@@ -143,6 +143,6 @@ describe("matchesTjmorris", () => {
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcher_result.CORRECT);
+    expect(result).toBe(matcherResult.CORRECT);
   });
 });

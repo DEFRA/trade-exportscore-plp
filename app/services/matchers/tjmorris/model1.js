@@ -1,4 +1,4 @@
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const headers = require("../../model-headers");
@@ -22,7 +22,7 @@ function matches(packingList, filename) {
           packingList[sheet],
         )
       ) {
-        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
@@ -42,7 +42,7 @@ function matches(packingList, filename) {
         headerRow === -1 ||
         !isHeaderMatching(packingList[sheet], header, headerRow)
       ) {
-        return matcher_result.WRONG_HEADER;
+        return matcherResult.WRONG_HEADER;
       }
     }
     logger.log_info(
@@ -50,10 +50,10 @@ function matches(packingList, filename) {
       "matches()",
       `Packing list matches tjmorris Model 1 with filename: ${filename}`,
     );
-    return matcher_result.CORRECT;
+    return matcherResult.CORRECT;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return matcher_result.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 
