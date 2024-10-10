@@ -1,4 +1,4 @@
-const Matcher = require("../../../../../app/services/matchers/cds/model1");
+const matcher = require("../../../../../app/services/matchers/cds/model1");
 const matcher_result = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/cds/model1");
 
@@ -6,7 +6,7 @@ describe("matchesCdsModel1", () => {
   test("returns Correct", () => {
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(model.validModel, filename);
+    const result = matcher.matches(model.validModel, filename);
 
     expect(result).toBe(matcher_result.CORRECT);
   });
@@ -15,7 +15,7 @@ describe("matchesCdsModel1", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = matcher.matches(packingListJson, filename);
 
     expect(result).toBe(matcher_result.GENERIC_ERROR);
   });
@@ -31,7 +31,14 @@ describe("matchesCdsModel1", () => {
     };
     const filename = "packinglist.xlsx";
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = matcher.matches(packingListJson, filename);
+
+    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
+  });
+
+  test("returns wrong establishment number for missing establishment numbers of multiple sheets", () => {
+    const filename = "packinglist.xlsx";
+    const result = matcher.matches(model.wrongEstablishmentMultiple, filename);
 
     expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
   });
@@ -51,7 +58,13 @@ describe("matchesCdsModel1", () => {
       ],
     };
 
-    const result = Matcher.matches(packingListJson, filename);
+    const result = matcher.matches(packingListJson, filename);
+
+    expect(result).toBe(matcher_result.WRONG_HEADER);
+  });
+  test("return wrong header for incorrect header values of multiple sheets", () => {
+    const filename = "packinglist.xlsx";
+    const result = matcher.matches(model.incorrectHeaderMultiple, filename);
 
     expect(result).toBe(matcher_result.WRONG_HEADER);
   });

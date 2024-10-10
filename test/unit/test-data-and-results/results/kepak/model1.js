@@ -27,6 +27,31 @@ module.exports = {
     registration_approval_number: "RMS-GB-000280",
     parserModel: parser_model.KEPAK1,
   },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: "1602495000",
+        description: "FS MINI SAUSAGE BAP",
+        nature_of_products: null,
+        number_of_packages: 3,
+        total_net_weight_kg: 2.16,
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "1602495000",
+        description: "RS MEATBALL SUB",
+        nature_of_products: null,
+        number_of_packages: 3,
+        total_net_weight_kg: 1.716,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parser_model.KEPAK1,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

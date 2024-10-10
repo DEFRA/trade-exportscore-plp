@@ -26,6 +26,31 @@ module.exports = {
     registration_approval_number: "RMS-GB-000009-001",
     parserModel: parser_model.COOP1,
   },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: "0709601000",
+        description: "Co-op Red Peppers Each",
+        nature_of_products: null,
+        number_of_packages: 12,
+        total_net_weight_kg: 12,
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "0707000599",
+        description: "Co-op Whole Cucumber Each #",
+        nature_of_products: null,
+        number_of_packages: 10,
+        total_net_weight_kg: 58.8,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000009-001",
+    parserModel: parser_model.COOP1,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

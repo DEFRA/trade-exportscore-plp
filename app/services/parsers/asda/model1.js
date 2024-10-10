@@ -7,17 +7,23 @@ const logger = require("../../../utilities/logger");
 
 function parse(packingListJson) {
   try {
+    const sheets = Object.keys(packingListJson);
+    let packingListContents = [];
+    let packingListContentsTemp = [];
     const establishmentNumber = regex.findMatch(
       headers.ASDA1.establishmentNumber.regex,
-      packingListJson,
+      packingListJson[sheets[0]],
     );
 
-    const packingListContents = mapParser(
-      packingListJson,
-      0,
-      1,
-      headers.ASDA1.headers,
-    );
+    for (const sheet of sheets) {
+      packingListContentsTemp = mapParser(
+        packingListJson[sheet],
+        0,
+        1,
+        headers.ASDA1.headers,
+      );
+      packingListContents = packingListContents.concat(packingListContentsTemp);
+    }
 
     return combine_parser.combine(
       establishmentNumber,

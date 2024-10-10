@@ -5,13 +5,17 @@ const test_results = require("../../../test-data-and-results/results/tescos/mode
 
 describe("parseTescoModel2", () => {
   test("parses populated json", () => {
-    const result = parser.parse(model.validModel.Sheet2);
+    const result = parser.parse(model.validModel);
 
     expect(result).toEqual(test_results.validTestResult);
   });
 
+  test("parses multiple sheets", () => {
+    const result = parser.parse(model.validModelMultipleSheets);
+    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+  });
   test("parses empty json", () => {
-    const result = parser.parse(model.emptyModel.Sheet2);
+    const result = parser.parse(model.emptyModel);
 
     expect(result).toEqual(test_results.emptyTestResult);
   });

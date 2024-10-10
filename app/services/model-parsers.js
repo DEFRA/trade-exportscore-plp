@@ -41,44 +41,39 @@ const parsersExcel = {
   ASDA1: {
     matches: (packingList, filename) =>
       asdaMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      asdaParser.parse(packingList.PackingList_Extract, filename),
+    parse: (packingList, filename) => asdaParser.parse(packingList, filename),
   },
   ASDA2: {
     matches: (packingList, filename) =>
       asdaMatcher2.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      asdaParser2.parse(packingList.Sheet1, filename),
+    parse: (packingList, filename) => asdaParser2.parse(packingList, filename),
   },
   BANDM1: {
     matches: (packingList, filename) =>
       bandMMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      bandMParser.parse(packingList.Sheet1, filename),
+    parse: (packingList, filename) => bandMParser.parse(packingList, filename),
   },
   BUFFALOAD1: {
     matches: (packingList, filename) =>
       buffaloadMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
-      buffaloadParser.parse(packingList.Tabelle1, filename),
+      buffaloadParser.parse(packingList, filename),
   },
   CDS1: {
     matches: (packingList, filename) =>
       cdsMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      cdsParser.parse(packingList[Object.keys(packingList)[0]], filename),
+    parse: (packingList, filename) => cdsParser.parse(packingList, filename),
   },
   COOP1: {
     matches: (packingList, filename) =>
       coopMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      coopParser.parse(packingList["Input Packing Sheet"], filename),
+    parse: (packingList, filename) => coopParser.parse(packingList, filename),
   },
   DAVENPORT1: {
     matches: (packingList, filename) =>
       davenportMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
-      davenportParser.parse(packingList[Object.keys(packingList)[0]], filename),
+      davenportParser.parse(packingList, filename),
   },
   FOWLERWELCH1: {
     matches: (packingList, filename) =>
@@ -90,55 +85,51 @@ const parsersExcel = {
     matches: (packingList, filename) =>
       giovanniMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
-      giovanniParser.parse(packingList[Object.keys(packingList)[0]], filename),
+      giovanniParser.parse(packingList, filename),
   },
   KEPAK1: {
     matches: (packingList, filename) =>
       kepakMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      kepakParser.parse(packingList[Object.keys(packingList)[0]], filename),
+    parse: (packingList, filename) => kepakParser.parse(packingList, filename),
   },
   NISA1: {
     matches: (packingList, filename) =>
       nisaMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      nisaParser.parse(packingList[Object.keys(packingList)[0]], filename),
+    parse: (packingList, filename) => nisaParser.parse(packingList, filename),
   },
   NISA2: {
     matches: (packingList, filename) =>
       nisaMatcher2.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      nisaParser2.parse(packingList[Object.keys(packingList)[0]], filename),
+    parse: (packingList, filename) => nisaParser2.parse(packingList, filename),
   },
   NUTRICIA1: {
     matches: (packingList, filename) =>
       nutriciaMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
-      nutriciaParser.parse(packingList[Object.keys(packingList)[0]], filename),
+      nutriciaParser.parse(packingList, filename),
   },
   SAINSBURYS1: {
     matches: (packingList, filename) =>
       sainsburysMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
-      sainsburysParser.parse(packingList.Sheet1, filename),
+      sainsburysParser.parse(packingList, filename),
   },
   TESCO1: {
     matches: (packingList, filename) =>
       tescosMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      tescosParser.parse(packingList["Input Data Sheet"], filename),
+    parse: (packingList, filename) => tescosParser.parse(packingList, filename),
   },
   TESCO2: {
     matches: (packingList, filename) =>
       tescosMatcher2.matches(packingList, filename),
     parse: (packingList, filename) =>
-      tescosParser2.parse(packingList.Sheet2, filename),
+      tescosParser2.parse(packingList, filename),
   },
   TJMORRIS1: {
     matches: (packingList, filename) =>
       tjMorrisMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
-      tjMorrisParser.parse(packingList.Sheet1, filename),
+      tjMorrisParser.parse(packingList, filename),
   },
   WARRENS1: {
     matches: (packingList, filename) =>

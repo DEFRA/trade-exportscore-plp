@@ -6,18 +6,23 @@ const logger = require("../../../utilities/logger");
 
 function matches(packingList, filename) {
   try {
-    const sheet = Object.keys(packingList)[0];
-
-    // check for correct establishment number
-    if (
-      !regex.test(headers.ASDA2.establishmentNumber.regex, packingList[sheet])
-    ) {
-      return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+    let result;
+    const sheets = Object.keys(packingList);
+    if (sheets.length === 0) {
+      throw new Error("generic error");
     }
 
-    // check for header values
-    const result = matchesHeader(headers.ASDA2.regex, packingList[sheet]);
+    for (const sheet of sheets) {
+      // check for correct establishment number
+      if (
+        !regex.test(headers.ASDA2.establishmentNumber.regex, packingList[sheet])
+      ) {
+        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+      }
 
+      // check for header values
+      result = matchesHeader(headers.ASDA2.regex, packingList[sheet]);
+    }
     if (result === matcher_result.CORRECT) {
       logger.log_info(
         "app/services/matchers/asda/model2.js",

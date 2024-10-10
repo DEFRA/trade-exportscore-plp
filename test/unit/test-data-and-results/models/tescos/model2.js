@@ -45,6 +45,70 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheets: {
+    Sheet1: [
+      {
+        A: "Item",
+        B: "Product code",
+        C: "Commodity code",
+        D: "Online Check",
+        E: "Meursing code",
+        F: "Description of goods",
+        G: "Country of Origin",
+        H: "No. of pkgs",
+        I: "Type of pkgs",
+        J: "Total Gross Weight",
+        K: "Total Net Weight",
+        L: "Total Line Value",
+        M: "GB Establishment RMS Number",
+      },
+      {},
+      {
+        A: "1",
+        B: "SKU1944",
+        C: "709200010",
+        F: "TS Asp Bundles 180g",
+        G: "Peru",
+        H: "144",
+        I: "Tray",
+        J: "27.216",
+        K: "25.92",
+        L: "72",
+        M: "RMS-GB-000015-009",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "Item",
+        B: "Product code",
+        C: "Commodity code",
+        D: "Online Check",
+        E: "Meursing code",
+        F: "Description of goods",
+        G: "Country of Origin",
+        H: "No. of pkgs",
+        I: "Type of pkgs",
+        J: "Total Gross Weight",
+        K: "Total Net Weight",
+        L: "Total Line Value",
+        M: "GB Establishment RMS Number",
+      },
+      {},
+      {
+        A: "2",
+        B: "81827872",
+        C: "709200010",
+        F: "TS Asp Tips Exp 125g",
+        G: "Peru",
+        H: "90",
+        I: "Tray",
+        J: "11.813",
+        K: "11.25",
+        L: "45",
+        M: "RMS-GB-000015-009",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     Sheet2: [
       {
@@ -87,6 +151,46 @@ module.exports = {
         J: "32",
         K: "16.144",
         L: "64.32",
+        M: "RMS-GB-000015-009",
+      },
+    ],
+  },
+  wrongEstablishmentMultiple: {
+    Sheet1: [
+      {},
+      {},
+      {
+        M: "RMS-GB-000015-009",
+      },
+    ],
+    Sheet2: [
+      {},
+      {},
+      {
+        M: "INCORRECT",
+      },
+    ],
+  },
+  incorrectHeaderMultiple: {
+    Sheet1: [
+      {
+        F: "Description of goods",
+        H: "No. of pkgs",
+        K: "Total Net Weight",
+      },
+      {},
+      {
+        M: "RMS-GB-000015-009",
+      },
+    ],
+    Sheet2: [
+      {
+        F: "NOT",
+        H: "CORRECT",
+        K: "HEADER",
+      },
+      {},
+      {
         M: "RMS-GB-000015-009",
       },
     ],

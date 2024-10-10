@@ -26,6 +26,31 @@ module.exports = {
     registration_approval_number: "RMS-GB-000010-001",
     parserModel: parser_model.TJMORRIS1,
   },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: "0408192000",
+        description: "28 TUNA CRUNCH TIGER ROLL",
+        nature_of_products: "SANDWICHES",
+        number_of_packages: "2",
+        total_net_weight_kg: "0.26",
+        type_of_treatment: "CHILLED",
+      },
+      {
+        commodity_code: "0210191000",
+        description: "THICK CUT UNSMOKED BACON 20RAS",
+        nature_of_products: "MEATS AND POULTRY",
+        number_of_packages: "1",
+        total_net_weight_kg: "10",
+        type_of_treatment: "CHILLED",
+      },
+    ],
+    registration_approval_number: "RMS-GB-000010-001",
+    parserModel: parser_model.TJMORRIS1,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

@@ -6,16 +6,21 @@ const logger = require("../../../utilities/logger");
 
 function matchesModel(packingList, filename, regex_expression, trader) {
   try {
-    const sheet = Object.keys(packingList)[0];
-
-    // check for correct establishment number
-    if (!regex.test(regex_expression, packingList[sheet])) {
-      return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+    let result;
+    const sheets = Object.keys(packingList);
+    if (sheets.length === 0) {
+      throw new Error("generic error");
     }
 
-    // check for header values
-    const result = matchesHeader(headers.GIOVANNI1.regex, packingList[sheet]);
+    for (const sheet of sheets) {
+      // check for correct establishment number
+      if (!regex.test(regex_expression, packingList[sheet])) {
+        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+      }
 
+      // check for header values
+      result = matchesHeader(headers.GIOVANNI1.regex, packingList[sheet]);
+    }
     if (result === matcher_result.CORRECT) {
       logger.log_info(
         "app/services/matchers/giovanni/model1.js",

@@ -26,6 +26,47 @@ module.exports = {
     registration_approval_number: "RMS-GB-000015-006",
     parserModel: parser_model.ASDA1,
   },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: null,
+        description: "A BESSIES APPLE PIE",
+        nature_of_products: "DESSERTS & ICE CREAM",
+        number_of_packages: 1,
+        total_net_weight_kg: 4.2,
+        type_of_treatment: "FROZEN",
+      },
+      {
+        commodity_code: null,
+        description: "A BESSIES ROASTS",
+        nature_of_products: "CHIPS/POTATOES & VEG",
+        number_of_packages: 1,
+        total_net_weight_kg: 10.3,
+        type_of_treatment: "FROZEN",
+      },
+      {
+        commodity_code: null,
+        description: "ASDA BROOKIE BITES",
+        nature_of_products: "CAKES IS",
+        number_of_packages: 2,
+        total_net_weight_kg: 4.32,
+        type_of_treatment: "FRESH",
+      },
+      {
+        commodity_code: null,
+        description: "ASDA BROWNIE CAKE",
+        nature_of_products: "CAKES/CHILLED BI",
+        number_of_packages: 1,
+        total_net_weight_kg: 2.68,
+        type_of_treatment: "FRESH",
+      },
+    ],
+    registration_approval_number: "RMS-GB-000015-005",
+    parserModel: parser_model.ASDA1,
+  },
   validParserResult: {
     business_checks: {
       all_required_fields_present: true,

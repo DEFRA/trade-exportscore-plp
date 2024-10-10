@@ -31,6 +31,13 @@ describe("matchesDavenportModel1", () => {
     expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
   });
 
+  test("returns wrong establishment number for missing establishment numbers of multiple sheets", () => {
+    const filename = "packinglist.xlsx";
+    const result = matcher.matches(model.wrongEstablishmentMultiple, filename);
+
+    expect(result).toBe(matcher_result.WRONG_ESTABLISHMENT_NUMBER);
+  });
+
   test("return wrong header for missing header values", () => {
     const filename = "packinglist.xlsx";
 
@@ -46,6 +53,13 @@ describe("matchesDavenportModel1", () => {
       model.invalidModel_IncorrectHeaders,
       filename,
     );
+
+    expect(result).toBe(matcher_result.WRONG_HEADER);
+  });
+
+  test("return wrong header for incorrect header values of multiple sheets", () => {
+    const filename = "packinglist.xlsx";
+    const result = matcher.matches(model.incorrectHeaderMultiple, filename);
 
     expect(result).toBe(matcher_result.WRONG_HEADER);
   });

@@ -29,6 +29,48 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheets: {
+    Sheet1: [
+      {
+        A: "NIRMS NUMBER",
+      },
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "DESCRIPTION",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+      {
+        C: "RANA CHICKEN&BACON TORT",
+        G: 21,
+        H: 31.5,
+        E: "1902209990",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "NIRMS NUMBER",
+      },
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "DESCRIPTION",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+      {
+        C: "RANA HAM&CHEESE TORT",
+        G: 10,
+        H: 15,
+        E: "1902209990",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     RANA: [
       {
@@ -125,6 +167,18 @@ module.exports = {
       },
     ],
   },
+  wrongEstablishmentMultiple: {
+    sheet1: [
+      {
+        A: "RMS-GB-000153",
+      },
+    ],
+    sheet2: [
+      {
+        A: "INCORRECT",
+      },
+    ],
+  },
   incorrectHeader: {
     RANA: [
       {
@@ -132,7 +186,31 @@ module.exports = {
       },
       {
         C: "DESCRIPTION",
-        G: "CORRECT",
+        G: "INCORRECT",
+        H: "HEADER",
+        E: "Commodity Code",
+      },
+    ],
+  },
+  incorrectHeaderMultiple: {
+    sheet1: [
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "DESCRIPTION",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+    ],
+    sheet2: [
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "DESCRIPTION",
+        G: "INCORRECT",
         H: "HEADER",
         E: "Commodity Code",
       },

@@ -5,13 +5,17 @@ const test_results = require("../../../test-data-and-results/results/buffaload-l
 
 describe("parsesBuffaloadLogisticsModel1", () => {
   test("parses valid json", () => {
-    const result = parser.parse(model.validModel.Tabelle1);
+    const result = parser.parse(model.validModel);
 
     expect(result).toEqual(test_results.validTestResult);
   });
+  test("parses multiple sheets", () => {
+    const result = parser.parse(model.validModelMultipleSheets);
+    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+  });
 
   test("parses empty json", () => {
-    const result = parser.parse(model.emptyModel.Tabelle1);
+    const result = parser.parse(model.emptyModel);
 
     expect(result).toEqual(test_results.emptyModelResult);
   });

@@ -5,13 +5,18 @@ const test_results = require("../../../test-data-and-results/results/nutricia/mo
 
 describe("parseNutricaModel1", () => {
   test("parses json", () => {
-    const result = parser.parse(model.validModel.DANONE);
+    const result = parser.parse(model.validModel);
 
     expect(result).toEqual(test_results.validTestResult);
   });
 
+  test("parses multiple sheets", () => {
+    const result = parser.parse(model.validModelMultipleSheets);
+    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+  });
+
   test("parses empty json", () => {
-    const result = parser.parse(model.emptyModel.DANONE);
+    const result = parser.parse(model.emptyModel);
 
     expect(result).toEqual(test_results.emptyModelResult);
   });

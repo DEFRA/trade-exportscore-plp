@@ -26,6 +26,30 @@ module.exports = {
     business_checks: { all_required_fields_present: true },
     parserModel: parser_model.BUFFALOAD1,
   },
+  validTestResultForMultipleSheets: {
+    registration_approval_number: "RMS-GB-000098-001",
+    items: [
+      {
+        description:
+          "60008347 - Take-Out Club Classic Crust Kickin' Meat Feast",
+        nature_of_products: null,
+        type_of_treatment: "Chilled",
+        commodity_code: "1905908000",
+        number_of_packages: 6,
+        total_net_weight_kg: 3.552,
+      },
+      {
+        description: "51283907 - PizzaExpress 9 Classic American *4",
+        nature_of_products: null,
+        type_of_treatment: "Chilled",
+        commodity_code: "1905908000",
+        number_of_packages: 1,
+        total_net_weight_kg: 3.08,
+      },
+    ],
+    business_checks: { all_required_fields_present: true },
+    parserModel: parser_model.BUFFALOAD1,
+  },
   emptyModelResult: {
     registration_approval_number: null,
     items: [
