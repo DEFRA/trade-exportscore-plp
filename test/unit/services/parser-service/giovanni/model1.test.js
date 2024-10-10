@@ -1,6 +1,6 @@
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
-const parser_model = require("../../../../../app/services/parser-model");
+const parserModel = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/giovanni/model1");
 
 const filename = "packinglist-giovanni-model1.xlsx";
@@ -29,7 +29,7 @@ describe("matchesGiovanniModel1", () => {
       },
       items: [],
       registration_approval_number: null,
-      parserModel: parser_model.NOMATCH,
+      parserModel: parserModel.NOMATCH,
     };
 
     const result = parserService.findParser(model.validModel, filename);

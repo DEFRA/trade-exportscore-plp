@@ -1,4 +1,4 @@
-const parser_model = require("../../../../../app/services/parser-model");
+const parserModel = require("../../../../../app/services/parser-model");
 
 module.exports = {
   validModel: {
@@ -345,7 +345,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000174-002",
-    parserModel: parser_model.WARRENS1,
+    parserModel: parserModel.WARRENS1,
   },
   validTestResultMultiple: {
     business_checks: {
@@ -386,7 +386,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000174-002",
-    parserModel: parser_model.WARRENS1,
+    parserModel: parserModel.WARRENS1,
   },
   invalidTestResult_MissingCells: {
     business_checks: {
@@ -411,6 +411,6 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000174-002",
-    parserModel: parser_model.WARRENS1,
+    parserModel: parserModel.WARRENS1,
   },
 };

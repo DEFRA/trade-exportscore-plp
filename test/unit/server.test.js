@@ -4,7 +4,7 @@ const logger = require("../../app/utilities/logger");
 const { start } = require("../../app/messaging");
 
 const consoleErrorSpy = jest
-  .spyOn(logger, "log_error")
+  .spyOn(logger, "logError")
   .mockImplementation(() => {});
 
 jest.mock("../../app/services/database-service", () => ({

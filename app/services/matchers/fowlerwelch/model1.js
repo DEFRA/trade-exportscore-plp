@@ -38,7 +38,7 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     );
     return matcher_result.CORRECT;
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/matchers/fowlerwelch/model1.js",
       "matches()",
       err,

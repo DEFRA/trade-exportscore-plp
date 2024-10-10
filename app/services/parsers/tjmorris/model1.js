@@ -1,5 +1,5 @@
 const combine_parser = require("../../parser-combine");
-const parser_model = require("../../parser-model");
+const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
@@ -30,10 +30,10 @@ function parse(packingListJson) {
       establishmentNumber,
       packingListContents,
       true,
-      parser_model.TJMORRIS1,
+      parserModel.TJMORRIS1,
     );
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/parsers/tjmorris/model1.js",
       "matches()",
       err,

@@ -11,7 +11,7 @@ module.exports = {
         await sequelize.authenticate();
         return h.response("ok").code(StatusCodes.OK);
       } catch (err) {
-        logger.log_error(
+        logger.logError(
           "app/routes/healthy.js",
           "get()",
           `Error running healthy check: ${err}`,

@@ -18,7 +18,7 @@ jest.mock("adp-messaging", () => {
 jest.mock("../../../app/messaging/process-plp-message", () => jest.fn());
 
 const console_error_spy = jest
-  .spyOn(logger, "log_error")
+  .spyOn(logger, "logError")
   .mockImplementation(() => {});
 const console_info_spy = jest
   .spyOn(logger, "log_info")

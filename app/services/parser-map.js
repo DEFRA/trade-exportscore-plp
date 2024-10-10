@@ -35,7 +35,7 @@ function mapParser(
     number_of_packages: col[headerCols.number_of_packages] ?? null,
     total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
   }));
-  
+
   return packingListContents;
 }
 

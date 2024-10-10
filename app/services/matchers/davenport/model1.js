@@ -34,7 +34,7 @@ function matches(packingList, filename) {
     }
     return result;
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/matchers/davenport/model1.js",
       "matches()",
       err,

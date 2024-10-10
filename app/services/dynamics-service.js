@@ -30,7 +30,7 @@ async function bearerTokenRequest() {
     const json = await response.json();
     return json.access_token;
   } catch (err) {
-    logger.log_error(logDynamicsService, "bearerTokenRequest()", err);
+    logger.logError(logDynamicsService, "bearerTokenRequest()", err);
     return err.message;
   }
 }
@@ -60,7 +60,7 @@ async function patchPackingListCheck(applicationId, isApproved) {
 
     return status;
   } catch (err) {
-    logger.log_error(logDynamicsService, "patchPackingListCheck()", err);
+    logger.logError(logDynamicsService, "patchPackingListCheck()", err);
     return err.message;
   }
 }

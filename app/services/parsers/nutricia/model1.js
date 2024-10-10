@@ -40,7 +40,7 @@ function parse(packingListJson) {
       parserModel.NUTRICIA1,
     );
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/parsers/nutricia/model1.js",
       "matches()",
       err,
