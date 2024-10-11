@@ -32,7 +32,8 @@ describe("matchesFowlerWelch", () => {
     expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("returns wrong header for incorrect header values of one sheet", () => {
+  test("returns 'Wrong Header' matcher result for incorrect header values of one sheet", () => {
+    const filename = "packinglist.xlsx";
     const result = matcher.matches(
       model.invalid_Model_IncorrectHeader,
       filename,
@@ -41,7 +42,8 @@ describe("matchesFowlerWelch", () => {
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
-  test("returns wrong header for incorrect header values of multiple sheets", () => {
+  test("returns 'Wrong Header' matcher result for incorrect header values of multiple sheets", () => {
+    const filename = "packinglist.xlsx";
     const result = matcher.matches(
       model.invalid_Model_IncorrectHeaderMultiple,
       filename,
@@ -62,7 +64,8 @@ describe("matchesFowlerWelch", () => {
     expect(result).toBe(matcherResult.CORRECT);
   });
 
-  test("if the key is equal to 'K' and doesn't include 'Net Weight' in its header, return wrong header", () => {
+  test("if the key is equal to 'K' and doesn't include 'Net Weight' in its header, return 'Wrong Header' matcher result", () => {
+    const filename = "packinglist.xlsx";
     const packingListJson = {
       "Cust Ord - Vitacress": [
         {
@@ -83,7 +86,8 @@ describe("matchesFowlerWelch", () => {
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
-  test("if the header doesn't start with the header[key], return wrong header", () => {
+  test("if the header doesn't start with the header[key], return 'Wrong Header' matcher result", () => {
+    const filename = "packinglist.xlsx";
     const packingListJson = {
       "Cust Ord - Vitacress": [
         {
@@ -104,7 +108,8 @@ describe("matchesFowlerWelch", () => {
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
-  test("if all reauired headers are missing, return wrong header", () => {
+  test("if all reauired headers are missing, return 'Wrong Header' matcher result", () => {
+    const filename = "packinglist.xlsx";
     const result = matcher.matches(model.invalidModel_MissingHeaders, filename);
 
     expect(result).toBe(matcherResult.WRONG_HEADER);
