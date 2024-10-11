@@ -2,6 +2,8 @@ const parserModel = require("../../parser-model");
 const { parseModel } = require("../fowlerwelch/model1");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function parse(packingListJson) {
   try {
@@ -11,7 +13,7 @@ function parse(packingListJson) {
       headers.WARRENS1.establishmentNumber.regex,
     );
   } catch (err) {
-    logger.logError("app/services/parsers/warrens/model1.js", "matches()", err);
+    logger.logError(filenameForLogging, "matches()", err);
   }
 }
 
