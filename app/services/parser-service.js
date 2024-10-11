@@ -1,5 +1,5 @@
 const matcher_result = require("./matcher-result");
-const parser_model = require("./parser-model");
+const parserModel = require("./parser-model");
 const combine_parser = require("./parser-combine");
 const json_file = require("../utilities/json-file");
 const file_extension = require("../utilities/file-extension");
@@ -18,7 +18,7 @@ async function findParser(packingList, filename) {
 
     // Test for Excel spreadsheets
     if (file_extension.isExcel(filename)) {
-      // Sanitised packing list (i.e. emove trailing spaces and empty cells)
+      // Sanitise packing list (i.e. emove trailing spaces and empty cells)
       const packingListJson = JSON.stringify(packingList);
       const sanitisedPackingListJson = json_file.sanitise(packingListJson);
       const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
@@ -67,7 +67,7 @@ async function findParser(packingList, filename) {
       );
     }
 
-    if (parsedPackingList.parserModel !== parser_model.NOMATCH) {
+    if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
       parsedPackingList.items = parsedPackingList.items.filter(
         (x) => !Object.values(x).every(isNullOrUndefined),
       );
@@ -78,13 +78,13 @@ async function findParser(packingList, filename) {
 
     return parsedPackingList;
   } catch (err) {
-    logger.log_error(logParserServicePath, logParserServiceFunction, err);
+    logger.logError(logParserServicePath, logParserServiceFunction, err);
     return {};
   }
 }
 
 function failedParser() {
-  return combine_parser.combine(null, [], false, parser_model.NOMATCH);
+  return combine_parser.combine(null, [], false, parserModel.NOMATCH);
 }
 
 function checkRequiredData(packingList) {

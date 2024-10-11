@@ -1,4 +1,4 @@
-const parser_model = require("../../../../../app/services/parser-model");
+const parserModel = require("../../../../../app/services/parser-model");
 
 module.exports = {
   validTestResult: {
@@ -24,7 +24,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000133",
-    parserModel: parser_model.NUTRICIA1,
+    parserModel: parserModel.NUTRICIA1,
   },
   validTestResultForMultipleSheets: {
     business_checks: {
@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000133",
-    parserModel: parser_model.NUTRICIA1,
+    parserModel: parserModel.NUTRICIA1,
   },
   invalidTestResult_MissingCells: {
     business_checks: {
@@ -74,7 +74,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000133",
-    parserModel: parser_model.NUTRICIA1,
+    parserModel: parserModel.NUTRICIA1,
   },
   emptyModelResult: {
     business_checks: {
@@ -91,6 +91,6 @@ module.exports = {
       },
     ],
     registration_approval_number: null,
-    parserModel: parser_model.NUTRICIA1,
+    parserModel: parserModel.NUTRICIA1,
   },
 };

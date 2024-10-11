@@ -1,14 +1,14 @@
 const joi = require("joi");
 const path = require("path");
-const mq_config = require("./mq-config");
-const db_config = require("./database-config");
-const dynamics_config = require("./dynamics-config");
+const messageQueueConfig = require("./mq-config");
+const dbConfig = require("./database-config");
+const dynamicsConfig = require("./dynamics-config");
 const { development, production, test } = require("./constants").environments;
-const schema_default_port = 3004;
+const schemaDefaultPort = 3004;
 
 // Define config schema
 const schema = joi.object({
-  port: joi.number().default(schema_default_port),
+  port: joi.number().default(schemaDefaultPort),
   env: joi.string().valid(development, test, production).default(development),
 });
 
@@ -35,10 +35,10 @@ const value = result.value;
 value.isDev = value.env === development;
 value.isProd = value.env === production;
 
-value.dbConfig = db_config;
-value.plpSubscription = mq_config.plpSubscription;
-value.tpQueue = mq_config.tpQueue;
-value.dynamicsConfig = dynamics_config;
+value.dbConfig = dbConfig;
+value.plpSubscription = messageQueueConfig.plpSubscription;
+value.tpQueue = messageQueueConfig.tpQueue;
+value.dynamicsConfig = dynamicsConfig;
 
 // AI values
 value.formRecognizerEndpoint = process.env.FORM_RECOGNIZER_ENDPOINT;

@@ -1,4 +1,4 @@
-const parser_model = require("../../parser-model");
+const parserModel = require("../../parser-model");
 const combine_parser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
@@ -31,10 +31,10 @@ function parse(packingListJson) {
       establishmentNumber,
       packingListContents,
       true,
-      parser_model.DAVENPORT1,
+      parserModel.DAVENPORT1,
     );
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/parsers/davenport/model1.js",
       "matches()",
       err,

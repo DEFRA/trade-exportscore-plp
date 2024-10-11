@@ -15,14 +15,14 @@ async function start() {
 
       logger.log_info(logIndexPath, "start()", "Ready to receive messages");
     } else {
-      logger.log_error(
+      logger.logError(
         logIndexPath,
         "start()",
         "Service Bus connection has not been initialised because 'config.plpSubscription.name' is missing.",
       );
     }
   } catch (err) {
-    logger.log_error(logIndexPath, "start()", err);
+    logger.logError(logIndexPath, "start()", err);
   }
 }
 
@@ -33,7 +33,7 @@ async function stop() {
       await plpReceiver.closeConnection();
     }
   } catch (err) {
-    logger.log_error(logIndexPath, "stop()", err);
+    logger.logError(logIndexPath, "stop()", err);
   }
 }
 

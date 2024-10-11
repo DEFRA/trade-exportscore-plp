@@ -3,7 +3,7 @@ const hapi = require("@hapi/hapi");
 const logger = require("../../app/utilities/logger");
 
 const consoleErrorSpy = jest
-  .spyOn(logger, "log_error")
+  .spyOn(logger, "logError")
   .mockImplementation(() => {});
 
 jest.mock("../../app/services/database-service", () => ({

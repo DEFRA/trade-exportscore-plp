@@ -1,6 +1,6 @@
 const parser = require("../../../../../app/services/parsers/warrens/model1");
 const logger = require("../../../../../app/utilities/logger");
-const parser_model = require("../../../../../app/services/parser-model");
+const parserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/warrens/model1");
 const test_results = require("../../../test-data-and-results/results/warrens/model1");
 
@@ -29,15 +29,15 @@ describe("parseWarrensModel1", () => {
     expect(result.items[0].number_of_packages).toBeNull();
     expect(result.items[0].total_net_weight_kg).toBeNull();
     expect(result.items[0].type_of_treatment).toBeNull();
-    expect(result.parserModel).toBe(parser_model.WARRENS1);
+    expect(result.parserModel).toBe(parserModel.WARRENS1);
   });
 
-  test("should call logger.log_error when an error is thrown", () => {
-    // Spy on the log_error method
-    const logErrorSpy = jest.spyOn(logger, "log_error");
+  test("should call logger.logError when an error is thrown", () => {
+    // Spy on the logError method
+    const logErrorSpy = jest.spyOn(logger, "logError");
     // Call the parse function with null data
     parser.parse(null);
-    // Check if logger.log_error has been called
+    // Check if logger.logError has been called
     expect(logErrorSpy).toHaveBeenCalled();
   });
 });

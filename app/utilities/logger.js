@@ -4,7 +4,7 @@
  * @param {string} method - The method name (and optional method call within the overall method) logging the error message.
  * @param {string} error - The actual error to log.
  */
-function log_error(file_name, method, error) {
+function logError(file_name, method, error) {
   console.error(
     `Whilst running the '${method}' method in '${file_name}', the PLP application encounterd: ${error}`,
   );
@@ -23,6 +23,6 @@ function log_info(file_name, method, info_message) {
 }
 
 module.exports = {
-  log_error,
+  logError,
   log_info,
 };

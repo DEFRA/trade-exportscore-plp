@@ -19,14 +19,14 @@ function setup() {
         "App Insights is running!",
       );
     } else {
-      logger.log_error(
+      logger.logError(
         logAppInsightsPath,
         "setup()",
         "App Insights is not running!",
       );
     }
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       logAppInsightsPath,
       "setup()",
       `App Insights Setup encountered: ${err}`,

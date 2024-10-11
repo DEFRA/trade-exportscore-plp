@@ -1,4 +1,4 @@
-const parser_model = require("../../../../../app/services/parser-model");
+const parserModel = require("../../../../../app/services/parser-model");
 
 module.exports = {
   validTestResult: {
@@ -24,7 +24,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
-    parserModel: parser_model.BANDM1,
+    parserModel: parserModel.BANDM1,
   },
   validTestResultForMultipleSheets: {
     business_checks: {
@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
-    parserModel: parser_model.BANDM1,
+    parserModel: parserModel.BANDM1,
   },
   invalidTestResult_MissingCells: {
     business_checks: {
@@ -74,7 +74,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
-    parserModel: parser_model.BANDM1,
+    parserModel: parserModel.BANDM1,
   },
   emptyTestResult: {
     business_checks: {
@@ -82,6 +82,6 @@ module.exports = {
     },
     items: [],
     registration_approval_number: null,
-    parserModel: parser_model.BANDM1,
+    parserModel: parserModel.BANDM1,
   },
 };

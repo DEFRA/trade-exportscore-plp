@@ -1,4 +1,4 @@
-const parser_model = require("../../../app/services/parser-model");
+const parserModel = require("../../../app/services/parser-model");
 const parserService = require("../../../app/services/parser-service");
 
 describe("failedParser", () => {
@@ -17,7 +17,7 @@ describe("failedParser", () => {
     expect(result.registration_approval_number).toBeNull();
     expect(result.items).toMatchObject([]);
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
-    expect(result.parserModel).toBe(parser_model.NOMATCH);
+    expect(result.parserModel).toBe(parserModel.NOMATCH);
   });
 });
 
@@ -255,7 +255,7 @@ describe("findParser", () => {
     const filename = "packinglist.xls";
 
     const result = await parserService.findParser(packingListJson, filename);
-    expect(result.parserModel).toBe(parser_model.NOMATCH);
+    expect(result.parserModel).toBe(parserModel.NOMATCH);
   });
 });
 

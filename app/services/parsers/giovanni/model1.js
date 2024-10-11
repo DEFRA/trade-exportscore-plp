@@ -39,7 +39,7 @@ function parse(packingListJson) {
       parserModel.GIOVANNI1,
     );
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/parsers/giovanni/model1.js",
       "matches()",
       err,
