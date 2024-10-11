@@ -1,4 +1,4 @@
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -22,12 +22,12 @@ function matches(packingList, filename) {
           packingList[sheet],
         )
       ) {
-        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
       // check for header values
       result = matchesHeader(headers.DAVENPORT1.regex, packingList[sheet]);
     }
-    if (result === matcher_result.CORRECT) {
+    if (result === matcherResult.CORRECT) {
       logger.log_info(
         filenameForLogging,
         "matches()",
@@ -37,7 +37,7 @@ function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return matcher_result.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

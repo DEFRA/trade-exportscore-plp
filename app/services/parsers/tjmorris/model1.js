@@ -1,4 +1,4 @@
-const combine_parser = require("../../parser-combine");
+const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
@@ -28,7 +28,7 @@ function parse(packingListJson) {
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
-    return combine_parser.combine(
+    return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,
