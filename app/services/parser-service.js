@@ -8,6 +8,7 @@ const logger = require("../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const logParserServiceFunction = "findParser()";
+const logParserServicePath = "app/services/parser-service.js";
 const config = require("../config");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
