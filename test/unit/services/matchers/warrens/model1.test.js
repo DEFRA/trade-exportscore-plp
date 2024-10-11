@@ -29,7 +29,7 @@ describe("matchesWarrens1", () => {
     expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("returns wrong header for incorrect header values of one sheet", () => {
+  test("returns 'Wrong Header' matcher result for incorrect header values of one sheet", () => {
     const filename = "packinglist.xlsx";
     const result = matcher.matches(
       model.invalid_Model_IncorrectHeader,
@@ -38,7 +38,7 @@ describe("matchesWarrens1", () => {
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
-  test("returns wrong header for incorrect header values of multiple sheets", () => {
+  test("returns 'Wrong Header' matcher result for incorrect header values of multiple sheets", () => {
     const filename = "packinglist.xlsx";
     const result = matcher.matches(
       model.invalid_Model_IncorrectHeaderMultiple,

@@ -59,7 +59,7 @@ describe("matchesHeader", () => {
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
-  test("return incorrect header for -1 row", () => {
+  test("return incorrect header for -1 row.", () => {
     // arrange
     const header = [/wrong/];
 
