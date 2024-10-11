@@ -24,7 +24,7 @@ function parse(packingListDocument) {
       parserModel.ICELAND1,
     );
   } catch (err) {
-    logger.log_error("app/services/parsers/iceland/model1.js", "parse()", err);
+    logger.logError("app/services/parsers/iceland/model1.js", "parse()", err);
     return {};
   }
 }

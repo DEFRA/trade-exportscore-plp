@@ -24,7 +24,7 @@ module.exports = {
       try {
         result = fs.readFileSync(filename);
       } catch (err) {
-        logger.log_error("app/routes/ai.js", "get() > readFileSync", err);
+        logger.logError("app/routes/ai.js", "get() > readFileSync", err);
       }
 
       const packingList = await findParser(result, filename);
@@ -36,7 +36,7 @@ module.exports = {
 
       return h.response(packingList).code(StatusCodes.OK);
     } catch (err) {
-      logger.log_error("app/routes/ai.js", "get()", err);
+      logger.logError("app/routes/ai.js", "get()", err);
       return h.response(err.message).code(StatusCodes.SERVICE_UNAVAILABLE);
     }
   },
