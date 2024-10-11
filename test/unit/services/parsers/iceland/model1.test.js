@@ -15,7 +15,7 @@ describe("parseIceland1", () => {
 
   test("should call logger.log_error when an error is thrown", () => {
     // Spy on the log_error method
-    const logErrorSpy = jest.spyOn(logger, "log_error");
+    const logErrorSpy = jest.spyOn(logger, "logError");
     // Call the parse function with null data
     parser.parse(null);
     // Check if logger.log_error has been called
