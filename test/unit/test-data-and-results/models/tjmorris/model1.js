@@ -48,6 +48,37 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    Sheet1: [
+      {
+        A: "Consignor / Place o f Despatch",
+        B: "CONSIGNEE",
+        C: "Trailer",
+        D: "Seal",
+        E: "Store",
+        F: "STORENAME",
+        G: "Order",
+        H: "Cage/Ref",
+        I: "Group",
+        J: "TREATMENTTYPE",
+        K: "Sub-Group",
+        L: "Description",
+        M: "Item",
+        N: "Description",
+        O: "Tariff/Commodity",
+        P: "Cases",
+        Q: "Gross Weight Kg",
+        R: "Net Weight Kg",
+        S: "Cost",
+        T: "Country of Origin",
+        U: "VAT Status",
+        V: "SPS",
+        W: "Consignment ID",
+        X: "Processed?",
+        Y: "Created Timestamp",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {
@@ -175,6 +206,40 @@ module.exports = {
       },
     ],
   },
+  wrongEstablishmentNumber: {
+    Sheet1: [
+      {
+        A: "Consignor / Place o f Despatch",
+        B: "CONSIGNEE",
+        C: "Trailer",
+        D: "Seal",
+        E: "Store",
+        F: "STORENAME",
+        G: "Order",
+        H: "Cage/Ref",
+        I: "Group",
+        J: "TREATMENTTYPE",
+        K: "Sub-Group",
+        L: "Description",
+        M: "Item",
+        N: "Description",
+        O: "Tariff/Commodity",
+        P: "Cases",
+        Q: "Gross Weight Kg",
+        R: "Net Weight Kg",
+        S: "Cost",
+        T: "Country of Origin",
+        U: "VAT Status",
+        V: "SPS",
+        W: "Consignment ID",
+        X: "Processed?",
+        Y: "Created Timestamp",
+      },
+      {
+        A: "Incorrect",
+      },
+    ],
+  },
   wrongEstablishmentMultiple: {
     Sheet1: [
       {
@@ -238,6 +303,18 @@ module.exports = {
       },
       {
         A: "Incorrect",
+      },
+    ],
+  },
+  incorrectHeader: {
+    Sheet1: [
+      {
+        L: "NOT",
+        O: "CORRECT",
+        P: "HEADER",
+      },
+      {
+        A: "RMS-GB-000010-001",
       },
     ],
   },

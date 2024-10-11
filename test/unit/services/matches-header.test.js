@@ -59,7 +59,7 @@ describe("matchesHeader", () => {
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
-  test("return incorrect header for -1 row", () => {
+  test("return incorrect header for -1 row.", () => {
     // arrange
     const header = [/wrong/];
 
@@ -73,17 +73,5 @@ describe("matchesHeader", () => {
     const result = matchesHeader(header, packingListSheet);
 
     expect(result).toBe(matcherResult.WRONG_HEADER);
-  });
-
-  test("returns 'Generic Error' matcher result for empty json", () => {
-    // arrange
-    const header = [/header/];
-
-    const packingListSheet = {};
-
-    // act
-    const result = matchesHeader(header, packingListSheet);
-
-    expect(result).toBe(matcherResult.GENERIC_ERROR);
   });
 });

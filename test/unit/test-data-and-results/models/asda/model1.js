@@ -33,6 +33,20 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    PackingList_Extract: [
+      {
+        A: "[Description Of All Retail Goods]",
+        B: "[Nature Of Product]",
+        C: "[Treatment Type]",
+        D: "[Number Of Establishment]",
+        E: "[Destination Store Establishment Number]",
+        F: "[Number of Packages]",
+        G: "[Net Weight]",
+        H: "[kilograms/grams]",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {

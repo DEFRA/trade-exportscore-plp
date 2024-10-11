@@ -6,7 +6,7 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function matchesModel(packingList, filename, regex_expression, trader) {
+function matchesModel(packingList, filename, regexExpression, trader) {
   try {
     let result;
     const sheets = Object.keys(packingList);
@@ -16,7 +16,7 @@ function matchesModel(packingList, filename, regex_expression, trader) {
 
     for (const sheet of sheets) {
       // check for correct establishment number
-      if (!regex.test(regex_expression, packingList[sheet])) {
+      if (!regex.test(regexExpression, packingList[sheet])) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 

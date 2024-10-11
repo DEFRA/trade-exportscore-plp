@@ -36,6 +36,25 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    "Input Data Sheet": [
+      {},
+      {},
+      {},
+      {
+        AT: "RMS-GB-000022-998",
+      },
+      {
+        G: "Product/ Part Number description",
+        L: "Tariff Code UK",
+        AS: "Treatment Type",
+        AT: "Green Lane",
+        BR: "Packages",
+        BT: "Gross Weight",
+        BU: "Net Weight",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {},
@@ -127,6 +146,16 @@ module.exports = {
       },
     ],
   },
+  wrongEstablishment: {
+    Sheet1: [
+      {},
+      {},
+      {},
+      {
+        AT: "INCORRECT",
+      },
+    ],
+  },
   wrongEstablishmentMultiple: {
     Sheet1: [
       {},
@@ -142,6 +171,25 @@ module.exports = {
       {},
       {
         AT: "RMS-GB-000022-998",
+      },
+    ],
+  },
+  incorrectHeader: {
+    Sheet1: [
+      {},
+      {},
+      {},
+      {
+        AT: "RMS-GB-000022-998",
+      },
+      {
+        G: "NOT",
+        L: "CORRECT",
+        AS: "HEADER",
+        AT: "Green Lane",
+        BR: "Packages",
+        BT: "Gross Weight",
+        BU: "Net Weight",
       },
     ],
   },
