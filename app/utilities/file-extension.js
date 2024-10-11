@@ -17,7 +17,12 @@ function isExcel(filename) {
   );
 }
 
+function isPdf(filename) {
+  return matches(filename, "pdf") === matcherResult.CORRECT;
+}
+
 module.exports = {
   matches,
   isExcel,
+  isPdf,
 };

@@ -40,9 +40,16 @@ value.plpSubscription = messageQueueConfig.plpSubscription;
 value.tpQueue = messageQueueConfig.tpQueue;
 value.dynamicsConfig = dynamicsConfig;
 
+// AI values
+value.formRecognizerEndpoint = process.env.FORM_RECOGNIZER_ENDPOINT;
+value.formRecognizerApiKey = process.env.FORM_RECOGNIZER_API_KEY;
+
 value.plDir = path.join(process.cwd(), "/app/packing-lists/");
 
 // TP/IDCOMS toggle
 value.isDynamicsIntegration = process.env.IS_DYNAMICS_INTEGRATION === "true";
+
+// DI toggle
+value.isDiEnabled = process.env.IS_DOCUMENT_INTLELLIGENCE_ENABLED === "true";
 
 module.exports = value;

@@ -1,3 +1,5 @@
+const headers = require("./model-headers");
+
 function findHeaderCols(header, packingListHeader, isExact = true) {
   const headerCols = {};
 
@@ -39,6 +41,33 @@ function mapParser(
   return packingListContents;
 }
 
+function mapPdfParser(packingListDocument, key) {
+  const packingListContents = [];
+
+  if (packingListDocument.fields.PackingListContents.values) {
+    for (const value of packingListDocument.fields.PackingListContents.values) {
+      const row = value.properties;
+      const plRow = {
+        description: row[headers[key].headers.description]?.value ?? null,
+        nature_of_products:
+          row[headers[key].headers.nature_of_products]?.value ?? null,
+        type_of_treatment:
+          row[headers[key].headers.type_of_treatment]?.value ?? null,
+        commodity_code: row[headers[key].headers.commodity_code]?.value ?? null,
+        number_of_packages:
+          row[headers[key].headers.number_of_packages]?.value ?? null,
+        total_net_weight_kg:
+          parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
+          null,
+      };
+      packingListContents.push(plRow);
+    }
+  }
+
+  return packingListContents;
+}
+
 module.exports = {
   mapParser,
+  mapPdfParser,
 };

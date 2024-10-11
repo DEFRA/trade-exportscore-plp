@@ -187,7 +187,7 @@ describe("checkRequiredData", () => {
 describe("findParser", () => {
   const filename = "packinglist.xls";
 
-  test("removes empty items", () => {
+  test("removes empty items", async () => {
     const packingListJson = {
       Sheet1: [
         {
@@ -247,15 +247,15 @@ describe("findParser", () => {
       ],
     };
 
-    const result = parserService.findParser(packingListJson, filename);
+    const result = await parserService.findParser(packingListJson, filename);
 
     expect(result.items).toHaveLength(2);
   });
 
-  test("Not matched Excel file", () => {
+  test("Not matched Excel file", async () => {
     const packingListJson = {};
 
-    const result = parserService.findParser(packingListJson, filename);
+    const result = await parserService.findParser(packingListJson, filename);
 
     expect(result.parserModel).toBe(parserModel.NOMATCH);
   });

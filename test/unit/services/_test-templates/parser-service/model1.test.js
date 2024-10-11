@@ -9,14 +9,14 @@ const traderAndModelNumber = parserModel.ASDA1; // Update as required
 const filename = `packinglist-${traderAndModelNumber}.xls`;
 
 describe(`parser-service-parses-${traderAndModelNumber}`, () => {
-  test(`matches valid ${traderAndModelNumber} file, calls parser and returns all_required_fields_present as true`, () => {
-    const result = parserService.findParser(model.validModel, filename);
+  test(`matches valid ${traderAndModelNumber} file, calls parser and returns all_required_fields_present as true`, async () => {
+    const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(testResults.validTestResult);
   });
 
-  test(`matches valid ${traderAndModelNumber} file, calls parser, but returns all_required_fields_present as false when cells missing`, () => {
-    const result = parserService.findParser(
+  test(`matches valid ${traderAndModelNumber} file, calls parser, but returns all_required_fields_present as false when cells missing`, async () => {
+    const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
     );
@@ -24,10 +24,10 @@ describe(`parser-service-parses-${traderAndModelNumber}`, () => {
     expect(result).toEqual(testResults.invalidTestResult_MissingCells);
   });
 
-  test("returns 'No Match' for incorrect file extension", () => {
+  test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.pdf";
 
-    const result = parserService.findParser(model.validModel, filename);
+    const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(incorrectFileExtension.invalidFileExtension);
   });
