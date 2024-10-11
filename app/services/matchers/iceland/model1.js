@@ -6,6 +6,8 @@ const {
 const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function matches(packingList, filename) {
   const result = {
@@ -37,7 +39,7 @@ async function matches(packingList, filename) {
 
     if (result.isMatched === matcherResult.CORRECT) {
       logger.log_info(
-        "app/services/matchers/iceland/model1.js",
+        filenameForLogging,
         "matches()",
         `Packing list matches Iceland Model 1 with filename: ${filename}`,
       );
@@ -46,7 +48,7 @@ async function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.logError(
-      "app/services/matchers/iceland/model1.js",
+      filenameForLogging,
       "matches()",
       err,
     );

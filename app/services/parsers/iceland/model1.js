@@ -4,6 +4,8 @@ const { mapPdfParser } = require("../../parser-map");
 const logger = require("../../../utilities/logger");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function parse(packingListDocument) {
   try {
@@ -24,7 +26,7 @@ function parse(packingListDocument) {
       parserModel.ICELAND1,
     );
   } catch (err) {
-    logger.logError("app/services/parsers/iceland/model1.js", "parse()", err);
+    logger.logError(filenameForLogging, "parse()", err);
     return {};
   }
 }

@@ -8,7 +8,6 @@ const logger = require("../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const logParserServiceFunction = "findParser()";
-const logParserServicePath = "app/services/parser-service.js";
 const config = require("../config");
 
 const isNullOrUndefined = (value) => value === null || value === undefined;
@@ -47,18 +46,18 @@ async function findParser(packingList, filename) {
       }
 
       // Test for PDF spreadsheets
-    } else if (file_extension.isPdf(filename) && config.isDiEnabled) {
+    } else if (fileExtension.isPdf(filename) && config.isDiEnabled) {
       parsedPackingList = await matchAndParsePdf(
         packingList,
         filename,
         parsedPackingList,
       );
 
-      if (parsedPackingList.parserModel === matcher_result.NOMATCH) {
+      if (parsedPackingList.parserModel === matcherResult.NOMATCH) {
         logger.log_info(
-          "app/services/parser-service.js",
-          "findParser()",
-          `Failed to parse packing list with filename: ${filename}`,
+          filenameForLogging,
+          "logParserServiceFunction",
+          `Failed to parse packing list with filename: ${filename}, no match`,
         );
       }
     } else {
@@ -80,7 +79,7 @@ async function findParser(packingList, filename) {
 
     return parsedPackingList;
   } catch (err) {
-    logger.logError(logParserServicePath, logParserServiceFunction, err);
+    logger.logError(filenameForLogging, logParserServiceFunction, err);
     return {};
   }
 }
@@ -130,7 +129,7 @@ async function matchAndParsePdf(packingList, filename, parsedPackingList) {
     if (parsersPdf.hasOwnProperty(key)) {
       const result = await parsersPdf[key].matches(packingList, filename);
 
-      if (result.isMatched === matcher_result.CORRECT) {
+      if (result.isMatched === matcherResult.CORRECT) {
         parsedPackingList = parsersPdf[key].parse(result.document, filename);
       }
     }
