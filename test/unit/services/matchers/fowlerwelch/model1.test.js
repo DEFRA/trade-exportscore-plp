@@ -3,11 +3,11 @@ const fowlerWelchMatcher = require("../../../../../app/services/matchers/fowlerw
 const model = require("../../../test-data-and-results/models/fowlerwelch/model1");
 
 describe("matchesFowlerWelch", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'Empty File' matcher result for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
     const result = fowlerWelchMatcher.matches(packingListJson, filename);
-    expect(result).toBe(MatcherResult.GENERIC_ERROR);
+    expect(result).toBe(MatcherResult.EMPTY_FILE);
   });
 
   test("returns wrong establishment number for missing establishment number for one sheet", () => {

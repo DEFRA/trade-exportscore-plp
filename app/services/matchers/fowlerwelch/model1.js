@@ -13,8 +13,8 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     //check for correct establishment number
     const sheets = Object.keys(packingList);
 
-    if (sheets.length === 0) {
-      throw new Error("generic error");
+    if (sheets?.length === 0) {
+      return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {

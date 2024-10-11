@@ -3,11 +3,11 @@ const warrens_matcher = require("../../../../../app/services/matchers/warrens/mo
 const model = require("../../../test-data-and-results/models/warrens/model1");
 
 describe("matchesWarrens1", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'Empty File' matcher result for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
     const result = warrens_matcher.matches(packingListJson, filename);
-    expect(result).toBe(matcherResult.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.EMPTY_FILE);
   });
 
   test("returns wrong establishment number for missing establishment number for one sheet", () => {

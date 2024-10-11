@@ -11,13 +11,13 @@ describe("matchesNisa", () => {
     expect(result).toBe(matcherResult.CORRECT);
   });
 
-  test("returns generic error for empty json", () => {
+  test("returns 'Empty File' matcher result for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcherResult.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.EMPTY_FILE);
   });
 
   test("returns wrong establishment number for missing establishment number", () => {
