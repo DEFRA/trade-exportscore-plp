@@ -20,6 +20,7 @@ function findParser(packingList, filename) {
     const packingListJson = JSON.stringify(packingList);
     const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+
     // Test for Excel spreadsheets
     if (fileExtension.isExcel(filename)) {
       Object.keys(parsersExcel).forEach((key) => {

@@ -39,6 +39,7 @@ describe("messaging module", () => {
   test("should log error message when config.plpSubscription.name is not set", async () => {
     console.log(config);
     config.plpSubscription.name = undefined;
+
     await start();
 
     expect(console_error_spy).toHaveBeenCalledWith(

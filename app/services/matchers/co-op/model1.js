@@ -24,6 +24,7 @@ function matches(packingList, filename) {
       // check for header values
       result = matchesHeader(headers.COOP1.regex, packingList[sheet]);
     }
+
     if (result === matcherResult.CORRECT) {
       logger.log_info(
         filenameForLogging,
@@ -31,6 +32,7 @@ function matches(packingList, filename) {
         `Packing list matches co-op Model 1 with filename: ${filename}`,
       );
     }
+
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

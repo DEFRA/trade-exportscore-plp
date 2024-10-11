@@ -28,6 +28,7 @@ function parse(packingListJson) {
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
+
     return combineParser.combine(
       establishmentNumber,
       packingListContents,

@@ -6,6 +6,7 @@ describe("createMessage", () => {
       applicationId: "claim123",
       approvalStatus: "approved",
     };
+
     expect(createMessage(true, "claim123")).toMatchObject({
       body: testObject,
       type: "uk.gov.trade.plp",

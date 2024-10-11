@@ -12,6 +12,7 @@ describe("parseKepakModel1", () => {
 
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModelMultipleSheets);
+
     expect(result).toEqual(test_results.validTestResultForMultipleSheets);
   });
 
@@ -30,4 +31,3 @@ describe("parseKepakModel1", () => {
     expect(logErrorSpy).toHaveBeenCalled();
   });
 });
-module.exports = {};

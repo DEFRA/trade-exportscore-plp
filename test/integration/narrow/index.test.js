@@ -11,7 +11,9 @@ describe("Server tests", () => {
       };
     });
     createServer = require("../../../app/server");
+
     server = await createServer();
+
     expect(server).toBeDefined();
   });
 
@@ -24,6 +26,7 @@ describe("Server tests", () => {
       };
     });
     createServer = require("../../../app/server");
+
     server = await createServer();
 
     expect(server).toBeDefined();

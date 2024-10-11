@@ -12,6 +12,7 @@ async function start() {
     if (config.plpSubscription.name) {
       const plpAction = (message) => processPlpMessage(message, plpReceiver);
       plpReceiver = new MessageReceiver(config.plpSubscription, plpAction);
+
       await plpReceiver.subscribe();
 
       logger.log_info(

@@ -44,11 +44,13 @@ function matches(packingList, filename) {
         return matcherResult.WRONG_HEADER;
       }
     }
+
     logger.log_info(
       filenameForLogging,
       "matches()",
       `Packing list matches tjmorris Model 1 with filename: ${filename}`,
     );
+
     return matcherResult.CORRECT;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
