@@ -1,4 +1,4 @@
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const { rowFinder } = require("../../../utilities/row-finder");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -6,30 +6,30 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function matchesModel(packingList, filename, regex_expression, trader) {
+function matchesModel(packingList, filename, regexExpression, trader) {
   let headerRow = 0;
 
   try {
     //check for correct establishment number
     const sheets = Object.keys(packingList);
 
-    if (sheets.length === 0) {
-      throw new Error("generic error");
+    if (sheets?.length === 0) {
+      return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {
       // check for correct establishment number
-      if (!regex.test(regex_expression, packingList[sheet])) {
-        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+      if (!regex.test(regexExpression, packingList[sheet])) {
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
       headerRow = rowFinder(packingList[sheet], callback);
       if (headerRow === -1) {
-        return matcher_result.WRONG_HEADER;
+        return matcherResult.WRONG_HEADER;
       }
       if (!areHeadersValid(packingList, sheet, headerRow)) {
-        return matcher_result.WRONG_HEADER;
+        return matcherResult.WRONG_HEADER;
       }
     }
 
@@ -38,10 +38,10 @@ function matchesModel(packingList, filename, regex_expression, trader) {
       "matches()",
       `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
     );
-    return matcher_result.CORRECT;
+    return matcherResult.CORRECT;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return matcher_result.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

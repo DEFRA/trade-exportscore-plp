@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../config");
 const dbConfig = config.dbConfig[config.env];
@@ -32,18 +33,16 @@ module.exports = (() => {
       .forEach((file) =>
         require(path.join(modelPath, file))(sequelize, DataTypes),
       );
+
     if (sequelize.models) {
       associateModels(sequelize);
     }
+
     return {
       models: sequelize.models,
       sequelize,
     };
   } catch (err) {
-    logger.logError(
-      "app/services/database-service.js",
-      "module.exports()",
-      err,
-    );
+    logger.logError(filenameForLogging, "module.exports()", err);
   }
 })();

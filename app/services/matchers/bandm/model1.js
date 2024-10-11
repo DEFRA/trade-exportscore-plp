@@ -1,4 +1,4 @@
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -10,8 +10,8 @@ function matches(packingList, filename) {
   try {
     let result;
     const sheets = Object.keys(packingList);
-    if (sheets.length === 0) {
-      throw new Error("generic error");
+    if (sheets?.length === 0) {
+      return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {
@@ -22,23 +22,25 @@ function matches(packingList, filename) {
           packingList[sheet],
         )
       ) {
-        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
       result = matchesHeader(headers.BANDM1.regex, packingList[sheet]);
     }
-    if (result === matcher_result.CORRECT) {
+
+    if (result === matcherResult.CORRECT) {
       logger.log_info(
         filenameForLogging,
         "matches()",
         `Packing list matches bandm Model 1 with filename: ${filename}`,
       );
     }
+
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return matcher_result.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

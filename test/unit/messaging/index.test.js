@@ -35,6 +35,7 @@ describe("messaging module", () => {
 
   test("start should create a new MessageReceiver and subscribe", async () => {
     await start();
+
     expect(MessageReceiver).toHaveBeenCalledTimes(1);
     expect(MessageReceiver.mock.results[0].value.subscribe).toHaveBeenCalled();
   });
@@ -42,6 +43,7 @@ describe("messaging module", () => {
   test("stop should close connection", async () => {
     await start();
     await stop();
+
     expect(
       MessageReceiver.mock.results[0].value.closeConnection,
     ).toHaveBeenCalledTimes(1);

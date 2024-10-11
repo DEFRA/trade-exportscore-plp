@@ -1,22 +1,24 @@
 const parser = require("../../../../../app/services/parsers/giovanni/model1");
 const logger = require("../../../../../app/utilities/logger");
-const parserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 const test_results = require("../../../test-data-and-results/results/giovanni/model1");
 
 describe("parseGiovanniModel1", () => {
   test("parses json", () => {
     const result = parser.parse(model.validModel);
+
     expect(result).toEqual(test_results.validTestResult);
   });
 
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModelMultipleSheets);
+
     expect(result).toEqual(test_results.validTestResultForMultipleSheets);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
+
     expect(result).toEqual(test_results.emptyTestResult);
   });
 

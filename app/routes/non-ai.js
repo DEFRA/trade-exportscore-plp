@@ -31,6 +31,7 @@ module.exports = {
     const packingList = await findParser(result, filename);
     if (packingList.parserModel !== parserModel.NOMATCH) {
       const randomInt = getRandomInt();
+
       await createPackingList(packingList, randomInt);
     }
 

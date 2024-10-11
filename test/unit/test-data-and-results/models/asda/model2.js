@@ -37,6 +37,19 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    Sheet1: [
+      {
+        B: "[Description Of All Retail Go",
+        D: "[Nature Of Product]",
+        F: "[Treatment Ty",
+        H: "Establishment Number",
+        J: "Cases",
+        L: "Case Weight",
+        N: "NET Weight",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {
@@ -171,6 +184,24 @@ module.exports = {
         J: 1,
         L: 3,
         N: 3,
+      },
+    ],
+  },
+  incorrectHeader: {
+    sheet1: [
+      {
+        B: "[Description Of All Retail Go",
+        D: "[Nature Of Product]",
+        F: "[Treatment Ty",
+      },
+      {
+        B: "4PK X 17 PINK LADY APPLES",
+        D: null,
+        F: "PRODUCE",
+        H: "RMS-GB-000015-010",
+        J: 20,
+        L: 12.75,
+        N: 255,
       },
     ],
   },

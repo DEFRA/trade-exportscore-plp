@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true,
     },
   );
+
   item.associate = function (models) {
     models.item.belongsTo(models.packingList, {
       foreignKey: "applicationId",

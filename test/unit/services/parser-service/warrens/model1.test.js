@@ -21,7 +21,7 @@ describe("matchesWarrensModel1", () => {
     expect(result).toEqual(test_results.invalidTestResult_MissingCells);
   });
 
-  test("wrong file extension", async () => {
+  test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.pdf";
     const invalidTestResult_NoMatch = {
       business_checks: {
@@ -31,6 +31,7 @@ describe("matchesWarrensModel1", () => {
       registration_approval_number: null,
       parserModel: parserModel.NOMATCH,
     };
+
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(invalidTestResult_NoMatch);

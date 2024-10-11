@@ -1,5 +1,4 @@
 const { matchesModel } = require("../fowlerwelch/model1");
-const headers = require("../../model-headers");
 
 function matches(packingList, filename) {
   return matchesModel(

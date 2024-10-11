@@ -1,11 +1,12 @@
-const matcher_result = require("./matcher-result");
+const matcherResult = require("./matcher-result");
 const parserModel = require("./parser-model");
-const combine_parser = require("./parser-combine");
-const json_file = require("../utilities/json-file");
-const file_extension = require("../utilities/file-extension");
+const combineParser = require("./parser-combine");
+const jsonFile = require("../utilities/json-file");
+const fileExtension = require("../utilities/file-extension");
 const { parsersExcel, parsersPdf } = require("./model-parsers");
 const logger = require("../utilities/logger");
-const logParserServicePath = "app/services/parser-service.js";
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const logParserServiceFunction = "findParser()";
 const config = require("../config");
 
@@ -17,16 +18,16 @@ async function findParser(packingList, filename) {
     let parserFound = false;
 
     // Test for Excel spreadsheets
-    if (file_extension.isExcel(filename)) {
+    if (fileExtension.isExcel(filename)) {
       // Sanitise packing list (i.e. emove trailing spaces and empty cells)
       const packingListJson = JSON.stringify(packingList);
-      const sanitisedPackingListJson = json_file.sanitise(packingListJson);
+      const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
       const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
 
       Object.keys(parsersExcel).forEach((key) => {
         if (
           parsersExcel[key].matches(sanitisedPackingList, filename) ===
-          matcher_result.CORRECT
+          matcherResult.CORRECT
         ) {
           parserFound = true;
           parsedPackingList = parsersExcel[key].parse(
@@ -38,7 +39,7 @@ async function findParser(packingList, filename) {
 
       if (!parserFound) {
         logger.log_info(
-          logParserServicePath,
+          filenameForLogging,
           logParserServiceFunction,
           `Failed to parse packing list with filename: ${filename}`,
         );
@@ -61,9 +62,9 @@ async function findParser(packingList, filename) {
       }
     } else {
       logger.log_info(
-        logParserServicePath,
+        filenameForLogging,
         logParserServiceFunction,
-        `Failed to parse packing list with filename: ${filename}`,
+        `Failed to parse packing list with filename: ${filename} as it is not an Excel file.`,
       );
     }
 
@@ -84,7 +85,7 @@ async function findParser(packingList, filename) {
 }
 
 function failedParser() {
-  return combine_parser.combine(null, [], false, parserModel.NOMATCH);
+  return combineParser.combine(null, [], false, parserModel.NOMATCH);
 }
 
 function checkRequiredData(packingList) {

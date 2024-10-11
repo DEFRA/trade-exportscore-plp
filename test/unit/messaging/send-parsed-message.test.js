@@ -69,6 +69,7 @@ describe("sendParsed", () => {
     // arrange
     const message = {};
     createMessage.mockReturnValue(message);
+
     // act
     await sendParsed(true, "123");
 
@@ -86,6 +87,7 @@ describe("sendParsed", () => {
     const message = {};
     createMessage.mockReturnValue(message);
     mockSendMessages.mockImplementationOnce(new Error());
+
     // act
     await sendParsed(true, "123");
 

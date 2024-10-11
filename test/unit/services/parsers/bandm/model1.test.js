@@ -1,13 +1,13 @@
 const parser = require("../../../../../app/services/parsers/bandm/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/bandm/model1");
-const json_file = require("../../../../../app/utilities/json-file");
+const jsonFile = require("../../../../../app/utilities/json-file");
 const test_results = require("../../../test-data-and-results/results/bandm/model1");
 
 describe("parseBandMModel1", () => {
   test("parses populated json", () => {
     const packingListJson = JSON.stringify(model.validModel);
-    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
+    const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
 
     const result = parser.parse(sanitisedPackingList);
@@ -17,15 +17,17 @@ describe("parseBandMModel1", () => {
 
   test("parses multiple sheets", () => {
     const packingListJson = JSON.stringify(model.validModelMultipleSheets);
-    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
+    const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+
     const result = parser.parse(sanitisedPackingList);
+
     expect(result).toEqual(test_results.validTestResultForMultipleSheets);
   });
 
   test("parses empty json", () => {
     const packingListJson = JSON.stringify(model.emptyModel);
-    const sanitisedPackingListJson = json_file.sanitise(packingListJson);
+    const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
     const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
 
     const result = parser.parse(sanitisedPackingList);

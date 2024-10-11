@@ -24,6 +24,17 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    "Input Packing Sheet": [
+      {
+        E: "Dispatch RMS Establishment",
+        O: "Product/ Part Number description",
+        P: "Tariff Code EU",
+        Q: "Packages",
+        S: "NW total",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {
@@ -96,6 +107,28 @@ module.exports = {
       {},
       {
         E: "INCORRECT",
+      },
+    ],
+  },
+  wrongEstablishment: {
+    sheet2: [
+      {},
+      {},
+      {
+        E: "INCORRECT",
+      },
+    ],
+  },
+  incorrectHeader: {
+    sheet1: [
+      {
+        E: "NOT",
+        L: "CORRECT",
+        P: "HEADER",
+        O: "Product/ Part Number description",
+      },
+      {
+        E: "RMS-GB-000009-001",
       },
     ],
   },

@@ -1,5 +1,5 @@
 const parserModel = require("../../parser-model");
-const combine_parser = require("../../parser-combine");
+const combineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
@@ -16,6 +16,7 @@ function parse(packingListJson) {
       headers.COOP1.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
+
     for (const sheet of sheets) {
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
@@ -26,7 +27,7 @@ function parse(packingListJson) {
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
-    return combine_parser.combine(
+    return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,

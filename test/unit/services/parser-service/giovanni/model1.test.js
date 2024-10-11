@@ -21,7 +21,7 @@ describe("matchesGiovanniModel1", () => {
     expect(result).toEqual(test_results.invalidTestResult_MissingCells);
   });
 
-  test("wrong file extension", async () => {
+  test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.pdf";
     const invalidTestResult_NoMatch = {
       business_checks: {

@@ -1,4 +1,4 @@
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -6,34 +6,36 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function matchesModel(packingList, filename, regex_expression, trader) {
+function matchesModel(packingList, filename, regexExpression, trader) {
   try {
     let result;
     const sheets = Object.keys(packingList);
-    if (sheets.length === 0) {
-      throw new Error("generic error");
+    if (sheets?.length === 0) {
+      return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {
       // check for correct establishment number
-      if (!regex.test(regex_expression, packingList[sheet])) {
-        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+      if (!regex.test(regexExpression, packingList[sheet])) {
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
       result = matchesHeader(headers.GIOVANNI1.regex, packingList[sheet]);
     }
-    if (result === matcher_result.CORRECT) {
+
+    if (result === matcherResult.CORRECT) {
       logger.log_info(
         filenameForLogging,
         "matches()",
         `Packing list matches giovanni Model 1 with filename: ${filename}`,
       );
     }
+
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return matcher_result.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

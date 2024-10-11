@@ -1,17 +1,16 @@
-const matcher_result = require("../../matcher-result");
+const matcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
-const { start } = require("applicationinsights");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matches(packingList, filename) {
   try {
     const sheets = Object.keys(packingList);
-    if (sheets.length === 0) {
-      throw new Error("generic error");
+    if (sheets?.length === 0) {
+      return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {
@@ -22,7 +21,7 @@ function matches(packingList, filename) {
           packingList[sheet],
         )
       ) {
-        return matcher_result.WRONG_ESTABLISHMENT_NUMBER;
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // check for header values
@@ -42,18 +41,20 @@ function matches(packingList, filename) {
         headerRow === -1 ||
         !isHeaderMatching(packingList[sheet], header, headerRow)
       ) {
-        return matcher_result.WRONG_HEADER;
+        return matcherResult.WRONG_HEADER;
       }
     }
+
     logger.log_info(
       filenameForLogging,
       "matches()",
       `Packing list matches tjmorris Model 1 with filename: ${filename}`,
     );
-    return matcher_result.CORRECT;
+
+    return matcherResult.CORRECT;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return matcher_result.GENERIC_ERROR;
+    return matcherResult.GENERIC_ERROR;
   }
 }
 

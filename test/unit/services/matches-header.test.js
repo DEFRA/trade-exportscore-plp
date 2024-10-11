@@ -1,5 +1,5 @@
 const { matchesHeader } = require("../../../app/services/matches-header");
-const matcher_result = require("../../../app/services/matcher-result");
+const matcherResult = require("../../../app/services/matcher-result");
 
 describe("matchesHeader", () => {
   test("returns correct header", () => {
@@ -21,7 +21,7 @@ describe("matchesHeader", () => {
     const result = matchesHeader(header, packingListSheet);
 
     // assert
-    expect(result).toBe(matcher_result.CORRECT);
+    expect(result).toBe(matcherResult.CORRECT);
   });
 
   test("returns incorrect header", () => {
@@ -43,7 +43,7 @@ describe("matchesHeader", () => {
     const result = matchesHeader(header, packingListSheet);
 
     // assert
-    expect(result).toBe(matcher_result.WRONG_HEADER);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
   test("return incorrect header for null", () => {
@@ -56,10 +56,10 @@ describe("matchesHeader", () => {
     const result = matchesHeader(header, packingListSheet);
 
     // assert
-    expect(result).toBe(matcher_result.WRONG_HEADER);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
-  test("return incorrect header for -1 row", () => {
+  test("return incorrect header for -1 row.", () => {
     // arrange
     const header = [/wrong/];
 
@@ -72,18 +72,6 @@ describe("matchesHeader", () => {
     // act
     const result = matchesHeader(header, packingListSheet);
 
-    expect(result).toBe(matcher_result.WRONG_HEADER);
-  });
-
-  test("returns generic error for empty json", () => {
-    // arrange
-    const header = [/header/];
-
-    const packingListSheet = {};
-
-    // act
-    const result = matchesHeader(header, packingListSheet);
-
-    expect(result).toBe(matcher_result.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 });

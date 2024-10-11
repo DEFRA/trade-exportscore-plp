@@ -42,6 +42,23 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    PackingList_Extract: [
+      {
+        A: "TruckID",
+        B: "Dept",
+        C: "SubDept",
+        D: "Product",
+        E: "# Packages",
+        F: "# Units",
+        G: "GrossWeight",
+        H: "NetWeight",
+        I: "NatureOfProduct",
+        J: "Treatment",
+        K: "PlaceOfDispatch",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {
@@ -157,6 +174,14 @@ module.exports = {
       },
     ],
   },
+  wrongEstablishment: {
+    sheet2: [
+      {},
+      {
+        K: "INCORRECT",
+      },
+    ],
+  },
   incorrectHeaderMultiple: {
     sheet1: [
       {
@@ -168,6 +193,18 @@ module.exports = {
         K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
       },
     ],
+    sheet2: [
+      {
+        D: "NOT",
+        E: "CORRECT",
+        H: "HEADER",
+      },
+      {
+        K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
+      },
+    ],
+  },
+  incorrectHeader: {
     sheet2: [
       {
         D: "NOT",

@@ -1,4 +1,4 @@
-const { start, stop } = require("../../../app/messaging/index");
+const { start } = require("../../../app/messaging/index");
 const processPlpMessage = require("../../../app/messaging/process-plp-message");
 const { MessageReceiver } = require("adp-messaging");
 const logger = require("../../../app/utilities/logger");
@@ -39,6 +39,7 @@ describe("messaging module", () => {
   test("should log error message when config.plpSubscription.name is not set", async () => {
     console.log(config);
     config.plpSubscription.name = undefined;
+
     await start();
 
     expect(console_error_spy).toHaveBeenCalledWith(
