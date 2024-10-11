@@ -18,7 +18,7 @@ function isExcel(filename) {
 }
 
 function isPdf(filename) {
-  return matches(filename, "pdf") === matcher_result.CORRECT;
+  return matches(filename, "pdf") === matcherResult.CORRECT;
 }
 
 module.exports = {

@@ -47,11 +47,7 @@ async function matches(packingList, filename) {
 
     return result;
   } catch (err) {
-    logger.logError(
-      filenameForLogging,
-      "matches()",
-      err,
-    );
+    logger.logError(filenameForLogging, "matches()", err);
     return result;
   }
 }

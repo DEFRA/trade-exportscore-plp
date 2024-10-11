@@ -1,5 +1,5 @@
 const matcher = require("../../../../../app/services/matchers/iceland/model1");
-const matcher_result = require("../../../../../app/services/matcher-result");
+const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/iceland/model1");
 
 jest.mock("../../../../../app/services/document-intelligence");
@@ -16,14 +16,14 @@ createDocumentIntelligenceClient.mockImplementation(() => {
 
 describe("matchesIceland", () => {
   test.each([
-    [matcher_result.CORRECT, model.validModel],
+    [matcherResult.CORRECT, model.validModel],
     [MatcherResult.GENERIC_ERROR, {}],
     [
-      matcher_result.WRONG_ESTABLISHMENT_NUMBER,
+      matcherResult.WRONG_ESTABLISHMENT_NUMBER,
       model.invalidModel_WrongRemosNumber,
     ],
     [
-      matcher_result.WRONG_ESTABLISHMENT_NUMBER,
+      matcherResult.WRONG_ESTABLISHMENT_NUMBER,
       model.invalidModel_MissingRemosElement,
     ],
   ])("returns '%s' for iceland model", async (expected, inputModel) => {
