@@ -3,13 +3,13 @@ const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/sainsburys/model1");
 
 describe("matchesSainsburysModel1", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'Empty File' matcher result for empty json", () => {
     const packingListJson = {};
     const filename = "packinglist.xlsx";
 
     const result = matcher.matches(packingListJson, filename);
 
-    expect(result).toBe(matcherResult.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.EMPTY_FILE);
   });
 
   test("returns wrong establishment number for missing establishment number", () => {

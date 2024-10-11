@@ -3,10 +3,10 @@ const matcher = require("../../../../../app/services/matchers/giovanni/model1");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 
 describe("matchesGiovanni", () => {
-  test("returns generic error for empty json", () => {
+  test("returns 'Empty File' matcher result for empty json", () => {
     const filename = "packinglist.xlsx";
     const result = matcher.matches({}, filename);
-    expect(result).toBe(matcherResult.GENERIC_ERROR);
+    expect(result).toBe(matcherResult.EMPTY_FILE);
   });
 
   test("returns Correct", () => {
