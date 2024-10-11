@@ -1,6 +1,8 @@
 const { sequelize } = require("../services/database-service");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("./../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 module.exports = {
   method: "GET",
@@ -12,7 +14,7 @@ module.exports = {
         return h.response("ok").code(StatusCodes.OK);
       } catch (err) {
         logger.logError(
-          "app/routes/healthy.js",
+          filenameForLogging,
           "get()",
           `Error running healthy check: ${err}`,
         );

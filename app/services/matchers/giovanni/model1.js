@@ -3,6 +3,8 @@ const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matchesModel(packingList, filename, regex_expression, trader) {
   try {
@@ -23,18 +25,14 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     }
     if (result === matcher_result.CORRECT) {
       logger.log_info(
-        "app/services/matchers/giovanni/model1.js",
+        filenameForLogging,
         "matches()",
         `Packing list matches giovanni Model 1 with filename: ${filename}`,
       );
     }
     return result;
   } catch (err) {
-    logger.logError(
-      "app/services/matchers/giovanni/model1.js",
-      "matches()",
-      err,
-    );
+    logger.logError(filenameForLogging, "matches()", err);
     return matcher_result.GENERIC_ERROR;
   }
 }

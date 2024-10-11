@@ -3,7 +3,8 @@ const { patchPackingListCheck } = require("../services/dynamics-service");
 const { StatusCodes } = require("http-status-codes");
 const config = require("../config");
 const logger = require("./../utilities/logger");
-const logUpsertIdcomsPath = "app/routes/upsert-idcoms.js";
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function upsertWithDynamics(request) {
   let checkStatus = StatusCodes.NOT_FOUND;
@@ -13,7 +14,7 @@ async function upsertWithDynamics(request) {
       request.query.isApproved,
     );
   } catch (err) {
-    logger.logError(logUpsertIdcomsPath, "get() > patchPackingListCheck", err);
+    logger.logError(filenameForLogging, "get() > patchPackingListCheck", err);
   }
   return checkStatus;
 }
@@ -24,7 +25,7 @@ async function upsert(request) {
     await sendParsed(request.query.applicationId, request.query.isApproved);
     checkStatus = StatusCodes.OK;
   } catch (err) {
-    logger.logError(logUpsertIdcomsPath, "get() > sendParsed", err);
+    logger.logError(filenameForLogging, "get() > sendParsed", err);
   }
   return checkStatus;
 }
@@ -45,7 +46,7 @@ module.exports = {
         }
         return h.response(checkStatus).code(StatusCodes.OK);
       } catch (err) {
-        logger.logError(logUpsertIdcomsPath, "get()", err);
+        logger.logError(filenameForLogging, "get()", err);
       }
     },
   },

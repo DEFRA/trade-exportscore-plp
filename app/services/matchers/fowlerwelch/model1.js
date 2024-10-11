@@ -3,6 +3,8 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matchesModel(packingList, filename, regex_expression, trader) {
   let headerRow = 0;
@@ -32,17 +34,13 @@ function matchesModel(packingList, filename, regex_expression, trader) {
     }
 
     logger.log_info(
-      "app/services/matchers/fowlerwelch/model1.js",
+      filenameForLogging,
       "matches()",
       `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
     );
     return matcher_result.CORRECT;
   } catch (err) {
-    logger.logError(
-      "app/services/matchers/fowlerwelch/model1.js",
-      "matches()",
-      err,
-    );
+    logger.logError(filenameForLogging, "matches()", err);
     return matcher_result.GENERIC_ERROR;
   }
 }
