@@ -17,6 +17,7 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
     const dataRow = 1;
+
     for (const sheet of sheets) {
       packingListContentsTemp = mapParser(
         packingListJson[sheet],

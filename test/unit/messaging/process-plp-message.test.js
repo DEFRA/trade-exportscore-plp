@@ -22,9 +22,11 @@ const parserModel = require("../../../app/services/parser-model");
 createStorageAccountClient.mockImplementation(() => {
   return jest.fn();
 });
+
 getXlsPackingListFromBlob.mockImplementation(() => {
   return jest.fn();
 });
+
 findParser.mockImplementation(() => {
   return {
     parserModel: parserModel.NISA1,
@@ -33,9 +35,11 @@ findParser.mockImplementation(() => {
     },
   };
 });
+
 createPackingList.mockImplementation(() => {
   return jest.fn();
 });
+
 patchPackingListCheck.mockImplementation(() => {
   return jest.fn();
 });
@@ -77,7 +81,9 @@ describe("processPlpMessage", () => {
     const message = {
       body: { packing_list_blob: "https://example.com/path/doesnt/matter" },
     };
+
     await messageAction(message, receiver);
+
     expect(receiver.completeMessage).toHaveBeenCalled();
   });
 
@@ -90,7 +96,9 @@ describe("processPlpMessage", () => {
     receiver.completeMessage.mockImplementation(() => {
       throw new Error("Error");
     });
+
     await messageAction(message, receiver);
+
     expect(receiver.abandonMessage).toHaveBeenCalled();
   });
 });

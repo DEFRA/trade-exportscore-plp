@@ -48,7 +48,9 @@ describe("Packing list", () => {
       packingListMapper: jest.fn().mockResolvedValue({}),
       createPackingList: jest.fn(),
     }));
+
     await packingListIndex.createPackingList(packingListJson, "123");
+
     expect(mockDatabaseService.models.packingList.create).toHaveBeenCalled();
     expect(mockDatabaseService.models.item.bulkCreate).toHaveBeenCalled();
   });

@@ -185,6 +185,8 @@ describe("checkRequiredData", () => {
 });
 
 describe("findParser", () => {
+  const filename = "packinglist.xls";
+
   test("removes empty items", () => {
     const packingListJson = {
       Sheet1: [
@@ -244,17 +246,17 @@ describe("findParser", () => {
         },
       ],
     };
-    const filename = "packinglist.xls";
 
     const result = parserService.findParser(packingListJson, filename);
+
     expect(result.items).toHaveLength(2);
   });
 
   test("Not matched Excel file", () => {
     const packingListJson = {};
-    const filename = "packinglist.xls";
 
     const result = parserService.findParser(packingListJson, filename);
+
     expect(result.parserModel).toBe(parserModel.NOMATCH);
   });
 });
@@ -277,10 +279,13 @@ describe("checkType", () => {
         all_required_fields_present: false,
       },
     };
+
     const result = parserService.checkType(packingList.items);
+
     expect(result[0].number_of_packages).toBeNull();
     expect(result[0].total_net_weight_kg).toBeNull();
   });
+
   test("Number of pkgs and total net weight are both numbers", () => {
     const packingList = {
       registration_approval_number: "RMS-GB-000022-998",
@@ -298,7 +303,9 @@ describe("checkType", () => {
         all_required_fields_present: true,
       },
     };
+
     const result = parserService.checkType(packingList.items);
+
     expect(result[0].number_of_packages).toBe(1);
     expect(result[0].total_net_weight_kg).toBe(1.4155);
   });

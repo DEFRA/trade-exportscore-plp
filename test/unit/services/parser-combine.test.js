@@ -20,11 +20,13 @@ describe("combineParser", () => {
         all_required_fields_present: true,
       },
     };
+
     const result = parserCombine.combine(
       registrationApprovalNumber,
       items,
       true,
     );
+
     expect(result).toMatchObject(packingListJson);
   });
 });

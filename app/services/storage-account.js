@@ -15,9 +15,9 @@ async function getXlsPackingListFromBlob(blobClient) {
     const downloaded = await streamToBuffer(
       downloadBlockBlobResponse.readableStreamBody,
     );
-    const result = excelToJson({
-      source: downloaded,
-    });
+
+    const result = excelToJson({ source: downloaded });
+
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "getXlsPackingListFromBlob()", err);
@@ -30,6 +30,7 @@ async function streamToBuffer(readableStream) {
     readableStream.on("data", (data) => {
       chunks.push(data instanceof Buffer ? data : Buffer.from(data));
     });
+
     readableStream.on("end", () => {
       resolve(Buffer.concat(chunks));
     });

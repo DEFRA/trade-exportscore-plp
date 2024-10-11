@@ -14,7 +14,6 @@ describe("matchesAsdaModel1", () => {
 
   test("returns 'Empty File' matcher result for empty json", () => {
     const packingListJson = {};
-    const filename = "packinglist.xls";
 
     const result = matcher.matches(packingListJson, filename);
 

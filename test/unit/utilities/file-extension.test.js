@@ -18,6 +18,7 @@ describe("file-extension-check", () => {
       expect(fileExtension.matches(filename, extension)).toBe(expected);
     },
   );
+
   test.each([
     ["test-file.xls", true],
     ["test-file.xlsx", true],

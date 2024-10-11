@@ -33,7 +33,9 @@ describe("database config", () => {
 
   test("valid access token generated for production", async () => {
     const cfg = { password: "" };
+
     await dbConfig.production.hooks.beforeConnect(cfg);
+
     expect(cfg.password).toBe("test");
   });
 

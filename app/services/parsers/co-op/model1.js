@@ -16,6 +16,7 @@ function parse(packingListJson) {
       headers.COOP1.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
+
     for (const sheet of sheets) {
       packingListContentsTemp = mapParser(
         packingListJson[sheet],

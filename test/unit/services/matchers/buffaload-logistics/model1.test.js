@@ -3,10 +3,10 @@ const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/buffaload-logistics/model1");
 const logger = require("../../../../../app/utilities/logger");
 
+const filename = "PackingList.xlsx";
+
 describe("matchesBuffaloadLogisticsModel1", () => {
   test("returns Correct", () => {
-    const filename = "PackingList.xlsx";
-
     const result = matcher.matches(model.validModel, filename);
 
     expect(result).toBe(matcherResult.CORRECT);
@@ -14,7 +14,6 @@ describe("matchesBuffaloadLogisticsModel1", () => {
 
   test("returns 'Empty File' matcher result for empty json", () => {
     const packingListJson = {};
-    const filename = "packinglist.xlsx";
 
     const result = matcher.matches(packingListJson, filename);
 
@@ -29,7 +28,6 @@ describe("matchesBuffaloadLogisticsModel1", () => {
         },
       ],
     };
-    const filename = "packinglist.xlsx";
 
     const result = matcher.matches(packingListJson, filename);
 
@@ -37,14 +35,12 @@ describe("matchesBuffaloadLogisticsModel1", () => {
   });
 
   test("returns 'Wrong Establishment Number' matcher result for missing establishment numbers of multiple sheets", () => {
-    const filename = "packinglist.xlsx";
     const result = matcher.matches(model.wrongEstablishmentMultiple, filename);
 
     expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
   test("return 'Wrong Header' matcher result for incorrect header values", () => {
-    const filename = "packinglist.xlsx";
     const packingListJson = {
       Tabelle1: [
         {
@@ -64,7 +60,6 @@ describe("matchesBuffaloadLogisticsModel1", () => {
   });
 
   test("return 'Wrong Header' matcher result for incorrect header values of multiple sheets", () => {
-    const filename = "packinglist.xlsx";
     const result = matcher.matches(model.incorrectHeaderMultiple, filename);
 
     expect(result).toBe(matcherResult.WRONG_HEADER);

@@ -23,6 +23,7 @@ function matchesModel(packingList, filename, regexExpression, trader) {
       // check for header values
       result = matchesHeader(headers.GIOVANNI1.regex, packingList[sheet]);
     }
+
     if (result === matcherResult.CORRECT) {
       logger.log_info(
         filenameForLogging,
@@ -30,6 +31,7 @@ function matchesModel(packingList, filename, regexExpression, trader) {
         `Packing list matches giovanni Model 1 with filename: ${filename}`,
       );
     }
+
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

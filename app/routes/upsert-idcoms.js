@@ -23,6 +23,7 @@ async function upsert(request) {
   let checkStatus = StatusCodes.NOT_FOUND;
   try {
     await sendParsed(request.query.applicationId, request.query.isApproved);
+
     checkStatus = StatusCodes.OK;
   } catch (err) {
     logger.logError(filenameForLogging, "get() > sendParsed", err);

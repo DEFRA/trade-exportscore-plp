@@ -9,8 +9,10 @@ describe("parseTjmorrisModel1", () => {
 
     expect(result).toEqual(test_results.validTestResult);
   });
+
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModelMultipleSheets);
+
     expect(result).toEqual(test_results.validTestResultForMultipleSheets);
   });
 

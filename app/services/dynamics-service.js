@@ -29,6 +29,7 @@ async function bearerTokenRequest() {
     }
 
     const json = await response.json();
+
     return json.access_token;
   } catch (err) {
     logger.logError(filenameForLogging, "bearerTokenRequest()", err);

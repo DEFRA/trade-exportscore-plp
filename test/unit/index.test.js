@@ -31,7 +31,9 @@ describe("Server setup", () => {
   test("should log error and exit process when server start fails", async () => {
     const error = new Error("Server start failed");
     require("../../app/index");
+
     const mockStart = jest.fn().mockRejectedValue(error);
+
     createServer.mockResolvedValue({ start: mockStart });
   });
 });

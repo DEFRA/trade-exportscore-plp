@@ -11,6 +11,7 @@ function matchesHeader(regexHeader, packingListSheet) {
         return matcherResult.WRONG_HEADER;
       }
     }
+
     return matcherResult.CORRECT;
   } catch (err) {
     logger.logError(filenameForLogging, "matchesHeader()", err);

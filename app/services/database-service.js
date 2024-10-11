@@ -33,9 +33,11 @@ module.exports = (() => {
       .forEach((file) =>
         require(path.join(modelPath, file))(sequelize, DataTypes),
       );
+
     if (sequelize.models) {
       associateModels(sequelize);
     }
+
     return {
       models: sequelize.models,
       sequelize,

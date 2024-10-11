@@ -31,6 +31,7 @@ describe("matchesTescosModel1", () => {
       registration_approval_number: null,
       parserModel: parserModel.NOMATCH,
     };
+
     const result = parserService.findParser(model.validModel, filename);
 
     expect(result).toEqual(invalidTestResult_NoMatch);
