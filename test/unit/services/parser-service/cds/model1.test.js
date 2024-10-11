@@ -21,7 +21,7 @@ describe("matchesCdsModel1", () => {
     expect(result).toEqual(test_results.invalidTestResult_MissingCells);
   });
 
-  test("wrong file extension", () => {
+  test("returns 'No Match' for incorrect file extension", () => {
     const filename = "packinglist.pdf";
     const invalidTestResult_NoMatch = {
       business_checks: {

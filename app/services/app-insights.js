@@ -1,6 +1,7 @@
 const appInsights = require("applicationinsights");
 const logger = require("./../utilities/logger");
-const logAppInsightsPath = "app/services/app-insights.js";
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function setup() {
   try {
@@ -14,20 +15,20 @@ function setup() {
       const appName = process.env.APPINSIGHTS_CLOUDROLE;
       appInsights.defaultClient.context.tags[cloudRoleTag] = appName;
       logger.log_info(
-        logAppInsightsPath,
+        filenameForLogging,
         "setup()",
         "App Insights is running!",
       );
     } else {
       logger.logError(
-        logAppInsightsPath,
+        filenameForLogging,
         "setup()",
         "App Insights is not running!",
       );
     }
   } catch (err) {
     logger.logError(
-      logAppInsightsPath,
+      filenameForLogging,
       "setup()",
       `App Insights Setup encountered: ${err}`,
     );

@@ -29,6 +29,22 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    RANA: [
+      {
+        A: "NIRMS NUMBER",
+      },
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "DESCRIPTION",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {
@@ -92,6 +108,62 @@ module.exports = {
         C: "FOUR CHEESE TORT",
         G: 10,
         H: null,
+        E: "1902209990",
+      },
+    ],
+  },
+  incorrectEstablishmentNumber: {
+    RANA: [
+      {
+        A: "NIRMS NUMBER",
+      },
+      {
+        A: "INVALID",
+      },
+      {
+        C: "DESCRIPTION",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        G: 17,
+        H: 40.8,
+        E: "1902209990",
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        G: 10,
+        H: 24,
+        E: "1902209990",
+      },
+    ],
+  },
+  incorrectHeader: {
+    RANA: [
+      {
+        A: "INVALID",
+      },
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "INVALID",
+        G: "INVALID",
+        H: "INVALID",
+        E: "INVALID",
+      },
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        G: 17,
+        H: 40.8,
+        E: "1902209990",
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        G: 10,
+        H: 24,
         E: "1902209990",
       },
     ],

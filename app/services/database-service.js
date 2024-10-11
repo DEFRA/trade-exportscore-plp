@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../config");
 const dbConfig = config.dbConfig[config.env];
@@ -40,10 +41,6 @@ module.exports = (() => {
       sequelize,
     };
   } catch (err) {
-    logger.logError(
-      "app/services/database-service.js",
-      "module.exports()",
-      err,
-    );
+    logger.logError(filenameForLogging, "module.exports()", err);
   }
 })();

@@ -27,6 +27,47 @@ module.exports = {
     registration_approval_number: "RMS-GB-000216-002",
     parserModel: parserModel.FOWLERWELCH1,
   },
+  validTestResultMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+    },
+    items: [
+      {
+        commodity_code: "2005800099",
+        description: "Sweetcorn Express 8x2",
+        nature_of_products: null,
+        number_of_packages: "5",
+        total_net_weight_kg: "20.000",
+        type_of_treatment: "Chilled",
+      },
+      {
+        commodity_code: "2005800099",
+        description: "Sweetcorn Cobettes 24x4",
+        nature_of_products: null,
+        number_of_packages: "65",
+        total_net_weight_kg: "780.000",
+        type_of_treatment: "Chilled",
+      },
+      {
+        commodity_code: "1602329090",
+        description: "CHICKEN SLICE/PASTY",
+        nature_of_products: null,
+        number_of_packages: "5",
+        total_net_weight_kg: "5.1",
+        type_of_treatment: "Chilled",
+      },
+      {
+        commodity_code: "1602421000",
+        description: "PEPPERONI SLICE/PASTY",
+        nature_of_products: null,
+        number_of_packages: "8",
+        total_net_weight_kg: "8.16",
+        type_of_treatment: "Chilled",
+      },
+    ],
+    registration_approval_number: "RMS-GB-000216-002",
+    parserModel: parserModel.FOWLERWELCH1,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

@@ -1,4 +1,6 @@
 const logger = require("../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 // Function to trim and replace empty strings with null
 function sanitiseValue(value) {
@@ -36,7 +38,7 @@ function sanitise(jsonString) {
     return JSON.stringify(jsonObj); // Convert back to JSON string
   } catch (err) {
     logger.logError(
-      "app/utilities/json-file.js",
+      filenameForLogging,
       "sanitise()",
       `Invalid JSON string provided: ${err}`,
     );

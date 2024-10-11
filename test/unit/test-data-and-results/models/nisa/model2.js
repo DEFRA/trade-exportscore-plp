@@ -30,6 +30,23 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    sheet: [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+      },
+      {
+        A: "RMS-GB-000025-003",
+      },
+      {
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        I: "NET WEIGHT TOTAL",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {
@@ -76,6 +93,14 @@ module.exports = {
       },
     ],
   },
+  wrongEstablishment: {
+    Sheet1: [
+      {},
+      {
+        A: "INCORRECT",
+      },
+    ],
+  },
   wrongEstablishmentMultiple: {
     Sheet1: [
       {},
@@ -87,6 +112,18 @@ module.exports = {
       {},
       {
         A: "INCORRECT",
+      },
+    ],
+  },
+  incorrectHeader: {
+    sheet1: [
+      {
+        C: "NOT",
+        F: "CORRECT",
+        I: "HEADER",
+      },
+      {
+        A: "RMS-GB-000025-003",
       },
     ],
   },

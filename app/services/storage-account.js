@@ -2,6 +2,8 @@ const excelToJson = require("@boterop/convert-excel-to-json");
 const { BlobClient } = require("@azure/storage-blob");
 const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function createStorageAccountClient(blobUri) {
   return new BlobClient(blobUri, new DefaultAzureCredential());
@@ -18,11 +20,7 @@ async function getXlsPackingListFromBlob(blobClient) {
     });
     return result;
   } catch (err) {
-    logger.logError(
-      "app/services/storage-account.js",
-      "getXlsPackingListFromBlob()",
-      err,
-    );
+    logger.logError(filenameForLogging, "getXlsPackingListFromBlob()", err);
   }
 }
 
@@ -37,7 +35,7 @@ async function streamToBuffer(readableStream) {
     });
     readableStream.on("error", reject);
   }).catch((err) => {
-    logger.logError("app/services/storage-account.js", "streamToBuffer()", err);
+    logger.logError(filenameForLogging, "streamToBuffer()", err);
   });
 }
 

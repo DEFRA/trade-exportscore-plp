@@ -54,6 +54,29 @@ module.exports = {
       },
     ],
   },
+  validHeadersNoData: {
+    Sheet1: [
+      {},
+      {},
+      {
+        H: "WAREHOUSE SCHEME NUMBER:",
+        I: "RMS-GB-000005-001",
+      },
+      {},
+      {},
+      {
+        A: "PRODUCT CODE (SHORT)",
+        B: "PRISM",
+        C: "ITEM DESCRIPTION",
+        D: "COMMODITY CODE",
+        E: "PLACE OF DISPATCH",
+        F: "TOTAL NUMBER OF CASES",
+        G: "NET WEIGHT",
+        H: "GROSS WEIGHT",
+        I: "ANIMAL ORIGIN",
+      },
+    ],
+  },
   validModelMultipleSheets: {
     Sheet1: [
       {},
@@ -232,6 +255,25 @@ module.exports = {
         G: "NET WEIGHT",
         H: "GROSS WEIGHT",
         I: "ANIMAL ORIGIN",
+      },
+    ],
+  },
+  incorrectHeader: {
+    sheet1: [
+      {},
+      {},
+      { H: "WAREHOUSE SCHEME NUMBER:", I: "RMS-GB-000005-001" },
+      {},
+      {},
+      {
+        C: "ITEM DESCRIPTION",
+        F: "TOTAL NUMBER OF CASES",
+        G: "NET WEIGHT",
+      },
+      {
+        H: "J/L JERKY 70G TERIYAKI",
+        F: "1",
+        G: "1.15",
       },
     ],
   },
