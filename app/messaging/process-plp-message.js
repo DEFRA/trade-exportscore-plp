@@ -29,10 +29,10 @@ async function processBlob(message) {
   return result;
 }
 
-function getPackinList(result, message) {
+async function getPackinList(result, message) {
   let packingList = {};
   try {
-    packingList = findParser(result, message.body.packing_list_blob);
+    packingList = await findParser(result, message.body.packing_list_blob);
   } catch (err) {
     logger.logError(
       filenameForLogging,
@@ -50,7 +50,6 @@ async function processPackingList(packingList, message) {
       logger.log_info(
         filenameForLogging,
         logProcessPlpMessageFunction,
-        "Received message: ",
         `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
       );
     } catch (err) {
@@ -97,12 +96,11 @@ async function processPlpMessage(message, receiver) {
     logger.log_info(
       filenameForLogging,
       logProcessPlpMessageFunction,
-      "Received message: ",
-      JSON.stringify(message.body),
+      "Received message: " + JSON.stringify(message.body),
     );
 
     const result = await processBlob(message);
-    const packingList = getPackinList(result, message);
+    const packingList = await getPackinList(result, message);
     await processPackingList(packingList, message);
   } catch (err) {
     logger.logError(filenameForLogging, logProcessPlpMessageFunction, err);
