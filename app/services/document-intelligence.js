@@ -24,7 +24,7 @@ async function runAnalysis(client, modelId, fileBuffer) {
 
     return document;
   } catch (err) {
-    logger.log_error(
+    logger.logError(
       "app/services/document-intelligence.js",
       "runAnalysis()",
       err,
