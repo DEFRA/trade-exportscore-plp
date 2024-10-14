@@ -98,7 +98,7 @@ const headers = {
       nature_of_products: "NatureOfProduct",
     },
     regex: [
-      /Product/,
+      /^Product$/,
       /Treatment/,
       /# Packages/,
       /NetWeight/,
