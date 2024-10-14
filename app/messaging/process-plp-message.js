@@ -98,7 +98,7 @@ async function processPlpMessage(message, receiver) {
       filenameForLogging,
       logProcessPlpMessageFunction,
       "Received message: ",
-      message.body,
+      JSON.stringify(message.body),
     );
 
     const result = await processBlob(message);
