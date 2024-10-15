@@ -11,7 +11,7 @@ const { MessageReceiver } = require("adp-messaging");
 const { findParser } = require("../../../app/services/parser-service");
 const {
   createStorageAccountClient,
-  getXlsPackingListFromBlob,
+  getPackingListFromBlob,
 } = require("../../../app/services/storage-account");
 const { createPackingList } = require("../../../app/packing-list");
 const {
@@ -23,7 +23,7 @@ createStorageAccountClient.mockImplementation(() => {
   return jest.fn();
 });
 
-getXlsPackingListFromBlob.mockImplementation(() => {
+getPackingListFromBlob.mockImplementation(() => {
   return jest.fn();
 });
 

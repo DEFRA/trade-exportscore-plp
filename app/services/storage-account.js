@@ -4,23 +4,28 @@ const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const { isExcel } = require("../utilities/file-extension");
 
 function createStorageAccountClient(blobUri) {
   return new BlobClient(blobUri, new DefaultAzureCredential());
 }
 
-async function getXlsPackingListFromBlob(blobClient) {
+async function getPackingListFromBlob(blobClient, blobUri) {
   try {
     const downloadBlockBlobResponse = await blobClient.download();
     const downloaded = await streamToBuffer(
       downloadBlockBlobResponse.readableStreamBody,
     );
 
-    const result = excelToJson({ source: downloaded });
+    let result;
+    if (isExcel(blobUri)) {
+      result = excelToJson({ source: downloaded });
+    }
+    else result = downloaded;
 
     return result;
   } catch (err) {
-    logger.logError(filenameForLogging, "getXlsPackingListFromBlob()", err);
+    logger.logError(filenameForLogging, "getPackingListFromBlob()", err);
   }
 }
 
@@ -40,4 +45,4 @@ async function streamToBuffer(readableStream) {
   });
 }
 
-module.exports = { createStorageAccountClient, getXlsPackingListFromBlob };
+module.exports = { createStorageAccountClient, getPackingListFromBlob };
