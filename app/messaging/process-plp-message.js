@@ -18,7 +18,10 @@ async function processBlob(message) {
 
   let result = {};
   try {
-    result = await getPackingListFromBlob(blobClient, message.body.packing_list_blob);
+    result = await getPackingListFromBlob(
+      blobClient,
+      message.body.packing_list_blob,
+    );
   } catch (err) {
     logger.logError(
       filenameForLogging,
