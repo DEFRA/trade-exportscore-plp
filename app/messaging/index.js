@@ -15,7 +15,7 @@ async function start() {
 
       await plpReceiver.subscribe();
 
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "start()",
         "Ready to receive messages",
@@ -35,7 +35,7 @@ async function start() {
 async function stop() {
   try {
     if (config.plpSubscription.name) {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "stop()",
         "Stopped receiving messages",

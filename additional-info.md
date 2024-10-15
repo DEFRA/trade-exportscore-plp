@@ -29,3 +29,9 @@ gpg.program=/mnt/c/Program Files (x86)/gnupg/bin/gpg.exe (or /mnt/c/Users/userna
 commit.gpgsign=true
 tag.gpgsign=true
 ```
+
+GPG can have issues redirecting the output (i.e. the password request for signing the commit). To resolve:
+
+```text
+export GPG_TTY=$(tty)
+```

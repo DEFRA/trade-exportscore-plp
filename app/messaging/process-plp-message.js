@@ -47,7 +47,7 @@ async function processPackingList(packingList, message) {
   if (packingList.parserModel !== parserModel.NOMATCH) {
     try {
       await createPackingList(packingList, message.body.application_id);
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         logProcessPlpMessageFunction,
         `Business checks for ${message.body.application_id}: ${packingList.business_checks.all_required_fields_present}`,
@@ -93,7 +93,7 @@ async function processPackingList(packingList, message) {
 async function processPlpMessage(message, receiver) {
   try {
     await receiver.completeMessage(message);
-    logger.log_info(
+    logger.logInfo(
       filenameForLogging,
       logProcessPlpMessageFunction,
       "Received message: " + JSON.stringify(message.body),
