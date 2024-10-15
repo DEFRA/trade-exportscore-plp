@@ -29,7 +29,7 @@ async function processBlob(message) {
   return result;
 }
 
-async function getPackinList(result, message) {
+async function getPackingList(result, message) {
   let packingList = {};
   try {
     packingList = await findParser(result, message.body.packing_list_blob);
@@ -100,7 +100,7 @@ async function processPlpMessage(message, receiver) {
     );
 
     const result = await processBlob(message);
-    const packingList = await getPackinList(result, message);
+    const packingList = await getPackingList(result, message);
     await processPackingList(packingList, message);
   } catch (err) {
     logger.logError(filenameForLogging, logProcessPlpMessageFunction, err);
