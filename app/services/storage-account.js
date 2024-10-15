@@ -21,11 +21,14 @@ async function getPackingListFromBlob(blobClient, blobUri) {
     if (isExcel(blobUri)) {
       result = excelToJson({ source: downloaded });
     }
-    else result = downloaded;
+    else {
+      result = downloaded;
+    }
 
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "getPackingListFromBlob()", err);
+    return {};
   }
 }
 
