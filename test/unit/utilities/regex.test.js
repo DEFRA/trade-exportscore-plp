@@ -153,3 +153,65 @@ describe("findMatch function", () => {
     expect(regex.findMatch("John", array)).toBe("John"); // Matches 'John'
   });
 });
+
+describe("testAllPatterns function", () => {
+  it("should return true when all regex patterns match values in the object", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    const regexArray = ["John", "Doe"];
+    expect(regex.testAllPatterns(regexArray, array[0])).toBe(true); // All patterns match 'John Doe'
+  });
+
+  it("should return false when not all regex patterns match values in the object", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    const regexArray = ["John", "Smith"];
+    expect(regex.testAllPatterns(regexArray, array[0])).toBe(false); // 'Smith' doesn't match
+  });
+
+  it("should return true when all regex patterns match across different properties", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    const regexArray = ["John", "London"];
+    expect(regex.testAllPatterns(regexArray, array[0])).toBe(true); // 'John' and 'London' match across different properties
+  });
+
+  it("should return false if no regex patterns match", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    const regexArray = ["Michael", "Berlin"];
+    expect(regex.testAllPatterns(regexArray, array[0])).toBe(false); // No match at all
+  });
+
+  it("should skip non-string values and still match patterns in string properties", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London", active: true },
+      { name: "Jane Smith", age: 25, city: "Paris", job: "Engineer" },
+    ];
+
+    const regexArray = ["John", "London"];
+    expect(regex.testAllPatterns(regexArray, array[0])).toBe(true); // Matches 'John' and 'London' and skips boolean values
+  });
+
+  it("should return false if no objects have matching properties", () => {
+    const array = [
+      { age: 30, active: true },
+      { age: 25, city: "Paris" },
+    ];
+
+    const regexArray = ["John", "Doe"];
+    expect(regex.testAllPatterns(regexArray, array[0])).toBe(false); // No string properties to match
+  });
+});

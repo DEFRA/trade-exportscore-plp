@@ -20,8 +20,7 @@ async function getPackingListFromBlob(blobClient, blobUri) {
     let result;
     if (isExcel(blobUri)) {
       result = excelToJson({ source: downloaded });
-    }
-    else {
+    } else {
       result = downloaded;
     }
 

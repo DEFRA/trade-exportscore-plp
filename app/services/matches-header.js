@@ -4,20 +4,23 @@ const logger = require("../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function matchesHeader(regexHeader, packingListSheet) {
+function matchesHeader(regexHeaders, packingListSheet) {
   try {
-    for (const header in regexHeader) {
-      if (!regex.test(regexHeader[header], packingListSheet)) {
-        return matcherResult.WRONG_HEADER;
+    // Iterate over each row in the packingListSheet
+    for (const row of packingListSheet) {
+      // Test if ALL regex headers match any of the string properties in the current row object
+      if (regex.testAllPatterns(regexHeaders, row)) {
+        return matcherResult.CORRECT; // Return CORRECT if at least one object matches all regex
       }
     }
 
-    return matcherResult.CORRECT;
+    return matcherResult.WRONG_HEADER; // Return WRONG_HEADER if no object matches all regex patterns
   } catch (err) {
     logger.logError(filenameForLogging, "matchesHeader()", err);
     return matcherResult.GENERIC_ERROR;
   }
 }
+
 module.exports = {
   matchesHeader,
 };
