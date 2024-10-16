@@ -15,7 +15,7 @@ async function createPackingList(packingListJson, applicationId) {
 
       await models.item.bulkCreate(packingList.item, { transaction });
 
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "createPackingList()",
         `Saved packing list in database with application id: ${packingList.applicationId}`,

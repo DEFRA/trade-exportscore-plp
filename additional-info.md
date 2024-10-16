@@ -25,7 +25,13 @@ WSL configuration should be returned from `git config --global --list` with simi
 user.email=your.capgemini.email.address@capgemini.com
 user.name=Your Name
 user.signingkey=either your email address (or the Alpha-numeric name depending on how you configured)
-gpg.program=/mnt/c/Program Files (x86)/gnupg/bin/gpg.exe (or /mnt/c/Users/username/AppData/Local/Programs/GnuPG/bin/gpg.exe)
+gpg.program=/mnt/c/Users/{username}/AppData/Local/Programs/GnuPG/bin/gpg.exe (or /mnt/c/Program Files (x86)/gnupg/bin/gpg.exe)
 commit.gpgsign=true
 tag.gpgsign=true
+```
+
+GPG can have issues redirecting the output (i.e. the request for the password to sign the commit). To resolve:
+
+```text
+export GPG_TTY=$(tty)
 ```

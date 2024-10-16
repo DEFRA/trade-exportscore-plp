@@ -45,7 +45,7 @@ function matches(packingList, filename) {
       }
     }
 
-    logger.log_info(
+    logger.logInfo(
       filenameForLogging,
       "matches()",
       `Packing list matches tjmorris Model 1 with filename: ${filename}`,

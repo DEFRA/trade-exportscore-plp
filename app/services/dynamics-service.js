@@ -54,7 +54,7 @@ async function patchPackingListCheck(applicationId, isApproved) {
       body: JSON.stringify({ rms_automatedpackinglistcheck: outcome }),
     });
     const status = (await response).status;
-    logger.log_info(
+    logger.logInfo(
       filenameForLogging,
       "patchPackingListCheck()",
       `Upsert ${applicationId} with outcome ${isApproved}, status ${status}`,

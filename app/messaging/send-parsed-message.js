@@ -13,7 +13,7 @@ async function sendParsedAdp(parsedResult, applicationId) {
     const parsedSender = new MessageSender(config.tpQueue);
     await parsedSender.sendMessage(message);
     await parsedSender.closeConnection();
-    logger.log_info(
+    logger.logInfo(
       filenameForLogging,
       "sendParsedAdp()",
       `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,
@@ -38,7 +38,7 @@ async function sendParsed(applicationId, parsedResult) {
 
       try {
         await sender.sendMessages(message);
-        logger.log_info(
+        logger.logInfo(
           filenameForLogging,
           "sendParsed()",
           `Sent message to TP queue for application id ${applicationId} with parsed result ${parsedResult}`,

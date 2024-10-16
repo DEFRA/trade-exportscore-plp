@@ -38,7 +38,7 @@ async function matches(packingList, filename) {
     result.document = document;
 
     if (result.isMatched === matcherResult.CORRECT) {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "matches()",
         `Packing list matches Iceland Model 1 with filename: ${filename}`,

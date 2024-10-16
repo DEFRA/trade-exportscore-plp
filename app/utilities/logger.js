@@ -16,7 +16,7 @@ function logError(file_name, method, error) {
  * @param {string} method - The method name (and optional method call within the overall method) logging the informationally message.
  * @param {string} info_message - The actual informational message to log.
  */
-function log_info(file_name, method, info_message) {
+function logInfo(file_name, method, info_message) {
   console.info(
     `Whilst running the '${method}' method in '${file_name}', the PLP application logged info: ${info_message}`,
   );
@@ -24,5 +24,5 @@ function log_info(file_name, method, info_message) {
 
 module.exports = {
   logError,
-  log_info,
+  logInfo,
 };
