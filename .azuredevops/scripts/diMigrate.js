@@ -30,7 +30,7 @@ function createDocumentIntelligenceClients(env) {
   return {
     modelAdminClient: new DocumentModelAdministrationClient(
       env.endpoint,
-      new AzureKeyCredential(env.key)
+      new AzureKeyCredential(env.key),
     ),
   };
 }
@@ -64,7 +64,7 @@ async function copyModel(sourceClient, targetClient) {
 
     const poller = await sourceClient.beginCopyModelTo(
       targetModelId,
-      copyAuthorisation
+      copyAuthorisation,
     );
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);
