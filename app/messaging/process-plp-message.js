@@ -1,7 +1,7 @@
 const { findParser } = require("../services/parser-service");
 const {
   createStorageAccountClient,
-  getXlsPackingListFromBlob,
+  getPackingListFromBlob,
 } = require("../services/storage-account");
 const { createPackingList } = require("../packing-list");
 const { patchPackingListCheck } = require("../services/dynamics-service");
@@ -18,18 +18,21 @@ async function processBlob(message) {
 
   let result = {};
   try {
-    result = await getXlsPackingListFromBlob(blobClient);
+    result = await getPackingListFromBlob(
+      blobClient,
+      message.body.packing_list_blob,
+    );
   } catch (err) {
     logger.logError(
       filenameForLogging,
-      "processPlpMessage() > getXlsPackingListFromBlob",
+      "processPlpMessage() > getPackingListFromBlob",
       err,
     );
   }
   return result;
 }
 
-async function getPackinList(result, message) {
+async function getPackingList(result, message) {
   let packingList = {};
   try {
     packingList = await findParser(result, message.body.packing_list_blob);
@@ -100,7 +103,7 @@ async function processPlpMessage(message, receiver) {
     );
 
     const result = await processBlob(message);
-    const packingList = await getPackinList(result, message);
+    const packingList = await getPackingList(result, message);
     await processPackingList(packingList, message);
   } catch (err) {
     logger.logError(filenameForLogging, logProcessPlpMessageFunction, err);
