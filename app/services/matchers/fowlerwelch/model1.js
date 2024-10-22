@@ -8,36 +8,38 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matchesModel(packingList, filename, regexExpression, trader) {
   let headerRow = 0;
-
+  
   try {
-    //check for correct establishment number
     const sheets = Object.keys(packingList);
-
     if (sheets?.length === 0) {
       return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {
-      // check for correct establishment number
-      if (!regex.test(regexExpression, packingList[sheet])) {
-        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
-      }
+      if (!headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
+        // check for correct establishment number
+        if (!regex.test(regexExpression, packingList[sheet])) {
+          return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
+        }
 
-      // check for header values
-      headerRow = rowFinder(packingList[sheet], callback);
-      if (headerRow === -1) {
-        return matcherResult.WRONG_HEADER;
-      }
-      if (!areHeadersValid(packingList, sheet, headerRow)) {
-        return matcherResult.WRONG_HEADER;
+        // check for header values
+        headerRow = rowFinder(packingList[sheet], callback);
+        if (headerRow === -1) {
+          return matcherResult.WRONG_HEADER;
+        }
+        if (!areHeadersValid(packingList, sheet, headerRow)) {
+          return matcherResult.WRONG_HEADER;
+        
+        }
       }
     }
-
+    
     logger.logInfo(
       filenameForLogging,
       "matches()",
       `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
     );
+  
     return matcherResult.CORRECT;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

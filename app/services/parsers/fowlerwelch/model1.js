@@ -21,22 +21,26 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     );
 
     for (const sheet of sheets) {
-      headerRow = packingListJson[sheet].findIndex(
-        (x) => x.F === headers.FOWLERWELCH1.headers.description,
-      );
+      if (!headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
+        headerRow = packingListJson[sheet].findIndex(
+          (x) => x.F === headers.FOWLERWELCH1.headers.description,
+        );
 
-      packingListContentsTemp = packingListJson[sheet]
-        .slice(headerRow + 1)
-        .map((col) => ({
-          description: col.F ?? null,
-          nature_of_products: null,
-          type_of_treatment: col.N ?? null,
-          commodity_code: col.C ?? null,
-          number_of_packages: col.H ?? null,
-          total_net_weight_kg: col.K ?? null,
-        }));
+        packingListContentsTemp = packingListJson[sheet]
+          .slice(headerRow + 1)
+          .map((col) => ({
+            description: col.F ?? null,
+            nature_of_products: null,
+            type_of_treatment: col.N ?? null,
+            commodity_code: col.C ?? null,
+            number_of_packages: col.H ?? null,
+            total_net_weight_kg: col.K ?? null,
+          }));
 
-      packingListContents = packingListContents.concat(packingListContentsTemp);
+        packingListContents = packingListContents.concat(
+          packingListContentsTemp,
+        );
+      }
     }
 
     return combineParser.combine(
