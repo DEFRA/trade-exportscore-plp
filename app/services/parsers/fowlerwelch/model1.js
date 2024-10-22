@@ -21,6 +21,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     );
 
     for (const sheet of sheets) {
+      if (!headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
       headerRow = packingListJson[sheet].findIndex(
         (x) => x.F === headers.FOWLERWELCH1.headers.description,
       );
@@ -38,7 +39,8 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
 
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
-
+}
+    //console.log(packingListContents);
     return combineParser.combine(
       establishmentNumber,
       packingListContents,

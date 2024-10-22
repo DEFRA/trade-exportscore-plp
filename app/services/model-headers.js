@@ -135,12 +135,29 @@ const headers = {
     ],
   },
   FOWLERWELCH1: {
+    invalidSheets: [
+      "Invoice",
+      "Lookups",
+      "Addresses",
+      "Batch Info",
+      "Commodity",
+      "Meursing",
+      "Products",
+    ],
     headers: {
       description: descriptionOfGoods,
       commodity_code: commodityCodeLowercase,
       number_of_packages: noOfPackages,
       total_net_weight_kg: "Item Net Weight (kgs)",
+      type_of_treatment: "Treatment Type (Chilled /Ambient)",
     },
+    regex: [
+      /Description of goods/,
+      /Commodity code/,
+      /No. of pkgs/,
+      /(Total|Item) Net Weight\s*(?:\(?\d*\.?\d*kgs\))?/,
+      /Treatment Type \(Chilled \/Ambient\)/,
+    ],
     establishmentNumber: {
       regex: /RMS-GB-000216(-\d{3})?/,
     },
