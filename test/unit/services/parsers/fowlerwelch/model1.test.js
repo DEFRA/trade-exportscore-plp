@@ -11,7 +11,7 @@ describe("parseFowlerWelchModel1", () => {
     expect(result).toEqual(test_results.validTestResult);
   });
 
-  test.only("parses multiple sheets", () => {
+  test("parses multiple sheets", () => {
     const result = parser.parse(model.validModel_Multiple);
 
     expect(result).toEqual(test_results.validTestResultMultipleSheets);

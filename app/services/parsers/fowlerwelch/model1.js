@@ -5,13 +5,16 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const packingList = require("../../../models/packing-list");
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
+const {mapParser2} = require("../../parser-map")
 
 function parseModel(packingListJson, model, establishmentNumberRegex) {
   try {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
-
     let headerRow = packingListJson[sheets[0]].findIndex(
       (x) => x.F === headers.FOWLERWELCH1.headers.description,
     );
@@ -22,25 +25,21 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
 
     for (const sheet of sheets) {
       if (!headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
-      headerRow = packingListJson[sheet].findIndex(
-        (x) => x.F === headers.FOWLERWELCH1.headers.description,
-      );
+        headerRow = packingListJson[sheet].findIndex(
+          (x) => x.F === headers.FOWLERWELCH1.headers.description,
+        );
 
-      packingListContentsTemp = packingListJson[sheet]
-        .slice(headerRow + 1)
-        .map((col) => ({
-          description: col.F ?? null,
-          nature_of_products: null,
-          type_of_treatment: col.N ?? null,
-          commodity_code: col.C ?? null,
-          number_of_packages: col.H ?? null,
-          total_net_weight_kg: col.K ?? null,
-        }));
-
-      packingListContents = packingListContents.concat(packingListContentsTemp);
+        packingListContentsTemp = mapParser2(
+          packingListJson[sheet],
+          headerRow,
+          headerRow + 1,
+          headers.FOWLERWELCH1.regex,
+        );
+        packingListContents = packingListContents.concat(packingListContentsTemp);
+       
+      }
     }
-}
-    //console.log(packingListContents);
+
     return combineParser.combine(
       establishmentNumber,
       packingListContents,
@@ -59,5 +58,6 @@ function parse(packingListJson) {
     headers.FOWLERWELCH1.establishmentNumber.regex,
   );
 }
+
 
 module.exports = { parse, parseModel };
