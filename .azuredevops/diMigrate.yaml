@@ -1,0 +1,41 @@
+trigger: none
+
+pool:
+  vmImage: "<TO_REPLACE_WITH_ADO_AGENT_POOL>" # TO MODIFY WHEN ADO AGENT POOL TO USE IS KNOWN
+
+# Define pipeline parameters
+parameters:
+  - name: SOURCE_MODEL_ID
+    displayName: "Source Model ID"
+    type: string
+    default: ""
+  - name: TARGET_MODEL_ID
+    displayName: "Target Model ID"
+    type: string
+    default: ""
+
+steps:
+  # Set Node.js version to 16.x
+  - task: UseNode@1
+    inputs:
+      version: "16.x"
+
+  # Install npm dependencies if package.json is present
+  - script: |
+      npm install
+    displayName: "Install npm dependencies"
+
+  # Use the Azure CLI task to authenticate using the service connection and run the Node.js script
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: "<TO_REPLACE_WITH_ADO_SERVICE_CONNECTION>" # TO MODIFY WHEN SERVICE CONNECTION TO USE IS KNOWN
+      scriptType: "bash"
+      scriptLocation: "inlineScript"
+      inlineScript: |
+        # Run the Node.js script with environment variables
+        node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
+    env:
+      SOURCE_MODEL_ID: ${{ parameters.SOURCE_MODEL_ID }}
+      TARGET_MODEL_ID: ${{ parameters.TARGET_MODEL_ID }}
+      SOURCE_ENDPOINT: $(SOURCE_ENDPOINT)
+      TARGET_ENDPOINT: $(TARGET_ENDPOINT)
