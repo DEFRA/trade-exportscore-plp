@@ -151,13 +151,6 @@ const headers = {
       total_net_weight_kg: "Item Net Weight (kgs)",
       type_of_treatment: "Treatment Type (Chilled /Ambient)",
     },
-    regex: [
-      /Description of goods/,
-      /Commodity code/,
-      /No. of pkgs/,
-      /(Total|Item) Net Weight\s*(?:\(?\d*\.?\d*kgs\))?/,
-      /Treatment Type \(Chilled \/Ambient\)/,
-    ],
     establishmentNumber: {
       regex: /RMS-GB-000216(-\d{3})?/,
     },

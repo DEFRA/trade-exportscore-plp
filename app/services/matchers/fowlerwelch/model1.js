@@ -7,6 +7,8 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matchesModel(packingList, filename, regexExpression, trader) {
+  let headerRow = 0;
+  
   try {
     const sheets = Object.keys(packingList);
     if (sheets?.length === 0) {
