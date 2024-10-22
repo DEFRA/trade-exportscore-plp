@@ -30,7 +30,7 @@ function matches(packingList, filename) {
     }
 
     if (result === matcherResult.CORRECT) {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "matches()",
         `Packing list matches tescos Model 1 with filename: ${filename}`,

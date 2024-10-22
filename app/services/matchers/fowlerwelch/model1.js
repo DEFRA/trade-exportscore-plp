@@ -25,7 +25,7 @@ function matchesModel(packingList, filename, regexExpression, trader) {
       }
     }
     if (result === matcherResult.CORRECT) {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "matches()",
         `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
