@@ -29,7 +29,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         headerRow,
         headerRow + 1,
-        headers.GIOVANNI1.headers,
+        headers.GIOVANNI1.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

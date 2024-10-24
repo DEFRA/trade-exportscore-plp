@@ -23,11 +23,14 @@ function matches(packingList, filename) {
       }
 
       // check for header values
-      result = matchesHeader(headers.NISA2.regex, packingList[sheet]);
+      result = matchesHeader(
+        Object.values(headers.NISA2.regex),
+        packingList[sheet],
+      );
     }
 
     if (result === matcherResult.CORRECT) {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "matches()",
         `Packing list matches nisa Model 2 with filename: ${filename}`,

@@ -1,12 +1,12 @@
 const matcherResult = require("../../matcher-result");
-const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const { matchesHeader } = require("../../matches-header");
 
-function matchesModel(packingList, filename, regexExpression, trader) {
+function matchesModel(packingList, filename, regexExpression) {
   try {
     let result;
     const sheets = Object.keys(packingList);
@@ -20,17 +20,23 @@ function matchesModel(packingList, filename, regexExpression, trader) {
         if (!regex.test(regexExpression, packingList[sheet])) {
           return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
         }
+
         // check for header values
-        result = matchesHeader(headers.FOWLERWELCH1.regex, packingList[sheet]);
+        result = matchesHeader(
+          Object.values(headers.FOWLERWELCH1.regex),
+          packingList[sheet],
+        );
       }
     }
+
     if (result === matcherResult.CORRECT) {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "matches()",
         `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
       );
     }
+
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

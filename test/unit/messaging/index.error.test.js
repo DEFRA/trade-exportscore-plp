@@ -21,7 +21,7 @@ const console_error_spy = jest
   .spyOn(logger, "logError")
   .mockImplementation(() => {});
 const console_info_spy = jest
-  .spyOn(logger, "log_info")
+  .spyOn(logger, "logInfo")
   .mockImplementation(() => {});
 
 describe("messaging module", () => {

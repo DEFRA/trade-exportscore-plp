@@ -22,7 +22,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         0,
         2,
-        headers.TESCO2.headers,
+        headers.TESCO2.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

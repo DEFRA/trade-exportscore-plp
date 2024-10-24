@@ -25,11 +25,14 @@ function matches(packingList, filename) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
       // check for header values
-      result = matchesHeader(headers.DAVENPORT1.regex, packingList[sheet]);
+      result = matchesHeader(
+        Object.values(headers.DAVENPORT1.regex),
+        packingList[sheet],
+      );
     }
 
     if (result === matcherResult.CORRECT) {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "matches()",
         `Packing list matches davenport Model 1 with filename: ${filename}`,

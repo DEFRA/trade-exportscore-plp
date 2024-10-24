@@ -22,11 +22,14 @@ function matches(packingList, filename) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
       // check for header values
-      result = matchesHeader(headers.COOP1.regex, packingList[sheet]);
+      result = matchesHeader(
+        Object.values(headers.COOP1.regex),
+        packingList[sheet],
+      );
     }
 
     if (result === matcherResult.CORRECT) {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         "matches()",
         `Packing list matches co-op Model 1 with filename: ${filename}`,

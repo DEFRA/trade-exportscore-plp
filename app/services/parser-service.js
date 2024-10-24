@@ -38,7 +38,7 @@ async function findParser(packingList, filename) {
       });
 
       if (!parserFound) {
-        logger.log_info(
+        logger.logInfo(
           filenameForLogging,
           logParserServiceFunction,
           `Failed to parse packing list with filename: ${filename}`,
@@ -54,14 +54,14 @@ async function findParser(packingList, filename) {
       );
 
       if (parsedPackingList.parserModel === matcherResult.NOMATCH) {
-        logger.log_info(
+        logger.logInfo(
           filenameForLogging,
           "logParserServiceFunction",
           `Failed to parse packing list with filename: ${filename}, no match`,
         );
       }
     } else {
-      logger.log_info(
+      logger.logInfo(
         filenameForLogging,
         logParserServiceFunction,
         `Failed to parse packing list with filename: ${filename} as it is not an Excel file.`,

@@ -25,7 +25,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         0,
         1,
-        headers.SAINSBURYS1.headers,
+        headers.SAINSBURYS1.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

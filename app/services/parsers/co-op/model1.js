@@ -22,7 +22,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         0,
         1,
-        headers.COOP1.headers,
+        headers.COOP1.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

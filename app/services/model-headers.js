@@ -23,13 +23,13 @@ const headers = {
       number_of_packages: "[Number of Packages]",
       total_net_weight_kg: "[Net Weight]",
     },
-    regex: [
-      /\[Description Of All Retail Goods\]/,
-      /\[Nature Of Product\]/,
-      /\[Treatment Type\]/,
-      /\[Number of Packages\]/,
-      /\[Net Weight\]/,
-    ],
+    regex: {
+      description: /\[Description Of All Retail Goods\]/,
+      nature_of_products: /\[Nature Of Product\]/,
+      type_of_treatment: /\[Treatment Type\]/,
+      number_of_packages: /\[Number of Packages\]/,
+      total_net_weight_kg: /\[Net Weight\]/,
+    },
   },
   ASDA2: {
     establishmentNumber: {
@@ -42,13 +42,13 @@ const headers = {
       number_of_packages: "Cases",
       total_net_weight_kg: "NET Weight",
     },
-    regex: [
-      /\[Description Of All Retail Go/,
-      /\[Nature Of Product\]/,
-      /\[Treatment Ty/,
-      /Cases/,
-      /NET Weight/,
-    ],
+    regex: {
+      description: /\[Description Of All Retail Go/,
+      nature_of_products: /\[Nature Of Product\]/,
+      type_of_treatment: /\[Treatment Ty/,
+      number_of_packages: /Cases/,
+      total_net_weight_kg: /NET Weight/,
+    },
   },
   BANDM1: {
     establishmentNumber: {
@@ -78,13 +78,13 @@ const headers = {
       total_net_weight_kg: "Item Net Weight (kgs)",
       commodity_code: commodityCodeLowercase,
     },
-    regex: [
-      descriptionOfGoodsRegex,
-      /Treatment Type \(Chilled \/Ambient\)/,
-      noOfPackagesRegex,
-      /Item Net Weight \(kgs\)/,
-      commodityCodeLowercaseRegex,
-    ],
+    regex: {
+      description: descriptionOfGoodsRegex,
+      type_of_treatment: /Treatment Type \(Chilled \/Ambient\)/,
+      number_of_packages: noOfPackagesRegex,
+      total_net_weight_kg: /Item Net Weight \(kgs\)/,
+      commodity_code: commodityCodeLowercaseRegex,
+    },
   },
   CDS1: {
     establishmentNumber: {
@@ -97,13 +97,13 @@ const headers = {
       total_net_weight_kg: "NetWeight",
       nature_of_products: "NatureOfProduct",
     },
-    regex: [
-      /^Product$/,
-      /Treatment/,
-      /# Packages/,
-      /NetWeight/,
-      /NatureOfProduct/,
-    ],
+    regex: {
+      description: /^Product$/,
+      type_of_treatment: /Treatment/,
+      number_of_packages: /# Packages/,
+      total_net_weight_kg: /NetWeight/,
+      nature_of_products: /NatureOfProduct/,
+    },
   },
   COOP1: {
     establishmentNumber: {
@@ -115,7 +115,12 @@ const headers = {
       number_of_packages: "Packages",
       total_net_weight_kg: "NW total",
     },
-    regex: [descriptionRegex, /Tariff Code EU/, /Packages/, /NW total/],
+    regex: {
+      description: descriptionRegex,
+      commodity_code: /Tariff Code EU/,
+      number_of_packages: /Packages/,
+      total_net_weight_kg: /NW total/,
+    },
   },
   DAVENPORT1: {
     establishmentNumber: {
@@ -127,12 +132,12 @@ const headers = {
       number_of_packages: "No. of Pkgs",
       total_net_weight_kg: "Total Net Weight",
     },
-    regex: [
-      /Description of Goods/,
-      /Commodity Code/,
-      /No. of Pkgs/,
-      /Total Net Weight/,
-    ],
+    regex: {
+      description: /Description of Goods/,
+      commodity_code: /Commodity Code/,
+      number_of_packages: /No. of Pkgs/,
+      total_net_weight_kg: /Total Net Weight/,
+    },
   },
   FOWLERWELCH1: {
     invalidSheets: [
@@ -172,7 +177,12 @@ const headers = {
       number_of_packages: "Quantity",
       total_net_weight_kg: netWeight,
     },
-    regex: [/DESCRIPTION/, commodityCodeRegex, /Quantity/, netWeightRegex],
+    regex: {
+      description: /DESCRIPTION/,
+      commodity_code: commodityCodeRegex,
+      number_of_packages: /Quantity/,
+      total_net_weight_kg: netWeightRegex,
+    },
   },
   KEPAK1: {
     establishmentNumber: {
@@ -184,7 +194,12 @@ const headers = {
       number_of_packages: "Quantity",
       total_net_weight_kg: netWeight,
     },
-    regex: [/DESCRIPTION/, commodityCodeRegex, /Quantity/, netWeightRegex],
+    regex: {
+      description: /DESCRIPTION/,
+      commodity_code: commodityCodeRegex,
+      number_of_packages: /Quantity/,
+      total_net_weight_kg: netWeightRegex,
+    },
   },
   NISA1: {
     establishmentNumber: {
@@ -197,13 +212,13 @@ const headers = {
       total_net_weight_kg: "NET_WEIGHT_TOTAL",
       nature_of_products: "PRODUCT_TYPE_CATEGORY",
     },
-    regex: [
-      /PART_NUMBER_DESCRIPTION/,
-      /TARIFF_CODE_EU/,
-      /PACKAGES/,
-      /NET_WEIGHT_TOTAL/,
-      /PRODUCT_TYPE_CATEGORY/,
-    ],
+    regex: {
+      description: /PART_NUMBER_DESCRIPTION/,
+      commodity_code: /TARIFF_CODE_EU/,
+      number_of_packages: /PACKAGES/,
+      total_net_weight_kg: /NET_WEIGHT_TOTAL/,
+      nature_of_products: /PRODUCT_TYPE_CATEGORY/,
+    },
   },
   NISA2: {
     establishmentNumber: {
@@ -216,13 +231,13 @@ const headers = {
       total_net_weight_kg: "NET WEIGHT TOTAL",
       nature_of_products: "PRODUCT TYPE CATEGORY",
     },
-    regex: [
-      /PART NUMBER DESCRIPTION/,
-      /TARIFF CODE EU/,
-      /PACKAGES/,
-      /NET WEIGHT TOTAL/,
-      /PRODUCT TYPE CATEGORY/,
-    ],
+    regex: {
+      description: /PART NUMBER DESCRIPTION/,
+      commodity_code: /TARIFF CODE EU/,
+      number_of_packages: /PACKAGES/,
+      total_net_weight_kg: /NET WEIGHT TOTAL/,
+      nature_of_products: /PRODUCT TYPE CATEGORY/,
+    },
   },
   NUTRICIA1: {
     establishmentNumber: {
@@ -234,7 +249,12 @@ const headers = {
       number_of_packages: "Quantity",
       total_net_weight_kg: netWeight,
     },
-    regex: [/DESCRIPTION/, commodityCodeRegex, /Quantity/, netWeightRegex],
+    regex: {
+      description: /DESCRIPTION/,
+      commodity_code: commodityCodeRegex,
+      number_of_packages: /Quantity/,
+      total_net_weight_kg: netWeightRegex,
+    },
   },
   SAINSBURYS1: {
     establishmentNumber: {
@@ -248,14 +268,14 @@ const headers = {
       nature_of_products: "Product Type / Category",
       type_of_treatment: "Packaging Type",
     },
-    regex: [
-      /Product \/ Part Number Description/,
-      commodityCodeRegex,
-      /Packages/,
-      /Net\nWeight \/ Package KG/,
-      /Product Type \/ Category/,
-      /Packaging Type/,
-    ],
+    regex: {
+      description: /Product \/ Part Number Description/,
+      commodity_code: commodityCodeRegex,
+      number_of_packages: /Packages/,
+      total_net_weight_kg: /Net\nWeight \/ Package KG/,
+      nature_of_products: /Product Type \/ Category/,
+      type_of_treatment: /Packaging Type/,
+    },
   },
   TESCO1: {
     establishmentNumber: {
@@ -268,13 +288,13 @@ const headers = {
       total_net_weight_kg: "Net Weight",
       type_of_treatment: "Treatment Type",
     },
-    regex: [
-      descriptionRegex,
-      /Tariff Code UK/,
-      /Packages/,
-      /Net Weight/,
-      /Treatment Type/,
-    ],
+    regex: {
+      description: descriptionRegex,
+      commodity_code: /Tariff Code UK/,
+      number_of_packages: /Packages/,
+      total_net_weight_kg: /Net Weight/,
+      type_of_treatment: /Treatment Type/,
+    },
   },
   TESCO2: {
     establishmentNumber: {
@@ -286,12 +306,12 @@ const headers = {
       number_of_packages: noOfPackages,
       total_net_weight_kg: "Total Net Weight",
     },
-    regex: [
-      descriptionOfGoodsRegex,
-      commodityCodeLowercaseRegex,
-      noOfPackagesRegex,
-      /Total Net Weight/,
-    ],
+    regex: {
+      description: descriptionOfGoodsRegex,
+      commodity_code: commodityCodeLowercaseRegex,
+      number_of_packages: noOfPackagesRegex,
+      total_net_weight_kg: /Total Net Weight/,
+    },
   },
   TJMORRIS1: {
     establishmentNumber: {

@@ -5,10 +5,7 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-const packingList = require("../../../models/packing-list");
-const { matchesHeader } = require("../../matches-header");
-const MatcherResult = require("../../matcher-result");
-const {mapParser2} = require("../../parser-map")
+const { mapParser } = require("../../parser-map");
 
 function parseModel(packingListJson, model, establishmentNumberRegex) {
   try {
@@ -29,14 +26,15 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
           (x) => x.F === headers.FOWLERWELCH1.headers.description,
         );
 
-        packingListContentsTemp = mapParser2(
+        packingListContentsTemp = mapParser(
           packingListJson[sheet],
           headerRow,
           headerRow + 1,
           headers.FOWLERWELCH1.regex,
         );
-        packingListContents = packingListContents.concat(packingListContentsTemp);
-       
+        packingListContents = packingListContents.concat(
+          packingListContentsTemp,
+        );
       }
     }
 
@@ -58,6 +56,5 @@ function parse(packingListJson) {
     headers.FOWLERWELCH1.establishmentNumber.regex,
   );
 }
-
 
 module.exports = { parse, parseModel };
