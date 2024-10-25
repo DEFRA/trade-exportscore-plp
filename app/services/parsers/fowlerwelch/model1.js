@@ -6,15 +6,24 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapParser } = require("../../parser-map");
+const { rowFinder } = require("../../../utilities/row-finder");
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
 
 function parseModel(packingListJson, model, establishmentNumberRegex) {
   try {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
-    let headerRow = packingListJson[sheets[0]].findIndex(
-      (x) => x.F === headers.FOWLERWELCH1.headers.description,
-    );
+    const headerTitles = Object.values(headers.FOWLERWELCH1.regex);
+    function callback(x) {
+      if (matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT) {
+        return true;
+      }
+    }
+    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
+    const dataRow = headerRow + 1;
+
     const establishmentNumber = regex.findMatch(
       establishmentNumberRegex,
       packingListJson[sheets[0]],
@@ -22,14 +31,10 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
 
     for (const sheet of sheets) {
       if (!headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
-        headerRow = packingListJson[sheet].findIndex(
-          (x) => x.F === headers.FOWLERWELCH1.headers.description,
-        );
-
         packingListContentsTemp = mapParser(
           packingListJson[sheet],
           headerRow,
-          headerRow + 1,
+          dataRow,
           headers.FOWLERWELCH1.regex,
         );
         packingListContents = packingListContents.concat(

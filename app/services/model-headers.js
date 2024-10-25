@@ -1,27 +1,15 @@
-const description = "Product/ Part Number description";
 const descriptionRegex = /Product\/ Part Number description/;
-const descriptionOfGoods = "Description of goods";
 const descriptionOfGoodsRegex = /Description of goods/;
 const commodityCode = "Commodity Code";
 const commodityCodeRegex = /Commodity Code/;
-const commodityCodeLowercase = "Commodity code";
 const commodityCodeLowercaseRegex = /Commodity code/;
-const noOfPackages = "No. of pkgs";
 const noOfPackagesRegex = /No. of pkgs/;
-const netWeight = "Net Weight (KG)";
 const netWeightRegex = /Net Weight \(KG\)/;
 
 const headers = {
   ASDA1: {
     establishmentNumber: {
       regex: /RMS-GB-000015-(\d{3})?/,
-    },
-    headers: {
-      description: "[Description Of All Retail Goods]",
-      nature_of_products: "[Nature Of Product]",
-      type_of_treatment: "[Treatment Type]",
-      number_of_packages: "[Number of Packages]",
-      total_net_weight_kg: "[Net Weight]",
     },
     regex: {
       description: /\[Description Of All Retail Goods\]/,
@@ -34,13 +22,6 @@ const headers = {
   ASDA2: {
     establishmentNumber: {
       regex: /RMS-GB-000015-(\d{3})?/,
-    },
-    headers: {
-      description: "[Description Of All Retail Go",
-      nature_of_products: "[Nature Of Product]",
-      type_of_treatment: "[Treatment Ty",
-      number_of_packages: "Cases",
-      total_net_weight_kg: "NET Weight",
     },
     regex: {
       description: /\[Description Of All Retail Go/,
@@ -71,13 +52,6 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000098-(\d{3})?/,
     },
-    headers: {
-      description: descriptionOfGoods,
-      type_of_treatment: "Treatment Type (Chilled /Ambient)",
-      number_of_packages: noOfPackages,
-      total_net_weight_kg: "Item Net Weight (kgs)",
-      commodity_code: commodityCodeLowercase,
-    },
     regex: {
       description: descriptionOfGoodsRegex,
       type_of_treatment: /Treatment Type \(Chilled \/Ambient\)/,
@@ -89,13 +63,6 @@ const headers = {
   CDS1: {
     establishmentNumber: {
       regex: /RMS-GB-000252(-\d{3})?/,
-    },
-    headers: {
-      description: "Product",
-      type_of_treatment: "Treatment",
-      number_of_packages: "# Packages",
-      total_net_weight_kg: "NetWeight",
-      nature_of_products: "NatureOfProduct",
     },
     regex: {
       description: /^Product$/,
@@ -109,12 +76,6 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000009-(\d{3})?/,
     },
-    headers: {
-      description: description,
-      commodity_code: "Tariff Code EU",
-      number_of_packages: "Packages",
-      total_net_weight_kg: "NW total",
-    },
     regex: {
       description: descriptionRegex,
       commodity_code: /Tariff Code EU/,
@@ -125,12 +86,6 @@ const headers = {
   DAVENPORT1: {
     establishmentNumber: {
       regex: /RMS-GB-000323(-\d{3})?/,
-    },
-    headers: {
-      description: "Description of Goods",
-      commodity_code: commodityCode,
-      number_of_packages: "No. of Pkgs",
-      total_net_weight_kg: "Total Net Weight",
     },
     regex: {
       description: /Description of Goods/,
@@ -149,13 +104,6 @@ const headers = {
       "Meursing",
       "Products",
     ],
-    headers: {
-      description: descriptionOfGoods,
-      commodity_code: commodityCodeLowercase,
-      number_of_packages: noOfPackages,
-      total_net_weight_kg: "Item Net Weight (kgs)",
-      type_of_treatment: "Treatment Type (Chilled /Ambient)",
-    },
     regex: {
       description: /Description of goods/,
       commodity_code: /Commodity code/,
@@ -171,12 +119,6 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000153(-\d{3})?/,
     },
-    headers: {
-      description: "DESCRIPTION",
-      commodity_code: commodityCode,
-      number_of_packages: "Quantity",
-      total_net_weight_kg: netWeight,
-    },
     regex: {
       description: /DESCRIPTION/,
       commodity_code: commodityCodeRegex,
@@ -188,12 +130,6 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000280(-\d{3})?/,
     },
-    headers: {
-      description: "DESCRIPTION",
-      commodity_code: commodityCode,
-      number_of_packages: "Quantity",
-      total_net_weight_kg: netWeight,
-    },
     regex: {
       description: /DESCRIPTION/,
       commodity_code: commodityCodeRegex,
@@ -204,13 +140,6 @@ const headers = {
   NISA1: {
     establishmentNumber: {
       regex: /RMS-GB-000025-(\d{3})?/,
-    },
-    headers: {
-      description: "PART_NUMBER_DESCRIPTION",
-      commodity_code: "TARIFF_CODE_EU",
-      number_of_packages: "PACKAGES",
-      total_net_weight_kg: "NET_WEIGHT_TOTAL",
-      nature_of_products: "PRODUCT_TYPE_CATEGORY",
     },
     regex: {
       description: /PART_NUMBER_DESCRIPTION/,
@@ -224,13 +153,6 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000025-(\d{3})?/,
     },
-    headers: {
-      description: "PART NUMBER DESCRIPTION",
-      commodity_code: "TARIFF CODE EU",
-      number_of_packages: "PACKAGES",
-      total_net_weight_kg: "NET WEIGHT TOTAL",
-      nature_of_products: "PRODUCT TYPE CATEGORY",
-    },
     regex: {
       description: /PART NUMBER DESCRIPTION/,
       commodity_code: /TARIFF CODE EU/,
@@ -243,12 +165,6 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000133(-\d{3})?/,
     },
-    headers: {
-      description: "DESCRIPTION",
-      commodity_code: commodityCode,
-      number_of_packages: "Quantity",
-      total_net_weight_kg: netWeight,
-    },
     regex: {
       description: /DESCRIPTION/,
       commodity_code: commodityCodeRegex,
@@ -259,14 +175,6 @@ const headers = {
   SAINSBURYS1: {
     establishmentNumber: {
       regex: /RMS-GB-000094(-\d{3})?/,
-    },
-    headers: {
-      description: "Product / Part Number Description",
-      commodity_code: commodityCode,
-      number_of_packages: "Packages",
-      total_net_weight_kg: "Net\nWeight / Package KG",
-      nature_of_products: "Product Type / Category",
-      type_of_treatment: "Packaging Type",
     },
     regex: {
       description: /Product \/ Part Number Description/,
@@ -281,13 +189,6 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000022-(\d{3})?/,
     },
-    headers: {
-      description: description,
-      commodity_code: "Tariff Code UK",
-      number_of_packages: "Packages",
-      total_net_weight_kg: "Net Weight",
-      type_of_treatment: "Treatment Type",
-    },
     regex: {
       description: descriptionRegex,
       commodity_code: /Tariff Code UK/,
@@ -299,12 +200,6 @@ const headers = {
   TESCO2: {
     establishmentNumber: {
       regex: /RMS-GB-000015-(\d{3})?/,
-    },
-    headers: {
-      description: descriptionOfGoods,
-      commodity_code: commodityCodeLowercase,
-      number_of_packages: noOfPackages,
-      total_net_weight_kg: "Total Net Weight",
     },
     regex: {
       description: descriptionOfGoodsRegex,
