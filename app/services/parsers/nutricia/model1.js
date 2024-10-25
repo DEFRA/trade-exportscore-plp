@@ -22,7 +22,7 @@ function parse(packingListJson) {
 
     const headerTitles = Object.values(headers.NUTRICIA1.regex);
     const callback = function (x) {
-    return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
     };
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
     const dataRow = headerRow + 1;

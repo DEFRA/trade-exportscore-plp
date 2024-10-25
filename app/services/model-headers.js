@@ -108,7 +108,7 @@ const headers = {
       description: /Description of goods/,
       commodity_code: /Commodity code/,
       number_of_packages: /No. of pkgs/,
-      total_net_weight_kg: /(Total|Item) Net Weight\s*(?:\(?\d*\.?\d*kgs\))?/,
+      total_net_weight_kg: /(Total Net Weight|Item Net Weight)(\s+\d+(\.\d+)?\s*kgs)?/,
       type_of_treatment: /Treatment Type \(Chilled \/Ambient\)/,
     },
     establishmentNumber: {
