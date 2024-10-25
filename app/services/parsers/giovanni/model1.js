@@ -17,9 +17,7 @@ function parse(packingListJson) {
     let packingListContentsTemp = [];
     const headerTitles = Object.values(headers.GIOVANNI1.regex);
     const callback = function (x) {
-      if (matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      }
+    return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
     };
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
     const dataRow = headerRow + 1;
