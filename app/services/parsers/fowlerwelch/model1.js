@@ -18,9 +18,8 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     const headerTitles = Object.values(headers.FOWLERWELCH1.regex);
     const callback = function (x) {
       if (matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT) {
-        return true;
+        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT
       }
-      return false;
     };
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
     const dataRow = headerRow + 1;
