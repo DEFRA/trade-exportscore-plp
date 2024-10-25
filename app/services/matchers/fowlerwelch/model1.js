@@ -6,7 +6,7 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { matchesHeader } = require("../../matches-header");
 
-function matchesModel(packingList, filename, regexExpression, Trader) {
+function matchesModel(packingList, filename, regexExpression, trader) {
   try {
     let result;
     const sheets = Object.keys(packingList);
@@ -29,13 +29,11 @@ function matchesModel(packingList, filename, regexExpression, Trader) {
       }
     }
 
-    if (result === matcherResult.CORRECT) {
-      logger.logInfo(
-        filenameForLogging,
-        "matches()",
-        `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
-      );
-    }
+    logger.logInfo(
+      filenameForLogging,
+      "matches()",
+      `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
+    );
 
     return result;
   } catch (err) {
