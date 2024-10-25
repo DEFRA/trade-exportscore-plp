@@ -21,7 +21,10 @@ function matchesModel(packingList, filename, regexExpression, trader) {
       }
 
       // check for header values
-      result = matchesHeader(headers.GIOVANNI1.regex, packingList[sheet]);
+      result = matchesHeader(
+        Object.values(headers.GIOVANNI1.regex),
+        packingList[sheet],
+      );
     }
 
     if (result === matcherResult.CORRECT) {

@@ -7,17 +7,20 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
 
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
-    const headerTitles = Object.values(headers.GIOVANNI1.headers);
-    function callback(x) {
-      return Object.values(x).includes(headerTitles[0]);
-    }
+    const headerTitles = Object.values(headers.GIOVANNI1.regex);
+    const callback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
+    const dataRow = headerRow + 1;
 
     const establishmentNumber = regex.findMatch(
       headers.GIOVANNI1.establishmentNumber.regex,
@@ -28,8 +31,8 @@ function parse(packingListJson) {
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
         headerRow,
-        headerRow + 1,
-        headers.GIOVANNI1.headers,
+        dataRow,
+        headers.GIOVANNI1.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
