@@ -15,8 +15,9 @@ function parse(packingListDocument) {
         packingListDocument.fields.NIRMSNumber,
       ])
     ) {
-      establishmentNumber = headers.MANDS1.establishmentNumber.value;
+      establishmentNumber = packingListDocument.fields.NIRMSNumber.content;
     }
+
     const packingListContents = mapPdfParser(packingListDocument, "MANDS1");
 
     return combineParser.combine(

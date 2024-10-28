@@ -131,6 +131,7 @@ async function matchAndParsePdf(packingList, filename, parsedPackingList) {
 
       if (result.isMatched === matcherResult.CORRECT) {
         parsedPackingList = parsersPdf[key].parse(result.document, filename);
+        break;
       }
     }
   }

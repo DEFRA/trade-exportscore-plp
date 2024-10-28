@@ -1,9 +1,9 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-data-and-results/models/iceland/model1");
+const model = require("../../../test-data-and-results/models/mands/model1");
 const parser_model = require("../../../../../app/services/parser-model");
-const test_results = require("../../../test-data-and-results/results/iceland/model1");
+const test_results = require("../../../test-data-and-results/results/mands/model1");
 
-const filename = "iceland-model1.pdf";
+const filename = "mands-model1.pdf";
 
 jest.mock("../../../../../app/services/document-intelligence");
 jest.mock("../../../../../app/config", () => {
@@ -22,20 +22,28 @@ createDocumentIntelligenceClient.mockImplementation(() => {
 });
 
 describe("findParser", () => {
-  test("matches valid Iceland Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
-    runAnalysis.mockImplementationOnce(() => {
-      return model.validModel;
-    });
+  test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
+    runAnalysis
+      .mockImplementationOnce(() => {
+        return model.validModel;
+      })
+      .mockImplementationOnce(() => {
+        return model.validModel;
+      });
 
     const result = await parserService.findParser("", filename);
 
     expect(result).toEqual(test_results.validTestResult);
   });
 
-  test("matches valid Iceland Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
-    runAnalysis.mockImplementationOnce(() => {
-      return model.invalidModel_MissingColumnCells;
-    });
+  test("matches valid MandS Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+    runAnalysis
+      .mockImplementationOnce(() => {
+        return model.invalidModel_MissingColumnCells;
+      })
+      .mockImplementationOnce(() => {
+        return model.invalidModel_MissingColumnCells;
+      });
 
     const result = await parserService.findParser("", filename);
 
