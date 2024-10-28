@@ -24,7 +24,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         dataRow - 1,
         dataRow,
-        headers.KEPAK1.headers,
+        headers.KEPAK1.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

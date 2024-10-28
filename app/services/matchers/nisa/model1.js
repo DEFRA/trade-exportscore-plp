@@ -23,7 +23,10 @@ function matches(packingList, filename) {
       }
 
       // check for header values
-      result = matchesHeader(headers.NISA1.regex, packingList[sheet]);
+      result = matchesHeader(
+        Object.values(headers.NISA1.regex),
+        packingList[sheet],
+      );
     }
 
     if (result === matcherResult.CORRECT) {

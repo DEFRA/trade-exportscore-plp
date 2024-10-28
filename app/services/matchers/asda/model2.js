@@ -23,7 +23,10 @@ function matches(packingList, filename) {
       }
 
       // check for header values
-      result = matchesHeader(headers.ASDA2.regex, packingList[sheet]);
+      result = matchesHeader(
+        Object.values(headers.ASDA2.regex),
+        packingList[sheet],
+      );
     }
 
     if (result === matcherResult.CORRECT) {

@@ -22,7 +22,10 @@ function matches(packingList, filename) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
       // check for header values
-      result = matchesHeader(headers.ASDA1.regex, packingList[sheet]);
+      result = matchesHeader(
+        Object.values(headers.ASDA1.regex),
+        packingList[sheet],
+      );
     }
 
     if (result === matcherResult.CORRECT) {

@@ -24,7 +24,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         dataRowFirst - 1,
         dataRowFirst,
-        headers.NISA2.headers,
+        headers.NISA2.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

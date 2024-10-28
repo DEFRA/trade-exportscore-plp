@@ -7,6 +7,8 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
 
 function parse(packingListJson) {
   try {
@@ -18,10 +20,10 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
-    const headerTitles = Object.values(headers.NUTRICIA1.headers);
-    function callback(x) {
-      return Object.values(x).includes(headerTitles[0]);
-    }
+    const headerTitles = Object.values(headers.NUTRICIA1.regex);
+    const callback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
     const dataRow = headerRow + 1;
 
@@ -30,7 +32,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         headerRow,
         dataRow,
-        headers.NUTRICIA1.headers,
+        headers.NUTRICIA1.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
