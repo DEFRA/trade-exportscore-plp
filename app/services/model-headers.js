@@ -194,7 +194,7 @@ const headers = {
       description: descriptionRegex,
       commodity_code: /Tariff Code UK/,
       number_of_packages: /Packages/,
-      total_net_weight_kg: /Net Weight/,
+      total_net_weight_kg: /^Net Weight$/,
       type_of_treatment: /Treatment Type/,
     },
   },
