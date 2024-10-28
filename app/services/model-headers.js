@@ -309,6 +309,19 @@ const headers = {
     },
     modelId: "iceland-requireddataonly-stringsintsandnumbers",
   },
+  MANDS1: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000008-\d{3}$/,
+    },
+    headers: {
+      description: "Description of Goods",
+      commodity_code: "EU Commodity Code",
+      type_of_treatment: "Treatment Type",
+      number_of_packages: "Trays/Ctns",
+      total_net_weight_kg: "Tot Net Weight (Kg)",
+    },
+    modelId: "mands-v1",
+  },
 };
 
 module.exports = headers;

@@ -36,6 +36,8 @@ const warrensMatcher = require("./matchers/warrens/model1");
 const warrensParser = require("./parsers/warrens/model1");
 const icelandMatcher = require("./matchers/iceland/model1");
 const icelandParser = require("./parsers/iceland/model1");
+const mandsMatcher = require("./matchers/mands/model1");
+const mandsParser = require("./parsers/mands/model1");
 
 const parsersExcel = {
   ASDA1: {
@@ -145,6 +147,11 @@ const parsersPdf = {
       icelandMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
       icelandParser.parse(packingList, filename),
+  },
+  MANDS: {
+    matches: (packingList, filename) =>
+      mandsMatcher.matches(packingList, filename),
+    parse: (packingList, filename) => mandsParser.parse(packingList, filename),
   },
 };
 

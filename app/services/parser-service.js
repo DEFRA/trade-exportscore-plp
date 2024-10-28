@@ -64,7 +64,7 @@ async function findParser(packingList, filename) {
       logger.logInfo(
         filenameForLogging,
         logParserServiceFunction,
-        `Failed to parse packing list with filename: ${filename} as it is not an Excel file.`,
+        `Failed to parse packing list with filename: ${filename}.`,
       );
     }
 

@@ -8,7 +8,7 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matchesModel(packingList, filename, regexExpression, trader) {
   let headerRow = 0;
-  
+
   try {
     const sheets = Object.keys(packingList);
     if (sheets?.length === 0) {
@@ -29,17 +29,16 @@ function matchesModel(packingList, filename, regexExpression, trader) {
         }
         if (!areHeadersValid(packingList, sheet, headerRow)) {
           return matcherResult.WRONG_HEADER;
-        
         }
       }
     }
-    
+
     logger.logInfo(
       filenameForLogging,
       "matches()",
       `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
     );
-  
+
     return matcherResult.CORRECT;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
