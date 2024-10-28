@@ -108,7 +108,8 @@ const headers = {
       description: /Description of goods/,
       commodity_code: /Commodity code/,
       number_of_packages: /No. of pkgs/,
-      total_net_weight_kg: /(Total Net Weight|Item Net Weight)(\s+\d+(\.\d+)?\s*kgs)?/,
+      total_net_weight_kg:
+        /(Total Net Weight|Item Net Weight)(\s+\d+(\.\d+)?\s*kgs)?/,
       type_of_treatment: /Treatment Type \(Chilled \/Ambient\)/,
     },
     establishmentNumber: {
@@ -193,7 +194,7 @@ const headers = {
       description: descriptionRegex,
       commodity_code: /Tariff Code UK/,
       number_of_packages: /Packages/,
-      total_net_weight_kg: /Net Weight/,
+      total_net_weight_kg: /^Net Weight$/,
       type_of_treatment: /Treatment Type/,
     },
   },
