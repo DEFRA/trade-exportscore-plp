@@ -120,7 +120,7 @@ function checkRequiredData(packingList) {
 }
 
 function checkLength(packingList) {
-  return packingList.items.length === 0 ? false : true
+  return packingList.items.length > 0;
 }
 
 function checkType(packingList) {
