@@ -73,8 +73,15 @@ async function findParser(packingList, filename) {
         (x) => !Object.values(x).every(isNullOrUndefined),
       );
       parsedPackingList.items = checkType(parsedPackingList.items);
-      parsedPackingList.business_checks.all_required_fields_present =
-        checkRequiredData(parsedPackingList);
+
+      if (
+        !checkRequiredData(parsedPackingList) ||
+        !checkLength(parsedPackingList)
+      ) {
+        parsedPackingList.business_checks.all_required_fields_present = false;
+      } else {
+        parsedPackingList.business_checks.all_required_fields_present = true;
+      }
     }
 
     return parsedPackingList;
@@ -112,6 +119,10 @@ function checkRequiredData(packingList) {
   );
 }
 
+function checkLength(packingList) {
+  return packingList.items.length === 0 ? false : true
+}
+
 function checkType(packingList) {
   for (const x of packingList) {
     if (isNaN(Number(x.number_of_packages))) {
@@ -143,4 +154,5 @@ module.exports = {
   findParser,
   checkRequiredData,
   checkType,
+  checkLength,
 };
