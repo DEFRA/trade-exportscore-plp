@@ -64,7 +64,7 @@ async function findParser(packingList, filename) {
       logger.logInfo(
         filenameForLogging,
         logParserServiceFunction,
-        `Failed to parse packing list with filename: ${filename} as it is not an Excel file.`,
+        `Failed to parse packing list with filename: ${filename}.`,
       );
     }
 
@@ -131,6 +131,7 @@ async function matchAndParsePdf(packingList, filename, parsedPackingList) {
 
       if (result.isMatched === matcherResult.CORRECT) {
         parsedPackingList = parsersPdf[key].parse(result.document, filename);
+        break;
       }
     }
   }
