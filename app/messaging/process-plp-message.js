@@ -4,8 +4,6 @@ const {
   getPackingListFromBlob,
 } = require("../services/storage-account");
 const { createPackingList } = require("../packing-list");
-const { patchPackingListCheck } = require("../services/dynamics-service");
-const config = require("../config");
 const parserModel = require("../services/parser-model");
 const { sendParsed } = require("../messaging/send-parsed-message");
 const logger = require("./../utilities/logger");
@@ -63,32 +61,17 @@ async function processPackingList(packingList, message) {
       );
     }
 
-    if (config.isDynamicsIntegration) {
-      try {
-        await patchPackingListCheck(
-          message.body.application_id,
-          packingList.business_checks.all_required_fields_present,
-        );
-      } catch (err) {
-        logger.logError(
-          filenameForLogging,
-          "processPlpMessage() > patchPackingListCheck",
-          err,
-        );
-      }
-    } else {
-      try {
-        await sendParsed(
-          message.body.application_id,
-          packingList.business_checks.all_required_fields_present,
-        );
-      } catch (err) {
-        logger.logError(
-          filenameForLogging,
-          "processPlpMessage() > sendParsed",
-          err,
-        );
-      }
+    try {
+      await sendParsed(
+        message.body.application_id,
+        packingList.business_checks.all_required_fields_present,
+      );
+    } catch (err) {
+      logger.logError(
+        filenameForLogging,
+        "processPlpMessage() > sendParsed",
+        err,
+      );
     }
   }
 }
