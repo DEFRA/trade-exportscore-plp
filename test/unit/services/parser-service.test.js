@@ -186,9 +186,87 @@ describe("checkRequiredData", () => {
 
 describe("findParser", () => {
   const filename = "packinglist.xls";
+  const packingListJson = {
+    Sheet1: [
+      {
+        A: "Consignor / Place o f Despatch",
+        B: "CONSIGNEE",
+        C: "Trailer",
+        D: "Seal",
+        E: "Store",
+        F: "STORENAME",
+        G: "Order",
+        H: "Cage/Ref",
+        I: "Group",
+        J: "TREATMENTTYPE",
+        K: "Sub-Group",
+        L: "Description",
+        M: "Item",
+        N: "Description",
+        O: "Tariff/Commodity",
+        P: "Cases",
+        Q: "Gross Weight Kg",
+        R: "Net Weight Kg",
+        S: "Cost",
+        T: "Country of Origin",
+        U: "VAT Status",
+        V: "SPS",
+        W: "Consignment ID",
+        X: "Processed?",
+        Y: "Created Timestamp",
+      },
+      {
+        A: "RMS-GB-000010-001",
+        J: "CHILLED",
+        L: "Description",
+        N: "Description",
+        O: "0408192000",
+        P: "2",
+        R: "1.4",
+      },
+      {
+        A: null,
+        J: null,
+        L: null,
+        N: null,
+        O: null,
+        P: null,
+        R: null,
+      },
+      {
+        A: "RMS-GB-000010-001",
+        J: "FRESH PRODUCTS",
+        L: "LETTUCE & BAGGED SALADS",
+        N: "FLORETTE SWEET & CRUNCHY 250G",
+        O: "1602906100",
+        P: "4",
+        R: "8",
+      },
+    ],
+  };
 
   test("removes empty items", async () => {
-    const packingListJson = {
+    const result = await parserService.findParser(packingListJson, filename);
+
+    expect(result.items).toHaveLength(2);
+  });
+
+  test("Not matched Excel file", async () => {
+    const packingListJson = {};
+
+    const result = await parserService.findParser(packingListJson, filename);
+
+    expect(result.parserModel).toBe(parserModel.NOMATCH);
+  });
+
+  test("all_required_fields_present true", async () => {
+    const result = await parserService.findParser(packingListJson, filename);
+
+    expect(result.business_checks.all_required_fields_present).toBeTruthy();
+  });
+
+  test("all_required_fields_present false for missing data", async () => {
+    const packingListJsonMissing = {
       Sheet1: [
         {
           A: "Consignor / Place o f Despatch",
@@ -227,37 +305,56 @@ describe("findParser", () => {
           R: "1.4",
         },
         {
-          A: null,
-          J: null,
-          L: null,
-          N: null,
-          O: null,
-          P: null,
-          R: null,
-        },
-        {
           A: "RMS-GB-000010-001",
           J: "FRESH PRODUCTS",
           L: "LETTUCE & BAGGED SALADS",
           N: "FLORETTE SWEET & CRUNCHY 250G",
-          O: "1602906100",
-          P: "4",
+          O: null,
+          P: null,
           R: "8",
         },
       ],
     };
+    const result = await parserService.findParser(packingListJsonMissing, filename);
 
-    const result = await parserService.findParser(packingListJson, filename);
-
-    expect(result.items).toHaveLength(2);
+    expect(result.business_checks.all_required_fields_present).toBeFalsy();
   });
 
-  test("Not matched Excel file", async () => {
-    const packingListJson = {};
+  test("all_required_fields_present false for empty sheet", async () => {
+    const packingListJsonEmpty = {
+      Sheet1: [
+        {
+          A: "Consignor / Place o f Despatch",
+          B: "CONSIGNEE",
+          C: "Trailer",
+          D: "Seal",
+          E: "Store",
+          F: "STORENAME",
+          G: "Order",
+          H: "Cage/Ref",
+          I: "Group",
+          J: "TREATMENTTYPE",
+          K: "Sub-Group",
+          L: "Description",
+          M: "Item",
+          N: "Description",
+          O: "Tariff/Commodity",
+          P: "Cases",
+          Q: "Gross Weight Kg",
+          R: "Net Weight Kg",
+          S: "Cost",
+          T: "Country of Origin",
+          U: "VAT Status",
+          V: "SPS",
+          W: "Consignment ID",
+          X: "Processed?",
+          Y: "Created Timestamp",
+        },
+      ],
+    };
+    const result = await parserService.findParser(packingListJsonEmpty, filename);
 
-    const result = await parserService.findParser(packingListJson, filename);
-
-    expect(result.parserModel).toBe(parserModel.NOMATCH);
+    expect(result.business_checks.all_required_fields_present).toBeFalsy();
   });
 });
 
@@ -308,5 +405,44 @@ describe("checkType", () => {
 
     expect(result[0].number_of_packages).toBe(1);
     expect(result[0].total_net_weight_kg).toBe(1.4155);
+  });
+});
+
+describe("checkLength", () => {
+  test("return true for length greater than 0", () => {
+    const packingList = {
+      registration_approval_number: "RMS-GB-000022-999",
+      items: [
+        {
+          description: 1234,
+          nature_of_products: null,
+          type_of_treatment: "Type C",
+          commodity_code: "Text",
+          number_of_packages: "Text",
+          total_net_weight_kg: "Text",
+        },
+      ],
+      business_checks: {
+        all_required_fields_present: false,
+      },
+    };
+
+    const result = parserService.checkLength(packingList);
+
+    expect(result).toBeTruthy();
+  });
+
+  test("return false for length equals 0", () => {
+    const packingList = {
+      registration_approval_number: "RMS-GB-000022-999",
+      items: [],
+      business_checks: {
+        all_required_fields_present: false,
+      },
+    };
+
+    const result = parserService.checkLength(packingList);
+
+    expect(result).toBeFalsy();
   });
 });
