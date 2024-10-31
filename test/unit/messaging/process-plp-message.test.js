@@ -14,6 +14,7 @@ const {
 } = require("../../../app/services/storage-account");
 const { createPackingList } = require("../../../app/packing-list");
 const parserModel = require("../../../app/services/parser-model");
+const { sendParsed } = require("../../../app/messaging/send-parsed-message");
 
 createStorageAccountClient.mockImplementation(() => {
   return jest.fn();
@@ -33,6 +34,10 @@ findParser.mockImplementation(() => {
 });
 
 createPackingList.mockImplementation(() => {
+  return jest.fn();
+});
+
+sendParsed.mockImplementation(() => {
   return jest.fn();
 });
 

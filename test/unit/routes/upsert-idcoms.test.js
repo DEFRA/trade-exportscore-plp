@@ -5,6 +5,9 @@ jest.mock("../../../app/messaging/send-parsed-message");
 
 const { sendParsed } = require("../../../app/messaging/send-parsed-message");
 
+sendParsed.mockImplementation(() => {
+  return mockResponse;
+});
 const mockApplicationId = 123;
 
 const mockHandler = {
@@ -20,7 +23,7 @@ describe("upsert idcoms", () => {
     jest.resetAllMocks();
   });
 
-  test("should not call the upsert when application id is not specified", async () => {
+  test("should not call the sendParsed when application id is not specified", async () => {
     const mockHandler = {};
 
     await upsertIdcoms.options.handler({}, mockHandler);
@@ -37,7 +40,7 @@ describe("upsert idcoms", () => {
     );
   });
 
-  test("should perform the upsert when application id is specified and isApproved is true", async () => {
+  test("should perform the sendParsed when application id is specified and isApproved is true", async () => {
     const response = await upsertIdcoms.options.handler(
       { query: { applicationId: mockApplicationId, isApproved: true } },
       mockHandler,
@@ -47,7 +50,7 @@ describe("upsert idcoms", () => {
     expect(sendParsed).toHaveBeenCalledWith(mockApplicationId, true);
   });
 
-  test("should perform the upsert when application id is specified and isApproved is false", async () => {
+  test("should perform the sendParsed when application id is specified and isApproved is false", async () => {
     await upsertIdcoms.options.handler(
       { query: { applicationId: mockApplicationId, isApproved: false } },
       mockHandler,
