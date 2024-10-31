@@ -315,7 +315,10 @@ describe("findParser", () => {
         },
       ],
     };
-    const result = await parserService.findParser(packingListJsonMissing, filename);
+    const result = await parserService.findParser(
+      packingListJsonMissing,
+      filename,
+    );
 
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
   });
@@ -352,7 +355,10 @@ describe("findParser", () => {
         },
       ],
     };
-    const result = await parserService.findParser(packingListJsonEmpty, filename);
+    const result = await parserService.findParser(
+      packingListJsonEmpty,
+      filename,
+    );
 
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
   });
