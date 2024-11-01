@@ -6,7 +6,7 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { matchesHeader } = require("../../matches-header");
 
-function matchesModel(packingList, filename, regexExpression, trader) {
+function matchesModel(packingList, filename, regexExpression, _trader) {
   try {
     let result;
     const sheets = Object.keys(packingList);
