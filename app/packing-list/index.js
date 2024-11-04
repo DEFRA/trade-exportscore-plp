@@ -23,7 +23,6 @@ async function createPackingList(packingListJson, applicationId) {
     });
   } catch (err) {
     logger.logError(filenameForLogging, "createPackingList()", err);
-    return err
   }
 }
 
