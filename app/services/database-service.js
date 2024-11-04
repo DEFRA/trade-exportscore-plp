@@ -44,5 +44,6 @@ module.exports = (() => {
     };
   } catch (err) {
     logger.logError(filenameForLogging, "module.exports()", err);
+    return err;
   }
 })();

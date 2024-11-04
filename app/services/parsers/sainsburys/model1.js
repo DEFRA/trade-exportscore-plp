@@ -38,6 +38,7 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
+    return err;
   }
 }
 

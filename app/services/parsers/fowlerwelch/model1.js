@@ -49,6 +49,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
+    return err;
   }
 }
 
