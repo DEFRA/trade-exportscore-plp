@@ -2,19 +2,16 @@ const headers = require("./model-headers");
 
 function findHeaderCols(regexHeader, packingListHeader) {
   const headerCols = {};
-  // console.log(packingListHeader)
   for (const value in regexHeader) {
     headerCols[value] = Object.keys(packingListHeader).find((key) => {
       return regexHeader[value].test(packingListHeader[key]);
     });
-    //console.log(headerCols[value])
   }
   return headerCols;
 }
 
 function mapParser(packingListJson, headerRow, dataRow, header) {
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
-  //console.log(headerCols)
   const packingListContents = packingListJson.slice(dataRow).map((col) => ({
     description: col[headerCols.description] ?? null,
     nature_of_products: col[headerCols.nature_of_products] ?? null,
