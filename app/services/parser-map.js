@@ -2,7 +2,6 @@ const headers = require("./model-headers");
 
 function findHeaderCols(regexHeader, packingListHeader) {
   const headerCols = {};
-
   for (const value in regexHeader) {
     headerCols[value] = Object.keys(packingListHeader).find((key) => {
       return regexHeader[value].test(packingListHeader[key]);
