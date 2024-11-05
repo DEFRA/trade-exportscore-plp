@@ -38,7 +38,7 @@ function packingListMapper(packingListJson, applicationId) {
     };
   } catch (err) {
     logger.logError(filenameForLogging, "packingListMapper()", err);
-    return err
+    return err;
   }
 }
 
@@ -56,7 +56,7 @@ function itemsMapper(o, applicationId) {
     };
   } catch (err) {
     logger.logError(filenameForLogging, "itemsMapper()", err);
-    return err
+    return err;
   }
 }
 

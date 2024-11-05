@@ -40,4 +40,14 @@ describe("parseWarrensModel1", () => {
     // Check if logger.logError has been called
     expect(logErrorSpy).toHaveBeenCalled();
   });
+
+  test("should return error", () => {
+    //arrange
+
+    //act
+    const result = parser.parse({});
+    console.log(result);
+    //assert
+    expect(result).toThrow(new Error("this is an error"));
+  });
 });
