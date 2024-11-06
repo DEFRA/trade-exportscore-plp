@@ -14,9 +14,7 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    //console.log(err);
-    //throw new Error(err);
-    return new Error("this is an error");
+    return err;
   }
 }
 

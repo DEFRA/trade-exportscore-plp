@@ -41,13 +41,11 @@ describe("parseWarrensModel1", () => {
     expect(logErrorSpy).toHaveBeenCalled();
   });
 
-  test("should return error", () => {
-    //arrange
-
-    //act
+  test("should return the error and an error message", () => {
     const result = parser.parse({});
-    console.log(result);
-    //assert
-    expect(result).toThrow(new Error("this is an error"));
+    expect(result).toBeInstanceOf(Error);
+    expect(result.message).toBe(
+      "Cannot read properties of undefined (reading 'findIndex')",
+    );
   });
 });
