@@ -19,15 +19,14 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     const callback = function (x) {
       return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
     };
-    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
-    const dataRow = headerRow + 1;
-
     const establishmentNumber = regex.findMatch(
       establishmentNumberRegex,
       packingListJson[sheets[0]],
     );
 
     for (const sheet of sheets) {
+      const headerRow = rowFinder(packingListJson[sheet], callback);
+      const dataRow = headerRow + 1;
       if (!headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
         packingListContentsTemp = mapParser(
           packingListJson[sheet],
@@ -40,7 +39,6 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
         );
       }
     }
-
     return combineParser.combine(
       establishmentNumber,
       packingListContents,

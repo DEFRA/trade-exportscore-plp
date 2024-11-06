@@ -20,7 +20,6 @@ function matchesModel(packingList, filename, regexExpression, _trader) {
         if (!regex.test(regexExpression, packingList[sheet])) {
           return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
         }
-
         // check for header values
         result = matchesHeader(
           Object.values(headers.FOWLERWELCH1.regex),
