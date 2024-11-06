@@ -44,8 +44,6 @@ describe("parseWarrensModel1", () => {
   test("should return the error and an error message", () => {
     const result = parser.parse({});
     expect(result).toBeInstanceOf(Error);
-    expect(result.message).toBe(
-      "Cannot read properties of undefined (reading 'findIndex')",
-    );
+    expect(result.message).toBe("array is not iterable");
   });
 });
