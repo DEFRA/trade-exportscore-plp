@@ -56,7 +56,7 @@ async function createServer() {
       err,
     );
   }
-
+  //put in its own function those final 3
   try {
     await messageService.start();
   } catch (err) {

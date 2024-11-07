@@ -66,7 +66,6 @@ describe("Packing list", () => {
     };
 
     const result = packingListIndex.itemsMapper(item, "123");
-
     expect(result.description).toBe(item.description);
     expect(result.natureOfProducts).toBe(item.nature_of_products);
     expect(result.typeOfTreatment).toBe(item.type_of_treatment);
@@ -74,6 +73,11 @@ describe("Packing list", () => {
     expect(result.numberOfPackages).toBe(item.number_of_packages);
     expect(result.totalWeight).toBe(item.total_net_weight_kg);
     expect(result.applicationId).toBe("123");
+  });
+
+  test("should return the error caught", () => {
+    const result = packingListIndex.itemsMapper();
+    expect(result).toBeInstanceOf(Error);
   });
 
   test("packingListMapper should map correctly", () => {
@@ -122,5 +126,10 @@ describe("Packing list", () => {
       packingListJson.items[0].total_net_weight_kg,
     );
     expect(result.item[0].applicationId).toBe("123");
+  });
+
+  test("should return the error caught", () => {
+    const result = packingListIndex.packingListMapper({}, "$$$");
+    expect(result).toBeInstanceOf(Error);
   });
 });

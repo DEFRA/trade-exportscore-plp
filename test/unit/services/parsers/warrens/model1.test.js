@@ -41,9 +41,8 @@ describe("parseWarrensModel1", () => {
     expect(logErrorSpy).toHaveBeenCalled();
   });
 
-  test("should return the error", () => {
+  test("should return the error caught", () => {
     const result = parser.parse({});
     expect(result).toBeInstanceOf(Error);
-    //expect(result.message).toBe("array is not iterable");
   });
 });
