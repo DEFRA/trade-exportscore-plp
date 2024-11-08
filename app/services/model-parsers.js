@@ -20,6 +20,8 @@ const kepakMatcher = require("./matchers/kepak/model1");
 const kepakParser = require("./parsers/kepak/model1");
 const nisaMatcher = require("./matchers/nisa/model1");
 const nisaParser = require("./parsers/nisa/model1");
+const marsMatcher = require("./matchers/mars/model1");
+const marsParser = require("./parsers/mars/model1");
 const nisaMatcher2 = require("./matchers/nisa/model2");
 const nisaParser2 = require("./parsers/nisa/model2");
 const nutriciaMatcher = require("./matchers/nutricia/model1");
@@ -93,6 +95,11 @@ const parsersExcel = {
     matches: (packingList, filename) =>
       kepakMatcher.matches(packingList, filename),
     parse: (packingList, filename) => kepakParser.parse(packingList, filename),
+  },
+  MARS1: {
+    matches: (packingList, filename) =>
+      marsMatcher.matches(packingList, filename),
+    parse: (packingList, filename) => marsParser.parse(packingList, filename),
   },
   NISA1: {
     matches: (packingList, filename) =>

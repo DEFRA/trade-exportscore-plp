@@ -138,6 +138,17 @@ const headers = {
       total_net_weight_kg: netWeightRegex,
     },
   },
+  MARS1: {
+    establishmentNumber: {
+      regex: /RMS-GB-000213(-\d{3})?/,
+    },
+    regex: {
+      description: /Description/,
+      commodity_code: commodityCodeRegex,
+      number_of_packages: /Case Qty/,
+      total_net_weight_kg: /Weight/,
+    },
+  },
   NISA1: {
     establishmentNumber: {
       regex: /RMS-GB-000025-(\d{3})?/,
