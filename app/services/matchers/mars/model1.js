@@ -6,7 +6,7 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function matchesModel(packingList, filename, regexExpression) {
+function matches(packingList, filename) {
   try {
     let result;
     const sheets = Object.keys(packingList);
@@ -15,7 +15,9 @@ function matchesModel(packingList, filename, regexExpression) {
     }
     for (const sheet of sheets) {
       // check for correct establishment number
-      if (!regex.test(regexExpression, packingList[sheet])) {
+      if (
+        !regex.test(headers.MARS1.establishmentNumber.regex, packingList[sheet])
+      ) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
@@ -41,16 +43,6 @@ function matchesModel(packingList, filename, regexExpression) {
   }
 }
 
-function matches(packingList, filename) {
-  return matchesModel(
-    packingList,
-    filename,
-    headers.MARS1.establishmentNumber.regex,
-    "Mars Model 1",
-  );
-}
-
 module.exports = {
   matches,
-  matchesModel,
 };
