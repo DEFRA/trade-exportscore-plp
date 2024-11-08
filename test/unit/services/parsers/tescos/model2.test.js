@@ -2,7 +2,7 @@ const parser = require("../../../../../app/services/parsers/tescos/model2");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/tescos/model2");
 const test_results = require("../../../test-data-and-results/results/tescos/model2");
-
+const parserModel = require("../../../../../app/services/parser-model");
 describe("parseTescoModel2", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);
@@ -29,5 +29,17 @@ describe("parseTescoModel2", () => {
     parser.parse(null);
     // Check if logger.logError has been called
     expect(logErrorSpy).toHaveBeenCalled();
+  });
+  test("should return 'No Match' for failed parser", () => {
+    const result = parser.parse({ Sheet1: [] });
+    const invalidTestResult_NoMatch = {
+      business_checks: {
+        all_required_fields_present: false,
+      },
+      items: [],
+      registration_approval_number: null,
+      parserModel: parserModel.NOMATCH,
+    };
+    expect(result).toEqual(invalidTestResult_NoMatch);
   });
 });

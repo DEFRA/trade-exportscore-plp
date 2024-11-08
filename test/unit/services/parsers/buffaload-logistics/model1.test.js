@@ -2,7 +2,7 @@ const parser = require("../../../../../app/services/parsers/buffaload-logistics/
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/buffaload-logistics/model1");
 const test_results = require("../../../test-data-and-results/results/buffaload-logistics/model1");
-
+const parserModel = require("../../../../../app/services/parser-model");
 describe("parsesBuffaloadLogisticsModel1", () => {
   test("parses valid json", () => {
     const result = parser.parse(model.validModel);
@@ -28,5 +28,17 @@ describe("parsesBuffaloadLogisticsModel1", () => {
     parser.parse(null);
     // Check if logger.logError has been called
     expect(logErrorSpy).toHaveBeenCalled();
+  });
+  test("should return 'No Match' for failed parser", () => {
+    const result = parser.parse({ Sheet1: [] });
+    const invalidTestResult_NoMatch = {
+      business_checks: {
+        all_required_fields_present: false,
+      },
+      items: [],
+      registration_approval_number: null,
+      parserModel: parserModel.NOMATCH,
+    };
+    expect(result).toEqual(invalidTestResult_NoMatch);
   });
 });

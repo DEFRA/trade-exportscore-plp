@@ -75,11 +75,6 @@ describe("Packing list", () => {
     expect(result.applicationId).toBe("123");
   });
 
-  test("should return the error caught", () => {
-    const result = packingListIndex.itemsMapper();
-    expect(result).toBeInstanceOf(Error);
-  });
-
   test("packingListMapper should map correctly", () => {
     const packingListJson = {
       items: [
@@ -126,10 +121,5 @@ describe("Packing list", () => {
       packingListJson.items[0].total_net_weight_kg,
     );
     expect(result.item[0].applicationId).toBe("123");
-  });
-
-  test("should return the error caught", () => {
-    const result = packingListIndex.packingListMapper({}, "$$$");
-    expect(result).toBeInstanceOf(Error);
   });
 });

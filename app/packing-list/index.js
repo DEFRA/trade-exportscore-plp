@@ -8,11 +8,9 @@ async function createPackingList(packingListJson, applicationId) {
   try {
     await sequelize.transaction(async (transaction) => {
       const packingList = packingListMapper(packingListJson, applicationId);
-
       await models.packingList.create(packingList, {
         transaction,
       });
-
       await models.item.bulkCreate(packingList.item, { transaction });
 
       logger.logInfo(
@@ -38,7 +36,6 @@ function packingListMapper(packingListJson, applicationId) {
     };
   } catch (err) {
     logger.logError(filenameForLogging, "packingListMapper()", err);
-    return err;
   }
 }
 
@@ -56,7 +53,6 @@ function itemsMapper(o, applicationId) {
     };
   } catch (err) {
     logger.logError(filenameForLogging, "itemsMapper()", err);
-    return err;
   }
 }
 

@@ -41,8 +41,16 @@ describe("parseWarrensModel1", () => {
     expect(logErrorSpy).toHaveBeenCalled();
   });
 
-  test("should return the error caught", () => {
-    const result = parser.parse({});
-    expect(result).toBeInstanceOf(Error);
+  test("should return 'No Match' for failed parser", () => {
+    const result = parser.parse({ Sheet1: [] });
+    const invalidTestResult_NoMatch = {
+      business_checks: {
+        all_required_fields_present: false,
+      },
+      items: [],
+      registration_approval_number: null,
+      parserModel: parserModel.NOMATCH,
+    };
+    expect(result).toEqual(invalidTestResult_NoMatch);
   });
 });

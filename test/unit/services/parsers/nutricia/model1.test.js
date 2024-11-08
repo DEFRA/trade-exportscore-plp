@@ -2,7 +2,7 @@ const parser = require("../../../../../app/services/parsers/nutricia/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/nutricia/model1");
 const test_results = require("../../../test-data-and-results/results/nutricia/model1");
-
+const parserModel = require("../../../../../app/services/parser-model");
 describe("parseNutricaModel1", () => {
   test("parses json", () => {
     const result = parser.parse(model.validModel);
@@ -29,5 +29,17 @@ describe("parseNutricaModel1", () => {
     parser.parse(null);
     // Check if logger.logError has been called
     expect(logErrorSpy).toHaveBeenCalled();
+  });
+  test("should return 'No Match' for failed parser", () => {
+    const result = parser.parse({ Sheet1: [] });
+    const invalidTestResult_NoMatch = {
+      business_checks: {
+        all_required_fields_present: false,
+      },
+      items: [],
+      registration_approval_number: null,
+      parserModel: parserModel.NOMATCH,
+    };
+    expect(result).toEqual(invalidTestResult_NoMatch);
   });
 });
