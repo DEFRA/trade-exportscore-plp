@@ -56,7 +56,7 @@ async function createServer() {
       err,
     );
   }
-  serverMessage();
+  await serverMessage();
   return server;
 }
 

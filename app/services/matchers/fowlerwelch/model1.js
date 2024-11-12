@@ -6,7 +6,7 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { matchesHeader } = require("../../matches-header");
 
-function matchesModel(packingList, filename, regexExpression, _trader) {
+function matchesModel(packingList, filename, regexExpression) {
   try {
     let result;
     const sheets = Object.keys(packingList);
@@ -46,7 +46,6 @@ function matches(packingList, filename) {
     packingList,
     filename,
     headers.FOWLERWELCH1.establishmentNumber.regex,
-    "Fowler Welch",
   );
 }
 

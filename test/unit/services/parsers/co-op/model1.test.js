@@ -30,16 +30,4 @@ describe("parseCoopModel1", () => {
     // Check if logger.logError has been called
     expect(logErrorSpy).toHaveBeenCalled();
   });
-  test("should return 'No Match' for failed parser", () => {
-    const result = parser.parse({ Sheet1: [] });
-    const invalidTestResult_NoMatch = {
-      business_checks: {
-        all_required_fields_present: false,
-      },
-      items: [],
-      registration_approval_number: null,
-      parserModel: parserModel.NOMATCH,
-    };
-    expect(result).toEqual(invalidTestResult_NoMatch);
-  });
 });

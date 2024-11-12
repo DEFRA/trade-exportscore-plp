@@ -6,7 +6,6 @@ function matches(packingList, filename) {
     packingList,
     filename,
     headers.NUTRICIA1.establishmentNumber.regex,
-    "Nutricia Model 1",
   );
 }
 
