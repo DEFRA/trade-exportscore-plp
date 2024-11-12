@@ -66,7 +66,6 @@ describe("Packing list", () => {
     };
 
     const result = packingListIndex.itemsMapper(item, "123");
-
     expect(result.description).toBe(item.description);
     expect(result.natureOfProducts).toBe(item.nature_of_products);
     expect(result.typeOfTreatment).toBe(item.type_of_treatment);

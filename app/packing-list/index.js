@@ -8,11 +8,9 @@ async function createPackingList(packingListJson, applicationId) {
   try {
     await sequelize.transaction(async (transaction) => {
       const packingList = packingListMapper(packingListJson, applicationId);
-
       await models.packingList.create(packingList, {
         transaction,
       });
-
       await models.item.bulkCreate(packingList.item, { transaction });
 
       logger.logInfo(

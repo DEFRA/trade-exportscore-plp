@@ -2,7 +2,7 @@ const parser = require("../../../../../app/services/parsers/nisa/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/nisa/model1");
 const test_results = require("../../../test-data-and-results/results/nisa/model1");
-
+const parserModel = require("../../../../../app/services/parser-model");
 describe("parseNisa1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);

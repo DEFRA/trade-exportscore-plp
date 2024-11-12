@@ -2,7 +2,7 @@ const parser = require("../../../../../app/services/parsers/nutricia/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/nutricia/model1");
 const test_results = require("../../../test-data-and-results/results/nutricia/model1");
-
+const parserModel = require("../../../../../app/services/parser-model");
 describe("parseNutricaModel1", () => {
   test("parses json", () => {
     const result = parser.parse(model.validModel);

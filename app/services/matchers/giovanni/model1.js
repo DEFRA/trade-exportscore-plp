@@ -6,7 +6,7 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function matchesModel(packingList, filename, regexExpression, trader) {
+function matchesModel(packingList, filename, regexExpression) {
   try {
     let result;
     const sheets = Object.keys(packingList);
@@ -47,7 +47,6 @@ function matches(packingList, filename) {
     packingList,
     filename,
     headers.GIOVANNI1.establishmentNumber.regex,
-    "Giovanni Model 1",
   );
 }
 

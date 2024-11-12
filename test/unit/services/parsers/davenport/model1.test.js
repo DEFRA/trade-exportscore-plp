@@ -2,7 +2,7 @@ const parser = require("../../../../../app/services/parsers/davenport/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/davenport/model1");
 const test_results = require("../../../test-data-and-results/results/davenport/model1");
-
+const parserModel = require("../../../../../app/services/parser-model");
 describe("parseDavenportModel1", () => {
   test("parses json", () => {
     const packingListJson = model.validModel;

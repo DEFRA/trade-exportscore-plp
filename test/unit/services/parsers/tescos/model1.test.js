@@ -2,7 +2,7 @@ const parser = require("../../../../../app/services/parsers/tescos/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/tescos/model1");
 const test_results = require("../../../test-data-and-results/results/tescos/model1");
-
+const parserModel = require("../../../../../app/services/parser-model");
 describe("parseTescoModel1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);

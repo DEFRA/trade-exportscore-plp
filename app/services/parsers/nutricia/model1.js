@@ -45,6 +45,7 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
+    return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
 }
 

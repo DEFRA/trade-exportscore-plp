@@ -56,7 +56,11 @@ async function createServer() {
       err,
     );
   }
+  await serverMessage();
+  return server;
+}
 
+async function serverMessage() {
   try {
     await messageService.start();
   } catch (err) {
@@ -94,8 +98,6 @@ async function createServer() {
       process.exit(0);
     }
   });
-
-  return server;
 }
 
 module.exports = createServer;

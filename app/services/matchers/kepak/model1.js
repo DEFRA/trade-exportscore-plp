@@ -6,7 +6,6 @@ function matches(packingList, filename) {
     packingList,
     filename,
     headers.KEPAK1.establishmentNumber.regex,
-    "Kepak Model 1",
   );
 }
 
