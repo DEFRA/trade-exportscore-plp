@@ -59,7 +59,7 @@ function testAllPatterns(regexArray, obj) {
     for (const key of stringProperties) {
       const value = obj[key];
       if (pattern.test(value)) {
-        foundMatch = true;    
+        foundMatch = true;
         break; // Stop searching if a match is found for this pattern
       }
     }

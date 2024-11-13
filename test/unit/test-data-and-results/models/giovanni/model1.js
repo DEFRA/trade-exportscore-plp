@@ -244,10 +244,22 @@ module.exports = {
       {
         A: "RMS-GB-000153",
       },
+      {
+        C: "DESCRIPTION",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      }
     ],
     sheet2: [
       {
         A: "INCORRECT",
+      },
+      {
+        C: "DESCRIPTION",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
       },
     ],
   },

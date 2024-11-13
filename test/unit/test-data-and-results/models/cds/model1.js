@@ -162,13 +162,37 @@ module.exports = {
   },
   wrongEstablishmentMultiple: {
     sheet1: [
-      {},
+      {
+        A: "TruckID",
+        B: "Dept",
+        C: "SubDept",
+        D: "Product",
+        E: "# Packages",
+        F: "# Units",
+        G: "GrossWeight",
+        H: "NetWeight",
+        I: "NatureOfProduct",
+        J: "Treatment",
+        K: "PlaceOfDispatch",
+      },
       {
         K: "THE RANGE / RMS-GB-000252-002 / DN8 4HT",
       },
     ],
     sheet2: [
-      {},
+      {
+        A: "TruckID",
+        B: "Dept",
+        C: "SubDept",
+        D: "Product",
+        E: "# Packages",
+        F: "# Units",
+        G: "GrossWeight",
+        H: "NetWeight",
+        I: "NatureOfProduct",
+        J: "Treatment",
+        K: "PlaceOfDispatch",
+      },
       {
         K: "INCORRECT",
       },

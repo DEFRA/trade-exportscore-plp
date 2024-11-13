@@ -180,10 +180,32 @@ module.exports = {
       {
         B: "RMS-GB-000098-001",
       },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient)",
+        I: "NIRMS Lane (R/G)",
+      },
     ],
     sheet2: [
       {
         B: "INCORRECT",
+      },
+      {
+        A: "Commodity code",
+        B: "Description of goods",
+        C: "Country of Origin",
+        D: "No. of pkgs",
+        E: "Type of pkgs",
+        F: "Item Gross Weight (kgs)",
+        G: "Item Net Weight (kgs)",
+        H: "Treatment Type (Chilled /Ambient)",
+        I: "NIRMS Lane (R/G)",
       },
     ],
   },

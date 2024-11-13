@@ -25,6 +25,9 @@ function matchesModel(packingList, filename, regexExpression) {
         Object.values(headers.GIOVANNI1.regex),
         packingList[sheet],
       );
+      if (result === matcherResult.WRONG_HEADER) {
+        return result;
+      }
     }
 
     if (result === matcherResult.CORRECT) {

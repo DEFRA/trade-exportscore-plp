@@ -29,6 +29,9 @@ function matches(packingList, filename) {
         Object.values(headers.DAVENPORT1.regex),
         packingList[sheet],
       );
+      if (result === matcherResult.WRONG_HEADER) {
+        return result;
+      }
     }
 
     if (result === matcherResult.CORRECT) {

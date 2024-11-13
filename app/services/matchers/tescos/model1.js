@@ -30,8 +30,8 @@ function matches(packingList, filename) {
         Object.values(headers.TESCO1.regex),
         packingList[sheet],
       );
-      if(result === matcherResult.WRONG_HEADER){
-        return result
+      if (result === matcherResult.WRONG_HEADER) {
+        return result;
       }
     }
 
