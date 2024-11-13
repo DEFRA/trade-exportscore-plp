@@ -27,6 +27,9 @@ function matches(packingList, filename) {
 
       // check for header values
       result = matchesHeader(headers.BANDM1.regex, packingList[sheet]);
+      if (result === matcherResult.WRONG_HEADER) {
+        return result;
+      }
     }
 
     if (result === matcherResult.CORRECT) {

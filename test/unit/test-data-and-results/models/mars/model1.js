@@ -200,12 +200,30 @@ module.exports = {
   wrongEstablishmentMultiple: {
     Sheet1: [
       {
+        A: "Despatch Location : ",
+      },
+      {
         A: "RMS-GB-000213",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Weight",
+        G: "Commodity Code",
       },
     ],
     Sheet2: [
       {
+        A: "Despatch Location : ",
+      },
+      {
         A: "INCORRECT",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Weight",
+        G: "Commodity Code",
       },
     ],
   },

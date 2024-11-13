@@ -79,13 +79,27 @@ module.exports = {
   },
   wrongEstablishmentMultiple: {
     sheet1: [
-      {},
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+        I: "PRODUCT_TYPE_CATEGORY",
+        K: "PART_NUMBER_DESCRIPTION",
+        L: "TARIFF_CODE_EU",
+        M: "PACKAGES",
+        O: "NET_WEIGHT_TOTAL",
+      },
       {
         A: "RMS-GB-000025-001",
       },
     ],
     Sheet2: [
-      {},
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+        I: "PRODUCT_TYPE_CATEGORY",
+        K: "PART_NUMBER_DESCRIPTION",
+        L: "TARIFF_CODE_EU",
+        M: "PACKAGES",
+        O: "NET_WEIGHT_TOTAL",
+      },
       {
         A: "INCORRECT",
       },

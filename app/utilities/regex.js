@@ -63,7 +63,6 @@ function testAllPatterns(regexArray, obj) {
         break; // Stop searching if a match is found for this pattern
       }
     }
-
     if (!foundMatch) {
       return false; // If any regex doesn't find a match, return false
     }

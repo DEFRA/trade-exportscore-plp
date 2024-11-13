@@ -112,13 +112,29 @@ module.exports = {
   },
   wrongEstablishmentMultiple: {
     Sheet1: [
-      {},
+      {
+        C: "Product Type / Category",
+        E: "Product / Part Number Description",
+        G: "Packages",
+        H: "Net\nWeight / Package KG",
+        J: "Packaging Type",
+        N: "RMS Number (based on depot)",
+        O: "Commodity Code",
+      },
       {
         N: "RMS-GB-000094-002​",
       },
     ],
     Sheet2: [
-      {},
+      {
+        C: "Product Type / Category",
+        E: "Product / Part Number Description",
+        G: "Packages",
+        H: "Net\nWeight / Package KG",
+        J: "Packaging Type",
+        N: "RMS Number (based on depot)",
+        O: "Commodity Code",
+      },
       {
         N: "Incorrect",
       },

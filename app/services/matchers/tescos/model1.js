@@ -30,6 +30,9 @@ function matches(packingList, filename) {
         Object.values(headers.TESCO1.regex),
         packingList[sheet],
       );
+      if (result === matcherResult.WRONG_HEADER) {
+        return result;
+      }
     }
 
     if (result === matcherResult.CORRECT) {
@@ -39,7 +42,6 @@ function matches(packingList, filename) {
         `Packing list matches tescos Model 1 with filename: ${filename}`,
       );
     }
-
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

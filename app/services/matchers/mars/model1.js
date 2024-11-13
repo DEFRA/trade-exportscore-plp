@@ -20,12 +20,14 @@ function matches(packingList, filename) {
       ) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
-
       // check for header values
       result = matchesHeader(
         Object.values(headers.MARS1.regex),
         packingList[sheet],
       );
+      if (result === matcherResult.WRONG_HEADER) {
+        return result;
+      }
     }
 
     if (result === matcherResult.CORRECT) {
