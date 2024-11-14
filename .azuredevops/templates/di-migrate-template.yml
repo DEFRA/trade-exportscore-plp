@@ -1,0 +1,38 @@
+# templates/di-migrate-template.yml
+
+parameters:
+  - name: modelIds
+    type: string
+  - name: sourceEndpoint
+    type: string
+  - name: targetEndpoint
+    type: string
+  - name: azureSubscription
+    type: string
+  - name: poolName
+    type: string
+
+jobs:
+  - job: Migrate_Job
+    pool:
+      name: ${{ parameters.poolName }}
+    steps:
+      - task: UseNode@1
+        inputs:
+          version: "16.x"
+
+      - script: |
+          npm install
+        displayName: "Install npm dependencies"
+
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: ${{ parameters.azureSubscription }}
+          scriptType: "bash"
+          scriptLocation: "inlineScript"
+          inlineScript: |
+            node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
+        env:
+          MODEL_IDS: ${{ parameters.modelIds }}
+          SOURCE_ENDPOINT: ${{ parameters.sourceEndpoint }}
+          TARGET_ENDPOINT: ${{ parameters.targetEndpoint }}

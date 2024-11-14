@@ -249,7 +249,7 @@ module.exports = {
         G: "Quantity",
         H: "Net Weight (KG)",
         E: "Commodity Code",
-      }
+      },
     ],
     sheet2: [
       {

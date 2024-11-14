@@ -1,0 +1,56 @@
+trigger: none
+
+parameters:
+  - name: MODEL_IDS
+    displayName: "Model IDs (comma-separated)"
+    type: string
+    default: "" # Input format: "model1,model2,model3"
+
+stages:
+  - stage: SND_to_DEV
+    displayName: "Migration from SND to DEV"
+    environment: "DEV1" # For approval step
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelIds: ${{ parameters.MODEL_IDS }}
+          sourceEndpoint: $(SOURCE_ENDPOINT_SND)
+          targetEndpoint: $(TARGET_ENDPOINT_DEV)
+          azureSubscription: "<SERVICE_CONNECTION_SND_DEV_PLACEHOLDER>"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
+
+  - stage: DEV_to_TST
+    displayName: "Migration from DEV to TST"
+    environment: "TST1" # For approval step
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelIds: ${{ parameters.MODEL_IDS }}
+          sourceEndpoint: $(SOURCE_ENDPOINT_DEV)
+          targetEndpoint: $(TARGET_ENDPOINT_TST)
+          azureSubscription: "<SERVICE_CONNECTION_DEV_TST_PLACEHOLDER>"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
+
+  - stage: TST_to_PRE
+    displayName: "Migration from TST to PRE"
+    environment: "PRE1" # For approval step
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelIds: ${{ parameters.MODEL_IDS }}
+          sourceEndpoint: $(SOURCE_ENDPOINT_TST)
+          targetEndpoint: $(TARGET_ENDPOINT_PRE)
+          azureSubscription: "<SERVICE_CONNECTION_TST_PRE_PLACEHOLDER>"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
+
+  - stage: PRE_to_PRD
+    displayName: "Migration from PRE to PRD"
+    environment: "PRD1" # For approval step
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelIds: ${{ parameters.MODEL_IDS }}
+          sourceEndpoint: $(SOURCE_ENDPOINT_PRE)
+          targetEndpoint: $(TARGET_ENDPOINT_PRD)
+          azureSubscription: "<SERVICE_CONNECTION_PRE_PRD_PLACEHOLDER>"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
