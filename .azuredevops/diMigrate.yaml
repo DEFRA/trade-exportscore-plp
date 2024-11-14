@@ -1,41 +1,56 @@
 trigger: none
 
-pool:
-  vmImage: "<TO_REPLACE_WITH_ADO_AGENT_POOL>" # TO MODIFY WHEN ADO AGENT POOL TO USE IS KNOWN
-
-# Define pipeline parameters
 parameters:
-  - name: SOURCE_MODEL_ID
-    displayName: "Source Model ID"
-    type: string
-    default: ""
-  - name: TARGET_MODEL_ID
-    displayName: "Target Model ID"
+  - name: MODEL_ID
+    displayName: "Model ID"
     type: string
     default: ""
 
-steps:
-  # Set Node.js version to 16.x
-  - task: UseNode@1
-    inputs:
-      version: "16.x"
+stages:
+  - stage: SND_to_DEV
+    displayName: "Migration from SND to DEV"
+    environment: "DEV1"
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelId: ${{ parameters.MODEL_ID }}
+          sourceEndpoint: $(SOURCE_ENDPOINT_SND)
+          targetEndpoint: $(TARGET_ENDPOINT_DEV)
+          azureSubscription: "<SERVICE_CONNECTION_SND_DEV_PLACEHOLDER>"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
 
-  # Install npm dependencies if package.json is present
-  - script: |
-      npm install
-    displayName: "Install npm dependencies"
+  - stage: DEV_to_TST
+    displayName: "Migration from DEV to TST"
+    environment: "TST1"
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelId: ${{ parameters.MODEL_ID }}
+          sourceEndpoint: $(SOURCE_ENDPOINT_DEV)
+          targetEndpoint: $(TARGET_ENDPOINT_TST)
+          azureSubscription: "<SERVICE_CONNECTION_DEV_TST_PLACEHOLDER>"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
 
-  # Use the Azure CLI task to authenticate using the service connection and run the Node.js script
-  - task: AzureCLI@2
-    inputs:
-      azureSubscription: "<TO_REPLACE_WITH_ADO_SERVICE_CONNECTION>" # TO MODIFY WHEN SERVICE CONNECTION TO USE IS KNOWN
-      scriptType: "bash"
-      scriptLocation: "inlineScript"
-      inlineScript: |
-        # Run the Node.js script with environment variables
-        node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
-    env:
-      SOURCE_MODEL_ID: ${{ parameters.SOURCE_MODEL_ID }}
-      TARGET_MODEL_ID: ${{ parameters.TARGET_MODEL_ID }}
-      SOURCE_ENDPOINT: $(SOURCE_ENDPOINT)
-      TARGET_ENDPOINT: $(TARGET_ENDPOINT)
+  - stage: TST_to_PRE
+    displayName: "Migration from TST to PRE"
+    environment: "PRE1"
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelId: ${{ parameters.MODEL_ID }}
+          sourceEndpoint: $(SOURCE_ENDPOINT_TST)
+          targetEndpoint: $(TARGET_ENDPOINT_PRE)
+          azureSubscription: "<SERVICE_CONNECTION_TST_PRE_PLACEHOLDER>"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
+
+  - stage: PRE_to_PRD
+    displayName: "Migration from PRE to PRD"
+    environment: "PRD1"
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelId: ${{ parameters.MODEL_ID }}
+          sourceEndpoint: $(SOURCE_ENDPOINT_PRE)
+          targetEndpoint: $(TARGET_ENDPOINT_PRD)
+          azureSubscription: "<SERVICE_CONNECTION_PRE_PRD_PLACEHOLDER>"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV5"

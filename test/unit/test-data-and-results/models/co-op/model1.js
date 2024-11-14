@@ -97,7 +97,7 @@ module.exports = {
   wrongEstablishmentMultiple: {
     sheet1: [
       {},
-      { 
+      {
         E: "Dispatch RMS Establishment",
         O: "Product/ Part Number description",
         P: "Tariff Code EU",

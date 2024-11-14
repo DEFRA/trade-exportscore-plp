@@ -1,45 +1,28 @@
+const { DefaultAzureCredential } = require("@azure/identity");
 const {
-  AzureKeyCredential,
   DocumentModelAdministrationClient,
 } = require("@azure/ai-form-recognizer");
 
-// ADO pipeline parameters
-const sourceModelId = process.env.SOURCE_MODEL_ID;
-const targetModelId = process.env.TARGET_MODEL_ID;
+// ADO pipeline parameter
+const modelId = process.env.MODEL_ID;
 
-// ADO pipeline variables
-const sourceKey = process.env.SOURCE_KEY;
+// ADO pipeline variables for endpoints
 const sourceEndpoint = process.env.SOURCE_ENDPOINT;
-const targetKey = process.env.TARGET_KEY;
 const targetEndpoint = process.env.TARGET_ENDPOINT;
 
-// Credentials for source and target environments
-const environments = {
-  source: {
-    key: sourceKey,
-    endpoint: sourceEndpoint,
-  },
-  target: {
-    key: targetKey,
-    endpoint: targetEndpoint,
-  },
-};
+// Create a DefaultAzureCredential instance for authentication
+const credential = new DefaultAzureCredential();
 
-// Helper function to create Document Model Administration clients
-function createDocumentIntelligenceClients(env) {
-  return {
-    modelAdminClient: new DocumentModelAdministrationClient(
-      env.endpoint,
-      new AzureKeyCredential(env.key),
-    ),
-  };
+// Helper function to create a Document Model Administration client
+function createDocumentIntelligenceClient(endpoint) {
+  return new DocumentModelAdministrationClient(endpoint, credential);
 }
 
 // Assess the validity of a model
-async function assessModelPresence(modelAdminClient, modelId) {
+async function assessModelPresence(client, modelId) {
   try {
     console.log("== Assessing model presence");
-    const model = await modelAdminClient.getDocumentModel(modelId);
+    const model = await client.getDocumentModel(modelId);
     console.log(`Model ID: ${model.modelId}`);
     console.log(`Description: ${model.description}`);
     console.log(`Created On: ${model.createdOn}`);
@@ -58,18 +41,17 @@ function handleError(msg) {
 // Handle model copying between environments
 async function copyModel(sourceClient, targetClient) {
   try {
-    const copyAuthorisation =
-      await targetClient.getCopyAuthorization(targetModelId);
+    const copyAuthorisation = await targetClient.getCopyAuthorization(modelId);
     console.log("Copy authorisation received.");
 
     const poller = await sourceClient.beginCopyModelTo(
-      targetModelId,
+      modelId,
       copyAuthorisation,
     );
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);
   } catch (error) {
-    const msg = `Error copying model with ID ${targetModelId}: ${error.message}`;
+    const msg = `Error copying model with ID ${modelId}: ${error.message}`;
     handleError(msg);
   }
 }
@@ -77,19 +59,17 @@ async function copyModel(sourceClient, targetClient) {
 // Main function to assess source, copy to target, and perform analysis
 async function main() {
   console.log("========== Creating clients for source and target ==========");
-  const { modelAdminClient: sourceModelAdminClient } =
-    createDocumentIntelligenceClients(environments.source);
-  const { modelAdminClient: targetModelAdminClient } =
-    createDocumentIntelligenceClients(environments.target);
+  const sourceClient = createDocumentIntelligenceClient(sourceEndpoint);
+  const targetClient = createDocumentIntelligenceClient(targetEndpoint);
 
   console.log("========== Assessing the source model ==========");
-  await assessModelPresence(sourceModelAdminClient, sourceModelId);
+  await assessModelPresence(sourceClient, modelId);
 
   console.log("========== Copying model from source to target ==========");
-  await copyModel(sourceModelAdminClient, targetModelAdminClient);
+  await copyModel(sourceClient, targetClient);
 
   console.log("========== Assessing the target model ==========");
-  await assessModelPresence(targetModelAdminClient, targetModelId);
+  await assessModelPresence(targetClient, modelId);
 }
 
 main().catch((error) => {
