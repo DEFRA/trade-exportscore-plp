@@ -1,7 +1,7 @@
 # templates/di-migrate-template.yml
 
 parameters:
-  - name: modelId
+  - name: modelIds
     type: string
   - name: sourceEndpoint
     type: string
@@ -33,6 +33,6 @@ jobs:
           inlineScript: |
             node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
         env:
-          MODEL_ID: ${{ parameters.modelId }}
+          MODEL_IDS: ${{ parameters.modelIds }}
           SOURCE_ENDPOINT: ${{ parameters.sourceEndpoint }}
           TARGET_ENDPOINT: ${{ parameters.targetEndpoint }}
