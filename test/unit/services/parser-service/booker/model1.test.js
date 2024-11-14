@@ -1,9 +1,9 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-data-and-results/models/mands/model1");
+const model = require("../../../test-data-and-results/models/booker/model1");
 const parser_model = require("../../../../../app/services/parser-model");
-const test_results = require("../../../test-data-and-results/results/mands/model1");
+const test_results = require("../../../test-data-and-results/results/booker/model1");
 
-const filename = "mands-model1.pdf";
+const filename = "booker-model1.pdf";
 
 jest.mock("../../../../../app/services/document-intelligence");
 jest.mock("../../../../../app/config", () => {
@@ -22,8 +22,11 @@ createDocumentIntelligenceClient.mockImplementation(() => {
 });
 
 describe("findParser", () => {
-  test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
+  test("matches valid booker Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
     runAnalysis
+      .mockImplementationOnce(() => {
+        return model.validModel;
+      })
       .mockImplementationOnce(() => {
         return model.validModel;
       })
@@ -35,8 +38,11 @@ describe("findParser", () => {
     expect(result).toEqual(test_results.validTestResult);
   });
 
-  test("matches valid MandS Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+  test("matches valid booker Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
     runAnalysis
+      .mockImplementationOnce(() => {
+        return model.invalidModel_MissingColumnCells;
+      })
       .mockImplementationOnce(() => {
         return model.invalidModel_MissingColumnCells;
       })
@@ -45,7 +51,6 @@ describe("findParser", () => {
       });
 
     const result = await parserService.findParser("", filename);
-
     expect(result).toEqual(test_results.invalidTestResult_MissingCells);
   });
 

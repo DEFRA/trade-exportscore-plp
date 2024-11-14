@@ -256,6 +256,18 @@ const headers = {
     },
     modelId: "mands-v1",
   },
+  BOOKER1: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000077-\d{3}$/,
+    },
+    headers: {
+      description: "Description",
+      commodity_code: "Commodity Code",
+      number_of_packages: "Unit Quantity",
+      total_net_weight_kg: "Net Weight (Kilos)",
+    },
+    modelId: "booker-v1",
+  },
 };
 
 module.exports = headers;
