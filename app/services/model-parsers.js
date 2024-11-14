@@ -40,7 +40,8 @@ const icelandMatcher = require("./matchers/iceland/model1");
 const icelandParser = require("./parsers/iceland/model1");
 const mandsMatcher = require("./matchers/mands/model1");
 const mandsParser = require("./parsers/mands/model1");
-
+const bookerMatcher = require("./matchers/booker/model1");
+const bookerParser = require("./parsers/booker/model1");
 const parsersExcel = {
   ASDA1: {
     matches: (packingList, filename) =>
@@ -159,6 +160,11 @@ const parsersPdf = {
     matches: (packingList, filename) =>
       mandsMatcher.matches(packingList, filename),
     parse: (packingList, filename) => mandsParser.parse(packingList, filename),
+  },
+  BOOKER: {
+    matches: (packingList, filename) =>
+      bookerMatcher.matches(packingList, filename),
+    parse: (packingList, filename) => bookerParser.parse(packingList, filename),
   },
 };
 
