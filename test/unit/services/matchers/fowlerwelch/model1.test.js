@@ -128,4 +128,22 @@ describe("matchesFowlerWelch", () => {
 
     expect(logErrorSpy).toHaveBeenCalled();
   });
+
+  test("skips processing for sheets listed in invalidSheets", () => {
+    const packingListJson = {
+      Invoice: [
+        {
+          C: "Commodity code",
+          F: "Description of goods",
+          H: "No. of pkgs",
+          K: "Item Net Weight (kgs)",
+          N: "Treatment Type (Chilled /Ambient)",
+        },
+      ],
+    };
+
+    const result = matcher.matches(packingListJson, filename);
+
+    expect(result).toBe(matcherResult.EMPTY_FILE);
+  });
 });
