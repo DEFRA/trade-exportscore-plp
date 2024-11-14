@@ -44,7 +44,7 @@ async function copyModel(sourceClient, targetClient, modelId) {
 
     const poller = await sourceClient.beginCopyModelTo(
       modelId,
-      copyAuthorisation
+      copyAuthorisation,
     );
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);

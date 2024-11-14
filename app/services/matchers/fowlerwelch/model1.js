@@ -8,26 +8,30 @@ const { matchesHeader } = require("../../matches-header");
 
 function matchesModel(packingList, filename, regexExpression) {
   try {
-    let result;
+    let result = matcherResult.EMPTY_FILE; // Initialise to EMPTY_FILE as spreadsheet with only invalid sheets is equivalent to an empty file.
     const sheets = Object.keys(packingList);
-    if (sheets?.length === 0) {
+    if (!sheets?.length) {
       return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {
-      if (!headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
-        // check for correct establishment number
-        if (!regex.test(regexExpression, packingList[sheet])) {
-          return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
-        }
-        // check for header values
-        result = matchesHeader(
-          Object.values(headers.FOWLERWELCH1.regex),
-          packingList[sheet],
-        );
-        if (result === matcherResult.WRONG_HEADER) {
-          return result;
-        }
+      // Skip invalid sheets
+      if (headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
+        continue;
+      }
+
+      // Check for correct establishment number
+      if (!regex.test(regexExpression, packingList[sheet])) {
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      }
+
+      // Check for header values
+      result = matchesHeader(
+        Object.values(headers.FOWLERWELCH1.regex),
+        packingList[sheet],
+      );
+      if (result === matcherResult.WRONG_HEADER) {
+        return result;
       }
     }
 
@@ -37,7 +41,7 @@ function matchesModel(packingList, filename, regexExpression) {
       `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
     );
 
-    return result;
+    return result; // Return the last checked result if no issues were found
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
     return matcherResult.GENERIC_ERROR;
