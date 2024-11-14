@@ -266,7 +266,7 @@ const headers = {
       number_of_packages: "Unit Quantity",
       total_net_weight_kg: "Net Weight (Kilos)",
     },
-    modelId: "booker-v2",
+    modelId: "booker-v1",
   },
 };
 

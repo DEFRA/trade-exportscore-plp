@@ -14,7 +14,6 @@ async function matches(packingList, filename) {
     isMatched: matcherResult.GENERIC_ERROR,
     document: {},
   };
-
   try {
     const client = createDocumentIntelligenceClient();
     const document = await runAnalysis(
