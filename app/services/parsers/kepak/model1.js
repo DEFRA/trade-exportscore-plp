@@ -6,23 +6,31 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const { rowFinder } = require("../../../utilities/row-finder");
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
 
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    const headerTitles = Object.values(headers.KEPAK1.regex);
+    const callback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
+    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
+    const dataRow = headerRow + 1;
+
     const establishmentNumber = regex.findMatch(
       headers.KEPAK1.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
 
-    const dataRow = 21;
-
     for (const sheet of sheets) {
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
-        dataRow - 1,
+        headerRow,
         dataRow,
         headers.KEPAK1.regex,
       );
