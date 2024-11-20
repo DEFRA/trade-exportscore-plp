@@ -8,13 +8,18 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matches(packingList, filename) {
   try {
-    let result;
+    let result = matcherResult.EMPTY_FILE; // Initialise to EMPTY_FILE as spreadsheet with only invalid sheets is equivalent to an empty file.
     const sheets = Object.keys(packingList);
-    if (sheets?.length === 0) {
+    if (!sheets?.length) {
       return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {
+      // Skip invalid sheets
+      if (headers.DAVENPORT1.invalidSheets.includes(sheet)) {
+        continue;
+      }
+
       // check for correct establishment number
       if (
         !regex.test(

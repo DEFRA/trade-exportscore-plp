@@ -83,6 +83,16 @@ const headers = {
     },
   },
   DAVENPORT1: {
+    invalidSheets: [
+      "Packing List",
+      "Invoice",
+      "Lookups",
+      "Addresses",
+      "Products",
+      "Batch Info",
+      "Commodity",
+      "Meursing",
+    ],
     establishmentNumber: {
       regex: /RMS-GB-000323(-\d{3})?/i,
     },

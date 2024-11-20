@@ -69,4 +69,21 @@ describe("matchesDavenportModel1", () => {
 
     expect(logErrorSpy).toHaveBeenCalled();
   });
+
+  test("skips processing for sheets listed in invalidSheets", () => {
+    const packingListJson = {
+      Invoice: [
+        {
+          C: "Commodity Code",
+          F: "Description of Goods",
+          H: "No. of Pkgs(X)",
+          K: "Total Net Weight(X)",
+        },
+      ],
+    };
+
+    const result = matcher.matches(packingListJson, filename);
+
+    expect(result).toBe(matcherResult.EMPTY_FILE);
+  });
 });
