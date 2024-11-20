@@ -19,13 +19,17 @@ function parse(packingListJson) {
 
     const dataRow = 45;
     for (const sheet of sheets) {
-      packingListContentsTemp = mapParser(
-        packingListJson[sheet],
-        dataRow - 1,
-        dataRow,
-        headers.DAVENPORT1.regex,
-      );
-      packingListContents = packingListContents.concat(packingListContentsTemp);
+      if (!headers.DAVENPORT1.invalidSheets.includes(sheet)) {
+        packingListContentsTemp = mapParser(
+          packingListJson[sheet],
+          dataRow - 1,
+          dataRow,
+          headers.DAVENPORT1.regex,
+        );
+        packingListContents = packingListContents.concat(
+          packingListContentsTemp,
+        );
+      }
     }
 
     return combineParser.combine(
