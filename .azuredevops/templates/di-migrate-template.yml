@@ -24,6 +24,8 @@ jobs:
     runOnce:
       deploy:
         steps:
+          - checkout: self 
+
           - task: UseNode@1
             inputs:
               version: "16.x"
