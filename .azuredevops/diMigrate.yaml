@@ -13,8 +13,8 @@ stages:
       - template: ./templates/di-migrate-template.yml
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
-          sourceEndpoint: $(SOURCE_ENDPOINT_SND)
-          targetEndpoint: $(TARGET_ENDPOINT_DEV)
+          sourceEndpoint: "https://sndadpinfdi4401.cognitiveservices.azure.com/"
+          targetEndpoint: "https://devadpinfdi1401.cognitiveservices.azure.com/"
           azureSubscription: "AZR-ADP-SND4_DEV1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
           environmentName: "DEV1"
@@ -26,8 +26,8 @@ stages:
       - template: ./templates/di-migrate-template.yml
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
-          sourceEndpoint: $(SOURCE_ENDPOINT_DEV)
-          targetEndpoint: $(TARGET_ENDPOINT_TST)
+          sourceEndpoint: "https://devadpinfdi1401.cognitiveservices.azure.com/"
+          targetEndpoint: "https://tstadpinfdi1401.cognitiveservices.azure.com/"
           azureSubscription: "AZR-ADP-DEV1_TST1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
           environmentName: "TST1"
