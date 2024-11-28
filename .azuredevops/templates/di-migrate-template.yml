@@ -11,28 +11,35 @@ parameters:
     type: string
   - name: poolName
     type: string
+  - name: environmentName
+    type: string
 
 jobs:
-  - job: Migrate_Job
-    pool:
-      name: ${{ parameters.poolName }}
-    steps:
-      - task: UseNode@1
-        inputs:
-          version: "16.x"
+- deployment: copyModel
+  displayName: Copy model to ${{ parameters.environmentName }}
+  pool:
+    name: ${{ parameters.poolName }}
+  environment: ${{ parameters.environmentName }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - task: UseNode@1
+            inputs:
+              version: "16.x"
 
-      - script: |
-          npm install
-        displayName: "Install npm dependencies"
+          - script: |
+              npm install
+            displayName: "Install npm dependencies"
 
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: ${{ parameters.azureSubscription }}
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
-          inlineScript: |
-            node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
-        env:
-          MODEL_IDS: ${{ parameters.modelIds }}
-          SOURCE_ENDPOINT: ${{ parameters.sourceEndpoint }}
-          TARGET_ENDPOINT: ${{ parameters.targetEndpoint }}
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: ${{ parameters.azureSubscription }}
+              scriptType: "bash"
+              scriptLocation: "inlineScript"
+              inlineScript: |
+                node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
+            env:
+              MODEL_IDS: ${{ parameters.modelIds }}
+              SOURCE_ENDPOINT: ${{ parameters.sourceEndpoint }}
+              TARGET_ENDPOINT: ${{ parameters.targetEndpoint }}

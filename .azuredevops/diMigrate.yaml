@@ -9,7 +9,6 @@ parameters:
 stages:
   - stage: SND_to_DEV
     displayName: "Migration from SND to DEV"
-    environment: "DEV1" # For approval step
     jobs:
       - template: ./templates/di-migrate-template.yml
         parameters:
@@ -18,11 +17,11 @@ stages:
           targetEndpoint: $(TARGET_ENDPOINT_DEV)
           azureSubscription: "AZR-ADP-SND4_DEV1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
+          environmentName: "DEV1"
 
   - stage: DEV_to_TST
     dependsOn: SND_to_DEV
     displayName: "Migration from DEV to TST"
-    environment: "TST1" # For approval step
     jobs:
       - template: ./templates/di-migrate-template.yml
         parameters:
@@ -31,6 +30,7 @@ stages:
           targetEndpoint: $(TARGET_ENDPOINT_TST)
           azureSubscription: "AZR-ADP-DEV1_TST1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
+          environmentName: "TST1"
 
   # - stage: TST_to_PRE
   #   dependsOn: DEV_to_TST
