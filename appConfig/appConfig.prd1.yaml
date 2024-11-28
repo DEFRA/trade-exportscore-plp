@@ -8,3 +8,5 @@
   value: "PRDTREINFSB1001.servicebus.windows.net"
 - key: TP_TENANT_ID
   value: "bce3d7d1-cbbd-481e-8c81-eaecfc38b551"
+- key: FORM_RECOGNIZER_ENDPOINT
+  value: "https://prdadpinfdi1401.cognitiveservices.azure.com/"

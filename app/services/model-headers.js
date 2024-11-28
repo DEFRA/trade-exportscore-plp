@@ -250,7 +250,7 @@ const headers = {
       number_of_packages: "Unit Qty",
       total_net_weight_kg: "Net Weight (KG)",
     },
-    modelId: "iceland-requireddataonly-stringsintsandnumbers",
+    modelId: "iceland1-v1",
   },
   MANDS1: {
     establishmentNumber: {
@@ -263,7 +263,7 @@ const headers = {
       number_of_packages: "Trays/Ctns",
       total_net_weight_kg: "Tot Net Weight (Kg)",
     },
-    modelId: "mands-v1",
+    modelId: "mands1-v1",
   },
   BOOKER1: {
     establishmentNumber: {
@@ -275,7 +275,7 @@ const headers = {
       number_of_packages: "Unit Quantity",
       total_net_weight_kg: "Net Weight (Kilos)",
     },
-    modelId: "booker-v1",
+    modelId: "booker1-v1",
   },
 };
 

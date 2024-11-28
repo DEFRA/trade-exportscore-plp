@@ -11,4 +11,4 @@
 - key: TP_TENANT_ID
   value: "c9d74090-b4e6-4b04-981d-e6757a160812"
 - key: FORM_RECOGNIZER_ENDPOINT
-  value: "https://adpaipocuksdi.cognitiveservices.azure.com/"
+  value: "https://sndadpinfdi4401.cognitiveservices.azure.com/"
