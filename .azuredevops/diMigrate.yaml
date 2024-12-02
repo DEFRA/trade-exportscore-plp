@@ -32,28 +32,28 @@ stages:
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
           environmentName: "TST1"
 
-  # - stage: TST_to_PRE
-  #   dependsOn: DEV_to_TST
-  #   displayName: "Migration from TST to PRE"
-  #   jobs:
-  #     - template: ./templates/di-migrate-template.yml
-  #       parameters:
-  #         modelIds: ${{ parameters.MODEL_IDS }}
-  #         sourceEndpoint: "https://tstadpinfdi1401.cognitiveservices.azure.com/"
-  #         targetEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
-  #         azureSubscription: "AZR-ADP-TST1_PRE1"
-  #         poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
-  #         environmentName: "PRE1"
+  - stage: TST_to_PRE
+    dependsOn: DEV_to_TST
+    displayName: "Migration from TST to PRE"
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelIds: ${{ parameters.MODEL_IDS }}
+          sourceEndpoint: "https://tstadpinfdi1401.cognitiveservices.azure.com/"
+          targetEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
+          azureSubscription: "AZR-ADP-TST1_PRE1"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
+          environmentName: "PRE1"
 
-  # - stage: PRE_to_PRD
-  #   dependsOn: TST_to_PRE
-  #   displayName: "Migration from PRE to PRD"
-  #   jobs:
-  #     - template: ./templates/di-migrate-template.yml
-  #       parameters:
-  #         modelIds: ${{ parameters.MODEL_IDS }}
-  #         sourceEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
-  #         targetEndpoint: "https://prdadpinfdi1401.cognitiveservices.azure.com/"
-  #         azureSubscription: "AZR-ADP-PRE1_PRD1"
-  #         poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
-  #         environmentName: "PRD1"
+  - stage: PRE_to_PRD
+    dependsOn: TST_to_PRE
+    displayName: "Migration from PRE to PRD"
+    jobs:
+      - template: ./templates/di-migrate-template.yml
+        parameters:
+          modelIds: ${{ parameters.MODEL_IDS }}
+          sourceEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
+          targetEndpoint: "https://prdadpinfdi1401.cognitiveservices.azure.com/"
+          azureSubscription: "AZR-ADP-PRE1_PRD1"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
+          environmentName: "PRD1"
