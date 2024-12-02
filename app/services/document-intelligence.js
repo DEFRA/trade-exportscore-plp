@@ -4,7 +4,7 @@ const logger = require("../utilities/logger");
 const { DefaultAzureCredential } = require("@azure/identity");
 
 function createDocumentIntelligenceClient() {
-  const credential = DefaultAzureCredential()
+  const credential = DefaultAzureCredential();
   return new DocumentAnalysisClient(config.formRecognizerEndpoint, credential);
 }
 

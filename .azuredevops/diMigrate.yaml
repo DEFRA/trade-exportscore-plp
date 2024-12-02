@@ -35,25 +35,25 @@ stages:
   # - stage: TST_to_PRE
   #   dependsOn: DEV_to_TST
   #   displayName: "Migration from TST to PRE"
-  #   environment: "PRE1" # For approval step
   #   jobs:
   #     - template: ./templates/di-migrate-template.yml
   #       parameters:
   #         modelIds: ${{ parameters.MODEL_IDS }}
-  #         sourceEndpoint: $(SOURCE_ENDPOINT_TST)
-  #         targetEndpoint: $(TARGET_ENDPOINT_PRE)
-  #         azureSubscription: "<SERVICE_CONNECTION_TST_PRE_PLACEHOLDER>"
+  #         sourceEndpoint: "https://tstadpinfdi1401.cognitiveservices.azure.com/"
+  #         targetEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
+  #         azureSubscription: "AZR-ADP-TST1_PRE1"
   #         poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
+  #         environmentName: "PRE1"
 
   # - stage: PRE_to_PRD
   #   dependsOn: TST_to_PRE
   #   displayName: "Migration from PRE to PRD"
-  #   environment: "PRD1" # For approval step
   #   jobs:
   #     - template: ./templates/di-migrate-template.yml
   #       parameters:
   #         modelIds: ${{ parameters.MODEL_IDS }}
-  #         sourceEndpoint: $(SOURCE_ENDPOINT_PRE)
-  #         targetEndpoint: $(TARGET_ENDPOINT_PRD)
-  #         azureSubscription: "<SERVICE_CONNECTION_PRE_PRD_PLACEHOLDER>"
+  #         sourceEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
+  #         targetEndpoint: "https://prdadpinfdi1401.cognitiveservices.azure.com/"
+  #         azureSubscription: "AZR-ADP-PRE1_PRD1"
   #         poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
+  #         environmentName: "PRD1"
