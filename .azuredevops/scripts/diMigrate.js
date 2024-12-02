@@ -24,9 +24,10 @@ async function assessModelPresence(client, modelId) {
     console.log(`Model ID: ${model.modelId}`);
     console.log(`Description: ${model.description}`);
     console.log(`Created On: ${model.createdOn}`);
+    return true;
   } catch (error) {
-    const msg = `Error in assessing model with ID ${modelId}: ${error.message}`;
-    handleError(msg);
+    console.log(`Model with ID ${modelId} not found: ${error.message}`);
+    return false;
   }
 }
 
@@ -63,6 +64,19 @@ async function main() {
   for (const modelId of modelIds) {
     console.log(`========== Processing model: ${modelId} ==========`);
 
+    // Assess target model before copying
+    console.log(
+      "========== Checking if target model already exists ==========",
+    );
+    const targetModelExists = await assessModelPresence(targetClient, modelId);
+
+    if (targetModelExists) {
+      console.log(
+        `Model with ID ${modelId} already exists in the target environment. Skipping copy...`,
+      );
+      continue;
+    }
+
     // Assess source model
     console.log("========== Assessing the source model ==========");
     await assessModelPresence(sourceClient, modelId);
@@ -71,7 +85,7 @@ async function main() {
     console.log("========== Copying model from source to target ==========");
     await copyModel(sourceClient, targetClient, modelId);
 
-    // Assess target model
+    // Assess target model after copy
     console.log("========== Assessing the target model ==========");
     await assessModelPresence(targetClient, modelId);
   }
