@@ -45,6 +45,7 @@ jobs:
                 scriptLocation: "inlineScript"
                 inlineScript: |
                   az account set --subscription ${{ parameters.sourceSubscriptionId }}
+                  nc -v -w 3 ${{ parameters.sourceEndpoint }} 443
                   node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
               env:
                 MODEL_IDS: ${{ parameters.modelIds }}
