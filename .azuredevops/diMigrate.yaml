@@ -4,7 +4,7 @@ parameters:
   - name: MODEL_IDS
     displayName: "Model IDs (comma-separated)"
     type: string
-    default: "" # Input format: "model1,model2,model3"
+    default: "iceland1-v1" # Input format: "model1,model2,model3"
 
 stages:
   - stage: SND_to_DEV
@@ -19,7 +19,7 @@ stages:
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
           environmentName: "DEV1"
           sourceSubscriptionId: "da83801b-f7e0-4510-9848-67d87b1009e2"
-          targetSubscriptionId: "TBD"
+          targetSubscriptionId: "19164a52-70b4-46bf-be9b-0cb3edd7c120"
 
   - stage: DEV_to_TST
     dependsOn: SND_to_DEV
@@ -33,8 +33,8 @@ stages:
           azureSubscription: "AZR-ADP-DEV1_TST1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
           environmentName: "TST1"
-          sourceSubscriptionId: "TBD"
-          targetSubscriptionId: "TBD"
+          sourceSubscriptionId: "19164a52-70b4-46bf-be9b-0cb3edd7c120"
+          targetSubscriptionId: "e386d700-ffc5-475c-897a-3f556e66acb8"
 
   - stage: TST_to_PRE
     dependsOn: DEV_to_TST
@@ -48,8 +48,8 @@ stages:
           azureSubscription: "AZR-ADP-TST1_PRE1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
           environmentName: "PRE1"
-          sourceSubscriptionId: "TBD"
-          targetSubscriptionId: "TBD"
+          sourceSubscriptionId: "e386d700-ffc5-475c-897a-3f556e66acb8"
+          targetSubscriptionId: "972e5314-c0a2-4423-bc39-ce43c8b5e4a6"
 
   - stage: PRE_to_PRD
     dependsOn: TST_to_PRE
@@ -63,5 +63,5 @@ stages:
           azureSubscription: "AZR-ADP-PRE1_PRD1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
           environmentName: "PRD1"
-          sourceSubscriptionId: "TBD"
-          targetSubscriptionId: "TBD"
+          sourceSubscriptionId: "972e5314-c0a2-4423-bc39-ce43c8b5e4a6"
+          targetSubscriptionId: "3f906099-3c40-4e1d-adc1-112ff3af128b"
