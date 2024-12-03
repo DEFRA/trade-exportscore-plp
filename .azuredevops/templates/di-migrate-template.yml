@@ -47,7 +47,7 @@ jobs:
                   az account set --subscription ${{ parameters.sourceSubscriptionId }}
                   nc -v -w 3 sndadpinfdi4401.cognitiveservices.azure.com 443
                   nslookup sndadpinfdi4401.cognitiveservices.azure.com
-                  curl -v https://sndadpinfdi4401.cognitiveservices.azure.com/documentintelligence/
+                  curl -v https://sndadpinfdi4401.cognitiveservices.azure.com
                   node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
               env:
                 MODEL_IDS: ${{ parameters.modelIds }}
