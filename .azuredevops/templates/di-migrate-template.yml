@@ -45,6 +45,8 @@ jobs:
                 scriptLocation: "inlineScript"
                 inlineScript: |
                   az account set --subscription ${{ parameters.sourceSubscriptionId }}
+                  export NODE_OPTIONS=--tls-min-v1.2
+                  openssl s_client -connect sndadpinfdi4401.cognitiveservices.azure.com:443 -tls1_2
                   nc -v -w 3 sndadpinfdi4401.cognitiveservices.azure.com 443
                   nslookup sndadpinfdi4401.cognitiveservices.azure.com
                   curl -v https://sndadpinfdi4401.cognitiveservices.azure.com
