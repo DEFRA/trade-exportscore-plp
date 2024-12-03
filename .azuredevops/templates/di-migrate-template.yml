@@ -44,7 +44,7 @@ jobs:
                 scriptType: "pscore"
                 scriptLocation: "inlineScript"
                 inlineScript: |
-                  az role assignment list ---output table
+                  az role assignment list
 
             - task: AzureCLI@2
               inputs:
