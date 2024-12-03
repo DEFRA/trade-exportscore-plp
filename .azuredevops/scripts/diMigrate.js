@@ -62,7 +62,7 @@ async function copyModel(sourceClient, targetClient, modelId) {
 // Main function to assess source, copy to target, and perform analysis for each model
 async function main() {
   console.log("========== Creating clients for source and target ==========");
-  const sourceClient = new DocumentModelAdministrationClient(endpoint, new DefaultAzureCredential());
+  const sourceClient = new DocumentModelAdministrationClient(sourceEndpoint, new DefaultAzureCredential());
   //const sourceClient = createDocumentIntelligenceClient(sourceEndpoint);
   //const targetClient = createDocumentIntelligenceClient(targetEndpoint);
 
