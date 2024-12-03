@@ -70,24 +70,24 @@ async function main() {
     );
     const targetModelExists = await assessModelPresence(targetClient, modelId);
 
-    if (targetModelExists) {
-      console.log(
-        `Model with ID ${modelId} already exists in the target environment. Skipping copy...`,
-      );
-      continue;
-    }
+    // if (targetModelExists) {
+    //   console.log(
+    //     `Model with ID ${modelId} already exists in the target environment. Skipping copy...`,
+    //   );
+    //   continue;
+    // }
 
-    // Assess source model
-    console.log("========== Assessing the source model ==========");
-    await assessModelPresence(sourceClient, modelId);
+    // // Assess source model
+    // console.log("========== Assessing the source model ==========");
+    // await assessModelPresence(sourceClient, modelId);
 
-    // Copy model to target
-    console.log("========== Copying model from source to target ==========");
-    await copyModel(sourceClient, targetClient, modelId);
+    // // Copy model to target
+    // console.log("========== Copying model from source to target ==========");
+    // await copyModel(sourceClient, targetClient, modelId);
 
-    // Assess target model after copy
-    console.log("========== Assessing the target model ==========");
-    await assessModelPresence(targetClient, modelId);
+    // // Assess target model after copy
+    // console.log("========== Assessing the target model ==========");
+    // await assessModelPresence(targetClient, modelId);
   }
 }
 
