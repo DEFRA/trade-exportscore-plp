@@ -63,7 +63,7 @@ async function copyModel(sourceClient, targetClient, modelId) {
 async function main() {
   console.log("========== Creating clients for source and target ==========");
   const sourceClient = createDocumentIntelligenceClient(sourceEndpoint);
-  const targetClient = createDocumentIntelligenceClient(targetEndpoint);
+  //const targetClient = createDocumentIntelligenceClient(targetEndpoint);
 
   for (const modelId of modelIds) {
     console.log(`========== Processing model: ${modelId} ==========`);

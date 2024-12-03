@@ -13,6 +13,10 @@ parameters:
     type: string
   - name: environmentName
     type: string
+  - name: sourceSubscriptionId
+    type: string
+  - name: targetSubscriptionId
+    type: string
 
 jobs:
   - deployment: copyModel
@@ -40,6 +44,7 @@ jobs:
                 scriptType: "bash"
                 scriptLocation: "inlineScript"
                 inlineScript: |
+                  az account set --subscription ${{ parameters.sourceSubscriptionId }}
                   node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
               env:
                 MODEL_IDS: ${{ parameters.modelIds }}
