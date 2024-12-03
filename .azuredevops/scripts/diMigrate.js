@@ -10,7 +10,7 @@ const sourceEndpoint = process.env.SOURCE_ENDPOINT;
 const targetEndpoint = process.env.TARGET_ENDPOINT;
 
 // Create a DefaultAzureCredential instance for authentication
-const credential = new DefaultAzureCredential();
+//const credential = new DefaultAzureCredential();
 
 // Helper function to create a Document Model Administration client
 function createDocumentIntelligenceClient(endpoint) {
@@ -62,8 +62,8 @@ async function copyModel(sourceClient, targetClient, modelId) {
 // Main function to assess source, copy to target, and perform analysis for each model
 async function main() {
   console.log("========== Creating clients for source and target ==========");
-  const sourceClient = createDocumentIntelligenceClient(sourceEndpoint);
-  console.log(new DefaultAzureCredential());
+  const sourceClient = new DocumentModelAdministrationClient(endpoint, new DefaultAzureCredential());
+  //const sourceClient = createDocumentIntelligenceClient(sourceEndpoint);
   //const targetClient = createDocumentIntelligenceClient(targetEndpoint);
 
   for (const modelId of modelIds) {

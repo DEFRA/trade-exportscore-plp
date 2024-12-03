@@ -15,7 +15,7 @@ stages:
           modelIds: ${{ parameters.MODEL_IDS }}
           sourceEndpoint: "https://sndadpinfdi4401.cognitiveservices.azure.com/"
           targetEndpoint: "https://devadpinfdi1401.cognitiveservices.azure.com/"
-          azureSubscription: "AZR-ADP-SND4"
+          azureSubscription: "AZR-ADP-SND4_DEV1"
           poolName: "DEFRA-ADP-SND4-ubuntu2204"
           environmentName: "DEV1"
           sourceSubscriptionId: "da83801b-f7e0-4510-9848-67d87b1009e2"
