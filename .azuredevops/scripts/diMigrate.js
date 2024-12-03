@@ -2,6 +2,7 @@ const { DefaultAzureCredential } = require("@azure/identity");
 const {
   DocumentModelAdministrationClient,
 } = require("@azure/ai-form-recognizer");
+const { Json } = require("sequelize/lib/utils");
 
 // ADO pipeline variables
 const modelIds = process.env.MODEL_IDS.split(",").map((id) => id.trim()); // Split and trim each model ID
@@ -26,7 +27,10 @@ async function assessModelPresence(client, modelId) {
     console.log(`Created On: ${model.createdOn}`);
     return true;
   } catch (error) {
-    console.log(`Model with ID ${modelId} not found: ${error.message}`);
+    console.log(
+      `Model with ID ${modelId} not found:`,
+      JSON.stringify(error, Object.getOwnPropertyNames(error))
+    );
     return false;
   }
 }
@@ -45,7 +49,7 @@ async function copyModel(sourceClient, targetClient, modelId) {
 
     const poller = await sourceClient.beginCopyModelTo(
       modelId,
-      copyAuthorisation,
+      copyAuthorisation
     );
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);
