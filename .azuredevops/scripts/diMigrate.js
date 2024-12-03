@@ -65,10 +65,10 @@ async function main() {
     console.log(`========== Processing model: ${modelId} ==========`);
 
     // Assess target model before copying
-    console.log(
-      "========== Checking if target model already exists ==========",
-    );
-    const targetModelExists = await assessModelPresence(targetClient, modelId);
+    // console.log(
+    //   "========== Checking if target model already exists ==========",
+    // );
+    // const targetModelExists = await assessModelPresence(targetClient, modelId);
 
     // if (targetModelExists) {
     //   console.log(
@@ -77,9 +77,9 @@ async function main() {
     //   continue;
     // }
 
-    // // Assess source model
-    // console.log("========== Assessing the source model ==========");
-    // await assessModelPresence(sourceClient, modelId);
+    // Assess source model
+    console.log("========== Assessing the source model ==========");
+    await assessModelPresence(sourceClient, modelId);
 
     // // Copy model to target
     // console.log("========== Copying model from source to target ==========");
