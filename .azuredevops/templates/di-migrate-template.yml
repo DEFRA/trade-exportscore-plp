@@ -41,6 +41,14 @@ jobs:
             - task: AzureCLI@2
               inputs:
                 azureSubscription: ${{ parameters.azureSubscription }}
+                scriptType: "ps"
+                scriptLocation: "inlineScript"
+                inlineScript: |
+                  az role assignment list ---output table
+
+            - task: AzureCLI@2
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
                 scriptType: "bash"
                 scriptLocation: "inlineScript"
                 inlineScript: |
