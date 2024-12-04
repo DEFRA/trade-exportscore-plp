@@ -1,6 +1,8 @@
 const {
   createDocumentIntelligenceClient
 } = require("../services/document-intelligence");
+const logger = require("../utilities/logger");
+const { StatusCodes } = require("http-status-codes");
 
 module.exports = {
   method: "GET",
