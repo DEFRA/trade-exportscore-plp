@@ -29,7 +29,7 @@ async function assessModelPresence(client, modelId) {
   } catch (error) {
     console.log(
       `Model with ID ${modelId} not found:`,
-      JSON.stringify(error, Object.getOwnPropertyNames(error))
+      JSON.stringify(error, Object.getOwnPropertyNames(error)),
     );
     return false;
   }
@@ -49,7 +49,7 @@ async function copyModel(sourceClient, targetClient, modelId) {
 
     const poller = await sourceClient.beginCopyModelTo(
       modelId,
-      copyAuthorisation
+      copyAuthorisation,
     );
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);
@@ -62,7 +62,10 @@ async function copyModel(sourceClient, targetClient, modelId) {
 // Main function to assess source, copy to target, and perform analysis for each model
 async function main() {
   console.log("========== Creating clients for source and target ==========");
-  const sourceClient = new DocumentModelAdministrationClient(sourceEndpoint, new DefaultAzureCredential());
+  const sourceClient = new DocumentModelAdministrationClient(
+    sourceEndpoint,
+    new DefaultAzureCredential(),
+  );
   //const sourceClient = createDocumentIntelligenceClient(sourceEndpoint);
   //const targetClient = createDocumentIntelligenceClient(targetEndpoint);
 
