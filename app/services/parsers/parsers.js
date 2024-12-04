@@ -3,13 +3,14 @@ const parserModel = require("../parser-model");;
 const matcherResult = require("../matcher-result");
 const combineParser = require("../parser-combine");
 
-function getUnrecognisedParser()
-{
-    return {
+
+function getUnrecognisedParser() {
+  return {
     "parse": (packingList, filename) => {
-        return combineParser.combine(null, [], false, parserModel.NOMATCH);
-    }
-    };
+      return combineParser.combine(null, [], false, parserModel.NOMATCH);
+    },
+    "name": "unrecognised parser"
+  };
 }
 
 function getExcelParser(sanitisedPackingList, filename) {
@@ -44,6 +45,6 @@ function getPdfParser(sanitisedPackingList, filename) {
 
 module.exports = {
   getExcelParser,
-  getPdfParser, 
+  getPdfParser,
   getUnrecognisedParser
 };

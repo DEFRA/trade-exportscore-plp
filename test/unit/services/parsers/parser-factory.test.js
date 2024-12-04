@@ -1,5 +1,7 @@
 const parserModel = require("../../../../app/services/parser-model");
 const parserFactory = require("../../../../app/services/parsers/parser-factory");
+const { parsersExcel, parsersPdf } = require("../../../../app/services/model-parsers");
+const tjmorrisModel = require("../../test-data-and-results/models/tjmorris/model1");
 
 describe("parsePackingList - e2e", () => {
   const filename = "packinglist.xls";
@@ -258,3 +260,47 @@ describe("sanitizeInput", () => {
     expect(result.Sheet1[1].T).toBeNull();
   });
 });
+
+describe("findParser", () => {
+  test("Unrecognised extension", () => {
+    const packingListJson = {
+      Sheet1: [
+        {
+          A: "Consignor / Place o f Despatch",
+          B: "CONSIGNEE",
+        }
+      ]
+    };
+    const fileName = "packingList.txt";
+
+    const result = parserFactory.findParser(packingListJson, fileName);
+
+    expect(result.name).toBeTruthy();
+  });
+
+  test("Unrecognised excel", () => {
+    const packingListJson = {
+      Sheet1: [
+        {
+          A: "Consignor / Place o f Despatch",
+          B: "CONSIGNEE",
+        }
+      ]
+    };
+    const fileName = "packingList.xls";
+
+    const result = parserFactory.findParser(packingListJson, fileName);
+
+    expect(result.name).toBeTruthy();
+  });
+
+  test("TJMORRIS1 excel Parser", () => {
+    const filename = "packinglist.xls";
+    const packingListJson = tjmorrisModel.validModel;
+
+    const result = parserFactory.findParser(packingListJson, filename);
+
+    expect(result).toBe(parsersExcel.TJMORRIS1);
+  })
+
+})

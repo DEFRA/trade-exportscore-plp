@@ -41,7 +41,7 @@ function findParser(sanitizedPackingList, fileName) {
         parser = getPdfParser(sanitizedPackingList, fileName);
     }
 
-    if (parser === null) {
+    if (parser == null) {
         logger.logInfo(
             filenameForLogging,
             "findParser",
