@@ -7,13 +7,12 @@ const { Json } = require("sequelize/lib/utils");
 // ADO pipeline variables
 const modelIds = process.env.MODEL_IDS.split(",").map((id) => id.trim()); // Split and trim each model ID
 const sourceEndpoint = process.env.SOURCE_ENDPOINT;
+const sourceAPIKey = process.env.SOURCE_APIKEY;
 const targetEndpoint = process.env.TARGET_ENDPOINT;
 
-// Create a DefaultAzureCredential instance for authentication
-//const credential = new DefaultAzureCredential();
-
 // Helper function to create a Document Model Administration client
-function createDocumentIntelligenceClient(endpoint) {
+function createDocumentIntelligenceClient(endpoint, apiKey) {
+  const credential = new AzureKeyCredential(apiKey);
   return new DocumentModelAdministrationClient(endpoint, credential);
 }
 
@@ -29,7 +28,7 @@ async function assessModelPresence(client, modelId) {
   } catch (error) {
     console.log(
       `Model with ID ${modelId} not found:`,
-      JSON.stringify(error, Object.getOwnPropertyNames(error)),
+      JSON.stringify(error, Object.getOwnPropertyNames(error))
     );
     return false;
   }
@@ -49,7 +48,7 @@ async function copyModel(sourceClient, targetClient, modelId) {
 
     const poller = await sourceClient.beginCopyModelTo(
       modelId,
-      copyAuthorisation,
+      copyAuthorisation
     );
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);
@@ -62,11 +61,11 @@ async function copyModel(sourceClient, targetClient, modelId) {
 // Main function to assess source, copy to target, and perform analysis for each model
 async function main() {
   console.log("========== Creating clients for source and target ==========");
-  const sourceClient = new DocumentModelAdministrationClient(
+
+  const sourceClient = createDocumentIntelligenceClient(
     sourceEndpoint,
-    new DefaultAzureCredential(),
+    sourceAPIKey
   );
-  //const sourceClient = createDocumentIntelligenceClient(sourceEndpoint);
   //const targetClient = createDocumentIntelligenceClient(targetEndpoint);
 
   for (const modelId of modelIds) {

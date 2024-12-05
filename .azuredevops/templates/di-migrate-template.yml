@@ -3,6 +3,10 @@
 parameters:
   - name: modelIds
     type: string
+  - name: sourceDIRGName
+    type: string
+  - name: sourceDIName
+    type: string
   - name: sourceEndpoint
     type: string
   - name: targetEndpoint
@@ -44,11 +48,13 @@ jobs:
                 scriptType: "bash"
                 scriptLocation: "inlineScript"
                 inlineScript: |
-                  key1=$(az cognitiveservices account keys list --name SNDADPINFDI4401 -g SNDADPINFRG4401 --only-show-errors --query "key1" -o tsv)
+                  key1=$(az cognitiveservices account keys list --name ${{ parameters.sourceDIName }} -g ${{ parameters.sourceDIRGName }} --only-show-errors --query "key1" -o tsv)
                   if [ -n "$key1" ]; then
-                      echo "key1 is present"
+                      echo "##vso[task.setvariable variable=sourceDIAPIKey;issecret=true]$key1"
+                      echo "key1 is present and stored securely"
                   else
-                      echo "key1 is missing"
+                      echo "Error: key1 is missing" >&2
+                      exit 1
                   fi
 
             - task: AzureCLI@2
@@ -61,4 +67,5 @@ jobs:
               env:
                 MODEL_IDS: ${{ parameters.modelIds }}
                 SOURCE_ENDPOINT: ${{ parameters.sourceEndpoint }}
+                SOURCE_APIKEY: $(sourceDIAPIKey)
                 TARGET_ENDPOINT: ${{ parameters.targetEndpoint }}

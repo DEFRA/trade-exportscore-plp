@@ -14,6 +14,8 @@ stages:
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
           sourceEndpoint: "https://sndadpinfdi4401.cognitiveservices.azure.com/"
+          sourceDIRGName: "SNDADPINFRG4401"
+          sourceDIName: "SNDADPINFDI4401"
           targetEndpoint: "https://devadpinfdi1401.cognitiveservices.azure.com/"
           azureSubscription: "AZR-ADP-SND4_DEV1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
@@ -29,6 +31,8 @@ stages:
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
           sourceEndpoint: "https://devadpinfdi1401.cognitiveservices.azure.com/"
+          sourceDIRGName: ""
+          sourceDIName: ""
           targetEndpoint: "https://tstadpinfdi1401.cognitiveservices.azure.com/"
           azureSubscription: "AZR-ADP-DEV1_TST1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
@@ -44,6 +48,8 @@ stages:
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
           sourceEndpoint: "https://tstadpinfdi1401.cognitiveservices.azure.com/"
+          sourceDIRGName: ""
+          sourceDIName: ""
           targetEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
           azureSubscription: "AZR-ADP-TST1_PRE1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
@@ -59,6 +65,8 @@ stages:
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
           sourceEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
+          sourceDIRGName: ""
+          sourceDIName: ""
           targetEndpoint: "https://prdadpinfdi1401.cognitiveservices.azure.com/"
           azureSubscription: "AZR-ADP-PRE1_PRD1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
