@@ -41,7 +41,7 @@ jobs:
             - task: AzureCLI@2
               inputs:
                 azureSubscription: ${{ parameters.azureSubscription }}
-                scriptType: "pscore"
+                scriptType: "bash"
                 scriptLocation: "inlineScript"
                 inlineScript: |
                   key1=$(az cognitiveservices account keys list --name SNDADPINFDI4401 -g SNDADPINFRG4401 --only-show-errors --query "key1" -o tsv)
