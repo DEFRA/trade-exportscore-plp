@@ -28,7 +28,7 @@ async function assessModelPresence(client, modelId) {
   } catch (error) {
     console.log(
       `Model with ID ${modelId} not found:`,
-      JSON.stringify(error, Object.getOwnPropertyNames(error))
+      JSON.stringify(error, Object.getOwnPropertyNames(error)),
     );
     return false;
   }
@@ -48,7 +48,7 @@ async function copyModel(sourceClient, targetClient, modelId) {
 
     const poller = await sourceClient.beginCopyModelTo(
       modelId,
-      copyAuthorisation
+      copyAuthorisation,
     );
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);
@@ -60,28 +60,30 @@ async function copyModel(sourceClient, targetClient, modelId) {
 
 // Main function to assess source, copy to target, and perform analysis for each model
 async function main() {
-  console.log("========== Creating clients for source and target ==========");
+  console.log(
+    "============ Creating clients for source and target ============",
+  );
 
   const sourceClient = createDocumentIntelligenceClient(
     sourceEndpoint,
-    sourceAPIKey
+    sourceAPIKey,
   );
   const targetClient = createDocumentIntelligenceClient(
     targetEndpoint,
-    targetAPIKey
+    targetAPIKey,
   );
 
   for (const modelId of modelIds) {
-    console.log(`========== Processing model: ${modelId} ==========`);
+    console.log(`============ Processing model: ${modelId} ============`);
 
     // Assess target model before copying
     console.log(
-      "========== Checking if target model already exists =========="
+      "========== Checking if target model already exists ==========",
     );
     const targetModelExists = await assessModelPresence(targetClient, modelId);
     if (targetModelExists) {
       console.log(
-        `Model with ID ${modelId} already exists in the target environment. Skipping copy...`
+        `Model with ID ${modelId} already exists in the target environment. Skipping copy...`,
       );
       continue;
     }

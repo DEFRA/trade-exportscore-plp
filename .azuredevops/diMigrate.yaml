@@ -4,7 +4,7 @@ parameters:
   - name: MODEL_IDS
     displayName: "Model IDs (comma-separated)"
     type: string
-    default: "iceland1-v1" # Input format: "model1,model2,model3"
+    default: "" # Input format: "model1,model2,model3"
 
 stages:
   - stage: SND_to_DEV
