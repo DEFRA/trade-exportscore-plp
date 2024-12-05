@@ -53,6 +53,7 @@ jobs:
                 scriptType: "bash"
                 scriptLocation: "inlineScript"
                 inlineScript: |
+                  az account set --subscription ${{ parameters.sourceSubscriptionId }}
                   key1=$(az cognitiveservices account keys list --name ${{ parameters.sourceDIName }} -g ${{ parameters.sourceDIRGName }} --only-show-errors --query "key1" -o tsv)
                   if [ -n "$key1" ]; then
                       echo "##vso[task.setvariable variable=sourceDIAPIKey;issecret=true]$key1"
@@ -61,6 +62,8 @@ jobs:
                       echo "Error: Source key1 is missing" >&2
                       exit 1
                   fi
+
+                  az account set --subscription ${{ parameters.targetSubscriptionId }}
                   key1=$(az cognitiveservices account keys list --name ${{ parameters.targetDIName }} -g ${{ parameters.targetDIRGName }} --only-show-errors --query "key1" -o tsv)
                   if [ -n "$key1" ]; then
                       echo "##vso[task.setvariable variable=targetDIAPIKey;issecret=true]$key1"
