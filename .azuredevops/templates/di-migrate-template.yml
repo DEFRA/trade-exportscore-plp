@@ -44,7 +44,12 @@ jobs:
                 scriptType: "pscore"
                 scriptLocation: "inlineScript"
                 inlineScript: |
-                  az role assignment list
+                  key1=$(az cognitiveservices account keys list --name SNDADPINFDI4401 -g SNDADPINFRG4401 --only-show-errors --query "key1" -o tsv)
+                  if [ -n "$key1" ]; then
+                      echo "key1 is present"
+                  else
+                      echo "key1 is missing"
+                  fi
 
             - task: AzureCLI@2
               inputs:
