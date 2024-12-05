@@ -27,6 +27,7 @@ stages:
 
   - stage: DEV_to_TST
     dependsOn: SND_to_DEV
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     displayName: "Migration from DEV to TST"
     jobs:
       - template: ./templates/di-migrate-template.yml
@@ -43,10 +44,10 @@ stages:
           environmentName: "TST1"
           sourceSubscriptionId: $(DEV_SUBSCRIPTION_ID)
           targetSubscriptionId: $(TST_SUBSCRIPTION_ID)
-        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   - stage: TST_to_PRE
     dependsOn: DEV_to_TST
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     displayName: "Migration from TST to PRE"
     jobs:
       - template: ./templates/di-migrate-template.yml
@@ -63,10 +64,10 @@ stages:
           environmentName: "PRE1"
           sourceSubscriptionId: $(TST_SUBSCRIPTION_ID)
           targetSubscriptionId: $(PRE_SUBSCRIPTION_ID)
-        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   - stage: PRE_to_PRD
     dependsOn: TST_to_PRE
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     displayName: "Migration from PRE to PRD"
     jobs:
       - template: ./templates/di-migrate-template.yml
@@ -83,4 +84,3 @@ stages:
           environmentName: "PRD1"
           sourceSubscriptionId: $(PRE_SUBSCRIPTION_ID)
           targetSubscriptionId: $(PRD_SUBSCRIPTION_ID)
-        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
