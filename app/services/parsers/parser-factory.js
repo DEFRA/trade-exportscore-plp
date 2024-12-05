@@ -9,10 +9,10 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 
-function parsePackingList(packingList, fileName) {
+async function parsePackingList(packingList, fileName) {
     try {
         const sanitizedPackingList = sanitizeInput(packingList, fileName);
-        const parser = findParser(sanitizedPackingList, fileName);
+        const parser = await findParser(sanitizedPackingList, fileName);
         return generateParsedPackingList(parser, sanitizedPackingList);
     }
     catch (err) {
@@ -32,13 +32,13 @@ function sanitizeInput(packingList, fileName) {
     }
 }
 
-function findParser(sanitizedPackingList, fileName) {
+async function findParser(sanitizedPackingList, fileName) {
     let parser;
 
     if (fileExtension.isExcel(fileName)) {
         parser = getExcelParser(sanitizedPackingList, fileName);
-    } else if (fileExtension.isPdf(fileName) && config.isDiEnabled) {
-        parser = getPdfParser(sanitizedPackingList, fileName);
+    } else if (fileExtension.isPdf(fileName) && config.isDiEnabled()) {
+        parser = await getPdfParser(sanitizedPackingList, fileName);
     }
 
     if (parser == null) {
