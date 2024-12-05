@@ -1,6 +1,7 @@
 const { DefaultAzureCredential } = require("@azure/identity");
 const {
   DocumentModelAdministrationClient,
+  AzureKeyCredential,
 } = require("@azure/ai-form-recognizer");
 const { Json } = require("sequelize/lib/utils");
 
