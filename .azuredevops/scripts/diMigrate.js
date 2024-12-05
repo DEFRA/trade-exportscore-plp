@@ -27,8 +27,7 @@ async function assessModelPresence(client, modelId) {
     return true;
   } catch (error) {
     console.log(
-      `Model with ID ${modelId} not found:`,
-      JSON.stringify(error, Object.getOwnPropertyNames(error)),
+      `Error in assessing model with ID ${modelId}: ${error.message}`,
     );
     return false;
   }
