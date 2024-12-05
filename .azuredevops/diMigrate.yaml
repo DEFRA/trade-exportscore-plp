@@ -33,11 +33,11 @@ stages:
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
           sourceEndpoint: "https://devadpinfdi1401.cognitiveservices.azure.com/"
-          sourceDIRGName: ""
-          sourceDIName: ""
+          sourceDIRGName: "DEVADPINFRG1401"
+          sourceDIName: "DEVADPINFDI1401"
           targetEndpoint: "https://tstadpinfdi1401.cognitiveservices.azure.com/"
-          targetDIRGName: ""
-          targetDIName: ""
+          targetDIRGName: "TSTADPINFRG1401"
+          targetDIName: "TSTADPINFDI1401"
           azureSubscription: "AZR-ADP-DEV1_TST1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
           environmentName: "TST1"
@@ -52,11 +52,11 @@ stages:
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
           sourceEndpoint: "https://tstadpinfdi1401.cognitiveservices.azure.com/"
-          sourceDIRGName: ""
-          sourceDIName: ""
+          sourceDIRGName: "TSTADPINFRG1401"
+          sourceDIName: "TSTADPINFDI1401"
           targetEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
-          targetDIRGName: ""
-          targetDIName: ""
+          targetDIRGName: "PREADPINFRG1401"
+          targetDIName: "PREADPINFDI1401"
           azureSubscription: "AZR-ADP-TST1_PRE1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
           environmentName: "PRE1"
@@ -71,11 +71,11 @@ stages:
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
           sourceEndpoint: "https://preadpinfdi1401.cognitiveservices.azure.com/"
-          sourceDIRGName: ""
-          sourceDIName: ""
+          sourceDIRGName: "PREADPINFRG1401"
+          sourceDIName: "PREADPINFDI1401"
           targetEndpoint: "https://prdadpinfdi1401.cognitiveservices.azure.com/"
-          targetDIRGName: ""
-          targetDIName: ""
+          targetDIRGName: "PRDADPINFRG1401"
+          targetDIName: "PRDADPINFDI1401"
           azureSubscription: "AZR-ADP-PRE1_PRD1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
           environmentName: "PRD1"
