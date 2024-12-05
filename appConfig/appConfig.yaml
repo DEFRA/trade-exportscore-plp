@@ -47,3 +47,6 @@
 - key: IS_DOCUMENT_INTLELLIGENCE_ENABLED
   value: "{{servicename}}-IS-DOCUMENT-INTLELLIGENCE-ENABLED"
   type: "keyvault"
+- key: FORM_RECOGNIZER_ENDPOINT
+  value: "{{servicename}}-FORM-RECOGNIZER-ENDPOINT"
+  type: "keyvault"

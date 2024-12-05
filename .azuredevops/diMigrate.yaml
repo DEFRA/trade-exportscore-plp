@@ -9,48 +9,78 @@ parameters:
 stages:
   - stage: SND_to_DEV
     displayName: "Migration from SND to DEV"
-    environment: "DEV1" # For approval step
     jobs:
       - template: ./templates/di-migrate-template.yml
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
-          sourceEndpoint: $(SOURCE_ENDPOINT_SND)
-          targetEndpoint: $(TARGET_ENDPOINT_DEV)
-          azureSubscription: "<SERVICE_CONNECTION_SND_DEV_PLACEHOLDER>"
+          sourceEndpoint: $(SND_ENDPOINT)
+          sourceDIRGName: "SNDADPINFRG4401"
+          sourceDIName: "SNDADPINFDI4401"
+          targetEndpoint: $(DEV_ENDPOINT)
+          targetDIRGName: "DEVADPINFRG1401"
+          targetDIName: "DEVADPINFDI1401"
+          azureSubscription: "AZR-ADP-SND4_DEV1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
+          environmentName: "DEV1"
+          sourceSubscriptionId: $(SND_SUBSCRIPTION_ID)
+          targetSubscriptionId: $(DEV_SUBSCRIPTION_ID)
 
   - stage: DEV_to_TST
+    dependsOn: SND_to_DEV
     displayName: "Migration from DEV to TST"
-    environment: "TST1" # For approval step
     jobs:
       - template: ./templates/di-migrate-template.yml
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
-          sourceEndpoint: $(SOURCE_ENDPOINT_DEV)
-          targetEndpoint: $(TARGET_ENDPOINT_TST)
-          azureSubscription: "<SERVICE_CONNECTION_DEV_TST_PLACEHOLDER>"
+          sourceEndpoint: $(DEV_ENDPOINT)
+          sourceDIRGName: "DEVADPINFRG1401"
+          sourceDIName: "DEVADPINFDI1401"
+          targetEndpoint: $(TST_ENDPOINT)
+          targetDIRGName: "TSTADPINFRG1401"
+          targetDIName: "TSTADPINFDI1401"
+          azureSubscription: "AZR-ADP-DEV1_TST1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
+          environmentName: "TST1"
+          sourceSubscriptionId: $(DEV_SUBSCRIPTION_ID)
+          targetSubscriptionId: $(TST_SUBSCRIPTION_ID)
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   - stage: TST_to_PRE
+    dependsOn: DEV_to_TST
     displayName: "Migration from TST to PRE"
-    environment: "PRE1" # For approval step
     jobs:
       - template: ./templates/di-migrate-template.yml
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
-          sourceEndpoint: $(SOURCE_ENDPOINT_TST)
-          targetEndpoint: $(TARGET_ENDPOINT_PRE)
-          azureSubscription: "<SERVICE_CONNECTION_TST_PRE_PLACEHOLDER>"
+          sourceEndpoint: $(TST_ENDPOINT)
+          sourceDIRGName: "TSTADPINFRG1401"
+          sourceDIName: "TSTADPINFDI1401"
+          targetEndpoint: $(PRE_ENDPOINT)
+          targetDIRGName: "PREADPINFRG1401"
+          targetDIName: "PREADPINFDI1401"
+          azureSubscription: "AZR-ADP-TST1_PRE1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
+          environmentName: "PRE1"
+          sourceSubscriptionId: $(TST_SUBSCRIPTION_ID)
+          targetSubscriptionId: $(PRE_SUBSCRIPTION_ID)
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   - stage: PRE_to_PRD
+    dependsOn: TST_to_PRE
     displayName: "Migration from PRE to PRD"
-    environment: "PRD1" # For approval step
     jobs:
       - template: ./templates/di-migrate-template.yml
         parameters:
           modelIds: ${{ parameters.MODEL_IDS }}
-          sourceEndpoint: $(SOURCE_ENDPOINT_PRE)
-          targetEndpoint: $(TARGET_ENDPOINT_PRD)
-          azureSubscription: "<SERVICE_CONNECTION_PRE_PRD_PLACEHOLDER>"
+          sourceEndpoint: $(PRE_ENDPOINT)
+          sourceDIRGName: "PREADPINFRG1401"
+          sourceDIName: "PREADPINFDI1401"
+          targetEndpoint: $(PRD_ENDPOINT)
+          targetDIRGName: "PRDADPINFRG1401"
+          targetDIName: "PRDADPINFDI1401"
+          azureSubscription: "AZR-ADP-PRE1_PRD1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
+          environmentName: "PRD1"
+          sourceSubscriptionId: $(PRE_SUBSCRIPTION_ID)
+          targetSubscriptionId: $(PRD_SUBSCRIPTION_ID)
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))

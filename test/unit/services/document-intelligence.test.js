@@ -2,16 +2,13 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../../app/services/document-intelligence");
-const {
-  AzureKeyCredential,
-  DocumentAnalysisClient,
-} = require("@azure/ai-form-recognizer");
+const { DocumentAnalysisClient } = require("@azure/ai-form-recognizer");
+const { DefaultAzureCredential } = require("@azure/identity");
 
 const document = { test: "this is a test" };
 
 jest.mock("@azure/ai-form-recognizer", () => {
   return {
-    AzureKeyCredential: jest.fn(),
     DocumentAnalysisClient: jest.fn().mockImplementation(() => {
       return {
         beginAnalyzeDocument: jest.fn().mockImplementation(() => {
@@ -25,6 +22,12 @@ jest.mock("@azure/ai-form-recognizer", () => {
         }),
       };
     }),
+  };
+});
+
+jest.mock("@azure/identity", () => {
+  return {
+    DefaultAzureCredential: jest.fn(),
   };
 });
 
@@ -44,7 +47,7 @@ describe("createDocumentIntelligenceClient", () => {
   test("creates client", () => {
     createDocumentIntelligenceClient();
 
-    expect(AzureKeyCredential).toHaveBeenCalled();
+    expect(DefaultAzureCredential).toHaveBeenCalled();
     expect(DocumentAnalysisClient).toHaveBeenCalled();
   });
 });
