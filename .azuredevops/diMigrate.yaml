@@ -43,6 +43,7 @@ stages:
           environmentName: "TST1"
           sourceSubscriptionId: $(DEV_SUBSCRIPTION_ID)
           targetSubscriptionId: $(TST_SUBSCRIPTION_ID)
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   - stage: TST_to_PRE
     dependsOn: DEV_to_TST
@@ -62,6 +63,7 @@ stages:
           environmentName: "PRE1"
           sourceSubscriptionId: $(TST_SUBSCRIPTION_ID)
           targetSubscriptionId: $(PRE_SUBSCRIPTION_ID)
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   - stage: PRE_to_PRD
     dependsOn: TST_to_PRE
@@ -81,3 +83,4 @@ stages:
           environmentName: "PRD1"
           sourceSubscriptionId: $(PRE_SUBSCRIPTION_ID)
           targetSubscriptionId: $(PRD_SUBSCRIPTION_ID)
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
