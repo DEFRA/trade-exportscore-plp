@@ -1,15 +1,14 @@
-const { DefaultAzureCredential } = require("@azure/identity");
 const {
   DocumentModelAdministrationClient,
   AzureKeyCredential,
 } = require("@azure/ai-form-recognizer");
-const { Json } = require("sequelize/lib/utils");
 
 // ADO pipeline variables
 const modelIds = process.env.MODEL_IDS.split(",").map((id) => id.trim()); // Split and trim each model ID
 const sourceEndpoint = process.env.SOURCE_ENDPOINT;
 const sourceAPIKey = process.env.SOURCE_APIKEY;
 const targetEndpoint = process.env.TARGET_ENDPOINT;
+const targetAPIKey = process.env.TARGET_APIKEY;
 
 // Helper function to create a Document Model Administration client
 function createDocumentIntelligenceClient(endpoint, apiKey) {
@@ -67,35 +66,36 @@ async function main() {
     sourceEndpoint,
     sourceAPIKey
   );
-  //const targetClient = createDocumentIntelligenceClient(targetEndpoint);
+  const targetClient = createDocumentIntelligenceClient(
+    targetEndpoint,
+    targetAPIKey
+  );
 
   for (const modelId of modelIds) {
     console.log(`========== Processing model: ${modelId} ==========`);
 
     // Assess target model before copying
-    // console.log(
-    //   "========== Checking if target model already exists ==========",
-    // );
-    // const targetModelExists = await assessModelPresence(targetClient, modelId);
-
-    // if (targetModelExists) {
-    //   console.log(
-    //     `Model with ID ${modelId} already exists in the target environment. Skipping copy...`,
-    //   );
-    //   continue;
-    // }
+    console.log(
+      "========== Checking if target model already exists =========="
+    );
+    const targetModelExists = await assessModelPresence(targetClient, modelId);
+    if (targetModelExists) {
+      console.log(
+        `Model with ID ${modelId} already exists in the target environment. Skipping copy...`
+      );
+      continue;
+    }
 
     // Assess source model
     console.log("========== Assessing the source model ==========");
     await assessModelPresence(sourceClient, modelId);
 
-    // // Copy model to target
-    // console.log("========== Copying model from source to target ==========");
-    // await copyModel(sourceClient, targetClient, modelId);
-
-    // // Assess target model after copy
-    // console.log("========== Assessing the target model ==========");
-    // await assessModelPresence(targetClient, modelId);
+    // Copy model to target
+    console.log("========== Copying model from source to target ==========");
+    await copyModel(sourceClient, targetClient, modelId);
+    // Assess target model after copy
+    console.log("========== Assessing the target model ==========");
+    await assessModelPresence(targetClient, modelId);
   }
 }
 

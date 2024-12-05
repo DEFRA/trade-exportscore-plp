@@ -9,6 +9,10 @@ parameters:
     type: string
   - name: sourceEndpoint
     type: string
+  - name: targetDIRGName
+    type: string
+  - name: targetDIName
+    type: string
   - name: targetEndpoint
     type: string
   - name: azureSubscription
@@ -43,6 +47,7 @@ jobs:
               displayName: "Install npm dependencies"
 
             - task: AzureCLI@2
+              displayName: "Get DI API Keys"
               inputs:
                 azureSubscription: ${{ parameters.azureSubscription }}
                 scriptType: "bash"
@@ -51,13 +56,22 @@ jobs:
                   key1=$(az cognitiveservices account keys list --name ${{ parameters.sourceDIName }} -g ${{ parameters.sourceDIRGName }} --only-show-errors --query "key1" -o tsv)
                   if [ -n "$key1" ]; then
                       echo "##vso[task.setvariable variable=sourceDIAPIKey;issecret=true]$key1"
-                      echo "key1 is present and stored securely"
+                      echo "Source key1 is present and stored securely"
                   else
-                      echo "Error: key1 is missing" >&2
+                      echo "Error: Source key1 is missing" >&2
+                      exit 1
+                  fi
+                  key1=$(az cognitiveservices account keys list --name ${{ parameters.targetDIName }} -g ${{ parameters.targetDIRGName }} --only-show-errors --query "key1" -o tsv)
+                  if [ -n "$key1" ]; then
+                      echo "##vso[task.setvariable variable=targetDIAPIKey;issecret=true]$key1"
+                      echo "Target key1 is present and stored securely"
+                  else
+                      echo "Error: Target key1 is missing" >&2
                       exit 1
                   fi
 
             - task: AzureCLI@2
+              displayName: "Copy DI Models"
               inputs:
                 azureSubscription: ${{ parameters.azureSubscription }}
                 scriptType: "bash"
@@ -69,3 +83,4 @@ jobs:
                 SOURCE_ENDPOINT: ${{ parameters.sourceEndpoint }}
                 SOURCE_APIKEY: $(sourceDIAPIKey)
                 TARGET_ENDPOINT: ${{ parameters.targetEndpoint }}
+                TARGET_APIKEY: $(targetDIAPIKey)

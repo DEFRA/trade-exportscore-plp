@@ -17,6 +17,8 @@ stages:
           sourceDIRGName: "SNDADPINFRG4401"
           sourceDIName: "SNDADPINFDI4401"
           targetEndpoint: "https://devadpinfdi1401.cognitiveservices.azure.com/"
+          targetDIRGName: "DEVADPINFRG1401"
+          targetDIName: "DEVADPINFDI1401"
           azureSubscription: "AZR-ADP-SND4_DEV1"
           poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
           environmentName: "DEV1"
