@@ -1,5 +1,5 @@
 const {
-  createDocumentIntelligenceClient
+  createDocumentIntelligenceClient,
 } = require("../services/document-intelligence");
 const logger = require("../utilities/logger");
 const { StatusCodes } = require("http-status-codes");
@@ -10,8 +10,12 @@ module.exports = {
   handler: async (_request, h) => {
     try {
       const client = createDocumentIntelligenceClient();
-      const documentUrlRead = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/rest-api/read.png"
-      const poller = await client.beginAnalyzeDocument("prebuilt-read", documentUrlRead);
+      const documentUrlRead =
+        "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/rest-api/read.png";
+      const poller = await client.beginAnalyzeDocument(
+        "prebuilt-read",
+        documentUrlRead,
+      );
 
       const { content } = await poller.pollUntilDone();
 

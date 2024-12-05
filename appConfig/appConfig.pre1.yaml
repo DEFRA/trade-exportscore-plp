@@ -8,5 +8,3 @@
   value: "PRETREINFSB1001.servicebus.windows.net"
 - key: TP_TENANT_ID
   value: "9e1ba897-3a49-4461-b406-377db4ec2959"
-- key: FORM_RECOGNIZER_ENDPOINT
-  value: "https://preadpinfdi1401.cognitiveservices.azure.com/"

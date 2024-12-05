@@ -2,9 +2,7 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../../app/services/document-intelligence");
-const {
-  DocumentAnalysisClient,
-} = require("@azure/ai-form-recognizer");
+const { DocumentAnalysisClient } = require("@azure/ai-form-recognizer");
 const { DefaultAzureCredential } = require("@azure/identity");
 
 const document = { test: "this is a test" };
@@ -29,9 +27,9 @@ jest.mock("@azure/ai-form-recognizer", () => {
 
 jest.mock("@azure/identity", () => {
   return {
-    DefaultAzureCredential: jest.fn()
-  }
-})
+    DefaultAzureCredential: jest.fn(),
+  };
+});
 
 describe("runAnalysis", () => {
   test("returns document", async () => {
