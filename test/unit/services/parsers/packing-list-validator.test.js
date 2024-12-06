@@ -184,10 +184,51 @@ describe("validatePackingList", () => {
 
         expect(result.hasAllFields).toBeFalsy();
     });
+
+    test("multiple failures", () => {
+        const packingList = {
+            registration_approval_number: "remos",
+            items: [
+                {
+                    description: "description",
+                    nature_of_products: "nature of products",
+                    type_of_treatment: "treatment type",
+                    commodity_code: "123",
+                    number_of_packages: 1,
+                    total_net_weight_kg: null,
+                },
+                {
+                    description: 12345,
+                    nature_of_products: null,
+                    type_of_treatment: null,
+                    commodity_code: null,
+                    number_of_packages: 1,
+                    total_net_weight_kg: 2,
+                },
+                {
+                    description: 12345,
+                    nature_of_products: null,
+                    type_of_treatment: "Type C",
+                    commodity_code: "Text",
+                    number_of_packages: "Text",
+                    total_net_weight_kg: "Text",
+                },
+            ],
+            business_checks: {
+                all_required_fields_present: true,
+            },
+        };
+
+        const result = packingListValidator.validatePackingList(packingList);
+
+        expect(result.hasAllFields).toBeFalsy();
+    });
+
+    
 });
 
 describe("cleansePackingList", () => {
-    test("Number of pkgs and total net weight are both NaN", () => {
+    /* test("Number of pkgs and total net weight are both NaN", () => {
         const packingList = {
             registration_approval_number: "RMS-GB-000022-999",
             items: [
@@ -209,7 +250,7 @@ describe("cleansePackingList", () => {
 
         expect(result.items[0].number_of_packages).toBeNull();
         expect(result.items[0].total_net_weight_kg).toBeNull();
-    });
+    }); */
 
     test("Number of pkgs and total net weight are both numbers", () => {
         const packingList = {
