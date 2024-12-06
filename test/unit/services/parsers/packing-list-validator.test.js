@@ -1,4 +1,3 @@
-//const parserModel = require("../../../../app/services/parser-model");
 const packingListValidator = require("../../../../app/services/parsers/packing-list-validator");
 
 describe("validatePackingList", () => {
