@@ -1,18 +1,18 @@
+const { DefaultAzureCredential } = require("@azure/identity");
 const {
   DocumentModelAdministrationClient,
-  AzureKeyCredential,
 } = require("@azure/ai-form-recognizer");
 
 // ADO pipeline variables
 const modelIds = process.env.MODEL_IDS.split(",").map((id) => id.trim()); // Split and trim each model ID
 const sourceEndpoint = process.env.SOURCE_ENDPOINT;
-const sourceAPIKey = process.env.SOURCE_APIKEY;
 const targetEndpoint = process.env.TARGET_ENDPOINT;
-const targetAPIKey = process.env.TARGET_APIKEY;
+
+// Create a DefaultAzureCredential instance for authentication
+const credential = new DefaultAzureCredential();
 
 // Helper function to create a Document Model Administration client
-function createDocumentIntelligenceClient(endpoint, apiKey) {
-  const credential = new AzureKeyCredential(apiKey);
+function createDocumentIntelligenceClient(endpoint) {
   return new DocumentModelAdministrationClient(endpoint, credential);
 }
 
@@ -62,15 +62,8 @@ async function main() {
   console.log(
     "============ Creating clients for source and target ============",
   );
-
-  const sourceClient = createDocumentIntelligenceClient(
-    sourceEndpoint,
-    sourceAPIKey,
-  );
-  const targetClient = createDocumentIntelligenceClient(
-    targetEndpoint,
-    targetAPIKey,
-  );
+  const sourceClient = createDocumentIntelligenceClient(sourceEndpoint);
+  const targetClient = createDocumentIntelligenceClient(targetEndpoint);
 
   for (const modelId of modelIds) {
     console.log(`============ Processing model: ${modelId} ============`);
