@@ -12,8 +12,13 @@ const targetAPIKey = process.env.TARGET_APIKEY;
 
 // Helper function to create a Document Model Administration client
 function createDocumentIntelligenceClient(endpoint, apiKey) {
-  const credential = new AzureKeyCredential(apiKey);
-  return new DocumentModelAdministrationClient(endpoint, credential);
+  try {
+    const credential = new AzureKeyCredential(apiKey);
+    return new DocumentModelAdministrationClient(endpoint, credential);
+  } catch (error) {
+    const msg = `Error creating Document Model Administration Client for endpoint ${endpoint}: ${error}`;
+    handleError(msg);
+  }
 }
 
 // Assess the validity of a model
@@ -26,9 +31,7 @@ async function assessModelPresence(client, modelId) {
     console.log(`Created On: ${model.createdOn}`);
     return true;
   } catch (error) {
-    console.log(
-      `Error in assessing model with ID ${modelId}: ${error.message}`,
-    );
+    console.log(`Error in assessing model with ID ${modelId}: ${error}`);
     return false;
   }
 }
@@ -52,7 +55,7 @@ async function copyModel(sourceClient, targetClient, modelId) {
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);
   } catch (error) {
-    const msg = `Error copying model with ID ${modelId}: ${error.message}`;
+    const msg = `Error copying model with ID ${modelId}: ${error}`;
     handleError(msg);
   }
 }
@@ -89,11 +92,18 @@ async function main() {
 
     // Assess source model
     console.log("========== Assessing the source model ==========");
-    await assessModelPresence(sourceClient, modelId);
+    const sourceModelExists = await assessModelPresence(sourceClient, modelId);
+    if (!sourceModelExists) {
+      console.log(
+        `Model with ID ${modelId} does not exist in the source environment. Skipping copy...`,
+      );
+      continue;
+    }
 
     // Copy model to target
     console.log("========== Copying model from source to target ==========");
     await copyModel(sourceClient, targetClient, modelId);
+
     // Assess target model after copy
     console.log("========== Assessing the target model ==========");
     await assessModelPresence(targetClient, modelId);
