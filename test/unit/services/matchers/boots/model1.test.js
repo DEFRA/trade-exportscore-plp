@@ -6,7 +6,7 @@ describe("matchesBoots", () => {
   test.each([
     [matcherResult.CORRECT, model.validModel],
     [matcherResult.GENERIC_ERROR, null],
-    [matcherResult.WRONG_ESTABLISHMENT_NUMBER, model.wrongEstablishment], 
+    [matcherResult.WRONG_ESTABLISHMENT_NUMBER, model.wrongEstablishment],
     [matcherResult.WRONG_HEADER, model.incorrectHeader],
     [matcherResult.EMPTY_FILE, model.emptyFile],
   ])("returns '%s' for boots model", async (expected, inputModel) => {

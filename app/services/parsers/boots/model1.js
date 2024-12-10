@@ -11,7 +11,6 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function parse(packingListJson) {
-
   const sheets = Object.keys(packingListJson);
   const establishmentNumber = regex.findMatch(
     headers.BOOTS1.establishmentNumber.regex,
@@ -38,8 +37,16 @@ function parse(packingListJson) {
         headers.BOOTS1.regex,
       );
 
-      const footerValues = ['Total Quantity of items:', 'Gross Mass in Kgs:', 'Total Value in GBP:'];
-      packingListContents = packingListContents.concat(packingListContentsTemp.filter((row) => !footerValues.includes(row.description)));
+      const footerValues = [
+        "Total Quantity of items:",
+        "Gross Mass in Kgs:",
+        "Total Value in GBP:",
+      ];
+      packingListContents = packingListContents.concat(
+        packingListContentsTemp.filter(
+          (row) => !footerValues.includes(row.description),
+        ),
+      );
     }
 
     return combineParser.combine(
@@ -50,7 +57,12 @@ function parse(packingListJson) {
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
-    return combineParser.combine(establishmentNumber, [], false, parserModel.BOOTS1);
+    return combineParser.combine(
+      establishmentNumber,
+      [],
+      false,
+      parserModel.BOOTS1,
+    );
   }
 }
 

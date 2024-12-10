@@ -1,108 +1,108 @@
 const parserModel = require("../../../../../app/services/parser-model");
 
 module.exports = {
-    validTestResult: {
-        registration_approval_number: "RMS-GB-000084-001",
-        items: [
-            {
-                "description": "Haribo Starmix share bag 160g",
-                "commodity_code": 1704906500,
-                "number_of_packages": 12,
-                "total_net_weight_kg": 1.94,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            },
-            {
-                "description": "Kind bars drk chclt nts&SS 30g 3s",
-                "commodity_code": 1806310000,
-                "number_of_packages": 4,
-                "total_net_weight_kg": 0.46,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            },
-            {
-                "description": "CADBURYS_DAIRY_MILK, FRUIT_NUT",
-                "commodity_code": 1806321000,
-                "number_of_packages": 48,
-                "total_net_weight_kg": 2.4,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            },
-            {
-                "description": "Rhythm 108 mlk choc tab hazel 100g",
-                "commodity_code": 1806321000,
-                "number_of_packages": 9,
-                "total_net_weight_kg": 0.91,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            },
-            {
-                "description": "Kind Dark Choc Bar Nuts & Sea Salt 40g",
-                "commodity_code": 1806321000,
-                "number_of_packages": 12,
-                "total_net_weight_kg": 0.48,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            },
-            {
-                "description": "Kind Pnut Btter & Dark Choc Bar 40g",
-                "commodity_code": 1806321000,
-                "number_of_packages": 12,
-                "total_net_weight_kg": 0.48,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            },
-            {
-                "description": "Galaxy Milk single 42g",
-                "commodity_code": 1806329000,
-                "number_of_packages": 24,
-                "total_net_weight_kg": 1.03,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            },
-            {
-                "description": "Heinz Chocolate Biscotti Stg2 60g",
-                "commodity_code": 1806329000,
-                "number_of_packages": 6,
-                "total_net_weight_kg": 0.36,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            }
-        ],
-        business_checks: { all_required_fields_present: true },
-        parserModel: parserModel.BOOTS1,
+  validTestResult: {
+    registration_approval_number: "RMS-GB-000084-001",
+    items: [
+      {
+        description: "Haribo Starmix share bag 160g",
+        commodity_code: 1704906500,
+        number_of_packages: 12,
+        total_net_weight_kg: 1.94,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+      {
+        description: "Kind bars drk chclt nts&SS 30g 3s",
+        commodity_code: 1806310000,
+        number_of_packages: 4,
+        total_net_weight_kg: 0.46,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+      {
+        description: "CADBURYS_DAIRY_MILK, FRUIT_NUT",
+        commodity_code: 1806321000,
+        number_of_packages: 48,
+        total_net_weight_kg: 2.4,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+      {
+        description: "Rhythm 108 mlk choc tab hazel 100g",
+        commodity_code: 1806321000,
+        number_of_packages: 9,
+        total_net_weight_kg: 0.91,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+      {
+        description: "Kind Dark Choc Bar Nuts & Sea Salt 40g",
+        commodity_code: 1806321000,
+        number_of_packages: 12,
+        total_net_weight_kg: 0.48,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+      {
+        description: "Kind Pnut Btter & Dark Choc Bar 40g",
+        commodity_code: 1806321000,
+        number_of_packages: 12,
+        total_net_weight_kg: 0.48,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+      {
+        description: "Galaxy Milk single 42g",
+        commodity_code: 1806329000,
+        number_of_packages: 24,
+        total_net_weight_kg: 1.03,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+      {
+        description: "Heinz Chocolate Biscotti Stg2 60g",
+        commodity_code: 1806329000,
+        number_of_packages: 6,
+        total_net_weight_kg: 0.36,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+    ],
+    business_checks: { all_required_fields_present: true },
+    parserModel: parserModel.BOOTS1,
+  },
+  invalidTestResult_MissingCells: {
+    business_checks: {
+      all_required_fields_present: false,
     },
-    invalidTestResult_MissingCells: {
-        business_checks: {
-            all_required_fields_present: false,
-        },
-        items: [
-            {
-                "description": "Haribo Starmix share bag 160g",
-                "commodity_code": 1704906500,
-                "number_of_packages": 12,
-                "total_net_weight_kg": null,
-                "nature_of_products": null,
-                "type_of_treatment": null,
-            },
-        ],
-        registration_approval_number: "RMS-GB-000084-001",
-        parserModel: parserModel.BOOTS1,
+    items: [
+      {
+        description: "Haribo Starmix share bag 160g",
+        commodity_code: 1704906500,
+        number_of_packages: 12,
+        total_net_weight_kg: null,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000084-001",
+    parserModel: parserModel.BOOTS1,
+  },
+  emptyTestResult: {
+    business_checks: {
+      all_required_fields_present: true,
     },
-    emptyTestResult: {
-        business_checks: {
-            all_required_fields_present: true,
-        },
-        items: [],
-        registration_approval_number: "RMS-GB-000084-001",
-        parserModel: parserModel.BOOTS1,
+    items: [],
+    registration_approval_number: "RMS-GB-000084-001",
+    parserModel: parserModel.BOOTS1,
+  },
+  failedTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
     },
-    failedTestResult: {
-        business_checks: {
-            all_required_fields_present: false,
-        },
-        items: [],
-        registration_approval_number: "RMS-GB-000084-001",
-        parserModel: parserModel.BOOTS1,
-    },
-}
+    items: [],
+    registration_approval_number: "RMS-GB-000084-001",
+    parserModel: parserModel.BOOTS1,
+  },
+};
