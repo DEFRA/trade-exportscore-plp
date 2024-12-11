@@ -14,7 +14,7 @@ function parse(packingListJson) {
     let packingListContentsTemp = [];
     const establishmentNumber = regex.findMatch(
       headers.TESCO1.establishmentNumber.regex,
-      packingListJson[sheets[0]]
+      packingListJson[sheets[0]],
     );
 
     const packingListContentsRow = 5;
@@ -24,20 +24,20 @@ function parse(packingListJson) {
         packingListJson[sheet],
         packingListContentsRow - 1,
         packingListContentsRow,
-        headers.TESCO1.regex
+        headers.TESCO1.regex,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
     packingListContents = packingListContents.filter(
-      (row) => row.total_net_weight_kg != 0 // Filter out rows where weight is equal to zero
+      (row) => row.total_net_weight_kg != 0, // Filter out rows where weight is equal to zero
     );
 
     return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,
-      parserModel.TESCO1
+      parserModel.TESCO1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
