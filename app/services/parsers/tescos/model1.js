@@ -1,7 +1,7 @@
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
-const { mapParser } = require("../../parser-map");
+const { findHeaderCols, mapParser } = require("../../parser-map");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("path");
@@ -20,8 +20,20 @@ function parse(packingListJson) {
     const packingListContentsRow = 5;
 
     for (const sheet of sheets) {
+      // Find header columns
+      const headerCols = findHeaderCols(
+        headers.TESCO1.regex,
+        packingListJson[sheet][packingListContentsRow - 1],
+      );
+
+      // Sanitised data from invalid rows
+      const sanitisedPackingListJsonSheet = packingListJson[sheet].filter(
+        (row) => row[headerCols.total_net_weight_kg] != 0, // Filter out rows where weight is equal to zero
+      );
+
+      // Parse sanitised rows
       packingListContentsTemp = mapParser(
-        packingListJson[sheet],
+        sanitisedPackingListJsonSheet,
         packingListContentsRow - 1,
         packingListContentsRow,
         headers.TESCO1.regex,

@@ -50,6 +50,7 @@ function mapPdfParser(packingListDocument, key) {
 }
 
 module.exports = {
+  findHeaderCols,
   mapParser,
   mapPdfParser,
 };
