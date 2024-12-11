@@ -3,7 +3,15 @@
 parameters:
   - name: modelIds
     type: string
+  - name: sourceDIRGName
+    type: string
+  - name: sourceDIName
+    type: string
   - name: sourceEndpoint
+    type: string
+  - name: targetDIRGName
+    type: string
+  - name: targetDIName
     type: string
   - name: targetEndpoint
     type: string
@@ -11,28 +19,71 @@ parameters:
     type: string
   - name: poolName
     type: string
+  - name: environmentName
+    type: string
+  - name: sourceSubscriptionId
+    type: string
+  - name: targetSubscriptionId
+    type: string
 
 jobs:
-  - job: Migrate_Job
+  - deployment: copyModel
+    displayName: Copy model to ${{ parameters.environmentName }}
     pool:
       name: ${{ parameters.poolName }}
-    steps:
-      - task: UseNode@1
-        inputs:
-          version: "16.x"
+    environment: ${{ parameters.environmentName }}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
 
-      - script: |
-          npm install
-        displayName: "Install npm dependencies"
+            - task: UseNode@1
+              inputs:
+                version: "16.x"
 
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: ${{ parameters.azureSubscription }}
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
-          inlineScript: |
-            node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
-        env:
-          MODEL_IDS: ${{ parameters.modelIds }}
-          SOURCE_ENDPOINT: ${{ parameters.sourceEndpoint }}
-          TARGET_ENDPOINT: ${{ parameters.targetEndpoint }}
+            - script: |
+                npm install
+              displayName: "Install npm dependencies"
+
+            - task: AzureCLI@2
+              displayName: "Get DI API Keys"
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
+                scriptType: "bash"
+                scriptLocation: "inlineScript"
+                inlineScript: |
+                  az account set --subscription ${{ parameters.sourceSubscriptionId }}
+                  key1=$(az cognitiveservices account keys list --name ${{ parameters.sourceDIName }} -g ${{ parameters.sourceDIRGName }} --only-show-errors --query "key1" -o tsv)
+                  if [ -n "$key1" ]; then
+                      echo "##vso[task.setvariable variable=sourceDIAPIKey;issecret=true]$key1"
+                      echo "Source key1 is present and stored securely"
+                  else
+                      echo "Error: Source key1 is missing" >&2
+                      exit 1
+                  fi
+
+                  az account set --subscription ${{ parameters.targetSubscriptionId }}
+                  key1=$(az cognitiveservices account keys list --name ${{ parameters.targetDIName }} -g ${{ parameters.targetDIRGName }} --only-show-errors --query "key1" -o tsv)
+                  if [ -n "$key1" ]; then
+                      echo "##vso[task.setvariable variable=targetDIAPIKey;issecret=true]$key1"
+                      echo "Target key1 is present and stored securely"
+                  else
+                      echo "Error: Target key1 is missing" >&2
+                      exit 1
+                  fi
+
+            - task: AzureCLI@2
+              displayName: "Copy DI Models"
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
+                scriptType: "bash"
+                scriptLocation: "inlineScript"
+                inlineScript: |
+                  node $(Build.SourcesDirectory)/.azuredevops/scripts/diMigrate.js
+              env:
+                MODEL_IDS: ${{ parameters.modelIds }}
+                SOURCE_ENDPOINT: ${{ parameters.sourceEndpoint }}
+                SOURCE_APIKEY: $(sourceDIAPIKey)
+                TARGET_ENDPOINT: ${{ parameters.targetEndpoint }}
+                TARGET_APIKEY: $(targetDIAPIKey)

@@ -4,6 +4,7 @@ const routes = [].concat(
   require("../routes/healthz"),
   require("../routes/upsert-idcoms"),
   require("../routes/ai"),
+  require("../routes/test-di-conn"),
 );
 
 module.exports = {

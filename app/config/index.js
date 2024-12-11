@@ -42,7 +42,6 @@ value.dynamicsConfig = dynamicsConfig;
 
 // AI values
 value.formRecognizerEndpoint = process.env.FORM_RECOGNIZER_ENDPOINT;
-value.formRecognizerApiKey = process.env.FORM_RECOGNIZER_API_KEY;
 
 value.plDir = path.join(process.cwd(), "/app/packing-lists/");
 
