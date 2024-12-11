@@ -30,7 +30,11 @@ function parse(packingListJson) {
     }
 
     packingListContents = packingListContents.filter(
-      (row) => row.total_net_weight_kg !== 0, // Filter out rows where weight is equal to zero
+      (row) =>
+        row.description !== null &&
+        row.commodity_code !== null &&
+        row.number_of_packages !== null &&
+        row.total_net_weight_kg !== 0,
     );
 
     return combineParser.combine(
