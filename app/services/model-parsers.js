@@ -60,7 +60,7 @@ const parsersExcel = {
       bandMMatcher.matches(packingList, filename),
     parse: (packingList, filename) => bandMParser.parse(packingList, filename),
   },
-  BOOTS1:{
+  BOOTS1: {
     matches: (packingList, filename) =>
       bootsMatcher.matches(packingList, filename),
     parse: (packingList, filename) => bootsParser.parse(packingList, filename),

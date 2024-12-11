@@ -47,15 +47,15 @@ const headers = {
       /NET WEIGHT/i,
     ],
   },
-  BOOTS1:{
+  BOOTS1: {
     establishmentNumber: {
       regex: /RMS-GB-000084-(\d{3})?/i,
     },
-    headers:{
-        description: "Description",
-        number_of_packages: "Quantity",
-        total_net_weight: "NetMassKG",
-        commodity_code:"CommodityCode"
+    headers: {
+      description: "Description",
+      number_of_packages: "Quantity",
+      total_net_weight: "NetMassKG",
+      commodity_code: "CommodityCode",
     },
     regex: {
       description: /Description/i,
