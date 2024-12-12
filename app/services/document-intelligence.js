@@ -46,7 +46,11 @@ async function getLatestModelByName(client, namePrefix) {
   }
 
   // Step 4: Use reduce to find the "latest" model based on the Unix epoch value in the modelId.
-  return filteredModels.reduce((latest, current) => {
+  const latestModel = filteredModels.reduce((latest, current) => {
+    if (!latest) {
+      return current; // Initialize with the first model if latest is null
+    }
+
     // Split the modelId of the current model into parts (e.g., "iceland1-v2-1734000598981").
     const currentParts = current.modelId.split("-");
 
@@ -69,14 +73,16 @@ async function getLatestModelByName(client, namePrefix) {
 
     // Step 5: Compare the current and latest models:
     // - If the current model has a valid epoch and it's greater than the latest epoch, select the current model.
-    // - If no valid epochs exist, keep the current "latest" model as it was.
     if (currentEpoch && (!latestEpoch || currentEpoch > latestEpoch)) {
-      return current; // Current model is newer based on the epoch value.
+      return current;
     }
 
-    // If no better model is found, keep the latest model.
+    // If no valid epochs exist, fall back to selecting the latest model based on version order.
     return latest;
-  }).modelId; // Step 6: Return only the modelId of the "latest" model.
+  }, null);
+
+  // Step 6: Safely return the modelId of the latest model, or null if no valid model is found.
+  return latestModel ? latestModel.modelId : null;
 }
 
 function createDocumentIntelligenceClient() {
