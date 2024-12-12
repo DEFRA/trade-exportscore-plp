@@ -241,7 +241,7 @@ const headers = {
   },
   ICELAND1: {
     establishmentNumber: {
-      regex: /^KingdomRMS_ESTABLISHMENT_NORMS-GB-000040-/i,
+      regex: /RMS-GB-000040-/i,
       value: "RMS-GB-000040",
     },
     headers: {
@@ -250,7 +250,7 @@ const headers = {
       number_of_packages: "Unit Qty",
       total_net_weight_kg: "Net Weight (KG)",
     },
-    modelId: "iceland1-v1",
+    modelId: "iceland1-v2",
   },
   MANDS1: {
     establishmentNumber: {
@@ -263,7 +263,7 @@ const headers = {
       number_of_packages: "Trays/Ctns",
       total_net_weight_kg: "Tot Net Weight (Kg)",
     },
-    modelId: "mands1-v1",
+    modelId: "mands1-v2",
   },
   BOOKER1: {
     establishmentNumber: {
@@ -275,7 +275,7 @@ const headers = {
       number_of_packages: "Unit Quantity",
       total_net_weight_kg: "Net Weight (Kilos)",
     },
-    modelId: "booker1-v1",
+    modelId: "booker1-v2",
   },
 };
 
