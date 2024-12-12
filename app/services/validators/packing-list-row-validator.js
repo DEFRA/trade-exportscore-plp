@@ -96,6 +96,8 @@ function generateitemFailureReasons(item){
 }
 
 module.exports = {
-    cleansePackingList,
+    removeEmptyItems,
+    
+    validatePackingListByIndex,
     validatePackingList,
 };

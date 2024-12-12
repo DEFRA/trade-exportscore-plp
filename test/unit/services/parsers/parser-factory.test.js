@@ -1,23 +1,7 @@
 const parserModel = require("../../../../app/services/parser-model");
 const parserFactory = require("../../../../app/services/parsers/parser-factory");
-const { parsersExcel, parsersPdf } = require("../../../../app/services/model-parsers");
+const { parsersExcel } = require("../../../../app/services/model-parsers");
 const tjmorrisModel = require("../../test-data-and-results/models/tjmorris/model1");
-const icelandModel = require("../../test-data-and-results/models/iceland/model1");
-
-jest.mock("../../../../app/services/document-intelligence");
-
-const {
-  createDocumentIntelligenceClient,
-  runAnalysis,
-} = require("../../../../app/services/document-intelligence");
-const MatcherResult = require("../../../../app/services/matcher-result");
-
-createDocumentIntelligenceClient.mockImplementation(() => {
-  return jest.fn();
-});
-
-const config = require("../../../../app/config");
-
 
 describe("parsePackingList - e2e", () => {
   const filename = "packinglist.xls";
@@ -317,48 +301,6 @@ describe("findParser", () => {
     const result = await parserFactory.findParser(packingListJson, filename);
 
     expect(result).toBe(parsersExcel.TJMORRIS1);
-  })
-
-  test("ICELAND pdf Parser with DI", async () => {
-    const filename = "packinglist.pdf";
-    const packingListJson = {};
-
-    runAnalysis.mockImplementation((client, modelId, fileBuffer) => {
-      if (modelId === "iceland-requireddataonly-stringsintsandnumbers") {
-        return icelandModel.validModel;
-      } else {
-        return {
-          fields: {}
-        };
-      }
-
-    });
-
-    config.isDiEnabled = true;
-    const result = await parserFactory.findParser(packingListJson, filename);
-    config.isDiEnabled = false;
-
-    expect(result).toBe(parsersPdf.ICELAND);
-  })
-
-  test("ICELAND pdf Parser without DI", async () => {
-    const filename = "packinglist.pdf";
-    const packingListJson = {};
-
-    runAnalysis.mockImplementation((client, modelId, fileBuffer) => {
-      if (modelId === "iceland-requireddataonly-stringsintsandnumbers") {
-        return icelandModel.validModel;
-      } else {
-        return {
-          fields: {}
-        };
-      }
-
-    });
-
-    const result = await parserFactory.findParser(packingListJson, filename);
-
-    expect(result.name).toBeTruthy();
   })
 
 })

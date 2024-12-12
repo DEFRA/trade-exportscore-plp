@@ -2,7 +2,8 @@ const fileExtension = require("../../utilities/file-extension");
 const jsonFile = require("../../utilities/json-file");
 const config = require("../../config");
 const { getExcelParser, getPdfParser, getUnrecognisedParser } = require("./parsers");
-const packingListValidator = require("./packing-list-validator");
+const packingListValidator = require("../validators/packing-list-column-validator");
+const { removeEmptyItems, removeBadData } = require("../validators/packing-list-validator-utilities");
 const parserModel = require("../parser-model");
 const logger = require("../../utilities/logger");
 const path = require("path");
@@ -37,7 +38,7 @@ async function findParser(sanitizedPackingList, fileName) {
 
     if (fileExtension.isExcel(fileName)) {
         parser = getExcelParser(sanitizedPackingList, fileName);
-    } else if (fileExtension.isPdf(fileName) && config.isDiEnabled()) {
+    } else if (fileExtension.isPdf(fileName) && config.isDiEnabled) {
         parser = await getPdfParser(sanitizedPackingList, fileName);
     }
 
@@ -54,17 +55,19 @@ async function findParser(sanitizedPackingList, fileName) {
 }
 
 function generateParsedPackingList(parser, sanitisedPackingList) {
-    
+
     let parsedPackingList = parser.parse(sanitisedPackingList);
 
     if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
-       
-        parsedPackingList = packingListValidator.cleansePackingList(parsedPackingList);
+
+        parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
         const validationResults =
             packingListValidator.validatePackingList(parsedPackingList);
 
         parsedPackingList.business_checks.all_required_fields_present = validationResults.hasAllFields;
-        if(validationResults.failureReasons) parsedPackingList.business_checks.failure_reasons = validationResults.failureReasons
+        if (validationResults.failureReasons) parsedPackingList.business_checks.failure_reasons = validationResults.failureReasons
+
+        parsedPackingList.items = removeBadData(parsedPackingList.items)
     }
 
     return parsedPackingList;
