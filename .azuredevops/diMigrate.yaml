@@ -1,4 +1,5 @@
 trigger: none
+pr: none
 
 parameters:
   - name: MODEL_IDS
@@ -20,7 +21,7 @@ stages:
           targetDIRGName: "DEVADPINFRG1401"
           targetDIName: "DEVADPINFDI1401"
           azureSubscription: "AZR-ADP-SND4_DEV1"
-          poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
           environmentName: "DEV1"
           sourceSubscriptionId: $(SND_SUBSCRIPTION_ID)
           targetSubscriptionId: $(DEV_SUBSCRIPTION_ID)
@@ -40,7 +41,7 @@ stages:
           targetDIRGName: "TSTADPINFRG1401"
           targetDIName: "TSTADPINFDI1401"
           azureSubscription: "AZR-ADP-DEV1_TST1"
-          poolName: "DEFRA-COMMON-ubuntu2004-SSV3"
+          poolName: "DEFRA-COMMON-ubuntu2004-SSV5"
           environmentName: "TST1"
           sourceSubscriptionId: $(DEV_SUBSCRIPTION_ID)
           targetSubscriptionId: $(TST_SUBSCRIPTION_ID)
