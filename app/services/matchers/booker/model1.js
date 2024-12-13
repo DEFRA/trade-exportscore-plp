@@ -1,5 +1,7 @@
 const logger = require("../../../utilities/logger");
 const {
+  createDocumentIntelligenceAdminClient,
+  getLatestModelByName,
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../document-intelligence");
@@ -15,12 +17,16 @@ async function matches(packingList, filename) {
     document: {},
   };
   try {
-    const client = createDocumentIntelligenceClient();
-    const document = await runAnalysis(
-      client,
+    // Get latest model for that version
+    const adminClient = createDocumentIntelligenceAdminClient();
+    const modelId = await getLatestModelByName(
+      adminClient,
       headers.BOOKER1.modelId,
-      packingList,
     );
+
+    // Run document analysis
+    const client = createDocumentIntelligenceClient();
+    const document = await runAnalysis(client, modelId, packingList);
 
     // check for correct establishment number
     if (

@@ -31,8 +31,7 @@ const retry = {
 };
 
 const dbConfig = {
-  database:
-    process.env.POSTGRES_DB || "eutd-trade-exports-core-trade-exportscore-plp",
+  database: process.env.POSTGRES_DB,
   dialect: "postgres",
   dialectOptions: {
     ssl: isProd(),
