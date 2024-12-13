@@ -60,7 +60,7 @@ function generateFailuresByIndexAndTypes(validationResult) {
     // build failure reason
     let failureReasons = "";
     if (validationResult.isEmpty) {
-      failureReasons = "The packing list had no data";
+      failureReasons = "No product line data found.";
     } else {
       const checks = [
         {
@@ -90,11 +90,12 @@ function generateFailuresByIndexAndTypes(validationResult) {
       ];
 
       checks.forEach((check) => {
-        if (check.collection.length > 0)
+        if (check.collection.length > 0) {
           failureReasons += generateFailureReasonFromRows(
             check.description,
             check.collection,
           );
+        }
       });
     }
 
@@ -106,16 +107,17 @@ function generateFailuresByIndexAndTypes(validationResult) {
 }
 
 function generateFailureReasonFromRows(description, rows) {
+  const maxItemsToShow = 3;
   if (rows.length === 0) {
     return "";
   } else if (rows.length === 1) {
     return `${description} in row ${rows[0]}.\n`;
   } else if (rows.length === 2) {
     return `${description} in rows ${rows[0]} and ${rows[1]}.\n`;
-  } else if (rows.length === 3) {
+  } else if (rows.length === maxItemsToShow) {
     return `${description} in rows ${rows[0]}, ${rows[1]} and ${rows[2]}.\n`;
   } else {
-    return `${description} in rows ${rows.slice(0, 3).join(", ")} in addition to ${rows.length - 3} other rows.\n`;
+    return `${description} in rows ${rows.slice(0, maxItemsToShow).join(", ")} in addition to ${rows.length - maxItemsToShow} other rows.\n`;
   }
 }
 

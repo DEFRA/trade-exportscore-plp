@@ -6,7 +6,7 @@ const combineParser = require("../parser-combine");
 
 function getUnrecognisedParser() {
   return {
-    "parse": (packingList, filename) => {
+    "parse": (_packingList, _filename) => {
       return combineParser.combine(null, [], false, parserModel.NOMATCH);
     },
     "name": "unrecognised parser"

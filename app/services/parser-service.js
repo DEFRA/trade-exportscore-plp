@@ -6,7 +6,7 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function findParser(packingList, fileName) {
-  return await parsePackingList(packingList, fileName);
+  return parsePackingList(packingList, fileName);
 }
 
 async function parsePackingList(packingList, fileName) {

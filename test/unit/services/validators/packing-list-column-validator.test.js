@@ -311,7 +311,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       packingListValidator.generateFailuresByIndexAndTypes(validationResult);
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toBe("The packing list had no data");
+    expect(result.failureReasons).toBe("No product line data found.");
   });
 
   test("missing identifier", () => {

@@ -22,9 +22,11 @@ async function findParser(sanitizedPackingList, fileName) {
     parser = getExcelParser(sanitizedPackingList, fileName);
   } else if (fileExtension.isPdf(fileName) && config.isDiEnabled) {
     parser = await getPdfParser(sanitizedPackingList, fileName);
+  } else {
+    parser = null;
   }
 
-  if (parser == null) {
+  if (parser === null) {
     logger.logInfo(
       filenameForLogging,
       "findParser",
@@ -37,7 +39,7 @@ async function findParser(sanitizedPackingList, fileName) {
 }
 
 function generateParsedPackingList(parser, sanitisedPackingList) {
-  let parsedPackingList = parser.parse(sanitisedPackingList);
+  const parsedPackingList = parser.parse(sanitisedPackingList);
 
   if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
     parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
@@ -46,9 +48,10 @@ function generateParsedPackingList(parser, sanitisedPackingList) {
 
     parsedPackingList.business_checks.all_required_fields_present =
       validationResults.hasAllFields;
-    if (validationResults.failureReasons)
+    if (validationResults.failureReasons) {
       parsedPackingList.business_checks.failure_reasons =
         validationResults.failureReasons;
+    }
 
     parsedPackingList.items = removeBadData(parsedPackingList.items);
   }
