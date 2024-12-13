@@ -8,7 +8,13 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function createServer() {
   try {
-    await sequelize.authenticate();
+    if (
+      config.dbConfig.development.database ||
+      config.dbConfig.test.database ||
+      config.dbConfig.production.database
+    ) {
+      await sequelize.authenticate();
+    }
   } catch (err) {
     logger.logError(
       filenameForLogging,

@@ -44,6 +44,18 @@ Use Docker Compose to run service locally.
 - stop
   - `docker-compose down` or CTRL-C
 
+To run the app not using Docker, e.g. for pdf parsing
+
+- First setup environment variables for document intelligence
+- `export FORM_RECOGNIZER_ENDPOINT="https://<DI_NAME>.cognitiveservices.azure.com/"`
+- `export IS_DOCUMENT_INTLELLIGENCE_ENABLED="true"`
+- Connect to OpenVPN
+- Sign in using az login
+- Start
+  - `npm run start:watch`
+- Stop
+  - CTRL-C
+
 ## Test structure
 
 The tests have been structured into subfolders of `./test` as per the

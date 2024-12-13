@@ -2,6 +2,9 @@ const {
   DocumentModelAdministrationClient,
   AzureKeyCredential,
 } = require("@azure/ai-form-recognizer");
+const {
+  getLatestModelByName,
+} = require("../../app/services/document-intelligence");
 
 // ADO pipeline variables
 const modelIds = process.env.MODEL_IDS.split(",").map((id) => id.trim()); // Split and trim each model ID
@@ -24,7 +27,7 @@ function createDocumentIntelligenceClient(endpoint, apiKey) {
 // Assess the validity of a model
 async function assessModelPresence(client, modelId) {
   try {
-    console.log("== Assessing model presence");
+    console.log("== Assessing model presence ==");
     const model = await client.getDocumentModel(modelId);
     console.log(`Model ID: ${model.modelId}`);
     console.log(`Description: ${model.description}`);
@@ -42,25 +45,39 @@ function handleError(msg) {
   throw new Error(msg);
 }
 
-// Handle model copying between environments
-async function copyModel(sourceClient, targetClient, modelId) {
+// Generate a new target model ID with a timestamp and log it
+function generateTargetModelId(modelId) {
+  const timestamp = Date.now();
+  const newModelId = `${modelId}-${timestamp}`;
+  console.log(`Generated new target model ID with timestamp: ${newModelId}`);
+  return newModelId;
+}
+
+// Copy a model from source to target
+async function copyModel(
+  sourceClient,
+  targetClient,
+  sourceModelId,
+  targetModelId,
+) {
   try {
-    const copyAuthorisation = await targetClient.getCopyAuthorization(modelId);
+    const copyAuthorisation =
+      await targetClient.getCopyAuthorization(targetModelId);
     console.log("Copy authorisation received.");
 
     const poller = await sourceClient.beginCopyModelTo(
-      modelId,
+      sourceModelId,
       copyAuthorisation,
     );
     const modelDetails = await poller.pollUntilDone();
     console.log("Model copy completed:", modelDetails);
   } catch (error) {
-    const msg = `Error copying model with ID ${modelId}: ${error}`;
+    const msg = `Error copying model with ID ${sourceModelId}: ${error}`;
     handleError(msg);
   }
 }
 
-// Main function to assess source, copy to target, and perform analysis for each model
+// Main function
 async function main() {
   console.log(
     "============ Creating clients for source and target ============",
@@ -78,39 +95,39 @@ async function main() {
   for (const modelId of modelIds) {
     console.log(`============ Processing model: ${modelId} ============`);
 
-    // Assess target model before copying
-    console.log(
-      "========== Checking if target model already exists ==========",
-    );
-    const targetModelExists = await assessModelPresence(targetClient, modelId);
-    if (targetModelExists) {
-      console.log(
-        `Model with ID ${modelId} already exists in the target environment. Skipping copy...`,
-      );
-      continue;
-    }
-
     // Assess source model
-    console.log("========== Assessing the source model ==========");
-    const sourceModelExists = await assessModelPresence(sourceClient, modelId);
-    if (!sourceModelExists) {
+    console.log("========== Retrieving the source model ==========");
+    const sourceModelId = await getLatestModelByName(sourceClient, modelId);
+    if (!sourceModelId) {
       console.log(
         `Model with ID ${modelId} does not exist in the source environment. Skipping copy...`,
       );
       continue;
+    } else {
+      console.log(
+        `Model with ID ${modelId} has been found in source environment: ${sourceModelId}`,
+      );
     }
 
-    // Copy model to target
+    // Generate the timestamped target model ID
+    const targetModelIdWithTimestamp = generateTargetModelId(modelId);
+
+    // Copy model to target using the new timestamped model ID
     console.log("========== Copying model from source to target ==========");
-    await copyModel(sourceClient, targetClient, modelId);
+    await copyModel(
+      sourceClient,
+      targetClient,
+      sourceModelId,
+      targetModelIdWithTimestamp,
+    );
 
     // Assess target model after copy
     console.log("========== Assessing the target model ==========");
-    await assessModelPresence(targetClient, modelId);
+    await assessModelPresence(targetClient, targetModelIdWithTimestamp);
   }
 }
 
 main().catch((error) => {
-  console.error("An unexpected error occurred:", error.message);
+  console.error("An unexpected error occurred:", error);
   process.exit(1);
 });
