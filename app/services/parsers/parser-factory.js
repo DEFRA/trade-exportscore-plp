@@ -1,5 +1,4 @@
 const fileExtension = require("../../utilities/file-extension");
-const jsonFile = require("../../utilities/json-file");
 const config = require("../../config");
 const { getExcelParser, getPdfParser, getUnrecognisedParser } = require("./parsers");
 const packingListValidator = require("../validators/packing-list-column-validator");
@@ -8,30 +7,6 @@ const parserModel = require("../parser-model");
 const logger = require("../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-
-async function parsePackingList(packingList, fileName) {
-    try {
-        const sanitizedPackingList = sanitizeInput(packingList, fileName);
-        const parser = await findParser(sanitizedPackingList, fileName);
-        return generateParsedPackingList(parser, sanitizedPackingList);
-    }
-    catch (err) {
-        logger.logError(filenameForLogging, "parsePackingList", err);
-        return {};
-    }
-}
-
-function sanitizeInput(packingList, fileName) {
-    if (fileExtension.isExcel(fileName)) {
-        // Sanitise packing list (i.e. emove trailing spaces and empty cells)
-        const packingListJson = JSON.stringify(packingList);
-        const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
-        return JSON.parse(sanitisedPackingListJson);
-    } else {
-        return packingList;
-    }
-}
 
 async function findParser(sanitizedPackingList, fileName) {
     let parser;
@@ -75,8 +50,6 @@ function generateParsedPackingList(parser, sanitisedPackingList) {
 
 
 module.exports = {
-    sanitizeInput,
     findParser,
     generateParsedPackingList,
-    parsePackingList,
 };

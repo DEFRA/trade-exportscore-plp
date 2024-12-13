@@ -1,5 +1,6 @@
 const parserModel = require("../../../../app/services/parser-model");
 const parserFactory = require("../../../../app/services/parsers/parser-factory");
+const {getUnrecognisedParser} = require("../../../../app/services/parsers/parsers");
 const { parsersExcel } = require("../../../../app/services/model-parsers");
 const tjmorrisModel = require("../../test-data-and-results/models/tjmorris/model1");
 
@@ -65,7 +66,7 @@ describe("parsePackingList - e2e", () => {
   };
 
   test("removes empty items", async () => {
-    const result = await parserFactory.parsePackingList(packingListJson, filename);
+    const result = await parserFactory.generateParsedPackingList(parsersExcel.TJMORRIS1 ,packingListJson);
 
     expect(result.items).toHaveLength(2);
   });
@@ -73,13 +74,13 @@ describe("parsePackingList - e2e", () => {
   test("Not matched Excel file", async () => {
     const packingListJson = {};
 
-    const result = await parserFactory.parsePackingList(packingListJson, filename);
+    const result = await parserFactory.generateParsedPackingList(getUnrecognisedParser() ,packingListJson);
 
     expect(result.parserModel).toBe(parserModel.NOMATCH);
   });
 
   test("all_required_fields_present true", async () => {
-    const result = await parserFactory.parsePackingList(packingListJson, filename);
+    const result = await parserFactory.generateParsedPackingList(parsersExcel.TJMORRIS1 ,packingListJson);
 
     expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
@@ -134,10 +135,7 @@ describe("parsePackingList - e2e", () => {
         },
       ],
     };
-    const result = await parserFactory.parsePackingList(
-      packingListJsonMissing,
-      filename,
-    );
+    const result = await parserFactory.generateParsedPackingList(parsersExcel.TJMORRIS1, packingListJsonMissing);
 
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
   });
@@ -174,90 +172,12 @@ describe("parsePackingList - e2e", () => {
         },
       ],
     };
-    const result = await parserFactory.parsePackingList(
+    const result = await parserFactory.generateParsedPackingList(
+      parsersExcel.TJMORRIS1,
       packingListJsonEmpty,
-      filename,
     );
 
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
-  });
-});
-
-describe("sanitizeInput", () => {
-
-  test("sanitize a pdf - no change", async () => {
-    const filename = "packinglist.pdf";
-    const packingListJson = {
-      Sheet1: [
-        {
-          A: "Consignor / Place o f Despatch",
-          B: "CONSIGNEE",
-          C: "Trailer",
-          D: "Seal"
-        },
-        {
-          A: "Col A",
-          B: "Col B",
-          C: "Col C",
-          D: "Col D"
-        }
-      ]
-    };
-
-    const result = parserFactory.sanitizeInput(packingListJson, filename);
-
-    expect(result).toBe(packingListJson);
-  })
-
-  test("sanitize an excel", async () => {
-    const filename = "packinglist.xls";
-    const packingListJson = {
-      Sheet1: [
-        {
-          A: "Consignor / Place o f Despatch",
-          B: "CONSIGNEE",
-          C: "Trailer",
-          D: "Seal",
-          E: "Store",
-          F: "STORENAME",
-          G: "Order",
-          H: "Cage/Ref",
-          I: "Group",
-          J: "TREATMENTTYPE",
-          K: "Sub-Group",
-          L: "Description",
-          M: "Item",
-          N: "Description",
-          O: "Tariff/Commodity",
-          P: "Cases",
-          Q: "Gross Weight Kg",
-          R: "Net Weight Kg",
-          S: "Cost",
-          T: "Country of Origin",
-          U: "VAT Status",
-          V: "SPS",
-          W: "Consignment ID",
-          X: "Processed?",
-          Y: "Created Timestamp",
-        },
-        {
-          A: "RMS-GB-000010-001",
-          J: "CHILLED",
-          L: " Description",
-          N: "Description ",
-          O: "0408192000",
-          P: "2",
-          R: "1.4",
-          T: ""
-        }
-      ]
-    };
-
-    const result = await parserFactory.sanitizeInput(packingListJson, filename);
-
-    expect(result.Sheet1[1].L).toBe("Description");
-    expect(result.Sheet1[1].N).toBe("Description");
-    expect(result.Sheet1[1].T).toBeNull();
   });
 });
 
