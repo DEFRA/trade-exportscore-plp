@@ -2,6 +2,9 @@ const {
   DocumentModelAdministrationClient,
   AzureKeyCredential,
 } = require("@azure/ai-form-recognizer");
+const {
+  getLatestModelByName,
+} = require("../../app/services/document-intelligence");
 
 // ADO pipeline variables
 const modelIds = process.env.MODEL_IDS.split(",").map((id) => id.trim()); // Split and trim each model ID
@@ -93,13 +96,17 @@ async function main() {
     console.log(`============ Processing model: ${modelId} ============`);
 
     // Assess source model
-    console.log("========== Assessing the source model ==========");
-    const sourceModelExists = await assessModelPresence(sourceClient, modelId);
-    if (!sourceModelExists) {
+    console.log("========== Retrieving the source model ==========");
+    const sourceModelId = await getLatestModelByName(sourceClient, modelId);
+    if (!sourceModelId) {
       console.log(
         `Model with ID ${modelId} does not exist in the source environment. Skipping copy...`,
       );
       continue;
+    } else {
+      console.log(
+        `Model with ID ${modelId} has been found in source environment: ${sourceModelId}`,
+      );
     }
 
     // Generate the timestamped target model ID
@@ -110,7 +117,7 @@ async function main() {
     await copyModel(
       sourceClient,
       targetClient,
-      modelId,
+      sourceModelId,
       targetModelIdWithTimestamp,
     );
 
