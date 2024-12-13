@@ -50,7 +50,10 @@ describe("findParser", () => {
         return model.invalidModel_MissingColumnCells;
       });
 
-    const result = await parserService.findParser(model.invalidModel_MissingColumnCells, filename);
+    const result = await parserService.findParser(
+      model.invalidModel_MissingColumnCells,
+      filename,
+    );
     expect(result).toEqual(test_results.invalidTestResult_MissingCells);
   });
 

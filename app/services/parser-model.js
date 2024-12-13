@@ -22,7 +22,7 @@ const ParserModel = {
   ICELAND1: "iceland-1",
   MANDS1: "mands-1",
   BOOKER1: "booker-1",
-  BOOTS1: "boots-1"
+  BOOTS1: "boots-1",
 };
 
 module.exports = ParserModel;

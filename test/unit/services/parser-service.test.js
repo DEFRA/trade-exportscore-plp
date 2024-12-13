@@ -1,7 +1,6 @@
 const parserModel = require("../../../app/services/parser-model");
 const parserService = require("../../../app/services/parser-service");
 
-
 describe("findParser", () => {
   const filename = "packinglist.xls";
   const packingListJson = {
@@ -183,7 +182,6 @@ describe("findParser", () => {
 });
 
 describe("sanitizeInput", () => {
-
   test("sanitize a pdf - no change", async () => {
     const filename = "packinglist.pdf";
     const packingListJson = {
@@ -192,21 +190,21 @@ describe("sanitizeInput", () => {
           A: "Consignor / Place o f Despatch",
           B: "CONSIGNEE",
           C: "Trailer",
-          D: "Seal"
+          D: "Seal",
         },
         {
           A: "Col A",
           B: "Col B",
           C: "Col C",
-          D: "Col D"
-        }
-      ]
+          D: "Col D",
+        },
+      ],
     };
 
     const result = parserService.sanitizeInput(packingListJson, filename);
 
     expect(result).toBe(packingListJson);
-  })
+  });
 
   test("sanitize an excel", async () => {
     const filename = "packinglist.xls";
@@ -247,9 +245,9 @@ describe("sanitizeInput", () => {
           O: "0408192000",
           P: "2",
           R: "1.4",
-          T: ""
-        }
-      ]
+          T: "",
+        },
+      ],
     };
 
     const result = await parserService.sanitizeInput(packingListJson, filename);

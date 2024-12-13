@@ -12,10 +12,15 @@ async function findParser(packingList, fileName) {
 async function parsePackingList(packingList, fileName) {
   try {
     const sanitizedPackingList = sanitizeInput(packingList, fileName);
-    const parser = await parserFactory.findParser(sanitizedPackingList, fileName);
-    return parserFactory.generateParsedPackingList(parser, sanitizedPackingList);
-  }
-  catch (err) {
+    const parser = await parserFactory.findParser(
+      sanitizedPackingList,
+      fileName,
+    );
+    return parserFactory.generateParsedPackingList(
+      parser,
+      sanitizedPackingList,
+    );
+  } catch (err) {
     logger.logError(filenameForLogging, "parsePackingList()", err);
     return {};
   }
@@ -35,5 +40,5 @@ function sanitizeInput(packingList, fileName) {
 module.exports = {
   findParser,
   parsePackingList,
-  sanitizeInput
+  sanitizeInput,
 };
