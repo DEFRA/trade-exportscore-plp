@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const logger = require("./../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
+const packingListValidator = require("../services/validators/packing-list-column-validator") 
 async function createPackingList(packingListJson, applicationId) {
   try {
     await sequelize.transaction(async (transaction) => {
@@ -25,7 +25,8 @@ async function createPackingList(packingListJson, applicationId) {
 }
 
 function packingListMapper(packingListJson, applicationId) {
-  try {
+  
+  try { 
     return {
       applicationId,
       registrationApprovalNumber: packingListJson.registration_approval_number,
@@ -33,6 +34,7 @@ function packingListMapper(packingListJson, applicationId) {
         packingListJson.business_checks.all_required_fields_present,
       item: packingListJson.items.map((n) => itemsMapper(n, applicationId)),
       parserModel: packingListJson.parserModel,
+      reasonsForFailure: packingListJson.business_checks.failure_reasons
     };
   } catch (err) {
     logger.logError(filenameForLogging, "packingListMapper()", err);

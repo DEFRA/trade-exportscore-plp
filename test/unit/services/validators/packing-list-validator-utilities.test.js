@@ -55,6 +55,7 @@ describe("validator function tests", () => {
     ["1", false],
     ["a string", true],
     [null, false],
+    ["", false]
   ])("wrongTypeNetWeight", (total_net_weight_kg, expected) => {
     const item = { total_net_weight_kg };
     expect(wrongTypeNetWeight(item)).toBe(expected);
