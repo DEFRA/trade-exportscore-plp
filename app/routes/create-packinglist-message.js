@@ -28,6 +28,7 @@ module.exports = {
         return h.response(returnMessage).code(StatusCodes.OK);
       } catch (err) {
         logger.logError(filenameForLogging, "get()", err);
+        return h.response().code(StatusCodes.INTERNAL_SERVER_ERROR);
       }
     },
   },

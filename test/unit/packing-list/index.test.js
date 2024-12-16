@@ -75,7 +75,7 @@ describe("Packing list", () => {
     expect(result.applicationId).toBe("123");
   });
 
-  test("packingListMapper should map correctly", () => {
+  test("packingListMapper should map correctly for failure", () => {
     const packingListJson = {
       items: [
         {
@@ -105,6 +105,56 @@ describe("Packing list", () => {
     expect(result.item[0].description).toBe(
       packingListJson.items[0].description,
     );
+    expect(result.item[0].natureOfProducts).toBe(
+      packingListJson.items[0].nature_of_products,
+    );
+    expect(result.item[0].typeOfTreatment).toBe(
+      packingListJson.items[0].type_of_treatment,
+    );
+    expect(result.item[0].commodityCode).toBe(
+      packingListJson.items[0].commodity_code,
+    );
+    expect(result.item[0].numberOfPackages).toBe(
+      packingListJson.items[0].number_of_packages,
+    );
+    expect(result.item[0].totalWeight).toBe(
+      packingListJson.items[0].total_net_weight_kg,
+    );
+    expect(result.item[0].applicationId).toBe("123");
+  });
+
+  test("packingListMapper should map correctly", () => {
+    const packingListJson = {
+      items: [
+        {
+          description: null,
+          nature_of_products: "nature_of_products",
+          type_of_treatment: "type_of_treatment",
+          commodity_code: 123,
+          number_of_packages: 1,
+          total_net_weight_kg: 0.5,
+        },
+      ],
+      registration_approval_number: "test",
+      business_checks: {
+        all_required_fields_present: false,
+        failure_reasons: "Product description is missing in row 3.\n"
+      },
+    };
+
+    const result = packingListIndex.packingListMapper(packingListJson, "123");
+
+    expect(result.applicationId).toBe("123");
+    expect(result.registrationApprovalNumber).toBe(
+      packingListJson.registration_approval_number,
+    );
+    expect(result.allRequiredFieldsPresent).toBe(
+      packingListJson.business_checks.all_required_fields_present,
+    );
+    expect(result.reasonsForFailure).toBe(
+      packingListJson.business_checks.failure_reasons
+    );
+    expect(result.item[0].description).toBeNull();
     expect(result.item[0].natureOfProducts).toBe(
       packingListJson.items[0].nature_of_products,
     );

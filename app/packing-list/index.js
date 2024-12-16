@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const logger = require("./../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-const packingListValidator = require("../services/validators/packing-list-column-validator") 
+
 async function createPackingList(packingListJson, applicationId) {
   try {
     await sequelize.transaction(async (transaction) => {
