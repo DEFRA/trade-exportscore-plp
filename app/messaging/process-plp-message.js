@@ -65,6 +65,7 @@ async function processPackingList(packingList, message) {
       await sendParsed(
         message.body.application_id,
         packingList.business_checks.all_required_fields_present,
+        packingList.business_checks.failure_reasons,
       );
     } catch (err) {
       logger.logError(

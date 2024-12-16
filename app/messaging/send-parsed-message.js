@@ -23,7 +23,7 @@ async function sendParsedAdp(parsedResult, applicationId) {
   }
 }
 
-async function sendParsed(applicationId, parsedResult) {
+async function sendParsed(applicationId, parsedResult, failureReason) {
   try {
     if (config.tpQueue.managedIdentityClientId) {
       const credential = new DefaultAzureCredential({
@@ -34,7 +34,7 @@ async function sendParsed(applicationId, parsedResult) {
       const sbClient = new ServiceBusClient(config.tpQueue.host, credential);
       const sender = sbClient.createSender(config.tpQueue.address);
 
-      const message = createMessage(parsedResult, applicationId);
+      const message = createMessage(parsedResult, applicationId, failureReason);
 
       try {
         await sender.sendMessages(message);

@@ -1,10 +1,11 @@
 const { v4 } = require("uuid");
 
-function createMessage(parsedResult, applicationId) {
+function createMessage(parsedResult, applicationId, failureReasons) {
   return {
     body: {
       applicationId: applicationId,
       approvalStatus: parsedResult ? "approved" : "rejected",
+      failureReasons,
     },
     type: "uk.gov.trade.plp",
     source: "trade-exportscore-plp",

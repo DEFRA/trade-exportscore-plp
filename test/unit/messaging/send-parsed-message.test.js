@@ -74,7 +74,7 @@ describe("sendParsed", () => {
     await sendParsed(true, "123");
 
     //assert
-    expect(createMessage).toHaveBeenCalledWith("123", true);
+    expect(createMessage).toHaveBeenCalledWith("123", true, undefined);
     expect(DefaultAzureCredential).toHaveBeenCalledTimes(1);
     expect(ServiceBusClient).toHaveBeenCalledTimes(1);
     expect(mockSendMessages).toHaveBeenCalledTimes(1);
@@ -92,7 +92,7 @@ describe("sendParsed", () => {
     await sendParsed(true, "123");
 
     //assert
-    expect(createMessage).toHaveBeenCalledWith("123", true);
+    expect(createMessage).toHaveBeenCalledWith("123", true, undefined);
     expect(DefaultAzureCredential).toHaveBeenCalledTimes(1);
     expect(ServiceBusClient).toHaveBeenCalledTimes(1);
     expect(mockSendMessages).toHaveBeenCalledTimes(1);
