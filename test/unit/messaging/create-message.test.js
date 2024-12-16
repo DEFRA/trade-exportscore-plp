@@ -20,7 +20,7 @@ describe("createMessage", () => {
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected",
-      failureReasons:"failure",
+      failureReasons: "failure",
     };
 
     const result = createMessage(false, "claim123", "failure");
