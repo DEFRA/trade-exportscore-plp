@@ -10,6 +10,11 @@ describe("parseAsdaModel2", () => {
 
     expect(result).toEqual(test_results.validTestResult);
   });
+  test("parses populated json with total", () => {
+    const result = parser.parse(model.validModelWithTotal);
+
+    expect(result).toEqual(test_results.validTestResult);
+  });
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModelMultipleSheets);
 

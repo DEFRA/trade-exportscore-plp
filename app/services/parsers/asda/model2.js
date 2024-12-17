@@ -4,6 +4,7 @@ const { mapParser } = require("../../parser-map");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
+const { rowFinder } = require("../../../utilities/row-finder");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
@@ -17,7 +18,18 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
+    const footerValues = [
+      /^TOTAL$/i,
+    ];
     for (const sheet of sheets) {
+      function callback(x) {
+        return regex.testAllPatterns(footerValues, x);
+      }
+      const footerRow = rowFinder(packingListJson[sheet], callback);
+      if (footerRow !== -1){
+        packingListJson[sheet] = packingListJson[sheet].slice(0, footerRow);
+      }
+
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
         0,
