@@ -4,6 +4,7 @@ const healthzRoutes = require("../../../app/routes/healthz");
 const aiRoutes = require("../../../app/routes/ai");
 const upsertIdcomsRoutes = require("../../../app/routes/upsert-idcoms");
 const testDiConnRoutes = require("../../../app/routes/test-di-conn");
+const createPackingList = require("../../../app/routes/create-packinglist-message");
 const router = require("../../../app/plugins/router");
 
 jest.mock("../../../app/routes/non-ai", () => [{ path: "/non-ai" }]);
@@ -15,6 +16,9 @@ jest.mock("../../../app/routes/test-di-conn", () => [
 ]);
 jest.mock("../../../app/routes/upsert-idcoms", () => [
   { path: "/upsert-idcoms" },
+]);
+jest.mock("../../../app/routes/create-packinglist-message", () => [
+  { path: "/create-packinglist-message" },
 ]);
 
 describe("router plugin", () => {
@@ -33,6 +37,7 @@ describe("router plugin", () => {
         upsertIdcomsRoutes,
         aiRoutes,
         testDiConnRoutes,
+        createPackingList,
       ),
     );
   });

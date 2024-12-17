@@ -7,7 +7,25 @@ describe("createMessage", () => {
       approvalStatus: "approved",
     };
 
-    expect(createMessage(true, "claim123")).toMatchObject({
+    const result = createMessage(true, "claim123");
+
+    expect(result).toMatchObject({
+      body: testObject,
+      type: "uk.gov.trade.plp",
+      source: "trade-exportscore-plp",
+    });
+  });
+
+  test("should create a failure message", () => {
+    const testObject = {
+      applicationId: "claim123",
+      approvalStatus: "rejected",
+      failureReasons: "failure",
+    };
+
+    const result = createMessage(false, "claim123", "failure");
+
+    expect(result).toMatchObject({
       body: testObject,
       type: "uk.gov.trade.plp",
       source: "trade-exportscore-plp",

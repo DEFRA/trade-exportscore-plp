@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       registrationApprovalNumber: DataTypes.STRING,
       allRequiredFieldsPresent: DataTypes.BOOLEAN,
       parserModel: DataTypes.STRING,
+      reasonsForFailure: DataTypes.STRING
     },
     {
       freezeTableName: true,

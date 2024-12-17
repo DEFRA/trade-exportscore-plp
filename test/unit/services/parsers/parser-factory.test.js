@@ -1,7 +1,12 @@
-const parserModel = require("../../../app/services/parser-model");
-const parserService = require("../../../app/services/parser-service");
+const parserModel = require("../../../../app/services/parser-model");
+const parserFactory = require("../../../../app/services/parsers/parser-factory");
+const {
+  getUnrecognisedParser,
+} = require("../../../../app/services/parsers/parsers");
+const { parsersExcel } = require("../../../../app/services/model-parsers");
+const tjmorrisModel = require("../../test-data-and-results/models/tjmorris/model1");
 
-describe("findParser", () => {
+describe("parsePackingList - e2e", () => {
   const filename = "packinglist.xls";
   const packingListJson = {
     Sheet1: [
@@ -63,7 +68,10 @@ describe("findParser", () => {
   };
 
   test("removes empty items", async () => {
-    const result = await parserService.findParser(packingListJson, filename);
+    const result = await parserFactory.generateParsedPackingList(
+      parsersExcel.TJMORRIS1,
+      packingListJson,
+    );
 
     expect(result.items).toHaveLength(2);
   });
@@ -71,13 +79,19 @@ describe("findParser", () => {
   test("Not matched Excel file", async () => {
     const packingListJson = {};
 
-    const result = await parserService.findParser(packingListJson, filename);
+    const result = await parserFactory.generateParsedPackingList(
+      getUnrecognisedParser(),
+      packingListJson,
+    );
 
     expect(result.parserModel).toBe(parserModel.NOMATCH);
   });
 
   test("all_required_fields_present true", async () => {
-    const result = await parserService.findParser(packingListJson, filename);
+    const result = await parserFactory.generateParsedPackingList(
+      parsersExcel.TJMORRIS1,
+      packingListJson,
+    );
 
     expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
@@ -132,9 +146,9 @@ describe("findParser", () => {
         },
       ],
     };
-    const result = await parserService.findParser(
+    const result = await parserFactory.generateParsedPackingList(
+      parsersExcel.TJMORRIS1,
       packingListJsonMissing,
-      filename,
     );
 
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
@@ -172,88 +186,54 @@ describe("findParser", () => {
         },
       ],
     };
-    const result = await parserService.findParser(
+    const result = await parserFactory.generateParsedPackingList(
+      parsersExcel.TJMORRIS1,
       packingListJsonEmpty,
-      filename,
     );
 
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
   });
 });
 
-describe("sanitizeInput", () => {
-  test("sanitize a pdf - no change", async () => {
-    const filename = "packinglist.pdf";
+describe("findParser", () => {
+  test("Unrecognised extension", async () => {
     const packingListJson = {
       Sheet1: [
         {
           A: "Consignor / Place o f Despatch",
           B: "CONSIGNEE",
-          C: "Trailer",
-          D: "Seal",
-        },
-        {
-          A: "Col A",
-          B: "Col B",
-          C: "Col C",
-          D: "Col D",
         },
       ],
     };
+    const fileName = "packingList.txt";
 
-    const result = parserService.sanitizeInput(packingListJson, filename);
+    const result = await parserFactory.findParser(packingListJson, fileName);
 
-    expect(result).toBe(packingListJson);
+    expect(result.name).toBeTruthy();
   });
 
-  test("sanitize an excel", async () => {
-    const filename = "packinglist.xls";
+  test("Unrecognised excel", async () => {
     const packingListJson = {
       Sheet1: [
         {
           A: "Consignor / Place o f Despatch",
           B: "CONSIGNEE",
-          C: "Trailer",
-          D: "Seal",
-          E: "Store",
-          F: "STORENAME",
-          G: "Order",
-          H: "Cage/Ref",
-          I: "Group",
-          J: "TREATMENTTYPE",
-          K: "Sub-Group",
-          L: "Description",
-          M: "Item",
-          N: "Description",
-          O: "Tariff/Commodity",
-          P: "Cases",
-          Q: "Gross Weight Kg",
-          R: "Net Weight Kg",
-          S: "Cost",
-          T: "Country of Origin",
-          U: "VAT Status",
-          V: "SPS",
-          W: "Consignment ID",
-          X: "Processed?",
-          Y: "Created Timestamp",
-        },
-        {
-          A: "RMS-GB-000010-001",
-          J: "CHILLED",
-          L: " Description",
-          N: "Description ",
-          O: "0408192000",
-          P: "2",
-          R: "1.4",
-          T: "",
         },
       ],
     };
+    const fileName = "packingList.xls";
 
-    const result = await parserService.sanitizeInput(packingListJson, filename);
+    const result = await parserFactory.findParser(packingListJson, fileName);
 
-    expect(result.Sheet1[1].L).toBe("Description");
-    expect(result.Sheet1[1].N).toBe("Description");
-    expect(result.Sheet1[1].T).toBeNull();
+    expect(result.name).toBeTruthy();
+  });
+
+  test("TJMORRIS1 excel Parser", async () => {
+    const filename = "packinglist.xls";
+    const packingListJson = tjmorrisModel.validModel;
+
+    const result = await parserFactory.findParser(packingListJson, filename);
+
+    expect(result).toBe(parsersExcel.TJMORRIS1);
   });
 });
