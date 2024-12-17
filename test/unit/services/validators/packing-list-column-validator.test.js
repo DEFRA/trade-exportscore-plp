@@ -57,6 +57,8 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeFalsy();
     expect(result.isEmpty).toBeFalsy();
   });
@@ -87,6 +89,8 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
   });
@@ -117,6 +121,8 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
   });
@@ -147,6 +153,8 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
   });
@@ -207,6 +215,8 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(1);
     expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
   });
@@ -237,6 +247,72 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(1);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(0);
+    expect(result.hasRemos).toBeTruthy();
+    expect(result.isEmpty).toBeFalsy();
+  });
+
+  test("invalid packages", () => {
+    const packingList = {
+      registration_approval_number: "remos",
+      items: [
+        {
+          description: "description",
+          nature_of_products: "nature of products",
+          type_of_treatment: "treatment type",
+          commodity_code: "123",
+          number_of_packages: "potato",
+          total_net_weight_kg: 1.2,
+        },
+      ],
+      business_checks: {
+        all_required_fields_present: true,
+      },
+    };
+
+    const result =
+      packingListValidator.validatePackingListByIndexAndType(packingList);
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.missingIdentifier.length).toBe(0);
+    expect(result.missingDescription.length).toBe(0);
+    expect(result.missingPackages.length).toBe(0);
+    expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(1);
+    expect(result.invalidNetWeight.length).toBe(0);
+    expect(result.hasRemos).toBeTruthy();
+    expect(result.isEmpty).toBeFalsy();
+  });
+
+  test("invalid net weight", () => {
+    const packingList = {
+      registration_approval_number: "remos",
+      items: [
+        {
+          description: "description",
+          nature_of_products: "nature of products",
+          type_of_treatment: "treatment type",
+          commodity_code: "123",
+          number_of_packages: 1,
+          total_net_weight_kg: "potato",
+        },
+      ],
+      business_checks: {
+        all_required_fields_present: true,
+      },
+    };
+
+    const result =
+      packingListValidator.validatePackingListByIndexAndType(packingList);
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.missingIdentifier.length).toBe(0);
+    expect(result.missingDescription.length).toBe(0);
+    expect(result.missingPackages.length).toBe(0);
+    expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(1);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
   });
@@ -283,6 +359,8 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(1);
+    expect(result.invalidPackages.length).toBe(1);
+    expect(result.invalidNetWeight.length).toBe(1);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
   });

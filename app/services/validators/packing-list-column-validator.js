@@ -39,7 +39,9 @@ function validatePackingListByIndexAndType(packingList) {
       missingIdentifier.length === 0 &&
       missingDescription.length === 0 &&
       missingPackages.length === 0 &&
+      invalidPackages.length === 0 &&
       missingNetWeight.length === 0 &&
+      invalidNetWeight.length === 0 &&
       hasRemos &&
       !isEmpty,
   };
