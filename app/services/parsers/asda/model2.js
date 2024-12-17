@@ -19,7 +19,7 @@ function parse(packingListJson) {
     );
 
     const footerValues = [
-      /TOTAL/i,
+      /^TOTAL$/i,
     ];
     for (const sheet of sheets) {
       function callback(x) {
