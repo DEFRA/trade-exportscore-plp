@@ -9,7 +9,7 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 module.exports = {
   method: "GET",
-  path: "/upsert-idcoms",
+  path: "/create-packinglist-message",
   options: {
     handler: async (request, h) => {
       try {
