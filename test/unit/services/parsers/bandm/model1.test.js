@@ -15,6 +15,16 @@ describe("parseBandMModel1", () => {
     expect(result).toEqual(test_results.validTestResult);
   });
 
+  test("parses populated json with case insensitive headers", () => {
+    const packingListJson = JSON.stringify(model.validModelInsensitiveHeader);
+    const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
+    const sanitisedPackingList = JSON.parse(sanitisedPackingListJson);
+
+    const result = parser.parse(sanitisedPackingList);
+
+    expect(result).toEqual(test_results.validTestResult);
+  });
+
   test("parses multiple sheets", () => {
     const packingListJson = JSON.stringify(model.validModelMultipleSheets);
     const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);

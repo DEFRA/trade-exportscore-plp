@@ -20,9 +20,9 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
-    const headerTitles = Object.values(headers.BANDM1.headers);
+    const headerTitles = Object.values(headers.BANDM1.regex);
     function callback(x) {
-      return Object.values(x).includes(headerTitles[0]);
+      return regex.testAllPatterns(headerTitles, x);
     }
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
 
