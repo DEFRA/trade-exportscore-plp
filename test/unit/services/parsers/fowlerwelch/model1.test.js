@@ -1,12 +1,17 @@
 const parser = require("../../../../../app/services/parsers/fowlerwelch/model1");
 const logger = require("../../../../../app/utilities/logger");
-const parserModel = require("../../../../../app/services/parser-model");
 const model = require("../../../test-data-and-results/models/fowlerwelch/model1");
 const test_results = require("../../../test-data-and-results/results/fowlerwelch/model1");
 
 describe("parseFowlerWelchModel1", () => {
   test("parses valid json", () => {
     const result = parser.parse(model.validModel);
+
+    expect(result).toEqual(test_results.validTestResult);
+  });
+
+  test("parses valid json with dragdown", () => {
+    const result = parser.parse(model.validModelWithDragdown);
 
     expect(result).toEqual(test_results.validTestResult);
   });
