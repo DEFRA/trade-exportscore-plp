@@ -43,7 +43,7 @@ const headers = {
   },
   BOOTS1: {
     establishmentNumber: {
-      regex: /RMS-GB-000084-(\d{3})?/i,
+      regex: /^RMS-GB-000084-\d{3}$/i,
     },
     headers: {
       description: "Description",

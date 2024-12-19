@@ -2,7 +2,6 @@ const parser = require("../../../../../app/services/parsers/tescos/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/tescos/model1");
 const test_results = require("../../../test-data-and-results/results/tescos/model1");
-const parserModel = require("../../../../../app/services/parser-model");
 describe("parseTescoModel1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);
@@ -13,6 +12,12 @@ describe("parseTescoModel1", () => {
     const result = parser.parse(model.validModelMultipleSheets);
 
     expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+  });
+
+  test("parses missing required values", () => {
+    const result = parser.parse(model.invalidModel_MissingColumnCells);
+
+    expect(result).toEqual(test_results.invalidTestResult_MissingCellsInParse);
   });
 
   test("parses empty json", () => {
