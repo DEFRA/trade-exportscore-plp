@@ -9,6 +9,7 @@ const { mapParser } = require("../../parser-map");
 const { rowFinder } = require("../../../utilities/row-finder");
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
+const validatorUtilities = require("../../validators/packing-list-validator-utilities");
 
 function parseModel(packingListJson, model, establishmentNumberRegex) {
   try {
@@ -24,6 +25,15 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       packingListJson[sheets[0]],
     );
 
+    const notDragDownCallback = function (item){
+      return !(
+        validatorUtilities.hasMissingDescription(item) &&
+        validatorUtilities.hasMissingIdentifier(item) && 
+        validatorUtilities.hasMissingPackages(item) &&
+        validatorUtilities.hasMissingNetWeight(item)
+      );
+    }
+
     for (const sheet of sheets) {
       const headerRow = rowFinder(packingListJson[sheet], callback);
       const dataRow = headerRow + 1;
@@ -34,6 +44,9 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
           dataRow,
           headers.FOWLERWELCH1.regex,
         );
+
+        packingListContentsTemp = packingListContentsTemp.filter(notDragDownCallback);
+
         packingListContents = packingListContents.concat(
           packingListContentsTemp,
         );

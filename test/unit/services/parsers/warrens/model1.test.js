@@ -23,12 +23,7 @@ describe("parseWarrensModel1", () => {
     const result = parser.parse(packingListJson);
 
     expect(result.registration_approval_number).toBeNull();
-    expect(result.items).toHaveLength(1);
-    expect(result.items[0].description).toBeNull();
-    expect(result.items[0].commodity_code).toBeNull();
-    expect(result.items[0].number_of_packages).toBeNull();
-    expect(result.items[0].total_net_weight_kg).toBeNull();
-    expect(result.items[0].type_of_treatment).toBeNull();
+    expect(result.items).toHaveLength(0);
     expect(result.parserModel).toBe(parserModel.WARRENS1);
   });
 

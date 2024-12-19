@@ -98,16 +98,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: true,
     },
-    items: [
-      {
-        commodity_code: null,
-        description: null,
-        nature_of_products: null,
-        number_of_packages: null,
-        total_net_weight_kg: null,
-        type_of_treatment: null,
-      },
-    ],
+    items: [],
     registration_approval_number: null,
     parserModel: parserModel.FOWLERWELCH1,
   },
