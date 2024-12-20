@@ -1,6 +1,7 @@
 const combineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
 const parserModel = require("../../parser-model");
+const validatorUtilities = require("../../validators/packing-list-validator-utilities");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
@@ -24,6 +25,10 @@ function parse(packingListJson) {
         1,
         headers.NISA1.regex,
       );
+
+      if (isTotalRow(packingListContentsTemp[packingListContentsTemp.length - 1])) {
+        packingListContentsTemp = packingListContentsTemp.slice(0, -1);
+      }
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
@@ -37,6 +42,13 @@ function parse(packingListJson) {
     logger.logError(filenameForLogging, "matches()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
+}
+
+function isTotalRow(item) {
+  return validatorUtilities.hasMissingDescription(item) &&
+    validatorUtilities.hasMissingIdentifier(item) &&
+    !validatorUtilities.hasMissingNetWeight(item) &&
+    !validatorUtilities.hasMissingPackages(item);
 }
 
 module.exports = {

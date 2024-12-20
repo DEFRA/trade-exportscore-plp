@@ -12,6 +12,12 @@ describe("matchesNisa", () => {
     expect(result).toBe(matcherResult.CORRECT);
   });
 
+  test("returns Correct With Footer", () => {
+    const result = matcher.matches(model.validModelWithFooter, filename);
+
+    expect(result).toBe(matcherResult.CORRECT);
+  });
+
   test("returns 'Empty File' matcher result for empty json", () => {
     const packingListJson = {};
 
