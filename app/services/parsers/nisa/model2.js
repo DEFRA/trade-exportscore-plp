@@ -3,7 +3,7 @@ const { mapParser } = require("../../parser-map");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
-const validatorUtilities = require("../../validators/packing-list-validator-utilities");
+const { isTotalRow } = require("./utilities");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
@@ -44,13 +44,6 @@ function parse(packingListJson) {
     logger.logError(filenameForLogging, "matches()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
-}
-
-function isTotalRow(item) {
-  return validatorUtilities.hasMissingDescription(item) &&
-    validatorUtilities.hasMissingIdentifier(item) &&
-    !validatorUtilities.hasMissingNetWeight(item) &&
-    !validatorUtilities.hasMissingPackages(item);
 }
 
 module.exports = {
