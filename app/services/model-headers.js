@@ -261,7 +261,7 @@ const headers = {
       number_of_packages: "Unit Qty",
       total_net_weight_kg: "Net Weight (KG)",
     },
-    modelId: "iceland1-v2",
+    modelId: "iceland1-v3",
   },
   MANDS1: {
     establishmentNumber: {
