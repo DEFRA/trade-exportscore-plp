@@ -4,6 +4,7 @@ const parserFactory = require("./parsers/parser-factory");
 const logger = require("../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const matcherResult = require("./matcher-result");
 
 async function findParser(packingList, fileName) {
   return parsePackingList(packingList, fileName);
@@ -16,10 +17,21 @@ async function parsePackingList(packingList, fileName) {
       sanitizedPackingList,
       fileName,
     );
-    return parserFactory.generateParsedPackingList(
-      parser,
-      sanitizedPackingList,
-    );
+
+    if (
+      fileExtension.isPdf(fileName) &&
+      parser.result?.isMatched === matcherResult.CORRECT
+    ) {
+      return parserFactory.generateParsedPackingList(
+        parser.parser,
+        parser.result.document,
+      );
+    } else {
+      return parserFactory.generateParsedPackingList(
+        parser,
+        sanitizedPackingList,
+      );
+    }
   } catch (err) {
     logger.logError(filenameForLogging, "parsePackingList()", err);
     return {};

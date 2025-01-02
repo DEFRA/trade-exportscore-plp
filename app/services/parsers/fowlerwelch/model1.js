@@ -25,14 +25,14 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       packingListJson[sheets[0]],
     );
 
-    const notDragDownCallback = function (item){
+    const notDragDownCallback = function (item) {
       return !(
         validatorUtilities.hasMissingDescription(item) &&
-        validatorUtilities.hasMissingIdentifier(item) && 
+        validatorUtilities.hasMissingIdentifier(item) &&
         validatorUtilities.hasMissingPackages(item) &&
         validatorUtilities.hasMissingNetWeight(item)
       );
-    }
+    };
 
     for (const sheet of sheets) {
       const headerRow = rowFinder(packingListJson[sheet], callback);
@@ -45,7 +45,8 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
           headers.FOWLERWELCH1.regex,
         );
 
-        packingListContentsTemp = packingListContentsTemp.filter(notDragDownCallback);
+        packingListContentsTemp =
+          packingListContentsTemp.filter(notDragDownCallback);
 
         packingListContents = packingListContents.concat(
           packingListContentsTemp,
