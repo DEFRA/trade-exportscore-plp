@@ -27,7 +27,7 @@ function getExcelParser(sanitisedPackingList, filename) {
 }
 
 async function getPdfParser(sanitisedPackingList, filename) {
-  let parser = {};
+  const parser = {};
   for (const key in parsersPdf) {
     if (parsersPdf.hasOwnProperty(key)) {
       const result = await parsersPdf[key].matches(
