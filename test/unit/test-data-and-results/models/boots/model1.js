@@ -275,7 +275,8 @@ module.exports = {
       { B: "Gross Mass in Kgs:", C: 123 },
       { B: "Total Value in GBP:", C: 123 },
     ],
-  },wrongEstablishment: {
+  },
+  wrongEstablishment: {
     "05122024 5223 SSC NI ROUTE1 - A": [
       { A: "Export Details" },
       { A: "GB RMS Number", B: "RMS-GB-000085" },

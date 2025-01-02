@@ -68,7 +68,7 @@ module.exports = {
       },
       {
         L: "TOTAL",
-        N: 1234
+        N: 1234,
       },
     ],
   },

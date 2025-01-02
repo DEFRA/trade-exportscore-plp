@@ -1,15 +1,14 @@
 const { parsersExcel, parsersPdf } = require("../model-parsers");
-const parserModel = require("../parser-model");;
+const parserModel = require("../parser-model");
 const matcherResult = require("../matcher-result");
 const combineParser = require("../parser-combine");
 
-
 function getUnrecognisedParser() {
   return {
-    "parse": (_packingList, _filename) => {
+    parse: (_packingList, _filename) => {
       return combineParser.combine(null, [], false, parserModel.NOMATCH);
     },
-    "name": "unrecognised parser"
+    name: "unrecognised parser",
   };
 }
 
@@ -25,26 +24,30 @@ function getExcelParser(sanitisedPackingList, filename) {
   });
 
   return parser;
-
 }
 
 async function getPdfParser(sanitisedPackingList, filename) {
-  let parser = null;
+  const parser = {};
   for (const key in parsersPdf) {
     if (parsersPdf.hasOwnProperty(key)) {
-      const result = await parsersPdf[key].matches(sanitisedPackingList, filename);
+      const result = await parsersPdf[key].matches(
+        sanitisedPackingList,
+        filename,
+      );
 
       if (result.isMatched === matcherResult.CORRECT) {
-        parser = parsersPdf[key];
+        parser.parser = parsersPdf[key];
+        parser.result = result;
         break;
       }
     }
   }
+
   return parser;
 }
 
 module.exports = {
   getExcelParser,
   getPdfParser,
-  getUnrecognisedParser
+  getUnrecognisedParser,
 };

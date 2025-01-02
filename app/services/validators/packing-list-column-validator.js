@@ -60,7 +60,7 @@ function generateFailuresByIndexAndTypes(validationResult) {
     };
   } else {
     // build failure reason
-   let failureReasons = "";
+    let failureReasons = "";
     if (validationResult.isEmpty) {
       failureReasons = "No product line data found.";
     } else {

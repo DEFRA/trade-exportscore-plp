@@ -22,7 +22,7 @@ describe("matchesBootsModel1", () => {
   });
 
   test("returns 'No Match' for incorrect file extension", async () => {
-    const filename = "packinglist.pdf";
+    const filename = "packinglist.wrong";
     const invalidTestResult_NoMatch = {
       business_checks: {
         all_required_fields_present: false,

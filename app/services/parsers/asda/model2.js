@@ -18,9 +18,7 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
-    const footerValues = [
-      /^TOTAL$/i,
-    ];
+    const footerValues = [/^TOTAL$/i];
     function callback(x) {
       return regex.testAllPatterns(footerValues, x);
     }

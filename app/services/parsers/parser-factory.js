@@ -26,7 +26,7 @@ async function findParser(sanitizedPackingList, fileName) {
     parser = null;
   }
 
-  if (parser === null) {
+  if (parser === null || Object.keys(parser).length === 0) {
     logger.logInfo(
       filenameForLogging,
       "findParser",

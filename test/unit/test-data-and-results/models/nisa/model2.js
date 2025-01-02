@@ -62,7 +62,7 @@ module.exports = {
       {
         G: 3,
         I: 4.5,
-      }
+      },
     ],
   },
   validHeadersNoData: {

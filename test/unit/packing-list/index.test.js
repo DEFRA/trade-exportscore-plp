@@ -138,7 +138,7 @@ describe("Packing list", () => {
       registration_approval_number: "test",
       business_checks: {
         all_required_fields_present: false,
-        failure_reasons: "Product description is missing in row 3.\n"
+        failure_reasons: "Product description is missing in row 3.\n",
       },
     };
 
@@ -152,7 +152,7 @@ describe("Packing list", () => {
       packingListJson.business_checks.all_required_fields_present,
     );
     expect(result.reasonsForFailure).toBe(
-      packingListJson.business_checks.failure_reasons
+      packingListJson.business_checks.failure_reasons,
     );
     expect(result.item[0].description).toBeNull();
     expect(result.item[0].natureOfProducts).toBe(
