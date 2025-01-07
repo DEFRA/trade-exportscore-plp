@@ -7,25 +7,49 @@ const combineParser = require("../parser-combine");
 function getUnrecognisedParser() {
   return {
     "parse": (_packingList, _filename) => {
-      return combineParser.combine(null, [], false, parserModel.NOMATCH);
+      return combineParser.combine(null, [], false,
+      parserModel.NOMATCH);
     },
     "name": "unrecognised parser"
   };
 }
 
+function getUnrecognisedParserWithFailureReason() {
+  return {
+    "parse": (_packingList, _filename) => {
+      return combineParser.combine(null, [], false, 
+      parserModel.NOMATCH);
+    },
+    "name": "unrecognised parser"
+  };
+}
+
+function remosCheck(sanitisedPackingList){
+  let isRemosPresent;
+  const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i
+  const sheets = Object.keys(sanitisedPackingList)
+  for(const sheet of sheets){
+    isRemosPresent = sanitisedPackingList[sheet].some((x) => {
+      return remosRegex.test(Object.values(x))
+    })
+  }
+  return isRemosPresent;
+}
 function getExcelParser(sanitisedPackingList, filename) {
   let parser = null;
-  Object.keys(parsersExcel).forEach((key) => {
-    if (
-      parsersExcel[key].matches(sanitisedPackingList, filename) ===
-      matcherResult.CORRECT
-    ) {
-      parser = parsersExcel[key];
-    }
-  });
-
+  if(remosCheck(sanitisedPackingList) === true){
+    Object.keys(parsersExcel).forEach((key) => {
+      if (
+        parsersExcel[key].matches(sanitisedPackingList, filename) ===
+        matcherResult.CORRECT
+      ) {
+        parser = parsersExcel[key];
+      }
+    });
+  } else {
+    parser = getUnrecognisedParserWithFailureReason()
+  }
   return parser;
-
 }
 
 async function getPdfParser(sanitisedPackingList, filename) {
@@ -46,5 +70,6 @@ async function getPdfParser(sanitisedPackingList, filename) {
 module.exports = {
   getExcelParser,
   getPdfParser,
-  getUnrecognisedParser
+  getUnrecognisedParser,
+  getUnrecognisedParserWithFailureReason
 };
