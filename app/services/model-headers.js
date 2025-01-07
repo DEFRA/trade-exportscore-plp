@@ -283,10 +283,10 @@ const headers = {
     headers: {
       description: "Description",
       commodity_code: "Commodity Code",
-      number_of_packages: "Unit Quantity",
+      number_of_packages: "Boxes",
       total_net_weight_kg: "Net Weight (Kilos)",
     },
-    modelId: "booker1-v2",
+    modelId: "booker1-v5",
   },
 };
 

@@ -22,3 +22,16 @@ describe("parseBooker", () => {
     expect(logErrorSpy).toHaveBeenCalled();
   });
 });
+
+describe("transformPackingList", () => {
+  test.each([
+    [model.validModel, "1"],
+    [model.invalidModel_MissingColumnCells, null],
+  ])("transforms boxes", (testModel, expected) => {
+    const result = parser.transformPackingList(testModel);
+
+    expect(
+      result.fields.PackingListContents.values[0].properties.Boxes.value,
+    ).toBe(expected);
+  });
+});

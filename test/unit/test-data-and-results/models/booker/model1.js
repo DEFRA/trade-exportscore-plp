@@ -14,6 +14,9 @@ module.exports = {
               "Unit Quantity": {
                 value: "1",
               },
+              Boxes: {
+                value: "1 Boxes",
+              },
               "Net Weight (Kilos)": {
                 content: 1.067,
               },
@@ -63,11 +66,32 @@ module.exports = {
               "Unit Quantity": {
                 value: null,
               },
+              Boxes: {
+                value: null,
+              },
               "Net Weight (Kilos)": {
                 content: 1.067,
               },
               "Commodity Code": {
                 value: "1806329000",
+              },
+            },
+          },
+        ],
+      },
+    },
+  },
+  invalidBoxes: {
+    fields: {
+      NIRMSNumber: {
+        content: "RMS-GB-000077-001",
+      },
+      PackingListContents: {
+        values: [
+          {
+            properties: {
+              Boxes: {
+                value: "Boxes",
               },
             },
           },
