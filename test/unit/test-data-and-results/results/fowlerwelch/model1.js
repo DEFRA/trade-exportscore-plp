@@ -5,6 +5,7 @@ module.exports = {
   validTestResult: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [
       {
@@ -30,6 +31,7 @@ module.exports = {
   validTestResultMultipleSheets: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [
       {
@@ -97,6 +99,7 @@ module.exports = {
   emptyModelResult: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [],
     registration_approval_number: null,

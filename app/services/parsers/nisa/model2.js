@@ -28,7 +28,9 @@ function parse(packingListJson) {
         headers.NISA2.regex,
       );
 
-      if (isTotalRow(packingListContentsTemp[packingListContentsTemp.length - 1])) {
+      if (
+        isTotalRow(packingListContentsTemp[packingListContentsTemp.length - 1])
+      ) {
         packingListContentsTemp = packingListContentsTemp.slice(0, -1);
       }
       packingListContents = packingListContents.concat(packingListContentsTemp);

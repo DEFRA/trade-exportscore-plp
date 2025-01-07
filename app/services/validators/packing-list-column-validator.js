@@ -63,11 +63,10 @@ function generateFailuresByIndexAndTypes(validationResult) {
     };
   } else {
     // build failure reason
-   let failureReasons = "";
-   if(validationResult.missingRemos){
-    failureReasons = "No GB Establishment RMS Number"
-   }
-   else if (validationResult.isEmpty) {
+    let failureReasons = "";
+    if (validationResult.missingRemos) {
+      failureReasons = "No GB Establishment RMS Number";
+    } else if (validationResult.isEmpty) {
       failureReasons = "No product line data found.";
     } else {
       const checks = [

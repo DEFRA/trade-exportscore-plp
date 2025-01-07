@@ -4,6 +4,7 @@ module.exports = {
   validTestResult: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [
       {
@@ -29,6 +30,7 @@ module.exports = {
   validTestResultMultiple: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [
       {
@@ -94,7 +96,7 @@ module.exports = {
     parserModel: parserModel.WARRENS1,
   },
   emptyFile: {
-    business_checks: { all_required_fields_present: true },
+    business_checks: { all_required_fields_present: true, failure_reasons: null, },
     items: [],
     parserModel: "warrens-1",
     registration_approval_number: null,

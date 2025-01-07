@@ -69,7 +69,9 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    business_checks: { all_required_fields_present: true },
+    business_checks: { all_required_fields_present: true,
+      failure_reasons: null,
+    },
     parserModel: parserModel.BOOTS1,
   },
   invalidTestResult_MissingCells: {
@@ -93,6 +95,7 @@ module.exports = {
   emptyTestResult: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [],
     registration_approval_number: "RMS-GB-000084-001",
@@ -101,6 +104,7 @@ module.exports = {
   failedTestResult: {
     business_checks: {
       all_required_fields_present: false,
+      failure_reasons: null,
     },
     items: [],
     registration_approval_number: "RMS-GB-000084-001",

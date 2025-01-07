@@ -4,7 +4,6 @@ const {
   getExcelParser,
   getPdfParser,
   getUnrecognisedParser,
-  getUnrecognisedParserWithFailureReason
 } = require("./parsers");
 const packingListValidator = require("../validators/packing-list-column-validator");
 const {
@@ -33,7 +32,7 @@ async function findParser(sanitizedPackingList, fileName) {
       "findParser",
       `Failed to parse packing list with filename: ${fileName}, no match`,
     );
-    parser = getUnrecognisedParserWithFailureReason();
+    parser = getUnrecognisedParser();
   }
 
   return parser;
@@ -42,15 +41,14 @@ async function findParser(sanitizedPackingList, fileName) {
 function generateParsedPackingList(parser, sanitisedPackingList) {
   const parsedPackingList = parser.parse(sanitisedPackingList);
   let validationResults;
-  if(parsedPackingList.parserModel === parserModel.NOMATCH){
+  if (parsedPackingList.parserModel === parserModel.NOMATCH) {
     validationResults =
-    packingListValidator.validatePackingList(parsedPackingList);
+      packingListValidator.validatePackingList(parsedPackingList);
     if (validationResults.failureReasons) {
       parsedPackingList.business_checks.failure_reasons =
         validationResults.failureReasons;
     }
-  }
-  else if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
+  } else if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
     parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
     validationResults =
       packingListValidator.validatePackingList(parsedPackingList);
