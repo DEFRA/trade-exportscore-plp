@@ -41,7 +41,7 @@ function getExcelParser(sanitisedPackingList, filename) {
 }
 
 async function getPdfParser(sanitisedPackingList, filename) {
-  let parser = null;
+  const parser = {};
   for (const key in parsersPdf) {
     if (parsersPdf.hasOwnProperty(key)) {
       const result = await parsersPdf[key].matches(
@@ -50,11 +50,13 @@ async function getPdfParser(sanitisedPackingList, filename) {
       );
 
       if (result.isMatched === matcherResult.CORRECT) {
-        parser = parsersPdf[key];
+        parser.parser = parsersPdf[key];
+        parser.result = result;
         break;
       }
     }
   }
+
   return parser;
 }
 

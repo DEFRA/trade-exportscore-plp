@@ -18,7 +18,9 @@ function parse(packingListDocument) {
       establishmentNumber = packingListDocument.fields.NIRMSNumber.content;
     }
 
-    const packingListContents = mapPdfParser(packingListDocument, "BOOKER1");
+    const transformedContents = transformPackingList(packingListDocument);
+
+    const packingListContents = mapPdfParser(transformedContents, "BOOKER1");
 
     return combineParser.combine(
       establishmentNumber,
@@ -32,6 +34,20 @@ function parse(packingListDocument) {
   }
 }
 
+function transformPackingList(packingListDocument) {
+  if (packingListDocument.fields.PackingListContents.values) {
+    for (const value of packingListDocument.fields.PackingListContents.values) {
+      if (value.properties.Boxes.value) {
+        value.properties.Boxes.value =
+          value.properties?.Boxes.value?.match(/\d*/)[0];
+      }
+    }
+  }
+
+  return packingListDocument;
+}
+
 module.exports = {
   parse,
+  transformPackingList,
 };

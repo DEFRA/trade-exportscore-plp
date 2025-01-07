@@ -1,6 +1,16 @@
 const parserModel = require("../../../app/services/parser-model");
 const parserService = require("../../../app/services/parser-service");
 
+jest.mock("../../../app/services/document-intelligence");
+const {
+  createDocumentIntelligenceClient,
+  runAnalysis,
+} = require("../../../app/services/document-intelligence");
+
+createDocumentIntelligenceClient.mockImplementation(() => {
+  return jest.fn();
+});
+
 describe("findParser", () => {
   const filename = "packinglist.xls";
   const packingListJson = {
@@ -178,6 +188,25 @@ describe("findParser", () => {
     );
 
     expect(result.business_checks.all_required_fields_present).toBeFalsy();
+  });
+
+  test("not matched pdf file", async () => {
+    const invalidTestResult_NoMatch = {
+      business_checks: {
+        all_required_fields_present: false,
+      },
+      items: [],
+      registration_approval_number: null,
+      parserModel: parserModel.NOMATCH,
+    };
+    const pdfFilename = "test.pdf";
+    runAnalysis.mockImplementation(() => {
+      return {};
+    });
+
+    const result = await parserService.findParser({}, pdfFilename);
+
+    expect(result).toEqual(invalidTestResult_NoMatch);
   });
 });
 

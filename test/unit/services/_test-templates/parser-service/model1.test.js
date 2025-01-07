@@ -25,7 +25,7 @@ describe(`parser-service-parses-${traderAndModelNumber}`, () => {
   });
 
   test("returns 'No Match' for incorrect file extension", async () => {
-    const filename = "packinglist.pdf";
+    const filename = "packinglist.wrong";
 
     const result = await parserService.findParser(model.validModel, filename);
 
