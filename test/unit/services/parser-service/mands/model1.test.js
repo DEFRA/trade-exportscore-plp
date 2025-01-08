@@ -55,12 +55,12 @@ describe("findParser", () => {
   test("wrong file extension", async () => {
     const filename = "packinglist.xls";
     const invalidTestResult_NoMatch = {
-      // business_checks: {
-      //   all_required_fields_present: false,
-      // },
-      // items: [],
-      // registration_approval_number: null,
-      // parserModel: parser_model.NOMATCH,
+      business_checks: {
+        all_required_fields_present: false,
+      },
+      items: [],
+      registration_approval_number: null,
+      parserModel: parser_model.NOMATCH,
     };
     const result = await parserService.findParser(model.validModel, filename);
 
