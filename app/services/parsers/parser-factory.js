@@ -62,7 +62,7 @@ function generateParsedPackingList(parser, sanitisedPackingList) {
 
     parsedPackingList.items = removeBadData(parsedPackingList.items);
   }
-
+  console.log(parsedPackingList);
   return parsedPackingList;
 }
 

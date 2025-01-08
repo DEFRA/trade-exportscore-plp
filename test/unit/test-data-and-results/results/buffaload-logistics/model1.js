@@ -23,7 +23,8 @@ module.exports = {
         total_net_weight_kg: 3.558,
       },
     ],
-    business_checks: { all_required_fields_present: true,
+    business_checks: {
+      all_required_fields_present: true,
       failure_reasons: null,
     },
     parserModel: parserModel.BUFFALOAD1,
@@ -49,7 +50,10 @@ module.exports = {
         total_net_weight_kg: 3.08,
       },
     ],
-    business_checks: { all_required_fields_present: true, failure_reasons: null, },
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
     parserModel: parserModel.BUFFALOAD1,
   },
   emptyModelResult: {
@@ -64,7 +68,10 @@ module.exports = {
         total_net_weight_kg: null,
       },
     ],
-    business_checks: { all_required_fields_present: true, failure_reasons: null, },
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
     parserModel: parserModel.BUFFALOAD1,
   },
   invalidTestResult_MissingCells: {

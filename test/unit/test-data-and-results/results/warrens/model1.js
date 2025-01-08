@@ -96,7 +96,10 @@ module.exports = {
     parserModel: parserModel.WARRENS1,
   },
   emptyFile: {
-    business_checks: { all_required_fields_present: true, failure_reasons: null, },
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
     items: [],
     parserModel: "warrens-1",
     registration_approval_number: null,

@@ -69,7 +69,8 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    business_checks: { all_required_fields_present: true,
+    business_checks: {
+      all_required_fields_present: true,
       failure_reasons: null,
     },
     parserModel: parserModel.BOOTS1,
