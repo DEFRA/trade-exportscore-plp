@@ -48,7 +48,7 @@ function generateParsedPackingList(parser, sanitisedPackingList) {
       parsedPackingList.business_checks.failure_reasons =
         validationResults.failureReasons;
     }
-  } else if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
+  } else {
     parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
     validationResults =
       packingListValidator.validatePackingList(parsedPackingList);
@@ -59,10 +59,8 @@ function generateParsedPackingList(parser, sanitisedPackingList) {
       parsedPackingList.business_checks.failure_reasons =
         validationResults.failureReasons;
     }
-
     parsedPackingList.items = removeBadData(parsedPackingList.items);
   }
-  console.log(parsedPackingList);
   return parsedPackingList;
 }
 
