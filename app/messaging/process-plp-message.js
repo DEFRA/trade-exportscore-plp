@@ -60,7 +60,9 @@ async function processPackingList(packingList, message) {
         err,
       );
     }
+  }
 
+  if (packingList.parserModel !== parserModel.NOMATCH || packingList.business_checks.failure_reasons){
     try {
       await sendParsed(
         message.body.application_id,
