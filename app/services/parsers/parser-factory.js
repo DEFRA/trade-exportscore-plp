@@ -40,18 +40,18 @@ async function findParser(sanitizedPackingList, fileName) {
 
 function generateParsedPackingList(parser, sanitisedPackingList) {
   const parsedPackingList = parser.parse(sanitisedPackingList);
-  let validationResults;
 
   parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
-  validationResults =
+  const validationResults =
     packingListValidator.validatePackingList(parsedPackingList);
-    parsedPackingList.business_checks.all_required_fields_present =
+  parsedPackingList.business_checks.all_required_fields_present =
     validationResults.hasAllFields;
 
-    validationResults.failureReasons ? parsedPackingList.business_checks.failure_reasons =
-    validationResults.failureReasons : parsedPackingList.business_checks.failure_reasons = null
-    parsedPackingList.items = removeBadData(parsedPackingList.items);
-  
+  parsedPackingList.business_checks.failure_reasons =
+    validationResults.failureReasons ? validationResults.failureReasons : null;
+
+  parsedPackingList.items = removeBadData(parsedPackingList.items);
+
   return parsedPackingList;
 }
 
