@@ -12,17 +12,31 @@ function getUnrecognisedParser() {
   };
 }
 
+function remosCheck(sanitisedPackingList) {
+  let isRemosPresent;
+  const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
+  const sheets = Object.keys(sanitisedPackingList);
+  for (const sheet of sheets) {
+    isRemosPresent = sanitisedPackingList[sheet].some((x) => {
+      return remosRegex.test(Object.values(x));
+    });
+  }
+  return isRemosPresent;
+}
 function getExcelParser(sanitisedPackingList, filename) {
   let parser = null;
-  Object.keys(parsersExcel).forEach((key) => {
-    if (
-      parsersExcel[key].matches(sanitisedPackingList, filename) ===
-      matcherResult.CORRECT
-    ) {
-      parser = parsersExcel[key];
-    }
-  });
-
+  if (remosCheck(sanitisedPackingList) === true) {
+    Object.keys(parsersExcel).forEach((key) => {
+      if (
+        parsersExcel[key].matches(sanitisedPackingList, filename) ===
+        matcherResult.CORRECT
+      ) {
+        parser = parsersExcel[key];
+      }
+    });
+  } else {
+    parser = getUnrecognisedParser();
+  }
   return parser;
 }
 

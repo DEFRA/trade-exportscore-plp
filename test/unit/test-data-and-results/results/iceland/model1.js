@@ -4,6 +4,7 @@ module.exports = {
   validTestResult: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [
       {
@@ -21,6 +22,7 @@ module.exports = {
   emptyTestResult: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [],
     registration_approval_number: "RMS-GB-000040",

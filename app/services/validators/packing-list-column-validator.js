@@ -25,6 +25,7 @@ function validatePackingListByIndexAndType(packingList) {
 
   const hasRemos = packingList.registration_approval_number !== null;
   const isEmpty = packingList.items.length === 0;
+  const missingRemos = packingList.registration_approval_number === null;
 
   return {
     missingIdentifier,
@@ -35,6 +36,7 @@ function validatePackingListByIndexAndType(packingList) {
     invalidNetWeight,
     hasRemos,
     isEmpty,
+    missingRemos,
     hasAllFields:
       missingIdentifier.length === 0 &&
       missingDescription.length === 0 &&
@@ -43,7 +45,8 @@ function validatePackingListByIndexAndType(packingList) {
       missingNetWeight.length === 0 &&
       invalidNetWeight.length === 0 &&
       hasRemos &&
-      !isEmpty,
+      !isEmpty &&
+      !missingRemos,
   };
 }
 
@@ -61,7 +64,9 @@ function generateFailuresByIndexAndTypes(validationResult) {
   } else {
     // build failure reason
     let failureReasons = "";
-    if (validationResult.isEmpty) {
+    if (validationResult.missingRemos) {
+      failureReasons = "No GB Establishment RMS Number";
+    } else if (validationResult.isEmpty) {
       failureReasons = "No product line data found.";
     } else {
       const checks = [

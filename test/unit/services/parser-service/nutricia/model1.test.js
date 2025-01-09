@@ -26,6 +26,7 @@ describe("matchesNutriciaModel1", () => {
     const invalidTestResult_NoMatch = {
       business_checks: {
         all_required_fields_present: false,
+        failure_reasons: "No GB Establishment RMS Number",
       },
       items: [],
       registration_approval_number: null,
