@@ -40,17 +40,21 @@ async function findParser(sanitizedPackingList, fileName) {
 
 function generateParsedPackingList(parser, sanitisedPackingList) {
   const parsedPackingList = parser.parse(sanitisedPackingList);
+  
+  if (parsedPackingList.parserModel !== parserModel.NOMATCH) {
+    parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
+    const validationResults =
+      packingListValidator.validatePackingList(parsedPackingList);
+    parsedPackingList.business_checks.all_required_fields_present =
+      validationResults.hasAllFields;
 
-  parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
-  const validationResults =
-    packingListValidator.validatePackingList(parsedPackingList);
-  parsedPackingList.business_checks.all_required_fields_present =
-    validationResults.hasAllFields;
+    parsedPackingList.business_checks.failure_reasons =
+      validationResults.failureReasons
+        ? validationResults.failureReasons
+        : null;
 
-  parsedPackingList.business_checks.failure_reasons =
-    validationResults.failureReasons ? validationResults.failureReasons : null;
-
-  parsedPackingList.items = removeBadData(parsedPackingList.items);
+    parsedPackingList.items = removeBadData(parsedPackingList.items);
+  }
 
   return parsedPackingList;
 }

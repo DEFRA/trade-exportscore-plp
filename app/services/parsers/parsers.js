@@ -12,6 +12,15 @@ function getUnrecognisedParser() {
   };
 }
 
+function getMissingRemosParser() {
+  return {
+    parse: (_packingList, _filename) => {
+      return combineParser.combine(null, [], false, parserModel.NOMATCH, "No GB Establishment RMS Number");
+    },
+    name: "missing remos parser",
+  };
+}
+
 function remosCheck(sanitisedPackingList) {
   let isRemosPresent;
   const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
@@ -23,6 +32,7 @@ function remosCheck(sanitisedPackingList) {
   }
   return isRemosPresent;
 }
+
 function getExcelParser(sanitisedPackingList, filename) {
   let parser = null;
   if (remosCheck(sanitisedPackingList) === true) {
@@ -35,7 +45,7 @@ function getExcelParser(sanitisedPackingList, filename) {
       }
     });
   } else {
-    parser = getUnrecognisedParser();
+    parser = getMissingRemosParser();
   }
   return parser;
 }
