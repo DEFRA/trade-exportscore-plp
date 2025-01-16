@@ -1,3 +1,5 @@
+const noMatchMatcher = require("./matchers/no-match/model1");
+const noMatchParser = require("./parsers/no-match/model1");
 const asdaMatcher = require("./matchers/asda/model1");
 const asdaParser = require("./parsers/asda/model1");
 const asdaMatcher2 = require("./matchers/asda/model2");
@@ -183,4 +185,19 @@ const parsersPdf = {
   },
 };
 
-module.exports = { parsersExcel, parsersPdf };
+const noMatchParsers = {
+  UNRECOGNISED: {
+    parse: (_packingList, _filename) => 
+      noMatchParser.unrecognisedParse(_packingList, _filename),
+    name: "unrecognised parser",
+  },
+  NOREMOS: {
+    matches:(packingList, _filename) => 
+      noMatchMatcher.noRemosMatch(packingList, _filename),
+    parse: (_packingList, _filename) => 
+      noMatchParser.noRemosParse(_packingList, _filename),
+    name: "missing remos parser",
+  },
+}
+
+module.exports = { parsersExcel, parsersPdf , noMatchParsers};

@@ -83,7 +83,7 @@ describe("findParser", () => {
 
     const result = await parserService.findParser(packingListJson, filename);
 
-    expect(result.parserModel).toBe(parserModel.NOMATCH);
+    expect(result.parserModel).toBe(parserModel.NOREMOS);
   });
 
   test("all_required_fields_present true", async () => {

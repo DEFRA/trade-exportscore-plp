@@ -1,5 +1,6 @@
 const ParserModel = {
   NOMATCH: "no-match",
+  NOREMOS: "no-remos",
   TJMORRIS1: "tjmorris-1",
   ASDA1: "asda-1",
   ASDA2: "asda-2",

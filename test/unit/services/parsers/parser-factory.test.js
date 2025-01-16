@@ -1,8 +1,8 @@
 const parserModel = require("../../../../app/services/parser-model");
 const parserFactory = require("../../../../app/services/parsers/parser-factory");
 const {
-  getUnrecognisedParser,
-} = require("../../../../app/services/parsers/parsers");
+  noMatchParsers,
+} = require("../../../../app/services/model-parsers");
 const { parsersExcel } = require("../../../../app/services/model-parsers");
 const tjmorrisModel = require("../../test-data-and-results/models/tjmorris/model1");
 
@@ -80,7 +80,7 @@ describe("parsePackingList - e2e", () => {
     const packingListJson = {};
 
     const result = await parserFactory.generateParsedPackingList(
-      getUnrecognisedParser(),
+      noMatchParsers.UNRECOGNISED,
       packingListJson,
     );
 
