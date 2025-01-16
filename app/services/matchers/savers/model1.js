@@ -8,7 +8,6 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matches(packingList, filename) {
   try {
-    let result;
     const sheets = Object.keys(packingList);
     if (sheets?.length === 0) {
       return matcherResult.EMPTY_FILE;
@@ -26,7 +25,7 @@ function matches(packingList, filename) {
     }
 
     // check for header values
-    result = matchesHeader(
+    const result = matchesHeader(
       Object.values(headers.SAVERS1.regex),
       packingList[fristSheet],
     );

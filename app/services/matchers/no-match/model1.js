@@ -5,7 +5,9 @@ function noRemosMatch(sanitisedPackingList, _filename) {
         const isRemosPresent = sanitisedPackingList[sheet].some((x) => {
             return remosRegex.test(Object.values(x));
         });
-        if (isRemosPresent) return true;
+        if (isRemosPresent) {
+            return true;
+        }
     }
     return false;
 }
