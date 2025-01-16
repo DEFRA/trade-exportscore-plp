@@ -17,7 +17,7 @@ function remosCheck(sanitisedPackingList) {
   const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
   const sheets = Object.keys(sanitisedPackingList);
   for (const sheet of sheets) {
-    isRemosPresent = sanitisedPackingList[sheet].some((x) => {
+    isRemosPresent = isRemosPresent || sanitisedPackingList[sheet].some((x) => {//is this correct?
       return remosRegex.test(Object.values(x));
     });
   }

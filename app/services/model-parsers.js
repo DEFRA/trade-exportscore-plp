@@ -30,6 +30,8 @@ const nutriciaMatcher = require("./matchers/nutricia/model1");
 const nutriciaParser = require("./parsers/nutricia/model1");
 const sainsburysMatcher = require("./matchers/sainsburys/model1");
 const sainsburysParser = require("./parsers/sainsburys/model1");
+const saversMatcher = require("./matchers/savers/model1");
+const saversParser = require("./parsers/savers/model1");
 const tescosMatcher = require("./matchers/tescos/model1");
 const tescosParser = require("./parsers/tescos/model1");
 const tescosMatcher2 = require("./matchers/tescos/model2");
@@ -130,6 +132,12 @@ const parsersExcel = {
       sainsburysMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
       sainsburysParser.parse(packingList, filename),
+  },
+  SAVERS1: {
+    matches: (packingList, filename) =>
+      saversMatcher.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      saversParser.parse(packingList, filename),
   },
   TESCO1: {
     matches: (packingList, filename) =>
