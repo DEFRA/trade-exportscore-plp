@@ -1,3 +1,5 @@
+const noMatchMatcher = require("./matchers/no-match/model1");
+const noMatchParser = require("./parsers/no-match/model1");
 const asdaMatcher = require("./matchers/asda/model1");
 const asdaParser = require("./parsers/asda/model1");
 const asdaMatcher2 = require("./matchers/asda/model2");
@@ -30,6 +32,8 @@ const nutriciaMatcher = require("./matchers/nutricia/model1");
 const nutriciaParser = require("./parsers/nutricia/model1");
 const sainsburysMatcher = require("./matchers/sainsburys/model1");
 const sainsburysParser = require("./parsers/sainsburys/model1");
+const saversMatcher = require("./matchers/savers/model1");
+const saversParser = require("./parsers/savers/model1");
 const tescosMatcher = require("./matchers/tescos/model1");
 const tescosParser = require("./parsers/tescos/model1");
 const tescosMatcher2 = require("./matchers/tescos/model2");
@@ -131,6 +135,12 @@ const parsersExcel = {
     parse: (packingList, filename) =>
       sainsburysParser.parse(packingList, filename),
   },
+  SAVERS1: {
+    matches: (packingList, filename) =>
+      saversMatcher.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      saversParser.parse(packingList, filename),
+  },
   TESCO1: {
     matches: (packingList, filename) =>
       tescosMatcher.matches(packingList, filename),
@@ -175,4 +185,19 @@ const parsersPdf = {
   },
 };
 
-module.exports = { parsersExcel, parsersPdf };
+const noMatchParsers = {
+  UNRECOGNISED: {
+    parse: (_packingList, _filename) => 
+      noMatchParser.unrecognisedParse(_packingList, _filename),
+    name: "unrecognised parser",
+  },
+  NOREMOS: {
+    matches:(packingList, _filename) => 
+      noMatchMatcher.noRemosMatch(packingList, _filename),
+    parse: (_packingList, _filename) => 
+      noMatchParser.noRemosParse(_packingList, _filename),
+    name: "missing remos parser",
+  },
+}
+
+module.exports = { parsersExcel, parsersPdf , noMatchParsers};

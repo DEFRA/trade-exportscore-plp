@@ -217,6 +217,17 @@ const headers = {
       type_of_treatment: /Packaging Type/i,
     },
   },
+  SAVERS1: {
+    establishmentNumber: {
+      regex: /RMS-GB-000247-(\d{3})?/i,
+    },
+    regex: {
+      description: /Item Description/i,
+      commodity_code: /EU Commodity Code/i,
+      number_of_packages: /CASE Quantity/i,
+      total_net_weight_kg: /Case Weight \(KGs\)/i,
+    },
+  },
   TESCO1: {
     establishmentNumber: {
       regex: /RMS-GB-000022-(\d{3})?/i,

@@ -6,6 +6,8 @@ const {
   wrongTypeForPackages,
   wrongTypeNetWeight,
 } = require("./packing-list-validator-utilities");
+const parserModel = require("../parser-model");
+
 
 function validatePackingList(packingList) {
   const validationResult = validatePackingListByIndexAndType(packingList);
@@ -25,7 +27,8 @@ function validatePackingListByIndexAndType(packingList) {
 
   const hasRemos = packingList.registration_approval_number !== null;
   const isEmpty = packingList.items.length === 0;
-  const missingRemos = packingList.registration_approval_number === null;
+  const missingRemos = packingList.registration_approval_number === null  || packingList.parserModel === parserModel.NOREMOS;
+  const noMatch = packingList.parserModel === parserModel.NOMATCH;
 
   return {
     missingIdentifier,
@@ -37,6 +40,7 @@ function validatePackingListByIndexAndType(packingList) {
     hasRemos,
     isEmpty,
     missingRemos,
+    noMatch,
     hasAllFields:
       missingIdentifier.length === 0 &&
       missingDescription.length === 0 &&
@@ -64,7 +68,9 @@ function generateFailuresByIndexAndTypes(validationResult) {
   } else {
     // build failure reason
     let failureReasons = "";
-    if (validationResult.missingRemos) {
+    if (validationResult.noMatch) {
+      failureReasons = null;//"unrecognised parser";
+    } else if (validationResult.missingRemos) {
       failureReasons = "No GB Establishment RMS Number";
     } else if (validationResult.isEmpty) {
       failureReasons = "No product line data found.";
