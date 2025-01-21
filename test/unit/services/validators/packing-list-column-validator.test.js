@@ -427,7 +427,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       packingListValidator.generateFailuresByIndexAndTypes(validationResult);
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toContain("Description is missing");
+    expect(result.failureReasons).toContain("Product description is missing");
   });
 
   test("missing packages", () => {
@@ -526,7 +526,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       "Total net weight is invalid in row 1.\n",
     );
     expect(result.failureReasons).toContain(
-      "Description is missing in rows 1 and 2.\n",
+      "Product description is missing in rows 1 and 2.\n",
     );
   });
 });
