@@ -38,7 +38,7 @@ module.exports = {
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Description is missing in row 0.\n",
+      failure_reasons: "Product description is missing in row 1.\n",
     },
     items: [
       {

@@ -57,7 +57,7 @@ function validatePackingListByIndexAndType(packingList) {
 
 function findItems(items, fn) {
   return items
-    .map((val, index) => (fn(val) ? index : null))
+    .map((val, index) => (fn(val) ? index + 1: null))
     .filter((val) => val !== null);
 }
 
@@ -83,7 +83,7 @@ function generateFailuresByIndexAndTypes(validationResult) {
         },
         {
           collection: validationResult.missingDescription,
-          description: "Description is missing",
+          description: "Product description is missing",
         },
         {
           collection: validationResult.missingPackages,
