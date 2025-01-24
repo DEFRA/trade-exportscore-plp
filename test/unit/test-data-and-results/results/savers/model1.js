@@ -18,7 +18,7 @@ module.exports = {
         "type_of_treatment": null,
         "commodity_code": 3004900000,
         "number_of_packages": 2,
-        "total_net_weight_kg": 3.2
+        "total_net_weight_kg": 6.4
       },
       {
         "description": "DRI-PAK SODA CRYSTALS 1KG.",
@@ -26,7 +26,7 @@ module.exports = {
         "type_of_treatment": null,
         "commodity_code": 3306900000,
         "number_of_packages": 2,
-        "total_net_weight_kg": 6.08
+        "total_net_weight_kg": 12.16
       }
     ],
     business_checks: {
