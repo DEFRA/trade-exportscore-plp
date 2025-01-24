@@ -263,7 +263,7 @@ const headers = {
   },
   ICELAND1: {
     establishmentNumber: {
-      regex: /RMS-GB-000040-/i,
+      regex: /RMS-GB-000040/i,
       value: "RMS-GB-000040",
     },
     headers: {

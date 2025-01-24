@@ -48,6 +48,7 @@ const mandsMatcher = require("./matchers/mands/model1");
 const mandsParser = require("./parsers/mands/model1");
 const bookerMatcher = require("./matchers/booker/model1");
 const bookerParser = require("./parsers/booker/model1");
+
 const parsersExcel = {
   ASDA1: {
     matches: (packingList, filename) =>
@@ -167,18 +168,18 @@ const parsersExcel = {
 };
 
 const parsersPdf = {
-  ICELAND: {
+  ICELAND1: {
     matches: (packingList, filename) =>
       icelandMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
       icelandParser.parse(packingList, filename),
   },
-  MANDS: {
+  MANDS1: {
     matches: (packingList, filename) =>
       mandsMatcher.matches(packingList, filename),
     parse: (packingList, filename) => mandsParser.parse(packingList, filename),
   },
-  BOOKER: {
+  BOOKER1: {
     matches: (packingList, filename) =>
       bookerMatcher.matches(packingList, filename),
     parse: (packingList, filename) => bookerParser.parse(packingList, filename),
@@ -198,6 +199,13 @@ const noMatchParsers = {
       noMatchParser.noRemosParse(_packingList, _filename),
     name: "missing remos parser",
   },
+  NOREMOSPDF: {
+    matches:(packingList) =>
+      noMatchMatcher.noRemosMatchPdf(packingList),
+    parse: () =>
+      noMatchParser.noRemosParse(),
+    name: "missing remos parser",
+  }
 }
 
 module.exports = { parsersExcel, parsersPdf , noMatchParsers};

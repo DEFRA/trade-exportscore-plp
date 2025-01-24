@@ -94,9 +94,7 @@ async function runAnalysis(client, modelId, fileBuffer) {
   try {
     const poller = await client.beginAnalyzeDocument(modelId, fileBuffer);
 
-    const {
-      documents: [document],
-    } = await poller.pollUntilDone();
+    const {documents: [document]} = await poller.pollUntilDone();
 
     if (!document) {
       throw new Error("Expected at least one document in the result.");
@@ -113,9 +111,27 @@ async function runAnalysis(client, modelId, fileBuffer) {
   }
 }
 
+async function runPrebuiltAnalysis(client, modelId, fileBuffer) {
+  try {
+    const poller = await client.beginAnalyzeDocument(modelId, fileBuffer);
+
+    const result = await poller.pollUntilDone();
+
+    return result;
+  } catch (err) {
+    logger.logError(
+      "app/services/document-intelligence.js",
+      "runPrebuiltAnalysis()",
+      err,
+    );
+    return {};
+  }
+}
+
 module.exports = {
   createDocumentIntelligenceAdminClient,
   getLatestModelByName,
   createDocumentIntelligenceClient,
   runAnalysis,
+  runPrebuiltAnalysis,
 };
