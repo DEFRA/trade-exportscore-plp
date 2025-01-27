@@ -91,6 +91,16 @@ describe("findParser", () => {
     expect(result.parserModel).toBe(parserModel.NOREMOS);
   });
 
+  test("runPrebuiltAnalysis throws error", async () => {
+    runPrebuiltAnalysis.mockImplementation(() => {
+      throw new Error("run analysis error");
+    });
+
+    const result = await parserService.findParser(packingListJson, "test.pdf");
+
+    expect(result.parserModel).toBe(parserModel.NOREMOS);
+  });
+
   test("No remos number pdf", async () => {
     const packingListJson = {};
     runPrebuiltAnalysis.mockImplementation(() => {
