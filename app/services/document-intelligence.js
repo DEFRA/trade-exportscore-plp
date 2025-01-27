@@ -14,6 +14,8 @@ function createDocumentIntelligenceAdminClient() {
   );
 }
 
+const file = "app/services/document-intelligence.js";
+
 async function listModels(client) {
   try {
     const models = [];
@@ -22,11 +24,7 @@ async function listModels(client) {
     }
     return models;
   } catch (err) {
-    logger.logError(
-      "app/services/document-intelligence.js",
-      "listModels()",
-      err,
-    );
+    logger.logError(file, "listModels()", err);
     return [];
   }
 }
@@ -104,11 +102,20 @@ async function runAnalysis(client, modelId, fileBuffer) {
 
     return document;
   } catch (err) {
-    logger.logError(
-      "app/services/document-intelligence.js",
-      "runAnalysis()",
-      err,
-    );
+    logger.logError(file, "runAnalysis()", err);
+    return {};
+  }
+}
+
+async function runPrebuiltAnalysis(client, modelId, fileBuffer) {
+  try {
+    const poller = await client.beginAnalyzeDocument(modelId, fileBuffer);
+
+    const result = await poller.pollUntilDone();
+
+    return result;
+  } catch (err) {
+    logger.logError(file, "runPrebuiltAnalysis()", err);
     return {};
   }
 }
@@ -118,4 +125,5 @@ module.exports = {
   getLatestModelByName,
   createDocumentIntelligenceClient,
   runAnalysis,
+  runPrebuiltAnalysis,
 };

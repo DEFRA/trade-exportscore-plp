@@ -15,10 +15,15 @@ jest.mock("../../../../../app/config", () => {
 const {
   createDocumentIntelligenceClient,
   runAnalysis,
+  runPrebuiltAnalysis,
 } = require("../../../../../app/services/document-intelligence");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
+});
+
+runPrebuiltAnalysis.mockImplementation(() => {
+  return { content: "RMS-GB-000040" };
 });
 
 describe("findParser", () => {
@@ -50,7 +55,7 @@ describe("findParser", () => {
     const invalidTestResult_NoMatch = {
       business_checks: {
         all_required_fields_present: false,
-        failure_reasons: null
+        failure_reasons: null,
       },
       items: [],
       registration_approval_number: null,

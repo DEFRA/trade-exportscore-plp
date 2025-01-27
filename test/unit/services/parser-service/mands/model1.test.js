@@ -15,34 +15,31 @@ jest.mock("../../../../../app/config", () => {
 const {
   createDocumentIntelligenceClient,
   runAnalysis,
+  runPrebuiltAnalysis,
 } = require("../../../../../app/services/document-intelligence");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
 });
 
+runPrebuiltAnalysis.mockImplementation(() => {
+  return { content: "RMS-GB-000008-001" };
+});
+
 describe("findParser", () => {
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
-    runAnalysis
-      .mockImplementationOnce(() => {
-        return model.validModel;
-      })
-      .mockImplementationOnce(() => {
-        return model.validModel;
-      });
+    runAnalysis.mockImplementationOnce(() => {
+      return model.validModel;
+    });
 
     const result = await parserService.findParser(model.validModel, filename);
     expect(result).toEqual(test_results.validTestResult);
   });
 
   test("matches valid MandS Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
-    runAnalysis
-      .mockImplementationOnce(() => {
-        return model.invalidModel_MissingColumnCells;
-      })
-      .mockImplementationOnce(() => {
-        return model.invalidModel_MissingColumnCells;
-      });
+    runAnalysis.mockImplementationOnce(() => {
+      return model.invalidModel_MissingColumnCells;
+    });
 
     const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,

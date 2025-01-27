@@ -1,8 +1,6 @@
 const parserModel = require("../../../../app/services/parser-model");
 const parserFactory = require("../../../../app/services/parsers/parser-factory");
-const {
-  noMatchParsers,
-} = require("../../../../app/services/model-parsers");
+const { noMatchParsers } = require("../../../../app/services/model-parsers");
 const { parsersExcel } = require("../../../../app/services/model-parsers");
 const tjmorrisModel = require("../../test-data-and-results/models/tjmorris/model1");
 
@@ -85,6 +83,17 @@ describe("parsePackingList - e2e", () => {
     );
 
     expect(result.parserModel).toBe(parserModel.NOMATCH);
+  });
+
+  test("No remos pdf file", async () => {
+    const packingListJson = {};
+
+    const result = await parserFactory.generateParsedPackingList(
+      noMatchParsers.NOREMOSPDF,
+      packingListJson,
+    );
+
+    expect(result.parserModel).toBe(parserModel.NOREMOS);
   });
 
   test("all_required_fields_present true", async () => {

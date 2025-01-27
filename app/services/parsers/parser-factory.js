@@ -1,9 +1,6 @@
 const fileExtension = require("../../utilities/file-extension");
 const config = require("../../config");
-const {
-  getExcelParser,
-  getPdfParser,
-} = require("./parsers");
+const { getExcelParser, getPdfParser } = require("./parsers");
 const packingListValidator = require("../validators/packing-list-column-validator");
 const {
   removeEmptyItems,
@@ -39,7 +36,6 @@ async function findParser(sanitizedPackingList, fileName) {
 
 function generateParsedPackingList(parser, sanitisedPackingList) {
   const parsedPackingList = parser.parse(sanitisedPackingList);
-
   parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
   const validationResults =
     packingListValidator.validatePackingList(parsedPackingList);
@@ -47,9 +43,7 @@ function generateParsedPackingList(parser, sanitisedPackingList) {
     validationResults.hasAllFields;
 
   parsedPackingList.business_checks.failure_reasons =
-    validationResults.failureReasons
-      ? validationResults.failureReasons
-      : null;
+    validationResults.failureReasons ? validationResults.failureReasons : null;
 
   parsedPackingList.items = removeBadData(parsedPackingList.items);
 
