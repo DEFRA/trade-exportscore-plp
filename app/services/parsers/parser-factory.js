@@ -46,7 +46,7 @@ function generateParsedPackingList(parser, sanitisedPackingList) {
     validationResults.failureReasons ? validationResults.failureReasons : null;
 
   parsedPackingList.items = removeBadData(parsedPackingList.items);
-  console.log(parsedPackingList);
+
   return parsedPackingList;
 }
 
