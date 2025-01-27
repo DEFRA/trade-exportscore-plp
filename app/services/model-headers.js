@@ -225,7 +225,7 @@ const headers = {
       description: /Item Description/i,
       commodity_code: /EU Commodity Code/i,
       number_of_packages: /CASE Quantity/i,
-      total_net_weight_kg: /Case Weight \(KGs\)/i,
+      total_net_weight_kg: /Net Weight \(KGs\)/i,
     },
   },
   TESCO1: {
