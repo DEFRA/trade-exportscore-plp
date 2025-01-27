@@ -85,6 +85,17 @@ describe("parsePackingList - e2e", () => {
     expect(result.parserModel).toBe(parserModel.NOMATCH);
   });
 
+  test("No remos pdf file", async () => {
+    const packingListJson = {};
+
+    const result = await parserFactory.generateParsedPackingList(
+      noMatchParsers.NOREMOSPDF,
+      packingListJson,
+    );
+
+    expect(result.parserModel).toBe(parserModel.NOREMOS);
+  });
+
   test("all_required_fields_present true", async () => {
     const result = await parserFactory.generateParsedPackingList(
       parsersExcel.TJMORRIS1,
