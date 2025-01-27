@@ -57,7 +57,7 @@ function validatePackingListByIndexAndType(packingList) {
 
 function findItems(items, fn) {
   return items
-    .map((val, index) => (fn(val) ? index + 1: null))
+    .map((val, index) => (fn(val) ? index + 1 : null))
     .filter((val) => val !== null);
 }
 

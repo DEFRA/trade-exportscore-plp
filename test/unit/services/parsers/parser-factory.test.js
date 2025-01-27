@@ -1,8 +1,6 @@
 const parserModel = require("../../../../app/services/parser-model");
 const parserFactory = require("../../../../app/services/parsers/parser-factory");
-const {
-  noMatchParsers,
-} = require("../../../../app/services/model-parsers");
+const { noMatchParsers } = require("../../../../app/services/model-parsers");
 const { parsersExcel } = require("../../../../app/services/model-parsers");
 const tjmorrisModel = require("../../test-data-and-results/models/tjmorris/model1");
 

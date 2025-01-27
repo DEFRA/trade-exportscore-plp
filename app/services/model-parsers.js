@@ -139,8 +139,7 @@ const parsersExcel = {
   SAVERS1: {
     matches: (packingList, filename) =>
       saversMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      saversParser.parse(packingList, filename),
+    parse: (packingList, filename) => saversParser.parse(packingList, filename),
   },
   TESCO1: {
     matches: (packingList, filename) =>
@@ -188,24 +187,22 @@ const parsersPdf = {
 
 const noMatchParsers = {
   UNRECOGNISED: {
-    parse: (_packingList, _filename) => 
+    parse: (_packingList, _filename) =>
       noMatchParser.unrecognisedParse(_packingList, _filename),
     name: "unrecognised parser",
   },
   NOREMOS: {
-    matches:(packingList, _filename) => 
+    matches: (packingList, _filename) =>
       noMatchMatcher.noRemosMatch(packingList, _filename),
-    parse: (_packingList, _filename) => 
+    parse: (_packingList, _filename) =>
       noMatchParser.noRemosParse(_packingList, _filename),
     name: "missing remos parser",
   },
   NOREMOSPDF: {
-    matches:(packingList) =>
-      noMatchMatcher.noRemosMatchPdf(packingList),
-    parse: () =>
-      noMatchParser.noRemosParse(),
+    matches: (packingList) => noMatchMatcher.noRemosMatchPdf(packingList),
+    parse: () => noMatchParser.noRemosParse(),
     name: "missing remos parser",
-  }
-}
+  },
+};
 
-module.exports = { parsersExcel, parsersPdf , noMatchParsers};
+module.exports = { parsersExcel, parsersPdf, noMatchParsers };

@@ -15,21 +15,20 @@ jest.mock("../../../../../app/config", () => {
 const {
   createDocumentIntelligenceClient,
   runAnalysis,
+  runPrebuiltAnalysis,
 } = require("../../../../../app/services/document-intelligence");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
 });
 
+runPrebuiltAnalysis.mockImplementation(() => {
+  return { content: "RMS-GB-000077-001" };
+});
+
 describe("findParser", () => {
   test("matches valid booker Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
     runAnalysis
-      .mockImplementationOnce(() => {
-        return model.validModel;
-      })
-      .mockImplementationOnce(() => {
-        return model.validModel;
-      })
       .mockImplementationOnce(() => {
         return model.validModel;
       });
@@ -43,12 +42,6 @@ describe("findParser", () => {
       .mockImplementationOnce(() => {
         return model.invalidModel_MissingColumnCells;
       })
-      .mockImplementationOnce(() => {
-        return model.invalidModel_MissingColumnCells;
-      })
-      .mockImplementationOnce(() => {
-        return model.invalidModel_MissingColumnCells;
-      });
 
     const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
