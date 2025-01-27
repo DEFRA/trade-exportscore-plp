@@ -14,6 +14,8 @@ function createDocumentIntelligenceAdminClient() {
   );
 }
 
+const file = "app/services/document-intelligence.js"
+
 async function listModels(client) {
   try {
     const models = [];
@@ -23,7 +25,7 @@ async function listModels(client) {
     return models;
   } catch (err) {
     logger.logError(
-      "app/services/document-intelligence.js",
+      file,
       "listModels()",
       err,
     );
@@ -105,7 +107,7 @@ async function runAnalysis(client, modelId, fileBuffer) {
     return document;
   } catch (err) {
     logger.logError(
-      "app/services/document-intelligence.js",
+      file,
       "runAnalysis()",
       err,
     );
@@ -122,7 +124,7 @@ async function runPrebuiltAnalysis(client, modelId, fileBuffer) {
     return result;
   } catch (err) {
     logger.logError(
-      "app/services/document-intelligence.js",
+      file,
       "runPrebuiltAnalysis()",
       err,
     );

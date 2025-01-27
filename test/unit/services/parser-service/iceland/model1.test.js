@@ -28,7 +28,6 @@ runPrebuiltAnalysis.mockImplementation(() => {
 
 describe("findParser", () => {
   test("matches valid Iceland Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
-    
     runAnalysis.mockImplementationOnce(() => {
       return model.validModel;
     });
@@ -39,7 +38,6 @@ describe("findParser", () => {
   });
 
   test("matches valid Iceland Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
-
     runAnalysis.mockImplementationOnce(() => {
       return model.invalidModel_MissingColumnCells;
     });
