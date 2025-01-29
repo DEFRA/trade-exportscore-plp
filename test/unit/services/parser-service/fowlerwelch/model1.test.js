@@ -21,6 +21,15 @@ describe("matchesFowlerWelchModel1", () => {
     expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
   });
 
+  test("matches valid FowlerWelch Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+    const result = await parserService.findParser(
+      model.InvalidModelWithDragdown,
+      filename,
+    );
+
+    expect(result).toMatchObject(test_results.invalidTestResultWithDragDown);
+  });
+
   test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.wrong";
     const invalidTestResult_NoMatch = {

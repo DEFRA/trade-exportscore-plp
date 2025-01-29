@@ -96,6 +96,32 @@ module.exports = {
     registration_approval_number: "RMS-GB-000216-004",
     parserModel: parserModel.FOWLERWELCH1,
   },
+  invalidTestResultWithDragDown: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: "Total net weight is missing in row 46.\n",
+    },
+    items: [
+      {
+        commodity_code: "2005800099",
+        description: "Sweetcorn Express 8x2",
+        nature_of_products: null,
+        number_of_packages: "5",
+        total_net_weight_kg: null,
+        type_of_treatment: "Chilled",
+      },
+      {
+        commodity_code: "2005800099",
+        description: "Sweetcorn Cobettes 24x4",
+        nature_of_products: null,
+        number_of_packages: "65",
+        total_net_weight_kg: "780.000",
+        type_of_treatment: "Chilled",
+      },
+    ],
+    registration_approval_number: "RMS-GB-000216-002",
+    parserModel: parserModel.FOWLERWELCH1,
+  },
   emptyModelResult: {
     business_checks: {
       all_required_fields_present: true,
