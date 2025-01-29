@@ -72,7 +72,7 @@ module.exports = {
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Total net weight is missing in row 1.\n",
+      failure_reasons: "Total net weight is missing in sheet \"Customer Order\" row 1.\n",
     },
     items: [
       {
