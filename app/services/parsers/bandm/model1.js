@@ -33,13 +33,17 @@ function parse(packingListJson) {
           .findIndex((x) => isEndOfRow(x)) + headerRow;
       packingListContentsTemp = packingListJson[sheet]
         .slice(headerRow + 1, lastRow + 1)
-        .map((col) => ({
+        .map((col, rowPos) => ({
           description: col.C ?? null,
           nature_of_products: null,
           type_of_treatment: null,
           commodity_code: col.D ?? null,
           number_of_packages: col.F ?? null,
           total_net_weight_kg: col.G ?? null,
+          row_location: {
+            rowNumber: headerRow + 2 + rowPos,
+            sheetName: null,
+          },
         }));
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

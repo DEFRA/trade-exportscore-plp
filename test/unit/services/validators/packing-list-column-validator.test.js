@@ -74,6 +74,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: null,
           number_of_packages: 1,
           total_net_weight_kg: 1.2,
+          row_location: {
+            rowNumber: 1
+          },
         },
       ],
       business_checks: {
@@ -106,6 +109,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: null,
           number_of_packages: 1,
           total_net_weight_kg: 1.2,
+          row_location: {
+            rowNumber: 1
+          },
         },
       ],
       business_checks: {
@@ -138,6 +144,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: null,
           number_of_packages: 1,
           total_net_weight_kg: 1.2,
+          row_location: {
+            rowNumber: 1
+          },
         },
       ],
       business_checks: {
@@ -170,6 +179,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: "123",
           number_of_packages: 1,
           total_net_weight_kg: 1.2,
+          row_location: {
+            rowNumber: 1
+          },
         },
       ],
       business_checks: {
@@ -200,6 +212,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: "123",
           number_of_packages: null,
           total_net_weight_kg: 1.2,
+          row_location: {
+            rowNumber: 1
+          },
         },
       ],
       business_checks: {
@@ -232,6 +247,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: "123",
           number_of_packages: 1,
           total_net_weight_kg: null,
+          row_location: {
+            rowNumber: 1
+          },
         },
       ],
       business_checks: {
@@ -264,6 +282,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: "123",
           number_of_packages: "potato",
           total_net_weight_kg: 1.2,
+          row_location: {
+            rowNumber: 1
+          },
         },
       ],
       business_checks: {
@@ -296,6 +317,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: "123",
           number_of_packages: 1,
           total_net_weight_kg: "potato",
+          row_location: {
+            rowNumber: 1
+          },
         },
       ],
       business_checks: {
@@ -328,6 +352,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: "123",
           number_of_packages: 1,
           total_net_weight_kg: null,
+          row_location: {
+            rowNumber: 1
+          },
         },
         {
           description: 12345,
@@ -336,6 +363,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: null,
           number_of_packages: 1,
           total_net_weight_kg: 2,
+          row_location: {
+            rowNumber: 2
+          },
         },
         {
           description: 12345,
@@ -344,6 +374,9 @@ describe("validatePackingListByIndexAndType", () => {
           commodity_code: "Text",
           number_of_packages: "Text",
           total_net_weight_kg: "Text",
+          row_location: {
+            rowNumber: 3
+          },
         },
       ],
       business_checks: {
@@ -396,7 +429,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
-      missingIdentifier: [1],
+      missingIdentifier: [{ rowNumber: 1 }],
       missingDescription: [],
       missingPackages: [],
       missingNetWeight: [],
@@ -416,7 +449,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [],
-      missingDescription: [1],
+      missingDescription: [{ rowNumber: 1 }],
       missingPackages: [],
       missingNetWeight: [],
       invalidPackages: [],
@@ -436,7 +469,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       isEmpty: false,
       missingIdentifier: [],
       missingDescription: [],
-      missingPackages: [1],
+      missingPackages: [{ rowNumber: 1 }],
       missingNetWeight: [],
       invalidPackages: [],
       invalidNetWeight: [],
@@ -456,7 +489,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingIdentifier: [],
       missingDescription: [],
       missingPackages: [],
-      missingNetWeight: [1],
+      missingNetWeight: [{ rowNumber: 1 }],
       invalidPackages: [],
       invalidNetWeight: [],
     };
@@ -476,7 +509,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingDescription: [],
       missingPackages: [],
       missingNetWeight: [],
-      invalidPackages: [1],
+      invalidPackages: [{ rowNumber: 1 }],
       invalidNetWeight: [],
     };
 
@@ -496,7 +529,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingPackages: [],
       missingNetWeight: [],
       invalidPackages: [],
-      invalidNetWeight: [1],
+      invalidNetWeight: [{ rowNumber: 1 }],
     };
 
     const result =
@@ -511,11 +544,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [],
-      missingDescription: [1, 2],
+      missingDescription: [{ rowNumber: 1 }, { rowNumber: 2 }],
       missingPackages: [],
       missingNetWeight: [],
       invalidPackages: [],
-      invalidNetWeight: [1],
+      invalidNetWeight: [{ rowNumber: 1 }],
     };
 
     const result =
@@ -534,13 +567,23 @@ describe("generateFailuresByIndexAndTypes", () => {
 describe("generateFailureReasonFromRows", () => {
   test.each([
     ["description", [], ""],
-    ["description", [1], "description in row 1.\n"],
-    ["description", [1, 2], "description in rows 1 and 2.\n"],
-    ["description", [1, 2, 3], "description in rows 1, 2 and 3.\n"],
+    ["description", [{ rowNumber: 1 }], "description in row 1.\n"],
+    ["description", [{ rowNumber: 1 }, { rowNumber: 2 }], "description in rows 1 and 2.\n"],
+    ["description", [{ rowNumber: 1 }, { rowNumber: 2 }, { rowNumber: 3 }], "description in rows 1, 2 and 3.\n"],
     [
       "description",
-      [1, 2, 3, 4],
+      [{ rowNumber: 1 }, { rowNumber: 2 }, { rowNumber: 3 }, { rowNumber: 4 }],
       "description in rows 1, 2, 3 in addition to 1 other rows.\n",
+    ],
+    ["description", [{ rowNumber: 1, sheetName: "Sheet1" }], "description in sheet \"Sheet1\" row 1.\n"],
+    ["description", [{ rowNumber: 1, sheetName: "Sheet1" }, { rowNumber: 2, sheetName: "Sheet1" }], 
+     "description in sheet \"Sheet1\" row 1 and sheet \"Sheet1\" row 2.\n"],
+    ["description", [{ rowNumber: 1, sheetName: "Sheet1" }, { rowNumber: 2, sheetName: "Sheet1" }, { rowNumber: 3, sheetName: "Sheet1" }], 
+     "description in sheet \"Sheet1\" row 1, sheet \"Sheet1\" row 2 and sheet \"Sheet1\" row 3.\n"],
+    [
+      "description",
+      [{ rowNumber: 1, sheetName: "Sheet1" }, { rowNumber: 2, sheetName: "Sheet1" }, { rowNumber: 3, sheetName: "Sheet1" }, { rowNumber: 4, sheetName: "Sheet1" }],
+      "description in sheet \"Sheet1\" row 1, sheet \"Sheet1\" row 2, sheet \"Sheet1\" row 3 in addition to 1 other locations.\n",
     ],
   ])("generateFailureReasonFromRows", (description, rows, expected) => {
     const result = packingListValidator.generateFailureReasonFromRows(

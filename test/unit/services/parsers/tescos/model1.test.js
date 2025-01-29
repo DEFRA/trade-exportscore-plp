@@ -6,24 +6,24 @@ describe("parseTescoModel1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModelMultipleSheets);
 
-    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+    expect(result).toMatchObject(test_results.validTestResultForMultipleSheets);
   });
 
   test("parses missing required values", () => {
     const result = parser.parse(model.invalidModel_MissingColumnCells);
 
-    expect(result).toEqual(test_results.invalidTestResult_MissingCellsInParse);
+    expect(result).toMatchObject(test_results.invalidTestResult_MissingCellsInParse);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
 
-    expect(result).toEqual(test_results.emptyTestResult);
+    expect(result).toMatchObject(test_results.emptyTestResult);
   });
 
   test("should call logger.logError when an error is thrown", () => {

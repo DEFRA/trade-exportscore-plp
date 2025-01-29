@@ -15,10 +15,7 @@ function validatePackingList(packingList) {
 
 function validatePackingListByIndexAndType(packingList) {
   const missingIdentifier = findItems(packingList.items, hasMissingIdentifier);
-  const missingDescription = findItems(
-    packingList.items,
-    hasMissingDescription,
-  );
+  const missingDescription = findItems(packingList.items, hasMissingDescription);
   const missingPackages = findItems(packingList.items, hasMissingPackages);
   const invalidPackages = findItems(packingList.items, wrongTypeForPackages);
   const missingNetWeight = findItems(packingList.items, hasMissingNetWeight);
@@ -57,7 +54,7 @@ function validatePackingListByIndexAndType(packingList) {
 
 function findItems(items, fn) {
   return items
-    .map((val, index) => (fn(val) ? index + 1 : null))
+    .map((val) => (fn(val) ? val.row_location : null))
     .filter((val) => val !== null);
 }
 
@@ -70,7 +67,7 @@ function generateFailuresByIndexAndTypes(validationResult) {
     // build failure reason
     let failureReasons = "";
     if (validationResult.noMatch) {
-      failureReasons = null; //"unrecognised parser";
+      failureReasons = null; 
     } else if (validationResult.missingRemos) {
       failureReasons = "Check GB Establishment RMS Number";
     } else if (validationResult.isEmpty) {
@@ -121,19 +118,51 @@ function generateFailuresByIndexAndTypes(validationResult) {
 }
 
 function generateFailureReasonFromRows(description, rows) {
-  const maxItemsToShow = 3;
+  if(rows.length === 0){
+    return "";
+  } else if(rows[0].sheetName){
+    return generateRowBySheet(description, rows);
+  } else {
+    return generatebyRow(description, rows);
+  }
+}
+
+const maxItemsToShow = 3;
+
+function generatebyRow(description, rows){
   if (rows.length === 0) {
     return "";
   } else if (rows.length === 1) {
-    return `${description} in row ${rows[0]}.\n`;
+    return `${description} in row ${rows[0].rowNumber}.\n`;
   } else if (rows.length === 2) {
-    return `${description} in rows ${rows[0]} and ${rows[1]}.\n`;
+    return `${description} in rows ${rows[0].rowNumber} and ${rows[1].rowNumber}.\n`;
   } else if (rows.length === maxItemsToShow) {
-    return `${description} in rows ${rows[0]}, ${rows[1]} and ${rows[2]}.\n`;
+    return `${description} in rows ${rows[0].rowNumber}, ${rows[1].rowNumber} and ${rows[2].rowNumber}.\n`;
   } else {
-    return `${description} in rows ${rows.slice(0, maxItemsToShow).join(", ")} in addition to ${rows.length - maxItemsToShow} other rows.\n`;
+    return `${description} in rows ${rows.slice(0, maxItemsToShow).map(row => row.rowNumber).join(", ")} in addition to ${rows.length - maxItemsToShow} other rows.\n`;
   }
 }
+
+function generateRowBySheet(description, rows){
+  if (rows.length === 0) {
+    return "";
+  } else if (rows.length === 1) {
+    return `${description} in ${generateLocationDescription(rows[0])}.\n`;
+  } else if (rows.length === 2) {
+    return `${description} in ${generateLocationDescription(rows[0])} and ${generateLocationDescription(rows[1])}.\n`;
+  } else if (rows.length === maxItemsToShow) {
+    return `${description} in ${generateLocationDescription(rows[0])}, ${generateLocationDescription(rows[1])} and ${generateLocationDescription(rows[2])}.\n`;
+  } else {
+    return `${description} in ${rows.slice(0, maxItemsToShow)
+                                    .map(row => generateLocationDescription(row))
+                                    .join(", ")} in addition to ${rows.length - maxItemsToShow} other locations.\n`;
+  }
+}
+
+function generateLocationDescription(row) {
+  return `sheet "${row.sheetName}" row ${row.rowNumber}`;
+}
+
 
 module.exports = {
   validatePackingListByIndexAndType,

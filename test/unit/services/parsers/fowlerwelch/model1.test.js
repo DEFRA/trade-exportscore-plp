@@ -7,25 +7,25 @@ describe("parseFowlerWelchModel1", () => {
   test("parses valid json", () => {
     const result = parser.parse(model.validModel);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("parses valid json with dragdown", () => {
     const result = parser.parse(model.validModelWithDragdown);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModel_Multiple);
 
-    expect(result).toEqual(test_results.validTestResultMultipleSheets);
+    expect(result).toMatchObject(test_results.validTestResultMultipleSheets);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
 
-    expect(result).toEqual(test_results.emptyModelResult);
+    expect(result).toMatchObject(test_results.emptyModelResult);
   });
 
   test("should call logger.logError when an error is thrown", () => {

@@ -58,7 +58,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        "Product description is missing in row 2.\nNo of packages is missing in row 1.\n",
+        "Product description is missing in row 22.\nNo of packages is missing in row 21.\n",
     },
     items: [
       {

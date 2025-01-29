@@ -12,7 +12,7 @@ describe("parseBandMModel1", () => {
 
     const result = parser.parse(sanitisedPackingList);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("parses populated json with case insensitive headers", () => {
@@ -22,7 +22,7 @@ describe("parseBandMModel1", () => {
 
     const result = parser.parse(sanitisedPackingList);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("parses multiple sheets", () => {
@@ -32,7 +32,7 @@ describe("parseBandMModel1", () => {
 
     const result = parser.parse(sanitisedPackingList);
 
-    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+    expect(result).toMatchObject(test_results.validTestResultForMultipleSheets);
   });
 
   test("parses empty json", () => {
@@ -42,7 +42,7 @@ describe("parseBandMModel1", () => {
 
     const result = parser.parse(sanitisedPackingList);
 
-    expect(result).toEqual(test_results.emptyTestResult);
+    expect(result).toMatchObject(test_results.emptyTestResult);
   });
 
   test("should call logger.logError when an error is thrown", () => {

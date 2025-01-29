@@ -10,15 +10,19 @@ function findHeaderCols(regexHeader, packingListHeader) {
   return headerCols;
 }
 
-function mapParser(packingListJson, headerRow, dataRow, header) {
+function mapParser(packingListJson, headerRow, dataRow, header, sheetName = null) {
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
-  const packingListContents = packingListJson.slice(dataRow).map((col) => ({
+  const packingListContents = packingListJson.slice(dataRow).map((col, rowPos) => ({
     description: col[headerCols.description] ?? null,
     nature_of_products: col[headerCols.nature_of_products] ?? null,
     type_of_treatment: col[headerCols.type_of_treatment] ?? null,
     commodity_code: col[headerCols.commodity_code] ?? null,
     number_of_packages: col[headerCols.number_of_packages] ?? null,
     total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
+    row_location: {
+      rowNumber: dataRow + rowPos,
+      sheetName,
+    },
   }));
   return packingListContents;
 }
@@ -27,7 +31,10 @@ function mapPdfParser(packingListDocument, key) {
   const packingListContents = [];
 
   if (packingListDocument.fields.PackingListContents.values) {
+    let currentItemNumber = 0;
     for (const value of packingListDocument.fields.PackingListContents.values) {
+       currentItemNumber += 1;
+
       const row = value.properties;
       const plRow = {
         description: row[headers[key].headers.description]?.value ?? null,
@@ -41,7 +48,11 @@ function mapPdfParser(packingListDocument, key) {
         total_net_weight_kg:
           parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
           null,
+        row_location: {
+          rowNumber: currentItemNumber,
+        }
       };
+      
       packingListContents.push(plRow);
     }
   }
