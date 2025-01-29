@@ -1,4 +1,4 @@
-const excelToJson = require("@boterop/convert-excel-to-json");
+const { convertExcelToJson } = require("../utilities/excel-utility");
 const { BlobClient } = require("@azure/storage-blob");
 const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("../utilities/logger");
@@ -19,7 +19,7 @@ async function getPackingListFromBlob(blobClient, blobUri) {
 
     let result;
     if (isExcel(blobUri)) {
-      result = excelToJson({ source: downloaded });
+      result = convertExcelToJson({ source: downloaded });
     } else {
       result = downloaded;
     }

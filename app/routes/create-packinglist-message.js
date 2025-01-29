@@ -1,7 +1,7 @@
 const createMessage = require("../messaging/create-message");
 const { parsePackingList } = require("../services/parser-service");
 const config = require("../config");
-const excelToJson = require("@boterop/convert-excel-to-json");
+const { convertExcelToJson } = require("../utilities/excel-utility");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("./../utilities/logger");
 const path = require("path");
@@ -14,7 +14,7 @@ module.exports = {
     handler: async (request, h) => {
       try {
         const filename = config.plDir + request.query.filename;
-        const result = excelToJson({ sourceFile: filename });
+        const result = convertExcelToJson({ sourceFile: filename });
         const packingList = await parsePackingList(
           result,
           request.query.filename,

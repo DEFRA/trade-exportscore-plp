@@ -75,7 +75,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        "No of packages is missing in row 2.\nTotal net weight is missing in row 3.\n",
+        "No of packages is missing in row 3.\nTotal net weight is missing in row 4.\n",
     },
     items: [
       {
