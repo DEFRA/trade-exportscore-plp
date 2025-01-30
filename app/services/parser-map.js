@@ -32,10 +32,16 @@ function mapPdfParser(packingListDocument, key) {
 
   if (packingListDocument.fields.PackingListContents.values) {
     let currentItemNumber = 0;
+    let lastPageNumber = 1;
     for (const value of packingListDocument.fields.PackingListContents.values) {
-       currentItemNumber += 1;
-
       const row = value.properties;
+      const currentPageNumber = row[headers[key].headers.description]?.boundingRegions?.[0]?.pageNumber ?? lastPageNumber;
+      if(lastPageNumber !== currentPageNumber){
+        lastPageNumber = currentPageNumber;
+        currentItemNumber = 0;
+      }
+      currentItemNumber += 1;
+      
       const plRow = {
         description: row[headers[key].headers.description]?.value ?? null,
         nature_of_products:
@@ -50,6 +56,7 @@ function mapPdfParser(packingListDocument, key) {
           null,
         row_location: {
           rowNumber: currentItemNumber,
+          pageNumber: currentPageNumber,
         }
       };
       

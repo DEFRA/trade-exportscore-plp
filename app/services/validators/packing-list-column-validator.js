@@ -121,15 +121,17 @@ function generateFailureReasonFromRows(description, rows) {
   if(rows.length === 0){
     return "";
   } else if(rows[0].sheetName){
-    return generateRowBySheet(description, rows);
+    return generateRowLocation(generateLocationSheetDescription, description, rows);
+  } else if(rows[0].pageNumber){
+    return generateRowLocation(generateLocatioPagenDescription, description, rows);
   } else {
-    return generatebyRow(description, rows);
+    return generateByRow(description, rows);
   }
 }
 
 const maxItemsToShow = 3;
 
-function generatebyRow(description, rows){
+function generateByRow(description, rows){
   if (rows.length === 0) {
     return "";
   } else if (rows.length === 1) {
@@ -143,26 +145,29 @@ function generatebyRow(description, rows){
   }
 }
 
-function generateRowBySheet(description, rows){
+function generateRowLocation(generateDescription, description, rows){
   if (rows.length === 0) {
     return "";
   } else if (rows.length === 1) {
-    return `${description} in ${generateLocationDescription(rows[0])}.\n`;
+    return `${description} in ${generateDescription(rows[0])}.\n`;
   } else if (rows.length === 2) {
-    return `${description} in ${generateLocationDescription(rows[0])} and ${generateLocationDescription(rows[1])}.\n`;
+    return `${description} in ${generateDescription(rows[0])} and ${generateDescription(rows[1])}.\n`;
   } else if (rows.length === maxItemsToShow) {
-    return `${description} in ${generateLocationDescription(rows[0])}, ${generateLocationDescription(rows[1])} and ${generateLocationDescription(rows[2])}.\n`;
+    return `${description} in ${generateDescription(rows[0])}, ${generateDescription(rows[1])} and ${generateDescription(rows[2])}.\n`;
   } else {
     return `${description} in ${rows.slice(0, maxItemsToShow)
-                                    .map(row => generateLocationDescription(row))
+                                    .map(row => generateDescription(row))
                                     .join(", ")} in addition to ${rows.length - maxItemsToShow} other locations.\n`;
   }
 }
 
-function generateLocationDescription(row) {
+function generateLocationSheetDescription(row) {
   return `sheet "${row.sheetName}" row ${row.rowNumber}`;
 }
 
+function generateLocatioPagenDescription(row) {
+  return `page ${row.pageNumber} row ${row.rowNumber}`;
+}
 
 module.exports = {
   validatePackingListByIndexAndType,
