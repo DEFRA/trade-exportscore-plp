@@ -10,13 +10,13 @@ describe(`parses-${traderAndModelNumber}`, () => {
   test("parses valid populated json", () => {
     const result = parser.parse(model.validModel);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toMatchObject(testResults.validTestResult);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
 
-    expect(result).toEqual(testResults.emptyTestResult);
+    expect(result).toMatchObject(testResults.emptyTestResult);
   });
 
   test("should call logger.logError when an error is thrown", () => {

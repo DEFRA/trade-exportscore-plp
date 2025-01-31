@@ -1,5 +1,5 @@
 const config = require("../config");
-const excelToJson = require("@boterop/convert-excel-to-json");
+const { convertExcelToJson } = require("../utilities/excel-utility");
 const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const { StatusCodes } = require("http-status-codes");
@@ -16,9 +16,9 @@ module.exports = {
     const filename = config.plDir + _request.query.filename;
     let result = {};
     try {
-      result = excelToJson({ sourceFile: filename });
+      result = convertExcelToJson({ sourceFile: filename });
     } catch (err) {
-      logger.logError(filenameForLogging, "get() > excelToJson", err);
+      logger.logError(filenameForLogging, "get() > convertExcelToJson", err);
     }
 
     const packingList = await findParser(result, filename);

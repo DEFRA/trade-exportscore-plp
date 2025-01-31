@@ -26,9 +26,10 @@ function wrongTypeNetWeight(item) {
 }
 
 function removeEmptyItems(packingListItems) {
-  const isNullOrUndefined = (value) => value === null || value === undefined;
+  const isNullOrUndefined = (entry) =>
+    entry[0] === "row_location" || entry[1] === null || entry[1] === undefined;
   return packingListItems.filter(
-    (x) => !Object.values(x).every(isNullOrUndefined),
+    (x) => !Object.entries(x).every(isNullOrUndefined),
   );
 }
 

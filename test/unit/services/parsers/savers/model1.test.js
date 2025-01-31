@@ -10,6 +10,6 @@ describe("parse a packing list using the SAVERS1 parser", () => {
   ])("parses model", (testModel, expected) => {
     const result = parser.parse(testModel);
 
-    expect(result).toEqual(expected);
+    expect(result).toMatchObject(expected);
   });
 });

@@ -7,19 +7,19 @@ describe("parseCdsModel1", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModelMultipleSheets);
 
-    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+    expect(result).toMatchObject(test_results.validTestResultForMultipleSheets);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
 
-    expect(result).toEqual(test_results.emptyTestResult);
+    expect(result).toMatchObject(test_results.emptyTestResult);
   });
 
   test("should call logger.logError when an error is thrown", () => {

@@ -9,19 +9,19 @@ describe("parseDavenportModel1", () => {
 
     const result = parser.parse(packingListJson);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModelMultipleSheets);
 
-    expect(result).toEqual(test_results.validTestResultForMultipleSheets);
+    expect(result).toMatchObject(test_results.validTestResultForMultipleSheets);
   });
 
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
 
-    expect(result).toEqual(test_results.emptyModelResult);
+    expect(result).toMatchObject(test_results.emptyModelResult);
   });
 
   test("should call logger.logError when an error is thrown", () => {

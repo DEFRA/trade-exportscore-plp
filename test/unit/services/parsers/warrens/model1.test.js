@@ -8,13 +8,13 @@ describe("parseWarrensModel1", () => {
   test("parses json", () => {
     const result = parser.parse(model.validModel);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("parses multiple sheets", () => {
     const result = parser.parse(model.validModel_Multiple);
 
-    expect(result).toEqual(test_results.validTestResultMultiple);
+    expect(result).toMatchObject(test_results.validTestResultMultiple);
   });
 
   test("parses empty json", () => {

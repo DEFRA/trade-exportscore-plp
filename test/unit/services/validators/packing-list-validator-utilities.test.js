@@ -169,6 +169,32 @@ describe("removeEmptyItems", () => {
     expect(result.length).toBe(0);
   });
 
+  test("return empty for null item with row_location", () => {
+    const packingList = {
+      registration_approval_number: "RMS-GB-000022-999",
+      items: [
+        {
+          description: null,
+          nature_of_products: null,
+          type_of_treatment: null,
+          commodity_code: null,
+          number_of_packages: null,
+          total_net_weight_kg: null,
+          row_location: {
+            rowNumber: 1,
+          },
+        },
+      ],
+      business_checks: {
+        all_required_fields_present: false,
+      },
+    };
+
+    const result = removeEmptyItems(packingList.items);
+
+    expect(result.length).toBe(0);
+  });
+
   test("multiple items", () => {
     const packingList = {
       registration_approval_number: "RMS-GB-000022-999",

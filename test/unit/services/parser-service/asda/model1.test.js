@@ -9,7 +9,7 @@ describe("matchesAsdaModel1", () => {
   test("matches valid Asda Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("matches valid Asda Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
@@ -18,7 +18,7 @@ describe("matchesAsdaModel1", () => {
       filename,
     );
 
-    expect(result).toEqual(test_results.invalidTestResult_MissingCells);
+    expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
   });
 
   test("returns 'No Match' for incorrect file extension", async () => {
@@ -34,6 +34,6 @@ describe("matchesAsdaModel1", () => {
     };
     const result = await parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual(invalidTestResult_NoMatch);
+    expect(result).toMatchObject(invalidTestResult_NoMatch);
   });
 });

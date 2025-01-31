@@ -56,7 +56,8 @@ module.exports = {
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Identifier is missing in rows 1 and 2.\n",
+      failure_reasons:
+        'Identifier is missing in sheet "Sheet1" row 2 and sheet "Sheet1" row 3.\n',
     },
     items: [
       {

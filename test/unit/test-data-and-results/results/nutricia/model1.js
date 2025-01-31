@@ -57,7 +57,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        "Identifier is missing in row 1.\nTotal net weight is missing in row 2.\n",
+        'Identifier is missing in sheet "DANONE" row 22.\nTotal net weight is missing in sheet "DANONE" row 23.\n',
     },
     items: [
       {

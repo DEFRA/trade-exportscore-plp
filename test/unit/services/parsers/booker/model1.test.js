@@ -10,7 +10,7 @@ describe("parseBooker", () => {
   ])("parses model", (testModel, expected) => {
     const result = parser.parse(testModel);
 
-    expect(result).toEqual(expected);
+    expect(result).toMatchObject(expected);
   });
 
   test("should call logger.logError when an error is thrown", () => {

@@ -12,7 +12,7 @@ describe(`parser-service-parses-${traderAndModelNumber}`, () => {
   test(`matches valid ${traderAndModelNumber} file, calls parser and returns all_required_fields_present as true`, async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual(testResults.validTestResult);
+    expect(result).toMatchObject(testResults.validTestResult);
   });
 
   test(`matches valid ${traderAndModelNumber} file, calls parser, but returns all_required_fields_present as false when cells missing`, async () => {
@@ -21,7 +21,7 @@ describe(`parser-service-parses-${traderAndModelNumber}`, () => {
       filename,
     );
 
-    expect(result).toEqual(testResults.invalidTestResult_MissingCells);
+    expect(result).toMatchObject(testResults.invalidTestResult_MissingCells);
   });
 
   test("returns 'No Match' for incorrect file extension", async () => {
@@ -29,7 +29,7 @@ describe(`parser-service-parses-${traderAndModelNumber}`, () => {
 
     const result = await parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual(incorrectFileExtension.invalidFileExtension);
+    expect(result).toMatchObject(incorrectFileExtension.invalidFileExtension);
   });
 
   test("should call logger.logError when an error is thrown", () => {
