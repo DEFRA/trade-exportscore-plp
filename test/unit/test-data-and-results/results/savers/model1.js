@@ -38,7 +38,8 @@ module.exports = {
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Product description is missing in sheet \"(DO NOT SORT) Packing List\" row 6.\n",
+      failure_reasons:
+        'Product description is missing in sheet "(DO NOT SORT) Packing List" row 6.\n',
     },
     items: [
       {

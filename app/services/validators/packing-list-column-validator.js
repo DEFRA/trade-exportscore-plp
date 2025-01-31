@@ -15,7 +15,10 @@ function validatePackingList(packingList) {
 
 function validatePackingListByIndexAndType(packingList) {
   const missingIdentifier = findItems(packingList.items, hasMissingIdentifier);
-  const missingDescription = findItems(packingList.items, hasMissingDescription);
+  const missingDescription = findItems(
+    packingList.items,
+    hasMissingDescription,
+  );
   const missingPackages = findItems(packingList.items, hasMissingPackages);
   const invalidPackages = findItems(packingList.items, wrongTypeForPackages);
   const missingNetWeight = findItems(packingList.items, hasMissingNetWeight);
@@ -67,7 +70,7 @@ function generateFailuresByIndexAndTypes(validationResult) {
     // build failure reason
     let failureReasons = "";
     if (validationResult.noMatch) {
-      failureReasons = null; 
+      failureReasons = null;
     } else if (validationResult.missingRemos) {
       failureReasons = "Check GB Establishment RMS Number";
     } else if (validationResult.isEmpty) {
@@ -118,12 +121,20 @@ function generateFailuresByIndexAndTypes(validationResult) {
 }
 
 function generateFailureReasonFromRows(description, rows) {
-  if(rows.length === 0){
+  if (rows.length === 0) {
     return "";
-  } else if(rows[0].sheetName){
-    return generateRowLocation(generateLocationSheetDescription, description, rows);
-  } else if(rows[0].pageNumber){
-    return generateRowLocation(generateLocatioPagenDescription, description, rows);
+  } else if (rows[0].sheetName) {
+    return generateRowLocation(
+      generateLocationSheetDescription,
+      description,
+      rows,
+    );
+  } else if (rows[0].pageNumber) {
+    return generateRowLocation(
+      generateLocatioPagenDescription,
+      description,
+      rows,
+    );
   } else {
     return generateByRow(description, rows);
   }
@@ -131,7 +142,7 @@ function generateFailureReasonFromRows(description, rows) {
 
 const maxItemsToShow = 3;
 
-function generateByRow(description, rows){
+function generateByRow(description, rows) {
   if (rows.length === 0) {
     return "";
   } else if (rows.length === 1) {
@@ -141,11 +152,16 @@ function generateByRow(description, rows){
   } else if (rows.length === maxItemsToShow) {
     return `${description} in rows ${rows[0].rowNumber}, ${rows[1].rowNumber} and ${rows[2].rowNumber}.\n`;
   } else {
-    return `${description} in rows ${rows.slice(0, maxItemsToShow).map(row => row.rowNumber).join(", ")} in addition to ${rows.length - maxItemsToShow} other rows.\n`;
+    return `${description} in rows ${rows
+      .slice(0, maxItemsToShow)
+      .map((row) => row.rowNumber)
+      .join(
+        ", ",
+      )} in addition to ${rows.length - maxItemsToShow} other rows.\n`;
   }
 }
 
-function generateRowLocation(generateDescription, description, rows){
+function generateRowLocation(generateDescription, description, rows) {
   if (rows.length === 0) {
     return "";
   } else if (rows.length === 1) {
@@ -155,9 +171,12 @@ function generateRowLocation(generateDescription, description, rows){
   } else if (rows.length === maxItemsToShow) {
     return `${description} in ${generateDescription(rows[0])}, ${generateDescription(rows[1])} and ${generateDescription(rows[2])}.\n`;
   } else {
-    return `${description} in ${rows.slice(0, maxItemsToShow)
-                                    .map(row => generateDescription(row))
-                                    .join(", ")} in addition to ${rows.length - maxItemsToShow} other locations.\n`;
+    return `${description} in ${rows
+      .slice(0, maxItemsToShow)
+      .map((row) => generateDescription(row))
+      .join(
+        ", ",
+      )} in addition to ${rows.length - maxItemsToShow} other locations.\n`;
   }
 }
 

@@ -78,7 +78,8 @@ module.exports = {
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Total net weight is missing in sheet \"05122024 5223 SSC NI ROUTE1 - A\" row 19.\n",
+      failure_reasons:
+        'Total net weight is missing in sheet "05122024 5223 SSC NI ROUTE1 - A" row 19.\n',
     },
     items: [
       {

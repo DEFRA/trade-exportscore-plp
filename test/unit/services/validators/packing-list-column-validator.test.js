@@ -75,7 +75,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: 1,
           total_net_weight_kg: 1.2,
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
       ],
@@ -110,7 +110,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: 1,
           total_net_weight_kg: 1.2,
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
       ],
@@ -145,7 +145,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: 1,
           total_net_weight_kg: 1.2,
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
       ],
@@ -180,7 +180,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: 1,
           total_net_weight_kg: 1.2,
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
       ],
@@ -213,7 +213,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: null,
           total_net_weight_kg: 1.2,
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
       ],
@@ -248,7 +248,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: 1,
           total_net_weight_kg: null,
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
       ],
@@ -283,7 +283,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: "potato",
           total_net_weight_kg: 1.2,
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
       ],
@@ -318,7 +318,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: 1,
           total_net_weight_kg: "potato",
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
       ],
@@ -353,7 +353,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: 1,
           total_net_weight_kg: null,
           row_location: {
-            rowNumber: 1
+            rowNumber: 1,
           },
         },
         {
@@ -364,7 +364,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: 1,
           total_net_weight_kg: 2,
           row_location: {
-            rowNumber: 2
+            rowNumber: 2,
           },
         },
         {
@@ -375,7 +375,7 @@ describe("validatePackingListByIndexAndType", () => {
           number_of_packages: "Text",
           total_net_weight_kg: "Text",
           row_location: {
-            rowNumber: 3
+            rowNumber: 3,
           },
         },
       ],
@@ -568,31 +568,83 @@ describe("generateFailureReasonFromRows", () => {
   test.each([
     ["description", [], ""],
     ["description", [{ rowNumber: 1 }], "description in row 1.\n"],
-    ["description", [{ rowNumber: 1 }, { rowNumber: 2 }], "description in rows 1 and 2.\n"],
-    ["description", [{ rowNumber: 1 }, { rowNumber: 2 }, { rowNumber: 3 }], "description in rows 1, 2 and 3.\n"],
+    [
+      "description",
+      [{ rowNumber: 1 }, { rowNumber: 2 }],
+      "description in rows 1 and 2.\n",
+    ],
+    [
+      "description",
+      [{ rowNumber: 1 }, { rowNumber: 2 }, { rowNumber: 3 }],
+      "description in rows 1, 2 and 3.\n",
+    ],
     [
       "description",
       [{ rowNumber: 1 }, { rowNumber: 2 }, { rowNumber: 3 }, { rowNumber: 4 }],
       "description in rows 1, 2, 3 in addition to 1 other rows.\n",
     ],
-    ["description", [{ rowNumber: 1, sheetName: "Sheet1" }], "description in sheet \"Sheet1\" row 1.\n"],
-    ["description", [{ rowNumber: 1, sheetName: "Sheet1" }, { rowNumber: 2, sheetName: "Sheet1" }], 
-     "description in sheet \"Sheet1\" row 1 and sheet \"Sheet1\" row 2.\n"],
-    ["description", [{ rowNumber: 1, sheetName: "Sheet1" }, { rowNumber: 2, sheetName: "Sheet1" }, { rowNumber: 3, sheetName: "Sheet1" }], 
-     "description in sheet \"Sheet1\" row 1, sheet \"Sheet1\" row 2 and sheet \"Sheet1\" row 3.\n"],
     [
       "description",
-      [{ rowNumber: 1, sheetName: "Sheet1" }, { rowNumber: 2, sheetName: "Sheet1" }, { rowNumber: 3, sheetName: "Sheet1" }, { rowNumber: 4, sheetName: "Sheet1" }],
-      "description in sheet \"Sheet1\" row 1, sheet \"Sheet1\" row 2, sheet \"Sheet1\" row 3 in addition to 1 other locations.\n",
+      [{ rowNumber: 1, sheetName: "Sheet1" }],
+      'description in sheet "Sheet1" row 1.\n',
     ],
-    ["description", [{ rowNumber: 1, pageNumber: 1 }], "description in page 1 row 1.\n"],
-    ["description", [{ rowNumber: 1, pageNumber: 1 }, { rowNumber: 2, pageNumber: 2 }], 
-     "description in page 1 row 1 and page 2 row 2.\n"],
-    ["description", [{ rowNumber: 1, pageNumber: 1 }, { rowNumber: 2, pageNumber: 2 }, { rowNumber: 3, pageNumber: 3}], 
-     "description in page 1 row 1, page 2 row 2 and page 3 row 3.\n"],
     [
       "description",
-      [{ rowNumber: 1, pageNumber: 1}, { rowNumber: 2, pageNumber: 2 }, { rowNumber: 3, pageNumber: 3 }, { rowNumber: 4, pageNumber: 4 }],
+      [
+        { rowNumber: 1, sheetName: "Sheet1" },
+        { rowNumber: 2, sheetName: "Sheet1" },
+      ],
+      'description in sheet "Sheet1" row 1 and sheet "Sheet1" row 2.\n',
+    ],
+    [
+      "description",
+      [
+        { rowNumber: 1, sheetName: "Sheet1" },
+        { rowNumber: 2, sheetName: "Sheet1" },
+        { rowNumber: 3, sheetName: "Sheet1" },
+      ],
+      'description in sheet "Sheet1" row 1, sheet "Sheet1" row 2 and sheet "Sheet1" row 3.\n',
+    ],
+    [
+      "description",
+      [
+        { rowNumber: 1, sheetName: "Sheet1" },
+        { rowNumber: 2, sheetName: "Sheet1" },
+        { rowNumber: 3, sheetName: "Sheet1" },
+        { rowNumber: 4, sheetName: "Sheet1" },
+      ],
+      'description in sheet "Sheet1" row 1, sheet "Sheet1" row 2, sheet "Sheet1" row 3 in addition to 1 other locations.\n',
+    ],
+    [
+      "description",
+      [{ rowNumber: 1, pageNumber: 1 }],
+      "description in page 1 row 1.\n",
+    ],
+    [
+      "description",
+      [
+        { rowNumber: 1, pageNumber: 1 },
+        { rowNumber: 2, pageNumber: 2 },
+      ],
+      "description in page 1 row 1 and page 2 row 2.\n",
+    ],
+    [
+      "description",
+      [
+        { rowNumber: 1, pageNumber: 1 },
+        { rowNumber: 2, pageNumber: 2 },
+        { rowNumber: 3, pageNumber: 3 },
+      ],
+      "description in page 1 row 1, page 2 row 2 and page 3 row 3.\n",
+    ],
+    [
+      "description",
+      [
+        { rowNumber: 1, pageNumber: 1 },
+        { rowNumber: 2, pageNumber: 2 },
+        { rowNumber: 3, pageNumber: 3 },
+        { rowNumber: 4, pageNumber: 4 },
+      ],
       "description in page 1 row 1, page 2 row 2, page 3 row 3 in addition to 1 other locations.\n",
     ],
   ])("generateFailureReasonFromRows", (description, rows, expected) => {

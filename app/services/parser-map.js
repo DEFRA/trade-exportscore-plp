@@ -10,20 +10,28 @@ function findHeaderCols(regexHeader, packingListHeader) {
   return headerCols;
 }
 
-function mapParser(packingListJson, headerRow, dataRow, header, sheetName = null) {
+function mapParser(
+  packingListJson,
+  headerRow,
+  dataRow,
+  header,
+  sheetName = null,
+) {
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
-  const packingListContents = packingListJson.slice(dataRow).map((col, rowPos) => ({
-    description: col[headerCols.description] ?? null,
-    nature_of_products: col[headerCols.nature_of_products] ?? null,
-    type_of_treatment: col[headerCols.type_of_treatment] ?? null,
-    commodity_code: col[headerCols.commodity_code] ?? null,
-    number_of_packages: col[headerCols.number_of_packages] ?? null,
-    total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
-    row_location: {
-      rowNumber: dataRow + rowPos + 1,
-      sheetName,
-    },
-  }));
+  const packingListContents = packingListJson
+    .slice(dataRow)
+    .map((col, rowPos) => ({
+      description: col[headerCols.description] ?? null,
+      nature_of_products: col[headerCols.nature_of_products] ?? null,
+      type_of_treatment: col[headerCols.type_of_treatment] ?? null,
+      commodity_code: col[headerCols.commodity_code] ?? null,
+      number_of_packages: col[headerCols.number_of_packages] ?? null,
+      total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
+      row_location: {
+        rowNumber: dataRow + rowPos + 1,
+        sheetName,
+      },
+    }));
   return packingListContents;
 }
 
@@ -35,13 +43,15 @@ function mapPdfParser(packingListDocument, key) {
     let lastPageNumber = 1;
     for (const value of packingListDocument.fields.PackingListContents.values) {
       const row = value.properties;
-      const currentPageNumber = row[headers[key].headers.description]?.boundingRegions?.[0]?.pageNumber ?? lastPageNumber;
-      if(lastPageNumber !== currentPageNumber){
+      const currentPageNumber =
+        row[headers[key].headers.description]?.boundingRegions?.[0]
+          ?.pageNumber ?? lastPageNumber;
+      if (lastPageNumber !== currentPageNumber) {
         lastPageNumber = currentPageNumber;
         currentItemNumber = 0;
       }
       currentItemNumber += 1;
-      
+
       const plRow = {
         description: row[headers[key].headers.description]?.value ?? null,
         nature_of_products:
@@ -57,9 +67,9 @@ function mapPdfParser(packingListDocument, key) {
         row_location: {
           rowNumber: currentItemNumber,
           pageNumber: currentPageNumber,
-        }
+        },
       };
-      
+
       packingListContents.push(plRow);
     }
   }
