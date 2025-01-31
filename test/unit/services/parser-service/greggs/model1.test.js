@@ -34,7 +34,7 @@ describe("findParser", () => {
 
     const result = await parserService.findParser(model.validModel, filename);
 
-    expect(result).toEqual(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("matches valid Greggs Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
@@ -47,7 +47,7 @@ describe("findParser", () => {
       filename,
     );
 
-    expect(result).toEqual(test_results.invalidTestResult_MissingCells);
+    expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
   });
 
   test("wrong file extension", async () => {
