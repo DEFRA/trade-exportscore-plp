@@ -131,7 +131,7 @@ function generateFailureReasonFromRows(description, rows) {
     );
   } else if (rows[0].pageNumber) {
     return generateRowLocation(
-      generateLocatioPagenDescription,
+      generateLocatioPageDescription,
       description,
       rows,
     );
@@ -184,7 +184,7 @@ function generateLocationSheetDescription(row) {
   return `sheet "${row.sheetName}" row ${row.rowNumber}`;
 }
 
-function generateLocatioPagenDescription(row) {
+function generateLocatioPageDescription(row) {
   return `page ${row.pageNumber} row ${row.rowNumber}`;
 }
 
