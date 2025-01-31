@@ -26,7 +26,7 @@ function parse(packingListJson) {
         total_net_weight_kg: col.R ?? null,
         row_location: {
           rowNumber: rowPos + 2,
-          sheetName: null,
+          sheetName: sheet,
         },
       }));
       packingListContents = packingListContents.concat(packingListContentsTemp);
