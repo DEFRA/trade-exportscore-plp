@@ -1,7 +1,7 @@
 const excelToJson = require("@boterop/convert-excel-to-json");
 
 function convertExcelToJson(options) {
-    let result = excelToJson({
+    const result = excelToJson({
         ...options,
         includeEmptyLines: true,
     });

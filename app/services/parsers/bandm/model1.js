@@ -27,12 +27,15 @@ function parse(packingListJson) {
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
 
     for (const sheet of sheets) {
+      const dataRow = packingListJson[sheet]
+      .slice(headerRow + 1)
+      .findIndex((x) => !isEmptyRow(x)) + headerRow + 1;
       const lastRow =
         packingListJson[sheet]
-          .slice(headerRow + 1)
-          .findIndex((x) => isEndOfRow(x)) + headerRow;
+          .slice(dataRow + 1)
+          .findIndex((x) => isEndOfRow(x)) + dataRow;
       packingListContentsTemp = packingListJson[sheet]
-        .slice(headerRow + 1, lastRow + 1)
+        .slice(dataRow, lastRow + 1)
         .map((col, rowPos) => ({
           description: col.C ?? null,
           nature_of_products: null,
@@ -41,7 +44,7 @@ function parse(packingListJson) {
           number_of_packages: col.F ?? null,
           total_net_weight_kg: col.G ?? null,
           row_location: {
-            rowNumber: headerRow + 2 + rowPos,
+            rowNumber: dataRow + rowPos + 1,
             sheetName: null,
           },
         }));
@@ -61,14 +64,22 @@ function parse(packingListJson) {
 }
 
 function isEndOfRow(x) {
-  const isTotal = x.F !== null && x.G !== null && x.H !== null;
-  const isEmpty =
-    isNullOrUndefined(x.A) &&
-    isNullOrUndefined(x.B) &&
-    isNullOrUndefined(x.C) &&
-    isNullOrUndefined(x.D) &&
-    isNullOrUndefined(x.E);
+  const isTotal = isTotalRow(x);
+  const isEmpty = isEmptyRow(x);
+    
   return isTotal && isEmpty;
+}
+
+function isTotalRow(x) {
+  return x.F !== null && x.G !== null && x.H !== null;
+}
+
+function isEmptyRow(x) {
+  return isNullOrUndefined(x.A) &&
+  isNullOrUndefined(x.B) &&
+  isNullOrUndefined(x.C) &&
+  isNullOrUndefined(x.D) &&
+  isNullOrUndefined(x.E);
 }
 
 module.exports = {
