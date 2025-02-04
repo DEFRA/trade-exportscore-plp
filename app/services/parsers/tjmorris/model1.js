@@ -17,18 +17,20 @@ function parse(packingListJson) {
     );
 
     for (const sheet of sheets) {
-      packingListContentsTemp = packingListJson[sheet].slice(1).map((col, rowPos) => ({
-        description: col.N ?? null,
-        nature_of_products: col.L ?? null,
-        type_of_treatment: col.J ?? null,
-        commodity_code: col.O ?? null,
-        number_of_packages: col.P ?? null,
-        total_net_weight_kg: col.R ?? null,
-        row_location: {
-          rowNumber: rowPos + 2,
-          sheetName: sheet,
-        },
-      }));
+      packingListContentsTemp = packingListJson[sheet]
+        .slice(1)
+        .map((col, rowPos) => ({
+          description: col.N ?? null,
+          nature_of_products: col.L ?? null,
+          type_of_treatment: col.J ?? null,
+          commodity_code: col.O ?? null,
+          number_of_packages: col.P ?? null,
+          total_net_weight_kg: col.R ?? null,
+          row_location: {
+            rowNumber: rowPos + 2,
+            sheetName: sheet,
+          },
+        }));
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 

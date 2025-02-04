@@ -27,9 +27,12 @@ function parse(packingListJson) {
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
 
     for (const sheet of sheets) {
-      const dataRow = packingListJson[sheet]
-      .slice(headerRow + 1)
-      .findIndex((x) => !isEmptyRow(x)) + headerRow + 1;
+      const dataRow =
+        packingListJson[sheet]
+          .slice(headerRow + 1)
+          .findIndex((x) => !isEmptyRow(x)) +
+        headerRow +
+        1;
       const lastRow =
         packingListJson[sheet]
           .slice(dataRow + 1)
@@ -66,7 +69,7 @@ function parse(packingListJson) {
 function isEndOfRow(x) {
   const isTotal = isTotalRow(x);
   const isEmpty = isEmptyRow(x);
-    
+
   return isTotal && isEmpty;
 }
 
@@ -75,11 +78,13 @@ function isTotalRow(x) {
 }
 
 function isEmptyRow(x) {
-  return isNullOrUndefined(x.A) &&
-  isNullOrUndefined(x.B) &&
-  isNullOrUndefined(x.C) &&
-  isNullOrUndefined(x.D) &&
-  isNullOrUndefined(x.E);
+  return (
+    isNullOrUndefined(x.A) &&
+    isNullOrUndefined(x.B) &&
+    isNullOrUndefined(x.C) &&
+    isNullOrUndefined(x.D) &&
+    isNullOrUndefined(x.E)
+  );
 }
 
 module.exports = {

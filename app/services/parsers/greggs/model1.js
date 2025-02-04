@@ -10,14 +10,22 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 function parse(packingListDocument) {
   try {
     let establishmentNumber;
+
     if (
       regex.findMatch(headers.GREGGS1.establishmentNumber.regex, [
         packingListDocument.fields.NIRMSNumber,
       ])
     ) {
       establishmentNumber = packingListDocument.fields.NIRMSNumber.content;
+    } else {
+      establishmentNumber =
+        packingListDocument.fields.PackingListContents?.values.find((x) =>
+          regex.findMatch(headers.GREGGS1.establishmentNumber.regex, [
+            x.properties[headers.GREGGS1.headers.remos_number],
+          ]),
+        ).properties[headers.GREGGS1.headers.remos_number].value;
     }
-    
+
     const packingListContents = mapPdfParser(packingListDocument, "GREGGS1");
 
     return combineParser.combine(

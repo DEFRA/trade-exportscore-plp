@@ -17,7 +17,9 @@ describe("parseTescoModel1", () => {
   test("parses missing required values", () => {
     const result = parser.parse(model.invalidModel_MissingColumnCells);
 
-    expect(result).toMatchObject(test_results.invalidTestResult_MissingCellsInParse);
+    expect(result).toMatchObject(
+      test_results.invalidTestResult_MissingCellsInParse,
+    );
   });
 
   test("parses empty json", () => {

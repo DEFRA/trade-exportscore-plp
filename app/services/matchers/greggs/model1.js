@@ -31,10 +31,15 @@ async function matches(packingList, filename) {
 
     // check for correct establishment number
     if (
-      !document.fields.NIRMSNumber ||
-      !regex.findMatch(headers.GREGGS1.establishmentNumber.regex, [
-        document.fields.NIRMSNumber,
-      ])
+      (!document.fields.NIRMSNumber ||
+        !regex.findMatch(headers.GREGGS1.establishmentNumber.regex, [
+          document.fields.NIRMSNumber,
+        ])) &&
+      !document.fields.PackingListContents?.values.some((x) =>
+        regex.findMatch(headers.GREGGS1.establishmentNumber.regex, [
+          x.properties[headers.GREGGS1.headers.remos_number],
+        ]),
+      )
     ) {
       result.isMatched = matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       return result;

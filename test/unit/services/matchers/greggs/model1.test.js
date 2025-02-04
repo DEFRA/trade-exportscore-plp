@@ -26,6 +26,7 @@ describe("matchesGreggs", () => {
       matcherResult.WRONG_ESTABLISHMENT_NUMBER,
       model.invalidModel_MissingRemosElement,
     ],
+    [matcherResult.CORRECT, model.invalidModel_MissingAllRemos],
   ])("returns '%s' for greggs model", async (expected, inputModel) => {
     const filename = "PackingList.xlsx";
     runAnalysis.mockImplementationOnce(() => {

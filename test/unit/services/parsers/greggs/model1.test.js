@@ -7,6 +7,7 @@ describe("parseGreggs1", () => {
   test.each([
     [model.validModel, test_results.validTestResult],
     [model.emptyModel, test_results.emptyTestResult],
+    [model.invalidModel_MissingAllRemos, test_results.validTestResult],
   ])("parses model", (testModel, expected) => {
     const result = parser.parse(testModel);
 

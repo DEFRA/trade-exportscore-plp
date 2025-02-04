@@ -24,7 +24,7 @@ function parse(packingListJson) {
         dataRow - 1,
         dataRow,
         headers.CDS1.regex,
-        sheet
+        sheet,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

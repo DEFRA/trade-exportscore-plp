@@ -310,8 +310,9 @@ const headers = {
       total_net_weight_kg: "TOTAL NET WEIGHT kg",
       type_of_treatment: "Treatment Type",
       nature_of_products: "Nature of Product",
+      remos_number: "GB Place of Dispatch",
     },
-    modelId: "greggs1-v1",
+    modelId: "greggs1-v2",
   },
 };
 
