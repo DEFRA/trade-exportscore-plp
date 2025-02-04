@@ -43,7 +43,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
           headerRow,
           dataRow,
           headers.FOWLERWELCH1.regex,
-          sheet
+          sheet,
         );
 
         packingListContentsTemp =
