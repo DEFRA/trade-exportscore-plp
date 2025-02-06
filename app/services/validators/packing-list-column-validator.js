@@ -72,7 +72,7 @@ function generateFailuresByIndexAndTypes(validationResult) {
     if (validationResult.noMatch) {
       failureReasons = null;
     } else if (validationResult.missingRemos) {
-      failureReasons = "Check GB Establishment RMS Number";
+      failureReasons = "Check GB Establishment RMS Number.";
     } else if (validationResult.isEmpty) {
       failureReasons = "No product line data found.";
     } else {
