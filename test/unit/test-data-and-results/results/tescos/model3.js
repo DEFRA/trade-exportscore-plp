@@ -1,71 +1,117 @@
 const parserModel = require("../../../../../app/services/parser-model");
-const { emptyModelResult } = require("../nutricia/model1");
 
 module.exports = {
   validTestResult: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [
       {
-        commodity_code: "4015900000",
-        description: "1 MARIGOLD EXTRA LIFE GLOVES KITCHEN MEDIUM",
+        commodity_code: "9617000000",
+        description: "CONTIGO AUTO-POP BOTTLE 720ML",
         nature_of_products: null,
         number_of_packages: 1,
-        total_net_weight_kg: 0.437,
-        type_of_treatment: "AMBIENT",
+        total_net_weight_kg: 1.4155,
+        type_of_treatment: "Ambient",
       },
       {
-        commodity_code: "0401401090",
-        description: "APTAMIL 1 1ST MILK 200ML RTF LIQD",
+        commodity_code: "3924100090",
+        description: "JOIE MEASURING SPOONS",
         nature_of_products: null,
-        number_of_packages: 2,
-        total_net_weight_kg: 5.396,
-        type_of_treatment: "AMBIENT",
+        number_of_packages: 1,
+        total_net_weight_kg: 0.798,
+        type_of_treatment: "Ambient",
       },
     ],
-    registration_approval_number: "RMS-GB-000022-999",
+    registration_approval_number: "RMS-GB-000022-998",
+    parserModel: parserModel.TESCO3,
+  },
+  validTestResultForMultipleSheets: {
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    items: [
+      {
+        commodity_code: "9617000000",
+        description: "CONTIGO AUTO-POP BOTTLE 720ML",
+        nature_of_products: null,
+        number_of_packages: 1,
+        total_net_weight_kg: 1.4155,
+        type_of_treatment: "Ambient",
+      },
+      {
+        commodity_code: "3924100090",
+        description: "JOIE MEASURING SPOONS",
+        nature_of_products: null,
+        number_of_packages: 1,
+        total_net_weight_kg: 0.798,
+        type_of_treatment: "Ambient",
+      },
+    ],
+    registration_approval_number: "RMS-GB-000022-998",
     parserModel: parserModel.TESCO3,
   },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,
+      failure_reasons:
+        'Total net weight is missing in sheet "Input Data Sheet" row 6.\n',
     },
     items: [
       {
-        commodity_code: "4015900000",
-        description: "1 MARIGOLD EXTRA LIFE GLOVES KITCHEN MEDIUM",
+        commodity_code: "9617000000",
+        description: "CONTIGO AUTO-POP BOTTLE 720ML",
         nature_of_products: null,
         number_of_packages: 1,
-        total_net_weight_kg: 0.437,
-        type_of_treatment: null,
+        total_net_weight_kg: null,
+        type_of_treatment: "Ambient",
       },
       {
-        commodity_code: "0401401090",
-        description: "APTAMIL 1 1ST MILK 200ML RTF LIQD",
+        commodity_code: "3924100090",
+        description: "JOIE MEASURING SPOONS",
         nature_of_products: null,
-        number_of_packages: 2,
-        total_net_weight_kg: null,
-        type_of_treatment: "AMBIENT",
+        number_of_packages: 1,
+        total_net_weight_kg: 0.798,
+        type_of_treatment: null,
       },
     ],
-    registration_approval_number: "RMS-GB-000022-999",
+    registration_approval_number: "RMS-GB-000022-998",
     parserModel: parserModel.TESCO3,
   },
-  emptyModelResult: {
+  invalidTestResult_MissingCellsInParse: {
     business_checks: {
       all_required_fields_present: true,
+      failure_reasons: null,
     },
     items: [
       {
-        commodity_code: null,
-        description: null,
+        commodity_code: "9617000000",
+        description: "CONTIGO AUTO-POP BOTTLE 720ML",
         nature_of_products: null,
-        number_of_packages: null,
+        number_of_packages: 1,
         total_net_weight_kg: null,
+        type_of_treatment: "Ambient",
+      },
+      {
+        commodity_code: "3924100090",
+        description: "JOIE MEASURING SPOONS",
+        nature_of_products: null,
+        number_of_packages: 1,
+        total_net_weight_kg: 0.798,
         type_of_treatment: null,
       },
     ],
+    registration_approval_number: "RMS-GB-000022-998",
+    parserModel: parserModel.TESCO3,
+  },
+  emptyTestResult: {
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    items: [],
     registration_approval_number: null,
     parserModel: parserModel.TESCO3,
   },
