@@ -8,6 +8,7 @@ const ParserModel = {
   BANDM1: "bandm-1",
   TESCO1: "tesco-1",
   TESCO2: "tesco-2",
+  TESCO3: "tesco-3",
   FOWLERWELCH1: "fowlerwelch-1",
   MARS1: "mars-1",
   NISA1: "nisa-1",

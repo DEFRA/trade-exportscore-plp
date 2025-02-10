@@ -1,6 +1,5 @@
 const descriptionRegex = /Product\/ Part Number description/i;
 const descriptionOfGoodsRegex = /Description of goods/i;
-const commodityCode = "Commodity Code";
 const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
@@ -249,6 +248,18 @@ const headers = {
       commodity_code: commodityCodeRegex,
       number_of_packages: noOfPackagesRegex,
       total_net_weight_kg: /Total Net Weight/i,
+    },
+  },
+  TESCO3: {
+    establishmentNumber: {
+      regex: /RMS-GB-000022-(\d{3})?/i,
+    },
+    regex: {
+      description: /Product Description/i,
+      commodity_code: /Tariff Code UK/i,
+      number_of_packages: /Packages/i,
+      total_net_weight_kg: /^Net Weight \(KG\)$/i,
+      type_of_treatment: /Treatment Type/i,
     },
   },
   TJMORRIS1: {

@@ -38,6 +38,8 @@ const tescosMatcher = require("./matchers/tescos/model1");
 const tescosParser = require("./parsers/tescos/model1");
 const tescosMatcher2 = require("./matchers/tescos/model2");
 const tescosParser2 = require("./parsers/tescos/model2");
+const tescosMatcher3 = require("./matchers/tescos/model3");
+const tescosParser3 = require("./parsers/tescos/model3");
 const tjMorrisMatcher = require("./matchers/tjmorris/model1");
 const tjMorrisParser = require("./parsers/tjmorris/model1");
 const warrensMatcher = require("./matchers/warrens/model1");
@@ -153,6 +155,12 @@ const parsersExcel = {
       tescosMatcher2.matches(packingList, filename),
     parse: (packingList, filename) =>
       tescosParser2.parse(packingList, filename),
+  },
+  TESCO3: {
+    matches: (packingList, filename) =>
+      tescosMatcher3.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      tescosParser3.parse(packingList, filename),
   },
   TJMORRIS1: {
     matches: (packingList, filename) =>
