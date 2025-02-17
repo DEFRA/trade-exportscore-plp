@@ -1,7 +1,10 @@
 const combineParser = require("../../parser-combine");
-const { mapParser } = require("../../parser-map");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
+const { rowFinder } = require("../../../utilities/row-finder");
+const { mapParser } = require("../../parser-map");
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const { isTotalRow } = require("./utilities");
 const logger = require("../../../utilities/logger");
@@ -17,14 +20,19 @@ function parse(packingListJson) {
       headers.NISA2.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
+    const headerTitles = Object.values(headers.NISA2.regex);
+    const headerCallback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
 
-    const dataRowFirst = 3;
+    const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
+    const dataRow = headerRow + 1;
 
     for (const sheet of sheets) {
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
-        dataRowFirst - 1,
-        dataRowFirst,
+        headerRow,
+        dataRow,
         headers.NISA2.regex,
         sheet,
       );
