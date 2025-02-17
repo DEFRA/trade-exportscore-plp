@@ -217,6 +217,10 @@ const headers = {
     },
   },
   SAVERS1: {
+    invalidSheets: [
+      "DC Sheet (with Calcs)",
+      "SPS Codes",
+    ],
     establishmentNumber: {
       regex: /RMS-GB-000247-(\d{3})?/i,
     },
