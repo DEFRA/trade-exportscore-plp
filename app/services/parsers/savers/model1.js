@@ -29,24 +29,28 @@ function parse(packingListJson) {
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
     const dataRow = headerRow + 1;
 
-    packingListContentsTemp = mapParser(
-      packingListJson[sheets[0]],
-      headerRow,
-      dataRow,
-      headers.SAVERS1.regex,
-      sheets[0],
-    );
+    for (const sheet of sheets) {
+      if (!headers.SAVERS1.invalidSheets.includes(sheet)) {
+        packingListContentsTemp = mapParser(
+          packingListJson[sheet],
+          headerRow,
+          dataRow,
+          headers.SAVERS1.regex,
+          sheet,
+        );
 
-    packingListContents = packingListContents.concat(
-      packingListContentsTemp.filter(
-        (row) =>
-          !(
-            row.description === 0 &&
-            row.number_of_packages === 0 &&
-            row.total_net_weight_kg === 0
+        packingListContents = packingListContents.concat(
+          packingListContentsTemp.filter(
+            (row) =>
+              !(
+                row.description === 0 &&
+                row.number_of_packages === 0 &&
+                row.total_net_weight_kg === 0
+              ),
           ),
-      ),
-    );
+        );
+      }
+    }
 
     return combineParser.combine(
       establishmentNumber,
