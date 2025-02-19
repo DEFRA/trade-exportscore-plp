@@ -95,7 +95,7 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    registration_approval_number: null,
+    registration_approval_number: "RMS-GB-000025-001",
     parserModel: parserModel.NISA1,
   },
 };

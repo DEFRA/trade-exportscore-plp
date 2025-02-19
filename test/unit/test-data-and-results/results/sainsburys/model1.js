@@ -94,7 +94,7 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    registration_approval_number: null,
+    registration_approval_number: "RMS-GB-000094-002",
     parserModel: parserModel.SAINSBURYS1,
   },
 };

@@ -1,7 +1,10 @@
 const combineParser = require("../../parser-combine");
-const { mapParser } = require("../../parser-map");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
+const { rowFinder } = require("../../../utilities/row-finder");
+const { mapParser } = require("../../parser-map");
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("path");
@@ -21,10 +24,17 @@ function parse(packingListJson) {
         ?.replace(/\u200B/g, "") ?? null;
 
     for (const sheet of sheets) {
+      const headerTitles = Object.values(headers.SAINSBURYS1.regex);
+      const headerCallback = function (x) {
+        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+      };
+
+      const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
+      const dataRow = headerRow + 1;
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
-        0,
-        1,
+        headerRow,
+        dataRow,
         headers.SAINSBURYS1.regex,
         sheet,
       );
