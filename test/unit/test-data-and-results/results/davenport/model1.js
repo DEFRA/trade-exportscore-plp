@@ -85,17 +85,8 @@ module.exports = {
       all_required_fields_present: true,
       failure_reasons: null,
     },
-    items: [
-      {
-        commodity_code: null,
-        description: null,
-        nature_of_products: null,
-        number_of_packages: null,
-        total_net_weight_kg: null,
-        type_of_treatment: null,
-      },
-    ],
-    registration_approval_number: null,
+    items: [],
+    registration_approval_number: "RMS-GB-000323-001",
     parserModel: parserModel.DAVENPORT1,
   },
 };

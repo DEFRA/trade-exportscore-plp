@@ -1,7 +1,10 @@
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
+const { rowFinder } = require("../../../utilities/row-finder");
 const { mapParser } = require("../../parser-map");
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("path");
@@ -17,13 +20,18 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
-    const packingListContentsRow = 5;
-
     for (const sheet of sheets) {
+      const headerTitles = Object.values(headers.TESCO1.regex);
+      const headerCallback = function (x) {
+        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+      };
+
+      const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
+      const dataRow = headerRow + 1;
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
-        packingListContentsRow - 1,
-        packingListContentsRow,
+        headerRow,
+        dataRow,
         headers.TESCO1.regex,
         sheet,
       );

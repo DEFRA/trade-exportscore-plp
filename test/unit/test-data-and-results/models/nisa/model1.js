@@ -190,14 +190,15 @@ module.exports = {
   emptyModel: {
     "Customer Order": [
       {
-        E: "Dispatch RMS Establishment",
-        O: "Product/ Part Number description",
-        P: "Tariff Code EU",
-        Q: "Packages",
-        S: "NW total",
+        A: "RMS_ESTABLISHMENT_NO",
+        I: "PRODUCT_TYPE_CATEGORY",
+        K: "PART_NUMBER_DESCRIPTION",
+        L: "TARIFF_CODE_EU",
+        M: "PACKAGES",
+        O: "NET_WEIGHT_TOTAL",
       },
       {
-        E: null,
+        A: "RMS-GB-000025-001",
       },
     ],
   },

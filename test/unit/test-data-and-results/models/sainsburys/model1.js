@@ -189,14 +189,16 @@ module.exports = {
   emptyModel: {
     Sheet1: [
       {
-        E: "Product / Part Number Description",
         C: "Product Type / Category",
-        O: "Commodity Code",
+        E: "Product / Part Number Description",
         G: "Packages",
         H: "Net\nWeight / Package KG",
+        J: "Packaging Type",
+        N: "RMS Number (based on depot)",
+        O: "Commodity Code",
       },
       {
-        N: null,
+        N: "RMS-GB-000094-002​",
       },
     ],
   },
