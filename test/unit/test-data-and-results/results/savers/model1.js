@@ -35,6 +35,48 @@ module.exports = {
     },
     parserModel: parserModel.SAVERS1,
   },
+  validTestResultForMultipleSheets: {
+    registration_approval_number: "RMS-GB-000247-001",
+    items: [
+      {
+        description: "PEPSI MAX 330ML CAN",
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: 2202100000,
+        number_of_packages: 1,
+        total_net_weight_kg: 9.02,
+      },
+      {
+        description: "CELTIC SPARKLING WATER 500ML",
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: 3004900000,
+        number_of_packages: 1,
+        total_net_weight_kg: 12.87,
+      },
+      {
+        description: "TIDYZ REFUSE SACKS 50L 50PK",
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: 3306900000,
+        number_of_packages: 1,
+        total_net_weight_kg: 8.7,
+      },
+      {
+        description: "J&J COTTON BUDS X200.",
+        nature_of_products: null,
+        type_of_treatment: null,
+        commodity_code: 9616200000,
+        number_of_packages: 5,
+        total_net_weight_kg: 2.6,
+      },
+    ],
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    parserModel: parserModel.SAVERS1,
+  },
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,

@@ -2,9 +2,10 @@ const matcher = require("../../../../../app/services/matchers/savers/model1");
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/savers/model1");
 
-describe("matchesBoots", () => {
+describe("matchesSavers", () => {
   test.each([
     [matcherResult.CORRECT, model.validModel],
+    [matcherResult.CORRECT, model.validModelMultipleSheets],
     [matcherResult.GENERIC_ERROR, null],
     [matcherResult.WRONG_ESTABLISHMENT_NUMBER, model.wrongEstablishment],
     [
