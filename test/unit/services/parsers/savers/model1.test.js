@@ -13,7 +13,7 @@ describe("parse a packing list using the SAVERS1 parser", () => {
     [model.invalidModel_MissingHeaders, test_results.failedTestResult],
   ])("parses model", (testModel, expected) => {
     const result = parser.parse(testModel);
-    
+
     expect(result).toMatchObject(expected);
   });
 });
