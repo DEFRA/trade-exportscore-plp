@@ -5,6 +5,10 @@ const test_results = require("../../../test-data-and-results/results/savers/mode
 describe("parse a packing list using the SAVERS1 parser", () => {
   test.each([
     [model.validModel, test_results.validTestResult],
+    [
+      model.validModelMultipleSheets,
+      test_results.validTestResultForMultipleSheets,
+    ],
     [model.validHeadersNoData, test_results.emptyTestResult],
     [model.invalidModel_MissingHeaders, test_results.failedTestResult],
   ])("parses model", (testModel, expected) => {
