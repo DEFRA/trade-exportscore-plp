@@ -1,5 +1,6 @@
 const {
   hasMissingDescription,
+  hasInvalidProductCode,
   hasMissingIdentifier,
   hasMissingNetWeight,
   hasMissingPackages,
@@ -21,6 +22,20 @@ describe("validator function tests", () => {
     (commodity_code, nature_of_products, type_of_treatment, expected) => {
       const item = { commodity_code, nature_of_products, type_of_treatment };
       expect(hasMissingIdentifier(item)).toBe(expected);
+    },
+  );
+
+  test.each([
+    [undefined, false],
+    [null, false],
+    ["text", true],
+    ["1d1", true],
+    ["123", false],
+    [123, false],
+  ])(
+    "hasInvalidProductCode",
+    (commodity_code, expected) => {
+      expect(hasInvalidProductCode({commodity_code})).toBe(expected);
     },
   );
 
