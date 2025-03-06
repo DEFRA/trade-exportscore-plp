@@ -21,7 +21,7 @@ function parse(packingListJson) {
     );
 
     const headerTitles = Object.values(headers.BANDM1.regex);
-    function callback(x) {
+    const callback = function(x) {
       return regex.testAllPatterns(headerTitles, x);
     }
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);

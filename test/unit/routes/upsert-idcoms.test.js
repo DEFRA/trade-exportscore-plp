@@ -1,3 +1,4 @@
+const path = require("path");
 const upsertIdcoms = require("../../../app/routes/upsert-idcoms");
 const mockResponse = { response: 200, code: 200 };
 
@@ -24,19 +25,25 @@ describe("upsert idcoms", () => {
   });
 
   test("should not call the sendParsed when application id is not specified", async () => {
-    const mockHandler = {};
+    const mockHandler =  {
+      response: jest.fn(() => ({
+        code: jest.fn((code) => code),
+      })),
+    };;
 
-    await upsertIdcoms.options.handler({}, mockHandler);
+    const response = await upsertIdcoms.options.handler({}, mockHandler);
 
     expect(sendParsed).not.toHaveBeenCalled();
+    expect(response).toBe(503);
   });
 
   test("should log the exception when an error occurs", async () => {
     await upsertIdcoms.options.handler({}, mockHandler);
 
     expect(sendParsed).not.toHaveBeenCalled();
+    const filePath = path.join("app", "routes", "upsert-idcoms.js");
     expect(console.error.mock.calls[0][0]).toBe(
-      "Whilst running the 'get()' method in 'app/routes/upsert-idcoms.js', the PLP application encounterd: TypeError: Cannot read properties of undefined (reading 'applicationId')",
+      `Whilst running the 'get()' method in '${filePath}', the PLP application encounterd: TypeError: Cannot read properties of undefined (reading 'applicationId')`,
     );
   });
 

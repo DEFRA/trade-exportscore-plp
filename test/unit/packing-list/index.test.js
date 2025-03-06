@@ -75,6 +75,12 @@ describe("Packing list", () => {
     expect(result.applicationId).toBe("123");
   });
 
+  test("itemsMapper undefined items", () => {
+    const result = packingListIndex.itemsMapper(undefined, "123");
+
+    expect(result).not.toBeDefined();
+  })
+
   test("packingListMapper should map correctly for failure", () => {
     const packingListJson = {
       items: [
@@ -172,4 +178,10 @@ describe("Packing list", () => {
     );
     expect(result.item[0].applicationId).toBe("123");
   });
+
+  test("packingListMapper errors ", () => {
+    const result = packingListIndex.packingListMapper(null, "123");
+
+    expect(result).not.toBeDefined();
+  })
 });
