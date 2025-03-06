@@ -240,9 +240,6 @@ module.exports = {
         G: "PACKAGES",
         I: "NET WEIGHT TOTAL",
       },
-      {
-        A: null,
-      },
     ],
   },
 };
