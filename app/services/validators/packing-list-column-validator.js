@@ -45,7 +45,7 @@ function validatePackingListByIndexAndType(packingList) {
   const allItemsValid =
     (invalidPackages.length +
       invalidNetWeight.length +
-      invalidProductCodes.length) == 0;
+      invalidProductCodes.length) === 0;
 
   return {
     missingIdentifier,
