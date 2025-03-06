@@ -76,7 +76,7 @@ describe("Packing list", () => {
   });
 
   test("itemsMapper undefined items", () => {
-    const result = packingListIndex.packingListMapper(undefined, "123");
+    const result = packingListIndex.itemsMapper(undefined, "123");
 
     expect(result).not.toBeDefined();
   })
