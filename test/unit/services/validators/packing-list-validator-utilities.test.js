@@ -30,14 +30,13 @@ describe("validator function tests", () => {
     [null, false],
     ["text", true],
     ["1d1", true],
-    ["123", false],
+    ["1 1d1", true],
+    ["0123", false],
+    [" 12 3 ", false],
     [123, false],
-  ])(
-    "hasInvalidProductCode",
-    (commodity_code, expected) => {
-      expect(hasInvalidProductCode({commodity_code})).toBe(expected);
-    },
-  );
+  ])("hasInvalidProductCode", (commodity_code, expected) => {
+    expect(hasInvalidProductCode({ commodity_code })).toBe(expected);
+  });
 
   test.each([
     ["a description", false],

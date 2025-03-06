@@ -9,7 +9,9 @@ function hasInvalidProductCode(item) {
   if (item.commodity_code === null || item.commodity_code === undefined) {
     return false;
   }
-  return item.commodity_code.toString().match(/^\d*$/) === null;
+  return (
+    item.commodity_code.toString().replace(/\s+/g, "").match(/^\d*$/) === null
+  );
 }
 
 function hasMissingDescription(item) {

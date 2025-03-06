@@ -16,7 +16,10 @@ function validatePackingList(packingList) {
 
 function validatePackingListByIndexAndType(packingList) {
   const missingIdentifier = findItems(packingList.items, hasMissingIdentifier);
-  const invalidProductCodes = findItems(packingList.items, hasInvalidProductCode);
+  const invalidProductCodes = findItems(
+    packingList.items,
+    hasInvalidProductCode,
+  );
   const missingDescription = findItems(
     packingList.items,
     hasMissingDescription,
@@ -33,12 +36,14 @@ function validatePackingListByIndexAndType(packingList) {
     packingList.parserModel === parserModel.NOREMOS;
   const noMatch = packingList.parserModel === parserModel.NOMATCH;
 
-  const hasAllItems = missingIdentifier.length === 0 &&
+  const hasAllItems =
+    missingIdentifier.length === 0 &&
     missingDescription.length === 0 &&
     missingPackages.length === 0 &&
     missingNetWeight.length === 0;
 
-  const allItemsValid = invalidPackages.length === 0 &&
+  const allItemsValid =
+    invalidPackages.length === 0 &&
     invalidNetWeight.length === 0 &&
     invalidProductCodes.length == 0;
 
@@ -55,11 +60,7 @@ function validatePackingListByIndexAndType(packingList) {
     missingRemos,
     noMatch,
     hasAllFields:
-      hasAllItems &&
-      allItemsValid &&
-      hasRemos &&
-      !isEmpty &&
-      !missingRemos,
+      hasAllItems && allItemsValid && hasRemos && !isEmpty && !missingRemos,
   };
 }
 
