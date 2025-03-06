@@ -24,9 +24,12 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeTruthy();
     expect(result.missingIdentifier.length).toBe(0);
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
   });
@@ -54,6 +57,7 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
@@ -89,6 +93,7 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(1);
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
@@ -124,6 +129,7 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(1);
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
@@ -159,6 +165,7 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(1);
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
@@ -194,9 +201,12 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(1);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(0);
+    expect(result.invalidPackages.length).toBe(0);
+    expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
   });
@@ -227,6 +237,7 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(1);
     expect(result.missingNetWeight.length).toBe(0);
@@ -262,6 +273,7 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(1);
@@ -296,6 +308,7 @@ describe("validatePackingListByIndexAndType", () => {
       packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingIdentifier.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
@@ -331,6 +344,7 @@ describe("validatePackingListByIndexAndType", () => {
       packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
+    expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingIdentifier.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
@@ -389,6 +403,7 @@ describe("validatePackingListByIndexAndType", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(1);
+    expect(result.invalidProductCodes.length).toBe(1);
     expect(result.missingDescription.length).toBe(0);
     expect(result.missingPackages.length).toBe(0);
     expect(result.missingNetWeight.length).toBe(1);
@@ -430,6 +445,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [{ rowNumber: 1 }],
+      invalidProductCodes: [],
       missingDescription: [],
       missingPackages: [],
       missingNetWeight: [],
@@ -449,6 +465,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [],
+      invalidProductCodes: [],
       missingDescription: [{ rowNumber: 1 }],
       missingPackages: [],
       missingNetWeight: [],
@@ -468,6 +485,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [],
+      invalidProductCodes: [],
       missingDescription: [],
       missingPackages: [{ rowNumber: 1 }],
       missingNetWeight: [],
@@ -487,6 +505,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [],
+      invalidProductCodes: [],
       missingDescription: [],
       missingPackages: [],
       missingNetWeight: [{ rowNumber: 1 }],
@@ -506,6 +525,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [],
+      invalidProductCodes: [],
       missingDescription: [],
       missingPackages: [],
       missingNetWeight: [],
@@ -525,6 +545,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [],
+      invalidProductCodes: [],
       missingDescription: [],
       missingPackages: [],
       missingNetWeight: [],
@@ -539,11 +560,32 @@ describe("generateFailuresByIndexAndTypes", () => {
     expect(result.failureReasons).toContain("Total net weight is invalid");
   });
 
+  test("invalid product code", () => {
+    const validationResult = {
+      hasAllFields: false,
+      isEmpty: false,
+      missingIdentifier: [],
+      invalidProductCodes: [{ rowNumber: 1 }],
+      missingDescription: [],
+      missingPackages: [],
+      missingNetWeight: [],
+      invalidPackages: [],
+      invalidNetWeight: [],
+    };
+
+    const result =
+      packingListValidator.generateFailuresByIndexAndTypes(validationResult);
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.failureReasons).toContain("Product code is invalid");
+  });
+
   test("multiple failures", () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
       missingIdentifier: [],
+      invalidProductCodes: [],
       missingDescription: [{ rowNumber: 1 }, { rowNumber: 2 }],
       missingPackages: [],
       missingNetWeight: [],
