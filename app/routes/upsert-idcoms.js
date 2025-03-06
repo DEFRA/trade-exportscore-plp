@@ -29,6 +29,7 @@ module.exports = {
         return h.response(checkStatus).code(StatusCodes.OK);
       } catch (err) {
         logger.logError(filenameForLogging, "get()", err);
+        return h.response(err.message).code(StatusCodes.SERVICE_UNAVAILABLE);
       }
     },
   },
