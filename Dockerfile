@@ -15,7 +15,7 @@ EXPOSE ${PORT} ${PORT_DEBUG}
 COPY --chown=node:node --chmod=444 package.json ./
 COPY --chown=node:node --chmod=644 package-lock.json ./
 RUN npm install --ignore-scripts
-COPY --chown=node:node --chmod=444 . .
+COPY --chown=node:node --chmod=444 . ./
 CMD [ "npm", "run", "start:watch" ]
 
 # Production
