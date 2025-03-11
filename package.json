@@ -32,6 +32,8 @@
     "http-status-codes": "^2.3.0",
     "import-local": "^3.1.0",
     "joi": "^17.13.1",
+    "pdf-data-parser": "^1.2.15",
+    "pdf.js-extract": "^0.2.1",
     "pg": "^8.12.0",
     "sequelize": "^6.37.3",
     "uuid": "^10.0.0",
