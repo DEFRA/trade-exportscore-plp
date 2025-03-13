@@ -79,7 +79,7 @@ describe("Packing list", () => {
     const result = packingListIndex.itemsMapper(undefined, "123");
 
     expect(result).not.toBeDefined();
-  })
+  });
 
   test("packingListMapper should map correctly for failure", () => {
     const packingListJson = {
@@ -183,5 +183,5 @@ describe("Packing list", () => {
     const result = packingListIndex.packingListMapper(null, "123");
 
     expect(result).not.toBeDefined();
-  })
+  });
 });

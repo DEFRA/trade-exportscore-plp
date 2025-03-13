@@ -37,15 +37,17 @@ function validatePackingListByIndexAndType(packingList) {
   const noMatch = packingList.parserModel === parserModel.NOMATCH;
 
   const hasAllItems =
-    (missingIdentifier.length +
+    missingIdentifier.length +
       missingDescription.length +
       missingPackages.length +
-      missingNetWeight.length) === 0;
+      missingNetWeight.length ===
+    0;
 
   const allItemsValid =
-    (invalidPackages.length +
+    invalidPackages.length +
       invalidNetWeight.length +
-      invalidProductCodes.length) === 0;
+      invalidProductCodes.length ===
+    0;
 
   return {
     missingIdentifier,
