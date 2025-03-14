@@ -29,6 +29,25 @@ const headers = {
       total_net_weight_kg: /NET Weight/i,
     },
   },
+  ASDA3: {
+    establishmentNumber: {
+      regex: /RMS-GB-000015-(\d{3})?/i,
+    },
+    regex: [
+      {
+        description: /\[Description Of All Retail Go/i,
+        nature_of_products: /\[Nature Of Product\]/i,
+        type_of_treatment: /\[Treatment Ty/i,
+        number_of_packages: /\[Number of Packages\]/i,
+        total_net_weight_kg: /NET Weight/i,
+      },
+      {
+        description: /Description/i,
+        number_of_packages: /Cases/i,
+      },
+
+    ],
+  },
   BANDM1: {
     establishmentNumber: {
       regex: /RMS-GB-000005-(\d{3})?/i,
