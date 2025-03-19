@@ -8,6 +8,7 @@ module.exports = {
         AT: "RMS-GB-000022-998",
       },
       {
+        E: "Country of Origin",
         G: "Product Description",
         L: "Tariff Code UK",
         AS: "Treatment Type",
@@ -17,6 +18,7 @@ module.exports = {
         BU: "Net Weight (KG)",
       },
       {
+        E: "PL",
         G: "CONTIGO AUTO-POP BOTTLE 720ML",
         L: "9617000000",
         AS: "Ambient",
@@ -26,6 +28,7 @@ module.exports = {
         BU: 1.4155,
       },
       {
+        E: "GR",
         G: "JOIE MEASURING SPOONS",
         L: "3924100090",
         AS: "Ambient",
@@ -67,6 +70,7 @@ module.exports = {
         AT: "RMS-GB-000022-998",
       },
       {
+        D: "Country of Origin",
         G: "Product Description",
         L: "Tariff Code UK",
         AS: "Treatment Type",
@@ -76,6 +80,7 @@ module.exports = {
         BU: "Net Weight (KG)",
       },
       {
+        D: "PL",
         G: "CONTIGO AUTO-POP BOTTLE 720ML",
         L: "9617000000",
         AS: "Ambient",
@@ -93,6 +98,7 @@ module.exports = {
         AT: "RMS-GB-000022-998",
       },
       {
+        D: "Country of Origin",
         G: "Product Description",
         L: "Tariff Code UK",
         AS: "Treatment Type",
@@ -102,6 +108,7 @@ module.exports = {
         BU: "Net Weight (KG)",
       },
       {
+        D: "GR",
         G: "JOIE MEASURING SPOONS",
         L: "3924100090",
         AS: "Ambient",
@@ -121,6 +128,7 @@ module.exports = {
         AT: "RMS-GB-000022-998",
       },
       {
+        E: "Country of Origin",
         G: "Product Description",
         L: "Tariff Code UK",
         AS: "Treatment Type",
@@ -130,6 +138,7 @@ module.exports = {
         BU: "Net Weight (KG)",
       },
       {
+        E: "PL",
         G: "CONTIGO AUTO-POP BOTTLE 720ML",
         L: "9617000000",
         AS: "Ambient",
@@ -139,6 +148,7 @@ module.exports = {
         BU: null,
       },
       {
+        E: "GR",
         G: "JOIE MEASURING SPOONS",
         L: "3924100090",
         AS: null,
@@ -241,6 +251,7 @@ module.exports = {
         AT: null,
       },
       {
+        D: "Country of Origin",
         G: "Product Description",
         L: "Tariff Code UK",
         AS: "Treatment Type",

@@ -32,6 +32,7 @@ function matches(packingList, filename) {
         O: "Tariff/Commodity",
         P: "Cases",
         R: "Net Weight Kg",
+        T: "Country of Origin",
       };
 
       const headerRow = rowFinder(packingList[sheet], callback);

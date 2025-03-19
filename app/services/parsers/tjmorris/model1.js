@@ -26,6 +26,7 @@ function parse(packingListJson) {
           commodity_code: col.O ?? null,
           number_of_packages: col.P ?? null,
           total_net_weight_kg: col.R ?? null,
+          country_of_origin: col.T ?? null,
           row_location: {
             rowNumber: rowPos + 2,
             sheetName: sheet,
