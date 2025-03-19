@@ -21,7 +21,6 @@ module.exports = {
     }
 
     const pages = outcome.pages;
-    console.log(pages)
 
     // Find the RMS number
     let foundRMSElement = null;
@@ -57,32 +56,25 @@ module.exports = {
     // We now have the pixels of Y of the top of the table
     // We don't bother finding the footer as it's not consistent across the pages
 
-    // const pdfParser = new PdfDataParser({
-    //   url: filename,
-    //   newlines: false,
-    //   //orderXY: false,
-    //   // repeatingHeaders: true   can't use this as there's repeating headers but with a table above that stops this functionality working
-    //   pageHeader: startOfTableYCooord,
-    //   repeatingHeaders: true,
-    // });
-
-    //const rows = await pdfParser.parse();
 
     // to be replaced with helper function to find all x and y values
-    const xs = pdfHelper.getXsForHeaders();
-    const ys = pdfHelper.getYsForLines();
+    //console.log(pages[0].content)
     const packingListContents = [];
 
-    ys.forEach(y => {
-      const plRow = {
-        description: pages[0].content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.description) && (item.str.trim() !== '')))[0]?.str ?? null,
-        number_of_packages: pages[0].content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.packages) && (item.str.trim() !== '')))[0]?.str ?? null,
-        total_net_weight_kg: pages[0].content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.weight) && (item.str.trim() !== '')))[0]?.str ?? null,
-        commodity_code: pages[0].content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.commodityCode) && (item.str.trim() !== '')))[0]?.str ?? null
-      }
-      packingListContents.push(plRow);
-    })
+    for (const page of pages) {
+      const xs = pdfHelper.getXsForHeaders(page.content);
+      const ys = pdfHelper.getYsForRows(page.content);
 
+      ys.forEach(y => {
+        const plRow = {
+          description: page.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.description) && (item.str.trim() !== '')))[0]?.str ?? null,
+          number_of_packages: page.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.packages) && (item.str.trim() !== '')))[0]?.str ?? null,
+          total_net_weight_kg: page.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.weight) && (item.str.trim() !== '')))[0]?.str ?? null,
+          commodity_code: page.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.commodityCode) && (item.str.trim() !== '')))[0]?.str ?? null
+        }
+        packingListContents.push(plRow);
+      })
+    }
 
     return h.response(packingListContents).code(200);
   },
