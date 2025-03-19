@@ -1,5 +1,5 @@
 const config = require("../config");
-
+const pdfHelper = require('../utilities/pdf-helper');
 const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
 
@@ -69,14 +69,8 @@ module.exports = {
     //const rows = await pdfParser.parse();
 
     // to be replaced with helper function to find all x and y values
-    const xs = {
-      description: 163,
-      packages: 377.95,
-      weight: 432.91,
-      commodityCode: 507.1
-    }
-    const ys = [217.94, 223.82, 229.7, 235.58, 241.46, 247.34, 253.22, 259.1, 265.01, 270.89, 276.77, 282.65, 288.53, 294.41, 300.29, 306.17, 312.05, 317.93]
-
+    const xs = pdfHelper.getXsForHeaders();
+    const ys = pdfHelper.getYsForLines();
     const packingListContents = [];
 
     ys.forEach(y => {
@@ -90,6 +84,6 @@ module.exports = {
     })
 
 
-    return h.response(pages).code(200);
+    return h.response(packingListContents).code(200);
   },
 };
