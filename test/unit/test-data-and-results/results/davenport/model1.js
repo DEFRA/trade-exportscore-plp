@@ -14,6 +14,7 @@ module.exports = {
         number_of_packages: 160,
         total_net_weight_kg: 40.0,
         type_of_treatment: null,
+        country_of_origin: "Great Britain",
       },
       {
         commodity_code: "709599000",
@@ -22,6 +23,7 @@ module.exports = {
         number_of_packages: 20,
         total_net_weight_kg: 30.0,
         type_of_treatment: null,
+        country_of_origin: "Great Britain",
       },
     ],
     registration_approval_number: "RMS-GB-000323-001",
@@ -40,6 +42,7 @@ module.exports = {
         number_of_packages: 160,
         total_net_weight_kg: 40.0,
         type_of_treatment: null,
+        country_of_origin: "Great Britain",
       },
       {
         commodity_code: "709599000",
@@ -48,6 +51,7 @@ module.exports = {
         number_of_packages: 20,
         total_net_weight_kg: 30.0,
         type_of_treatment: null,
+        country_of_origin: "Great Britain",
       },
     ],
     registration_approval_number: "RMS-GB-000323-001",
@@ -67,6 +71,7 @@ module.exports = {
         number_of_packages: 160,
         total_net_weight_kg: 40.0,
         type_of_treatment: null,
+        country_of_origin: "Great Britain",
       },
       {
         commodity_code: "709599000",
@@ -75,6 +80,7 @@ module.exports = {
         number_of_packages: 20,
         total_net_weight_kg: null,
         type_of_treatment: null,
+        country_of_origin: "Great Britain",
       },
     ],
     registration_approval_number: "RMS-GB-000323-001",

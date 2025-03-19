@@ -48,18 +48,21 @@ module.exports = {
       {
         C: "Commodity Code",
         F: "Description of Goods",
+        G: "Country of Origin",
         H: "No. of Pkgs(180)",
         K: "Total Net Weight(X)",
       },
       {
         C: "709200010",
         F: "ASPARAGUS BUNDLE",
+        G: "Great Britain",
         H: 160,
         K: 40.0,
       },
       {
         C: "709599000",
         F: "OYSTER MUSHROOM",
+        G: "Great Britain",
         H: 20,
         K: 30.0,
       },
@@ -170,12 +173,14 @@ module.exports = {
         F: "Description of Goods",
         H: "No. of Pkgs(180)",
         K: "Total Net Weight(X)",
+        G: "Country of Origin",
       },
       {
         C: "709200010",
         F: "ASPARAGUS BUNDLE",
         H: 160,
         K: 40.0,
+        G: "Great Britain",
       },
     ],
     sheet2: [
@@ -228,12 +233,14 @@ module.exports = {
         F: "Description of Goods",
         H: "No. of Pkgs(180)",
         K: "Total Net Weight(X)",
+        G: "Country of Origin",
       },
       {
         C: "709599000",
         F: "OYSTER MUSHROOM",
         H: 20,
         K: 30.0,
+        G: "Great Britain",
       },
     ],
   },
@@ -340,6 +347,7 @@ module.exports = {
       {
         C: "Commodity Code",
         F: "Description of Goods",
+        G: "Country of Origin",
         H: "No. of Pkgs(X)",
         K: "Total Net Weight(X)",
       },
@@ -392,6 +400,7 @@ module.exports = {
       {
         C: "Commodity Code",
         F: "Description of Goods",
+        G: "Country of Origin",
         H: "No. of Pkgs(X)",
         K: "Total Net Weight(X)",
       },
@@ -682,6 +691,7 @@ module.exports = {
       {
         C: "Commodity Code",
         F: "Description of Goods",
+        G: "Country of Origin",
         H: "No. of Pkgs(180)",
         K: "Total Net Weight(X)",
       },
@@ -689,12 +699,14 @@ module.exports = {
       {
         C: null,
         F: "ASPARAGUS BUNDLE",
+        G: "Great Britain",
         H: 160,
         K: 40.0,
       },
       {
         C: "709599000",
         F: "OYSTER MUSHROOM",
+        G: "Great Britain",
         H: 20,
         K: null,
       },
@@ -708,6 +720,7 @@ module.exports = {
         F: "Description of Goods",
         H: "No. of Pkgs(180)",
         K: "Total Net Weight(X)",
+        G: "Country of Origin",
       },
     ],
   },

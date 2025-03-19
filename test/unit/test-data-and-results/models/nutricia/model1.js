@@ -24,18 +24,21 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
       {
         C: "ACTIVIA DRK FRTS 6X8X115",
         E: "403209300",
+        F: "BE",
         G: 2,
         H: 11.04,
       },
       {
         C: "ACT 00  YE&RD FRU 6X8X115",
         E: "403209100",
+        F: "FR",
         G: 5,
         H: 27.6,
       },
@@ -96,12 +99,14 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
       {
         C: "ACTIVIA DRK FRTS 6X8X115",
         E: "403209300",
+        F: "BE",
         G: 2,
         H: 11.04,
       },
@@ -130,12 +135,14 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
       {
         C: "ACT 00  YE&RD FRU 6X8X115",
         E: "403209100",
+        F: "FR",
         G: 5,
         H: 27.6,
       },
@@ -208,6 +215,7 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
@@ -236,6 +244,7 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
@@ -363,18 +372,21 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
       {
         C: "ACTIVIA DRK FRTS 6X8X115",
         E: null,
+        F: "BE",
         G: 2,
         H: 11.04,
       },
       {
         C: "ACT 00  YE&RD FRU 6X8X115",
         E: "403209100",
+        F: "FR",
         G: 5,
         H: null,
       },
@@ -405,6 +417,7 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },

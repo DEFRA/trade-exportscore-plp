@@ -49,12 +49,14 @@ const headers = {
       number_of_packages: "Quantity",
       total_net_weight: "NetMassKG",
       commodity_code: "CommodityCode",
+      country_of_origin: "CountryOrigin",
     },
     regex: {
       description: /Description/i,
       number_of_packages: /Quantity/i,
       total_net_weight_kg: /NetMassKG/i,
       commodity_code: /CommodityCode/i,
+      country_of_origin: /CountryOrigin/i,
     },
   },
   BUFFALOAD1: {
@@ -67,6 +69,7 @@ const headers = {
       number_of_packages: noOfPackagesRegex,
       total_net_weight_kg: /Item Net Weight \(kgs\)/i,
       commodity_code: commodityCodeRegex,
+      country_of_origin: /Country of Origin/i,
     },
   },
   CDS1: {
@@ -111,6 +114,7 @@ const headers = {
       commodity_code: /Commodity Code/i,
       number_of_packages: /No. of Pkgs/i,
       total_net_weight_kg: /Total Net Weight/i,
+      country_of_origin: /Country of Origin/i,
     },
   },
   FOWLERWELCH1: {
@@ -130,6 +134,7 @@ const headers = {
       total_net_weight_kg:
         /(Total Net Weight|Item Net Weight)(\s+\d+(\.\d+)?\s*kgs)?/i,
       type_of_treatment: /Treatment Type \(Chilled \/Ambient\)/i,
+      country_of_origin: /Country of Origin/i,
     },
     establishmentNumber: {
       regex: /RMS-GB-000216(-\d{3})?/i,
@@ -144,6 +149,7 @@ const headers = {
       commodity_code: commodityCodeRegex,
       number_of_packages: /Quantity/i,
       total_net_weight_kg: netWeightRegex,
+      country_of_origin: /Country of Origin/i,
     },
   },
   KEPAK1: {
@@ -155,6 +161,7 @@ const headers = {
       commodity_code: commodityCodeRegex,
       number_of_packages: /Quantity/i,
       total_net_weight_kg: netWeightRegex,
+      country_of_origin: /Country of Origin/i,
     },
   },
   MARS1: {
@@ -166,6 +173,7 @@ const headers = {
       commodity_code: commodityCodeRegex,
       number_of_packages: /Case Qty/i,
       total_net_weight_kg: /Weight/i,
+      country_of_origin: /Country Code/i,
     },
   },
   NISA1: {
@@ -201,6 +209,7 @@ const headers = {
       commodity_code: commodityCodeRegex,
       number_of_packages: /Quantity/i,
       total_net_weight_kg: netWeightRegex,
+      country_of_origin: /Country of Origin/i,
     },
   },
   SAINSBURYS1: {
@@ -261,6 +270,7 @@ const headers = {
       number_of_packages: /Packages/i,
       total_net_weight_kg: /^Net Weight \(KG\)$/i,
       type_of_treatment: /Treatment Type/i,
+      country_of_origin: /Country of Origin/i,
     },
   },
   TJMORRIS1: {
