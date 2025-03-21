@@ -24,6 +24,7 @@ function validatePackingListByIndexAndType(packingList) {
     packingList.items,
     hasMissingDescription,
   );
+
   const missingPackages = findItems(packingList.items, hasMissingPackages);
   const invalidPackages = findItems(packingList.items, wrongTypeForPackages);
   const missingNetWeight = findItems(packingList.items, hasMissingNetWeight);

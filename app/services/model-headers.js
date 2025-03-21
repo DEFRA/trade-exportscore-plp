@@ -299,17 +299,51 @@ const headers = {
     },
     modelId: "mands1-v3",
   },
-  BOOKER1: {
+  // BOOKER1: {
+  //   establishmentNumber: {
+  //     regex: /^RMS-GB-000077-\d{3}$/i,
+  //   },
+  //   headers: {
+  //     description: "Description",
+  //     commodity_code: "Commodity Code",
+  //     number_of_packages: "Boxes",
+  //     total_net_weight_kg: "Net Weight (Kilos)",
+  //   },
+  //   modelId: "booker1-v5",
+  // },
+  BOOKER2: {
     establishmentNumber: {
       regex: /^RMS-GB-000077-\d{3}$/i,
     },
     headers: {
-      description: "Description",
-      commodity_code: "Commodity Code",
-      number_of_packages: "Boxes",
-      total_net_weight_kg: "Net Weight (Kilos)",
+      description: {
+        regex: /Description/i,
+        headerTextAlignment: 'CL',
+      },
+      commodity_code: {
+        regex: /Commodity Code/i,
+        headerTextAlignment: 'LL',
+      },
+      number_of_packages: {
+        regex: /Quantity/i,
+        headerTextAlignment: 'LL',
+      },
+      total_net_weight: {
+        regex: /Net/i,
+        headerTextAlignment: 'LL',
+      },
+      // country_of_origin: {
+      //   regex: /Country of Origin/i,
+      //   headerTextAlignment: 'LL',
+      // },
+      // type_of_treatment: {
+      //   regex: /Treatment Type/i,
+      //   headerTextAlignment: 'LL',
+      // },
     },
-    modelId: "booker1-v5",
+    totals: /0 Boxes/i,
+    minHeadersY: /Net/i,
+    maxHeadersY: /(Kilos)/i,
   },
   GREGGS1: {
     establishmentNumber: {

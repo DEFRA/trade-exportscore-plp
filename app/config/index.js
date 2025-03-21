@@ -46,6 +46,6 @@ value.formRecognizerEndpoint = process.env.FORM_RECOGNIZER_ENDPOINT;
 value.plDir = path.join(process.cwd(), "/app/packing-lists/");
 
 // DI toggle
-value.isDiEnabled = process.env.IS_DOCUMENT_INTLELLIGENCE_ENABLED === "true";
+value.isDiEnabled = true//process.env.IS_DOCUMENT_INTLELLIGENCE_ENABLED === "true";
 
 module.exports = value;

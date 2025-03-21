@@ -1,6 +1,7 @@
 const {
   parsersExcel,
   parsersPdf,
+  parsersPdfNonAi,
   noMatchParsers,
 } = require("../model-parsers");
 const matcherResult = require("../matcher-result");
@@ -29,6 +30,7 @@ async function getPdfParser(sanitisedPackingList, filename) {
 
   if (remos) {
     let result = {};
+
     for (const pdfModel in headers) {
       if (headers[pdfModel].establishmentNumber.regex.test(remos)) {
         result = await parsersPdf[pdfModel].matches(
@@ -50,7 +52,25 @@ async function getPdfParser(sanitisedPackingList, filename) {
   return parser;
 }
 
+function getPdfNonAiParser(sanitisedPackingList, filename) {
+  let parser = null;
+  if (noMatchParsers.NOREMOSPDF.matches(sanitisedPackingList, filename)) {
+    Object.keys(parsersPdfNonAi).forEach((key) => {
+      if (
+        parsersPdfNonAi[key].matches(sanitisedPackingList, filename) ===
+        matcherResult.CORRECT
+      ) {
+        parser = parsersPdfNonAi[key];
+      }
+    });
+  } else {
+    parser = noMatchParsers.NOREMOS;
+  }
+  return parser;
+}
+
 module.exports = {
   getExcelParser,
   getPdfParser,
+  getPdfNonAiParser,
 };

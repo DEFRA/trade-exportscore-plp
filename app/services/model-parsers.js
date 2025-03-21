@@ -52,6 +52,8 @@ const bookerMatcher = require("./matchers/booker/model1");
 const bookerParser = require("./parsers/booker/model1");
 const greggsMatcher = require("./matchers/greggs/model1");
 const greggsParser = require("./parsers/greggs/model1");
+const bookerMatcher2 = require("./matchers/booker/model2");
+const bookerParser2 = require("./parsers/booker/model2");
 
 const parsersExcel = {
   ASDA1: {
@@ -220,4 +222,12 @@ const noMatchParsers = {
   },
 };
 
-module.exports = { parsersExcel, parsersPdf, noMatchParsers };
+const parsersPdfNonAi = {
+  BOOKER2: {
+    matches: (packingList, filename) =>
+      bookerMatcher2.matches(packingList, filename),
+    parse: (packingList, filename) => bookerParser2.parse(packingList, filename),
+  },
+}
+
+module.exports = { parsersExcel, parsersPdf, noMatchParsers, parsersPdfNonAi };

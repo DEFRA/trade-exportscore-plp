@@ -1,6 +1,6 @@
 const fileExtension = require("../../utilities/file-extension");
 const config = require("../../config");
-const { getExcelParser, getPdfParser } = require("./parsers");
+const { getExcelParser, getPdfParser, getPdfNonAiParser } = require("./parsers");
 const packingListValidator = require("../validators/packing-list-column-validator");
 const {
   removeEmptyItems,
@@ -16,7 +16,9 @@ async function findParser(sanitizedPackingList, fileName) {
 
   if (fileExtension.isExcel(fileName)) {
     parser = getExcelParser(sanitizedPackingList, fileName);
-  } else if (fileExtension.isPdf(fileName) && config.isDiEnabled) {
+  } else if (fileExtension.isPdf(fileName)) {
+    parser = getPdfNonAiParser(sanitizedPackingList, fileName);
+  } else if (config.isDiEnabled) {
     parser = await getPdfParser(sanitizedPackingList, fileName);
   } else {
     parser = null;

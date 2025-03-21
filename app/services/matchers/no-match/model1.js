@@ -21,14 +21,15 @@ function noRemosMatch(sanitisedPackingList, _filename) {
 async function noRemosMatchPdf(packingList) {
   try {
     const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
-    const client = createDocumentIntelligenceClient();
-    const content = await runPrebuiltAnalysis(
-      client,
-      "prebuilt-read",
-      packingList,
-    );
+    for (const page of packingList) {
+      for (const element of page.content) {
+        if (remosRegex.test(element.str)) {
+          return true;
+        }
+      }
+    }
 
-    return regex.findMatch(remosRegex, [content]);
+    return false;
   } catch (err) {
     return false;
   }
