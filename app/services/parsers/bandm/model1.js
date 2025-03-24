@@ -27,16 +27,25 @@ function parse(packingListJson) {
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
 
     for (const sheet of sheets) {
-      const dataRow =
-        packingListJson[sheet]
-          .slice(headerRow + 1)
-          .findIndex((x) => !isEmptyRow(x)) +
+      const firstDataRowIndex =  packingListJson[sheet]
+      .slice(headerRow + 1)
+      .findIndex((x) => !isEmptyRow(x));
+
+      const dataRow = firstDataRowIndex === -1 ?
+        headerRow + 1 :
+        firstDataRowIndex +
         headerRow +
         1;
-      const lastRow =
-        packingListJson[sheet]
-          .slice(dataRow + 1)
-          .findIndex((x) => isEndOfRow(x)) + dataRow;
+
+      const dataRows = 
+        packingListJson[sheet].slice(dataRow + 1);
+      const lastRowIndex =
+        dataRows.findIndex((x) => isEndOfRow(x));
+
+      const lastRow = lastRowIndex === -1 ?
+        dataRows.length + dataRow + 1 :  
+        lastRowIndex + dataRow;
+
       packingListContentsTemp = packingListJson[sheet]
         .slice(dataRow, lastRow + 1)
         .map((col, rowPos) => ({
