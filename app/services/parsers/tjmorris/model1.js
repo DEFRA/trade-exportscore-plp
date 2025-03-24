@@ -18,7 +18,6 @@ function parse(packingListJson) {
     );
 
     for (const sheet of sheets) {
-
       // look for header row
       const headerRow = rowFinder(packingListJson[sheet], callback);
 
