@@ -13,7 +13,7 @@ function matches(packingList, filename) {
     // check for correct establishment number
     for (const page of packingList) {
       if (
-        !regex.test(headers.BOOKER2.establishmentNumber.regex, page.content)
+        !regex.test(headers.BOOKER2L.establishmentNumber.regex, page.content)
       ) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
@@ -21,8 +21,8 @@ function matches(packingList, filename) {
       // match header
       const header = pdfHelper.getHeaders(page.content, "BOOKER2");
 
-      for (const x in headers["BOOKER2"].headers) {
-        if (!header.some(item => headers["BOOKER2"].headers[x].regex.test(item))) {
+      for (const x in headers["BOOKER2L"].headers) {
+        if (!header.some(item => headers["BOOKER2L"].headers[x].regex.test(item))) {
           return matcherResult.WRONG_HEADER
         }
       }

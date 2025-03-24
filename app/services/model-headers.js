@@ -311,7 +311,7 @@ const headers = {
   //   },
   //   modelId: "booker1-v5",
   // },
-  BOOKER2: {
+  BOOKER2P: {
     establishmentNumber: {
       regex: /^RMS-GB-000077-\d{3}$/i,
     },
@@ -332,14 +332,40 @@ const headers = {
         regex: /Net/i,
         headerTextAlignment: 'LL',
       },
-      // country_of_origin: {
-      //   regex: /Country of Origin/i,
-      //   headerTextAlignment: 'LL',
-      // },
-      // type_of_treatment: {
-      //   regex: /Treatment Type/i,
-      //   headerTextAlignment: 'LL',
-      // },
+    },
+    totals: /0 Boxes/i,
+    minHeadersY: /Net/i,
+    maxHeadersY: /(Kilos)/i,
+  },
+  BOOKER2L: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000077-\d{3}$/i,
+    },
+    headers: {
+      description: {
+        regex: /Description/i,
+        headerTextAlignment: 'CL',
+      },
+      commodity_code: {
+        regex: /Commodity Code/i,
+        headerTextAlignment: 'LL',
+      },
+      number_of_packages: {
+        regex: /Quantity/i,
+        headerTextAlignment: 'LL',
+      },
+      total_net_weight: {
+        regex: /Net/i,
+        headerTextAlignment: 'LL',
+      },
+      country_of_origin: {
+        regex: /Country of Origin/i,
+        headerTextAlignment: 'LL',
+      },
+      type_of_treatment: {
+        regex: /Treatment Type/i,
+        headerTextAlignment: 'LL',
+      },
     },
     totals: /0 Boxes/i,
     minHeadersY: /Net/i,
