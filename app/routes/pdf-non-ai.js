@@ -1,9 +1,6 @@
 const config = require("../config");
-const pdfHelper = require('../utilities/pdf-helper');
 const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
-const matcher = require('../services/matchers/booker/model2');
-const parser = require('../services/parsers/booker/model2')
 const { findParser } = require("../services/parser-service");
 
 module.exports = {

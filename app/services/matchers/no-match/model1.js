@@ -18,17 +18,15 @@ function noRemosMatch(sanitisedPackingList, _filename) {
   return false;
 }
 
-async function noRemosMatchPdf(packingList) {
+function noRemosMatchPdf(packingList) {
   try {
     const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
     for (const page of packingList) {
-      for (const element of page.content) {
-        if (remosRegex.test(element.str)) {
-          return true;
-        }
+      const result = regex.findMatch(remosRegex, page.content)
+      if (result) {
+        return result
       }
     }
-
     return false;
   } catch (err) {
     return false;

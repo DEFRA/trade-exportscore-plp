@@ -13,22 +13,33 @@ function matches(packingList, filename) {
     // check for correct establishment number
     for (const page of packingList) {
       if (
-        !regex.test(headers.BOOKER2L.establishmentNumber.regex, page.content)
+        !regex.test(headers.BOOKER2.establishmentNumber.regex, page.content)
       ) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
 
       // match header
       const header = pdfHelper.getHeaders(page.content, "BOOKER2");
-
-      for (const x in headers["BOOKER2L"].headers) {
-        if (!header.some(item => headers["BOOKER2L"].headers[x].regex.test(item))) {
-          return matcherResult.WRONG_HEADER
+      let isBookerHeader = matcherResult.CORRECT;
+      for (const x in headers["BOOKER2"].headers) {
+        if (!header.some(item => headers["BOOKER2"].headers[x].regex.test(item))) {
+          isBookerHeader = matcherResult.WRONG_HEADER
+          break;
         }
       }
-    }
 
-    result = matcherResult.CORRECT
+      let isBookerLandscapeHeader = matcherResult.CORRECT;
+      for (const x in headers["BOOKER2L"].headers) {
+        if (!header.some(item => headers["BOOKER2L"].headers[x].regex.test(item))) {
+          isBookerLandscapeHeader = matcherResult.WRONG_HEADER
+          break;
+        }
+      }
+
+      if (isBookerHeader === matcherResult.CORRECT || isBookerLandscapeHeader === matcherResult.CORRECT) {
+        result = matcherResult.CORRECT;
+      }
+    }
 
     if (result === matcherResult.CORRECT) {
       logger.logInfo(

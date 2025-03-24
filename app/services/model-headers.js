@@ -4,6 +4,33 @@ const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
 
+const booker2 = {
+  establishmentNumber: {
+    regex: /^RMS-GB-000077-\d{3}$/i,
+  },
+  headers: {
+    description: {
+      regex: /Description/i,
+      headerTextAlignment: 'CL',
+    },
+    commodity_code: {
+      regex: /Commodity Code/i,
+      headerTextAlignment: 'LL',
+    },
+    number_of_packages: {
+      regex: /Quantity/i,
+      headerTextAlignment: 'LL',
+    },
+    total_net_weight: {
+      regex: /Net/i,
+      headerTextAlignment: 'LL',
+    },
+  },
+  totals: /0 Boxes/i,
+  minHeadersY: /Net/i,
+  maxHeadersY: /(Kilos)/i,
+}
+
 const headers = {
   ASDA1: {
     establishmentNumber: {
@@ -311,53 +338,11 @@ const headers = {
   //   },
   //   modelId: "booker1-v5",
   // },
-  BOOKER2P: {
-    establishmentNumber: {
-      regex: /^RMS-GB-000077-\d{3}$/i,
-    },
-    headers: {
-      description: {
-        regex: /Description/i,
-        headerTextAlignment: 'CL',
-      },
-      commodity_code: {
-        regex: /Commodity Code/i,
-        headerTextAlignment: 'LL',
-      },
-      number_of_packages: {
-        regex: /Quantity/i,
-        headerTextAlignment: 'LL',
-      },
-      total_net_weight: {
-        regex: /Net/i,
-        headerTextAlignment: 'LL',
-      },
-    },
-    totals: /0 Boxes/i,
-    minHeadersY: /Net/i,
-    maxHeadersY: /(Kilos)/i,
-  },
+  BOOKER2: booker2,
   BOOKER2L: {
-    establishmentNumber: {
-      regex: /^RMS-GB-000077-\d{3}$/i,
-    },
+    ...booker2,
     headers: {
-      description: {
-        regex: /Description/i,
-        headerTextAlignment: 'CL',
-      },
-      commodity_code: {
-        regex: /Commodity Code/i,
-        headerTextAlignment: 'LL',
-      },
-      number_of_packages: {
-        regex: /Quantity/i,
-        headerTextAlignment: 'LL',
-      },
-      total_net_weight: {
-        regex: /Net/i,
-        headerTextAlignment: 'LL',
-      },
+      ...booker2.headers,
       country_of_origin: {
         regex: /Country of Origin/i,
         headerTextAlignment: 'LL',
@@ -367,10 +352,41 @@ const headers = {
         headerTextAlignment: 'LL',
       },
     },
-    totals: /0 Boxes/i,
-    minHeadersY: /Net/i,
-    maxHeadersY: /(Kilos)/i,
   },
+  // BOOKER2L: {
+  //   establishmentNumber: {
+  //     regex: /^RMS-GB-000077-\d{3}$/i,
+  //   },
+  //   headers: {
+  //     description: {
+  //       regex: /Description/i,
+  //       headerTextAlignment: 'CL',
+  //     },
+  //     commodity_code: {
+  //       regex: /Commodity Code/i,
+  //       headerTextAlignment: 'LL',
+  //     },
+  //     number_of_packages: {
+  //       regex: /Quantity/i,
+  //       headerTextAlignment: 'LL',
+  //     },
+  //     total_net_weight: {
+  //       regex: /Net/i,
+  //       headerTextAlignment: 'LL',
+  //     },
+  //     country_of_origin: {
+  //       regex: /Country of Origin/i,
+  //       headerTextAlignment: 'LL',
+  //     },
+  //     type_of_treatment: {
+  //       regex: /Treatment Type/i,
+  //       headerTextAlignment: 'LL',
+  //     },
+  //   },
+  //   totals: /0 Boxes/i,
+  //   minHeadersY: /Net/i,
+  //   maxHeadersY: /(Kilos)/i,
+  // },
   GREGGS1: {
     establishmentNumber: {
       regex: /^RMS-GB-000021-\d{3}$/i,
