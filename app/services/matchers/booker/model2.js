@@ -5,13 +5,16 @@ const regex = require("../../../utilities/regex");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const pdfHelper = require('../../../utilities/pdf-helper');
+const PDFExtract = require("pdf.js-extract").PDFExtract;
+const pdfExtract = new PDFExtract();
 
-function matches(packingList, filename) {
+async function matches(packingList, filename) {
   try {
+    const pdfJson = await pdfExtract.extractBuffer(packingList);
     let result;
 
     // check for correct establishment number
-    for (const page of packingList) {
+    for (const page of pdfJson.pages) {
       if (
         !regex.test(headers.BOOKER2.establishmentNumber.regex, page.content)
       ) {

@@ -27,24 +27,25 @@ function getExcelParser(sanitisedPackingList, filename) {
 async function getPdfParser(sanitisedPackingList, filename) {
   let parser = {};
   const remos = await noMatchParsers.NOREMOSPDF.matches(sanitisedPackingList);
-  console.log(remos)
+
   if (remos) {
     let result = {};
 
-    for (const pdfModel in headers) {
-      if (headers[pdfModel].establishmentNumber.regex.test(remos)) {
-        result = await parsersPdf[pdfModel].matches(
+    for (const key in parsersPdf) {
+      if (headers[key].establishmentNumber.regex.test(remos)) {
+        result = await parsersPdf[key].matches(
           sanitisedPackingList,
           filename,
         );
       }
 
       if (result.isMatched === matcherResult.CORRECT) {
-        parser.parser = parsersPdf[pdfModel];
+        parser.parser = parsersPdf[key];
         parser.result = result;
         break;
       }
-    }
+    };
+
   } else {
     parser = noMatchParsers.NOREMOS;
   }
@@ -52,20 +53,19 @@ async function getPdfParser(sanitisedPackingList, filename) {
   return parser;
 }
 
-function getPdfNonAiParser(sanitisedPackingList, filename) {
+async function getPdfNonAiParser(sanitisedPackingList, filename) {
   let parser = null;
-  console.log(noMatchParsers.NOREMOSPDF.matches(sanitisedPackingList, filename))
-  if (noMatchParsers.NOREMOSPDF.matches(sanitisedPackingList, filename)) {
-    Object.keys(parsersPdfNonAi).forEach((key) => {
+
+  if (await noMatchParsers.NOREMOSPDF.matches(sanitisedPackingList, filename)) {
+    for (const key in parsersPdfNonAi) {
       if (
-        parsersPdfNonAi[key].matches(sanitisedPackingList, filename) ===
+        await parsersPdfNonAi[key].matches(sanitisedPackingList, filename) ===
         matcherResult.CORRECT
       ) {
         parser = parsersPdfNonAi[key];
       }
-    });
+    }
   } else {
-    console.log("no remos parser")
     parser = noMatchParsers.NOREMOS;
   }
   return parser;

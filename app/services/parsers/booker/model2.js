@@ -6,18 +6,22 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapPdfNonAiParser } = require('../../../services/parser-map')
+const PDFExtract = require("pdf.js-extract").PDFExtract;
+const pdfExtract = new PDFExtract();
 
-function parse(packingList) {
+async function parse(packingList) {
   try {
     let packingListContents = [];
     let packingListContentsTemp = [];
 
+    const pdfJson = await pdfExtract.extractBuffer(packingList);
+
     const establishmentNumber = regex.findMatch(
       headers.BOOKER2.establishmentNumber.regex,
-      packingList[0].content,
+      pdfJson.pages[0].content,
     );
 
-    for (const page of packingList) {
+    for (const page of pdfJson.pages) {
       packingListContentsTemp = mapPdfNonAiParser(page, "BOOKER2");
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }

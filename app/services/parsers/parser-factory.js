@@ -18,8 +18,8 @@ async function findParser(sanitizedPackingList, fileName) {
   if (fileExtension.isExcel(fileName)) {
     parser = getExcelParser(sanitizedPackingList, fileName);
   } else if (fileExtension.isPdf(fileName)) {
-    parser = getPdfNonAiParser(sanitizedPackingList, fileName);
-    console.log(parser)
+    parser = await getPdfNonAiParser(sanitizedPackingList, fileName);
+
     if (!parser) {
       parser = await getPdfParser(sanitizedPackingList, fileName);
     }
@@ -39,8 +39,8 @@ async function findParser(sanitizedPackingList, fileName) {
   return parser;
 }
 
-function generateParsedPackingList(parser, sanitisedPackingList) {
-  const parsedPackingList = parser.parse(sanitisedPackingList);
+async function generateParsedPackingList(parser, sanitisedPackingList) {
+  const parsedPackingList = await parser.parse(sanitisedPackingList);
   parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
   const validationResults =
     packingListValidator.validatePackingList(parsedPackingList);

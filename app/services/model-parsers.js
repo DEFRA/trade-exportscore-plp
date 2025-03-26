@@ -190,11 +190,11 @@ const parsersPdf = {
       mandsMatcher.matches(packingList, filename),
     parse: (packingList, filename) => mandsParser.parse(packingList, filename),
   },
-  BOOKER1: {
-    matches: (packingList, filename) =>
-      bookerMatcher.matches(packingList, filename),
-    parse: (packingList, filename) => bookerParser.parse(packingList, filename),
-  },
+  // BOOKER1: {
+  //   matches: (packingList, filename) =>
+  //     bookerMatcher.matches(packingList, filename),
+  //   parse: (packingList, filename) => bookerParser.parse(packingList, filename),
+  // },
   GREGGS1: {
     matches: (packingList, filename) =>
       greggsMatcher.matches(packingList, filename),

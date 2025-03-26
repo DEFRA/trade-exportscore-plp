@@ -22,12 +22,12 @@ async function parsePackingList(packingList, fileName) {
       fileExtension.isPdf(fileName) &&
       parser.result?.isMatched === matcherResult.CORRECT
     ) {
-      return parserFactory.generateParsedPackingList(
+      return await parserFactory.generateParsedPackingList(
         parser.parser,
         parser.result.document,
       );
     } else {
-      return parserFactory.generateParsedPackingList(
+      return await parserFactory.generateParsedPackingList(
         parser,
         sanitizedPackingList,
       );
