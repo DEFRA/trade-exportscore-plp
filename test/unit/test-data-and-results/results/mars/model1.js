@@ -14,6 +14,7 @@ module.exports = {
         total_net_weight_kg: 24.0,
         nature_of_products: null,
         type_of_treatment: null,
+        country_of_origin: "GB",
       },
       {
         commodity_code: "19049010",
@@ -22,6 +23,7 @@ module.exports = {
         total_net_weight_kg: 443.52,
         nature_of_products: null,
         type_of_treatment: null,
+        country_of_origin: "GB",
       },
     ],
     registration_approval_number: "RMS-GB-000213-001",
@@ -40,6 +42,7 @@ module.exports = {
         total_net_weight_kg: 24.0,
         nature_of_products: null,
         type_of_treatment: null,
+        country_of_origin: "GB",
       },
       {
         commodity_code: "19049010",
@@ -48,6 +51,7 @@ module.exports = {
         total_net_weight_kg: 443.52,
         nature_of_products: null,
         type_of_treatment: null,
+        country_of_origin: "GB",
       },
       {
         commodity_code: "21032000",
@@ -56,6 +60,7 @@ module.exports = {
         total_net_weight_kg: 24.0,
         nature_of_products: null,
         type_of_treatment: null,
+        country_of_origin: "GB",
       },
       {
         commodity_code: "19049010",
@@ -64,6 +69,7 @@ module.exports = {
         total_net_weight_kg: 443.52,
         nature_of_products: null,
         type_of_treatment: null,
+        country_of_origin: "GB",
       },
     ],
     registration_approval_number: "RMS-GB-000213-001",
@@ -82,6 +88,7 @@ module.exports = {
         number_of_packages: null,
         total_net_weight_kg: null,
         type_of_treatment: null,
+        country_of_origin: null,
       },
     ],
     registration_approval_number: null,
@@ -101,6 +108,7 @@ module.exports = {
         total_net_weight_kg: 24.0,
         nature_of_products: null,
         type_of_treatment: null,
+        country_of_origin: "GB",
       },
       {
         commodity_code: "19049010",
@@ -109,6 +117,7 @@ module.exports = {
         total_net_weight_kg: null,
         nature_of_products: null,
         type_of_treatment: null,
+        country_of_origin: "GB",
       },
     ],
     registration_approval_number: "RMS-GB-000213-001",

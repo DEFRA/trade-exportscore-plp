@@ -11,18 +11,21 @@ module.exports = {
       },
       {
         C: "DESCRIPTION",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
         E: "Commodity Code",
       },
       {
         C: "SPINACH AND RICOTTA TORT",
+        F: "IT",
         G: 17,
         H: 40.8,
         E: "1902209990",
       },
       {
         C: "FOUR CHEESE TORT",
+        F: "IT",
         G: 10,
         H: 24,
         E: "1902209990",
@@ -55,12 +58,14 @@ module.exports = {
       },
       {
         C: "DESCRIPTION",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
         E: "Commodity Code",
       },
       {
         C: "RANA CHICKEN&BACON TORT",
+        F: "IT",
         G: 21,
         H: 31.5,
         E: "1902209990",
@@ -75,12 +80,14 @@ module.exports = {
       },
       {
         C: "DESCRIPTION",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
         E: "Commodity Code",
       },
       {
         C: "RANA HAM&CHEESE TORT",
+        F: "IT",
         G: 10,
         H: 15,
         E: "1902209990",
@@ -94,18 +101,21 @@ module.exports = {
       },
       {
         C: "DESCRIPTION",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
         E: "Commodity Code",
       },
       {
         C: "SPINACH AND RICOTTA TORT",
+        F: "IT",
         G: null,
         H: 40.8,
         E: "1902209990",
       },
       {
         C: "FOUR CHEESE TORT",
+        F: "IT",
         G: 10,
         H: null,
         E: "1902209990",
@@ -175,6 +185,7 @@ module.exports = {
       },
       {
         C: "DESCRIPTION",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
         E: "Commodity Code",
@@ -249,6 +260,7 @@ module.exports = {
         G: "Quantity",
         H: "Net Weight (KG)",
         E: "Commodity Code",
+        F: "Country of Origin",
       },
     ],
     sheet2: [
@@ -260,6 +272,7 @@ module.exports = {
         G: "Quantity",
         H: "Net Weight (KG)",
         E: "Commodity Code",
+        F: "Country of Origin",
       },
     ],
   },

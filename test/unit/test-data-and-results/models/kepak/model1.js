@@ -24,18 +24,21 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
       {
         C: "RS DOUBLE DECKER STD",
         E: "1602509590",
+        F: "GB",
         G: 32,
         H: 30.336,
       },
       {
         C: "RS BBQ RIB STD 8X157G",
         E: "1602493000",
+        F: "GB",
         G: 22,
         H: 27.632,
       },
@@ -96,12 +99,14 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
       {
         C: "FS MINI SAUSAGE BAP",
         E: "1602495000",
+        F: "GB",
         G: 3,
         H: 2.16,
       },
@@ -130,12 +135,14 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
       {
         C: "RS MEATBALL SUB",
         E: "1602495000",
+        F: "GB",
         G: 3,
         H: 1.716,
       },
@@ -208,6 +215,7 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
@@ -236,6 +244,7 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
@@ -364,18 +373,21 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },
       {
         C: "RS DOUBLE DECKER STD",
         E: "1602509590",
+        F: "GB",
         G: null,
         H: 30.336,
       },
       {
         C: null,
         E: "1602493000",
+        F: "GB",
         G: 22,
         H: 27.632,
       },
@@ -406,6 +418,7 @@ module.exports = {
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
+        F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
       },

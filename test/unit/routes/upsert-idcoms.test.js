@@ -25,11 +25,11 @@ describe("upsert idcoms", () => {
   });
 
   test("should not call the sendParsed when application id is not specified", async () => {
-    const mockHandler =  {
+    const mockHandler = {
       response: jest.fn(() => ({
         code: jest.fn((code) => code),
       })),
-    };;
+    };
 
     const response = await upsertIdcoms.options.handler({}, mockHandler);
 

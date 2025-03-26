@@ -37,6 +37,7 @@ describe("Packing list", () => {
           commodity_code: 123,
           number_of_packages: 1,
           total_net_weight_kg: 0.5,
+          country_of_origin: null,
         },
       ],
       business_checks: {
@@ -63,6 +64,7 @@ describe("Packing list", () => {
       commodity_code: 123,
       number_of_packages: 1,
       total_net_weight_kg: 0.5,
+      country_of_origin: "Great Britain",
     };
 
     const result = packingListIndex.itemsMapper(item, "123");
@@ -73,13 +75,14 @@ describe("Packing list", () => {
     expect(result.numberOfPackages).toBe(item.number_of_packages);
     expect(result.totalWeight).toBe(item.total_net_weight_kg);
     expect(result.applicationId).toBe("123");
+    expect(result.countryOfOrigin).toBe("Great Britain");
   });
 
   test("itemsMapper undefined items", () => {
     const result = packingListIndex.itemsMapper(undefined, "123");
 
     expect(result).not.toBeDefined();
-  })
+  });
 
   test("packingListMapper should map correctly for failure", () => {
     const packingListJson = {
@@ -91,6 +94,7 @@ describe("Packing list", () => {
           commodity_code: 123,
           number_of_packages: 1,
           total_net_weight_kg: 0.5,
+          country_of_origin: "Great Britain",
         },
       ],
       registration_approval_number: "test",
@@ -127,6 +131,9 @@ describe("Packing list", () => {
       packingListJson.items[0].total_net_weight_kg,
     );
     expect(result.item[0].applicationId).toBe("123");
+    expect(result.item[0].countryOfOrigin).toBe(
+      packingListJson.items[0].country_of_origin,
+    );
   });
 
   test("packingListMapper should map correctly", () => {
@@ -139,6 +146,7 @@ describe("Packing list", () => {
           commodity_code: 123,
           number_of_packages: 1,
           total_net_weight_kg: 0.5,
+          country_of_origin: "Great Britain",
         },
       ],
       registration_approval_number: "test",
@@ -177,11 +185,14 @@ describe("Packing list", () => {
       packingListJson.items[0].total_net_weight_kg,
     );
     expect(result.item[0].applicationId).toBe("123");
+    expect(result.item[0].countryOfOrigin).toBe(
+      packingListJson.items[0].country_of_origin,
+    );
   });
 
   test("packingListMapper errors ", () => {
     const result = packingListIndex.packingListMapper(null, "123");
 
     expect(result).not.toBeDefined();
-  })
+  });
 });

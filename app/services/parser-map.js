@@ -28,6 +28,7 @@ function mapParser(
       commodity_code: col[headerCols.commodity_code] ?? null,
       number_of_packages: col[headerCols.number_of_packages] ?? null,
       total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
+      country_of_origin: col[headerCols.country_of_origin] ?? null,
       row_location: {
         rowNumber: dataRow + rowPos + 1,
         sheetName,

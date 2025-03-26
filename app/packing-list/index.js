@@ -52,6 +52,7 @@ function itemsMapper(o, applicationId) {
       numberOfPackages: o.number_of_packages,
       totalWeight: o.total_net_weight_kg,
       applicationId,
+      countryOfOrigin: o.country_of_origin,
     };
   } catch (err) {
     logger.logError(filenameForLogging, "itemsMapper()", err);

@@ -21,9 +21,9 @@ function parse(packingListJson) {
     );
 
     const footerValues = [/^TOTAL$/i];
-    const callback = function(x) {
+    const callback = function (x) {
       return regex.testAllPatterns(footerValues, x);
-    }
+    };
 
     for (const sheet of sheets) {
       const footerRow = rowFinder(packingListJson[sheet], callback);
