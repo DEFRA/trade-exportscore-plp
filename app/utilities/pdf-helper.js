@@ -1,4 +1,42 @@
 const headers = require('../services/model-headers')
+const PDFExtract = require("pdf.js-extract").PDFExtract;
+const pdfExtract = new PDFExtract();
+
+async function extractPdf(buffer) {
+  const pdfJson = await pdfExtract.extractBuffer(buffer);
+  const sanitisedJson = sanitise(pdfJson);
+  return sanitisedJson
+}
+
+function sanitise(pdfJson) {
+  for (const page in pdfJson.pages) {
+    // remove empty string elements
+    for (let i = pdfJson.pages[page].content.length - 1; i >= 0; i--) {
+      if (pdfJson.pages[page].content[i].width === 0) {
+        pdfJson.pages[page].content.splice(i, 1);
+      } 
+    }
+
+    // order by y then x
+    pdfJson.pages[page].content.sort((a, b) => {
+      if (a.y === b.y) {
+        return a.x - b.x;
+      }
+      return a.y - b.y
+    })
+
+    // merge elements that are next to each other
+    for (let i = pdfJson.pages[page].content.length - 1; i > 0; i--) {
+      if ((Math.round(pdfJson.pages[page].content[i].x) === (Math.round(pdfJson.pages[page].content[i - 1].x + pdfJson.pages[page].content[i - 1].width))) && pdfJson.pages[page].content[i].str !== ' ' && pdfJson.pages[page].content[i - 1].str !== ' ') {
+        pdfJson.pages[page].content[i - 1].str += pdfJson.pages[page].content[i].str
+        pdfJson.pages[page].content[i - 1].width += pdfJson.pages[page].content[i].width
+        pdfJson.pages[page].content.splice(i, 1);
+      }
+    }
+  }
+  
+  return pdfJson
+}
 
 function getXsForRows(pageContent, model) {
   const header = headers[model].headers;
@@ -75,4 +113,4 @@ function getHeaders(pageContent, model) {
   return joinedArray;
 }
 
-module.exports = { getXsForRows, getYsForRows, getHeaders };
+module.exports = { getXsForRows, getYsForRows, getHeaders, extractPdf };

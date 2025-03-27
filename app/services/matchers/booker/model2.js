@@ -5,12 +5,10 @@ const regex = require("../../../utilities/regex");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const pdfHelper = require('../../../utilities/pdf-helper');
-const PDFExtract = require("pdf.js-extract").PDFExtract;
-const pdfExtract = new PDFExtract();
 
 async function matches(packingList, filename) {
   try {
-    const pdfJson = await pdfExtract.extractBuffer(packingList);
+    const pdfJson = await pdfHelper.extractPdf(packingList);
     let result;
 
     // check for correct establishment number
