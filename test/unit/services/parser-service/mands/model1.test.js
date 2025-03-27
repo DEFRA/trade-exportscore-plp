@@ -11,7 +11,7 @@ jest.mock("../../../../../app/config", () => {
     isDiEnabled: true,
   };
 });
-jest.mock("../../../../../app/utilities/pdf-helper")
+jest.mock("../../../../../app/utilities/pdf-helper");
 
 const {
   createDocumentIntelligenceClient,
@@ -24,8 +24,8 @@ createDocumentIntelligenceClient.mockImplementation(() => {
 });
 
 extractPdf.mockImplementation(() => {
-  return { pages: [{ content: [{remos: "RMS-GB-000008-001"}]}] }
-})
+  return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+});
 
 describe("findParser", () => {
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as true", async () => {

@@ -17,7 +17,7 @@ async function parsePackingList(packingList, fileName) {
       sanitizedPackingList,
       fileName,
     );
-    console.log(parser)
+    console.log(parser);
     if (
       fileExtension.isPdf(fileName) &&
       parser.result?.isMatched === matcherResult.CORRECT

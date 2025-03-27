@@ -4,7 +4,8 @@ const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
 
-const booker1 = { //TODO change this maybe
+const booker1 = {
+  //TODO change this maybe
   establishmentNumber: {
     regex: /^RMS-GB-000077-\d{3}$/i,
   },

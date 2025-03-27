@@ -51,7 +51,7 @@ async function getPdfParser(sanitisedPackingList, filename) {
 
 async function getPdfNonAiParser(sanitisedPackingList, filename) {
   let parser = null;
-  console.log("here")
+  console.log("here");
   if (await noMatchParsers.NOREMOSPDF.matches(sanitisedPackingList, filename)) {
     for (const key in parsersPdfNonAi) {
       if (

@@ -5,7 +5,7 @@ const test_results = require("../../../test-data-and-results/results/greggs/mode
 
 const filename = "greggs-model1.pdf";
 
-jest.mock("../../../../../app/utilities/pdf-helper")
+jest.mock("../../../../../app/utilities/pdf-helper");
 jest.mock("../../../../../app/services/document-intelligence");
 jest.mock("../../../../../app/config", () => {
   return {
@@ -24,7 +24,7 @@ createDocumentIntelligenceClient.mockImplementation(() => {
 });
 
 extractPdf.mockImplementation(() => {
-  return { pages: [{ content: [{remos: "RMS-GB-000021-000"}]}] }
+  return { pages: [{ content: [{ remos: "RMS-GB-000021-000" }] }] };
 });
 
 describe("findParser", () => {

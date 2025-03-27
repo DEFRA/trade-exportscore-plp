@@ -6,7 +6,7 @@ jest.mock("../../../app/config", () => {
   };
 });
 
-jest.mock("../../../app/utilities/pdf-helper")
+jest.mock("../../../app/utilities/pdf-helper");
 const { extractPdf } = require("../../../app/utilities/pdf-helper");
 
 jest.mock("../../../app/services/document-intelligence");
@@ -96,7 +96,7 @@ describe("findParser", () => {
   test("No remos number pdf", async () => {
     const packingListJson = {};
     extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{remos: ""}]}] }
+      return { pages: [{ content: [{ remos: "" }] }] };
     });
 
     const result = await parserService.findParser(packingListJson, "test.pdf");
@@ -221,7 +221,7 @@ describe("findParser", () => {
     const pdfFilename = "test.pdf";
 
     extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{remos: "RMS-GB-000000-000"}]}] }
+      return { pages: [{ content: [{ remos: "RMS-GB-000000-000" }] }] };
     });
 
     const result = await parserService.findParser({}, pdfFilename);
