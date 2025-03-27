@@ -4,7 +4,7 @@ const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
 
-const booker2 = {
+const booker1 = { //TODO change this maybe
   establishmentNumber: {
     regex: /^RMS-GB-000077-\d{3}$/i,
   },
@@ -336,23 +336,11 @@ const headers = {
     },
     modelId: "mands1-v3",
   },
-  // BOOKER1: {
-  //   establishmentNumber: {
-  //     regex: /^RMS-GB-000077-\d{3}$/i,
-  //   },
-  //   headers: {
-  //     description: "Description",
-  //     commodity_code: "Commodity Code",
-  //     number_of_packages: "Boxes",
-  //     total_net_weight_kg: "Net Weight (Kilos)",
-  //   },
-  //   modelId: "booker1-v5",
-  // },
-  BOOKER2: booker2,
-  BOOKER2L: {
-    ...booker2,
+  BOOKER1: booker1,
+  BOOKER1L: {
+    ...booker1,
     headers: {
-      ...booker2.headers,
+      ...booker1.headers,
       country_of_origin: {
         regex: /Country of Origin/i,
         headerTextAlignment: "LL",

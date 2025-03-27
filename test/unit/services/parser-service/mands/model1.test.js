@@ -11,20 +11,21 @@ jest.mock("../../../../../app/config", () => {
     isDiEnabled: true,
   };
 });
+jest.mock("../../../../../app/utilities/pdf-helper")
 
 const {
   createDocumentIntelligenceClient,
   runAnalysis,
-  runPrebuiltAnalysis,
 } = require("../../../../../app/services/document-intelligence");
+const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
 });
 
-runPrebuiltAnalysis.mockImplementation(() => {
-  return { content: "RMS-GB-000008-001" };
-});
+extractPdf.mockImplementation(() => {
+  return { pages: [{ content: [{remos: "RMS-GB-000008-001"}]}] }
+})
 
 describe("findParser", () => {
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as true", async () => {

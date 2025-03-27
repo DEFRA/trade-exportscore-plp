@@ -1,5 +1,8 @@
 const regex = require("../../../utilities/regex");
 const { extractPdf } = require("../../../utilities/pdf-helper");
+const logger = require("../../../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function noRemosMatch(sanitisedPackingList, _filename) {
   const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
@@ -18,6 +21,7 @@ function noRemosMatch(sanitisedPackingList, _filename) {
 async function noRemosMatchPdf(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);
+    console.log("pdfjson: ", pdfJson)
     const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
     for (const page of pdfJson.pages) {
       const result = regex.findMatch(remosRegex, page.content);
@@ -27,6 +31,7 @@ async function noRemosMatchPdf(packingList) {
     }
     return false;
   } catch (err) {
+    logger.logError(filenameForLogging, "noRemosMatchPdf()", err);
     return false;
   }
 }

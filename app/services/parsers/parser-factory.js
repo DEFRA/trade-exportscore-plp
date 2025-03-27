@@ -23,7 +23,7 @@ async function findParser(sanitizedPackingList, fileName) {
     parser = getExcelParser(sanitizedPackingList, fileName);
   } else if (fileExtension.isPdf(fileName)) {
     parser = await getPdfNonAiParser(sanitizedPackingList, fileName);
-
+    console.log(parser)
     if (!parser) {
       parser = await getPdfParser(sanitizedPackingList, fileName);
     }

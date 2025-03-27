@@ -18,6 +18,6 @@ module.exports = {
     const pdfJson = await extractPdf(result);
     const packingList = await findParser(result, filename);
 
-    return h.response(packingList).code(200);
+    return h.response(pdfJson).code(200);
   },
 };
