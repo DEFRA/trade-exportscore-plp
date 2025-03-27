@@ -1,7 +1,7 @@
 const config = require("../config");
 const { findParser } = require("../services/parser-service");
 const fs = require("fs");
-const { extractPdf } = require("../utilities/pdf-helper")
+const { extractPdf } = require("../utilities/pdf-helper");
 
 module.exports = {
   method: "GET",

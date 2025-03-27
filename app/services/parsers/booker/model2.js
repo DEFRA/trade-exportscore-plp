@@ -5,8 +5,8 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-const { mapPdfNonAiParser } = require('../../../services/parser-map')
-const { extractPdf } = require("../../../utilities/pdf-helper")
+const { mapPdfNonAiParser } = require("../../../services/parser-map");
+const { extractPdf } = require("../../../utilities/pdf-helper");
 
 async function parse(packingList) {
   try {
@@ -29,7 +29,7 @@ async function parse(packingList) {
       establishmentNumber,
       packingListContents,
       true,
-      parserModel.BOOKER2
+      parserModel.BOOKER2,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

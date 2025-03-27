@@ -226,8 +226,9 @@ const parsersPdfNonAi = {
   BOOKER2: {
     matches: (packingList, filename) =>
       bookerMatcher2.matches(packingList, filename),
-    parse: (packingList, filename) => bookerParser2.parse(packingList, filename),
+    parse: (packingList, filename) =>
+      bookerParser2.parse(packingList, filename),
   },
-}
+};
 
 module.exports = { parsersExcel, parsersPdf, noMatchParsers, parsersPdfNonAi };

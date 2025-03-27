@@ -3,7 +3,7 @@ ARG PORT=3000
 ARG PORT_DEBUG=9229
 
 # Development
-FROM defradigital/node-development:${PARENT_VERSION} AS development
+FROM defralocaldev AS development
 ARG PARENT_VERSION
 LABEL uk.gov.defra.adp.parent-image=defradigital/node-development:${PARENT_VERSION}
 
@@ -18,7 +18,7 @@ COPY --chown=node:node . .
 CMD [ "npm", "run", "start:watch" ]
 
 # Production
-FROM defradigital/node:${PARENT_VERSION} AS production
+FROM defralocaldev AS production
 ARG PARENT_VERSION
 LABEL uk.gov.defra.adp.parent-image=defradigital/node:${PARENT_VERSION}
 

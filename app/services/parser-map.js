@@ -1,5 +1,5 @@
 const headers = require("./model-headers");
-const pdfHelper = require('../utilities/pdf-helper');
+const pdfHelper = require("../utilities/pdf-helper");
 
 function findHeaderCols(regexHeader, packingListHeader) {
   const headerCols = {};
@@ -87,20 +87,62 @@ function mapPdfNonAiParser(packingListJson, model) {
 
   ys.forEach((y, row) => {
     const plRow = {
-      description: packingListJson.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.description) && (item.str.trim() !== '')))[0]?.str ?? null,
-      number_of_packages: packingListJson.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.packages) && (item.str.trim() !== '')))[0]?.str ?? null,
-      total_net_weight_kg: packingListJson.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.weight) && (item.str.trim() !== '')))[0]?.str ?? null,
-      commodity_code: packingListJson.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.commodityCode) && (item.str.trim() !== '')))[0]?.str ?? null,
-      type_of_treatment: packingListJson.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.treatmentType) && (item.str.trim() !== '')))[0]?.str ?? null,
-      country_of_origin: packingListJson.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.countryOfOrigin) && (item.str.trim() !== '')))[0]?.str ?? null,
-      nature_of_products: packingListJson.content.filter(item => (Math.round(item.y) === Math.round(y)) && (Math.round(item.x) === Math.round(xs.natureOfProducts) && (item.str.trim() !== '')))[0]?.str ?? null,
+      description:
+        packingListJson.content.filter(
+          (item) =>
+            Math.round(item.y) === Math.round(y) &&
+            Math.round(item.x) === Math.round(xs.description) &&
+            item.str.trim() !== "",
+        )[0]?.str ?? null,
+      number_of_packages:
+        packingListJson.content.filter(
+          (item) =>
+            Math.round(item.y) === Math.round(y) &&
+            Math.round(item.x) === Math.round(xs.packages) &&
+            item.str.trim() !== "",
+        )[0]?.str ?? null,
+      total_net_weight_kg:
+        packingListJson.content.filter(
+          (item) =>
+            Math.round(item.y) === Math.round(y) &&
+            Math.round(item.x) === Math.round(xs.weight) &&
+            item.str.trim() !== "",
+        )[0]?.str ?? null,
+      commodity_code:
+        packingListJson.content.filter(
+          (item) =>
+            Math.round(item.y) === Math.round(y) &&
+            Math.round(item.x) === Math.round(xs.commodityCode) &&
+            item.str.trim() !== "",
+        )[0]?.str ?? null,
+      type_of_treatment:
+        packingListJson.content.filter(
+          (item) =>
+            Math.round(item.y) === Math.round(y) &&
+            Math.round(item.x) === Math.round(xs.treatmentType) &&
+            item.str.trim() !== "",
+        )[0]?.str ?? null,
+      country_of_origin:
+        packingListJson.content.filter(
+          (item) =>
+            Math.round(item.y) === Math.round(y) &&
+            Math.round(item.x) === Math.round(xs.countryOfOrigin) &&
+            item.str.trim() !== "",
+        )[0]?.str ?? null,
+      nature_of_products:
+        packingListJson.content.filter(
+          (item) =>
+            Math.round(item.y) === Math.round(y) &&
+            Math.round(item.x) === Math.round(xs.natureOfProducts) &&
+            item.str.trim() !== "",
+        )[0]?.str ?? null,
       row_location: {
         rowNumber: row + 1,
         pageNumber: packingListJson.pageInfo.num,
-      }
-    }
+      },
+    };
     packingListContents.push(plRow);
-  })
+  });
   return packingListContents;
 }
 

@@ -1,5 +1,5 @@
 const regex = require("../../../utilities/regex");
-const { extractPdf } = require("../../../utilities/pdf-helper")
+const { extractPdf } = require("../../../utilities/pdf-helper");
 
 function noRemosMatch(sanitisedPackingList, _filename) {
   const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
@@ -20,9 +20,9 @@ async function noRemosMatchPdf(packingList) {
     const pdfJson = await extractPdf(packingList);
     const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
     for (const page of pdfJson.pages) {
-      const result = regex.findMatch(remosRegex, page.content)
+      const result = regex.findMatch(remosRegex, page.content);
       if (result) {
-        return result
+        return result;
       }
     }
     return false;

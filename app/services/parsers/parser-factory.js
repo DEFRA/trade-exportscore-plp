@@ -1,6 +1,10 @@
 const fileExtension = require("../../utilities/file-extension");
 const config = require("../../config");
-const { getExcelParser, getPdfParser, getPdfNonAiParser } = require("./parsers");
+const {
+  getExcelParser,
+  getPdfParser,
+  getPdfNonAiParser,
+} = require("./parsers");
 const packingListValidator = require("../validators/packing-list-column-validator");
 const {
   removeEmptyItems,

@@ -11,25 +11,25 @@ const booker2 = {
   headers: {
     description: {
       regex: /Description/i,
-      headerTextAlignment: 'CL',
+      headerTextAlignment: "CL",
     },
     commodity_code: {
       regex: /Commodity Code/i,
-      headerTextAlignment: 'LL',
+      headerTextAlignment: "LL",
     },
     number_of_packages: {
       regex: /Quantity/i,
-      headerTextAlignment: 'LL',
+      headerTextAlignment: "LL",
     },
     total_net_weight: {
       regex: /Net/i,
-      headerTextAlignment: 'LL',
+      headerTextAlignment: "LL",
     },
   },
   totals: /0 Boxes/i,
   minHeadersY: /Net/i,
   maxHeadersY: /(Kilos)/i,
-}
+};
 
 const headers = {
   ASDA1: {
@@ -355,11 +355,11 @@ const headers = {
       ...booker2.headers,
       country_of_origin: {
         regex: /Country of Origin/i,
-        headerTextAlignment: 'LL',
+        headerTextAlignment: "LL",
       },
       type_of_treatment: {
         regex: /Treatment Type/i,
-        headerTextAlignment: 'LL',
+        headerTextAlignment: "LL",
       },
     },
   },

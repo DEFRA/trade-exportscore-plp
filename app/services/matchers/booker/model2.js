@@ -4,7 +4,7 @@ const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-const pdfHelper = require('../../../utilities/pdf-helper');
+const pdfHelper = require("../../../utilities/pdf-helper");
 
 async function matches(packingList, filename) {
   try {
@@ -23,21 +23,30 @@ async function matches(packingList, filename) {
       const header = pdfHelper.getHeaders(page.content, "BOOKER2");
       let isBookerHeader = matcherResult.CORRECT;
       for (const x in headers["BOOKER2"].headers) {
-        if (!header.some(item => headers["BOOKER2"].headers[x].regex.test(item))) {
-          isBookerHeader = matcherResult.WRONG_HEADER
+        if (
+          !header.some((item) => headers["BOOKER2"].headers[x].regex.test(item))
+        ) {
+          isBookerHeader = matcherResult.WRONG_HEADER;
           break;
         }
       }
 
       let isBookerLandscapeHeader = matcherResult.CORRECT;
       for (const x in headers["BOOKER2L"].headers) {
-        if (!header.some(item => headers["BOOKER2L"].headers[x].regex.test(item))) {
-          isBookerLandscapeHeader = matcherResult.WRONG_HEADER
+        if (
+          !header.some((item) =>
+            headers["BOOKER2L"].headers[x].regex.test(item),
+          )
+        ) {
+          isBookerLandscapeHeader = matcherResult.WRONG_HEADER;
           break;
         }
       }
 
-      if (isBookerHeader === matcherResult.CORRECT || isBookerLandscapeHeader === matcherResult.CORRECT) {
+      if (
+        isBookerHeader === matcherResult.CORRECT ||
+        isBookerLandscapeHeader === matcherResult.CORRECT
+      ) {
         result = matcherResult.CORRECT;
       }
     }
