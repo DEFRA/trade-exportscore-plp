@@ -1,4 +1,23 @@
 const pdfHelper = require("../../../app/utilities/pdf-helper");
+const headers = require("../../../app/services/model-headers");
+
+jest.mock("../../../app/services/model-headers", () => ({
+  TestHeader: {
+    headers: {
+      Header1: {
+        regex: /Header1/,
+        headerTextAlignment: "LL",
+      },
+      Header2: {
+        regex: /Header2/,
+        headerTextAlignment: "LL",
+      },
+    },
+    totals: /Totals/i,
+    minHeadersY: /Header1/i,
+    maxHeadersY: /HeaderMax/i,
+  },
+}));
 
 describe("findSmaller", () => {
   test.each([
@@ -113,5 +132,132 @@ describe("removeEmptyStringElements", () => {
     const result = pdfHelper.removeEmptyStringElements(pageContent);
 
     expect(result).toMatchObject(expected);
+  });
+});
+
+describe("mergeNeighbouringText", () => {
+  test("returns one string", () => {
+    const pageContent = [
+      {
+        str: " ",
+        x: 1,
+        y: 4,
+        width: 1,
+      },
+      {
+        str: "One",
+        x: 2,
+        y: 4,
+        width: 1,
+      },
+      {
+        str: "Long",
+        x: 3,
+        y: 4,
+        width: 2,
+      },
+      {
+        str: "String",
+        x: 5,
+        y: 4,
+        width: 2,
+      },
+      {
+        str: " ",
+        x: 7,
+        y: 4,
+        width: 1,
+      },
+    ];
+
+    const expected = [
+      {
+        str: " ",
+        x: 1,
+        y: 4,
+        width: 1,
+      },
+      {
+        str: "OneLongString",
+        x: 2,
+        y: 4,
+        width: 5,
+      },
+      {
+        str: " ",
+        x: 7,
+        y: 4,
+        width: 1,
+      },
+    ];
+
+    const result = pdfHelper.mergeNeighbouringText(pageContent);
+
+    expect(result).toMatchObject(expected);
+  });
+});
+
+describe("getXsForRows", () => {
+  test("returns correct xs", () => {
+    const pageContent = [
+      {
+        str: "Header1",
+        x: 1,
+      },
+      {
+        str: "Header2",
+        x: 5,
+      },
+    ];
+
+    const expected = {
+      Header1: 1,
+      Header2: 5,
+    };
+
+    const result = pdfHelper.getXsForRows(pageContent, "TestHeader");
+
+    expect(result).toMatchObject(expected);
+  });
+});
+
+describe("getYsForRows", () => {
+  test("returns correct ys", () => {
+    const pageContent = [
+      {
+        str: "Header1",
+        x: 4,
+        y: 1,
+      },
+      {
+        str: "HeaderMax",
+        x: 4,
+        y: 3,
+      },
+      {
+        str: "Header2",
+        x: 6,
+        y: 1,
+      },
+      {
+        str: "Header1Data2",
+        x: 4,
+        y: 5,
+      },
+      {
+        str: "Header1Data2",
+        x: 4,
+        y: 6,
+      },
+      {
+        str: "Totals",
+        x: 1,
+        y: 9,
+      },
+    ];
+
+    const expected = [5, 6];
+    const result = pdfHelper.getYsForRows(pageContent, "TestHeader");
+    expect(result.toString()).toBe(expected.toString());
   });
 });

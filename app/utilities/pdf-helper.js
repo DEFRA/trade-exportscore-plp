@@ -1,4 +1,3 @@
-const { object } = require("joi");
 const headers = require("../services/model-headers");
 const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
