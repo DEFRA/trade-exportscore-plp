@@ -9,15 +9,43 @@ async function extractPdf(buffer) {
   return sanitisedJson;
 }
 
+function removeEmptyStringElements(pageContent) {
+  for (let i = pageContent.length - 1; i >= 0; i--) {
+    if (pageContent[i].width === 0) {
+      pageContent.splice(i, 1);
+    }
+  }
+
+  return pageContent
+}
+
+function mergeNeighbouringText(pageContent) {
+  for (let i = pageContent.length - 1; i > 0; i--) {
+    if (
+      Math.round(pageContent[i].x) ===
+        Math.round(
+          pageContent[i - 1].x +
+          pageContent[i - 1].width,
+        ) &&
+        pageContent[i].str !== " " &&
+        pageContent[i - 1].str !== " " &&
+      (pageContent[i].y === pageContent[i - 1].y)
+    ) {
+      pageContent[i - 1].str +=
+      pageContent[i].str;
+      pageContent[i - 1].width +=
+      pageContent[i].width;
+      pageContent.splice(i, 1);
+    }
+  }
+  return pageContent
+}
+
 function sanitise(pdfJson) {
   for (const page in pdfJson.pages) {
     if (pdfJson.pages.hasOwnProperty(page)) {
       // remove empty string elements
-      for (let i = pdfJson.pages[page].content.length - 1; i >= 0; i--) {
-        if (pdfJson.pages[page].content[i].width === 0) {
-          pdfJson.pages[page].content.splice(i, 1);
-        }
-      }
+      pdfJson.pages[page].content = removeEmptyStringElements(pdfJson.pages[page].content);
 
       // order by y then x
       pdfJson.pages[page].content.sort((a, b) => {
@@ -28,23 +56,7 @@ function sanitise(pdfJson) {
       });
 
       // merge elements that are next to each other
-      for (let i = pdfJson.pages[page].content.length - 1; i > 0; i--) {
-        if (
-          Math.round(pdfJson.pages[page].content[i].x) ===
-            Math.round(
-              pdfJson.pages[page].content[i - 1].x +
-                pdfJson.pages[page].content[i - 1].width,
-            ) &&
-          pdfJson.pages[page].content[i].str !== " " &&
-          pdfJson.pages[page].content[i - 1].str !== " "
-        ) {
-          pdfJson.pages[page].content[i - 1].str +=
-            pdfJson.pages[page].content[i].str;
-          pdfJson.pages[page].content[i - 1].width +=
-            pdfJson.pages[page].content[i].width;
-          pdfJson.pages[page].content.splice(i, 1);
-        }
-      }
+      pdfJson.pages[page].content = mergeNeighbouringText(pdfJson.pages[page].content);
     }
   }
 
