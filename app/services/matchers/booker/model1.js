@@ -55,7 +55,7 @@ async function matches(packingList, filename) {
       logger.logInfo(
         filenameForLogging,
         "matches()",
-        `Packing list matches Booker Model 2 with filename: ${filename}`,
+        `Packing list matches Booker Model 1 with filename: ${filename}`,
       );
     }
 

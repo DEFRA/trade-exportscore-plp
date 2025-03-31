@@ -21,7 +21,6 @@ function noRemosMatch(sanitisedPackingList, _filename) {
 async function noRemosMatchPdf(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);
-    console.log("pdfjson: ", pdfJson);
     const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
     for (const page of pdfJson.pages) {
       const result = regex.findMatch(remosRegex, page.content);

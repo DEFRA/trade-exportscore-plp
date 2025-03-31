@@ -31,13 +31,13 @@ async function getPdfParser(sanitisedPackingList, filename) {
   if (remos) {
     let result = {};
 
-    for (const key in parsersPdf) {
-      if (headers[key].establishmentNumber.regex.test(remos)) {
-        result = await parsersPdf[key].matches(sanitisedPackingList, filename);
+    for (const pdfModel in parsersPdf) {
+      if (headers[pdfModel].establishmentNumber.regex.test(remos)) {
+        result = await parsersPdf[pdfModel].matches(sanitisedPackingList, filename);
       }
 
       if (result.isMatched === matcherResult.CORRECT) {
-        parser.parser = parsersPdf[key];
+        parser.parser = parsersPdf[pdfModel];
         parser.result = result;
         break;
       }
@@ -51,7 +51,7 @@ async function getPdfParser(sanitisedPackingList, filename) {
 
 async function getPdfNonAiParser(sanitisedPackingList, filename) {
   let parser = null;
-  console.log("here");
+
   if (await noMatchParsers.NOREMOSPDF.matches(sanitisedPackingList, filename)) {
     for (const key in parsersPdfNonAi) {
       if (

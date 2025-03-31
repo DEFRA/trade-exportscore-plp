@@ -13,7 +13,6 @@ const {
 const { noMatchParsers } = require("../model-parsers");
 const logger = require("../../utilities/logger");
 const path = require("path");
-const { noRemosMatch } = require("../matchers/no-match/model1");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function findParser(sanitizedPackingList, fileName) {
@@ -23,8 +22,8 @@ async function findParser(sanitizedPackingList, fileName) {
     parser = getExcelParser(sanitizedPackingList, fileName);
   } else if (fileExtension.isPdf(fileName)) {
     parser = await getPdfNonAiParser(sanitizedPackingList, fileName);
-    console.log(parser);
-    if (!parser) {
+
+    if (!parser && config.isDiEnabled) {
       parser = await getPdfParser(sanitizedPackingList, fileName);
     }
   } else {

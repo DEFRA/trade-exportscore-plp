@@ -5,7 +5,6 @@ const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
 
 const booker1 = {
-  //TODO change this maybe
   establishmentNumber: {
     regex: /^RMS-GB-000077-\d{3}$/i,
   },
@@ -339,7 +338,6 @@ const headers = {
   },
   BOOKER1: booker1,
   BOOKER1L: {
-    ...booker1,
     headers: {
       ...booker1.headers,
       country_of_origin: {

@@ -1,7 +1,7 @@
 const config = require("../config");
 const { findParser } = require("../services/parser-service");
 const fs = require("fs");
-const { extractPdf } = require("../utilities/pdf-helper");
+const { StatusCodes } = require("http-status-codes");
 
 module.exports = {
   method: "GET",
@@ -12,12 +12,12 @@ module.exports = {
     try {
       result = fs.readFileSync(filename);
     } catch (err) {
-      console.error(err);
-      return h.response(`notok: ${err}`).code(500);
+      logger.logError("app/routes/pdf-non-ai.js", "get()", err);
+      return h.response(err.message).code(StatusCodes.SERVICE_UNAVAILABLE);
     }
-    const pdfJson = await extractPdf(result);
+
     const packingList = await findParser(result, filename);
 
-    return h.response(pdfJson).code(200);
+    return h.response(packingList).code(200);
   },
 };

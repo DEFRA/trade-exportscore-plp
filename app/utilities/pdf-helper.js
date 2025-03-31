@@ -80,7 +80,7 @@ function getXsForRows(pageContent, model) {
       header.nature_of_products,
     ),
   };
-  //console.log(xs)
+
   return xs;
 }
 
