@@ -26,7 +26,7 @@ const booker1 = {
       headerTextAlignment: "LL",
     },
   },
-  totals: /0 Boxes/i,
+  totals: /^0 Boxes/i,
   minHeadersY: /Net/i,
   maxHeadersY: /(Kilos)/i,
 };

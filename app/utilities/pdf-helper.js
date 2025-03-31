@@ -16,36 +16,33 @@ function removeEmptyStringElements(pageContent) {
     }
   }
 
-  return pageContent
+  return pageContent;
 }
 
 function mergeNeighbouringText(pageContent) {
   for (let i = pageContent.length - 1; i > 0; i--) {
     if (
       Math.round(pageContent[i].x) ===
-        Math.round(
-          pageContent[i - 1].x +
-          pageContent[i - 1].width,
-        ) &&
-        pageContent[i].str !== " " &&
-        pageContent[i - 1].str !== " " &&
-      (pageContent[i].y === pageContent[i - 1].y)
+        Math.round(pageContent[i - 1].x + pageContent[i - 1].width) &&
+      pageContent[i].str !== " " &&
+      pageContent[i - 1].str !== " " &&
+      pageContent[i].y === pageContent[i - 1].y
     ) {
-      pageContent[i - 1].str +=
-      pageContent[i].str;
-      pageContent[i - 1].width +=
-      pageContent[i].width;
+      pageContent[i - 1].str += pageContent[i].str;
+      pageContent[i - 1].width += pageContent[i].width;
       pageContent.splice(i, 1);
     }
   }
-  return pageContent
+  return pageContent;
 }
 
 function sanitise(pdfJson) {
   for (const page in pdfJson.pages) {
     if (pdfJson.pages.hasOwnProperty(page)) {
       // remove empty string elements
-      pdfJson.pages[page].content = removeEmptyStringElements(pdfJson.pages[page].content);
+      pdfJson.pages[page].content = removeEmptyStringElements(
+        pdfJson.pages[page].content,
+      );
 
       // order by y then x
       pdfJson.pages[page].content.sort((a, b) => {
@@ -56,7 +53,9 @@ function sanitise(pdfJson) {
       });
 
       // merge elements that are next to each other
-      pdfJson.pages[page].content = mergeNeighbouringText(pdfJson.pages[page].content);
+      pdfJson.pages[page].content = mergeNeighbouringText(
+        pdfJson.pages[page].content,
+      );
     }
   }
 
@@ -181,4 +180,6 @@ module.exports = {
   extractPdf,
   findSmaller,
   findRowXFromHeaderAndTextAlignment,
+  mergeNeighbouringText,
+  removeEmptyStringElements,
 };

@@ -89,3 +89,29 @@ describe("findRowXFromHeaderAndTextAlignment", () => {
     expect(result).toBeNull();
   });
 });
+
+describe("removeEmptyStringElements", () => {
+  test("return json without empty string", () => {
+    const pageContent = [
+      {
+        str: "Text",
+        width: 2,
+      },
+      {
+        str: " ",
+        width: 0,
+      },
+    ];
+
+    const expected = [
+      {
+        str: "Text",
+        width: 2,
+      },
+    ];
+
+    const result = pdfHelper.removeEmptyStringElements(pageContent);
+
+    expect(result).toMatchObject(expected);
+  });
+});
