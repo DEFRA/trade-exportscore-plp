@@ -86,14 +86,15 @@ function mapPdfNonAiParser(packingListJson, model) {
 
   ys.forEach((y, row) => {
     const plRow = {};
-    Object.keys(xs).forEach(key => {
-      plRow[key] = packingListJson.content.filter(
-        (item) =>
-          Math.round(item.y) === Math.round(y) &&
-          Math.round(item.x) === Math.round(xs[key]) &&
-          item.str.trim() !== "",
-      )[0]?.str ?? null;
-    })
+    Object.keys(xs).forEach((key) => {
+      plRow[key] =
+        packingListJson.content.filter(
+          (item) =>
+            Math.round(item.y) === Math.round(y) &&
+            Math.round(item.x) === Math.round(xs[key]) &&
+            item.str.trim() !== "",
+        )[0]?.str ?? null;
+    });
     plRow.row_location = {
       rowNumber: row + 1,
       pageNumber: packingListJson.pageInfo.num,

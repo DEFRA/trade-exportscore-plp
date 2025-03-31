@@ -1,3 +1,4 @@
+const { object } = require("joi");
 const headers = require("../services/model-headers");
 const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
@@ -10,37 +11,39 @@ async function extractPdf(buffer) {
 
 function sanitise(pdfJson) {
   for (const page in pdfJson.pages) {
-    // remove empty string elements
-    for (let i = pdfJson.pages[page].content.length - 1; i >= 0; i--) {
-      if (pdfJson.pages[page].content[i].width === 0) {
-        pdfJson.pages[page].content.splice(i, 1);
+    if (pdfJson.pages.hasOwnProperty(page)) {
+      // remove empty string elements
+      for (let i = pdfJson.pages[page].content.length - 1; i >= 0; i--) {
+        if (pdfJson.pages[page].content[i].width === 0) {
+          pdfJson.pages[page].content.splice(i, 1);
+        }
       }
-    }
 
-    // order by y then x
-    pdfJson.pages[page].content.sort((a, b) => {
-      if (a.y === b.y) {
-        return a.x - b.x;
-      }
-      return a.y - b.y;
-    });
+      // order by y then x
+      pdfJson.pages[page].content.sort((a, b) => {
+        if (a.y === b.y) {
+          return a.x - b.x;
+        }
+        return a.y - b.y;
+      });
 
-    // merge elements that are next to each other
-    for (let i = pdfJson.pages[page].content.length - 1; i > 0; i--) {
-      if (
-        Math.round(pdfJson.pages[page].content[i].x) ===
-          Math.round(
-            pdfJson.pages[page].content[i - 1].x +
-              pdfJson.pages[page].content[i - 1].width,
-          ) &&
-        pdfJson.pages[page].content[i].str !== " " &&
-        pdfJson.pages[page].content[i - 1].str !== " "
-      ) {
-        pdfJson.pages[page].content[i - 1].str +=
-          pdfJson.pages[page].content[i].str;
-        pdfJson.pages[page].content[i - 1].width +=
-          pdfJson.pages[page].content[i].width;
-        pdfJson.pages[page].content.splice(i, 1);
+      // merge elements that are next to each other
+      for (let i = pdfJson.pages[page].content.length - 1; i > 0; i--) {
+        if (
+          Math.round(pdfJson.pages[page].content[i].x) ===
+            Math.round(
+              pdfJson.pages[page].content[i - 1].x +
+                pdfJson.pages[page].content[i - 1].width,
+            ) &&
+          pdfJson.pages[page].content[i].str !== " " &&
+          pdfJson.pages[page].content[i - 1].str !== " "
+        ) {
+          pdfJson.pages[page].content[i - 1].str +=
+            pdfJson.pages[page].content[i].str;
+          pdfJson.pages[page].content[i - 1].width +=
+            pdfJson.pages[page].content[i].width;
+          pdfJson.pages[page].content.splice(i, 1);
+        }
       }
     }
   }
@@ -79,10 +82,11 @@ function findRowXFromHeaderAndTextAlignment(pageContent, header) {
           item.x < headerPosition?.x &&
           item.str.trim() !== "",
       );
-      x = previousXs.reduce(
-        (max, obj) => (obj.x > max ? obj.x : max),
-        previousXs[0]?.x ?? null,
-      );
+      x =
+        previousXs.reduce(
+          (max, obj) => (obj.x > max ? obj.x : max),
+          previousXs[0]?.x,
+        ) ?? null;
       break;
     }
     default: {

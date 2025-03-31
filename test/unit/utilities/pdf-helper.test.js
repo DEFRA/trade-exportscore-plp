@@ -43,7 +43,7 @@ describe("findRowXFromHeaderAndTextAlignment", () => {
     const header = {
       regex: /Net/i,
       headerTextAlignment: "CL",
-    }
+    };
     const pageContent = [
       {
         str: str,
@@ -64,21 +64,21 @@ describe("findRowXFromHeaderAndTextAlignment", () => {
         str: "Other text",
         x: 17,
         y: 6,
-      }
-    ]
+      },
+    ];
 
     const result = pdfHelper.findRowXFromHeaderAndTextAlignment(
       pageContent,
       header,
     );
     expect(result).toBe(expected);
-  })
+  });
 
   test("returns null for default", () => {
     const header = {
       regex: /Net/i,
       headerTextAlignment: "wrong",
-    }
+    };
 
     const pageContent = [];
 
@@ -87,5 +87,5 @@ describe("findRowXFromHeaderAndTextAlignment", () => {
       header,
     );
     expect(result).toBeNull();
-  })
+  });
 });

@@ -54,9 +54,7 @@ function matchHeaders(pageContent) {
   let isBookerLandscapeHeader = matcherResult.CORRECT;
   for (const x in headers["BOOKER1L"].headers) {
     if (
-      !header.some((item) =>
-        headers["BOOKER1L"].headers[x].regex.test(item),
-      )
+      !header.some((item) => headers["BOOKER1L"].headers[x].regex.test(item))
     ) {
       isBookerLandscapeHeader = matcherResult.WRONG_HEADER;
       break;
@@ -68,9 +66,8 @@ function matchHeaders(pageContent) {
     isBookerLandscapeHeader === matcherResult.CORRECT
   ) {
     return matcherResult.CORRECT;
-  }
-  else {
-    return matcherResult.WRONG_HEADER
+  } else {
+    return matcherResult.WRONG_HEADER;
   }
 }
 
