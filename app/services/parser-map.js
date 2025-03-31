@@ -40,40 +40,42 @@ function mapParser(
 function mapPdfParser(packingListDocument, key) {
   const packingListContents = [];
 
-  if (packingListDocument.fields.PackingListContents.values) {
-    let currentItemNumber = 0;
-    let lastPageNumber = 1;
-    for (const value of packingListDocument.fields.PackingListContents.values) {
-      const row = value.properties;
-      const currentPageNumber =
-        row[headers[key].headers.description]?.boundingRegions?.[0]
-          ?.pageNumber ?? lastPageNumber;
-      if (lastPageNumber !== currentPageNumber) {
-        lastPageNumber = currentPageNumber;
-        currentItemNumber = 0;
-      }
-      currentItemNumber += 1;
+  if (!packingListDocument.fields.PackingListContents.values) {
+    return []
+  }
 
-      const plRow = {
-        description: row[headers[key].headers.description]?.value ?? null,
-        nature_of_products:
-          row[headers[key].headers.nature_of_products]?.value ?? null,
-        type_of_treatment:
-          row[headers[key].headers.type_of_treatment]?.value ?? null,
-        commodity_code: row[headers[key].headers.commodity_code]?.value ?? null,
-        number_of_packages:
-          row[headers[key].headers.number_of_packages]?.value ?? null,
-        total_net_weight_kg:
-          parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
-          null,
-        row_location: {
-          rowNumber: currentItemNumber,
-          pageNumber: currentPageNumber,
-        },
-      };
-
-      packingListContents.push(plRow);
+  let currentItemNumber = 0;
+  let lastPageNumber = 1;
+  for (const value of packingListDocument.fields.PackingListContents.values) {
+    const row = value.properties;
+    const currentPageNumber =
+      row[headers[key].headers.description]?.boundingRegions?.[0]
+        ?.pageNumber ?? lastPageNumber;
+    if (lastPageNumber !== currentPageNumber) {
+      lastPageNumber = currentPageNumber;
+      currentItemNumber = 0;
     }
+    currentItemNumber += 1;
+
+    const plRow = {
+      description: row[headers[key].headers.description]?.value ?? null,
+      nature_of_products:
+        row[headers[key].headers.nature_of_products]?.value ?? null,
+      type_of_treatment:
+        row[headers[key].headers.type_of_treatment]?.value ?? null,
+      commodity_code: row[headers[key].headers.commodity_code]?.value ?? null,
+      number_of_packages:
+        row[headers[key].headers.number_of_packages]?.value ?? null,
+      total_net_weight_kg:
+        parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
+        null,
+      row_location: {
+        rowNumber: currentItemNumber,
+        pageNumber: currentPageNumber,
+      },
+    };
+
+    packingListContents.push(plRow);
   }
 
   return packingListContents;
