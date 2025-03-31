@@ -20,35 +20,7 @@ async function matches(packingList, filename) {
       }
 
       // match header
-      const header = pdfHelper.getHeaders(page.content, "BOOKER1");
-      let isBookerHeader = matcherResult.CORRECT;
-      for (const x in headers["BOOKER1"].headers) {
-        if (
-          !header.some((item) => headers["BOOKER1"].headers[x].regex.test(item))
-        ) {
-          isBookerHeader = matcherResult.WRONG_HEADER;
-          break;
-        }
-      }
-
-      let isBookerLandscapeHeader = matcherResult.CORRECT;
-      for (const x in headers["BOOKER1L"].headers) {
-        if (
-          !header.some((item) =>
-            headers["BOOKER1L"].headers[x].regex.test(item),
-          )
-        ) {
-          isBookerLandscapeHeader = matcherResult.WRONG_HEADER;
-          break;
-        }
-      }
-
-      if (
-        isBookerHeader === matcherResult.CORRECT ||
-        isBookerLandscapeHeader === matcherResult.CORRECT
-      ) {
-        result = matcherResult.CORRECT;
-      }
+      result = matchHeaders(page.content);
     }
 
     if (result === matcherResult.CORRECT) {
@@ -64,6 +36,41 @@ async function matches(packingList, filename) {
     logger.logError(filenameForLogging, "matches()", err);
 
     return matcherResult.GENERIC_ERROR;
+  }
+}
+
+function matchHeaders(pageContent) {
+  const header = pdfHelper.getHeaders(pageContent, "BOOKER1");
+  let isBookerHeader = matcherResult.CORRECT;
+  for (const x in headers["BOOKER1"].headers) {
+    if (
+      !header.some((item) => headers["BOOKER1"].headers[x].regex.test(item))
+    ) {
+      isBookerHeader = matcherResult.WRONG_HEADER;
+      break;
+    }
+  }
+
+  let isBookerLandscapeHeader = matcherResult.CORRECT;
+  for (const x in headers["BOOKER1L"].headers) {
+    if (
+      !header.some((item) =>
+        headers["BOOKER1L"].headers[x].regex.test(item),
+      )
+    ) {
+      isBookerLandscapeHeader = matcherResult.WRONG_HEADER;
+      break;
+    }
+  }
+
+  if (
+    isBookerHeader === matcherResult.CORRECT ||
+    isBookerLandscapeHeader === matcherResult.CORRECT
+  ) {
+    return matcherResult.CORRECT;
+  }
+  else {
+    return matcherResult.WRONG_HEADER
   }
 }
 

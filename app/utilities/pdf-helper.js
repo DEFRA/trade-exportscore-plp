@@ -50,37 +50,10 @@ function sanitise(pdfJson) {
 
 function getXsForRows(pageContent, model) {
   const header = headers[model].headers;
-  const xs = {
-    description: findRowXFromHeaderAndTextAlignment(
-      pageContent,
-      header.description,
-    ),
-    packages: findRowXFromHeaderAndTextAlignment(
-      pageContent,
-      header.number_of_packages,
-    ),
-    weight: findRowXFromHeaderAndTextAlignment(
-      pageContent,
-      header.total_net_weight,
-    ),
-    commodityCode: findRowXFromHeaderAndTextAlignment(
-      pageContent,
-      header.commodity_code,
-    ),
-    treatmentType: findRowXFromHeaderAndTextAlignment(
-      pageContent,
-      header.type_of_treatment,
-    ),
-    countryOfOrigin: findRowXFromHeaderAndTextAlignment(
-      pageContent,
-      header.country_of_origin,
-    ),
-    natureOfProducts: findRowXFromHeaderAndTextAlignment(
-      pageContent,
-      header.nature_of_products,
-    ),
-  };
-
+  const xs = {};
+  for (const key in header) {
+    xs[key] = findRowXFromHeaderAndTextAlignment(pageContent, header[key]);
+  }
   return xs;
 }
 

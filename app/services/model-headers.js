@@ -21,7 +21,7 @@ const booker1 = {
       regex: /Quantity/i,
       headerTextAlignment: "LL",
     },
-    total_net_weight: {
+    total_net_weight_kg: {
       regex: /Net/i,
       headerTextAlignment: "LL",
     },
@@ -338,6 +338,7 @@ const headers = {
   },
   BOOKER1: booker1,
   BOOKER1L: {
+    ...booker1,
     headers: {
       ...booker1.headers,
       country_of_origin: {

@@ -21,7 +21,7 @@ async function parse(packingList) {
     );
 
     for (const page of pdfJson.pages) {
-      packingListContentsTemp = mapPdfNonAiParser(page, "BOOKER1");
+      packingListContentsTemp = mapPdfNonAiParser(page, "BOOKER1L");
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
