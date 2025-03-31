@@ -219,8 +219,7 @@ const parsersPdfNonAi = {
   BOOKER1: {
     matches: (packingList, filename) =>
       bookerMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      bookerParser.parse(packingList, filename),
+    parse: (packingList, filename) => bookerParser.parse(packingList, filename),
   },
 };
 

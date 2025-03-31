@@ -33,7 +33,10 @@ async function getPdfParser(sanitisedPackingList, filename) {
 
     for (const pdfModel in parsersPdf) {
       if (headers[pdfModel].establishmentNumber.regex.test(remos)) {
-        result = await parsersPdf[pdfModel].matches(sanitisedPackingList, filename);
+        result = await parsersPdf[pdfModel].matches(
+          sanitisedPackingList,
+          filename,
+        );
       }
 
       if (result.isMatched === matcherResult.CORRECT) {

@@ -2,12 +2,14 @@ const config = require("../config");
 const { findParser } = require("../services/parser-service");
 const fs = require("fs");
 const { StatusCodes } = require("http-status-codes");
+const logger = require("../utilities/logger");
 
 module.exports = {
   method: "GET",
   path: "/pdf-non-ai",
   handler: async (_request, h) => {
     const filename = config.plDir + _request.query.filename;
+    let result = {};
 
     try {
       result = fs.readFileSync(filename);
@@ -18,6 +20,6 @@ module.exports = {
 
     const packingList = await findParser(result, filename);
 
-    return h.response(packingList).code(200);
+    return h.response(packingList).code(StatusCodes.OK);
   },
 };

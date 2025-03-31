@@ -87,27 +87,34 @@ function getXsForRows(pageContent, model) {
 function findRowXFromHeaderAndTextAlignment(pageContent, header) {
   let x;
   switch (header?.headerTextAlignment) {
-    case "LL":
+    // left header and text alignment, use the x of the header
+    case "LL": {
       x =
         pageContent.filter((item) => header.regex.test(item.str))[0]?.x ?? null;
       break;
-    case "CL":
+    }
+    // centre header and left text alignment
+    // x value will be where the y is larger than header y
+    // and x is next largest x before than header x, but isn't whitespace
+    case "CL": {
       const headerPosition = pageContent.filter((item) =>
         header.regex.test(item.str),
       )[0];
       const previousXs = pageContent.filter(
         (item) =>
-          item.y > headerPosition.y &&
-          item.x < headerPosition.x &&
+          item.y > headerPosition?.y &&
+          item.x < headerPosition?.x &&
           item.str.trim() !== "",
       );
       x = previousXs.reduce(
         (max, obj) => (obj.x > max ? obj.x : max),
-        previousXs[0].x,
+        previousXs[0]?.x ?? null,
       );
       break;
-    default:
+    }
+    default: {
       x = null;
+    }
   }
   return x;
 }
@@ -178,4 +185,11 @@ function getHeaders(pageContent, model) {
   return joinedArray;
 }
 
-module.exports = { getXsForRows, getYsForRows, getHeaders, extractPdf };
+module.exports = {
+  getXsForRows,
+  getYsForRows,
+  getHeaders,
+  extractPdf,
+  findSmaller,
+  findRowXFromHeaderAndTextAlignment,
+};
