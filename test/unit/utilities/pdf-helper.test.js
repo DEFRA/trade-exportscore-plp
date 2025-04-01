@@ -8,11 +8,11 @@ jest.mock("../../../app/services/model-headers", () => ({
   TestHeader: {
     headers: {
       Header1: {
-        regex: /Header1/,
+        x: /Header1/,
         headerTextAlignment: "LL",
       },
       Header2: {
-        regex: /Header2/,
+        x: /Header2/,
         headerTextAlignment: "LL",
       },
     },
@@ -41,7 +41,7 @@ describe("findRowXFromHeaderAndTextAlignment", () => {
     [null, "Wrong"],
   ])("returns '%s' for left aligned header and text", (expected, str) => {
     const header = {
-      regex: /Net/i,
+      x: /Net/i,
       headerTextAlignment: "LL",
     };
     const pageContent = [
@@ -63,7 +63,7 @@ describe("findRowXFromHeaderAndTextAlignment", () => {
     [null, "Wrong"],
   ])("returns '%s' for centre header and left text", (expected, str) => {
     const header = {
-      regex: /Net/i,
+      x: /Net/i,
       headerTextAlignment: "CL",
     };
     const pageContent = [

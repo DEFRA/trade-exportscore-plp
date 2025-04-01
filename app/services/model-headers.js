@@ -10,18 +10,22 @@ const booker1 = {
   },
   headers: {
     description: {
+      x: /Description/i,
       regex: /Description/i,
       headerTextAlignment: "CL",
     },
     commodity_code: {
+      x: /Commodity Code/i,
       regex: /Commodity Code/i,
       headerTextAlignment: "LL",
     },
     number_of_packages: {
+      x: /Quantity/i,
       regex: /Unit Quantity/i,
       headerTextAlignment: "LL",
     },
     total_net_weight_kg: {
+      x: /Net/i,
       regex: /Net Weight \(Kilos\)/i,
       headerTextAlignment: "LL",
     },
@@ -342,10 +346,12 @@ const headers = {
     headers: {
       ...booker1.headers,
       country_of_origin: {
+        x: /Country of Origin/i,
         regex: /Country of Origin/i,
         headerTextAlignment: "LL",
       },
       type_of_treatment: {
+        x: /Treatment Type/i,
         regex: /Treatment Type/i,
         headerTextAlignment: "LL",
       },

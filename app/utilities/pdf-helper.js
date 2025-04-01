@@ -84,9 +84,7 @@ function findRowXFromHeaderAndTextAlignment(pageContent, header) {
     switch (header?.headerTextAlignment) {
       // left header and text alignment, use the x of the header
       case "LL": {
-        x =
-          pageContent.filter((item) => header.regex.test(item.str))[0]?.x ??
-          null;
+        x = pageContent.filter((item) => header.x.test(item.str))[0]?.x ?? null;
         break;
       }
       // centre header and left text alignment
@@ -94,7 +92,7 @@ function findRowXFromHeaderAndTextAlignment(pageContent, header) {
       // and x is next largest x before than header x, but isn't whitespace
       case "CL": {
         const headerPosition = pageContent.filter((item) =>
-          header.regex.test(item.str),
+          header.x.test(item.str),
         )[0];
         const previousXs = pageContent.filter(
           (item) =>

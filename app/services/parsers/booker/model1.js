@@ -32,7 +32,7 @@ async function parse(packingList) {
       parserModel.BOOKER1,
     );
   } catch (err) {
-    logger.logError(filenameForLogging, "matches()", err);
+    logger.logError(filenameForLogging, "parse()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
 }

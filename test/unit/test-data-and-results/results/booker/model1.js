@@ -10,9 +10,8 @@ module.exports = {
       {
         description: "Aero Melts Milk Bag PM135",
         commodity_code: "1806329000",
-        nature_of_products: null,
         number_of_packages: "1",
-        total_net_weight_kg: 1.067,
+        total_net_weight_kg: "1.067",
         type_of_treatment: null,
       },
     ],
@@ -37,9 +36,8 @@ module.exports = {
       {
         description: "Aero Melts Milk Bag PM135",
         commodity_code: "1806329000",
-        nature_of_products: null,
         number_of_packages: null,
-        total_net_weight_kg: 1.067,
+        total_net_weight_kg: "1.067",
         type_of_treatment: null,
       },
     ],
