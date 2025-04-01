@@ -471,5 +471,5 @@ describe("sanitise", () => {
 
     const result = pdfHelper.sanitise(pdfJson);
     expect(result).toMatchObject(expected);
-  })
+  });
 });

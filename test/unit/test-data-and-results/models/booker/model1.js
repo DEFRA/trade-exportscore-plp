@@ -97,4 +97,38 @@ module.exports = {
       },
     ],
   },
+  wrongEstablishment: {
+    pages: [
+      {
+        content: [
+          {
+            x: 84.264,
+            y: 106.46,
+            str: "RMS-GB-",
+            width: 51.1632,
+          },
+        ],
+      },
+    ],
+  },
+  incorrectHeader: {
+    pages: [
+      {
+        content: [
+          {
+            x: 84.264,
+            y: 106.46,
+            str: "RMS-GB-000077-999",
+            width: 51.1632,
+          },
+          {
+            x: 239.21,
+            y: 204.14,
+            str: "Description",
+            width: 30.8736,
+          },
+        ],
+      },
+    ],
+  },
 };
