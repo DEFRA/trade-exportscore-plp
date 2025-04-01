@@ -11,6 +11,10 @@ async function matches(packingList, filename) {
     const pdfJson = await pdfHelper.extractPdf(packingList);
     let result;
 
+    if (pdfJson.pages.length === 0) {
+      return matcherResult.EMPTY_FILE;
+    }
+
     // check for correct establishment number
     for (const page of pdfJson.pages) {
       if (
@@ -41,11 +45,13 @@ async function matches(packingList, filename) {
 
 function matchHeaders(pageContent) {
   const header = pdfHelper.getHeaders(pageContent, "BOOKER1");
+
   let isBookerHeader = matcherResult.CORRECT;
   for (const x in headers["BOOKER1"].headers) {
     if (
       !header.some((item) => headers["BOOKER1"].headers[x].regex.test(item))
     ) {
+      console.log(headers["BOOKER1"].headers[x].regex)
       isBookerHeader = matcherResult.WRONG_HEADER;
       break;
     }

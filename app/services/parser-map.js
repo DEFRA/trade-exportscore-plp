@@ -93,8 +93,7 @@ function mapPdfNonAiParser(packingListJson, model) {
         packingListJson.content.filter(
           (item) =>
             Math.round(item.y) === Math.round(y) &&
-            Math.round(item.x) === Math.round(xs[key]) &&
-            item.str.trim() !== "",
+            Math.round(item.x) === Math.round(xs[key]) 
         )[0]?.str ?? null;
     });
     plRow.row_location = {

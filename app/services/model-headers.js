@@ -18,11 +18,11 @@ const booker1 = {
       headerTextAlignment: "LL",
     },
     number_of_packages: {
-      regex: /Quantity/i,
+      regex: /Unit Quantity/i,
       headerTextAlignment: "LL",
     },
     total_net_weight_kg: {
-      regex: /Net/i,
+      regex: /Net Weight \(Kilos\)/i,
       headerTextAlignment: "LL",
     },
   },
