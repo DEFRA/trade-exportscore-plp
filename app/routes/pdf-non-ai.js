@@ -3,6 +3,8 @@ const { findParser } = require("../services/parser-service");
 const fs = require("fs");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("../utilities/logger");
+const PDFExtract = require("pdf.js-extract").PDFExtract;
+const pdfExtract = new PDFExtract();
 
 module.exports = {
   method: "GET",
@@ -18,6 +20,7 @@ module.exports = {
       return h.response(err.message).code(StatusCodes.SERVICE_UNAVAILABLE);
     }
 
+    const packing = await pdfExtract.extractBuffer(result);
     const packingList = await findParser(result, filename);
 
     return h.response(packingList).code(StatusCodes.OK);
