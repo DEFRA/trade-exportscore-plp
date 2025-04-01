@@ -1,6 +1,9 @@
 const headers = require("../services/model-headers");
 const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
+const logger = require("./logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function extractPdf(buffer) {
   const pdfJson = await pdfExtract.extractBuffer(buffer);
@@ -62,77 +65,97 @@ function sanitise(pdfJson) {
 }
 
 function getXsForRows(pageContent, model) {
-  const header = headers[model].headers;
-  const xs = {};
-  for (const key in header) {
-    xs[key] = findRowXFromHeaderAndTextAlignment(pageContent, header[key]);
+  try {
+    const header = headers[model].headers;
+    const xs = {};
+    for (const key in header) {
+      xs[key] = findRowXFromHeaderAndTextAlignment(pageContent, header[key]);
+    }
+    return xs;
+  } catch (err) {
+    logger.logError(filenameForLogging, "getXsForRows()", err);
+    return {};
   }
-  return xs;
 }
 
 function findRowXFromHeaderAndTextAlignment(pageContent, header) {
-  let x;
-  switch (header?.headerTextAlignment) {
-    // left header and text alignment, use the x of the header
-    case "LL": {
-      x =
-        pageContent.filter((item) => header.regex.test(item.str))[0]?.x ?? null;
-      break;
+  try {
+    let x;
+    switch (header?.headerTextAlignment) {
+      // left header and text alignment, use the x of the header
+      case "LL": {
+        x =
+          pageContent.filter((item) => header.regex.test(item.str))[0]?.x ??
+          null;
+        break;
+      }
+      // centre header and left text alignment
+      // x value will be where the y is larger than header y
+      // and x is next largest x before than header x, but isn't whitespace
+      case "CL": {
+        const headerPosition = pageContent.filter((item) =>
+          header.regex.test(item.str),
+        )[0];
+        const previousXs = pageContent.filter(
+          (item) =>
+            item.y > headerPosition?.y &&
+            item.x < headerPosition?.x &&
+            item.str.trim() !== "",
+        );
+        x =
+          previousXs.reduce(
+            (max, obj) => (obj.x > max ? obj.x : max),
+            previousXs[0]?.x,
+          ) ?? null;
+        break;
+      }
+      default: {
+        x = null;
+      }
     }
-    // centre header and left text alignment
-    // x value will be where the y is larger than header y
-    // and x is next largest x before than header x, but isn't whitespace
-    case "CL": {
-      const headerPosition = pageContent.filter((item) =>
-        header.regex.test(item.str),
-      )[0];
-      const previousXs = pageContent.filter(
-        (item) =>
-          item.y > headerPosition?.y &&
-          item.x < headerPosition?.x &&
-          item.str.trim() !== "",
-      );
-      x =
-        previousXs.reduce(
-          (max, obj) => (obj.x > max ? obj.x : max),
-          previousXs[0]?.x,
-        ) ?? null;
-      break;
-    }
-    default: {
-      x = null;
-    }
+    return x;
+  } catch (err) {
+    logger.logError(
+      filenameForLogging,
+      "findRowXFromHeaderAndTextAlignment()",
+      err,
+    );
+    return null;
   }
-  return x;
 }
 
 function getYsForRows(pageContent, model) {
-  const headerY = pageContent.filter((item) =>
-    headers[model].maxHeadersY.test(item.str),
-  )[0]?.y;
-  const firstY = pageContent.filter((item) => item.y > headerY)[0].y;
-  const pageNumberY = pageContent.filter((item) =>
-    /Page \d of \d*/.test(item.str),
-  )[0]?.y; // find the position of the 'Page X of Y'
-  const totals = pageContent.filter((item) =>
-    headers[model].totals.test(item.str),
-  ); // find the position of the totals row
-  const totalsY = totals.reduce(
-    (max, obj) => (obj.y > max ? obj.y : max),
-    totals[0]?.y,
-  ); // take the largest y
-  const y = findSmaller(pageNumberY, totalsY);
-  const lastY = pageContent
-    .filter((item) => item.y < y)
-    .sort((a, b) => b.y - a.y)[0]?.y;
-  const ys = [
-    ...new Set(
-      pageContent
-        .filter((item) => item.y >= firstY && item.y <= lastY)
-        .map((item) => item.y),
-    ),
-  ];
-  return ys;
+  try {
+    const headerY = pageContent.filter((item) =>
+      headers[model].maxHeadersY.test(item.str),
+    )[0]?.y;
+    const firstY = pageContent.filter((item) => item.y > headerY)[0].y;
+    const pageNumberY = pageContent.filter((item) =>
+      /Page \d of \d*/.test(item.str),
+    )[0]?.y; // find the position of the 'Page X of Y'
+    const totals = pageContent.filter((item) =>
+      headers[model].totals.test(item.str),
+    ); // find the position of the totals row
+    const totalsY = totals.reduce(
+      (max, obj) => (obj.y > max ? obj.y : max),
+      totals[0]?.y,
+    ); // take the largest y
+    const y = findSmaller(pageNumberY, totalsY);
+    const lastY = pageContent
+      .filter((item) => item.y < y)
+      .sort((a, b) => b.y - a.y)[0]?.y;
+    const ys = [
+      ...new Set(
+        pageContent
+          .filter((item) => item.y >= firstY && item.y <= lastY)
+          .map((item) => item.y),
+      ),
+    ];
+    return ys;
+  } catch (err) {
+    logger.logError(filenameForLogging, "getYsForRows()", err);
+    return [];
+  }
 }
 
 function findSmaller(a, b) {
@@ -148,28 +171,33 @@ function findSmaller(a, b) {
 }
 
 function getHeaders(pageContent, model) {
-  const y1 = pageContent.filter((item) =>
-    headers[model].minHeadersY.test(item.str),
-  )[0]?.y;
-  const y2 = pageContent.filter((item) =>
-    headers[model].maxHeadersY.test(item.str),
-  )[0]?.y;
-  const header = pageContent.filter(
-    (item) => item.y >= y1 && item.y <= y2 && item.str.trim() !== "",
-  );
+  try {
+    const y1 = pageContent.filter((item) =>
+      headers[model].minHeadersY.test(item.str),
+    )[0]?.y;
+    const y2 = pageContent.filter((item) =>
+      headers[model].maxHeadersY.test(item.str),
+    )[0]?.y;
+    const header = pageContent.filter(
+      (item) => item.y >= y1 && item.y <= y2 && item.str.trim() !== "",
+    );
 
-  const groupedByX = header.reduce((acc, obj) => {
-    if (!acc[obj.x]) {
-      acc[obj.x] = [];
-    }
-    acc[obj.x].push(obj.str);
-    return acc;
-  }, {});
+    const groupedByX = header.reduce((acc, obj) => {
+      if (!acc[obj.x]) {
+        acc[obj.x] = [];
+      }
+      acc[obj.x].push(obj.str);
+      return acc;
+    }, {});
 
-  const result = Object.values(groupedByX);
-  const joinedArray = result.map((x) => x.join(" "));
+    const result = Object.values(groupedByX);
+    const joinedArray = result.map((x) => x.join(" "));
 
-  return joinedArray;
+    return joinedArray;
+  } catch (err) {
+    logger.logError(filenameForLogging, "getHeaders()", err);
+    return [];
+  }
 }
 
 module.exports = {
@@ -181,4 +209,5 @@ module.exports = {
   findRowXFromHeaderAndTextAlignment,
   mergeNeighbouringText,
   removeEmptyStringElements,
+  sanitise,
 };

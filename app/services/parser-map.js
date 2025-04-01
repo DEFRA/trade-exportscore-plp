@@ -41,7 +41,7 @@ function mapPdfParser(packingListDocument, key) {
   const packingListContents = [];
 
   if (!packingListDocument.fields.PackingListContents.values) {
-    return []
+    return [];
   }
 
   let currentItemNumber = 0;
@@ -49,8 +49,8 @@ function mapPdfParser(packingListDocument, key) {
   for (const value of packingListDocument.fields.PackingListContents.values) {
     const row = value.properties;
     const currentPageNumber =
-      row[headers[key].headers.description]?.boundingRegions?.[0]
-        ?.pageNumber ?? lastPageNumber;
+      row[headers[key].headers.description]?.boundingRegions?.[0]?.pageNumber ??
+      lastPageNumber;
     if (lastPageNumber !== currentPageNumber) {
       lastPageNumber = currentPageNumber;
       currentItemNumber = 0;
