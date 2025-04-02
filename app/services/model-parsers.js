@@ -188,11 +188,6 @@ const parsersPdf = {
       mandsMatcher.matches(packingList, filename),
     parse: (packingList, filename) => mandsParser.parse(packingList, filename),
   },
-  BOOKER1: {
-    matches: (packingList, filename) =>
-      bookerMatcher.matches(packingList, filename),
-    parse: (packingList, filename) => bookerParser.parse(packingList, filename),
-  },
   GREGGS1: {
     matches: (packingList, filename) =>
       greggsMatcher.matches(packingList, filename),
@@ -220,4 +215,12 @@ const noMatchParsers = {
   },
 };
 
-module.exports = { parsersExcel, parsersPdf, noMatchParsers };
+const parsersPdfNonAi = {
+  BOOKER1: {
+    matches: (packingList, filename) =>
+      bookerMatcher.matches(packingList, filename),
+    parse: (packingList, filename) => bookerParser.parse(packingList, filename),
+  },
+};
+
+module.exports = { parsersExcel, parsersPdf, noMatchParsers, parsersPdfNonAi };

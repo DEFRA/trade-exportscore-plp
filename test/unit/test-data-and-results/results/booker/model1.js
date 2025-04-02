@@ -10,13 +10,12 @@ module.exports = {
       {
         description: "Aero Melts Milk Bag PM135",
         commodity_code: "1806329000",
-        nature_of_products: null,
         number_of_packages: "1",
-        total_net_weight_kg: 1.067,
+        total_net_weight_kg: "1.067",
         type_of_treatment: null,
       },
     ],
-    registration_approval_number: "RMS-GB-000077-001",
+    registration_approval_number: "RMS-GB-000077",
     parserModel: parser_model.BOOKER1,
   },
   emptyTestResult: {
@@ -25,7 +24,7 @@ module.exports = {
       failure_reasons: null,
     },
     items: [],
-    registration_approval_number: "RMS-GB-000077-001",
+    registration_approval_number: "RMS-GB-000077",
     parserModel: parser_model.BOOKER1,
   },
   invalidTestResult_MissingCells: {
@@ -37,13 +36,12 @@ module.exports = {
       {
         description: "Aero Melts Milk Bag PM135",
         commodity_code: "1806329000",
-        nature_of_products: null,
         number_of_packages: null,
-        total_net_weight_kg: 1.067,
+        total_net_weight_kg: "1.067",
         type_of_treatment: null,
       },
     ],
-    registration_approval_number: "RMS-GB-000077-001",
+    registration_approval_number: "RMS-GB-000077",
     parserModel: parser_model.BOOKER1,
   },
 };

@@ -1,48 +1,33 @@
 const logger = require("../../../utilities/logger");
-const {
-  createDocumentIntelligenceAdminClient,
-  getLatestModelByName,
-  createDocumentIntelligenceClient,
-  runAnalysis,
-} = require("../../document-intelligence");
 const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const pdfHelper = require("../../../utilities/pdf-helper");
 
 async function matches(packingList, filename) {
-  const result = {
-    isMatched: matcherResult.GENERIC_ERROR,
-    document: {},
-  };
   try {
-    // Get latest model for that version
-    const adminClient = createDocumentIntelligenceAdminClient();
-    const modelId = await getLatestModelByName(
-      adminClient,
-      headers.BOOKER1.modelId,
-    );
+    const pdfJson = await pdfHelper.extractPdf(packingList);
+    let result;
 
-    // Run document analysis
-    const client = createDocumentIntelligenceClient();
-    const document = await runAnalysis(client, modelId, packingList);
-
-    // check for correct establishment number
-    if (
-      !document.fields.NIRMSNumber ||
-      !regex.findMatch(headers.BOOKER1.establishmentNumber.regex, [
-        document.fields.NIRMSNumber,
-      ])
-    ) {
-      result.isMatched = matcherResult.WRONG_ESTABLISHMENT_NUMBER;
-      return result;
+    if (pdfJson.pages.length === 0) {
+      return matcherResult.EMPTY_FILE;
     }
 
-    result.isMatched = matcherResult.CORRECT;
-    result.document = document;
+    // check for correct establishment number
+    for (const page of pdfJson.pages) {
+      if (
+        !regex.test(headers.BOOKER1.establishmentNumber.regex, page.content)
+      ) {
+        return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
+      }
 
-    if (result.isMatched === matcherResult.CORRECT) {
+      // match header
+      result = matchHeaders(page.content);
+    }
+
+    if (result === matcherResult.CORRECT) {
       logger.logInfo(
         filenameForLogging,
         "matches()",
@@ -53,7 +38,41 @@ async function matches(packingList, filename) {
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return result;
+
+    return matcherResult.GENERIC_ERROR;
+  }
+}
+
+function matchHeaders(pageContent) {
+  const header = pdfHelper.getHeaders(pageContent, "BOOKER1");
+
+  let isBookerHeader = matcherResult.CORRECT;
+  for (const x in headers["BOOKER1"].headers) {
+    if (
+      !header.some((item) => headers["BOOKER1"].headers[x].regex.test(item))
+    ) {
+      isBookerHeader = matcherResult.WRONG_HEADER;
+      break;
+    }
+  }
+
+  let isBookerLandscapeHeader = matcherResult.CORRECT;
+  for (const x in headers["BOOKER1L"].headers) {
+    if (
+      !header.some((item) => headers["BOOKER1L"].headers[x].regex.test(item))
+    ) {
+      isBookerLandscapeHeader = matcherResult.WRONG_HEADER;
+      break;
+    }
+  }
+
+  if (
+    isBookerHeader === matcherResult.CORRECT ||
+    isBookerLandscapeHeader === matcherResult.CORRECT
+  ) {
+    return matcherResult.CORRECT;
+  } else {
+    return matcherResult.WRONG_HEADER;
   }
 }
 

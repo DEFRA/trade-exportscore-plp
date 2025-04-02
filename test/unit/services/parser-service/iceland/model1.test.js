@@ -5,6 +5,7 @@ const test_results = require("../../../test-data-and-results/results/iceland/mod
 
 const filename = "iceland-model1.pdf";
 
+jest.mock("../../../../../app/utilities/pdf-helper");
 jest.mock("../../../../../app/services/document-intelligence");
 jest.mock("../../../../../app/config", () => {
   return {
@@ -15,15 +16,15 @@ jest.mock("../../../../../app/config", () => {
 const {
   createDocumentIntelligenceClient,
   runAnalysis,
-  runPrebuiltAnalysis,
 } = require("../../../../../app/services/document-intelligence");
+const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
 });
 
-runPrebuiltAnalysis.mockImplementation(() => {
-  return { content: "RMS-GB-000040" };
+extractPdf.mockImplementation(() => {
+  return { pages: [{ content: [{ remos: "RMS-GB-000040" }] }] };
 });
 
 describe("findParser", () => {

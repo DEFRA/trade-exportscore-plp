@@ -6,10 +6,12 @@ jest.mock("../../../app/config", () => {
   };
 });
 
+jest.mock("../../../app/utilities/pdf-helper");
+const { extractPdf } = require("../../../app/utilities/pdf-helper");
+
 jest.mock("../../../app/services/document-intelligence");
 const {
   createDocumentIntelligenceClient,
-  runPrebuiltAnalysis,
 } = require("../../../app/services/document-intelligence");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
@@ -91,20 +93,10 @@ describe("findParser", () => {
     expect(result.parserModel).toBe(parserModel.NOREMOS);
   });
 
-  test("runPrebuiltAnalysis throws error", async () => {
-    runPrebuiltAnalysis.mockImplementation(() => {
-      throw new Error("run analysis error");
-    });
-
-    const result = await parserService.findParser(packingListJson, "test.pdf");
-
-    expect(result.parserModel).toBe(parserModel.NOREMOS);
-  });
-
   test("No remos number pdf", async () => {
     const packingListJson = {};
-    runPrebuiltAnalysis.mockImplementation(() => {
-      return {};
+    extractPdf.mockImplementation(() => {
+      return { pages: [{ content: [{ remos: "" }] }] };
     });
 
     const result = await parserService.findParser(packingListJson, "test.pdf");
@@ -228,8 +220,8 @@ describe("findParser", () => {
     };
     const pdfFilename = "test.pdf";
 
-    runPrebuiltAnalysis.mockImplementation(() => {
-      return { content: "RMS-GB-000000-000" };
+    extractPdf.mockImplementation(() => {
+      return { pages: [{ content: [{ remos: "RMS-GB-000000-000" }] }] };
     });
 
     const result = await parserService.findParser({}, pdfFilename);

@@ -6,6 +6,7 @@ const routes = [].concat(
   require("../routes/ai"),
   require("../routes/test-di-conn"),
   require("../routes/create-packinglist-message"),
+  require("../routes/pdf-non-ai"),
 );
 
 module.exports = {

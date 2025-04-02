@@ -1,26 +1,29 @@
-const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
-const { mapPdfParser } = require("../../parser-map");
-const logger = require("../../../utilities/logger");
+const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
+const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const { mapPdfNonAiParser } = require("../../../services/parser-map");
+const { extractPdf } = require("../../../utilities/pdf-helper");
 
-function parse(packingListDocument) {
+async function parse(packingList) {
   try {
-    let establishmentNumber;
-    if (
-      regex.findMatch(headers.BOOKER1.establishmentNumber.regex, [
-        packingListDocument.fields.NIRMSNumber,
-      ])
-    ) {
-      establishmentNumber = packingListDocument.fields.NIRMSNumber.content;
+    let packingListContents = [];
+    let packingListContentsTemp = [];
+
+    const pdfJson = await extractPdf(packingList);
+
+    const establishmentNumber = regex.findMatch(
+      headers.BOOKER1.establishmentNumber.regex,
+      pdfJson.pages[0].content,
+    );
+
+    for (const page of pdfJson.pages) {
+      packingListContentsTemp = mapPdfNonAiParser(page, "BOOKER1L");
+      packingListContents = packingListContents.concat(packingListContentsTemp);
     }
-
-    const transformedContents = transformPackingList(packingListDocument);
-
-    const packingListContents = mapPdfParser(transformedContents, "BOOKER1");
 
     return combineParser.combine(
       establishmentNumber,
@@ -30,24 +33,10 @@ function parse(packingListDocument) {
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
-    return {};
+    return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
-}
-
-function transformPackingList(packingListDocument) {
-  if (packingListDocument.fields.PackingListContents.values) {
-    for (const value of packingListDocument.fields.PackingListContents.values) {
-      if (value.properties.Boxes.value) {
-        value.properties.Boxes.value =
-          value.properties?.Boxes.value?.match(/\d*/)[0];
-      }
-    }
-  }
-
-  return packingListDocument;
 }
 
 module.exports = {
   parse,
-  transformPackingList,
 };

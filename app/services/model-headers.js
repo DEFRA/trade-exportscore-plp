@@ -4,6 +4,37 @@ const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
 
+const booker1 = {
+  establishmentNumber: {
+    regex: /^RMS-GB-000077/i,
+  },
+  headers: {
+    description: {
+      x: /Description/i,
+      regex: /Description/i,
+      headerTextAlignment: "CL",
+    },
+    commodity_code: {
+      x: /Commodity Code/i,
+      regex: /Commodity Code/i,
+      headerTextAlignment: "LL",
+    },
+    number_of_packages: {
+      x: /Quantity/i,
+      regex: /Unit Quantity/i,
+      headerTextAlignment: "LL",
+    },
+    total_net_weight_kg: {
+      x: /Net/i,
+      regex: /Net Weight \(Kilos\)/i,
+      headerTextAlignment: "LL",
+    },
+  },
+  totals: /^0 Boxes/i,
+  minHeadersY: /Net/i,
+  maxHeadersY: /(Kilos)/i,
+};
+
 const headers = {
   ASDA1: {
     establishmentNumber: {
@@ -309,17 +340,17 @@ const headers = {
     },
     modelId: "mands1-v3",
   },
-  BOOKER1: {
-    establishmentNumber: {
-      regex: /^RMS-GB-000077-\d{3}$/i,
-    },
+  BOOKER1: booker1,
+  BOOKER1L: {
+    ...booker1,
     headers: {
-      description: "Description",
-      commodity_code: "Commodity Code",
-      number_of_packages: "Boxes",
-      total_net_weight_kg: "Net Weight (Kilos)",
+      ...booker1.headers,
+      type_of_treatment: {
+        x: /Treatment Type/i,
+        regex: /Treatment Type/i,
+        headerTextAlignment: "LL",
+      },
     },
-    modelId: "booker1-v5",
   },
   GREGGS1: {
     establishmentNumber: {

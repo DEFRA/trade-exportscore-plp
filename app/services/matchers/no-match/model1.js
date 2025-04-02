@@ -1,8 +1,8 @@
-const {
-  createDocumentIntelligenceClient,
-  runPrebuiltAnalysis,
-} = require("../../document-intelligence");
 const regex = require("../../../utilities/regex");
+const { extractPdf } = require("../../../utilities/pdf-helper");
+const logger = require("../../../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function noRemosMatch(sanitisedPackingList, _filename) {
   const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
@@ -20,16 +20,17 @@ function noRemosMatch(sanitisedPackingList, _filename) {
 
 async function noRemosMatchPdf(packingList) {
   try {
+    const pdfJson = await extractPdf(packingList);
     const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
-    const client = createDocumentIntelligenceClient();
-    const content = await runPrebuiltAnalysis(
-      client,
-      "prebuilt-read",
-      packingList,
-    );
-
-    return regex.findMatch(remosRegex, [content]);
+    for (const page of pdfJson.pages) {
+      const result = regex.findMatch(remosRegex, page.content);
+      if (result) {
+        return result;
+      }
+    }
+    return false;
   } catch (err) {
+    logger.logError(filenameForLogging, "noRemosMatchPdf()", err);
     return false;
   }
 }

@@ -3,7 +3,6 @@ const {
   getLatestModelByName,
   createDocumentIntelligenceClient,
   runAnalysis,
-  runPrebuiltAnalysis,
 } = require("../../../app/services/document-intelligence");
 const {
   DocumentModelAdministrationClient,
@@ -99,20 +98,6 @@ describe("runAnalysis", () => {
     );
 
     expect(result).toEqual({ test: "this is a test" });
-  });
-});
-
-describe("runPrebuiltAnalysis", () => {
-  test("returns document", async () => {
-    const result = await runPrebuiltAnalysis(
-      createDocumentIntelligenceClient(),
-      "ICELAND1",
-      "",
-    );
-
-    expect(result).toEqual({
-      documents: [{ test: "this is a test" }],
-    });
   });
 });
 

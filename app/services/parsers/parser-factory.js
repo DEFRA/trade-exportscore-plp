@@ -1,6 +1,10 @@
 const fileExtension = require("../../utilities/file-extension");
 const config = require("../../config");
-const { getExcelParser, getPdfParser } = require("./parsers");
+const {
+  getExcelParser,
+  getPdfParser,
+  getPdfNonAiParser,
+} = require("./parsers");
 const packingListValidator = require("../validators/packing-list-column-validator");
 const {
   removeEmptyItems,
@@ -16,8 +20,12 @@ async function findParser(sanitizedPackingList, fileName) {
 
   if (fileExtension.isExcel(fileName)) {
     parser = getExcelParser(sanitizedPackingList, fileName);
-  } else if (fileExtension.isPdf(fileName) && config.isDiEnabled) {
-    parser = await getPdfParser(sanitizedPackingList, fileName);
+  } else if (fileExtension.isPdf(fileName)) {
+    parser = await getPdfNonAiParser(sanitizedPackingList, fileName);
+
+    if (!parser && config.isDiEnabled) {
+      parser = await getPdfParser(sanitizedPackingList, fileName);
+    }
   } else {
     parser = null;
   }
@@ -34,8 +42,8 @@ async function findParser(sanitizedPackingList, fileName) {
   return parser;
 }
 
-function generateParsedPackingList(parser, sanitisedPackingList) {
-  const parsedPackingList = parser.parse(sanitisedPackingList);
+async function generateParsedPackingList(parser, sanitisedPackingList) {
+  const parsedPackingList = await parser.parse(sanitisedPackingList);
   parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
   const validationResults =
     packingListValidator.validatePackingList(parsedPackingList);

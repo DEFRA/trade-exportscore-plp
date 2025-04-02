@@ -2,36 +2,39 @@ const parser = require("../../../../../app/services/parsers/booker/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/booker/model1");
 const test_results = require("../../../test-data-and-results/results/booker/model1");
+const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
 
-describe("parseBooker", () => {
-  test.each([
-    [model.validModel, test_results.validTestResult],
-    [model.emptyModel, test_results.emptyTestResult],
-  ])("parses model", (testModel, expected) => {
-    const result = parser.parse(testModel);
+jest.mock("../../../../../app/utilities/pdf-helper", () => {
+  const actual = jest.requireActual("../../../../../app/utilities/pdf-helper");
+  return {
+    ...actual,
+    extractPdf: jest.fn(),
+  };
+});
 
-    expect(result).toMatchObject(expected);
+describe("parse", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test("should call logger.logError when an error is thrown", () => {
+  test("parses model", async () => {
+    extractPdf.mockImplementation(() => {
+      return model.validModel;
+    });
+    const result = await parser.parse({});
+
+    expect(result).toMatchObject(test_results.validTestResult);
+  });
+
+  test("should call logger.logError when an error is thrown", async () => {
+    extractPdf.mockImplementation(() => {
+      throw new Error();
+    });
     // Spy on the logError method
     const logErrorSpy = jest.spyOn(logger, "logError");
     // Call the parse function with null data
-    parser.parse(null);
+    await parser.parse(null);
     // Check if logger.logError has been called
     expect(logErrorSpy).toHaveBeenCalled();
-  });
-});
-
-describe("transformPackingList", () => {
-  test.each([
-    [model.validModel, "1"],
-    [model.invalidModel_MissingColumnCells, null],
-  ])("transforms boxes", (testModel, expected) => {
-    const result = parser.transformPackingList(testModel);
-
-    expect(
-      result.fields.PackingListContents.values[0].properties.Boxes.value,
-    ).toBe(expected);
   });
 });
