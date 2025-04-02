@@ -15,7 +15,7 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    registration_approval_number: "RMS-GB-000077-001",
+    registration_approval_number: "RMS-GB-000077",
     parserModel: parser_model.BOOKER1,
   },
   emptyTestResult: {
@@ -24,7 +24,7 @@ module.exports = {
       failure_reasons: null,
     },
     items: [],
-    registration_approval_number: "RMS-GB-000077-001",
+    registration_approval_number: "RMS-GB-000077",
     parserModel: parser_model.BOOKER1,
   },
   invalidTestResult_MissingCells: {
@@ -41,7 +41,7 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    registration_approval_number: "RMS-GB-000077-001",
+    registration_approval_number: "RMS-GB-000077",
     parserModel: parser_model.BOOKER1,
   },
 };
