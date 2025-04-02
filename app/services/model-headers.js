@@ -345,11 +345,6 @@ const headers = {
     ...booker1,
     headers: {
       ...booker1.headers,
-      country_of_origin: {
-        x: /Country of Origin/i,
-        regex: /Country of Origin/i,
-        headerTextAlignment: "LL",
-      },
       type_of_treatment: {
         x: /Treatment Type/i,
         regex: /Treatment Type/i,
