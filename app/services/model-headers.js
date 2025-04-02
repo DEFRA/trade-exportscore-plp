@@ -6,7 +6,7 @@ const netWeightRegex = /Net Weight \(KG\)/i;
 
 const booker1 = {
   establishmentNumber: {
-    regex: /^RMS-GB-000077-\d{3}$/i,
+    regex: /^RMS-GB-000077/i,
   },
   headers: {
     description: {

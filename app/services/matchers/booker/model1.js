@@ -51,7 +51,6 @@ function matchHeaders(pageContent) {
     if (
       !header.some((item) => headers["BOOKER1"].headers[x].regex.test(item))
     ) {
-      console.log(headers["BOOKER1"].headers[x].regex)
       isBookerHeader = matcherResult.WRONG_HEADER;
       break;
     }
