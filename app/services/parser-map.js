@@ -82,19 +82,24 @@ function mapPdfParser(packingListDocument, key) {
 }
 
 function mapPdfNonAiParser(packingListJson, model) {
-  const xs = pdfHelper.getXsForRows(packingListJson.content, model);
   const ys = pdfHelper.getYsForRows(packingListJson.content, model);
   const packingListContents = [];
 
   ys.forEach((y, row) => {
-    const plRow = {};
-    Object.keys(xs).forEach((key) => {
-      plRow[key] =
-        packingListJson.content.filter(
-          (item) =>
-            Math.round(item.y) === Math.round(y) &&
-            Math.round(item.x) === Math.round(xs[key]),
-        )[0]?.str ?? null;
+    const plRow = {
+      description: null,
+      nature_of_products: null,
+      type_of_treatment: null,
+      commodity_code: null,
+      number_of_packages: null,
+      total_net_weight_kg: null,
+    };
+    Object.keys(headers[model].headers).forEach((key) => {
+      plRow[key] = findItemContent(
+        packingListJson,
+        headers[model].headers[key],
+        y,
+      );
     });
     plRow.row_location = {
       rowNumber: row + 1,
@@ -102,7 +107,23 @@ function mapPdfNonAiParser(packingListJson, model) {
     };
     packingListContents.push(plRow);
   });
+
   return packingListContents;
+}
+
+function findItemContent(packingListJson, header, y) {
+  const result = packingListJson.content.filter(
+    (item) =>
+      Math.round(item.y) === Math.round(y) &&
+      Math.round(item.x) >= header.x1 &&
+      Math.round(item.x) <= header.x2 &&
+      item.str.trim() !== "",
+  );
+  if (result.length > 0) {
+    return result.map((obj) => obj.str).join("");
+  } else {
+    return null;
+  }
 }
 
 module.exports = {
