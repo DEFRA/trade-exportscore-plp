@@ -26,7 +26,7 @@ async function matches(packingList, filename) {
       // match header
       result = matchHeaders(page.content);
       if (result === matcherResult.WRONG_HEADER) {
-        return matcherResult.WRONG_HEADER
+        return matcherResult.WRONG_HEADER;
       }
     }
 

@@ -95,7 +95,11 @@ function mapPdfNonAiParser(packingListJson, model) {
       total_net_weight_kg: null,
     };
     Object.keys(headers[model].headers).forEach((key) => {
-      plRow[key] = findItemContent(packingListJson, headers[model].headers[key], y);
+      plRow[key] = findItemContent(
+        packingListJson,
+        headers[model].headers[key],
+        y,
+      );
     });
     plRow.row_location = {
       rowNumber: row + 1,
@@ -109,16 +113,15 @@ function mapPdfNonAiParser(packingListJson, model) {
 
 function findItemContent(packingListJson, header, y) {
   const result = packingListJson.content.filter(
-      (item) =>
-        Math.round(item.y) === Math.round(y) &&
-        Math.round(item.x) >= header.x1 &&
-        Math.round(item.x) <= header.x2 &&
-        item.str.trim() != "",
-    )
+    (item) =>
+      Math.round(item.y) === Math.round(y) &&
+      Math.round(item.x) >= header.x1 &&
+      Math.round(item.x) <= header.x2 &&
+      item.str.trim() != "",
+  );
   if (result.length > 0) {
-    return result.map(obj => obj.str).join('');
-  }
-  else {
+    return result.map((obj) => obj.str).join("");
+  } else {
     return null;
   }
 }
