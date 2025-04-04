@@ -55,9 +55,9 @@ function sanitise(pdfJson) {
       });
 
       // merge elements that are next to each other
-      pdfJson.pages[page].content = mergeNeighbouringText(
-        pdfJson.pages[page].content,
-      );
+      // pdfJson.pages[page].content = mergeNeighbouringText(
+      //   pdfJson.pages[page].content,
+      // );
     }
   }
 
