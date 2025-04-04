@@ -86,7 +86,14 @@ function mapPdfNonAiParser(packingListJson, model) {
   const packingListContents = [];
 
   ys.forEach((y, row) => {
-    const plRow = {};
+    const plRow = {
+      description: null,
+      nature_of_products: null,
+      type_of_treatment: null,
+      commodity_code: null,
+      number_of_packages: null,
+      total_net_weight_kg: null,
+    };
     Object.keys(headers[model].headers).forEach((key) => {
       plRow[key] = findItemContent(packingListJson, headers[model].headers[key], y);
     });
