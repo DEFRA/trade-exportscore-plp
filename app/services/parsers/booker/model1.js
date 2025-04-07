@@ -20,8 +20,13 @@ async function parse(packingList) {
       pdfJson.pages[0].content,
     );
 
+    let model = "BOOKER1"
+    if (regex.findMatch(headers.BOOKER1L.headers.type_of_treatment.regex, pdfJson.pages[0].content)) {
+      model = "BOOKER1L"
+    }
+
     for (const page of pdfJson.pages) {
-      packingListContentsTemp = mapPdfNonAiParser(page, "BOOKER1L");
+      packingListContentsTemp = mapPdfNonAiParser(page, model);
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
