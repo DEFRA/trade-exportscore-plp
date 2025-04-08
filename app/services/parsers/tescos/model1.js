@@ -32,7 +32,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         headerRow,
         dataRow,
-        headers.TESCO1.regex,
+        headers.TESCO1,
         sheet,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);

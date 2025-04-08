@@ -1,12 +1,20 @@
 const headers = require("./model-headers");
 const pdfHelper = require("../utilities/pdf-helper");
 
-function findHeaderCols(regexHeader, packingListHeader) {
+function findHeaderCols(header, packingListHeader) {
   const headerCols = {};
+  const regexHeader = header.regex;
   for (const value in regexHeader) {
     headerCols[value] = Object.keys(packingListHeader).find((key) => {
       return regexHeader[value].test(packingListHeader[key]);
     });
+  }
+  if (header.country_of_origin) {
+    headerCols.country_of_origin = Object.keys(packingListHeader).find(
+      (key) => {
+        return header.country_of_origin.test(packingListHeader[key]);
+      },
+    );
   }
   return headerCols;
 }

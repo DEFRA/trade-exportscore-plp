@@ -35,7 +35,7 @@ function parse(packingListJson) {
           packingListJson[sheet],
           headerRow,
           dataRow,
-          headers.SAVERS1.regex,
+          headers.SAVERS1,
           sheet,
         );
 

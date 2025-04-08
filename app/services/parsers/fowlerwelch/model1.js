@@ -42,7 +42,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
           packingListJson[sheet],
           headerRow,
           dataRow,
-          headers.FOWLERWELCH1.regex,
+          headers.FOWLERWELCH1,
           sheet,
         );
 
