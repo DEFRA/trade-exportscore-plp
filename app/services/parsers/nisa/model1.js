@@ -33,7 +33,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         headerRow,
         dataRow,
-        headers.NISA1.regex,
+        headers.NISA1,
         sheet,
       );
 

@@ -34,7 +34,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         headerRow,
         dataRow,
-        headers.BOOTS1.regex,
+        headers.BOOTS1,
         sheet,
       );
 

@@ -32,7 +32,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
         headerRow,
         dataRow,
-        headers.CDS1.regex,
+        headers.CDS1,
         sheet,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
