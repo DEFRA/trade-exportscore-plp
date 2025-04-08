@@ -11,23 +11,27 @@ const booker1 = {
   headers: {
     description: {
       x: /Description/i,
+      x1: 160,
+      x2: 340,
       regex: /Description/i,
-      headerTextAlignment: "CL",
     },
     commodity_code: {
       x: /Commodity Code/i,
+      x1: 500,
+      x2: 540,
       regex: /Commodity Code/i,
-      headerTextAlignment: "LL",
     },
     number_of_packages: {
       x: /Quantity/i,
+      x1: 340,
+      x2: 360,
       regex: /Unit Quantity/i,
-      headerTextAlignment: "LL",
     },
     total_net_weight_kg: {
       x: /Net/i,
+      x1: 430,
+      x2: 455,
       regex: /Net Weight \(Kilos\)/i,
-      headerTextAlignment: "LL",
     },
   },
   totals: /^0 Boxes/i,
@@ -337,11 +341,35 @@ const headers = {
   BOOKER1L: {
     ...booker1,
     headers: {
-      ...booker1.headers,
+      description: {
+        x: /Description/i,
+        x1: 155,
+        x2: 335,
+        regex: /Description/i,
+      },
+      commodity_code: {
+        x: /Commodity Code/i,
+        x1: 490,
+        x2: 580,
+        regex: /Commodity Code/i,
+      },
+      number_of_packages: {
+        x: /Quantity/i,
+        x1: 335,
+        x2: 365,
+        regex: /Unit Quantity/i,
+      },
+      total_net_weight_kg: {
+        x: /Net/i,
+        x1: 420,
+        x2: 450,
+        regex: /Net Weight \(Kilos\)/i,
+      },
       type_of_treatment: {
         x: /Treatment Type/i,
+        x1: 660,
+        x2: 730,
         regex: /Treatment Type/i,
-        headerTextAlignment: "LL",
       },
     },
   },

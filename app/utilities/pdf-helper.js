@@ -21,23 +21,6 @@ function removeEmptyStringElements(pageContent) {
   return pageContent;
 }
 
-function mergeNeighbouringText(pageContent) {
-  for (let i = pageContent.length - 1; i > 0; i--) {
-    if (
-      Math.round(pageContent[i].x) ===
-        Math.round(pageContent[i - 1].x + pageContent[i - 1].width) &&
-      pageContent[i].str !== " " &&
-      pageContent[i - 1].str !== " " &&
-      pageContent[i].y === pageContent[i - 1].y
-    ) {
-      pageContent[i - 1].str += pageContent[i].str;
-      pageContent[i - 1].width += pageContent[i].width;
-      pageContent.splice(i, 1);
-    }
-  }
-  return pageContent;
-}
-
 function sanitise(pdfJson) {
   for (const page in pdfJson.pages) {
     if (pdfJson.pages.hasOwnProperty(page)) {
@@ -53,73 +36,10 @@ function sanitise(pdfJson) {
         }
         return a.y - b.y;
       });
-
-      // merge elements that are next to each other
-      pdfJson.pages[page].content = mergeNeighbouringText(
-        pdfJson.pages[page].content,
-      );
     }
   }
 
   return pdfJson;
-}
-
-function getXsForRows(pageContent, model) {
-  try {
-    const header = headers[model].headers;
-    const xs = {};
-    for (const key in header) {
-      xs[key] = findRowXFromHeaderAndTextAlignment(pageContent, header[key]);
-    }
-    return xs;
-  } catch (err) {
-    logger.logError(filenameForLogging, "getXsForRows()", err);
-    return {};
-  }
-}
-
-function findRowXFromHeaderAndTextAlignment(pageContent, header) {
-  try {
-    let x;
-    switch (header?.headerTextAlignment) {
-      // left header and text alignment, use the x of the header
-      case "LL": {
-        x = pageContent.filter((item) => header.x.test(item.str))[0]?.x ?? null;
-        break;
-      }
-      // centre header and left text alignment
-      // x value will be where the y is larger than header y
-      // and x is next largest x before than header x, but isn't whitespace
-      case "CL": {
-        const headerPosition = pageContent.filter((item) =>
-          header.x.test(item.str),
-        )[0];
-        const previousXs = pageContent.filter(
-          (item) =>
-            item.y > headerPosition?.y &&
-            item.x < headerPosition?.x &&
-            item.str.trim() !== "",
-        );
-        x =
-          previousXs.reduce(
-            (max, obj) => (obj.x > max ? obj.x : max),
-            previousXs[0]?.x,
-          ) ?? null;
-        break;
-      }
-      default: {
-        x = null;
-      }
-    }
-    return x;
-  } catch (err) {
-    logger.logError(
-      filenameForLogging,
-      "findRowXFromHeaderAndTextAlignment()",
-      err,
-    );
-    return null;
-  }
 }
 
 function getYsForRows(pageContent, model) {
@@ -199,13 +119,10 @@ function getHeaders(pageContent, model) {
 }
 
 module.exports = {
-  getXsForRows,
   getYsForRows,
   getHeaders,
   extractPdf,
   findSmaller,
-  findRowXFromHeaderAndTextAlignment,
-  mergeNeighbouringText,
   removeEmptyStringElements,
   sanitise,
 };
