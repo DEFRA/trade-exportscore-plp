@@ -26,7 +26,6 @@
     "@azure/storage-blob": "^12.23.0",
     "@boterop/convert-excel-to-json": "^2.0.0",
     "@hapi/hapi": "21.3.2",
-    "@pomgui/pdf-tables-parser": "^0.1.0",
     "adp-messaging": "^2.9.0",
     "applicationinsights": "2.8.0",
     "blipp": "^4.0.2",
