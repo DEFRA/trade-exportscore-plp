@@ -1,6 +1,6 @@
 {
   "name": "trade-exportscore-plp",
-  "version": "6.10.0",
+  "version": "6.10.1",
   "description": "",
   "homepage": "github.com?owner=defra&repo=trade-exportscore-plp&organization=defra",
   "main": "app/index.js",
@@ -26,7 +26,6 @@
     "@azure/storage-blob": "^12.23.0",
     "@boterop/convert-excel-to-json": "^2.0.0",
     "@hapi/hapi": "21.3.2",
-    "@pomgui/pdf-tables-parser": "^0.1.0",
     "adp-messaging": "^2.9.0",
     "applicationinsights": "2.8.0",
     "blipp": "^4.0.2",
@@ -44,7 +43,6 @@
     "jest": "29.7.0",
     "jest-junit": "16.0.0",
     "nodemon": "3.0.1",
-    "pdf.js-extract": "^0.2.1",
     "prettier": "^3.3.3",
     "standard": "^17.1.0"
   },
