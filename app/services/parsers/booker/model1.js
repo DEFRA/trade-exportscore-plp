@@ -20,9 +20,14 @@ async function parse(packingList) {
       pdfJson.pages[0].content,
     );
 
-    let model = "BOOKER1"
-    if (regex.findMatch(headers.BOOKER1L.headers.type_of_treatment.regex, pdfJson.pages[0].content)) {
-      model = "BOOKER1L"
+    let model = "BOOKER1";
+    if (
+      regex.findMatch(
+        headers.BOOKER1L.headers.type_of_treatment.regex,
+        pdfJson.pages[0].content,
+      )
+    ) {
+      model = "BOOKER1L";
     }
 
     for (const page of pdfJson.pages) {
