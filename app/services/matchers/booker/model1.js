@@ -49,39 +49,8 @@ async function matches(packingList, filename) {
 function matchHeaders(pageContent) {
   const header = pdfHelper.getHeaders(pageContent, "BOOKER1");
 
-  let isBookerHeader = matcherResult.WRONG_HEADER;
-  for (const x in headers["BOOKER1"].headers) {
-    const matchHeader = headers["BOOKER1"].headers[x];
-    for (const i in header) {
-      if (
-        matchHeader.regex.test(header[i]) &&
-        i >= matchHeader.x1 &&
-        i <= matchHeader.x2
-      ) {
-        isBookerHeader = matcherResult.CORRECT;
-        break;
-      } else {
-        isBookerHeader = matcherResult.WRONG_HEADER;
-      }
-    }
-  }
-
-  let isBookerLandscapeHeader = matcherResult.WRONG_HEADER;
-  for (const x in headers["BOOKER1L"].headers) {
-    const matchHeader = headers["BOOKER1L"].headers[x];
-    for (const i in header) {
-      if (
-        matchHeader.regex.test(header[i]) &&
-        i >= matchHeader.x1 &&
-        i <= matchHeader.x2
-      ) {
-        isBookerLandscapeHeader = matcherResult.CORRECT;
-        break;
-      } else {
-        isBookerLandscapeHeader = matcherResult.WRONG_HEADER;
-      }
-    }
-  }
+  let isBookerHeader = findHeader("BOOKER1", header);
+  let isBookerLandscapeHeader = findHeader("BOOKER1L", header);
 
   if (
     isBookerHeader === matcherResult.CORRECT ||
@@ -91,6 +60,30 @@ function matchHeaders(pageContent) {
   } else {
     return matcherResult.WRONG_HEADER;
   }
+}
+
+function findHeader(model, header) {
+  let isBookerHeader = matcherResult.WRONG_HEADER;
+  for (const x in headers[model].headers) {
+    if (headers[model].headers.hasOwnProperty(x)) {
+      const matchHeader = headers[model].headers[x];
+      for (const i in header) {
+        if (
+          matchHeader.regex.test(header[i]) &&
+          i >= matchHeader.x1 &&
+          i <= matchHeader.x2
+        ) {
+          isBookerHeader = matcherResult.CORRECT;
+          break;
+        } else {
+          isBookerHeader = matcherResult.WRONG_HEADER;
+        }
+      }
+    }
+
+  }
+
+  return isBookerHeader
 }
 
 module.exports = { matches };
