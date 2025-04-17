@@ -362,7 +362,7 @@ const headers = {
       total_net_weight_kg: {
         x: /Net/i,
         x1: 420,
-        x2: 450,
+        x2: 445,
         regex: /Net Weight \(Kilos\)/i,
       },
       type_of_treatment: {
