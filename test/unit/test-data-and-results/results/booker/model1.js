@@ -18,6 +18,23 @@ module.exports = {
     registration_approval_number: "RMS-GB-000077",
     parserModel: parser_model.BOOKER1,
   },
+  validTestResultLandscape: {
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    items: [
+      {
+        description: "Aero Melts Milk Bag PM135",
+        commodity_code: "1806329000",
+        number_of_packages: "1",
+        total_net_weight_kg: "1.067",
+        type_of_treatment: "Ambient",
+      },
+    ],
+    registration_approval_number: "RMS-GB-000077",
+    parserModel: parser_model.BOOKER1,
+  },
   emptyTestResult: {
     business_checks: {
       all_required_fields_present: true,
