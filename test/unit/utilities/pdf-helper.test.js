@@ -125,7 +125,10 @@ describe("getHeaders", () => {
       },
     ];
 
-    const expected = ["Header1 HeaderMax", "Header2"];
+    const expected = {
+      4: "Heder1 HeaderMax",
+      6: "Header2",
+    };
     const result = pdfHelper.getHeaders(pageContent, "TestHeader");
     expect(result.toString()).toBe(expected.toString());
   });

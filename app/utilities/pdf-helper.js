@@ -102,16 +102,13 @@ function getHeaders(pageContent, model) {
 
     const groupedByX = header.reduce((acc, obj) => {
       if (!acc[obj.x]) {
-        acc[obj.x] = [];
+        acc[obj.x] = "";
       }
-      acc[obj.x].push(obj.str);
+      acc[obj.x] += (acc[obj.x] ? " " : "") + obj.str;
       return acc;
     }, {});
 
-    const result = Object.values(groupedByX);
-    const joinedArray = result.map((x) => x.join(" "));
-
-    return joinedArray;
+    return groupedByX;
   } catch (err) {
     logger.logError(filenameForLogging, "getHeaders()", err);
     return [];
