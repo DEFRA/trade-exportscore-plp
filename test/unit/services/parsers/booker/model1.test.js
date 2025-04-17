@@ -26,6 +26,15 @@ describe("parse", () => {
     expect(result).toMatchObject(test_results.validTestResult);
   });
 
+  test("parses landscape model", async () => {
+    extractPdf.mockImplementation(() => {
+      return model.validModelLandscape;
+    });
+    const result = await parser.parse({});
+
+    expect(result).toMatchObject(test_results.validTestResultLandscape);
+  });
+
   test("should call logger.logError when an error is thrown", async () => {
     extractPdf.mockImplementation(() => {
       throw new Error();

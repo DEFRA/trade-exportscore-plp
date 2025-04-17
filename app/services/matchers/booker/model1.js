@@ -66,21 +66,21 @@ function findHeader(model, header) {
   let isBookerHeader = matcherResult.WRONG_HEADER;
   for (const x in headers[model].headers) {
     if (!headers[model].headers.hasOwnProperty(x)) {
-     return isBookerHeader 
+      return isBookerHeader;
     }
     const matchHeader = headers[model].headers[x];
-      for (const i in header) {
-        if (
-          matchHeader.regex.test(header[i]) &&
-          i >= matchHeader.x1 &&
-          i <= matchHeader.x2
-        ) {
-          isBookerHeader = matcherResult.CORRECT;
-          break;
-        } else {
-          isBookerHeader = matcherResult.WRONG_HEADER;
-        }
+    for (const i in header) {
+      if (
+        matchHeader.regex.test(header[i]) &&
+        i >= matchHeader.x1 &&
+        i <= matchHeader.x2
+      ) {
+        isBookerHeader = matcherResult.CORRECT;
+        break;
+      } else {
+        isBookerHeader = matcherResult.WRONG_HEADER;
       }
+    }
   }
 
   return isBookerHeader;
