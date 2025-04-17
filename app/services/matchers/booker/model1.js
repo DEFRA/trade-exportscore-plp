@@ -49,8 +49,8 @@ async function matches(packingList, filename) {
 function matchHeaders(pageContent) {
   const header = pdfHelper.getHeaders(pageContent, "BOOKER1");
 
-  let isBookerHeader = findHeader("BOOKER1", header);
-  let isBookerLandscapeHeader = findHeader("BOOKER1L", header);
+  const isBookerHeader = findHeader("BOOKER1", header);
+  const isBookerLandscapeHeader = findHeader("BOOKER1L", header);
 
   if (
     isBookerHeader === matcherResult.CORRECT ||
@@ -65,8 +65,10 @@ function matchHeaders(pageContent) {
 function findHeader(model, header) {
   let isBookerHeader = matcherResult.WRONG_HEADER;
   for (const x in headers[model].headers) {
-    if (headers[model].headers.hasOwnProperty(x)) {
-      const matchHeader = headers[model].headers[x];
+    if (!headers[model].headers.hasOwnProperty(x)) {
+     return isBookerHeader 
+    }
+    const matchHeader = headers[model].headers[x];
       for (const i in header) {
         if (
           matchHeader.regex.test(header[i]) &&
@@ -79,11 +81,9 @@ function findHeader(model, header) {
           isBookerHeader = matcherResult.WRONG_HEADER;
         }
       }
-    }
-
   }
 
-  return isBookerHeader
+  return isBookerHeader;
 }
 
 module.exports = { matches };
