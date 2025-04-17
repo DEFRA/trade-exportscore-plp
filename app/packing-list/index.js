@@ -51,6 +51,7 @@ function itemsMapper(o, applicationId) {
       commodityCode: o.commodity_code,
       numberOfPackages: o.number_of_packages,
       totalWeight: o.total_net_weight_kg,
+      totalWeightUnit: o.total_net_weight_unit,
       applicationId,
       countryOfOrigin: o.country_of_origin,
     };
