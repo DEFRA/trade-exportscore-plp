@@ -36,6 +36,7 @@ function mapParser(
       commodity_code: col[headerCols.commodity_code] ?? null,
       number_of_packages: col[headerCols.number_of_packages] ?? null,
       total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
+      total_net_weight_unit: col[headerCols.total_net_weight_unit] ?? null,
       country_of_origin: col[headerCols.country_of_origin] ?? null,
       row_location: {
         rowNumber: dataRow + rowPos + 1,
@@ -77,6 +78,8 @@ function mapPdfParser(packingListDocument, key) {
       total_net_weight_kg:
         parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
         null,
+      total_net_weight_unit:
+        row[headers[key].headers.total_net_weight_kg]?.content ?? null,
       row_location: {
         rowNumber: currentItemNumber,
         pageNumber: currentPageNumber,
@@ -101,6 +104,7 @@ function mapPdfNonAiParser(packingListJson, model) {
       commodity_code: null,
       number_of_packages: null,
       total_net_weight_kg: null,
+      total_net_weight_unit: null,
     };
     Object.keys(headers[model].headers).forEach((key) => {
       plRow[key] = findItemContent(
