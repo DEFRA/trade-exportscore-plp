@@ -47,6 +47,14 @@ describe("matches", () => {
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
 
+  test("return 'Wrong Header' matcher result for incorrect header values for multiple pages", async () => {
+    extractPdf.mockImplementationOnce(() => {
+      return model.incorrectHeaderMulitplePages;
+    });
+    const result = await matcher.matches({}, filename);
+    expect(result).toBe(matcherResult.WRONG_HEADER);
+  });
+
   test("return 'Generic Error' matcher result when an error occurs", async () => {
     const result = await matcher.matches(null, null);
     expect(result).toBe(matcherResult.GENERIC_ERROR);

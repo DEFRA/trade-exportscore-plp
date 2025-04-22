@@ -81,6 +81,9 @@ function findHeader(model, header) {
         isBookerHeader = matcherResult.WRONG_HEADER;
       }
     }
+    if (isBookerHeader === matcherResult.WRONG_HEADER) {
+      break;
+    }
   }
 
   return isBookerHeader;
