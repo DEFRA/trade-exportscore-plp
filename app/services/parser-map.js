@@ -16,6 +16,13 @@ function findHeaderCols(header, packingListHeader) {
       },
     );
   }
+  if (header.total_net_weight_unit) {
+    headerCols.total_net_weight_unit = Object.keys(packingListHeader).find(
+      (key) => {
+        return header.total_net_weight_unit.test(packingListHeader[key]);
+      },
+    );
+  }
   return headerCols;
 }
 

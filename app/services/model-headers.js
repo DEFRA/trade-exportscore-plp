@@ -51,6 +51,7 @@ const headers = {
       number_of_packages: /\[Number of Packages\]/i,
       total_net_weight_kg: /\[Net Weight\]/i,
     },
+    total_net_weight_unit: /\[kilograms\/grams\]/i,
   },
   ASDA2: {
     establishmentNumber: {
