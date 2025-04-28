@@ -14,6 +14,7 @@ module.exports = {
         number_of_packages: 2,
         total_net_weight_kg: 0.38,
         type_of_treatment: "GM",
+        total_net_weight_unit: "kgs",
       },
       {
         commodity_code: null,
@@ -22,6 +23,7 @@ module.exports = {
         number_of_packages: 1,
         total_net_weight_kg: 0.3457,
         type_of_treatment: "AMBIENT",
+        total_net_weight_unit: "kgs",
       },
     ],
     registration_approval_number: "RMS-GB-000015-006",
