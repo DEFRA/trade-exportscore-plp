@@ -28,8 +28,8 @@ function parse(packingListJson) {
 
     for (const sheet of sheets) {
       //extracting unit from netWeight header
-     const netWeightHeader = packingListJson[sheet][headerRow].G;
-     const  netWeightUnit = regex.findUnit(netWeightHeader);
+      const netWeightHeader = packingListJson[sheet][headerRow].G;
+      const netWeightUnit = regex.findUnit(netWeightHeader);
 
       const firstDataRowIndex = packingListJson[sheet]
         .slice(headerRow + 1)
