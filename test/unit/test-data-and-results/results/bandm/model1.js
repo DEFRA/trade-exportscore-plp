@@ -14,6 +14,7 @@ module.exports = {
         number_of_packages: 1,
         total_net_weight_kg: 1.15,
         type_of_treatment: null,
+        total_net_weight_unit: "KG",
       },
       {
         commodity_code: 19053199,
@@ -22,6 +23,7 @@ module.exports = {
         number_of_packages: 1,
         total_net_weight_kg: 3.27,
         type_of_treatment: null,
+        total_net_weight_unit: "KG",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
