@@ -25,17 +25,11 @@ function parse(packingListJson) {
       return regex.testAllPatterns(headerTitles, x);
     };
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
-  
-    //extracting unit from netWeight header
 
-    const unitRegex = /\b(KG?|KGS?|KILOGRAMS?|KILOS?)\b/i;     //regex of all possible units
-    const netWeightHeader = packingListJson[sheets[0]][headerRow].G   //net weight header
-    const match = netWeightHeader.match(unitRegex);     //Use match to extract the part of the string that matches
-    let netWeightUnit;
-    if(match){
-      netWeightUnit = match[0] // assign only the matching part of the string (the unit) to the variable netWeightUnit
-    }
-  
+    //extracting unit from netWeight header
+    const netWeightHeader = packingListJson[sheets[0]][headerRow].G;
+    const netWeightUnit = regex.findUnit(netWeightHeader);
+
     for (const sheet of sheets) {
       const firstDataRowIndex = packingListJson[sheet]
         .slice(headerRow + 1)
@@ -63,7 +57,7 @@ function parse(packingListJson) {
           commodity_code: col.D ?? null,
           number_of_packages: col.F ?? null,
           total_net_weight_kg: col.G ?? null,
-          total_net_weight_unit: netWeightUnit ?? null,
+          total_net_weight_unit: netWeightUnit,
           row_location: {
             rowNumber: dataRow + rowPos + 1,
             sheetName: sheet,

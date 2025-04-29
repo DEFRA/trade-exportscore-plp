@@ -73,7 +73,7 @@ const headers = {
       /ITEM DESCRIPTION/i,
       commodityCodeRegex,
       /TOTAL NUMBER OF CASES/i,
-      /NET WEIGHT*/i,
+      /NET WEIGHT/i,
     ],
   },
   BOOTS1: {
