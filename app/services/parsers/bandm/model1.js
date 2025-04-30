@@ -27,6 +27,10 @@ function parse(packingListJson) {
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
 
     for (const sheet of sheets) {
+      //extracting unit from netWeight header
+      const netWeightHeader = packingListJson[sheet][headerRow].G;
+      const netWeightUnit = regex.findUnit(netWeightHeader);
+
       const firstDataRowIndex = packingListJson[sheet]
         .slice(headerRow + 1)
         .findIndex((x) => !isEmptyRow(x));
@@ -53,6 +57,7 @@ function parse(packingListJson) {
           commodity_code: col.D ?? null,
           number_of_packages: col.F ?? null,
           total_net_weight_kg: col.G ?? null,
+          total_net_weight_unit: netWeightUnit,
           row_location: {
             rowNumber: dataRow + rowPos + 1,
             sheetName: sheet,
