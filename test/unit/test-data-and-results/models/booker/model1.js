@@ -151,7 +151,7 @@ module.exports = {
           },
           {
             x: 377.95,
-            y: 211.1,
+            y: 208,
             str: "packages",
             width: 25.3824,
           },
@@ -169,7 +169,7 @@ module.exports = {
           },
           {
             x: 432.91,
-            y: 211.1,
+            y: 208,
             str: "(Kilos)",
             width: 18.4224,
           },
