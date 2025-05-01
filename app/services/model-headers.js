@@ -83,10 +83,11 @@ const headers = {
     regex: {
       description: /Description/i,
       number_of_packages: /Quantity/i,
-      total_net_weight_kg: /NetMassKG/i,
+      total_net_weight_kg: /NetMass/i,
       commodity_code: /CommodityCode/i,
     },
     country_of_origin: /CountryOrigin/i,
+    unitsInHeader: true,
   },
   BUFFALOAD1: {
     establishmentNumber: {
