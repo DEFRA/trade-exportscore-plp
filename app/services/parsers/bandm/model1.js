@@ -28,9 +28,9 @@ function parse(packingListJson) {
 
     for (const sheet of sheets) {
       //extracting unit from netWeight header
-     
-     const netWeightHeader = Object.values(packingListJson[sheet][headerRow]).find(x => x.toLowerCase().includes("net weight"))
-    
+      const netWeightHeader = Object.values(
+        packingListJson[sheet][headerRow],
+      ).find((x) => headers.BANDM1.regex.total_net_weight_kg.test(x));
       const netWeightUnit = regex.findUnit(netWeightHeader);
 
       const firstDataRowIndex = packingListJson[sheet]
@@ -50,38 +50,25 @@ function parse(packingListJson) {
           ? dataRows.length + dataRow + 1
           : lastRowIndex + dataRow;
 
-      const headerCols = findHeaderCols(headers.BANDM1, packingListJson[sheet][headerRow]);
+      const headerCols = findHeaderCols(
+        headers.BANDM1,
+        packingListJson[sheet][headerRow],
+      );
       packingListContentsTemp = packingListJson[sheet]
-      .slice(dataRow, lastRow + 1)
-      .map((col, rowPos) => ({
-        description: col[headerCols.description] ?? null,
-        nature_of_products: null,
-        type_of_treatment: null,
-        commodity_code: col[headerCols.commodity_code] ?? null,
-        number_of_packages: col[headerCols.number_of_packages] ?? null,
-        total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
-        total_net_weight_unit: netWeightUnit,
-        row_location: {
-          rowNumber: dataRow + rowPos + 1,
-          sheetName: sheet,
-        },
-      }));
-
-      // packingListJson[sheet]
-      //   .slice(dataRow, lastRow + 1)
-      //   .map((col, rowPos) => ({
-      //     description: col.C ?? null,
-      //     nature_of_products: null,
-      //     type_of_treatment: null,
-      //     commodity_code: col.D ?? null,
-      //     number_of_packages: col.F ?? null,
-      //     total_net_weight_kg: col.G ?? null,
-      //     total_net_weight_unit: netWeightUnit,
-      //     row_location: {
-      //       rowNumber: dataRow + rowPos + 1,
-      //       sheetName: sheet,
-      //     },
-      //   }));
+        .slice(dataRow, lastRow + 1)
+        .map((col, rowPos) => ({
+          description: col[headerCols.description] ?? null,
+          nature_of_products: null,
+          type_of_treatment: null,
+          commodity_code: col[headerCols.commodity_code] ?? null,
+          number_of_packages: col[headerCols.number_of_packages] ?? null,
+          total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
+          total_net_weight_unit: netWeightUnit,
+          row_location: {
+            rowNumber: dataRow + rowPos + 1,
+            sheetName: sheet,
+          },
+        }));
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
