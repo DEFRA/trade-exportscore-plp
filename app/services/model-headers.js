@@ -69,12 +69,12 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000005-(\d{3})?/i,
     },
-    regex: [
-      /ITEM DESCRIPTION/i,
-      commodityCodeRegex,
-      /TOTAL NUMBER OF CASES/i,
-      /NET WEIGHT/i,
-    ],
+    regex: {
+     description: /ITEM DESCRIPTION/i,
+     commodity_code: commodityCodeRegex,
+     number_of_packages: /TOTAL NUMBER OF CASES/i,
+     total_net_weight_kg: /NET WEIGHT/i,
+  },
   },
   BOOTS1: {
     establishmentNumber: {

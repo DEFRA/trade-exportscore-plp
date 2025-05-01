@@ -149,4 +149,5 @@ module.exports = {
   mapParser,
   mapPdfParser,
   mapPdfNonAiParser,
+  findHeaderCols
 };
