@@ -1,6 +1,6 @@
 const headers = require("./model-headers");
 const pdfHelper = require("../utilities/pdf-helper");
-const { findUnit } = require("../utilities/regex");
+const regex = require("../utilities/regex");
 
 function findHeaderCols(header, packingListHeader) {
   const headerCols = {};
@@ -35,6 +35,9 @@ function mapParser(
   sheetName = null,
 ) {
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
+  const netWeightUnit = header.unitsInHeader ? 
+      regex.findUnit(packingListJson[headerRow][headerCols.total_net_weight_kg])
+      : null;
   const packingListContents = packingListJson
     .slice(dataRow)
     .map((col, rowPos) => ({
@@ -44,7 +47,7 @@ function mapParser(
       commodity_code: col[headerCols.commodity_code] ?? null,
       number_of_packages: col[headerCols.number_of_packages] ?? null,
       total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
-      total_net_weight_unit: col[headerCols.total_net_weight_unit] ?? null,
+      total_net_weight_unit: col[headerCols.total_net_weight_unit] ?? netWeightUnit ?? null,
       country_of_origin: col[headerCols.country_of_origin] ?? null,
       row_location: {
         rowNumber: dataRow + rowPos + 1,
@@ -107,7 +110,7 @@ function mapPdfNonAiParser(packingListJson, model) {
     const totalNetWeightHeader = Object.values(pageHeader).find((x) =>
       headers[model].headers.total_net_weight_kg.regex.test(x),
     );
-    netWeightUnit = findUnit(totalNetWeightHeader);
+    netWeightUnit = regex.findUnit(totalNetWeightHeader);
   }
 
   const ys = pdfHelper.getYsForRows(packingListJson.content, model);
