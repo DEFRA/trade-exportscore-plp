@@ -112,6 +112,7 @@ const headers = {
       total_net_weight_kg: /Total Net Weight/i,
     },
     country_of_origin: /Country of Origin/i,
+    unitsInHeader: true,
   },
   FOWLERWELCH1: {
     invalidSheets: [
