@@ -6,7 +6,7 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapPdfNonAiParser } = require("../../../services/parser-map");
-const { extractPdf } = require("../../../utilities/pdf-helper");
+const { extractPdf, getHeaders } = require("../../../utilities/pdf-helper");
 
 async function parse(packingList) {
   try {

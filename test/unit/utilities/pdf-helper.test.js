@@ -15,8 +15,8 @@ jest.mock("../../../app/services/model-headers", () => ({
       },
     },
     totals: /Totals/i,
-    minHeadersY: /Header1/i,
-    maxHeadersY: /HeaderMax/i,
+    minHeadersY: 1,
+    maxHeadersY: 3,
   },
 }));
 

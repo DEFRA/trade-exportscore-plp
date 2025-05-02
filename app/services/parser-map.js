@@ -104,6 +104,15 @@ function mapPdfParser(packingListDocument, key) {
 }
 
 function mapPdfNonAiParser(packingListJson, model) {
+  let netWeightUnit;
+  if (headers[model].unitsInHeader) {
+    const pageHeader = pdfHelper.getHeaders(packingListJson.content, model);
+    const totalNetWeightHeader = Object.values(pageHeader).find((x) =>
+      headers[model].headers.total_net_weight_kg.regex.test(x),
+    );
+    netWeightUnit = regex.findUnit(totalNetWeightHeader);
+  }
+
   const ys = pdfHelper.getYsForRows(packingListJson.content, model);
   const packingListContents = [];
 
@@ -115,7 +124,7 @@ function mapPdfNonAiParser(packingListJson, model) {
       commodity_code: null,
       number_of_packages: null,
       total_net_weight_kg: null,
-      total_net_weight_unit: null,
+      total_net_weight_unit: netWeightUnit ?? null,
     };
     Object.keys(headers[model].headers).forEach((key) => {
       plRow[key] = findItemContent(

@@ -72,7 +72,7 @@ function testAllPatterns(regexArray, obj) {
 }
 
 function findUnit(header) {
-  const unitRegex = /(KG?S?|KILOGRAMS?|KILOS?)/i; //regex of all possible units
+  const unitRegex = /(KGS?|KILOGRAMS?|KILOS?)/i; //regex of all possible units
   const match = header.match(unitRegex);
   if (match) {
     return match[0]; // return only the matching part of the string (the unit)

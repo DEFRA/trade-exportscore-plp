@@ -4,41 +4,6 @@ const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
 
-const booker1 = {
-  establishmentNumber: {
-    regex: /^RMS-GB-000077/i,
-  },
-  headers: {
-    description: {
-      x: /Description/i,
-      x1: 160,
-      x2: 340,
-      regex: /Description/i,
-    },
-    commodity_code: {
-      x: /Commodity Code/i,
-      x1: 500,
-      x2: 540,
-      regex: /Commodity Code/i,
-    },
-    number_of_packages: {
-      x: /Quantity/i,
-      x1: 340,
-      x2: 360,
-      regex: /Unit Quantity/i,
-    },
-    total_net_weight_kg: {
-      x: /Net/i,
-      x1: 430,
-      x2: 455,
-      regex: /Net Weight \(Kilos\)/i,
-    },
-  },
-  totals: /^0 Boxes/i,
-  minHeadersY: /Net/i,
-  maxHeadersY: /(Kilos)/i,
-};
-
 const headers = {
   ASDA1: {
     establishmentNumber: {
@@ -339,9 +304,49 @@ const headers = {
     },
     modelId: "mands1-v3",
   },
-  BOOKER1: booker1,
+  BOOKER1: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000077/i,
+    },
+    headers: {
+      description: {
+        x: /Description/i,
+        x1: 160,
+        x2: 340,
+        regex: /Description/i,
+      },
+      commodity_code: {
+        x: /Commodity Code/i,
+        x1: 500,
+        x2: 540,
+        regex: /Commodity Code/i,
+      },
+      number_of_packages: {
+        x: /Quantity/i,
+        x1: 340,
+        x2: 360,
+        regex: /Unit Quantity/i,
+      },
+      total_net_weight_kg: {
+        x: /Net/i,
+        x1: 430,
+        x2: 455,
+        regex: /Net Weight/i,
+      },
+    },
+    totals: /^0 Boxes/i,
+    minHeadersY: 198,
+    maxHeadersY: 212,
+    unitsInHeader: true,
+  },
   BOOKER1L: {
-    ...booker1,
+    establishmentNumber: {
+      regex: /^RMS-GB-000077/i,
+    },
+    totals: /^0 Boxes/i,
+    minHeadersY: 189,
+    maxHeadersY: 208,
+    unitsInHeader: true,
     headers: {
       description: {
         x: /Description/i,
@@ -365,7 +370,7 @@ const headers = {
         x: /Net/i,
         x1: 420,
         x2: 445,
-        regex: /Net Weight \(Kilos\)/i,
+        regex: /Net Weight/i,
       },
       type_of_treatment: {
         x: /Treatment Type/i,
