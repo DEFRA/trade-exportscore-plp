@@ -89,7 +89,9 @@ const headers = {
       commodity_code: /Tariff Code EU/i,
       number_of_packages: /Packages/i,
       total_net_weight_kg: /NW total/i,
+      header_net_weight_unit: /Net Weight\/Package/
     },
+    unitsInHeader: true,
   },
   DAVENPORT1: {
     invalidSheets: [
