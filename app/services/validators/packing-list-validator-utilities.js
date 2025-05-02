@@ -19,19 +19,47 @@ function hasMissingDescription(item) {
 }
 
 function hasMissingPackages(item) {
-  return item.number_of_packages === null;
+  return (
+    item.number_of_packages === null ||
+    item.number_of_packages === undefined ||
+    item.number_of_packages === ""
+  );
 }
 
 function wrongTypeForPackages(item) {
-  return isNaN(Number(item.number_of_packages));
+  // Check if number_of_packages is null, undefined, or an empty string
+  if (
+    item.number_of_packages === null ||
+    item.number_of_packages === undefined ||
+    item.number_of_packages === ""
+  ) {
+    return false;
+  }
+
+  const number_of_packages = Number(item.number_of_packages);
+  return isNaN(number_of_packages) || number_of_packages <= 0;
 }
 
 function hasMissingNetWeight(item) {
-  return item.total_net_weight_kg === null;
+  return (
+    item.total_net_weight_kg === null ||
+    item.total_net_weight_kg === undefined ||
+    item.total_net_weight_kg === ""
+  );
 }
 
 function wrongTypeNetWeight(item) {
-  return isNaN(Number(item.total_net_weight_kg));
+  // Check if total_net_weight_kg is null, undefined, or an empty string
+  if (
+    item.total_net_weight_kg === null ||
+    item.total_net_weight_kg === undefined ||
+    item.total_net_weight_kg === ""
+  ) {
+    return false;
+  }
+
+  const total_net_weight_kg = Number(item.total_net_weight_kg);
+  return isNaN(total_net_weight_kg) || total_net_weight_kg <= 0;
 }
 
 function removeEmptyItems(packingListItems) {
