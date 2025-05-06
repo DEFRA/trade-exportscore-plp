@@ -48,7 +48,9 @@ function mapParser(
       number_of_packages: col[headerCols.number_of_packages] ?? null,
       total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
       total_net_weight_unit:
-        col[headerCols.total_net_weight_unit] ?? netWeightUnit ?? null,
+        col[headerCols.total_net_weight_unit] ??
+        (col[headerCols.total_net_weight_kg] && netWeightUnit) ??
+        null,
       country_of_origin: col[headerCols.country_of_origin] ?? null,
       row_location: {
         rowNumber: dataRow + rowPos + 1,
@@ -163,4 +165,5 @@ module.exports = {
   mapParser,
   mapPdfParser,
   mapPdfNonAiParser,
+  findHeaderCols,
 };

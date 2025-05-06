@@ -95,7 +95,7 @@ module.exports = {
         commodity_code: 1704906500,
         number_of_packages: 12,
         total_net_weight_kg: null,
-        total_net_weight_unit: "KG",
+        total_net_weight_unit: null,
         nature_of_products: null,
         type_of_treatment: null,
       },
