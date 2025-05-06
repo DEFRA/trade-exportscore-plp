@@ -1,12 +1,17 @@
+function isNullOrEmptyString(value) {
+  return value === null || value === undefined || value === "";
+}
+
 function hasMissingIdentifier(item) {
   return !(
-    (item.nature_of_products !== null && item.type_of_treatment !== null) ||
-    item.commodity_code !== null
+    (!isNullOrEmptyString(item.nature_of_products) &&
+      !isNullOrEmptyString(item.type_of_treatment)) ||
+    !isNullOrEmptyString(item.commodity_code)
   );
 }
 
 function hasInvalidProductCode(item) {
-  if (item.commodity_code === null || item.commodity_code === undefined) {
+  if (isNullOrEmptyString(item.commodity_code)) {
     return false;
   }
   return (
@@ -15,23 +20,35 @@ function hasInvalidProductCode(item) {
 }
 
 function hasMissingDescription(item) {
-  return item.description === null;
+  return isNullOrEmptyString(item.description);
 }
 
 function hasMissingPackages(item) {
-  return item.number_of_packages === null;
+  return isNullOrEmptyString(item.number_of_packages);
 }
 
 function wrongTypeForPackages(item) {
-  return isNaN(Number(item.number_of_packages));
+  // Check if number_of_packages is null, undefined, or an empty string
+  if (isNullOrEmptyString(item.number_of_packages)) {
+    return false;
+  }
+
+  const number_of_packages = Number(item.number_of_packages);
+  return isNaN(number_of_packages) || number_of_packages < 0;
 }
 
 function hasMissingNetWeight(item) {
-  return item.total_net_weight_kg === null;
+  return isNullOrEmptyString(item.total_net_weight_kg);
 }
 
 function wrongTypeNetWeight(item) {
-  return isNaN(Number(item.total_net_weight_kg));
+  // Check if total_net_weight_kg is null, undefined, or an empty string
+  if (isNullOrEmptyString(item.total_net_weight_kg)) {
+    return false;
+  }
+
+  const total_net_weight_kg = Number(item.total_net_weight_kg);
+  return isNaN(total_net_weight_kg) || total_net_weight_kg < 0;
 }
 
 function removeEmptyItems(packingListItems) {

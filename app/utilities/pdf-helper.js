@@ -44,9 +44,7 @@ function sanitise(pdfJson) {
 
 function getYsForRows(pageContent, model) {
   try {
-    const headerY = pageContent.filter((item) =>
-      headers[model].maxHeadersY.test(item.str),
-    )[0]?.y;
+    const headerY = headers[model].maxHeadersY;
     const firstY = pageContent.filter((item) => item.y > headerY)[0].y;
     const pageNumberY = pageContent.filter((item) =>
       /Page \d of \d*/.test(item.str),
@@ -90,12 +88,8 @@ function findSmaller(a, b) {
 
 function getHeaders(pageContent, model) {
   try {
-    const y1 = pageContent.filter((item) =>
-      headers[model].minHeadersY.test(item.str),
-    )[0]?.y;
-    const y2 = pageContent.filter((item) =>
-      headers[model].maxHeadersY.test(item.str),
-    )[0]?.y;
+    const y1 = headers[model].minHeadersY;
+    const y2 = headers[model].maxHeadersY;
     const header = pageContent.filter(
       (item) => item.y >= y1 && item.y <= y2 && item.str.trim() !== "",
     );
