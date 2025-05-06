@@ -75,6 +75,7 @@ const headers = {
       number_of_packages: /TOTAL NUMBER OF CASES/i,
       total_net_weight_kg: /NET WEIGHT/i,
     },
+    unitsInHeader: true,
   },
   BOOTS1: {
     establishmentNumber: {

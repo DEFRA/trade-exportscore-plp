@@ -6,8 +6,7 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-const { findHeaderCols } = require("../../parser-map");
-const isNullOrUndefined = (value) => value === null || value === undefined;
+const { mapParser } = require("../../parser-map");
 
 function parse(packingListJson) {
   try {
@@ -25,52 +24,30 @@ function parse(packingListJson) {
       return regex.testAllPatterns(headerTitles, x);
     };
     const headerRow = rowFinder(packingListJson[sheets[0]], callback);
+    const dataRow = headerRow + 1;
 
     for (const sheet of sheets) {
-      //extracting unit from netWeight header
-      const netWeightHeader = Object.values(
-        packingListJson[sheet][headerRow],
-      ).find((x) => headers.BANDM1.regex.total_net_weight_kg.test(x));
-      const netWeightUnit = regex.findUnit(netWeightHeader);
-
-      const firstDataRowIndex = packingListJson[sheet]
-        .slice(headerRow + 1)
-        .findIndex((x) => !isEmptyRow(x));
-
-      const dataRow =
-        firstDataRowIndex === -1
-          ? headerRow + 1
-          : firstDataRowIndex + headerRow + 1;
-
-      const dataRows = packingListJson[sheet].slice(dataRow + 1);
-      const lastRowIndex = dataRows.findIndex((x) => isEndOfRow(x));
-
-      const lastRow =
-        lastRowIndex === -1
-          ? dataRows.length + dataRow + 1
-          : lastRowIndex + dataRow;
-
-      const headerCols = findHeaderCols(
+      packingListContentsTemp = mapParser(
+        packingListJson[sheet],
+        headerRow,
+        dataRow,
         headers.BANDM1,
-        packingListJson[sheet][headerRow],
+        sheet,
       );
-      packingListContentsTemp = packingListJson[sheet]
-        .slice(dataRow, lastRow + 1)
-        .map((col, rowPos) => ({
-          description: col[headerCols.description] ?? null,
-          nature_of_products: null,
-          type_of_treatment: null,
-          commodity_code: col[headerCols.commodity_code] ?? null,
-          number_of_packages: col[headerCols.number_of_packages] ?? null,
-          total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
-          total_net_weight_unit: netWeightUnit,
-          row_location: {
-            rowNumber: dataRow + rowPos + 1,
-            sheetName: sheet,
-          },
-        }));
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
+
+    if (packingListContents[packingListContents.length - 1])
+      packingListContents = packingListContents.filter(
+        (row) =>
+          !(
+            row.description === null &&
+            row.commodity_code === null &&
+            row.country_of_origin === null &&
+            row.number_of_packages !== 0 &&
+            row.total_net_weight_kg !== 0
+          ),
+      );
 
     return combineParser.combine(
       establishmentNumber,
@@ -84,28 +61,6 @@ function parse(packingListJson) {
   }
 }
 
-function isEndOfRow(x) {
-  const isTotal = isTotalRow(x);
-  const isEmpty = isEmptyRow(x);
-
-  return isTotal && isEmpty;
-}
-
-function isTotalRow(x) {
-  return x.F !== null && x.G !== null && x.H !== null;
-}
-
-function isEmptyRow(x) {
-  return (
-    isNullOrUndefined(x.A) &&
-    isNullOrUndefined(x.B) &&
-    isNullOrUndefined(x.C) &&
-    isNullOrUndefined(x.D) &&
-    isNullOrUndefined(x.E)
-  );
-}
-
 module.exports = {
   parse,
-  isEndOfRow,
 };
