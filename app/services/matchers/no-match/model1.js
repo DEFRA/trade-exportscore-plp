@@ -5,7 +5,7 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function noRemosMatch(sanitisedPackingList, _filename) {
-  const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
+  const remosRegex = /RMS-GB-(\d{6}\b)(-\d{3})?/i;
   const sheets = Object.keys(sanitisedPackingList);
   for (const sheet of sheets) {
     const isRemosPresent = sanitisedPackingList[sheet].some((x) => {
