@@ -12,6 +12,7 @@ module.exports = {
         commodity_code: "1905908000",
         number_of_packages: 6,
         total_net_weight_kg: 3.552,
+        total_net_weight_unit: "kgs",
       },
       {
         description:
@@ -21,6 +22,7 @@ module.exports = {
         commodity_code: "1905908000",
         number_of_packages: 5,
         total_net_weight_kg: 3.558,
+        total_net_weight_unit: "kgs",
       },
     ],
     business_checks: {
@@ -40,6 +42,7 @@ module.exports = {
         commodity_code: "1905908000",
         number_of_packages: 6,
         total_net_weight_kg: 3.552,
+        total_net_weight_unit: "kgs",
       },
       {
         description: "51283907 - PizzaExpress 9 Classic American *4",
@@ -48,6 +51,7 @@ module.exports = {
         commodity_code: "1905908000",
         number_of_packages: 1,
         total_net_weight_kg: 3.08,
+        total_net_weight_unit: "kgs",
       },
     ],
     business_checks: {
@@ -66,6 +70,7 @@ module.exports = {
         commodity_code: null,
         number_of_packages: null,
         total_net_weight_kg: null,
+        total_net_weight_unit: null,
       },
     ],
     business_checks: {
@@ -89,6 +94,7 @@ module.exports = {
         commodity_code: "1905908000",
         number_of_packages: 6,
         total_net_weight_kg: 3.552,
+        total_net_weight_unit: "kgs",
       },
       {
         description:
@@ -98,6 +104,7 @@ module.exports = {
         commodity_code: "1905908000",
         number_of_packages: 5,
         total_net_weight_kg: null,
+        total_net_weight_unit: null,
       },
     ],
     registration_approval_number: "RMS-GB-000098-001",

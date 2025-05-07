@@ -63,10 +63,11 @@ const headers = {
       description: descriptionOfGoodsRegex,
       type_of_treatment: /Treatment Type \(Chilled \/Ambient\)/i,
       number_of_packages: noOfPackagesRegex,
-      total_net_weight_kg: /Item Net Weight \(kgs\)/i,
+      total_net_weight_kg: /Item Net Weight/i,
       commodity_code: commodityCodeRegex,
     },
     country_of_origin: /Country of Origin/i,
+    unitsInHeader: true,
   },
   CDS1: {
     establishmentNumber: {
@@ -112,6 +113,7 @@ const headers = {
       total_net_weight_kg: /Total Net Weight/i,
     },
     country_of_origin: /Country of Origin/i,
+    unitsInHeader: true,
   },
   FOWLERWELCH1: {
     invalidSheets: [
