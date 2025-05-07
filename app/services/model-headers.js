@@ -40,7 +40,7 @@ const headers = {
       number_of_packages: /TOTAL NUMBER OF CASES/i,
       total_net_weight_kg: /NET WEIGHT/i,
     },
-    unitsInHeader: true,
+    findUnitInHeader: true,
   },
   BOOTS1: {
     establishmentNumber: {
@@ -53,7 +53,7 @@ const headers = {
       commodity_code: /CommodityCode/i,
     },
     country_of_origin: /CountryOrigin/i,
-    unitsInHeader: true,
+    findUnitInHeader: true,
   },
   BUFFALOAD1: {
     establishmentNumber: {
@@ -67,7 +67,7 @@ const headers = {
       commodity_code: commodityCodeRegex,
     },
     country_of_origin: /Country of Origin/i,
-    unitsInHeader: true,
+    findUnitInHeader: true,
   },
   CDS1: {
     establishmentNumber: {
@@ -80,6 +80,7 @@ const headers = {
       total_net_weight_kg: /NetWeight/i,
       nature_of_products: /NatureOfProduct/i,
     },
+    findUnitInHeader: true,
   },
   COOP1: {
     establishmentNumber: {
@@ -113,7 +114,7 @@ const headers = {
       total_net_weight_kg: /Total Net Weight/i,
     },
     country_of_origin: /Country of Origin/i,
-    unitsInHeader: true,
+    findUnitInHeader: true,
   },
   FOWLERWELCH1: {
     invalidSheets: [
@@ -340,7 +341,7 @@ const headers = {
     totals: /^0 Boxes/i,
     minHeadersY: 198,
     maxHeadersY: 212,
-    unitsInHeader: true,
+    findUnitInHeader: true,
   },
   BOOKER1L: {
     establishmentNumber: {
@@ -349,7 +350,7 @@ const headers = {
     totals: /^0 Boxes/i,
     minHeadersY: 189,
     maxHeadersY: 208,
-    unitsInHeader: true,
+    findUnitInHeader: true,
     headers: {
       description: {
         x: /Description/i,
