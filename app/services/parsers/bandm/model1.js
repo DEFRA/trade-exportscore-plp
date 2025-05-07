@@ -27,7 +27,6 @@ function parse(packingListJson) {
     const dataRow = headerRow + 1;
 
     for (const sheet of sheets) {
-
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
         headerRow,
@@ -37,12 +36,12 @@ function parse(packingListJson) {
       );
 
       const totalsIndex = packingListContentsTemp.findLastIndex(
-        (row) => (row.description === null &&
+        (row) =>
+          row.description === null &&
           row.commodity_code === null &&
           row.country_of_origin === null &&
           row.number_of_packages !== 0 &&
-          row.total_net_weight_kg !== 0
-        ),
+          row.total_net_weight_kg !== 0,
       );
       if (totalsIndex === packingListContentsTemp.length - 1) {
         packingListContentsTemp = packingListContentsTemp.slice(0, totalsIndex);
