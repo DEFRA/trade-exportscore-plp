@@ -15,6 +15,7 @@ module.exports = {
         number_of_packages: "5",
         total_net_weight_kg: "20.000",
         type_of_treatment: "Chilled",
+        total_net_weight_units: "kg",
       },
       {
         commodity_code: "2005800099",
@@ -23,6 +24,7 @@ module.exports = {
         number_of_packages: "65",
         total_net_weight_kg: "780.000",
         type_of_treatment: "Chilled",
+        total_net_weight_units: "kg",
       },
     ],
     registration_approval_number: "RMS-GB-000216-002",
@@ -41,6 +43,7 @@ module.exports = {
         number_of_packages: "5",
         total_net_weight_kg: "20.000",
         type_of_treatment: "Chilled",
+        total_net_weight_units: "kg",
       },
       {
         commodity_code: "2005800099",
@@ -49,6 +52,7 @@ module.exports = {
         number_of_packages: "65",
         total_net_weight_kg: "780.000",
         type_of_treatment: "Chilled",
+        total_net_weight_units: "kg",
       },
       {
         commodity_code: "1602329090",
@@ -57,6 +61,7 @@ module.exports = {
         number_of_packages: "5",
         total_net_weight_kg: "5.1",
         type_of_treatment: "Chilled",
+        total_net_weight_units: "kg",
       },
       {
         commodity_code: "1602421000",
@@ -65,6 +70,7 @@ module.exports = {
         number_of_packages: "8",
         total_net_weight_kg: "8.16",
         type_of_treatment: "Chilled",
+        total_net_weight_units: "kg",
       },
     ],
     registration_approval_number: "RMS-GB-000216-002",
@@ -84,6 +90,7 @@ module.exports = {
         number_of_packages: "32",
         total_net_weight_kg: null,
         type_of_treatment: "Chilled",
+        total_net_weight_units: null,
       },
       {
         commodity_code: "0702000007",
@@ -92,6 +99,7 @@ module.exports = {
         number_of_packages: "39",
         total_net_weight_kg: "351",
         type_of_treatment: null,
+        total_net_weight_units: "kg",
       },
     ],
     registration_approval_number: "RMS-GB-000216-004",
@@ -111,6 +119,7 @@ module.exports = {
         number_of_packages: "5",
         total_net_weight_kg: null,
         type_of_treatment: "Chilled",
+        total_net_weight_units: null,
       },
       {
         commodity_code: "2005800099",
@@ -119,6 +128,7 @@ module.exports = {
         number_of_packages: "65",
         total_net_weight_kg: "780.000",
         type_of_treatment: "Chilled",
+        total_net_weight_units: "kg",
       },
     ],
     registration_approval_number: "RMS-GB-000216-002",
