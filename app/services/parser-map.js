@@ -36,9 +36,14 @@ function mapParser(
 ) {
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
   const netWeightUnit = header.findUnitInHeader
-    ? regex.findUnit(packingListJson[headerRow][headerCols.total_net_weight_kg])
-    ??regex.findUnit(packingListJson[headerRow][headerCols.header_net_weight_unit])
+    ? (regex.findUnit(
+        packingListJson[headerRow][headerCols.total_net_weight_kg],
+      ) ??
+      regex.findUnit(
+        packingListJson[headerRow][headerCols.header_net_weight_unit],
+      ))
     : null;
+
   const packingListContents = packingListJson
     .slice(dataRow)
     .map((col, rowPos) => ({
@@ -58,6 +63,7 @@ function mapParser(
         sheetName,
       },
     }));
+
   return packingListContents;
 }
 
