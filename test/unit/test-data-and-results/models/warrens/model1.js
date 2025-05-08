@@ -548,7 +548,7 @@ module.exports = {
         H: "No. of pkgs",
         I: "Type of pkgs",
         J: "Total Gross Weight",
-        K: "Total Net Weight",
+        K: "Total Net Weight (kgs)",
         L: "Item value",
         M: "NIIRMS Dispatch number",
         N: "Treatment Type (Chilled /Ambient)",
