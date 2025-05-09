@@ -20,6 +20,8 @@ const fowlerWelchMatcher = require("./matchers/fowlerwelch/model1");
 const fowlerWelchParser = require("./parsers/fowlerwelch/model1");
 const giovanniMatcher = require("./matchers/giovanni/model1");
 const giovanniParser = require("./parsers/giovanni/model1");
+const giovanniMatcher2 = require("./matchers/giovanni/model2");
+const giovanniParser2 = require("./parsers/giovanni/model2");
 const kepakMatcher = require("./matchers/kepak/model1");
 const kepakParser = require("./parsers/kepak/model1");
 const nisaMatcher = require("./matchers/nisa/model1");
@@ -107,6 +109,12 @@ const parsersExcel = {
       giovanniMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
       giovanniParser.parse(packingList, filename),
+  },
+  GIOVANNI2: {
+    matches: (packingList, filename) =>
+      giovanniMatcher2.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      giovanniParser2.parse(packingList, filename),
   },
   KEPAK1: {
     matches: (packingList, filename) =>

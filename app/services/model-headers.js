@@ -153,6 +153,18 @@ const headers = {
     },
     country_of_origin: /Country of Origin/i,
   },
+  GIOVANNI2: {
+    establishmentNumber: {
+      regex: /RMS-GB-000149(-\d{3})?/i,
+    },
+    regex: {
+      description: /DESCRIPTION/i,
+      commodity_code: commodityCodeRegex,
+      number_of_packages: /Qauntity/i,
+      total_net_weight_kg: netWeightRegex,
+    },
+    country_of_origin: /Country of Origin/i,
+  },
   KEPAK1: {
     establishmentNumber: {
       regex: /RMS-GB-000280(-\d{3})?/i,

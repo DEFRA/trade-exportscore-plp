@@ -11,6 +11,7 @@ module.exports = {
     "<rootDir>/jest.config.js",
     "<rootDir>/jest.setup.js",
     "<rootDir>/rename.js",
+    "<rootDir>/.azuredevops/",
   ],
   modulePathIgnorePatterns: ["node_modules"],
   reporters: [
