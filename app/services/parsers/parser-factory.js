@@ -42,7 +42,11 @@ async function findParser(sanitizedPackingList, fileName) {
   return parser;
 }
 
-async function generateParsedPackingList(parser, sanitisedPackingList) {
+async function generateParsedPackingList(
+  parser,
+  sanitisedPackingList,
+  dispatchLocation,
+) {
   const parsedPackingList = await parser.parse(sanitisedPackingList);
   parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
   const validationResults =
@@ -54,6 +58,8 @@ async function generateParsedPackingList(parser, sanitisedPackingList) {
     validationResults.failureReasons ? validationResults.failureReasons : null;
 
   parsedPackingList.items = removeBadData(parsedPackingList.items);
+
+  parsedPackingList.dispatchLocationNumber = dispatchLocation;
 
   return parsedPackingList;
 }
