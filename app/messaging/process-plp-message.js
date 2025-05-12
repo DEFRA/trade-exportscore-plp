@@ -10,6 +10,7 @@ const logger = require("./../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const logProcessPlpMessageFunction = "processPlpMessage()";
+const { getDispatchLocation } = require("../services/dynamics-service");
 
 async function processBlob(message) {
   const blobClient = createStorageAccountClient(message.body.packing_list_blob);
@@ -33,7 +34,15 @@ async function processBlob(message) {
 async function getPackingList(result, message) {
   let packingList = {};
   try {
-    packingList = await findParser(result, message.body.packing_list_blob);
+    const establishmentId =
+      message.body.SupplyChainConsignment.DispatchLocation.IDCOMS
+        .EstablishmentId;
+    const dispatchLocation = getDispatchLocation(establishmentId);
+    packingList = await findParser(
+      result,
+      message.body.packing_list_blob,
+      dispatchLocation,
+    );
   } catch (err) {
     logger.logError(
       filenameForLogging,

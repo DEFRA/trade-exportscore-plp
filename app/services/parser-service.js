@@ -6,11 +6,11 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const matcherResult = require("./matcher-result");
 
-async function findParser(packingList, fileName) {
-  return parsePackingList(packingList, fileName);
+async function findParser(packingList, fileName, dispatchLocation) {
+  return parsePackingList(packingList, fileName, dispatchLocation);
 }
 
-async function parsePackingList(packingList, fileName) {
+async function parsePackingList(packingList, fileName, dispatchLocation) {
   try {
     const sanitizedPackingList = sanitizeInput(packingList, fileName);
     const parser = await parserFactory.findParser(
@@ -25,11 +25,13 @@ async function parsePackingList(packingList, fileName) {
       return await parserFactory.generateParsedPackingList(
         parser.parser,
         parser.result.document,
+        dispatchLocation,
       );
     } else {
       return await parserFactory.generateParsedPackingList(
         parser,
         sanitizedPackingList,
+        dispatchLocation,
       );
     }
   } catch (err) {

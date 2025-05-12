@@ -8,7 +8,7 @@ const pdfNonAiRoutes = require("../../../app/routes/pdf-non-ai");
 const createPackingList = require("../../../app/routes/create-packinglist-message");
 const dispatchLocation = require("../../../app/routes/get-dispatch-location");
 const router = require("../../../app/plugins/router");
-//get-dispatch-location
+
 jest.mock("../../../app/routes/non-ai", () => [{ path: "/non-ai" }]);
 jest.mock("../../../app/routes/healthy", () => [{ path: "/healthy" }]);
 jest.mock("../../../app/routes/healthz", () => [{ path: "/healthz" }]);

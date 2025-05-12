@@ -5,6 +5,7 @@ jest.mock("../../../app/services/parser-service");
 jest.mock("../../../app/services/storage-account");
 jest.mock("../../../app/packing-list");
 jest.mock("../../../app/messaging/send-parsed-message");
+jest.mock("../../../app/services/dynamics-service");
 
 const { MessageReceiver } = require("adp-messaging");
 const { findParser } = require("../../../app/services/parser-service");
@@ -15,6 +16,8 @@ const {
 const { createPackingList } = require("../../../app/packing-list");
 const parserModel = require("../../../app/services/parser-model");
 const { sendParsed } = require("../../../app/messaging/send-parsed-message");
+
+const {getDispatchLocation} = require("../../../app/services/dynamics-service");
 
 createStorageAccountClient.mockImplementation(() => {
   return jest.fn();
@@ -40,6 +43,10 @@ createPackingList.mockImplementation(() => {
 sendParsed.mockImplementation(() => {
   return jest.fn();
 });
+
+getDispatchLocation.mockImplementation(() => {
+  return jest.fn();
+})
 
 MessageReceiver.mockImplementation(() => {
   return {
