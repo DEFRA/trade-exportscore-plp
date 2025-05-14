@@ -11,6 +11,7 @@ module.exports = {
         commodity_code: 3924900090,
         number_of_packages: 1,
         total_net_weight_kg: 0.3,
+        total_net_weight_unit: "KGs",
       },
       {
         description: "PEPSI MAX 500ML.",
@@ -19,6 +20,7 @@ module.exports = {
         commodity_code: 3004900000,
         number_of_packages: 2,
         total_net_weight_kg: 6.4,
+        total_net_weight_unit: "KGs",
       },
       {
         description: "DRI-PAK SODA CRYSTALS 1KG.",
@@ -27,6 +29,7 @@ module.exports = {
         commodity_code: 3306900000,
         number_of_packages: 2,
         total_net_weight_kg: 12.16,
+        total_net_weight_unit: "KGs",
       },
     ],
     business_checks: {
@@ -45,6 +48,7 @@ module.exports = {
         commodity_code: 2202100000,
         number_of_packages: 1,
         total_net_weight_kg: 9.02,
+        total_net_weight_unit: "KGs",
       },
       {
         description: "CELTIC SPARKLING WATER 500ML",
@@ -53,6 +57,7 @@ module.exports = {
         commodity_code: 3004900000,
         number_of_packages: 1,
         total_net_weight_kg: 12.87,
+        total_net_weight_unit: "KGs",
       },
       {
         description: "TIDYZ REFUSE SACKS 50L 50PK",
@@ -61,6 +66,7 @@ module.exports = {
         commodity_code: 3306900000,
         number_of_packages: 1,
         total_net_weight_kg: 8.7,
+        total_net_weight_unit: "KGs",
       },
       {
         description: "J&J COTTON BUDS X200.",
@@ -69,6 +75,7 @@ module.exports = {
         commodity_code: 9616200000,
         number_of_packages: 5,
         total_net_weight_kg: 2.6,
+        total_net_weight_unit: "KGs",
       },
     ],
     business_checks: {
@@ -91,6 +98,7 @@ module.exports = {
         total_net_weight_kg: 0.3,
         nature_of_products: null,
         type_of_treatment: null,
+        total_net_weight_unit: "KGs",
       },
     ],
     registration_approval_number: "RMS-GB-000247-001",
