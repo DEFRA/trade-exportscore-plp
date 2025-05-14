@@ -17,7 +17,9 @@ const { createPackingList } = require("../../../app/packing-list");
 const parserModel = require("../../../app/services/parser-model");
 const { sendParsed } = require("../../../app/messaging/send-parsed-message");
 
-const {getDispatchLocation} = require("../../../app/services/dynamics-service");
+const {
+  getDispatchLocation,
+} = require("../../../app/services/dynamics-service");
 
 createStorageAccountClient.mockImplementation(() => {
   return jest.fn();
@@ -46,7 +48,7 @@ sendParsed.mockImplementation(() => {
 
 getDispatchLocation.mockImplementation(() => {
   return jest.fn();
-})
+});
 
 MessageReceiver.mockImplementation(() => {
   return {
