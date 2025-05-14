@@ -37,7 +37,7 @@ async function getPackingList(result, message) {
     const establishmentId =
       message.body.SupplyChainConsignment.DispatchLocation.IDCOMS
         .EstablishmentId;
-    const dispatchLocation = null; //getDispatchLocation(establishmentId);
+    const dispatchLocation = getDispatchLocation(establishmentId);
     packingList = await findParser(
       result,
       message.body.packing_list_blob,

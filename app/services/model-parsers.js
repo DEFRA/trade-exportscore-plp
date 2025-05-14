@@ -110,12 +110,12 @@ const parsersExcel = {
     parse: (packingList, filename) =>
       giovanniParser.parse(packingList, filename),
   },
- /*  GIOVANNI2: {
+  GIOVANNI2: {
     matches: (packingList, filename) =>
       giovanniMatcher2.matches(packingList, filename),
     parse: (packingList, filename) =>
       giovanniParser2.parse(packingList, filename),
-  }, */
+  },
   KEPAK1: {
     matches: (packingList, filename) =>
       kepakMatcher.matches(packingList, filename),

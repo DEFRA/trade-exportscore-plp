@@ -135,7 +135,7 @@ const headers = {
       total_net_weight_kg: /(Total Net Weight|Item Net Weight)/i,
       type_of_treatment: /Treatment Type \(Chilled \/Ambient\)/i,
     },
-    //findUnitInHeader: true,
+    findUnitInHeader: true,
     country_of_origin: /Country of Origin/i,
     establishmentNumber: {
       regex: /RMS-GB-000216(-\d{3})?/i,
