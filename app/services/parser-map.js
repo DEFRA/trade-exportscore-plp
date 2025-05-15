@@ -147,6 +147,9 @@ function mapPdfNonAiParser(packingListJson, model) {
       rowNumber: row + 1,
       pageNumber: packingListJson.pageInfo.num,
     };
+    plRow.total_net_weight_unit =
+      plRow.total_net_weight_kg === null ? null : plRow.total_net_weight_unit;
+
     packingListContents.push(plRow);
   });
 
@@ -156,7 +159,7 @@ function mapPdfNonAiParser(packingListJson, model) {
 function findItemContent(packingListJson, header, y) {
   const result = packingListJson.content.filter(
     (item) =>
-      Math.round(item.y) === Math.round(y) &&
+      Math.abs(item.y - y) <= 1 &&
       Math.round(item.x) >= header.x1 &&
       Math.round(item.x) <= header.x2 &&
       item.str.trim() !== "",
