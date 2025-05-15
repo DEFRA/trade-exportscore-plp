@@ -6,7 +6,6 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const { rowFinder } = require("../../../utilities/row-finder");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-const { findUnit } = require("../../../utilities/regex");
 
 function parse(packingListJson) {
   try {
