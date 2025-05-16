@@ -233,10 +233,11 @@ const headers = {
       description: /Product \/ Part Number Description/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /Packages/i,
-      total_net_weight_kg: /Net\nWeight \/ Package KG/i,
+      total_net_weight_kg: /Net\nWeight \/ Package/i,
       nature_of_products: /Product Type \/ Category/i,
       type_of_treatment: /Packaging Type/i,
     },
+    findUnitInHeader: true,
   },
   SAVERS1: {
     invalidSheets: ["DC Sheet (with Calcs)", "SPS Codes"],
