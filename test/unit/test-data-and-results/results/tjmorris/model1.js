@@ -14,6 +14,7 @@ module.exports = {
         number_of_packages: "2",
         total_net_weight_kg: "1.4",
         type_of_treatment: "CHILLED",
+        total_net_weight_unit: "Kg",
       },
       {
         commodity_code: "1602906100",
@@ -22,6 +23,7 @@ module.exports = {
         number_of_packages: "4",
         total_net_weight_kg: "8",
         type_of_treatment: "FRESH PRODUCTS",
+        total_net_weight_unit: "Kg",
       },
     ],
     registration_approval_number: "RMS-GB-000010-001",
@@ -40,6 +42,7 @@ module.exports = {
         number_of_packages: "2",
         total_net_weight_kg: "0.26",
         type_of_treatment: "CHILLED",
+        total_net_weight_unit: "Kg",
       },
       {
         commodity_code: "0210191000",
@@ -48,6 +51,7 @@ module.exports = {
         number_of_packages: "1",
         total_net_weight_kg: "10",
         type_of_treatment: "CHILLED",
+        total_net_weight_unit: "Kg",
       },
     ],
     registration_approval_number: "RMS-GB-000010-001",
