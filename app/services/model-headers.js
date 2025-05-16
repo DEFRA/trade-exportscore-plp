@@ -355,7 +355,7 @@ const headers = {
       },
     },
     totals: /^0 Boxes/i,
-    minHeadersY: 198,
+    minHeadersY: 192,
     maxHeadersY: 212,
     findUnitInHeader: true,
   },
