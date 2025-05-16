@@ -41,11 +41,11 @@ function parse(packingListJson) {
             sheetName: sheet,
           },
         }));
-        packingListContentsTemp.forEach(item => {
-          if(item.total_net_weight_kg === null){
-            item.total_net_weight_unit = null
-          };
-        });
+      packingListContentsTemp.forEach((item) => {
+        if (item.total_net_weight_kg === null) {
+          item.total_net_weight_unit = null;
+        }
+      });
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 

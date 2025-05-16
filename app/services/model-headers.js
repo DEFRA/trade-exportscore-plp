@@ -152,6 +152,7 @@ const headers = {
       total_net_weight_kg: netWeightRegex,
     },
     country_of_origin: /Country of Origin/i,
+    findUnitInHeader: true,
   },
   GIOVANNI2: {
     establishmentNumber: {
@@ -164,6 +165,7 @@ const headers = {
       total_net_weight_kg: netWeightRegex,
     },
     country_of_origin: /Country of Origin/i,
+    findUnitInHeader: true,
   },
   KEPAK1: {
     establishmentNumber: {

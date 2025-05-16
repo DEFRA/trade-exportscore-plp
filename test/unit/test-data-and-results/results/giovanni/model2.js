@@ -15,6 +15,7 @@ module.exports = {
         nature_of_products: null,
         type_of_treatment: null,
         country_of_origin: "IT",
+        total_net_weight_unit: "KG",
       },
       {
         commodity_code: "1902209990",
@@ -24,6 +25,7 @@ module.exports = {
         nature_of_products: null,
         type_of_treatment: null,
         country_of_origin: "IT",
+        total_net_weight_unit: "KG",
       },
     ],
     registration_approval_number: "RMS-GB-000149-006",
@@ -43,6 +45,7 @@ module.exports = {
         nature_of_products: null,
         type_of_treatment: null,
         country_of_origin: "IT",
+        total_net_weight_unit: "KG",
       },
       {
         commodity_code: "1902209990",
@@ -52,6 +55,7 @@ module.exports = {
         nature_of_products: null,
         type_of_treatment: null,
         country_of_origin: "IT",
+        total_net_weight_unit: "KG",
       },
     ],
     registration_approval_number: "RMS-GB-000149-006",
