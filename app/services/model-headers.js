@@ -404,7 +404,7 @@ const headers = {
   },
   GIOVANNIPDF1: {
     establishmentNumber: {
-      regex: /^RMS-GB-000149-\d{3}$/i,
+      regex: /RMS-GB-000149-\d{3}$/i,
     },
     headers: {
       description: {

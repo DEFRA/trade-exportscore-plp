@@ -63,17 +63,16 @@ function getYsForRows(pageContent, model) {
     const sortedYs = Object.keys(rowsByY)
       .map(Number)
       .sort((a, b) => a - b);
+
     const ysInRange = [];
+    const filteredYs = sortedYs.filter((y) => y >= firstY);
 
-    for (const y of sortedYs) {
+    for (const y of filteredYs) {
       const row = rowsByY[y];
-
-      if (y >= firstY) {
-        if (row.length === 1 || row[0] === "0") {
-          break; // Stop if row is short or starts with '0'
-        }
-        ysInRange.push(y);
+      if (row.length === 1 || row[0] === "0") {
+        break; // Stop if row is short or starts with '0'
       }
+      ysInRange.push(y);
     }
 
     return ysInRange;
