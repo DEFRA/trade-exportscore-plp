@@ -6,8 +6,7 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapPdfNonAiParser } = require("../../../services/parser-map");
-const { extractPdf, getHeaders } = require("../../../utilities/pdf-helper");
-const item = require("../../../models/item");
+const { extractPdf } = require("../../../utilities/pdf-helper");
 
 async function parse(packingList) {
   try {
@@ -20,7 +19,7 @@ async function parse(packingList) {
       pdfJson.pages[0].content,
     );
 
-    let model = "GIOVANNIPDF1";
+    const model = "GIOVANNIPDF1";
 
     for (const page of pdfJson.pages) {
       const ys = getYsForRows(page.content, model);
@@ -46,13 +45,17 @@ function getYsForRows(pageContent, model) {
 
     // Find the first Y after the header
     const firstY = pageContent.find((item) => item.y > headerY)?.y;
-    if (!firstY) return [];
+    if (!firstY) {
+      return [];
+    }
 
     // Group items by Y value
     const rowsByY = {};
     for (const item of pageContent) {
       const y = Number(item.y.toFixed(2));
-      if (!rowsByY[y]) rowsByY[y] = [];
+      if (!rowsByY[y]) {
+        rowsByY[y] = [];
+      }
       rowsByY[y].push(item.str.trim());
     }
 
@@ -63,10 +66,14 @@ function getYsForRows(pageContent, model) {
     const ysInRange = [];
 
     for (const y of sortedYs) {
-      if (y < firstY) continue;
       const row = rowsByY[y];
-      if (row.length == 1 || row[0] === "0") break; // Stop if row is short or starts with '0'
-      ysInRange.push(y);
+
+      if (y >= firstY) {
+        if (row.length === 1 || row[0] === "0") {
+          break; // Stop if row is short or starts with '0'
+        }
+        ysInRange.push(y);
+      }
     }
 
     return ysInRange;

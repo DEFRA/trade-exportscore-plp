@@ -51,7 +51,6 @@ async function matches(packingList, filename) {
 
 function matchHeaders(pageContent) {
   const isHeader = findHeader("GIOVANNIPDF1", pageContent);
-  console.log(isHeader);
   if (isHeader === matcherResult.CORRECT) {
     return matcherResult.CORRECT;
   } else {
@@ -61,8 +60,6 @@ function matchHeaders(pageContent) {
 
 function findHeader(model, pageContent) {
   const header = pdfHelper.getHeaders(pageContent, model);
-  console.log(header);
-  console.log(headers[model].headers);
   let isHeader = matcherResult.WRONG_HEADER;
   for (const x in headers[model].headers) {
     if (!headers[model].headers.hasOwnProperty(x)) {
