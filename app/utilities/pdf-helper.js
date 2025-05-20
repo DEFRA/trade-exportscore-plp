@@ -42,38 +42,6 @@ function sanitise(pdfJson) {
   return pdfJson;
 }
 
-function getYsForRows(pageContent, model) {
-  try {
-    const headerY = headers[model].maxHeadersY;
-    const firstY = pageContent.filter((item) => item.y > headerY)[0].y;
-    const pageNumberY = pageContent.filter((item) =>
-      /Page \d of \d*/.test(item.str),
-    )[0]?.y; // find the position of the 'Page X of Y'
-    const totals = pageContent.filter((item) =>
-      headers[model].totals.test(item.str),
-    ); // find the position of the totals row
-    const totalsY = totals.reduce(
-      (max, obj) => (obj.y > max ? obj.y : max),
-      totals[0]?.y,
-    ); // take the largest y
-    const y = findSmaller(pageNumberY, totalsY);
-    const lastY = pageContent
-      .filter((item) => item.y < y)
-      .sort((a, b) => b.y - a.y)[0]?.y;
-    const ys = [
-      ...new Set(
-        pageContent
-          .filter((item) => item.y >= firstY && item.y <= lastY)
-          .map((item) => Math.round(item.y * 100) / 100),
-      ),
-    ];
-    return ys;
-  } catch (err) {
-    logger.logError(filenameForLogging, "getYsForRows()", err);
-    return [];
-  }
-}
-
 function findSmaller(a, b) {
   if (a === undefined && b === undefined) {
     return undefined;
@@ -110,7 +78,6 @@ function getHeaders(pageContent, model) {
 }
 
 module.exports = {
-  getYsForRows,
   getHeaders,
   extractPdf,
   findSmaller,

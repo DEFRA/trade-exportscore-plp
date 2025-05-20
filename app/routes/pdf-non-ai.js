@@ -3,6 +3,9 @@ const { findParser } = require("../services/parser-service");
 const fs = require("fs");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("../utilities/logger");
+// Uncomment to see pdf elements positions
+// const PDFExtract = require("pdf.js-extract").PDFExtract;
+// const pdfExtract = new PDFExtract();
 
 module.exports = {
   method: "GET",
@@ -19,6 +22,8 @@ module.exports = {
     }
 
     const packingList = await findParser(result, filename);
+    // Uncomment to see pdf elements positions
+    //const packing = await pdfExtract.extractBuffer(result);
 
     return h.response(packingList).code(StatusCodes.OK);
   },
