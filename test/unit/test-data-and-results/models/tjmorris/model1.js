@@ -324,6 +324,7 @@ module.exports = {
         L: "Description",
         O: "Tariff/Commodity",
         P: "Cases",
+        R: "Net Weight Kg",
       },
       {
         A: "RMS-GB-000010-001",

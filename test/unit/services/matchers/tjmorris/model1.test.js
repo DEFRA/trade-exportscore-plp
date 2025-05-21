@@ -83,6 +83,7 @@ describe("matchesTjmorris", () => {
           A: "NOT",
           B: "CORRECT",
           C: "HEADER",
+          L: "Description",
         },
         {
           A: "RMS-GB-000010-001",
