@@ -31,12 +31,11 @@ function matches(packingList, filename) {
         N: "Description",
         O: "Tariff/Commodity",
         P: "Cases",
-        R: "Net Weight Kg",
-        T: "Country of Origin",
+        R: "Net Weight",
       };
 
       const headerRow = rowFinder(packingList[sheet], callback);
-
+     
       if (
         !packingList[sheet][headerRow] ||
         headerRow === -1 ||
@@ -60,12 +59,15 @@ function matches(packingList, filename) {
 }
 
 function callback(x) {
-  return x.L === "Description";
+  return x.L.toLowerCase().includes("description");
 }
 
 function isHeaderMatching(packingListSheet, header, headerRow) {
   for (const key in header) {
-    if (!packingListSheet[headerRow][key]?.startsWith(header[key])) {
+    if (
+      !packingListSheet[headerRow][key]?.toLowerCase()
+       .includes(header[key].toLowerCase())
+    ) {
       return false;
     }
   }

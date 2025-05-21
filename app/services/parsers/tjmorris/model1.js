@@ -62,7 +62,7 @@ function parse(packingListJson) {
 }
 
 function callback(x) {
-  return x.R === "Net Weight Kg";
+  return x.R.toLowerCase().includes("net weight");
 }
 
 module.exports = {
