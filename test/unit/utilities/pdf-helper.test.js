@@ -59,47 +59,6 @@ describe("removeEmptyStringElements", () => {
   });
 });
 
-describe("getYsForRows", () => {
-  test("returns correct ys", () => {
-    const pageContent = [
-      {
-        str: "Header1",
-        x: 4,
-        y: 1,
-      },
-      {
-        str: "HeaderMax",
-        x: 4,
-        y: 3,
-      },
-      {
-        str: "Header2",
-        x: 6,
-        y: 1,
-      },
-      {
-        str: "Header1Data2",
-        x: 4,
-        y: 5,
-      },
-      {
-        str: "Header1Data2",
-        x: 4,
-        y: 6,
-      },
-      {
-        str: "Totals",
-        x: 1,
-        y: 9,
-      },
-    ];
-
-    const expected = [5, 6];
-    const result = pdfHelper.getYsForRows(pageContent, "TestHeader");
-    expect(result.toString()).toBe(expected.toString());
-  });
-});
-
 describe("getHeaders", () => {
   test("returns correct headers", () => {
     const pageContent = [

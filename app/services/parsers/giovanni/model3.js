@@ -6,7 +6,7 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapPdfNonAiParser } = require("../../../services/parser-map");
-const { extractPdf, findSmaller } = require("../../../utilities/pdf-helper");
+const { extractPdf } = require("../../../utilities/pdf-helper");
 
 async function parse(packingList) {
   try {
@@ -14,21 +14,12 @@ async function parse(packingList) {
     let packingListContentsTemp = [];
 
     const pdfJson = await extractPdf(packingList);
-
     const establishmentNumber = regex.findMatch(
-      headers.BOOKER1.establishmentNumber.regex,
+      headers.GIOVANNI3.establishmentNumber.regex,
       pdfJson.pages[0].content,
     );
 
-    let model = "BOOKER1";
-    if (
-      regex.findMatch(
-        headers.BOOKER1L.headers.type_of_treatment.regex,
-        pdfJson.pages[0].content,
-      )
-    ) {
-      model = "BOOKER1L";
-    }
+    const model = "GIOVANNI3";
 
     for (const page of pdfJson.pages) {
       const ys = getYsForRows(page.content, model);
@@ -40,7 +31,7 @@ async function parse(packingList) {
       establishmentNumber,
       packingListContents,
       true,
-      parserModel.BOOKER1,
+      parserModel.GIOVANNI3,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
@@ -51,29 +42,40 @@ async function parse(packingList) {
 function getYsForRows(pageContent, model) {
   try {
     const headerY = headers[model].maxHeadersY;
-    const firstY = pageContent.filter((item) => item.y > headerY)[0].y;
-    const pageNumberY = pageContent.filter((item) =>
-      /Page \d of \d*/.test(item.str),
-    )[0]?.y; // find the position of the 'Page X of Y'
-    const totals = pageContent.filter((item) =>
-      headers[model].totals.test(item.str),
-    ); // find the position of the totals row
-    const totalsY = totals.reduce(
-      (max, obj) => (obj.y > max ? obj.y : max),
-      totals[0]?.y,
-    ); // take the largest y
-    const y = findSmaller(pageNumberY, totalsY);
-    const lastY = pageContent
-      .filter((item) => item.y < y)
-      .sort((a, b) => b.y - a.y)[0]?.y;
-    const ys = [
-      ...new Set(
-        pageContent
-          .filter((item) => item.y >= firstY && item.y <= lastY)
-          .map((item) => Number(item.y.toFixed(2))),
-      ),
-    ];
-    return ys;
+
+    // Find the first Y after the header
+    const firstY = pageContent.find((item) => item.y > headerY)?.y;
+    if (!firstY) {
+      return [];
+    }
+
+    // Group items by Y value
+    const rowsByY = {};
+    for (const item of pageContent) {
+      const y = Number(item.y.toFixed(2));
+      if (!rowsByY[y]) {
+        rowsByY[y] = [];
+      }
+      rowsByY[y].push(item.str.trim());
+    }
+
+    // Sort Y values and collect rows until stopping condition
+    const sortedYs = Object.keys(rowsByY)
+      .map(Number)
+      .sort((a, b) => a - b);
+
+    const ysInRange = [];
+    const filteredYs = sortedYs.filter((y) => y >= firstY);
+
+    for (const y of filteredYs) {
+      const row = rowsByY[y];
+      if (row.length === 1 || row[0] === "0") {
+        break; // Stop if row is short or starts with '0'
+      }
+      ysInRange.push(y);
+    }
+
+    return ysInRange;
   } catch (err) {
     logger.logError(filenameForLogging, "getYsForRows()", err);
     return [];
