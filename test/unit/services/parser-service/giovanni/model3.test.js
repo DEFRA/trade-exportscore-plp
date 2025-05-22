@@ -19,7 +19,7 @@ describe("findParser", () => {
     jest.clearAllMocks();
   });
 
-  test("matches valid Giovanni PDF Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
+  test("matches valid Giovanni Model 3 file, calls parser and returns all_required_fields_present as true", async () => {
     extractPdf.mockImplementation(() => {
       return model.validModel;
     });
@@ -27,7 +27,7 @@ describe("findParser", () => {
     expect(result).toMatchObject(test_results.validTestResult);
   });
 
-  test("matches valid Giovanni PDF Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+  test("matches valid Giovanni Model 3 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
     extractPdf.mockImplementation(() => {
       return model.invalidModel_MissingColumnCells;
     });
