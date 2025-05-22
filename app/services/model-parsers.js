@@ -54,8 +54,8 @@ const bookerMatcher = require("./matchers/booker/model1");
 const bookerParser = require("./parsers/booker/model1");
 const greggsMatcher = require("./matchers/greggs/model1");
 const greggsParser = require("./parsers/greggs/model1");
-const giovanniPdfMatcher = require("./matchers/giovanni/model-pdf1");
-const giovanniPdfParser = require("./parsers/giovanni/model-pdf1");
+const giovanniMatcher3 = require("./matchers/giovanni/model3");
+const giovanniParser3 = require("./parsers/giovanni/model3");
 
 const parsersExcel = {
   ASDA1: {
@@ -231,11 +231,11 @@ const parsersPdfNonAi = {
       bookerMatcher.matches(packingList, filename),
     parse: (packingList, filename) => bookerParser.parse(packingList, filename),
   },
-  GIOVANNIPDF1: {
+  GIOVANNI3: {
     matches: (packingList, filename) =>
-      giovanniPdfMatcher.matches(packingList, filename),
+      giovanniMatcher3.matches(packingList, filename),
     parse: (packingList, filename) =>
-      giovanniPdfParser.parse(packingList, filename),
+      giovanniParser3.parse(packingList, filename),
   },
 };
 

@@ -70,7 +70,7 @@ function getYsForRows(pageContent, model) {
       ...new Set(
         pageContent
           .filter((item) => item.y >= firstY && item.y <= lastY)
-          .map((item) => Math.round(item.y * 100) / 100),
+          .map((item) => Number(item.y.toFixed(2))),
       ),
     ];
     return ys;

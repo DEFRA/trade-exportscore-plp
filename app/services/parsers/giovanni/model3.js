@@ -15,11 +15,11 @@ async function parse(packingList) {
 
     const pdfJson = await extractPdf(packingList);
     const establishmentNumber = regex.findMatch(
-      headers.GIOVANNIPDF1.establishmentNumber.regex,
+      headers.GIOVANNI3.establishmentNumber.regex,
       pdfJson.pages[0].content,
     );
 
-    const model = "GIOVANNIPDF1";
+    const model = "GIOVANNI3";
 
     for (const page of pdfJson.pages) {
       const ys = getYsForRows(page.content, model);
@@ -31,7 +31,7 @@ async function parse(packingList) {
       establishmentNumber,
       packingListContents,
       true,
-      parserModel.GIOVANNIPDF1,
+      parserModel.GIOVANNI3,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);

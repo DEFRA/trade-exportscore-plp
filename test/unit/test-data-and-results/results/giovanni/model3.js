@@ -16,7 +16,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000149-002",
-    parserModel: parser_model.GIOVANNIPDF1,
+    parserModel: parser_model.GIOVANNI3,
   },
   emptyTestResult: {
     business_checks: {
@@ -25,7 +25,7 @@ module.exports = {
     },
     items: [],
     registration_approval_number: "RMS-GB-000149-002",
-    parserModel: parser_model.GIOVANNIPDF1,
+    parserModel: parser_model.GIOVANNI3,
   },
   invalidTestResult_MissingCells: {
     business_checks: {
@@ -42,6 +42,6 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000149-002",
-    parserModel: parser_model.GIOVANNIPDF1,
+    parserModel: parser_model.GIOVANNI3,
   },
 };

@@ -1,7 +1,7 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-data-and-results/models/giovanni/model-pdf1");
+const model = require("../../../test-data-and-results/models/giovanni/model3");
 const parserModel = require("../../../../../app/services/parser-model");
-const test_results = require("../../../test-data-and-results/results/giovanni/model-pdf1");
+const test_results = require("../../../test-data-and-results/results/giovanni/model3");
 const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
 
 jest.mock("../../../../../app/utilities/pdf-helper", () => {

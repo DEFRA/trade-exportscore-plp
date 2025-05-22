@@ -402,7 +402,7 @@ const headers = {
       },
     },
   },
-  GIOVANNIPDF1: {
+  GIOVANNI3: {
     establishmentNumber: {
       regex: /RMS-GB-000149-\d{3}$/i,
     },

@@ -1,6 +1,6 @@
-const matcher = require("../../../../../app/services/matchers/giovanni/model-pdf1");
+const matcher = require("../../../../../app/services/matchers/giovanni/model3");
 const matcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-data-and-results/models/giovanni/model-pdf1");
+const model = require("../../../test-data-and-results/models/giovanni/model3");
 const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
 const logger = require("../../../../../app/utilities/logger");
 

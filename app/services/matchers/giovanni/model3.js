@@ -18,10 +18,7 @@ async function matches(packingList, filename) {
     // check for correct establishment number
     for (const page of pdfJson.pages) {
       if (
-        !regex.test(
-          headers.GIOVANNIPDF1.establishmentNumber.regex,
-          page.content,
-        )
+        !regex.test(headers.GIOVANNI3.establishmentNumber.regex, page.content)
       ) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
@@ -50,7 +47,7 @@ async function matches(packingList, filename) {
 }
 
 function matchHeaders(pageContent) {
-  const isHeader = findHeader("GIOVANNIPDF1", pageContent);
+  const isHeader = findHeader("GIOVANNI3", pageContent);
   if (isHeader === matcherResult.CORRECT) {
     return matcherResult.CORRECT;
   } else {
