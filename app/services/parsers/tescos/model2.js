@@ -26,7 +26,8 @@ function parse(packingListJson) {
         return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
       };
 
-      const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
+      const headerRow = rowFinder(packingListJson[sheet], headerCallback);
+
       const dataRow = headerRow + 2;
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
@@ -35,7 +36,29 @@ function parse(packingListJson) {
         headers.TESCO2,
         sheet,
       );
-      packingListContents = packingListContents.concat(packingListContentsTemp);
+
+      // find net weight column
+      const key = packingListJson[sheet].reduce((foundKey, obj) => {
+        if (foundKey) return foundKey;
+        return Object.keys(obj).find((x) =>
+          headers.TESCO3.regex.total_net_weight_kg.test(obj[x]),
+        );
+      }, null);
+
+      // update value with unit
+      const unit = regex.findUnit(
+        packingListJson[sheet][headerRow + 1][key]?.toString(),
+      );
+      const packingListContentsTempUnit = packingListContentsTemp.map(
+        (item) => ({
+          ...item,
+          total_net_weight_unit: item.total_net_weight_kg == null ? null : unit,
+        }),
+      );
+
+      packingListContents = packingListContents.concat(
+        packingListContentsTempUnit,
+      );
     }
 
     return combineParser.combine(
@@ -45,7 +68,7 @@ function parse(packingListJson) {
       parserModel.TESCO2,
     );
   } catch (err) {
-    logger.logError(filenameForLogging, "matches()", err);
+    logger.logError(filenameForLogging, "parsers()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
 }
