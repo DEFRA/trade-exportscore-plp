@@ -15,6 +15,7 @@ module.exports = {
         BR: "Packages",
         BT: "Gross Weight",
         BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
       },
       {
         G: "CONTIGO AUTO-POP BOTTLE 720ML",
@@ -55,6 +56,7 @@ module.exports = {
         BR: "Packages",
         BT: "Gross Weight",
         BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
       },
     ],
   },
@@ -74,6 +76,7 @@ module.exports = {
         BR: "Packages",
         BT: "Gross Weight",
         BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
       },
       {
         G: "CONTIGO AUTO-POP BOTTLE 720ML",
@@ -100,6 +103,7 @@ module.exports = {
         BR: "Packages",
         BT: "Gross Weight",
         BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
       },
       {
         G: "JOIE MEASURING SPOONS",
@@ -128,6 +132,7 @@ module.exports = {
         BR: "Packages",
         BT: "Gross Weight",
         BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
       },
       {
         G: "CONTIGO AUTO-POP BOTTLE 720ML",
@@ -212,6 +217,7 @@ module.exports = {
         BR: "Packages",
         BT: "Gross Weight",
         BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
       },
     ],
     Sheet2: [
@@ -248,6 +254,7 @@ module.exports = {
         BR: "Packages",
         BT: "Gross Weight",
         BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
       },
     ],
   },

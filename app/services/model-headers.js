@@ -264,8 +264,8 @@ const headers = {
       number_of_packages: /Packages/i,
       total_net_weight_kg: /^Net Weight$/i,
       type_of_treatment: /Treatment Type/i,
+      header_net_weight_unit: /Net Weight\/ Package/i,
     },
-    header_net_weight_unit: /Net Weight\/ Package/i,
     findUnitInHeader: true,
   },
   TESCO2: {
