@@ -264,7 +264,9 @@ const headers = {
       number_of_packages: /Packages/i,
       total_net_weight_kg: /^Net Weight$/i,
       type_of_treatment: /Treatment Type/i,
+      header_net_weight_unit: /Net Weight\/ Package/i,
     },
+    findUnitInHeader: true,
   },
   TESCO2: {
     establishmentNumber: {
@@ -285,9 +287,10 @@ const headers = {
       description: /Product Description/i,
       commodity_code: /Tariff Code UK/i,
       number_of_packages: /Packages/i,
-      total_net_weight_kg: /^Net Weight \(KG\)$/i,
+      total_net_weight_kg: /Net Weight/i,
       type_of_treatment: /Treatment Type/i,
     },
+    findUnitInHeader: true,
     country_of_origin: /Country of Origin/i,
   },
   TJMORRIS1: {

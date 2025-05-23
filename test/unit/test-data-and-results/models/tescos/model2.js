@@ -16,7 +16,9 @@ module.exports = {
         L: "Total Line Value",
         M: "GB Establishment RMS Number",
       },
-      {},
+      {
+        K: "12kgs",
+      },
       {
         A: "1",
         B: "SKU1944",
@@ -62,7 +64,9 @@ module.exports = {
         L: "Total Line Value",
         M: "GB Establishment RMS Number",
       },
-      {},
+      {
+        K: "12kgs",
+      },
     ],
   },
   validModelMultipleSheets: {
@@ -82,7 +86,9 @@ module.exports = {
         L: "Total Line Value",
         M: "GB Establishment RMS Number",
       },
-      {},
+      {
+        K: "12kgs",
+      },
       {
         A: "1",
         B: "SKU1944",
@@ -113,7 +119,9 @@ module.exports = {
         L: "Total Line Value",
         M: "GB Establishment RMS Number",
       },
-      {},
+      {
+        K: "12kgs",
+      },
       {
         A: "2",
         B: "81827872",
@@ -146,7 +154,9 @@ module.exports = {
         L: "Total Line Value",
         M: "GB Establishment RMS Number",
       },
-      {},
+      {
+        K: "12kgs",
+      },
       {
         A: "1",
         B: "SKU1944",
@@ -201,7 +211,9 @@ module.exports = {
         L: "Total Line Value",
         M: "GB Establishment RMS Number",
       },
-      {},
+      {
+        K: "12kgs",
+      },
       {
         M: "RMS-GB-000015-009",
       },

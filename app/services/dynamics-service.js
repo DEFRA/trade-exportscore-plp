@@ -56,7 +56,7 @@ async function getDispatchLocation(applicationId) {
     const result = await resp.json();
     return result.rms_remosid;
   } catch (err) {
-    logger.logError(filenameForLogging, "patchPackingListCheck()", err);
+    logger.logError(filenameForLogging, "getDispatchLocation()", err);
     throw err;
   }
 }

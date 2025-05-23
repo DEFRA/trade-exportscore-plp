@@ -14,6 +14,7 @@ module.exports = {
         number_of_packages: "4",
         total_net_weight_kg: "9.312",
         type_of_treatment: null,
+        total_net_weight_unit: "kgs",
       },
       {
         commodity_code: "2005995090",
@@ -22,6 +23,7 @@ module.exports = {
         number_of_packages: "4",
         total_net_weight_kg: "16.144",
         type_of_treatment: null,
+        total_net_weight_unit: "kgs",
       },
     ],
     registration_approval_number: "RMS-GB-000015-009",
@@ -40,6 +42,7 @@ module.exports = {
         number_of_packages: "144",
         total_net_weight_kg: "25.92",
         type_of_treatment: null,
+        total_net_weight_unit: "kgs",
       },
       {
         commodity_code: "709200010",
@@ -48,6 +51,7 @@ module.exports = {
         number_of_packages: "90",
         total_net_weight_kg: "11.25",
         type_of_treatment: null,
+        total_net_weight_unit: "kgs",
       },
     ],
     registration_approval_number: "RMS-GB-000015-009",
@@ -67,6 +71,7 @@ module.exports = {
         number_of_packages: "4",
         total_net_weight_kg: null,
         type_of_treatment: null,
+        total_net_weight_unit: null,
       },
       {
         commodity_code: null,
@@ -75,6 +80,7 @@ module.exports = {
         number_of_packages: "4",
         total_net_weight_kg: "16.144",
         type_of_treatment: null,
+        total_net_weight_unit: "kgs",
       },
     ],
     registration_approval_number: "RMS-GB-000015-009",
