@@ -35,7 +35,7 @@ function matches(packingList, filename) {
       };
 
       const headerRow = rowFinder(packingList[sheet], callback);
-     
+
       if (
         !packingList[sheet][headerRow] ||
         headerRow === -1 ||
@@ -65,8 +65,9 @@ function callback(x) {
 function isHeaderMatching(packingListSheet, header, headerRow) {
   for (const key in header) {
     if (
-      !packingListSheet[headerRow][key]?.toLowerCase()
-       .includes(header[key].toLowerCase())
+      !packingListSheet[headerRow][key]
+        ?.toLowerCase()
+        .includes(header[key].toLowerCase())
     ) {
       return false;
     }

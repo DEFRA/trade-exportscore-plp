@@ -113,7 +113,7 @@ function mapPdfParser(packingListDocument, key) {
   return packingListContents;
 }
 
-function mapPdfNonAiParser(packingListJson, model) {
+function mapPdfNonAiParser(packingListJson, model, ys) {
   let netWeightUnit;
   if (headers[model].findUnitInHeader) {
     const pageHeader = pdfHelper.getHeaders(packingListJson.content, model);
@@ -123,7 +123,6 @@ function mapPdfNonAiParser(packingListJson, model) {
     netWeightUnit = regex.findUnit(totalNetWeightHeader);
   }
 
-  const ys = pdfHelper.getYsForRows(packingListJson.content, model);
   const packingListContents = [];
 
   ys.forEach((y, row) => {
