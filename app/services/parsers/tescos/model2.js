@@ -39,7 +39,9 @@ function parse(packingListJson) {
 
       // find net weight column
       const key = packingListJson[sheet].reduce((foundKey, obj) => {
-        if (foundKey) return foundKey;
+        if (foundKey) {
+          return foundKey;
+        }
         return Object.keys(obj).find((x) =>
           headers.TESCO3.regex.total_net_weight_kg.test(obj[x]),
         );
