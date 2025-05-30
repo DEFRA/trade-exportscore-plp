@@ -10,7 +10,6 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 function parse(packingListDocument) {
   try {
     let establishmentNumber;
-
     if (
       regex.findMatch(headers.GREGGS1.establishmentNumber.regex, [
         packingListDocument.fields.NIRMSNumber,

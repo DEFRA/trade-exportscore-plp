@@ -442,6 +442,9 @@ const headers = {
     establishmentNumber: {
       regex: /^RMS-GB-000021-\d{3}$/i,
     },
+    totalNetWeightHeader: {
+      regex: /TOTAL NET WEIGHT kg/i,
+    },
     headers: {
       commodity_code: "Article",
       description: "Short description",
@@ -451,7 +454,8 @@ const headers = {
       nature_of_products: "Nature of Product",
       remos_number: "GB Place of Dispatch",
     },
-    modelId: "greggs1-v2",
+    findUnitInHeader: true,
+    modelId: "greggs1-v4",
   },
 };
 
