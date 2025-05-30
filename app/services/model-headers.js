@@ -422,7 +422,7 @@ const headers = {
       commodity_code: {
         x: /Commodity Code/i,
         x1: 255,
-        x2: 300,
+        x2: 350,
         regex: /Commodity Code/i,
       },
       number_of_packages: {
