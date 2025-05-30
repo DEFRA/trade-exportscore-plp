@@ -3,6 +3,7 @@ const descriptionOfGoodsRegex = /Description of goods/i;
 const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
+const netWeight = /Net Weight/i;
 
 const headers = {
   ASDA1: {
@@ -27,7 +28,7 @@ const headers = {
       nature_of_products: /\[Nature Of Product\]/i,
       type_of_treatment: /\[Treatment Ty/i,
       number_of_packages: /Cases/i,
-      total_net_weight_kg: /NET Weight/i,
+      total_net_weight_kg: netWeight,
     },
   },
   BANDM1: {
@@ -38,7 +39,7 @@ const headers = {
       description: /ITEM DESCRIPTION/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /TOTAL NUMBER OF CASES/i,
-      total_net_weight_kg: /NET WEIGHT/i,
+      total_net_weight_kg: netWeight,
     },
     findUnitInHeader: true,
   },
@@ -175,9 +176,10 @@ const headers = {
       description: /DESCRIPTION/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /Quantity/i,
-      total_net_weight_kg: netWeightRegex,
+      total_net_weight_kg: netWeight,
     },
     country_of_origin: /Country of Origin/i,
+    findUnitInHeader: true,
   },
   MARS1: {
     establishmentNumber: {
@@ -250,7 +252,7 @@ const headers = {
       description: /Item Description/i,
       commodity_code: /EU Commodity Code/i,
       number_of_packages: /CASE Quantity/i,
-      total_net_weight_kg: /Net Weight/i,
+      total_net_weight_kg: netWeight,
     },
     findUnitInHeader: true,
   },
@@ -287,7 +289,7 @@ const headers = {
       description: /Product Description/i,
       commodity_code: /Tariff Code UK/i,
       number_of_packages: /Packages/i,
-      total_net_weight_kg: /Net Weight/i,
+      total_net_weight_kg: netWeight,
       type_of_treatment: /Treatment Type/i,
     },
     findUnitInHeader: true,
@@ -356,7 +358,7 @@ const headers = {
         x: /Net/i,
         x1: 430,
         x2: 455,
-        regex: /Net Weight/i,
+        regex: netWeight,
       },
     },
     totals: /^0 Boxes/i,
@@ -395,7 +397,7 @@ const headers = {
         x: /Net/i,
         x1: 420,
         x2: 445,
-        regex: /Net Weight/i,
+        regex: netWeight,
       },
       type_of_treatment: {
         x: /Treatment Type/i,
@@ -432,7 +434,7 @@ const headers = {
         x: /Net/i,
         x1: 389,
         x2: 439,
-        regex: /Net Weight/i,
+        regex: netWeight,
       },
     },
     minHeadersY: 280,
