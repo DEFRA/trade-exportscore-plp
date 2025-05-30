@@ -69,9 +69,14 @@ function mapParser(
 
 function mapPdfParser(packingListDocument, key) {
   const packingListContents = [];
-
+  let netWeightUnit;
   if (!packingListDocument.fields.PackingListContents.values) {
     return [];
+  }
+  if (headers[key].findUnitInHeader) {
+    const totalNetWeightHeader =
+      packingListDocument.fields.TotalNetWeightHeader.content;
+    netWeightUnit = regex.findUnit(totalNetWeightHeader);
   }
 
   let currentItemNumber = 0;
@@ -99,14 +104,14 @@ function mapPdfParser(packingListDocument, key) {
       total_net_weight_kg:
         parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
         null,
-      total_net_weight_unit:
-        row[headers[key].headers.total_net_weight_kg]?.content ?? null,
+      total_net_weight_unit: netWeightUnit ?? null,
       row_location: {
         rowNumber: currentItemNumber,
         pageNumber: currentPageNumber,
       },
     };
-
+    plRow.total_net_weight_unit =
+      plRow.total_net_weight_kg === null ? null : plRow.total_net_weight_unit;
     packingListContents.push(plRow);
   }
 
