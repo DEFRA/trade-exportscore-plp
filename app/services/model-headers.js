@@ -442,9 +442,6 @@ const headers = {
     establishmentNumber: {
       regex: /^RMS-GB-000021-\d{3}$/i,
     },
-    totalNetWeightHeader: {
-      regex: /TOTAL NET WEIGHT kg/i,
-    },
     headers: {
       commodity_code: "Article",
       description: "Short description",
