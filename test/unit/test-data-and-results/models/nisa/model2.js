@@ -12,6 +12,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
       {
@@ -43,6 +44,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
       {
@@ -78,6 +80,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
     ],
@@ -95,6 +98,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
       {
@@ -117,6 +121,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
       {
@@ -147,6 +152,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
     ],
@@ -160,6 +166,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
     ],
@@ -169,6 +176,7 @@ module.exports = {
       {
         C: "NOT",
         F: "CORRECT",
+        H: "NET WEIGHT PACKAGE KG",
         I: "HEADER",
       },
       {
@@ -181,6 +189,7 @@ module.exports = {
       {
         C: "PRODUCT TYPE CATEGORY",
         F: "TARIFF CODE EU",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
       {
@@ -191,6 +200,7 @@ module.exports = {
       {
         C: "NOT",
         F: "CORRECT",
+        H: "NET WEIGHT PACKAGE KG",
         I: "HEADER",
       },
       {
@@ -211,6 +221,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
       {
@@ -238,6 +249,7 @@ module.exports = {
         E: "PART NUMBER DESCRIPTION",
         F: "TARIFF CODE EU",
         G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
         I: "NET WEIGHT TOTAL",
       },
     ],

@@ -13,6 +13,7 @@ module.exports = {
         nature_of_products: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
         number_of_packages: 2,
         total_net_weight_kg: 2.5,
+        total_net_weight_unit: "KG",
         type_of_treatment: null,
       },
       {
@@ -21,6 +22,7 @@ module.exports = {
         nature_of_products: "900 - VEGETABLES PREPACK-C",
         number_of_packages: 1,
         total_net_weight_kg: 2,
+        total_net_weight_unit: "KG",
         type_of_treatment: null,
       },
     ],
@@ -39,6 +41,7 @@ module.exports = {
         nature_of_products: "500 - VEGETABLES - F",
         number_of_packages: 9,
         total_net_weight_kg: 63,
+        total_net_weight_unit: "KG",
         type_of_treatment: null,
       },
       {
@@ -47,6 +50,7 @@ module.exports = {
         nature_of_products: "515 - F/P POTATOES - F",
         number_of_packages: 28,
         total_net_weight_kg: 176.4,
+        total_net_weight_unit: "KG",
         type_of_treatment: null,
       },
     ],
@@ -66,6 +70,7 @@ module.exports = {
         nature_of_products: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
         number_of_packages: 2,
         total_net_weight_kg: null,
+        total_net_weight_unit: null,
         type_of_treatment: null,
       },
       {
@@ -74,6 +79,7 @@ module.exports = {
         nature_of_products: "900 - VEGETABLES PREPACK-C",
         number_of_packages: 1,
         total_net_weight_kg: 2,
+        total_net_weight_unit: "KG",
         type_of_treatment: null,
       },
     ],
