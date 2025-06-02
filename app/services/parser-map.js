@@ -162,7 +162,9 @@ function mapPdfNonAiParser(packingListJson, model, ys) {
 }
 
 function extractIfFirstTenAreDigits(input) {
-  if (input === null) return null;
+  if (input === null) {
+    return null;
+  }
 
   const firstTen = input.slice(0, 10);
   return /^\d{10}$/.test(firstTen) ? firstTen : input;

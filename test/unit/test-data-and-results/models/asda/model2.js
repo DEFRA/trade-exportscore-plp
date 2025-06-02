@@ -15,7 +15,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
       {
         B: "4PK X 17 PINK LADY APPLES",
@@ -46,7 +46,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
       {
         B: "4PK X 17 PINK LADY APPLES",
@@ -81,7 +81,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
     ],
   },
@@ -94,7 +94,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
       {
         B: "4PK X 17 PINK LADY APPLES",
@@ -114,7 +114,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
       {
         B: "ASDA BERRIES TWIN PACK 12X200G",
@@ -136,7 +136,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
       {
         B: "4PK X 17 PINK LADY APPLES",
@@ -167,7 +167,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
       {
         H: "RMS-GB-000015-010",
@@ -181,7 +181,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
       {
         H: "INCORRECT",
@@ -249,7 +249,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight",
+        N: "NET Weight kg",
       },
       {
         H: null,

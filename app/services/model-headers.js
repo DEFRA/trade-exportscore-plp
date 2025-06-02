@@ -30,6 +30,7 @@ const headers = {
       number_of_packages: /Cases/i,
       total_net_weight_kg: netWeight,
     },
+    findUnitInHeader: true,
   },
   BANDM1: {
     establishmentNumber: {
