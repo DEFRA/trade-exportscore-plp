@@ -331,7 +331,8 @@ const headers = {
       number_of_packages: "Trays/Ctns",
       total_net_weight_kg: "Tot Net Weight (Kg)",
     },
-    modelId: "mands1-v3",
+    findUnitInHeader: true,
+    modelId: "mands1-v4",
   },
   BOOKER1: {
     establishmentNumber: {

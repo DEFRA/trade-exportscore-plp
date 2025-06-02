@@ -4,6 +4,9 @@ module.exports = {
       NIRMSNumber: {
         content: "RMS-GB-000008-001",
       },
+      TotalNetWeightHeader: {
+        content: "Tot Net Weight (Kg)",
+      },
       PackingListContents: {
         values: [
           {
@@ -34,17 +37,26 @@ module.exports = {
       NIRMSNumber: {
         content: "RMS-GB-000041-001",
       },
+      TotalNetWeightHeader: {
+        content: "Tot Net Weight (Kg)",
+      },
     },
   },
   invalidModel_MissingRemosElement: {
     fields: {
       remosNumber: {},
     },
+    TotalNetWeightHeader: {
+        content: "Tot Net Weight (Kg)",
+      },
   },
   emptyModel: {
     fields: {
       NIRMSNumber: {
         content: "RMS-GB-000008-001",
+      },
+      TotalNetWeightHeader: {
+        content: "Tot Net Weight (Kg)",
       },
       PackingListContents: {
         values: [],
@@ -55,6 +67,9 @@ module.exports = {
     fields: {
       NIRMSNumber: {
         content: "RMS-GB-000008-001",
+      },
+      TotalNetWeightHeader: {
+        content: "Tot Net Weight (Kg)",
       },
       PackingListContents: {
         values: [
