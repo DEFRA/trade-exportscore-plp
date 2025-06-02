@@ -205,7 +205,9 @@ const headers = {
       number_of_packages: /PACKAGES/i,
       total_net_weight_kg: /NET_WEIGHT_TOTAL/i,
       nature_of_products: /PRODUCT_TYPE_CATEGORY/i,
+      header_net_weight_unit: /NET_WEIGHT_PACKAGE/i,
     },
+    findUnitInHeader: true,
   },
   NISA2: {
     establishmentNumber: {
