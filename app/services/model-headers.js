@@ -193,6 +193,7 @@ const headers = {
       total_net_weight_kg: /Weight/i,
     },
     country_of_origin: /Country Code/i,
+    findUnitInHeader: true,
   },
   NISA1: {
     establishmentNumber: {
