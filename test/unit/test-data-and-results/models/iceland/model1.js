@@ -41,8 +41,8 @@ module.exports = {
       remosNumber: {},
     },
     TotalNetWeightHeader: {
-        content: "Net Weight (KG)",
-      },
+      content: "Net Weight (KG)",
+    },
   },
   emptyModel: {
     fields: {
