@@ -34,6 +34,7 @@ function packingListMapper(packingListJson, applicationId) {
       item: packingListJson.items.map((n) => itemsMapper(n, applicationId)),
       parserModel: packingListJson.parserModel,
       reasonsForFailure: packingListJson.business_checks.failure_reasons,
+      dispatchLocationNumber: packingListJson.dispatchLocationNumber,
     };
   } catch (err) {
     logger.logError(filenameForLogging, "packingListMapper()", err);
