@@ -219,7 +219,9 @@ const headers = {
       number_of_packages: /PACKAGES/i,
       total_net_weight_kg: /NET WEIGHT TOTAL/i,
       nature_of_products: /PRODUCT TYPE CATEGORY/i,
+      header_net_weight_unit: /NET WEIGHT PACKAGE/i,
     },
+    findUnitInHeader: true
   },
   NUTRICIA1: {
     establishmentNumber: {
