@@ -10,8 +10,8 @@ const logger = require("../utilities/logger");
 module.exports = {
   method: "GET",
   path: "/pdf-non-ai",
-  handler: async (_request, h) => {
-    const filename = config.plDir + _request.query.filename;
+  handler: async (request, h) => {
+    const filename = config.plDir + request.query.filename;
     let result = {};
 
     try {
@@ -21,7 +21,11 @@ module.exports = {
       return h.response(err.message).code(StatusCodes.SERVICE_UNAVAILABLE);
     }
 
-    const packingList = await findParser(result, filename);
+    const packingList = await findParser(
+      result,
+      filename,
+      request.query.dispatchlocation,
+    );
     // Uncomment to see pdf elements positions
     //const packing = await pdfExtract.extractBuffer(result);
 

@@ -10,9 +10,9 @@ const { getRandomInt } = require("../utilities/random-int");
 module.exports = {
   method: "GET",
   path: "/ai",
-  handler: async (_request, h) => {
+  handler: async (request, h) => {
     try {
-      const filename = config.plDir + _request.query.filename;
+      const filename = config.plDir + request.query.filename;
       let result = {};
       try {
         result = fs.readFileSync(filename);
@@ -20,7 +20,11 @@ module.exports = {
         logger.logError("app/routes/ai.js", "get() > readFileSync", err);
       }
 
-      const packingList = await findParser(result, filename);
+      const packingList = await findParser(
+        result,
+        filename,
+        request.query.dispatchlocation,
+      );
 
       if (packingList.parserModel !== parserModel.NOMATCH) {
         const randomInt = getRandomInt();
