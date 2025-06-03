@@ -30,6 +30,7 @@ const headers = {
       number_of_packages: /Cases/i,
       total_net_weight_kg: netWeight,
     },
+    findUnitInHeader: true,
   },
   BANDM1: {
     establishmentNumber: {
@@ -192,6 +193,7 @@ const headers = {
       total_net_weight_kg: /Weight/i,
     },
     country_of_origin: /Country Code/i,
+    findUnitInHeader: true,
   },
   NISA1: {
     establishmentNumber: {
@@ -203,7 +205,9 @@ const headers = {
       number_of_packages: /PACKAGES/i,
       total_net_weight_kg: /NET_WEIGHT_TOTAL/i,
       nature_of_products: /PRODUCT_TYPE_CATEGORY/i,
+      header_net_weight_unit: /NET_WEIGHT_PACKAGE/i,
     },
+    findUnitInHeader: true,
   },
   NISA2: {
     establishmentNumber: {
@@ -215,7 +219,9 @@ const headers = {
       number_of_packages: /PACKAGES/i,
       total_net_weight_kg: /NET WEIGHT TOTAL/i,
       nature_of_products: /PRODUCT TYPE CATEGORY/i,
+      header_net_weight_unit: /NET WEIGHT PACKAGE/i,
     },
+    findUnitInHeader: true
   },
   NUTRICIA1: {
     establishmentNumber: {
@@ -330,7 +336,8 @@ const headers = {
       number_of_packages: "Trays/Ctns",
       total_net_weight_kg: "Tot Net Weight (Kg)",
     },
-    modelId: "mands1-v3",
+    findUnitInHeader: true,
+    modelId: "mands1-v4",
   },
   BOOKER1: {
     establishmentNumber: {
