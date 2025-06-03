@@ -221,7 +221,7 @@ const headers = {
       nature_of_products: /PRODUCT TYPE CATEGORY/i,
       header_net_weight_unit: /NET WEIGHT PACKAGE/i,
     },
-    findUnitInHeader: true
+    findUnitInHeader: true,
   },
   NUTRICIA1: {
     establishmentNumber: {
