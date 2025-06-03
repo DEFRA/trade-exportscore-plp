@@ -8,6 +8,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-001",
@@ -36,6 +37,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-001",
@@ -68,6 +70,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
     ],
   },
@@ -80,6 +83,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-001",
@@ -98,6 +102,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-001",
@@ -118,6 +123,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-001",
@@ -131,6 +137,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "INCORRECT",
@@ -143,6 +150,7 @@ module.exports = {
         A: "RMS_ESTABLISHMENT_NO",
         B: "DISPATCH_ADDRESS",
         C: "DELIVERY_ADDRESS",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-009",
@@ -153,6 +161,7 @@ module.exports = {
         A: "NOT",
         B: "CORRECT",
         C: "HEADER",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-009",
@@ -168,6 +177,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-001",
@@ -196,6 +206,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
       },
       {
         A: "RMS-GB-000025-001",

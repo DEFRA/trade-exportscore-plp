@@ -12,7 +12,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
         H: "Country Code",
       },
@@ -43,7 +43,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
       },
     ],
@@ -59,7 +59,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
         H: "Country Code",
       },
@@ -88,7 +88,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
         H: "Country Code",
       },
@@ -119,7 +119,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
         H: "Country Code",
       },
@@ -150,7 +150,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
       },
       {
@@ -178,7 +178,7 @@ module.exports = {
       {
         C: "INVALID",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
       },
       {
@@ -203,7 +203,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
         H: "Country Code",
       },
@@ -221,7 +221,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
         H: "Country Code",
       },
@@ -236,7 +236,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
         H: "Country Code",
       },
@@ -250,7 +250,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
       },
     ],
@@ -261,7 +261,7 @@ module.exports = {
       {
         C: "Invalid",
         D: "Case Qty",
-        E: "Weight",
+        E: "Net Weight KG",
         G: "Commodity Code",
       },
     ],

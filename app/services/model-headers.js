@@ -3,6 +3,7 @@ const descriptionOfGoodsRegex = /Description of goods/i;
 const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeightRegex = /Net Weight \(KG\)/i;
+const netWeight = /Net Weight/i;
 
 const headers = {
   ASDA1: {
@@ -27,8 +28,9 @@ const headers = {
       nature_of_products: /\[Nature Of Product\]/i,
       type_of_treatment: /\[Treatment Ty/i,
       number_of_packages: /Cases/i,
-      total_net_weight_kg: /NET Weight/i,
+      total_net_weight_kg: netWeight,
     },
+    findUnitInHeader: true,
   },
   BANDM1: {
     establishmentNumber: {
@@ -38,7 +40,7 @@ const headers = {
       description: /ITEM DESCRIPTION/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /TOTAL NUMBER OF CASES/i,
-      total_net_weight_kg: /NET WEIGHT/i,
+      total_net_weight_kg: netWeight,
     },
     findUnitInHeader: true,
   },
@@ -175,9 +177,10 @@ const headers = {
       description: /DESCRIPTION/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /Quantity/i,
-      total_net_weight_kg: netWeightRegex,
+      total_net_weight_kg: netWeight,
     },
     country_of_origin: /Country of Origin/i,
+    findUnitInHeader: true,
   },
   MARS1: {
     establishmentNumber: {
@@ -190,6 +193,7 @@ const headers = {
       total_net_weight_kg: /Weight/i,
     },
     country_of_origin: /Country Code/i,
+    findUnitInHeader: true,
   },
   NISA1: {
     establishmentNumber: {
@@ -201,7 +205,9 @@ const headers = {
       number_of_packages: /PACKAGES/i,
       total_net_weight_kg: /NET_WEIGHT_TOTAL/i,
       nature_of_products: /PRODUCT_TYPE_CATEGORY/i,
+      header_net_weight_unit: /NET_WEIGHT_PACKAGE/i,
     },
+    findUnitInHeader: true,
   },
   NISA2: {
     establishmentNumber: {
@@ -251,7 +257,7 @@ const headers = {
       description: /Item Description/i,
       commodity_code: /EU Commodity Code/i,
       number_of_packages: /CASE Quantity/i,
-      total_net_weight_kg: /Net Weight/i,
+      total_net_weight_kg: netWeight,
     },
     findUnitInHeader: true,
   },
@@ -288,7 +294,7 @@ const headers = {
       description: /Product Description/i,
       commodity_code: /Tariff Code UK/i,
       number_of_packages: /Packages/i,
-      total_net_weight_kg: /Net Weight/i,
+      total_net_weight_kg: netWeight,
       type_of_treatment: /Treatment Type/i,
     },
     findUnitInHeader: true,
@@ -315,7 +321,8 @@ const headers = {
       number_of_packages: "Unit Qty",
       total_net_weight_kg: "Net Weight (KG)",
     },
-    modelId: "iceland1-v3",
+    findUnitInHeader: true,
+    modelId: "iceland1-v4",
   },
   MANDS1: {
     establishmentNumber: {
@@ -328,7 +335,8 @@ const headers = {
       number_of_packages: "Trays/Ctns",
       total_net_weight_kg: "Tot Net Weight (Kg)",
     },
-    modelId: "mands1-v3",
+    findUnitInHeader: true,
+    modelId: "mands1-v4",
   },
   BOOKER1: {
     establishmentNumber: {
@@ -357,7 +365,7 @@ const headers = {
         x: /Net/i,
         x1: 430,
         x2: 455,
-        regex: /Net Weight/i,
+        regex: netWeight,
       },
     },
     totals: /^0 Boxes/i,
@@ -396,7 +404,7 @@ const headers = {
         x: /Net/i,
         x1: 420,
         x2: 445,
-        regex: /Net Weight/i,
+        regex: netWeight,
       },
       type_of_treatment: {
         x: /Treatment Type/i,
@@ -408,7 +416,7 @@ const headers = {
   },
   GIOVANNI3: {
     establishmentNumber: {
-      regex: /RMS-GB-000149-(\d{3})?/i,
+      regex: /RMS-GB-000149(-\d{3})?/i,
     },
     headers: {
       description: {
@@ -420,7 +428,7 @@ const headers = {
       commodity_code: {
         x: /Commodity Code/i,
         x1: 255,
-        x2: 300,
+        x2: 350,
         regex: /Commodity Code/i,
       },
       number_of_packages: {
@@ -433,7 +441,7 @@ const headers = {
         x: /Net/i,
         x1: 389,
         x2: 439,
-        regex: /Net Weight/i,
+        regex: netWeight,
       },
     },
     minHeadersY: 280,
@@ -452,7 +460,8 @@ const headers = {
       nature_of_products: "Nature of Product",
       remos_number: "GB Place of Dispatch",
     },
-    modelId: "greggs1-v2",
+    findUnitInHeader: true,
+    modelId: "greggs1-v4",
   },
 };
 

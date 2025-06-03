@@ -4,6 +4,9 @@ module.exports = {
       PartialNIRMSNumber: {
         content: "KingdomRMS_ESTABLISHMENT_NORMS-GB-000040-",
       },
+      TotalNetWeightHeader: {
+        content: "Net Weight (KG)",
+      },
       PackingListContents: {
         values: [
           {
@@ -37,11 +40,17 @@ module.exports = {
     fields: {
       remosNumber: {},
     },
+    TotalNetWeightHeader: {
+      content: "Net Weight (KG)",
+    },
   },
   emptyModel: {
     fields: {
       PartialNIRMSNumber: {
         content: "KingdomRMS_ESTABLISHMENT_NORMS-GB-000040-",
+      },
+      TotalNetWeightHeader: {
+        content: "TOTAL NET WEIGHT kg",
       },
       PackingListContents: {
         values: [],
@@ -52,6 +61,9 @@ module.exports = {
     fields: {
       PartialNIRMSNumber: {
         content: "KingdomRMS_ESTABLISHMENT_NORMS-GB-000040-",
+      },
+      TotalNetWeightHeader: {
+        content: "Net Weight (KG)",
       },
       PackingListContents: {
         values: [

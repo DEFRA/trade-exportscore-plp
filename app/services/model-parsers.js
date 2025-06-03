@@ -231,12 +231,12 @@ const parsersPdfNonAi = {
       bookerMatcher.matches(packingList, filename),
     parse: (packingList, filename) => bookerParser.parse(packingList, filename),
   },
-  // GIOVANNI3: {
-  //   matches: (packingList, filename) =>
-  //     giovanniMatcher3.matches(packingList, filename),
-  //   parse: (packingList, filename) =>
-  //     giovanniParser3.parse(packingList, filename),
-  // },
+  GIOVANNI3: {
+    matches: (packingList, filename) =>
+      giovanniMatcher3.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      giovanniParser3.parse(packingList, filename),
+  },
 };
 
 module.exports = { parsersExcel, parsersPdf, noMatchParsers, parsersPdfNonAi };
