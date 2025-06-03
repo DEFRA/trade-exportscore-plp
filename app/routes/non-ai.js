@@ -12,8 +12,8 @@ const { getRandomInt } = require("../utilities/random-int");
 module.exports = {
   method: "GET",
   path: "/non-ai",
-  handler: async (_request, h) => {
-    const filename = config.plDir + _request.query.filename;
+  handler: async (request, h) => {
+    const filename = config.plDir + request.query.filename;
     let result = {};
     try {
       result = convertExcelToJson({ sourceFile: filename });
@@ -21,7 +21,11 @@ module.exports = {
       logger.logError(filenameForLogging, "get() > convertExcelToJson", err);
     }
 
-    const packingList = await findParser(result, filename);
+    const packingList = await findParser(
+      result,
+      filename,
+      request.query.dispatchlocation,
+    );
     if (packingList.parserModel !== parserModel.NOMATCH) {
       const randomInt = getRandomInt();
 
