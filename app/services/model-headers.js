@@ -231,7 +231,7 @@ const headers = {
       description: /DESCRIPTION/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /Quantity/i,
-      total_net_weight_kg: /Net Weight/i,
+      total_net_weight_kg: netWeight,
     },
     findUnitInHeader: true,
     country_of_origin: /Country of Origin/i,
