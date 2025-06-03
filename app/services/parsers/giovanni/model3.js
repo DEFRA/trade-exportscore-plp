@@ -70,7 +70,7 @@ function getYsForRows(pageContent, model) {
     for (const y of filteredYs) {
       const row = rowsByY[y];
       if (row.length < 5 || row[0] === "0") {
-        break; // Ignore row if it is too short or starts with '0'
+        break; // Stop if row is short or starts with '0'
       }
       ysInRange.push(y);
     }
