@@ -50,7 +50,7 @@ function validatePackingListByIndexAndType(packingList) {
       invalidProductCodes.length ===
     0;
 
-  const hasSingleRms = !(packingList.establishment_numbers.length > 1);
+  const hasSingleRms = packingList.establishment_numbers.length <= 1;
 
   return {
     missingIdentifier,

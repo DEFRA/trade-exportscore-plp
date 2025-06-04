@@ -83,24 +83,26 @@ function findUnit(header) {
 function findAllMatches(regex, array, matches) {
   const searchPattern = createSearchPattern(regex);
 
-  for (const obj of array) {
+  array.forEach(obj => {
     const stringProperties = getStringProperties(obj);
 
-    for (const key of stringProperties) {
+    stringProperties.forEach(key => {
       const value = obj[key];
-      const match = value.match(searchPattern); // Use match to extract the part of the string that matches
+      const match = value.match(searchPattern);
+
       if (match) {
-        match.forEach((m) => {
+        match.forEach(m => {
           if (!matches.includes(m)) {
             matches.push(m);
           }
         });
       }
-    }
-  }
+    });
+  });
 
   return matches;
 }
+
 
 module.exports = {
   test,
