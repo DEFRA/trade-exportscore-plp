@@ -448,6 +448,7 @@ const headers = {
     },
     minHeadersY: 280,
     maxHeadersY: 300,
+    findUnitInHeader: true,
   },
   GREGGS1: {
     establishmentNumber: {
