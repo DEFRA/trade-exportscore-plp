@@ -215,3 +215,99 @@ describe("testAllPatterns function", () => {
     expect(regex.testAllPatterns(regexArray, array[0])).toBe(false); // No string properties to match
   });
 });
+
+describe("findAllMatches function", () => {
+  it("should return the matching value when the regex matches a value in the object", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    expect(regex.findAllMatches("John", array, [])).toStrictEqual(["John"]); // Matches 'John'
+    expect(regex.findAllMatches("Doe", array, [])).toStrictEqual(["Doe"]); // Matches 'Doe'
+    expect(regex.findAllMatches("Smith", array, [])).toStrictEqual(["Smith"]); // Matches 'Jane Smith'
+  });
+
+  it("should return the matching substring from a complex string", () => {
+    const array = [
+      { description: "THE RANGE / RMS-GB-000252-002 / DN8 4HT" },
+      { description: "OTHER PRODUCT / RMS-GB-000999 / LOCATION" },
+    ];
+
+    expect(
+      regex.findAllMatches(/RMS-GB-000252-\d{3}/, array, []),
+    ).toStrictEqual(["RMS-GB-000252-002"]); // Extracts and matches 'RMS-GB-000252-002'
+  });
+
+  it("should return empty array when the regex does not match any value in the object", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+    ];
+
+    expect(regex.findAllMatches("Berlin", array, [])).toStrictEqual([]); // No match
+    expect(regex.findAllMatches("Michael", array, [])).toStrictEqual([]); // No match
+  });
+
+  it("should skip non-string values and return matching string values", () => {
+    const array = [
+      { name: "John Doe", age: 30, city: "London" },
+      { name: "Jane Smith", age: 25, city: "Paris" },
+      { job: "Engineer", salary: 50000, active: true },
+    ];
+
+    expect(regex.findAllMatches("John", array, [])).toStrictEqual(["John"]); // Matches 'John'
+    expect(regex.findAllMatches("Engineer", array, [])).toStrictEqual([
+      "Engineer",
+    ]); // Matches 'Engineer'
+    expect(regex.findAllMatches("50000", array, [])).toStrictEqual([]); // Should not match number values
+    expect(regex.findAllMatches("true", array, [])).toStrictEqual([]); // Should not match boolean values
+  });
+
+  it("should return null if the array is empty", () => {
+    const array = [];
+    expect(regex.findAllMatches("John", array, [])).toStrictEqual([]); // Empty array
+  });
+
+  it("should return null if no objects have matching properties", () => {
+    const array = [
+      { age: 30, active: true },
+      { age: 25, city: "Paris" },
+    ];
+
+    expect(regex.findAllMatches("John", array, [])).toStrictEqual([]); // No string properties to match
+  });
+
+  it("should skip inherited properties and return the correct match", () => {
+    const parentObject = { name: "Parent Name" };
+    const array = [
+      Object.create(parentObject), // Inherited property
+      { name: "John Doe", age: 30, city: "London" },
+    ];
+
+    expect(regex.findAllMatches("Parent Name", array, [])).toStrictEqual([]); // Should not match inherited property
+    expect(regex.findAllMatches("John", array, [])).toStrictEqual(["John"]); // Matches 'John'
+  });
+
+  it("should add multiple matches", () => {
+    const array = [
+      { description: "THE RANGE / RMS-GB-000252-002 / DN8 4HT" },
+      { description: "OTHER PRODUCT / RMS-GB-000252-001 / LOCATION" },
+    ];
+
+    expect(
+      regex.findAllMatches(/RMS-GB-000252-\d{3}/, array, []),
+    ).toStrictEqual(["RMS-GB-000252-002", "RMS-GB-000252-001"]);
+  });
+
+  it("shouldn't add the same match twice", () => {
+    const array = [
+      { description: "THE RANGE / RMS-GB-000252-002 / DN8 4HT" },
+      { description: "OTHER PRODUCT / RMS-GB-000252-002 / LOCATION" },
+    ];
+
+    expect(
+      regex.findAllMatches(/RMS-GB-000252-\d{3}/, array, []),
+    ).toStrictEqual(["RMS-GB-000252-002"]);
+  });
+});

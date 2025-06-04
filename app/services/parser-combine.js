@@ -3,6 +3,7 @@ function combine(
   packingListContents,
   allRequiredFieldsPresent,
   ParserModel,
+  establishmentNumbers = [],
   reasonsForFailure = null,
 ) {
   return {
@@ -13,6 +14,7 @@ function combine(
       failure_reasons: reasonsForFailure,
     },
     parserModel: ParserModel,
+    establishment_numbers: establishmentNumbers,
   };
 }
 

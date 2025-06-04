@@ -80,9 +80,32 @@ function findUnit(header) {
   return null;
 }
 
+function findAllMatches(regex, array, matches) {
+  const searchPattern = createSearchPattern(regex);
+
+  for (const obj of array) {
+    const stringProperties = getStringProperties(obj);
+
+    for (const key of stringProperties) {
+      const value = obj[key];
+      const match = value.match(searchPattern); // Use match to extract the part of the string that matches
+      if (match) {
+        match.forEach((m) => {
+          if (!matches.includes(m)) {
+            matches.push(m);
+          }
+        });
+      }
+    }
+  }
+
+  return matches;
+}
+
 module.exports = {
   test,
   findMatch,
   testAllPatterns,
   findUnit,
+  findAllMatches,
 };
