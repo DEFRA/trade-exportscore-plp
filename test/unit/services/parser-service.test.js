@@ -226,7 +226,7 @@ describe("findParser", () => {
 
     const result = await parserService.findParser({}, pdfFilename);
 
-    expect(result).toEqual(invalidTestResult_NoMatch);
+    expect(result).toMatchObject(invalidTestResult_NoMatch);
   });
 });
 

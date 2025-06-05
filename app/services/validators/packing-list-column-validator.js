@@ -50,6 +50,8 @@ function validatePackingListByIndexAndType(packingList) {
       invalidProductCodes.length ===
     0;
 
+  const hasSingleRms = packingList.establishment_numbers.length <= 1;
+
   return {
     missingIdentifier,
     invalidProductCodes,
@@ -64,6 +66,7 @@ function validatePackingListByIndexAndType(packingList) {
     noMatch,
     hasAllFields:
       hasAllItems && allItemsValid && hasRemos && !isEmpty && !missingRemos,
+    hasSingleRms,
   };
 }
 
@@ -74,7 +77,7 @@ function findItems(items, fn) {
 }
 
 function generateFailuresByIndexAndTypes(validationResult) {
-  if (validationResult.hasAllFields) {
+  if (validationResult.hasAllFields && validationResult.hasSingleRms) {
     return {
       hasAllFields: true,
     };
@@ -88,6 +91,11 @@ function generateFailuresByIndexAndTypes(validationResult) {
     } else if (validationResult.isEmpty) {
       failureReasons = "No product line data found.";
     } else {
+      if (!validationResult.hasSingleRms) {
+        failureReasons =
+          "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n";
+      }
+
       const checks = [
         {
           collection: validationResult.missingIdentifier,

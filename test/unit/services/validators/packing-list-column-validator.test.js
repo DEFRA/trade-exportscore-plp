@@ -17,6 +17,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -32,6 +33,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("missing remos number", () => {
@@ -50,6 +52,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: [],
     };
 
     const result =
@@ -65,6 +68,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeFalsy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("missing commodity code", () => {
@@ -86,6 +90,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -101,6 +106,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("missing treatment type", () => {
@@ -122,6 +128,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -137,6 +144,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("missing nature of products", () => {
@@ -158,6 +166,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -173,6 +182,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("missing description", () => {
@@ -194,6 +204,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -209,6 +220,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("missing packages", () => {
@@ -230,6 +242,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -245,6 +258,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("missing net weight", () => {
@@ -266,6 +280,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -281,6 +296,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("invalid packages", () => {
@@ -302,6 +318,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -317,6 +334,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("invalid net weight", () => {
@@ -338,6 +356,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -353,6 +372,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(1);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 
   test("multiple failures", () => {
@@ -396,6 +416,7 @@ describe("validatePackingListByIndexAndType", () => {
       business_checks: {
         all_required_fields_present: true,
       },
+      establishment_numbers: ["RMS-GB-000000-000"],
     };
 
     const result =
@@ -411,6 +432,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(1);
     expect(result.hasRemos).toBeTruthy();
     expect(result.isEmpty).toBeFalsy();
+    expect(result.hasSingleRms).toBeTruthy();
   });
 });
 
@@ -418,6 +440,7 @@ describe("generateFailuresByIndexAndTypes", () => {
   test("valid data", () => {
     const validationResult = {
       hasAllFields: true,
+      hasSingleRms: true,
     };
 
     const result =
@@ -431,6 +454,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: true,
+      hasSingleRms: true,
     };
 
     const result =
@@ -451,6 +475,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [],
       invalidPackages: [],
       invalidNetWeight: [],
+      hasSingleRms: true,
     };
 
     const result =
@@ -471,6 +496,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [],
       invalidPackages: [],
       invalidNetWeight: [],
+      hasSingleRms: true,
     };
 
     const result =
@@ -491,6 +517,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [],
       invalidPackages: [],
       invalidNetWeight: [],
+      hasSingleRms: true,
     };
 
     const result =
@@ -511,6 +538,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [{ rowNumber: 1 }],
       invalidPackages: [],
       invalidNetWeight: [],
+      hasSingleRms: true,
     };
 
     const result =
@@ -531,6 +559,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [],
       invalidPackages: [{ rowNumber: 1 }],
       invalidNetWeight: [],
+      hasSingleRms: true,
     };
 
     const result =
@@ -551,6 +580,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [],
       invalidPackages: [],
       invalidNetWeight: [{ rowNumber: 1 }],
+      hasSingleRms: true,
     };
 
     const result =
@@ -571,6 +601,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [],
       invalidPackages: [],
       invalidNetWeight: [],
+      hasSingleRms: true,
     };
 
     const result =
@@ -591,6 +622,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [],
       invalidPackages: [],
       invalidNetWeight: [{ rowNumber: 1 }],
+      hasSingleRms: true,
     };
 
     const result =

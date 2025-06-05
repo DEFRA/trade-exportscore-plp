@@ -1,3 +1,5 @@
+const remosRegex = /RMS-GB-\d{6}-\d{3}/i;
+
 // Helper function to validate string properties and create a search pattern
 function createSearchPattern(regex) {
   return new RegExp(regex, "i"); // 'i' makes the search case-insensitive
@@ -80,9 +82,34 @@ function findUnit(header) {
   return null;
 }
 
+function findAllMatches(regex, array, matches) {
+  const searchPattern = createSearchPattern(regex);
+
+  array.forEach((obj) => {
+    const stringProperties = getStringProperties(obj);
+
+    stringProperties.forEach((key) => {
+      const value = obj[key];
+      const match = value.match(searchPattern);
+
+      if (match) {
+        match.forEach((m) => {
+          if (!matches.includes(m)) {
+            matches.push(m);
+          }
+        });
+      }
+    });
+  });
+
+  return matches;
+}
+
 module.exports = {
   test,
   findMatch,
   testAllPatterns,
   findUnit,
+  findAllMatches,
+  remosRegex,
 };

@@ -15,6 +15,8 @@ function parse(packingListJson) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
+
     const establishmentNumber = regex.findMatch(
       headers.ASDA2.establishmentNumber.regex,
       packingListJson[sheets[0]],
@@ -26,6 +28,12 @@ function parse(packingListJson) {
     };
 
     for (const sheet of sheets) {
+      establishmentNumbers = regex.findAllMatches(
+        regex.remosRegex,
+        packingListJson[sheet],
+        establishmentNumbers,
+      );
+
       const footerRow = rowFinder(packingListJson[sheet], callback);
       if (footerRow !== -1) {
         packingListJson[sheet] = packingListJson[sheet].slice(0, footerRow);
@@ -54,10 +62,11 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.ASDA2,
+      establishmentNumbers,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
-    return combineParser.combine(null, [], false, parserModel.NOMATCH);
+    return combineParser.combine(null, [], false, parserModel.NOMATCH, []);
   }
 }
 
