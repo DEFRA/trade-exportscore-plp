@@ -559,7 +559,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeight: [],
       invalidPackages: [{ rowNumber: 1 }],
       invalidNetWeight: [],
-      hasSingleRms: true
+      hasSingleRms: true,
     };
 
     const result =

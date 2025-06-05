@@ -92,7 +92,8 @@ function generateFailuresByIndexAndTypes(validationResult) {
       failureReasons = "No product line data found.";
     } else {
       if (!validationResult.hasSingleRms) {
-        failureReasons = "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n";
+        failureReasons =
+          "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n";
       }
 
       const checks = [
