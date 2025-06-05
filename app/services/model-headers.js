@@ -190,7 +190,7 @@ const headers = {
       description: /Description/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /Case Qty/i,
-      total_net_weight_kg: /Net Weight/i,
+      total_net_weight_kg: netWeight,
     },
     country_of_origin: /Country Code/i,
     findUnitInHeader: true,
