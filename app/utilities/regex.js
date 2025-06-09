@@ -2,7 +2,7 @@ const remosRegex = /RMS-GB-\d{6}-\d{3}/i;
 
 // Helper function to validate string properties and create a search pattern
 function createSearchPattern(regex) {
-  return new RegExp(regex, "i"); // 'i' makes the search case-insensitive
+  return new RegExp(regex, "gi"); // 'g' for global, 'i' for case-insensitive
 }
 
 function isValidStringProperty(obj, key) {

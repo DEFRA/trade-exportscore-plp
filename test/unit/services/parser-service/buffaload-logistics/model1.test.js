@@ -21,6 +21,15 @@ describe("matchesBuffaloadModel1", () => {
     expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
   });
 
+  test("matches valid Buffaload Model 1 file, calls parser, but returns all_required_fields_present as false when multiple rms numbers", async () => {
+    const result = await parserService.findParser(
+      model.invalidMultipleRMS,
+      filename,
+    );
+
+    expect(result).toMatchObject(test_results.invalidTestResult_multipleRMS);
+  });
+
   test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.wrong";
     const invalidTestResult_NoMatch = {
