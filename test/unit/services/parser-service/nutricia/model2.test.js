@@ -1,33 +1,24 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-data-and-results/models/buffaload-logistics/model1");
+const model = require("../../../test-data-and-results/models/nutricia/model2");
 const parserModel = require("../../../../../app/services/parser-model");
-const test_results = require("../../../test-data-and-results/results/buffaload-logistics/model1");
+const test_results = require("../../../test-data-and-results/results/nutricia/model2");
 
-const filename = "PackingList-Buffaload-model1.xlsx";
+const filename = "packinglist-nutricia-model2.xlsx";
 
-describe("matchesBuffaloadModel1", () => {
-  test("matches valid Buffaload Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
+describe("matchesNutriciaModel1", () => {
+  test("matches valid Nutricia Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toMatchObject(test_results.validTestResult);
   });
 
-  test("matches valid Buffaload Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+  test("matches valid Nutricia Model 2 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
     const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
     );
 
     expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
-  });
-
-  test("matches valid Buffaload Model 1 file, calls parser, but returns all_required_fields_present as false when multiple rms numbers", async () => {
-    const result = await parserService.findParser(
-      model.invalidMultipleRMS,
-      filename,
-    );
-
-    expect(result).toMatchObject(test_results.invalidTestResult_multipleRMS);
   });
 
   test("returns 'No Match' for incorrect file extension", async () => {

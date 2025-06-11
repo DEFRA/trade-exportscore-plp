@@ -151,7 +151,7 @@ const headers = {
       description: /DESCRIPTION/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /Quantity/i,
-      total_net_weight_kg: netWeightRegex,
+      total_net_weight_kg: netWeight,
     },
     country_of_origin: /Country of Origin/i,
     findUnitInHeader: true,
@@ -190,7 +190,7 @@ const headers = {
       description: /Description/i,
       commodity_code: commodityCodeRegex,
       number_of_packages: /Case Qty/i,
-      total_net_weight_kg: /Weight/i,
+      total_net_weight_kg: netWeight,
     },
     country_of_origin: /Country Code/i,
     findUnitInHeader: true,
@@ -235,6 +235,18 @@ const headers = {
     },
     findUnitInHeader: true,
     country_of_origin: /Country of Origin/i,
+  },
+  NUTRICIA2: {
+    establishmentNumber: {
+      regex: /RMS-GB-000133(-\d{3})?/i,
+    },
+    regex: {
+      description: /Material description/i,
+      commodity_code: /Commodity code/i,
+      number_of_packages: /Order qty/i,
+      total_net_weight_kg: /Order net weight/i,
+    },
+    country_of_origin: /coo/i,
   },
   SAINSBURYS1: {
     establishmentNumber: {

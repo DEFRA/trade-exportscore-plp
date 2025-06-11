@@ -1,46 +1,38 @@
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
-const headers = require("../../model-headers");
-const { rowFinder } = require("../../../utilities/row-finder");
 const { mapParser } = require("../../parser-map");
-const { matchesHeader } = require("../../matches-header");
-const MatcherResult = require("../../matcher-result");
+const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
+const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
 
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
-    let establishmentNumbers = [];
-
     const establishmentNumber = regex.findMatch(
-      headers.CDS1.establishmentNumber.regex,
+      headers.NUTRICIA2.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
 
+    const headerTitles = Object.values(headers.NUTRICIA2.regex);
+    const callback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
+    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
+    const dataRow = headerRow + 1;
+
     for (const sheet of sheets) {
-      establishmentNumbers = regex.findAllMatches(
-        regex.remosRegex,
-        packingListJson[sheet],
-        establishmentNumbers,
-      );
-
-      const headerTitles = Object.values(headers.CDS1.regex);
-      const headerCallback = function (x) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      };
-
-      const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
-      const dataRow = headerRow + 1;
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
         headerRow,
         dataRow,
-        headers.CDS1,
+        headers.NUTRICIA2,
         sheet,
       );
       packingListContents = packingListContents.concat(packingListContentsTemp);
@@ -50,9 +42,7 @@ function parse(packingListJson) {
       establishmentNumber,
       packingListContents,
       true,
-      parserModel.CDS1,
-      establishmentNumbers,
-      headers.CDS1.findUnitInHeader,
+      parserModel.NUTRICIA2,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
