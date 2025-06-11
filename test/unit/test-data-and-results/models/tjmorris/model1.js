@@ -350,7 +350,7 @@ module.exports = {
         N: "28 TUNA CRUNCH TIGER ROLL",
         O: "Tariff/Commodity",
         P: "Cases",
-        R: "Net Weight Kg",
+        R: "Net Weight",
       },
       {
         A: null,

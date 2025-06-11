@@ -3,6 +3,7 @@ function combine(
   packingListContents,
   allRequiredFieldsPresent,
   ParserModel,
+  findUnitInHeader = null,
   establishmentNumbers = [],
   reasonsForFailure = null,
 ) {
@@ -14,6 +15,7 @@ function combine(
       failure_reasons: reasonsForFailure,
     },
     parserModel: ParserModel,
+    unitInHeader: findUnitInHeader,
     establishment_numbers: establishmentNumbers,
   };
 }

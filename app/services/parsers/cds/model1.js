@@ -43,6 +43,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.CDS1,
+      headers.CDS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

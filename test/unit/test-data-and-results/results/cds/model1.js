@@ -13,6 +13,7 @@ module.exports = {
         nature_of_products: "General Retail Goods",
         number_of_packages: "2",
         total_net_weight_kg: "1.9",
+        total_net_weight_unit: "KG",
         type_of_treatment: "Ambient Goods",
       },
       {
@@ -21,6 +22,7 @@ module.exports = {
         nature_of_products: "General Retail Goods",
         number_of_packages: "4",
         total_net_weight_kg: "24.7",
+        total_net_weight_unit: "KG",
         type_of_treatment: "Ambient Goods",
       },
     ],
@@ -57,7 +59,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'Identifier is missing in sheet "PackingList_Extract" row 3.\nTotal net weight is missing in sheet "PackingList_Extract" row 2.\n',
+        'Net Weight Unit of Measure (kg) not found.\nIdentifier is missing in sheet "PackingList_Extract" row 3.\nTotal net weight is missing in sheet "PackingList_Extract" row 2.\n',
     },
     items: [
       {
@@ -66,6 +68,7 @@ module.exports = {
         nature_of_products: "General Retail Goods",
         number_of_packages: "2",
         total_net_weight_kg: null,
+        total_net_weight_unit: null,
         type_of_treatment: "Ambient Goods",
       },
       {
@@ -74,6 +77,7 @@ module.exports = {
         nature_of_products: "General Retail Goods",
         number_of_packages: "4",
         total_net_weight_kg: "24.7",
+        total_net_weight_unit: null,
         type_of_treatment: null,
       },
     ],

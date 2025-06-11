@@ -123,7 +123,7 @@ module.exports = {
         description: "BEN Mexican 6*220g GB",
         number_of_packages: 336,
         total_net_weight_kg: null,
-        total_net_weight_unit: null,
+        total_net_weight_unit: "KG",
         nature_of_products: null,
         type_of_treatment: null,
         country_of_origin: "GB",

@@ -206,7 +206,7 @@ module.exports = {
         L: "TARIFF_CODE_EU",
         M: "PACKAGES",
         O: "NET_WEIGHT_TOTAL",
-        P: "NET_WEIGHT_PACKAGE_KG",
+        P: "NET_WEIGHT_PACKAGE",
       },
       {
         A: "RMS-GB-000025-001",

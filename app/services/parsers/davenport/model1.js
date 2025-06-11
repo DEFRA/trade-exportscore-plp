@@ -47,6 +47,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.DAVENPORT1,
+      headers.DAVENPORT1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

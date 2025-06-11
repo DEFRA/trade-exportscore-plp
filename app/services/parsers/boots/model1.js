@@ -55,6 +55,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.BOOTS1,
+      headers.BOOTS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);

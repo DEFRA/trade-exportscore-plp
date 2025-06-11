@@ -43,6 +43,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.KEPAK1,
+      headers.KEPAK1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

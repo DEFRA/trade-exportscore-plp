@@ -84,7 +84,7 @@ module.exports = {
         total_net_weight_kg: null,
         type_of_treatment: null,
         country_of_origin: "FR",
-        total_net_weight_unit: null,
+        total_net_weight_unit: "KG",
       },
     ],
     registration_approval_number: "RMS-GB-000133",

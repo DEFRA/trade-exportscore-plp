@@ -45,15 +45,6 @@ describe("parsePackingList - e2e", () => {
         R: "1.4",
       },
       {
-        A: null,
-        J: null,
-        L: null,
-        N: null,
-        O: null,
-        P: null,
-        R: null,
-      },
-      {
         A: "RMS-GB-000010-001",
         J: "FRESH PRODUCTS",
         L: "LETTUCE & BAGGED SALADS",
@@ -65,13 +56,63 @@ describe("parsePackingList - e2e", () => {
     ],
   };
 
+  const emptyDataPackingListJson = {
+    Sheet1: [
+      {
+        A: "Consignor / Place o f Despatch",
+        B: "CONSIGNEE",
+        C: "Trailer",
+        D: "Seal",
+        E: "Store",
+        F: "STORENAME",
+        G: "Order",
+        H: "Cage/Ref",
+        I: "Group",
+        J: "TREATMENTTYPE",
+        K: "Sub-Group",
+        L: "Description",
+        M: "Item",
+        N: "Description",
+        O: "Tariff/Commodity",
+        P: "Cases",
+        Q: "Gross Weight Kg",
+        R: "Net Weight",
+        S: "Cost",
+        T: "Country of Origin",
+        U: "VAT Status",
+        V: "SPS",
+        W: "Consignment ID",
+        X: "Processed?",
+        Y: "Created Timestamp",
+      },
+      {
+        A: "RMS-GB-000010-001",
+        J: "CHILLED",
+        L: "Description",
+        N: "Description",
+        O: "0408192000",
+        P: "2",
+        R: "1.4",
+      },
+      {
+        A: null,
+        J: null,
+        L: null,
+        N: null,
+        O: null,
+        P: null,
+        R: null,
+      },
+    ],
+  };
+
   test("removes empty items", async () => {
     const result = await parserFactory.generateParsedPackingList(
       parsersExcel.TJMORRIS1,
-      packingListJson,
+      emptyDataPackingListJson,
     );
 
-    expect(result.items).toHaveLength(2);
+    expect(result.items).toHaveLength(1);
   });
 
   test("Not matched Excel file", async () => {

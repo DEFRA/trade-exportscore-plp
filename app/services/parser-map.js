@@ -43,7 +43,6 @@ function mapParser(
         packingListJson[headerRow][headerCols.header_net_weight_unit],
       ))
     : null;
-
   const packingListContents = packingListJson
     .slice(dataRow)
     .map((col, rowPos) => ({
@@ -54,16 +53,13 @@ function mapParser(
       number_of_packages: col[headerCols.number_of_packages] ?? null,
       total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
       total_net_weight_unit:
-        col[headerCols.total_net_weight_unit] ??
-        (col[headerCols.total_net_weight_kg] && netWeightUnit) ??
-        null,
+        col[headerCols.total_net_weight_unit] ?? netWeightUnit ?? null,
       country_of_origin: col[headerCols.country_of_origin] ?? null,
       row_location: {
         rowNumber: dataRow + rowPos + 1,
         sheetName,
       },
     }));
-
   return packingListContents;
 }
 
@@ -110,11 +106,8 @@ function mapPdfParser(packingListDocument, key) {
         pageNumber: currentPageNumber,
       },
     };
-    plRow.total_net_weight_unit =
-      plRow.total_net_weight_kg === null ? null : plRow.total_net_weight_unit;
     packingListContents.push(plRow);
   }
-
   return packingListContents;
 }
 
@@ -152,9 +145,6 @@ function mapPdfNonAiParser(packingListJson, model, ys) {
       pageNumber: packingListJson.pageInfo.num,
     };
     plRow.commodity_code = extractIfFirstTenAreDigits(plRow.commodity_code);
-    plRow.total_net_weight_unit =
-      plRow.total_net_weight_kg === null ? null : plRow.total_net_weight_unit;
-
     packingListContents.push(plRow);
   });
 

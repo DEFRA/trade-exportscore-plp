@@ -84,7 +84,7 @@ module.exports = {
         nature_of_products: null,
         number_of_packages: 20,
         total_net_weight_kg: null,
-        total_net_weight_unit: null,
+        total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
       },

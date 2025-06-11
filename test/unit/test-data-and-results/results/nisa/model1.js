@@ -79,7 +79,7 @@ module.exports = {
         nature_of_products: "900 - VEGETABLES PREPACK-C",
         number_of_packages: 1,
         total_net_weight_kg: null,
-        total_net_weight_unit: null,
+        total_net_weight_unit: "KG",
         type_of_treatment: null,
       },
     ],

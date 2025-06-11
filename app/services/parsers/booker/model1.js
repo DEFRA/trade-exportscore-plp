@@ -44,7 +44,13 @@ async function parse(packingList) {
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
-    return combineParser.combine(null, [], false, parserModel.NOMATCH);
+    return combineParser.combine(
+      null,
+      [],
+      false,
+      parserModel.NOMATCH,
+      headers.BOOKER1.findUnitInHeader,
+    );
   }
 }
 

@@ -54,7 +54,7 @@ function parse(packingListJson) {
       const packingListContentsTempUnit = packingListContentsTemp.map(
         (item) => ({
           ...item,
-          total_net_weight_unit: item.total_net_weight_kg == null ? null : unit,
+          total_net_weight_unit: unit,
         }),
       );
 
