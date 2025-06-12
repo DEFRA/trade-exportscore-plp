@@ -52,6 +52,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.ASDA1,
+      headers.ASDA1.findUnitInHeader,
       establishmentNumbers,
     );
   } catch (err) {

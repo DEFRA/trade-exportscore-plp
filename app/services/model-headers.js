@@ -18,6 +18,7 @@ const headers = {
       total_net_weight_kg: /\[Net Weight\]/i,
     },
     total_net_weight_unit: /\[kilograms\/grams\]/i,
+    findUnitInHeader: false,
   },
   ASDA2: {
     establishmentNumber: {
@@ -299,6 +300,7 @@ const headers = {
       number_of_packages: noOfPackagesRegex,
       total_net_weight_kg: /Total Net Weight/i,
     },
+    findUnitInHeader: false,
   },
   TESCO3: {
     establishmentNumber: {
@@ -318,11 +320,13 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000010-(\d{3})?/i,
     },
+    findUnitInHeader: false,
   },
   WARRENS1: {
     establishmentNumber: {
       regex: /^RMS-GB-000174-\d{3}$/i,
     },
+    findUnitInHeader: false,
   },
   ICELAND1: {
     establishmentNumber: {

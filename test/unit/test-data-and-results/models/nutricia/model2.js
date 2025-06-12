@@ -1,5 +1,5 @@
 module.exports = {
-  validModel: {
+  modelWithNoUnitInHeader: {
     DANONE: [
       {},
       {},
