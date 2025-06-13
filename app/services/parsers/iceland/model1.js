@@ -24,6 +24,7 @@ function parse(packingListDocument) {
       packingListContents,
       true,
       parserModel.ICELAND1,
+      [],
       headers.ICELAND1.findUnitInHeader,
     );
   } catch (err) {

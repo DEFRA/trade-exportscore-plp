@@ -62,8 +62,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.BANDM1,
-      headers.BANDM1.findUnitInHeader,
       establishmentNumbers,
+      headers.BANDM1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

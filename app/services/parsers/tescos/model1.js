@@ -53,6 +53,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.TESCO1,
+      [],
       headers.TESCO1.findUnitInHeader,
     );
   } catch (err) {

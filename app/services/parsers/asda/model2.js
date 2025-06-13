@@ -62,8 +62,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.ASDA2,
-      headers.ASDA2.findUnitInHeader,
       establishmentNumbers,
+      headers.ASDA2.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

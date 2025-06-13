@@ -51,8 +51,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.BUFFALOAD1,
-      headers.BUFFALOAD1.findUnitInHeader,
       establishmentNumbers,
+      headers.BUFFALOAD1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

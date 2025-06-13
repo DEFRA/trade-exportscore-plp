@@ -3,8 +3,8 @@ function combine(
   packingListContents,
   allRequiredFieldsPresent,
   ParserModel,
-  findUnitInHeader = null,
   establishmentNumbers = [],
+  findUnitInHeader = false,
   reasonsForFailure = null,
 ) {
   return {
@@ -15,8 +15,8 @@ function combine(
       failure_reasons: reasonsForFailure,
     },
     parserModel: ParserModel,
-    unitInHeader: findUnitInHeader,
     establishment_numbers: establishmentNumbers,
+    unitInHeader: findUnitInHeader ?? false,
   };
 }
 

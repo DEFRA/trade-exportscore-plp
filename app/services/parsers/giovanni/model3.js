@@ -32,6 +32,8 @@ async function parse(packingList) {
       packingListContents,
       true,
       parserModel.GIOVANNI3,
+      [],
+      headers.GIOVANNI3.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);

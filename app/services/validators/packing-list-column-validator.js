@@ -54,7 +54,6 @@ function validatePackingListByIndexAndType(packingList) {
     0;
 
   const hasSingleRms = packingList.establishment_numbers.length <= 1;
-
   return {
     missingIdentifier,
     invalidProductCodes,
