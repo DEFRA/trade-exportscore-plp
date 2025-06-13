@@ -4,7 +4,35 @@ module.exports = {
   validTestResult: {
     business_checks: {
       all_required_fields_present: true,
-      failure_reasons: null,
+      failure_reasons: null
+    },
+    items: [
+      {
+        commodity_code: "403209300",
+        description: "ACTIVIA DRK FRTS 6X8X115",
+        nature_of_products: null,
+        number_of_packages: 2,
+        total_net_weight_kg: 11.04,
+        type_of_treatment: null,
+        total_net_weight_unit: null,
+      },
+      {
+        commodity_code: "403209100",
+        description: "ACT 00  YE&RD FRU 6X8X115",
+        nature_of_products: null,
+        number_of_packages: 5,
+        total_net_weight_kg: 27.6,
+        type_of_treatment: null,
+        total_net_weight_unit: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000133",
+    parserModel: parserModel.NUTRICIA2,
+  },
+  invalidTestResultWithNoHeader: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: 'Net Weight Unit of Measure (kg) not found in sheet "DANONE" row 22 and sheet "DANONE" row 23.\n',
     },
     items: [
       {
@@ -63,7 +91,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'Identifier is missing in sheet "DANONE" row 22.\nTotal net weight is missing in sheet "DANONE" row 23.\n',
+        'Identifier is missing in sheet "DANONE" row 22.\nTotal net weight is missing in sheet "DANONE" row 23.\nNet Weight Unit of Measure (kg) not found in sheet "DANONE" row 22 and sheet "DANONE" row 23.\n',
     },
     items: [
       {

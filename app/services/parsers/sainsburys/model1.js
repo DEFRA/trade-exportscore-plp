@@ -46,6 +46,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.SAINSBURYS1,
+      [],
+      headers.SAINSBURYS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

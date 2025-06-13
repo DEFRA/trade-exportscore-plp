@@ -249,7 +249,7 @@ module.exports = {
         H: "Establishment Number",
         J: "Cases",
         L: "Case Weight",
-        N: "NET Weight kg",
+        N: "NET Weight",
       },
       {
         H: null,

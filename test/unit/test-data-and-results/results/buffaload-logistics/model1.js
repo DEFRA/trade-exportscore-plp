@@ -104,7 +104,7 @@ module.exports = {
         commodity_code: "1905908000",
         number_of_packages: 5,
         total_net_weight_kg: null,
-        total_net_weight_unit: null,
+        total_net_weight_unit: "kgs",
       },
     ],
     registration_approval_number: "RMS-GB-000098-001",

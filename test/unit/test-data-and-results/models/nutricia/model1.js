@@ -419,7 +419,7 @@ module.exports = {
         E: "Commodity Code",
         F: "Country of Origin",
         G: "Quantity",
-        H: "Net Weight (KG)",
+        H: "Net Weight",
       },
       {
         C: null,

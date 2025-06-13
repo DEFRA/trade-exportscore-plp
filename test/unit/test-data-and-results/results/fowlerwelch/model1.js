@@ -90,7 +90,7 @@ module.exports = {
         number_of_packages: "32",
         total_net_weight_kg: null,
         type_of_treatment: "Chilled",
-        total_net_weight_unit: null,
+        total_net_weight_unit: "kg",
       },
       {
         commodity_code: "0702000007",
@@ -119,7 +119,7 @@ module.exports = {
         number_of_packages: "5",
         total_net_weight_kg: null,
         type_of_treatment: "Chilled",
-        total_net_weight_unit: null,
+        total_net_weight_unit: "kg",
       },
       {
         commodity_code: "2005800099",

@@ -5,7 +5,7 @@ const test_results = require("../../../test-data-and-results/results/nutricia/mo
 const parserModel = require("../../../../../app/services/parser-model");
 describe("parseNutricaModel2", () => {
   test("parses json", () => {
-    const result = parser.parse(model.validModel);
+    const result = parser.parse(model.modelWithNoUnitInHeader);
 
     expect(result).toMatchObject(test_results.validTestResult);
   });

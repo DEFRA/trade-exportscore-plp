@@ -4,6 +4,7 @@ function combine(
   allRequiredFieldsPresent,
   ParserModel,
   establishmentNumbers = [],
+  findUnitInHeader = false,
   reasonsForFailure = null,
 ) {
   return {
@@ -15,6 +16,7 @@ function combine(
     },
     parserModel: ParserModel,
     establishment_numbers: establishmentNumbers,
+    unitInHeader: findUnitInHeader ?? false,
   };
 }
 

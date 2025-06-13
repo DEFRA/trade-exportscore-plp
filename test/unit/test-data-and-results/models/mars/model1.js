@@ -203,7 +203,7 @@ module.exports = {
       {
         C: "Description",
         D: "Case Qty",
-        E: "Net Weight KG",
+        E: "Net Weight",
         G: "Commodity Code",
         H: "Country Code",
       },

@@ -25,6 +25,8 @@ function parse(packingListDocument) {
       packingListContents,
       true,
       parserModel.MANDS1,
+      [],
+      headers.MANDS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);

@@ -7,7 +7,7 @@ const filename = "packinglist.xlsx";
 
 describe("matchesNutriciaModel2", () => {
   test("returns Correct", () => {
-    const result = matcher.matches(model.validModel, filename);
+    const result = matcher.matches(model.modelWithNoUnitInHeader, filename);
 
     expect(result).toBe(matcherResult.CORRECT);
   });

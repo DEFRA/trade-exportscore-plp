@@ -9,7 +9,7 @@ module.exports = {
         E: "# Packages",
         F: "# Units",
         G: "GrossWeight",
-        H: "NetWeight",
+        H: "NetWeight KG",
         I: "NatureOfProduct",
         J: "Treatment",
         K: "PlaceOfDispatch",

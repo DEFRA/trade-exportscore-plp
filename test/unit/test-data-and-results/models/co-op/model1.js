@@ -182,7 +182,7 @@ module.exports = {
         O: "Product/ Part Number description",
         P: "Tariff Code EU",
         Q: "Packages",
-        R: "Net Weight/Package KG",
+        R: "Net Weight/Package",
         S: "NW total",
       },
       {

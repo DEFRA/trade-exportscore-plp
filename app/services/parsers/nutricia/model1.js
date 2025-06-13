@@ -43,6 +43,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.NUTRICIA1,
+      [],
+      headers.NUTRICIA1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

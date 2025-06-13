@@ -6,12 +6,13 @@ const {
   wrongTypeForPackages,
   wrongTypeNetWeight,
   hasInvalidProductCode,
+  hasMissingNetWeightUnit,
 } = require("./packing-list-validator-utilities");
 const parserModel = require("../parser-model");
 
 function validatePackingList(packingList) {
   const validationResult = validatePackingListByIndexAndType(packingList);
-  return generateFailuresByIndexAndTypes(validationResult);
+  return generateFailuresByIndexAndTypes(validationResult, packingList);
 }
 
 function validatePackingListByIndexAndType(packingList) {
@@ -29,6 +30,7 @@ function validatePackingListByIndexAndType(packingList) {
   const invalidPackages = findItems(packingList.items, wrongTypeForPackages);
   const missingNetWeight = findItems(packingList.items, hasMissingNetWeight);
   const invalidNetWeight = findItems(packingList.items, wrongTypeNetWeight);
+  const missingNetWeightUnit = findItems(packingList.items, hasMissingNetWeightUnit);
 
   const hasRemos = packingList.registration_approval_number !== null;
   const isEmpty = packingList.items.length === 0;
@@ -41,7 +43,8 @@ function validatePackingListByIndexAndType(packingList) {
     missingIdentifier.length +
       missingDescription.length +
       missingPackages.length +
-      missingNetWeight.length ===
+      missingNetWeight.length +
+      missingNetWeightUnit.length ===
     0;
 
   const allItemsValid =
@@ -51,7 +54,6 @@ function validatePackingListByIndexAndType(packingList) {
     0;
 
   const hasSingleRms = packingList.establishment_numbers.length <= 1;
-
   return {
     missingIdentifier,
     invalidProductCodes,
@@ -60,6 +62,7 @@ function validatePackingListByIndexAndType(packingList) {
     invalidPackages,
     missingNetWeight,
     invalidNetWeight,
+    missingNetWeightUnit,
     hasRemos,
     isEmpty,
     missingRemos,
@@ -76,7 +79,7 @@ function findItems(items, fn) {
     .filter((val) => val !== null);
 }
 
-function generateFailuresByIndexAndTypes(validationResult) {
+function generateFailuresByIndexAndTypes(validationResult, packingList) {
   if (validationResult.hasAllFields && validationResult.hasSingleRms) {
     return {
       hasAllFields: true,
@@ -95,8 +98,7 @@ function generateFailuresByIndexAndTypes(validationResult) {
         failureReasons =
           "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n";
       }
-
-      const checks = [
+      let checks = [
         {
           collection: validationResult.missingIdentifier,
           description: "Identifier is missing",
@@ -126,7 +128,20 @@ function generateFailuresByIndexAndTypes(validationResult) {
           description: "Total net weight is invalid",
         },
       ];
-
+      //if the net weight unit is in the header, just the description below is assigned to the failure reason
+      if (
+          validationResult.missingNetWeightUnit.length !== 0 &&
+          packingList.unitInHeader
+      ) {
+        failureReasons = "Net Weight Unit of Measure (kg) not found.\n";
+      }
+      // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array 
+      else {
+         checks.push({
+          collection: validationResult.missingNetWeightUnit,
+          description: "Net Weight Unit of Measure (kg) not found",
+        });
+      }
       checks.forEach((check) => {
         if (check.collection.length > 0) {
           failureReasons += generateFailureReasonFromRows(
@@ -136,7 +151,6 @@ function generateFailuresByIndexAndTypes(validationResult) {
         }
       });
     }
-
     return {
       hasAllFields: false,
       failureReasons,

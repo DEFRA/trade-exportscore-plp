@@ -53,6 +53,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.GIOVANNI1,
+      [],
+      headers.GIOVANNI1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

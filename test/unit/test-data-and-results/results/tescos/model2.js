@@ -71,7 +71,7 @@ module.exports = {
         number_of_packages: "4",
         total_net_weight_kg: null,
         type_of_treatment: null,
-        total_net_weight_unit: null,
+        total_net_weight_unit: "kgs",
       },
       {
         commodity_code: null,

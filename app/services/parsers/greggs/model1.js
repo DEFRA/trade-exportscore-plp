@@ -32,6 +32,8 @@ function parse(packingListDocument) {
       packingListContents,
       true,
       parserModel.GREGGS1,
+      [],
+      headers.GREGGS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);

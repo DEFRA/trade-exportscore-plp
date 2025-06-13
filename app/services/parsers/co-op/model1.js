@@ -52,6 +52,7 @@ function parse(packingListJson) {
       true,
       parserModel.COOP1,
       establishmentNumbers,
+      headers.COOP1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

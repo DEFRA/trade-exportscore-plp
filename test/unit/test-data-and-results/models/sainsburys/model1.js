@@ -192,7 +192,7 @@ module.exports = {
         C: "Product Type / Category",
         E: "Product / Part Number Description",
         G: "Packages",
-        H: "Net\nWeight / Package KG",
+        H: "Net\nWeight / Package",
         J: "Packaging Type",
         N: "RMS Number (based on depot)",
         O: "Commodity Code",

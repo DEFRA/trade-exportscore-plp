@@ -55,6 +55,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.TESCO3,
+      [],
+      headers.TESCO3.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

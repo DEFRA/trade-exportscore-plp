@@ -70,7 +70,7 @@ module.exports = {
         nature_of_products: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
         number_of_packages: 2,
         total_net_weight_kg: null,
-        total_net_weight_unit: null,
+        total_net_weight_unit: "KG",
         type_of_treatment: null,
       },
       {

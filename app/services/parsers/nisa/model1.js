@@ -50,6 +50,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.NISA1,
+      [],
+      headers.NISA1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

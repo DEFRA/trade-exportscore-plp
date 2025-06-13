@@ -69,6 +69,7 @@ module.exports = {
         nature_of_products: "LETTUCE & BAGGED SALADS",
         number_of_packages: "2",
         total_net_weight_kg: "1.4",
+        total_net_weight_unit: "Kg",
         type_of_treatment: null,
       },
       {
@@ -77,6 +78,7 @@ module.exports = {
         nature_of_products: "LETTUCE & BAGGED SALADS",
         number_of_packages: "4",
         total_net_weight_kg: null,
+        total_net_weight_unit: "Kg",
         type_of_treatment: "FRESH PRODUCTS",
       },
     ],

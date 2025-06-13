@@ -71,6 +71,10 @@ function removeBadData(packingListItems) {
   return packingListItems;
 }
 
+function hasMissingNetWeightUnit(item) {
+  return isNullOrEmptyString(item.total_net_weight_unit);
+}
+
 module.exports = {
   hasMissingDescription,
   hasInvalidProductCode,
@@ -81,4 +85,5 @@ module.exports = {
   wrongTypeNetWeight,
   removeEmptyItems,
   removeBadData,
+  hasMissingNetWeightUnit,
 };

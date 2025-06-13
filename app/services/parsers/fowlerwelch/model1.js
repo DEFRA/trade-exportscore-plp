@@ -59,6 +59,8 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       packingListContents,
       true,
       model,
+      [],
+      headers.FOWLERWELCH1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
