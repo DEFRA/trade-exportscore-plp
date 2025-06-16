@@ -40,18 +40,24 @@ function parse(packingListJson) {
 
     packingListContents = packingListContents.filter(
       (row) =>
-        !((
+        !(
           row.description === 0 &&
           row.commodity_code === 0 &&
           row.number_of_packages === 0 &&
           row.total_net_weight_kg === 0
-        ) || (
+        ),
+    );
+
+    packingListContents = packingListContents.filter(
+      (row) =>
+        !(
           row.description === null &&
           row.commodity_code === null &&
           row.number_of_packages === null &&
           row.total_net_weight_kg === null
-        )),
+        ),
     );
+
     return combineParser.combine(
       establishmentNumber,
       packingListContents,
