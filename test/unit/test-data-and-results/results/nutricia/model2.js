@@ -4,7 +4,7 @@ module.exports = {
   validTestResult: {
     business_checks: {
       all_required_fields_present: true,
-      failure_reasons: null
+      failure_reasons: null,
     },
     items: [
       {
@@ -32,7 +32,7 @@ module.exports = {
   invalidTestResultWithNoHeader: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: 'Net Weight Unit of Measure (kg) not found in sheet "DANONE" row 22 and sheet "DANONE" row 23.\n',
+      failure_reasons: "Net Weight Unit of Measure (kg) not found.\n",
     },
     items: [
       {
@@ -91,7 +91,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'Identifier is missing in sheet "DANONE" row 22.\nTotal net weight is missing in sheet "DANONE" row 23.\nNet Weight Unit of Measure (kg) not found in sheet "DANONE" row 22 and sheet "DANONE" row 23.\n',
+        'Net Weight Unit of Measure (kg) not found.\nIdentifier is missing in sheet "DANONE" row 22.\nTotal net weight is missing in sheet "DANONE" row 23.\n',
     },
     items: [
       {
