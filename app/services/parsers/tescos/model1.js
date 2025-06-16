@@ -15,6 +15,8 @@ function parse(packingListJson) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
+
     const establishmentNumber = regex.findMatch(
       headers.TESCO1.establishmentNumber.regex,
       packingListJson[sheets[0]],
@@ -25,6 +27,12 @@ function parse(packingListJson) {
       const headerCallback = function (x) {
         return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
       };
+
+      establishmentNumbers = regex.findAllMatches(
+        regex.remosRegex,
+        packingListJson[sheet],
+        establishmentNumbers,
+      );
 
       const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
       const dataRow = headerRow + 1;
@@ -53,7 +61,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.TESCO1,
-      [],
+      establishmentNumbers,
       headers.TESCO1.findUnitInHeader,
     );
   } catch (err) {
