@@ -507,8 +507,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasSingleRms: true,
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeTruthy();
     expect(result.failureReasons).toBeFalsy();
@@ -521,8 +523,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasSingleRms: true,
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toBe("No product line data found.");
@@ -543,8 +547,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeightUnit: [],
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain("Identifier is missing");
@@ -565,8 +571,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeightUnit: [],
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain("Product description is missing");
@@ -587,8 +595,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeightUnit: [],
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain("No of packages is missing");
@@ -609,8 +619,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeightUnit: [],
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain("Total net weight is missing");
@@ -656,8 +668,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeightUnit: [],
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain("No of packages is invalid");
@@ -678,8 +692,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeightUnit: [],
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain("Total net weight is invalid");
@@ -700,8 +716,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeightUnit: [],
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain("Product code is invalid");
@@ -722,8 +740,10 @@ describe("generateFailuresByIndexAndTypes", () => {
       missingNetWeightUnit: [],
     };
 
-    const result =
-      packingListValidator.generateFailuresByIndexAndTypes(validationResult, packingList);
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain(
