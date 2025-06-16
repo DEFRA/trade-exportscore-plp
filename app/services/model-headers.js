@@ -246,6 +246,7 @@ const headers = {
       number_of_packages: /Order qty/i,
       total_net_weight_kg: /Order net weight/i,
     },
+    findUnitInHeader: true,
     country_of_origin: /coo/i,
   },
   SAINSBURYS1: {
