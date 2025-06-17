@@ -1,4 +1,4 @@
-const remosRegex = /RMS-GB-\d{6}-\d{3}/i;
+const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
 
 // Helper function to validate string properties and create a search pattern
 function createSearchPattern(regex) {
