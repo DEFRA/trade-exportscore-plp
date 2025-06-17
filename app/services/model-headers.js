@@ -21,7 +21,7 @@ const headers = {
   },
   ASDA2: {
     establishmentNumber: {
-      regex: /RMS-GB-000015-\d{3}$/i,
+      regex: /^RMS-GB-000015-\d{3}$/i,
     },
     regex: {
       description: /\[Description Of All Retail Go/i,
@@ -109,7 +109,7 @@ const headers = {
       "Meursing",
     ],
     establishmentNumber: {
-      regex: /RMS-GB-000323-\d{3}$/i,
+      regex: /^RMS-GB-000323-\d{3}$/i,
     },
     regex: {
       description: /Description of Goods/i,
