@@ -269,9 +269,10 @@ module.exports = {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
-        B: "RMS-GB-000098-001, RMS-GB-000098-002",
+        B: "RMS-GB-000098-001",
         C: "Dispatch address",
         D: "Buffaload Logistics, Gateway Industrial Estate, Crewe, Cheshire, CW1 6YY",
+        X: "RMS-GB-000098-002",
       },
       {
         A: "Commodity code",

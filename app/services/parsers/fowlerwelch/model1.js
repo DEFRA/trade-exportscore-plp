@@ -16,6 +16,8 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
+
     const headerTitles = Object.values(headers.FOWLERWELCH1.regex);
     const callback = function (x) {
       return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
@@ -35,6 +37,12 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     };
 
     for (const sheet of sheets) {
+      establishmentNumbers = regex.findAllMatches(
+        regex.remosRegex,
+        packingListJson[sheet],
+        establishmentNumbers,
+      );
+
       const headerRow = rowFinder(packingListJson[sheet], callback);
       const dataRow = headerRow + 1;
       if (!headers.FOWLERWELCH1.invalidSheets.includes(sheet)) {
@@ -59,7 +67,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       packingListContents,
       true,
       model,
-      [],
+      establishmentNumbers,
       headers.FOWLERWELCH1.findUnitInHeader,
     );
   } catch (err) {
