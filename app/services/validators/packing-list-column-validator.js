@@ -30,7 +30,10 @@ function validatePackingListByIndexAndType(packingList) {
   const invalidPackages = findItems(packingList.items, wrongTypeForPackages);
   const missingNetWeight = findItems(packingList.items, hasMissingNetWeight);
   const invalidNetWeight = findItems(packingList.items, wrongTypeNetWeight);
-  const missingNetWeightUnit = findItems(packingList.items, hasMissingNetWeightUnit);
+  const missingNetWeightUnit = findItems(
+    packingList.items,
+    hasMissingNetWeightUnit,
+  );
 
   const hasRemos = packingList.registration_approval_number !== null;
   const isEmpty = packingList.items.length === 0;
@@ -80,82 +83,71 @@ function findItems(items, fn) {
 }
 
 function generateFailuresByIndexAndTypes(validationResult, packingList) {
+  let failureReasons = "";
   if (validationResult.hasAllFields && validationResult.hasSingleRms) {
     return {
       hasAllFields: true,
     };
   } else {
     // build failure reason
-    let failureReasons = "";
-    if (validationResult.noMatch) {
-      failureReasons = null;
-    } else if (validationResult.missingRemos) {
-      failureReasons = "Check GB Establishment RMS Number.";
-    } else if (validationResult.isEmpty) {
-      failureReasons = "No product line data found.";
-    } else {
-      if (!validationResult.hasSingleRms) {
-        failureReasons =
-          "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n";
-      }
-      let checks = [
-        {
-          collection: validationResult.missingIdentifier,
-          description: "Identifier is missing",
-        },
-        {
-          collection: validationResult.invalidProductCodes,
-          description: "Product code is invalid",
-        },
-        {
-          collection: validationResult.missingDescription,
-          description: "Product description is missing",
-        },
-        {
-          collection: validationResult.missingPackages,
-          description: "No of packages is missing",
-        },
-        {
-          collection: validationResult.missingNetWeight,
-          description: "Total net weight is missing",
-        },
-        {
-          collection: validationResult.invalidPackages,
-          description: "No of packages is invalid",
-        },
-        {
-          collection: validationResult.invalidNetWeight,
-          description: "Total net weight is invalid",
-        },
-      ];
-      //if the net weight unit is in the header, just the description below is assigned to the failure reason
-      if (
-          validationResult.missingNetWeightUnit.length !== 0 &&
-          packingList.unitInHeader
-      ) {
-        failureReasons = "Net Weight Unit of Measure (kg) not found.\n";
-      }
-      // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array 
-      else {
-         checks.push({
-          collection: validationResult.missingNetWeightUnit,
-          description: "Net Weight Unit of Measure (kg) not found",
-        });
-      }
-      checks.forEach((check) => {
-        if (check.collection.length > 0) {
-          failureReasons += generateFailureReasonFromRows(
-            check.description,
-            check.collection,
-          );
-        }
+    failureReasons = getFailureReasons(validationResult);
+    const checks = [
+      {
+        collection: validationResult.missingIdentifier,
+        description: "Identifier is missing",
+      },
+      {
+        collection: validationResult.invalidProductCodes,
+        description: "Product code is invalid",
+      },
+      {
+        collection: validationResult.missingDescription,
+        description: "Product description is missing",
+      },
+      {
+        collection: validationResult.missingPackages,
+        description: "No of packages is missing",
+      },
+      {
+        collection: validationResult.missingNetWeight,
+        description: "Total net weight is missing",
+      },
+      {
+        collection: validationResult.invalidPackages,
+        description: "No of packages is invalid",
+      },
+      {
+        collection: validationResult.invalidNetWeight,
+        description: "Total net weight is invalid",
+      },
+    ];
+    //if the net weight unit is in the header, just the description below is assigned to the failure reason
+    if (
+      validationResult.missingNetWeightUnit.length !== 0 &&
+      packingList.unitInHeader
+    ) {
+      failureReasons = "Net Weight Unit of Measure (kg) not found.\n";
+    }
+    // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array
+    else {
+      checks.push({
+        collection: validationResult.missingNetWeightUnit,
+        description: "Net Weight Unit of Measure (kg) not found",
       });
     }
-    return {
-      hasAllFields: false,
-      failureReasons,
-    };
+    checks.forEach((check) => {
+      if (check.collection.length > 0) {
+        failureReasons += generateFailureReasonFromRows(
+          check.description,
+          check.collection,
+        );
+      }
+    });
   }
+  return {
+    hasAllFields: false,
+    failureReasons,
+  };
 }
 
 function generateFailureReasonFromRows(description, rows) {
@@ -224,6 +216,22 @@ function generateLocationSheetDescription(row) {
 
 function generateLocatioPageDescription(row) {
   return `page ${row.pageNumber} row ${row.rowNumber}`;
+}
+
+function getFailureReasons(validationResult) {
+  if (validationResult.noMatch) {
+    return null;
+  }
+  if (validationResult.missingRemos) {
+    return "Check GB Establishment RMS Number.";
+  }
+  if (validationResult.isEmpty) {
+    return "No product line data found.";
+  }
+  if (!validationResult.hasSingleRms) {
+    return "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n";
+  }
+  return "";
 }
 
 module.exports = {

@@ -7,7 +7,10 @@ const filename = "packinglist-nutricia-model2.xlsx";
 
 describe("matchesNutriciaModel1", () => {
   test("matches valid Nutricia Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
-    const result = await parserService.findParser(model.modelWithNoUnitInHeader, filename);
+    const result = await parserService.findParser(
+      model.modelWithNoUnitInHeader,
+      filename,
+    );
 
     expect(result).toMatchObject(test_results.invalidTestResultWithNoHeader);
   });
