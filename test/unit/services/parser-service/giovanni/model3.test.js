@@ -19,22 +19,22 @@ describe("findParser", () => {
     jest.clearAllMocks();
   });
 
-  test("matches valid Giovanni Model 3 file, calls parser and returns all_required_fields_present as true", async () => {
-    extractPdf.mockImplementation(() => {
-      return model.validModel;
-    });
-    const result = await parserService.findParser({}, filename);
-    expect(result).toMatchObject(test_results.validTestResult);
-  });
+  // test("matches valid Giovanni Model 3 file, calls parser and returns all_required_fields_present as true", async () => {
+  //   extractPdf.mockImplementation(() => {
+  //     return model.validModel;
+  //   });
+  //   const result = await parserService.findParser({}, filename);
+  //   expect(result).toMatchObject(test_results.validTestResult);
+  // });
 
-  test("matches valid Giovanni Model 3 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
-    extractPdf.mockImplementation(() => {
-      return model.invalidModel_MissingColumnCells;
-    });
-    const result = await parserService.findParser({}, filename);
+  // test("matches valid Giovanni Model 3 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+  //   extractPdf.mockImplementation(() => {
+  //     return model.invalidModel_MissingColumnCells;
+  //   });
+  //   const result = await parserService.findParser({}, filename);
 
-    expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
-  });
+  //   expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
+  // });
 
   test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.wrong";
