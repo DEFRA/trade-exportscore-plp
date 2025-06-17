@@ -8,7 +8,7 @@ const netWeight = /Net Weight/i;
 const headers = {
   ASDA1: {
     establishmentNumber: {
-      regex: /RMS-GB-000015-(\d{3})?/i,
+      regex: /^RMS-GB-000015-\d{3}$/i,
     },
     regex: {
       description: /\[Description Of All Retail Goods\]/i,
@@ -21,7 +21,7 @@ const headers = {
   },
   ASDA2: {
     establishmentNumber: {
-      regex: /RMS-GB-000015-(\d{3})?/i,
+      regex: /RMS-GB-000015-\d{3}$/i,
     },
     regex: {
       description: /\[Description Of All Retail Go/i,
@@ -34,7 +34,7 @@ const headers = {
   },
   BANDM1: {
     establishmentNumber: {
-      regex: /RMS-GB-000005-(\d{3})?/i,
+      regex: /^RMS-GB-000005-\d{3}$/i,
     },
     regex: {
       description: /ITEM DESCRIPTION/i,
@@ -59,7 +59,7 @@ const headers = {
   },
   BUFFALOAD1: {
     establishmentNumber: {
-      regex: /RMS-GB-000098-(\d{3})?/i,
+      regex: /^RMS-GB-000098-\d{3}$/i,
     },
     regex: {
       description: descriptionOfGoodsRegex,
@@ -86,7 +86,7 @@ const headers = {
   },
   COOP1: {
     establishmentNumber: {
-      regex: /RMS-GB-000009-(\d{3})?/i,
+      regex: /^RMS-GB-000009-\d{3}$/i,
     },
     regex: {
       description: descriptionRegex,
@@ -109,7 +109,7 @@ const headers = {
       "Meursing",
     ],
     establishmentNumber: {
-      regex: /RMS-GB-000323(-\d{3})?/i,
+      regex: /RMS-GB-000323-\d{3}$/i,
     },
     regex: {
       description: /Description of Goods/i,
@@ -140,7 +140,7 @@ const headers = {
     findUnitInHeader: true,
     country_of_origin: /Country of Origin/i,
     establishmentNumber: {
-      regex: /RMS-GB-000216(-\d{3})?/i,
+      regex: /^RMS-GB-000216-\d{3}$/i,
     },
   },
   GIOVANNI1: {
