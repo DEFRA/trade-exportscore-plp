@@ -51,7 +51,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.CDS1,
-      establishmentNumbers,
+      [],
       headers.CDS1.findUnitInHeader,
     );
   } catch (err) {
