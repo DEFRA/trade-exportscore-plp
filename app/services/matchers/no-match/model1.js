@@ -13,7 +13,12 @@ function noRemosMatch(sanitisedPackingList, _filename) {
   for (const sheet of sheets) {
     const isRemosPresent = sanitisedPackingList[sheet].some((x) => {
       return Object.values(x).some((y) => {
-        return remosRegex.test(y) || giovanni2Regex.test(y) || cdsRegex.test(y) || sainsburysRegex.test(y);
+        return (
+          remosRegex.test(y) ||
+          giovanni2Regex.test(y) ||
+          cdsRegex.test(y) ||
+          sainsburysRegex.test(y)
+        );
       });
     });
     if (isRemosPresent) {
