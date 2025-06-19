@@ -53,20 +53,6 @@ function parse(packingListJson) {
       if (totalsIndex === packingListContentsTemp.length - 1) {
         packingListContentsTemp = packingListContentsTemp.slice(0, totalsIndex);
       }
-
-      const keys = [
-        "description",
-        "commodity_code",
-        "country_of_origin",
-        "number_of_packages",
-        "total_net_weight_kg",
-      ];
-
-      packingListContentsTemp.forEach((obj) => {
-        if (allValuesAreNull(obj, keys)) {
-          obj.total_net_weight_unit = null;
-        }
-      });
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
@@ -84,9 +70,6 @@ function parse(packingListJson) {
   }
 }
 
-function allValuesAreNull(obj, keys) {
-  return keys.every((x) => obj[x] === null);
-}
 module.exports = {
   parse,
 };
