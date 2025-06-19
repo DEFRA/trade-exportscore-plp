@@ -46,7 +46,8 @@ function validatePackingListByIndexAndType(packingList) {
     missingIdentifier.length +
       missingDescription.length +
       missingPackages.length +
-      missingNetWeight.length ===
+      missingNetWeight.length +
+      missingNetWeightUnit.length ===
     0;
 
   const allItemsValid =
