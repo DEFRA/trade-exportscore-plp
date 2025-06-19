@@ -59,7 +59,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'Identifier is missing in sheet "Sheet1" row 7.\nTotal net weight is missing in sheet "Sheet1" row 7.\n',
+        'Net Weight Unit of Measure (kg) not found.\nIdentifier is missing in sheet "Sheet1" row 7.\nTotal net weight is missing in sheet "Sheet1" row 7.\n',
     },
     items: [
       {

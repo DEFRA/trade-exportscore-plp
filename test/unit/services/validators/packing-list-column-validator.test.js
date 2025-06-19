@@ -521,6 +521,14 @@ describe("generateFailuresByIndexAndTypes", () => {
       hasAllFields: false,
       isEmpty: true,
       hasSingleRms: true,
+      missingIdentifier: [],
+      invalidProductCodes: [],
+      missingDescription: [],
+      missingPackages: [],
+      missingNetWeight: [],
+      invalidPackages: [],
+      invalidNetWeight: [],
+      missingNetWeightUnit: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(

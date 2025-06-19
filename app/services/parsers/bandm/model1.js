@@ -53,7 +53,6 @@ function parse(packingListJson) {
       if (totalsIndex === packingListContentsTemp.length - 1) {
         packingListContentsTemp = packingListContentsTemp.slice(0, totalsIndex);
       }
-
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
