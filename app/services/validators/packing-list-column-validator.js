@@ -46,8 +46,7 @@ function validatePackingListByIndexAndType(packingList) {
     missingIdentifier.length +
       missingDescription.length +
       missingPackages.length +
-      missingNetWeight.length +
-      missingNetWeightUnit.length ===
+      missingNetWeight.length ===
     0;
 
   const allItemsValid =
@@ -131,20 +130,6 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
           description: "Total net weight is invalid",
         },
       ];
-      //if the net weight unit is in the header, just the description below is assigned to the failure reason
-      if (
-        validationResult.missingNetWeightUnit.length !== 0 &&
-        packingList.unitInHeader
-      ) {
-        failureReasons = "Net Weight Unit of Measure (kg) not found.\n";
-      }
-      // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array
-      else {
-        checks.push({
-          collection: validationResult.missingNetWeightUnit,
-          description: "Net Weight Unit of Measure (kg) not found",
-        });
-      }
       checks.forEach((check) => {
         if (check.collection.length > 0) {
           failureReasons += generateFailureReasonFromRows(

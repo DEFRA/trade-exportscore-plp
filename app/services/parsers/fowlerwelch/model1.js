@@ -67,7 +67,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       packingListContents,
       true,
       model,
-      establishmentNumbers,
+      [],
       headers.FOWLERWELCH1.findUnitInHeader,
     );
   } catch (err) {

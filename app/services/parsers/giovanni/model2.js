@@ -53,6 +53,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.GIOVANNI2,
+      [],
       headers.GIOVANNI2.findUnitInHeader,
     );
   } catch (err) {

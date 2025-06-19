@@ -146,12 +146,12 @@ const parsersExcel = {
     parse: (packingList, filename) =>
       nutriciaParser.parse(packingList, filename),
   },
-  NUTRICIA2: {
-    matches: (packingList, filename) =>
-      nutriciaMatcher2.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      nutriciaParser2.parse(packingList, filename),
-  },
+  // NUTRICIA2: {
+  //   matches: (packingList, filename) =>
+  //     nutriciaMatcher2.matches(packingList, filename),
+  //   parse: (packingList, filename) =>
+  //     nutriciaParser2.parse(packingList, filename),
+  // },
   SAINSBURYS1: {
     matches: (packingList, filename) =>
       sainsburysMatcher.matches(packingList, filename),
