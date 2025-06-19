@@ -46,21 +46,37 @@ function mapParser(
   const packingListContents = packingListJson
     .slice(dataRow)
     .map((col, rowPos) => ({
-      description: col[headerCols.description] ?? null,
-      nature_of_products: col[headerCols.nature_of_products] ?? null,
-      type_of_treatment: col[headerCols.type_of_treatment] ?? null,
-      commodity_code: col[headerCols.commodity_code] ?? null,
-      number_of_packages: col[headerCols.number_of_packages] ?? null,
-      total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
+      description: columnValue(col[headerCols.description]),
+      nature_of_products: columnValue(col[headerCols.nature_of_products]),
+      type_of_treatment: columnValue(col[headerCols.type_of_treatment]),
+      commodity_code: columnValue(col[headerCols.commodity_code]),
+      number_of_packages: columnValue(col[headerCols.number_of_packages]),
+      total_net_weight_kg: columnValue(col[headerCols.total_net_weight_kg]),
       total_net_weight_unit:
-        col[headerCols.total_net_weight_unit] ?? netWeightUnit ?? null,
-      country_of_origin: col[headerCols.country_of_origin] ?? null,
+        col[headerCols.total_net_weight_unit] ??
+        (isNotEmpty(col, headerCols) && netWeightUnit) ??
+        null,
+      country_of_origin: columnValue(col[headerCols.country_of_origin]),
       row_location: {
         rowNumber: dataRow + rowPos + 1,
         sheetName,
       },
     }));
   return packingListContents;
+}
+
+function columnValue(value) {
+  return value ?? null;
+}
+
+function isNotEmpty(col, headerCols) {
+  return (
+    col[headerCols.description] ||
+    col[headerCols.nature_of_products] ||
+    col[headerCols.commodity_code] ||
+    col[headerCols.number_of_packages] ||
+    col[headerCols.total_net_weight_kg]
+  );
 }
 
 function mapPdfParser(packingListDocument, key) {
