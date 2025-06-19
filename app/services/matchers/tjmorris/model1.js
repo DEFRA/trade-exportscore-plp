@@ -59,7 +59,7 @@ function matches(packingList, filename) {
 }
 
 function callback(x) {
-  return x.L.toLowerCase().includes("description");
+  return x.L?.toLowerCase().includes("description");
 }
 
 function isHeaderMatching(packingListSheet, header, headerRow) {
