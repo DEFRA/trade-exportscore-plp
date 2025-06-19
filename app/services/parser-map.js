@@ -54,7 +54,7 @@ function mapParser(
       total_net_weight_kg: col[headerCols.total_net_weight_kg] ?? null,
       total_net_weight_unit:
         col[headerCols.total_net_weight_unit] ??
-        (col[headerCols.total_net_weight_kg] && netWeightUnit) ??
+        (isNotEmpty(col, headerCols) && netWeightUnit) ??
         null,
       country_of_origin: col[headerCols.country_of_origin] ?? null,
       row_location: {
@@ -63,6 +63,16 @@ function mapParser(
       },
     }));
   return packingListContents;
+}
+
+function isNotEmpty(col, headerCols) {
+  return (
+    col[headerCols.description] ||
+    col[headerCols.nature_of_products] ||
+    col[headerCols.commodity_code] ||
+    col[headerCols.number_of_packages] ||
+    col[headerCols.total_net_weight_kg]
+  );
 }
 
 function mapPdfParser(packingListDocument, key) {
