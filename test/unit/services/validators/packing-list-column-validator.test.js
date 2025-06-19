@@ -342,7 +342,7 @@ describe("validatePackingListByIndexAndType", () => {
     const result =
       packingListValidator.validatePackingListByIndexAndType(packingList);
 
-    expect(result.hasAllFields).toBeTruthy();
+    expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
     expect(result.invalidProductCodes.length).toBe(0);
     expect(result.missingDescription.length).toBe(0);
@@ -656,6 +656,9 @@ describe("generateFailuresByIndexAndTypes", () => {
       packingList,
     );
     expect(result.hasAllFields).toBeFalsy();
+    expect(result.failureReasons).toContain(
+      "Net Weight Unit of Measure (kg) not found",
+    );
   });
 
   test("invalid packages", () => {
