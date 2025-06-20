@@ -20,6 +20,7 @@ function parse(packingListJson) {
   try {
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
 
     const headerTitles = Object.values(headers.SAVERS1.regex);
     const callback = function (x) {
@@ -37,6 +38,12 @@ function parse(packingListJson) {
           dataRow,
           headers.SAVERS1,
           sheet,
+        );
+
+        establishmentNumbers = regex.findAllMatches(
+          regex.remosRegex,
+          packingListJson[sheet],
+          establishmentNumbers,
         );
 
         packingListContents = packingListContents.concat(
@@ -57,6 +64,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.SAVERS1,
+      establishmentNumbers,
+      headers.SAVERS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
@@ -65,6 +74,7 @@ function parse(packingListJson) {
       [],
       false,
       parserModel.SAVERS1,
+      [],
       headers.SAVERS1.findUnitInHeader,
     );
   }
