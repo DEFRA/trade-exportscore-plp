@@ -300,6 +300,7 @@ const headers = {
       number_of_packages: noOfPackagesRegex,
       total_net_weight_kg: /Total Net Weight/i,
     },
+    findUnitInHeader: true,
   },
   TESCO3: {
     establishmentNumber: {
