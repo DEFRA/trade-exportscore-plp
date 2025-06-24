@@ -68,6 +68,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.TESCO2,
+      [],
+      headers.TESCO3.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parsers()", err);
