@@ -44,7 +44,8 @@ function parse(packingListJson) {
           row.description === "(blank)" &&
           row.commodity_code === "(blank)" &&
           row.number_of_packages === 0 &&
-          row.total_net_weight_kg === 0
+          (row.total_net_weight_kg === 0 || row.total_net_weight_kg === null) &&
+          row.country_of_origin === "(blank)"
         ),
     );
 
