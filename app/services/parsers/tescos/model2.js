@@ -69,7 +69,7 @@ function parse(packingListJson) {
       true,
       parserModel.TESCO2,
       [],
-      headers.TESCO3.findUnitInHeader,
+      headers.TESCO2.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parsers()", err);
