@@ -74,7 +74,10 @@ function removeBadData(packingListItems) {
 }
 
 function hasMissingNetWeightUnit(item) {
-  return isNullOrEmptyString(item.total_net_weight_unit) || !regex.findUnit(item.total_net_weight_unit);
+  return (
+    isNullOrEmptyString(item.total_net_weight_unit) ||
+    !regex.findUnit(item.total_net_weight_unit)
+  );
 }
 
 module.exports = {
