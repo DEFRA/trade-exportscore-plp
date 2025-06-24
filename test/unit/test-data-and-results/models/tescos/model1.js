@@ -35,7 +35,8 @@ module.exports = {
         BT: 0.84,
         BU: 0.798,
       },
-      {
+      { 
+        AS: "Ambient",
         BU: 0,
       },
     ],
