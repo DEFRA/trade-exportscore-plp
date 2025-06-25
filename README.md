@@ -111,6 +111,16 @@ please check docker is running. The message is _interesting_ but, more important
 
 After much _fun_, please refer to the [Debugging](./debugging.md) file for information on how (and where) to debug your tests.
 
+## Branching Strategy
+
+This repository uses a structured branching strategy to ensure clean, testable releases and priority-driven development.
+
+- `main` — only branch deployed to TST/Pre/Prod environments
+- `develop` — staging branch for completed features/bugs, merged in strict order
+- `feature/<ticket-id>-<short-name>` — short-lived feature branches
+- `bug/<ticket-id>-<short-name>` — short-lived bug branches
+- `urgent/<ticket-id>-<desc>` — urgent fixes merged directly to `main`
+
 ## CI & CD Pipeline
 
 This service uses the [ADP Common Pipelines](https://github.com/DEFRA/adp-pipeline-common) for Builds and Deployments.
