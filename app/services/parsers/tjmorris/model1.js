@@ -25,12 +25,6 @@ function parse(packingListJson) {
         establishmentNumbers,
       );
 
-      establishmentNumbers = regex.findAllMatches(
-        regex.remosRegex,
-        packingListJson[sheet],
-        establishmentNumbers,
-      );
-
       // look for header row
       const headerRow = rowFinder(packingListJson[sheet], callback);
 
