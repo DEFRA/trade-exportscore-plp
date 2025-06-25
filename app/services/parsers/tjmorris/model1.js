@@ -49,6 +49,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.TJMORRIS1,
+      [],
+      headers.TJMORRIS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

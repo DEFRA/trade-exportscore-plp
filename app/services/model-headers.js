@@ -320,6 +320,7 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000010-(\d{3})?/i,
     },
+    findUnitInHeader: true,
   },
   WARRENS1: {
     establishmentNumber: {
