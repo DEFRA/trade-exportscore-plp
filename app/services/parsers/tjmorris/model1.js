@@ -57,6 +57,7 @@ function parse(packingListJson) {
       true,
       parserModel.TJMORRIS1,
       establishmentNumbers,
+      headers.TJMORRIS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
@@ -71,7 +72,7 @@ function isNotEmpty(col) {
     col.N || //"Description"
     col.O || //"Tariff/Commodity"
     col.P || //"Cases"
-    col.R    //"Net Weight"
+    col.R //"Net Weight"
   );
 }
 

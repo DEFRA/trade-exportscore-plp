@@ -1,6 +1,6 @@
 {
   "name": "trade-exportscore-plp",
-  "version": "6.16.7",
+  "version": "6.17.1",
   "description": "",
   "homepage": "github.com?owner=defra&repo=trade-exportscore-plp&organization=defra",
   "main": "app/index.js",
