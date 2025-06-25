@@ -378,7 +378,7 @@ module.exports = {
         E: "Commodity code",
         F: "coo",
         G: "Order qty",
-        H: "Order net weight",
+        H: "Order net weight (Kg",
       },
       {
         C: "ACTIVIA DRK FRTS 6X8X115",

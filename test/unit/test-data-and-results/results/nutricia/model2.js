@@ -31,7 +31,7 @@ module.exports = {
   },
   invalidTestResultWithNoHeader: {
     business_checks: {
-      all_required_fields_present: true,
+      all_required_fields_present: false,
     },
     items: [
       {
@@ -101,7 +101,7 @@ module.exports = {
         total_net_weight_kg: 11.04,
         type_of_treatment: null,
         country_of_origin: "BE",
-        total_net_weight_unit: null,
+        total_net_weight_unit: "Kg",
       },
       {
         commodity_code: "403209100",
@@ -111,7 +111,7 @@ module.exports = {
         total_net_weight_kg: null,
         type_of_treatment: null,
         country_of_origin: "FR",
-        total_net_weight_unit: null,
+        total_net_weight_unit: "Kg",
       },
     ],
     registration_approval_number: "RMS-GB-000133",
