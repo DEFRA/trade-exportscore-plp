@@ -5,24 +5,24 @@ const test_results = require("../../../test-data-and-results/results/nutricia/mo
 
 const filename = "packinglist-nutricia-model2.xlsx";
 
-describe("matchesNutriciaModel1", () => {
-  // test("matches valid Nutricia Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
-  //   const result = await parserService.findParser(
-  //     model.modelWithNoUnitInHeader,
-  //     filename,
-  //   );
+describe("matchesNutriciaModel2", () => {
+  test("matches valid Nutricia Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
+    const result = await parserService.findParser(
+      model.modelWithNoUnitInHeader,
+      filename,
+    );
 
-  //   expect(result).toMatchObject(test_results.invalidTestResultWithNoHeader);
-  // });
+    expect(result).toMatchObject(test_results.invalidTestResultWithNoHeader);
+  });
 
-  // test("matches valid Nutricia Model 2 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
-  //   const result = await parserService.findParser(
-  //     model.invalidModel_MissingColumnCells,
-  //     filename,
-  //   );
+  test("matches valid Nutricia Model 2 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+    const result = await parserService.findParser(
+      model.invalidModel_MissingColumnCells,
+      filename,
+    );
 
-  //   expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
-  // });
+    expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
+  });
 
   test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.wrong";
