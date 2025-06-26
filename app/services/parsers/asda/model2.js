@@ -57,6 +57,17 @@ function parse(packingListJson) {
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
+    packingListContents = packingListContents.filter(
+      (row) =>
+        !(
+          row.description === null &&
+          row.type_of_treatment === null &&
+          row.commodity_code === null &&
+          row.number_of_packages === null &&
+          row.total_net_weight_kg === 0 &&
+          row.total_net_weight_unit === 0
+        ),
+    );
     return combineParser.combine(
       establishmentNumber,
       packingListContents,
