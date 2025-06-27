@@ -41,6 +41,8 @@ async function parse(packingList) {
       packingListContents,
       true,
       parserModel.BOOKER1,
+      [],
+      headers[model].findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
