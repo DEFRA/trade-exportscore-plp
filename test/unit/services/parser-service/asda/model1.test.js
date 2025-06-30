@@ -9,7 +9,7 @@ describe("matchesAsdaModel1", () => {
   test("matches valid Asda Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
-    expect(result).toMatchObject(test_results.validTestResult);
+    expect(result).toMatchObject(test_results.validTestResultParserService);
   });
 
   test("matches valid Asda Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
