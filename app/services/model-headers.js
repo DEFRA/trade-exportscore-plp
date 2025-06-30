@@ -32,6 +32,19 @@ const headers = {
     },
     findUnitInHeader: true,
   },
+  ASDA3: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000015-\d{3}$/i,
+    },
+    regex: {
+      description: /^Description Of All Retail Goods$/i,
+      nature_of_products: /^Nature of Product$/i,
+      type_of_treatment: /^Treatment Type$/i,
+      number_of_packages: /^Number of Packages$/i,
+      total_net_weight_kg: /^Net Weight$/i,
+    },
+    total_net_weight_unit: /^kilograms\/grams$/i,
+  },
   BANDM1: {
     establishmentNumber: {
       regex: /^RMS-GB-000005-\d{3}$/i,
