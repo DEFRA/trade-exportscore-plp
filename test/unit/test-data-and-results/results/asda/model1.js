@@ -29,6 +29,34 @@ module.exports = {
     registration_approval_number: "RMS-GB-000015-006",
     parserModel: parserModel.ASDA1,
   },
+  validTestResultParserService: {
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    items: [
+      {
+        commodity_code: null,
+        description: "169 STOREY TREEHOUSE",
+        nature_of_products: "BOOKS",
+        number_of_packages: 2,
+        total_net_weight_kg: 0.38,
+        type_of_treatment: "GM",
+        total_net_weight_unit: "kgs",
+      },
+      {
+        commodity_code: null,
+        description: "19 CRIMES",
+        nature_of_products: "WINES",
+        number_of_packages: 1,
+        total_net_weight_kg: 0.3457,
+        type_of_treatment: "AMBIENT",
+        total_net_weight_unit: "kgs",
+      },
+    ],
+    registration_approval_number: "RMS-GB-000015-006",
+    parserModel: parserModel.ASDA3,
+  },
   validTestResultForMultipleSheets: {
     business_checks: {
       all_required_fields_present: true,
@@ -140,6 +168,6 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000015-001",
-    parserModel: parserModel.ASDA1,
+    parserModel: parserModel.ASDA3,
   },
 };
