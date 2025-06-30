@@ -18,6 +18,7 @@ const ParserModel = {
   CDS1: "cds-1",
   COOP1: "coop-1",
   DAVENPORT1: "davenport-1",
+  DAVENPORT2: "davenport-2",
   GIOVANNI1: "giovanni-1",
   GIOVANNI2: "giovanni-2",
   KEPAK1: "kepak-1",
