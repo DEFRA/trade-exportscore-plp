@@ -3,9 +3,9 @@ const model = require("../../../test-data-and-results/models/tjmorris/model2");
 const parserModel = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/tjmorris/model2");
 
-const filename = "packinglist-tjmorris-model1.xls";
+const filename = "packinglist-tjmorris-model2.xls";
 
-describe("matchesTJMorrisModel1", () => {
+describe("matchesTJMorrisModel2", () => {
   test("matches valid TJMorris Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
