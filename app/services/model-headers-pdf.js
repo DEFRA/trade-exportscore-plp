@@ -65,7 +65,6 @@ const headers = {
     findUnitInHeader: true,
   },
   BOOKER1L: {
-    findUnitInHeader: true,
     establishmentNumber: {
       regex: /^RMS-GB-000077/i,
     },
