@@ -4,6 +4,8 @@ const asdaMatcher = require("./matchers/asda/model1");
 const asdaParser = require("./parsers/asda/model1");
 const asdaMatcher2 = require("./matchers/asda/model2");
 const asdaParser2 = require("./parsers/asda/model2");
+const asdaMatcher3 = require("./matchers/asda/model3");
+const asdaParser3 = require("./parsers/asda/model3");
 const bandMMatcher = require("./matchers/bandm/model1");
 const bandMParser = require("./parsers/bandm/model1");
 const bootsMatcher = require("./matchers/boots/model1");
@@ -16,6 +18,8 @@ const coopMatcher = require("./matchers/co-op/model1");
 const coopParser = require("./parsers/co-op/model1");
 const davenportMatcher = require("./matchers/davenport/model1");
 const davenportParser = require("./parsers/davenport/model1");
+const davenportMatcher2 = require("./matchers/davenport/model2");
+const davenportParser2 = require("./parsers/davenport/model2");
 const fowlerWelchMatcher = require("./matchers/fowlerwelch/model1");
 const fowlerWelchParser = require("./parsers/fowlerwelch/model1");
 const giovanniMatcher = require("./matchers/giovanni/model1");
@@ -46,6 +50,8 @@ const tescosMatcher3 = require("./matchers/tescos/model3");
 const tescosParser3 = require("./parsers/tescos/model3");
 const tjMorrisMatcher = require("./matchers/tjmorris/model1");
 const tjMorrisParser = require("./parsers/tjmorris/model1");
+const tjMorrisMatcher2 = require("./matchers/tjmorris/model2");
+const tjMorrisParser2 = require("./parsers/tjmorris/model2");
 const warrensMatcher = require("./matchers/warrens/model1");
 const warrensParser = require("./parsers/warrens/model1");
 const icelandMatcher = require("./matchers/iceland/model1");
@@ -69,6 +75,11 @@ const parsersExcel = {
     matches: (packingList, filename) =>
       asdaMatcher2.matches(packingList, filename),
     parse: (packingList, filename) => asdaParser2.parse(packingList, filename),
+  },
+  ASDA3: {
+    matches: (packingList, filename) =>
+      asdaMatcher3.matches(packingList, filename),
+    parse: (packingList, filename) => asdaParser3.parse(packingList, filename),
   },
   BANDM1: {
     matches: (packingList, filename) =>
@@ -101,6 +112,12 @@ const parsersExcel = {
       davenportMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
       davenportParser.parse(packingList, filename),
+  },
+  DAVENPORT2: {
+    matches: (packingList, filename) =>
+      davenportMatcher2.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      davenportParser2.parse(packingList, filename),
   },
   FOWLERWELCH1: {
     matches: (packingList, filename) =>
@@ -185,6 +202,12 @@ const parsersExcel = {
       tjMorrisMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
       tjMorrisParser.parse(packingList, filename),
+  },
+  TJMORRIS2: {
+    matches: (packingList, filename) =>
+      tjMorrisMatcher2.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      tjMorrisParser2.parse(packingList, filename),
   },
   WARRENS1: {
     matches: (packingList, filename) =>

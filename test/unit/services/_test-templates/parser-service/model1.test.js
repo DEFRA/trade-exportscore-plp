@@ -12,7 +12,7 @@ describe(`parser-service-parses-${traderAndModelNumber}`, () => {
   test(`matches valid ${traderAndModelNumber} file, calls parser and returns all_required_fields_present as true`, async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
-    expect(result).toMatchObject(testResults.validTestResult);
+    expect(result).toMatchObject(testResults.validTestResultParserService);
   });
 
   test(`matches valid ${traderAndModelNumber} file, calls parser, but returns all_required_fields_present as false when cells missing`, async () => {
