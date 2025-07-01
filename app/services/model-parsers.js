@@ -18,6 +18,8 @@ const coopMatcher = require("./matchers/co-op/model1");
 const coopParser = require("./parsers/co-op/model1");
 const davenportMatcher = require("./matchers/davenport/model1");
 const davenportParser = require("./parsers/davenport/model1");
+const davenportMatcher2 = require("./matchers/davenport/model2");
+const davenportParser2 = require("./parsers/davenport/model2");
 const fowlerWelchMatcher = require("./matchers/fowlerwelch/model1");
 const fowlerWelchParser = require("./parsers/fowlerwelch/model1");
 const giovanniMatcher = require("./matchers/giovanni/model1");
@@ -110,6 +112,12 @@ const parsersExcel = {
       davenportMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
       davenportParser.parse(packingList, filename),
+  },
+  DAVENPORT2: {
+    matches: (packingList, filename) =>
+      davenportMatcher2.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      davenportParser2.parse(packingList, filename),
   },
   FOWLERWELCH1: {
     matches: (packingList, filename) =>

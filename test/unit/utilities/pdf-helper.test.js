@@ -2,7 +2,7 @@ const pdfHelper = require("../../../app/utilities/pdf-helper");
 
 jest.mock("pdf.js-extract");
 
-jest.mock("../../../app/services/model-headers", () => ({
+jest.mock("../../../app/services/model-headers-pdf", () => ({
   TestHeader: {
     headers: {
       Header1: {
