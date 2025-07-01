@@ -6,7 +6,7 @@ const {
   runAnalysis,
 } = require("../../document-intelligence");
 const matcherResult = require("../../matcher-result");
-const headers = require("../../model-headers");
+const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);

@@ -5,7 +5,7 @@ const {
   noMatchParsers,
 } = require("../model-parsers");
 const matcherResult = require("../matcher-result");
-const headers = require("../model-headers");
+const headers = require("../model-headers-pdf");
 
 function getExcelParser(sanitisedPackingList, filename) {
   let parser = null;
