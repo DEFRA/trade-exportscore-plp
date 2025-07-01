@@ -1,6 +1,6 @@
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
-const headers = require("../../model-headers");
+const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("path");
