@@ -1,18 +1,18 @@
 const parserService = require("../../../../../app/services/parser-service");
-const model = require("../../../test-data-and-results/models/asda/model1");
+const model = require("../../../test-data-and-results/models/davenport/model2");
 const parserModel = require("../../../../../app/services/parser-model");
-const test_results = require("../../../test-data-and-results/results/asda/model1");
+const test_results = require("../../../test-data-and-results/results/davenport/model2");
 
-const filename = "packinglist-asda-model1.xls";
+const filename = "packinglist-davenport-model2.xlsx";
 
-describe("matchesAsdaModel1", () => {
-  test("matches valid Asda Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
+describe("matchesDavenportModel2", () => {
+  test("matches valid Davenport Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
-    expect(result).toMatchObject(test_results.validTestResultParserService);
+    expect(result).toMatchObject(test_results.validTestResult);
   });
 
-  test("matches valid Asda Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+  test("matches valid Davenport Model 2 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
     const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
@@ -32,6 +32,7 @@ describe("matchesAsdaModel1", () => {
       registration_approval_number: null,
       parserModel: parserModel.NOMATCH,
     };
+
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);

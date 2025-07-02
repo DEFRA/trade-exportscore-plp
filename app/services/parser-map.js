@@ -1,4 +1,4 @@
-const headers = require("./model-headers");
+const headers = require("./model-headers-pdf");
 const pdfHelper = require("../utilities/pdf-helper");
 const regex = require("../utilities/regex");
 

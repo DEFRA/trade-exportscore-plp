@@ -1,4 +1,4 @@
-const headers = require("../services/model-headers");
+const headers = require("../services/model-headers-pdf");
 const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
 const logger = require("./logger");
