@@ -55,7 +55,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.DAVENPORT2,
-      [],
+      establishmentNumbers,
       headers.DAVENPORT2.findUnitInHeader,
     );
   } catch (err) {
