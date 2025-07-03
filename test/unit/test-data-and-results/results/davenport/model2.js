@@ -104,7 +104,8 @@ module.exports = {
   multipleRms: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+      failure_reasons:
+        "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
     },
     items: [
       {

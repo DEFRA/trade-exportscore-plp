@@ -52,5 +52,4 @@ describe("matchesBAndMModel1", () => {
 
     expect(result).toMatchObject(test_results.missingKgunit);
   });
-
 });
