@@ -391,4 +391,73 @@ module.exports = {
       },
     ],
   },
+  multipleRms: {
+    Sheet1: [
+      {},
+      {},
+      {
+        H: "WAREHOUSE SCHEME NUMBER:",
+        I: "RMS-GB-000005-001",
+        J: "RMS-GB-000005-002",
+      },
+      {},
+      {},
+      {
+        A: "PRODUCT CODE (SHORT)",
+        B: "PRISM",
+        C: "ITEM Description",
+        D: "COMMODITY Code",
+        E: "PLACE OF DISPATCH",
+        F: "TOTAL Number OF CASES",
+        G: "Net WEIGHT KG",
+        H: "GROSS WEIGHT",
+        I: "ANIMAL ORIGIN",
+      },
+      {
+        A: 412267,
+        B: 10145600,
+        C: "J/L JERKY 70G TERIYAKI",
+        D: 16025095,
+        E: "RMS-GB-000005-001",
+        F: 1,
+        G: 1.15,
+        H: 1.28,
+        I: "YES",
+      },
+    ]
+  },
+   missingKgunit: {
+    Sheet1: [
+      {},
+      {},
+      {
+        H: "WAREHOUSE SCHEME NUMBER:",
+        I: "RMS-GB-000005-001",
+      },
+      {},
+      {},
+      {
+        A: "PRODUCT CODE (SHORT)",
+        B: "PRISM",
+        C: "ITEM Description",
+        D: "COMMODITY Code",
+        E: "PLACE OF DISPATCH",
+        F: "TOTAL Number OF CASES",
+        G: "Net WEIGHT",
+        H: "GROSS WEIGHT",
+        I: "ANIMAL ORIGIN",
+      },
+      {
+        A: 412267,
+        B: 10145600,
+        C: "J/L JERKY 70G TERIYAKI",
+        D: 16025095,
+        E: "RMS-GB-000005-001",
+        F: 1,
+        G: 1.15,
+        H: 1.28,
+        I: "YES",
+      },
+    ]
+   },
 };
