@@ -105,7 +105,6 @@ module.exports = {
         type_of_treatment: null,
       },
     ],
-    establishment_numbers: ["RMS-GB-000009-001"],
     registration_approval_number: null,
     parserModel: parserModel.COOP1,
   },
