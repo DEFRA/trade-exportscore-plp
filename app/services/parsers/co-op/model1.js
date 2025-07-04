@@ -51,7 +51,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.COOP1,
-      [],
+      establishmentNumbers,
       headers.COOP1.findUnitInHeader,
     );
   } catch (err) {

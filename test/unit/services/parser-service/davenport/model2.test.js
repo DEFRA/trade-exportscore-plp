@@ -39,17 +39,17 @@ describe("matchesDavenportModel2", () => {
   });
 
   test("matches valid Davenport Model 2 file, calls parser and returns all_required_fields_present as false for multiple rms", async () => {
-      const result = await parserService.findParser(model.multipleRms, filename);
-  
-      expect(result).toMatchObject(test_results.multipleRms);
-    });
-  
-    test("matches valid Davenport Model 2 file file, calls parser and returns all_required_fields_present as false for missing kg unit", async () => {
-      const result = await parserService.findParser(
-        model.missingKgunit,
-        filename,
-      );
-  
-      expect(result).toMatchObject(test_results.missingKgunit);
-    });
+    const result = await parserService.findParser(model.multipleRms, filename);
+
+    expect(result).toMatchObject(test_results.multipleRms);
+  });
+
+  test("matches valid Davenport Model 2 file file, calls parser and returns all_required_fields_present as false for missing kg unit", async () => {
+    const result = await parserService.findParser(
+      model.missingKgunit,
+      filename,
+    );
+
+    expect(result).toMatchObject(test_results.missingKgunit);
+  });
 });

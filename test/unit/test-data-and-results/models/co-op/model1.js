@@ -1,3 +1,5 @@
+const { missingKgunit } = require("../tjmorris/model2");
+
 module.exports = {
   validModel: {
     "Input Packing Sheet": [
@@ -187,6 +189,58 @@ module.exports = {
       },
       {
         E: null,
+      },
+    ],
+  },
+  multipleRms: {
+    "Input Packing Sheet": [
+      {
+        E: "Dispatch RMS Establishment",
+        O: "Product/ Part Number description",
+        P: "Tariff Code EU",
+        Q: "Packages",
+        R: "Net Weight/Package KG",
+        S: "NW total",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+      },
+      {
+        E: "RMS-GB-000009-002",
+        O: "Co-op Ripe And Ready To Eat Avocados 2S.",
+        P: "0709601001",
+        Q: 1,
+        S: 1,
+      },
+    ],
+  },
+  missingKgunit: {
+    "Input Packing Sheet": [
+      {
+        E: "Dispatch RMS Establishment",
+        O: "Product/ Part Number description",
+        P: "Tariff Code EU",
+        Q: "Packages",
+        R: "Net Weight/Package",
+        S: "NW total",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Ripe And Ready To Eat Avocados 2S.",
+        P: "0709601001",
+        Q: 1,
+        S: 1,
       },
     ],
   },
