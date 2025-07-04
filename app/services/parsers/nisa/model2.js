@@ -16,6 +16,7 @@ function parse(packingListJson) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
     const establishmentNumber = regex.findMatch(
       headers.NISA2.establishmentNumber.regex,
       packingListJson[sheets[0]],
@@ -29,6 +30,12 @@ function parse(packingListJson) {
     const dataRow = headerRow + 1;
 
     for (const sheet of sheets) {
+      establishmentNumbers = regex.findAllMatches(
+        regex.remosRegex,
+        packingListJson[sheet],
+        establishmentNumbers,
+      );
+
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
         headerRow,
@@ -51,7 +58,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.NISA2,
-      [],
+      establishmentNumbers,
       headers.NISA2.findUnitInHeader,
     );
   } catch (err) {
