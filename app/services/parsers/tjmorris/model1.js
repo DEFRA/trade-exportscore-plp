@@ -72,7 +72,7 @@ function isNotEmpty(col) {
     col.N || //"Description"
     col.O || //"Tariff/Commodity"
     col.P || //"Cases"
-    col.R    //"Net Weight"
+    col.R //"Net Weight"
   );
 }
 

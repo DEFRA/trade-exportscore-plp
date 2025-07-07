@@ -51,7 +51,7 @@ function parse(packingListJson) {
           return foundKey;
         }
         return Object.keys(obj).find((x) =>
-          headers.TESCO3.regex.total_net_weight_kg.test(obj[x]),
+          headers.TESCO2.regex.total_net_weight_kg.test(obj[x]),
         );
       }, null);
 
