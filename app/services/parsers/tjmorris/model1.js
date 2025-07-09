@@ -12,12 +12,19 @@ function parse(packingListJson) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
     const establishmentNumber = regex.findMatch(
       headers.TJMORRIS1.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
 
     for (const sheet of sheets) {
+      establishmentNumbers = regex.findAllMatches(
+        regex.remosRegex,
+        packingListJson[sheet],
+        establishmentNumbers,
+      );
+
       // look for header row
       const headerRow = rowFinder(packingListJson[sheet], callback);
 
@@ -34,7 +41,7 @@ function parse(packingListJson) {
           commodity_code: col.O ?? null,
           number_of_packages: col.P ?? null,
           total_net_weight_kg: col.R ?? null,
-          total_net_weight_unit: netWeightUnit ?? null,
+          total_net_weight_unit: (isNotEmpty(col) && netWeightUnit) ?? null,
           country_of_origin: col.T ?? null,
           row_location: {
             rowNumber: rowPos + 2,
@@ -49,13 +56,24 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.TJMORRIS1,
-      [],
+      establishmentNumbers,
       headers.TJMORRIS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
+}
+
+function isNotEmpty(col) {
+  return (
+    col.J || //"TREATMENTTYPE"
+    col.L || //"Description"
+    col.N || //"Description"
+    col.O || //"Tariff/Commodity"
+    col.P || //"Cases"
+    col.R //"Net Weight"
+  );
 }
 
 function callback(x) {
