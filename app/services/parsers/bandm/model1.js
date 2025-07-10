@@ -61,7 +61,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.BANDM1,
-      [],
+      establishmentNumbers,
       headers.BANDM1.findUnitInHeader,
     );
   } catch (err) {
