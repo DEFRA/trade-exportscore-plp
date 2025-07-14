@@ -6,8 +6,12 @@ const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const {
+  extractPdf,
+  extractEstablishmentNumbers,
+} = require("../../../utilities/pdf-helper");
 
-function parse(packingListDocument) {
+async function parse(packingListDocument, sanitizedFullPackingList = null) {
   try {
     let establishmentNumber;
     if (
@@ -26,7 +30,14 @@ function parse(packingListDocument) {
     }
 
     const packingListContents = mapPdfParser(packingListDocument, "GREGGS1");
+    let establishmentNumbers = [];
 
+    if (!!sanitizedFullPackingList) {
+      const pdfJson = await extractPdf(sanitizedFullPackingList);
+      establishmentNumbers = extractEstablishmentNumbers(pdfJson);
+    }
+
+    //TODO: Replace [] by establishmentNumbers when the parser is ready
     return combineParser.combine(
       establishmentNumber,
       packingListContents,

@@ -206,3 +206,43 @@ describe("sanitise", () => {
     expect(result).toMatchObject(expected);
   });
 });
+
+describe("extractEstablishmentNumbers", () => {
+  test("returns empty array for empty pdfJson", () => {
+    const pdfJson = { pages: [] };
+    const result = pdfHelper.extractEstablishmentNumbers(pdfJson);
+    expect(result).toEqual([]);
+  });
+
+  test("extracts single establishment number from pdfJson", () => {
+    const pdfJson = {
+      pages: [
+        {
+          content: [{ str: "RMS-GB-000000-000" }, { str: "Some other text" }],
+        },
+      ],
+    };
+
+    const expected = ["RMS-GB-000000-000"];
+    const result = pdfHelper.extractEstablishmentNumbers(pdfJson);
+    expect(result).toEqual(expected);
+  });
+
+  test("extracts multiple establishment numbers from pdfJson", () => {
+    const pdfJson = {
+      pages: [
+        {
+          content: [
+            { str: "RMS-GB-000000-000" },
+            { str: "Some other text" },
+            { str: "RMS-GB-000000-001" },
+          ],
+        },
+      ],
+    };
+
+    const expected = ["RMS-GB-000000-000", "RMS-GB-000000-001"];
+    const result = pdfHelper.extractEstablishmentNumbers(pdfJson);
+    expect(result).toEqual(expected);
+  });
+});

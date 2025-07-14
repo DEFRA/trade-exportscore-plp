@@ -6,7 +6,11 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapPdfNonAiParser } = require("../../../services/parser-map");
-const { extractPdf, findSmaller } = require("../../../utilities/pdf-helper");
+const {
+  extractPdf,
+  findSmaller,
+  extractEstablishmentNumbers,
+} = require("../../../utilities/pdf-helper");
 
 async function parse(packingList) {
   try {
@@ -19,6 +23,8 @@ async function parse(packingList) {
       headers.BOOKER1.establishmentNumber.regex,
       pdfJson.pages[0].content,
     );
+
+    const establishmentNumbers = extractEstablishmentNumbers(pdfJson);
 
     let model = "BOOKER1";
     if (
@@ -36,6 +42,7 @@ async function parse(packingList) {
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
+    //TODO: Replace [] by establishmentNumbers when the parser is ready
     return combineParser.combine(
       establishmentNumber,
       packingListContents,
