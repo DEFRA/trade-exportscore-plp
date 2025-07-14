@@ -5,10 +5,13 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function noRemosMatch(sanitisedPackingList, _filename) {
-  const remosRegex = /^RMS-GB-\d{6}(-\d{3})?$/i;
+  const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
   const giovanni2Regex = /\(NIRMS RMS-GB-\d{6}-\d{3}\)/i;
   const cdsRegex = /\/ RMS-GB-000252-\d{3} \//i;
   const sainsburysRegex = /^RMS-GB-000094-\d{3}​$/i;
+  const giovanni1Regex = /^RMS-GB-000153(-\d{3})?$/i;
+  const kepakRegex = /^RMS-GB-000280(-\d{3})?$/i;
+  const nutriciaRegex = /^RMS-GB-000133(-\d{3})?$/i;
   const sheets = Object.keys(sanitisedPackingList);
   for (const sheet of sheets) {
     const isRemosPresent = sanitisedPackingList[sheet].some((x) => {
@@ -17,7 +20,10 @@ function noRemosMatch(sanitisedPackingList, _filename) {
           remosRegex.test(y) ||
           giovanni2Regex.test(y) ||
           cdsRegex.test(y) ||
-          sainsburysRegex.test(y)
+          sainsburysRegex.test(y) ||
+          giovanni1Regex.test(y) ||
+          kepakRegex.test(y) ||
+          nutriciaRegex.test(y)
         );
       });
     });
