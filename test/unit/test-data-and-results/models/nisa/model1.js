@@ -213,4 +213,62 @@ module.exports = {
       },
     ],
   },
+  multipleRms: {
+    "Customer Order": [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+        I: "PRODUCT_TYPE_CATEGORY",
+        K: "PART_NUMBER_DESCRIPTION",
+        L: "TARIFF_CODE_EU",
+        M: "PACKAGES",
+        O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE_KG",
+      },
+      {
+        A: "RMS-GB-000025-001",
+        I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+        K: "DAIRYLEA DUNKERS JUMBO PM80P",
+        L: "2005995090",
+        M: 2,
+        O: 2.5,
+      },
+      {
+        A: "RMS-GB-000025-002",
+        I: "900 - VEGETABLES PREPACK-C",
+        K: "NISA BROCCOLI",
+        L: "0403209300",
+        M: 1,
+        O: 2,
+      },
+    ],
+  },
+  missingKgunit: {
+    "Customer Order": [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+        I: "PRODUCT_TYPE_CATEGORY",
+        K: "PART_NUMBER_DESCRIPTION",
+        L: "TARIFF_CODE_EU",
+        M: "PACKAGES",
+        O: "NET_WEIGHT_TOTAL",
+        P: "NET_WEIGHT_PACKAGE",
+      },
+      {
+        A: "RMS-GB-000025-001",
+        I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+        K: "DAIRYLEA DUNKERS JUMBO PM80P",
+        L: "2005995090",
+        M: 2,
+        O: 2.5,
+      },
+      {
+        A: "RMS-GB-000025-001",
+        I: "900 - VEGETABLES PREPACK-C",
+        K: "NISA BROCCOLI",
+        L: "0403209300",
+        M: 1,
+        O: 2,
+      },
+    ],
+  },
 };
