@@ -271,6 +271,37 @@ describe("findParser", () => {
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
   });
+
+  test.each([
+    ["R MS -  G B-0  00323   -001"],
+    [""],
+    ["RMS-GB-000323-001-extra"],
+    ["extra-RMS-GB-000323-001"],
+    ["RMSGB000323001"],
+    ["RMS-GB-000323"],
+  ])("incorrect rms format", async (rms) => {
+    const testModel = {
+      sheet1: [
+        {
+          B: rms,
+        },
+      ],
+    };
+
+    var expected = {
+      registration_approval_number: null,
+      items: [],
+      business_checks: {
+        all_required_fields_present: false,
+        failure_reasons: "Check GB Establishment RMS Number.",
+      },
+      parserModel: parserModel.NOREMOS,
+    };
+
+    const result = await parserService.findParser(testModel, filename);
+
+    expect(result).toMatchObject(expected);
+  });
 });
 
 describe("sanitizeInput", () => {
