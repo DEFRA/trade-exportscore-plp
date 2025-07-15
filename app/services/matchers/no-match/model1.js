@@ -9,9 +9,9 @@ function noRemosMatch(sanitisedPackingList, _filename) {
   const giovanni2Regex = /\(NIRMS RMS-GB-\d{6}-\d{3}\)/i;
   const cdsRegex = /\/ RMS-GB-000252-\d{3} \//i;
   const sainsburysRegex = /^RMS-GB-000094-\d{3}​$/i;
-  const giovanni1Regex = /^RMS-GB-000153(-\d{3})?$/i;
-  const kepakRegex = /^RMS-GB-000280(-\d{3})?$/i;
-  const nutriciaRegex = /^RMS-GB-000133(-\d{3})?$/i;
+  const giovanni1Regex = /^RMS-GB-000153$/i;
+  const kepakRegex = /^RMS-GB-000280$/i;
+  const nutriciaRegex = /^RMS-GB-000133$/i;
   const sheets = Object.keys(sanitisedPackingList);
   for (const sheet of sheets) {
     const isRemosPresent = sanitisedPackingList[sheet].some((x) => {

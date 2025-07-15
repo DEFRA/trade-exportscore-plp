@@ -6,6 +6,7 @@ describe("matchesNoMatch", () => {
   test.each([
     [true, "RMS-GB-000000-000"],
     [false, "RMS-GB-0000000-000"],
+    [false, "RMS-GB-000000"],
   ])("returns '%s' for '%s'", (expected, remos) => {
     const model = {
       pl: [
