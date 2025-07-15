@@ -15,12 +15,20 @@ function parse(packingListJson) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
+
     const establishmentNumber = regex.findMatch(
       headers.TESCO2.establishmentNumber.regex,
       packingListJson[sheets[0]],
     );
 
     for (const sheet of sheets) {
+      establishmentNumbers = regex.findAllMatches(
+        regex.remosRegex,
+        packingListJson[sheet],
+        establishmentNumbers,
+      );
+
       const headerTitles = Object.values(headers.TESCO2.regex);
       const headerCallback = function (x) {
         return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
@@ -43,7 +51,7 @@ function parse(packingListJson) {
           return foundKey;
         }
         return Object.keys(obj).find((x) =>
-          headers.TESCO3.regex.total_net_weight_kg.test(obj[x]),
+          headers.TESCO2.regex.total_net_weight_kg.test(obj[x]),
         );
       }, null);
 
@@ -68,7 +76,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.TESCO2,
-      [],
+      establishmentNumbers,
       headers.TESCO2.findUnitInHeader,
     );
   } catch (err) {
