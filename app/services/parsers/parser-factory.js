@@ -46,8 +46,12 @@ async function generateParsedPackingList(
   parser,
   sanitisedPackingList,
   dispatchLocation,
+  sanitizedFullPackingList = null,
 ) {
-  const parsedPackingList = await parser.parse(sanitisedPackingList);
+  const parsedPackingList = await parser.parse(
+    sanitisedPackingList,
+    sanitizedFullPackingList,
+  );
   parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
   const validationResults =
     packingListValidator.validatePackingList(parsedPackingList);

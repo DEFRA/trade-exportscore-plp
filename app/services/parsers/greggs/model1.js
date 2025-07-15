@@ -7,7 +7,7 @@ const regex = require("../../../utilities/regex");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-function parse(packingListDocument) {
+async function parse(packingListDocument) {
   try {
     let establishmentNumber;
     if (

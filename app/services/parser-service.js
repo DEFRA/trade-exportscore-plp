@@ -26,6 +26,7 @@ async function parsePackingList(packingList, fileName, dispatchLocation) {
         parser.parser,
         parser.result.document,
         dispatchLocation,
+        sanitizedPackingList,
       );
     } else {
       return await parserFactory.generateParsedPackingList(

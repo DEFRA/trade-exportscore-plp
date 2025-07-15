@@ -143,4 +143,61 @@ module.exports = {
     registration_approval_number: null,
     parserModel: parserModel.FOWLERWELCH1,
   },
+  multipleRms: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+    },
+    items: [
+      {
+        commodity_code: "2005800099",
+        description: "Sweetcorn Express 8x2",
+        nature_of_products: null,
+        number_of_packages: "5",
+        total_net_weight_kg: "20.000",
+        type_of_treatment: "Chilled",
+        total_net_weight_unit: "kg",
+      },
+      {
+        commodity_code: "2005800099",
+        description: "Sweetcorn Cobettes 24x4",
+        nature_of_products: null,
+        number_of_packages: "65",
+        total_net_weight_kg: "780.000",
+        type_of_treatment: "Chilled",
+        total_net_weight_unit: "kg",
+      },
+    ],
+    registration_approval_number: "RMS-GB-000216-002",
+    parserModel: parserModel.FOWLERWELCH1,
+  },
+  missingKgunit: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: "Net Weight Unit of Measure (kg) not found.\n",
+    },
+    items: [
+      {
+        commodity_code: "2005800099",
+        description: "Sweetcorn Express 8x2",
+        nature_of_products: null,
+        number_of_packages: "5",
+        total_net_weight_kg: "20.000",
+        type_of_treatment: "Chilled",
+        total_net_weight_unit: null,
+      },
+      {
+        commodity_code: "2005800099",
+        description: "Sweetcorn Cobettes 24x4",
+        nature_of_products: null,
+        number_of_packages: "65",
+        total_net_weight_kg: "780.000",
+        type_of_treatment: "Chilled",
+        total_net_weight_unit: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000216-002",
+    parserModel: parserModel.FOWLERWELCH1,
+  },
 };
