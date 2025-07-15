@@ -4,6 +4,7 @@ const pdfExtract = new PDFExtract();
 const logger = require("./logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const regex = require("./regex");
 
 async function extractPdf(buffer) {
   const pdfJson = await pdfExtract.extractBuffer(buffer);
@@ -77,10 +78,23 @@ function getHeaders(pageContent, model) {
   }
 }
 
+function extractEstablishmentNumbers(pdfJson) {
+  let establishmentNumbers = [];
+  for (const page of pdfJson.pages) {
+    establishmentNumbers = regex.findAllMatches(
+      regex.remosRegex,
+      page.content,
+      establishmentNumbers,
+    );
+  }
+  return establishmentNumbers;
+}
+
 module.exports = {
   getHeaders,
   extractPdf,
   findSmaller,
   removeEmptyStringElements,
   sanitise,
+  extractEstablishmentNumbers,
 };
