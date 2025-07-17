@@ -52,4 +52,23 @@ describe("matchesDavenportModel2", () => {
 
     expect(result).toMatchObject(test_results.missingKgunit);
   });
+  test("returns 'No Match' when 'Commodity Code' header is missing", async () => {
+    const filename = "packinglist-davenport-model2.xlsx";
+    const invalidTestResult_NoMatch = {
+      business_checks: {
+        all_required_fields_present: false,
+        failure_reasons: null,
+      },
+      items: [],
+      registration_approval_number: null,
+      parserModel: parserModel.NOMATCH,
+    };
+
+    const result = await parserService.findParser(
+      model.missingCommodityCodeHeader,
+      filename,
+    );
+
+    expect(result).toMatchObject(invalidTestResult_NoMatch);
+  });
 });
