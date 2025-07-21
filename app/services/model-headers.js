@@ -253,7 +253,7 @@ const headers = {
   },
   NUTRICIA1: {
     establishmentNumber: {
-      regex: /RMS-GB-000133(-\d{3})?/i,
+      regex: /^RMS-GB-000133(-\d{3})?$/i,
     },
     regex: {
       description: /DESCRIPTION/i,
