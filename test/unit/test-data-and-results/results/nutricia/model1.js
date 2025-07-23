@@ -140,4 +140,33 @@ module.exports = {
     registration_approval_number: "RMS-GB-000133",
     parserModel: parserModel.NUTRICIA1,
   },
+  missingKgunit: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: "Net Weight Unit of Measure (kg) not found.\n",
+    },
+    items: [
+      {
+        commodity_code: "403209300",
+        description: "ACTIVIA DRK FRTS 6X8X115",
+        nature_of_products: null,
+        number_of_packages: 2,
+        total_net_weight_kg: 11.04,
+        type_of_treatment: null,
+        total_net_weight_unit: null,
+      },
+      {
+        commodity_code: "403209100",
+        description: "ACT 00  YE&RD FRU 6X8X115",
+        nature_of_products: null,
+        number_of_packages: 5,
+        total_net_weight_kg: 27.6,
+        type_of_treatment: null,
+        total_net_weight_unit: null,
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000133",
+    parserModel: parserModel.NUTRICIA1,
+  },
 };
