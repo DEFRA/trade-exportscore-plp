@@ -26,7 +26,7 @@ module.exports = {
         total_net_weight_unit: "KG",
       },
     ],
-    registration_approval_number: "RMS-GB-000133",
+    registration_approval_number: "RMS-GB-000133-000",
     parserModel: parserModel.NUTRICIA1,
   },
   validTestResultForMultipleSheets: {
@@ -87,7 +87,7 @@ module.exports = {
         total_net_weight_unit: "KG",
       },
     ],
-    registration_approval_number: "RMS-GB-000133",
+    registration_approval_number: "RMS-GB-000133-000",
     parserModel: parserModel.NUTRICIA1,
   },
   emptyModelResult: {
