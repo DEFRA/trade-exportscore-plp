@@ -1,7 +1,7 @@
 const regex = require("../../../app/utilities/regex");
 
 describe("test function", () => {
-  /*  it("should return true when the regex matches a value in the object", () => {
+  it("should return true when the regex matches a value in the object", () => {
     const array = [
       { name: "John Doe", age: 30, city: "London" },
       { name: "Jane Smith", age: 25, city: "Paris" },
@@ -287,7 +287,7 @@ describe("findAllMatches function", () => {
 
     expect(regex.findAllMatches("Parent Name", array, [])).toStrictEqual([]); // Should not match inherited property
     expect(regex.findAllMatches("John", array, [])).toStrictEqual(["John"]); // Matches 'John'
-  }); */
+  });
 
   it("should add multiple matches", () => {
     const array = [
