@@ -15,6 +15,7 @@ function parse(packingListJson) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
     const establishmentNumber =
       regex
         .findMatch(
@@ -24,6 +25,11 @@ function parse(packingListJson) {
         ?.replace(/\u200B/g, "") ?? null;
 
     for (const sheet of sheets) {
+      establishmentNumbers = appendDistinctEstablishmentNumbers(
+        establishmentNumbers,
+        packingListJson[sheet],
+      );
+
       const headerTitles = Object.values(headers.SAINSBURYS1.regex);
       const headerCallback = function (x) {
         return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
@@ -46,13 +52,26 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.SAINSBURYS1,
-      [],
+      establishmentNumbers,
       headers.SAINSBURYS1.findUnitInHeader,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
+}
+
+function appendDistinctEstablishmentNumbers(establishmentNumbers, page) {
+  establishmentNumbers = regex.findAllMatches(
+    new RegExp(/^RMS-GB-\d{6}-\d{3}(\u200B)?$/),
+    page,
+    establishmentNumbers,
+  );
+
+  establishmentNumbers = establishmentNumbers.map((rms) =>
+    rms.replace(/\u200B/g, ""),
+  );
+  return [...new Set(establishmentNumbers)];
 }
 
 module.exports = {

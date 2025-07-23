@@ -104,4 +104,72 @@ module.exports = {
     registration_approval_number: "RMS-GB-000094-002",
     parserModel: parserModel.SAINSBURYS1,
   },
+  missingKgunit: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: "Net Weight Unit of Measure (kg) not found.\n",
+    },
+    items: [
+      {
+        commodity_code: "0709991000",
+        description: "JS Chicken Korma 400g",
+        nature_of_products: "Chilled Indian Meals",
+        number_of_packages: 1,
+        total_net_weight_kg: 3.15,
+        total_net_weight_unit: null,
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "1602323090",
+        description: "JS TTD Gunpowder Potatoes 250g",
+        nature_of_products: "Chilled Indian Meals",
+        number_of_packages: 2,
+        total_net_weight_kg: 1.4,
+        total_net_weight_unit: null,
+        type_of_treatment: null,
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000094-002"],
+    registration_approval_number: "RMS-GB-000094-002",
+    parserModel: parserModel.SAINSBURYS1,
+  },
+  multipleRms: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+    },
+    items: [
+      {
+        commodity_code: "0709991000",
+        description: "JS Chicken Korma 400g",
+        nature_of_products: "Chilled Indian Meals",
+        number_of_packages: 1,
+        total_net_weight_kg: 3.15,
+        total_net_weight_unit: "KG",
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "1602323090",
+        description: "JS TTD Gunpowder Potatoes 250g",
+        nature_of_products: "Chilled Indian Meals",
+        number_of_packages: 2,
+        total_net_weight_kg: 1.4,
+        total_net_weight_unit: "KG",
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: "1602323090",
+        description: "JS TTD Gunpowder Potatoes 500g",
+        nature_of_products: "Chilled Indian Meals",
+        number_of_packages: 2,
+        total_net_weight_kg: 2.8,
+        total_net_weight_unit: "KG",
+        type_of_treatment: null,
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000094-002", "RMS-GB-000094-003"],
+    registration_approval_number: "RMS-GB-000094-002",
+    parserModel: parserModel.SAINSBURYS1,
+  },
 };
