@@ -36,6 +36,25 @@ describe("findParser", () => {
     expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
   });
 
+
+  test("parses model multiple RMS", async () => {
+    extractPdf.mockImplementation(() => {
+      return model.multipleRms;
+    });
+    const result = await parserService.findParser({}, filename);
+
+    expect(result).toMatchObject(test_results.multipleRmsTestResult);
+  });
+
+  test("parses model missing unit of weight", async () => {
+    extractPdf.mockImplementation(() => {
+      return model.missingKgunit;
+    });
+    const result = await parserService.findParser({}, filename)
+
+    expect(result).toMatchObject(test_results.missingKgTestResult);
+  });
+
   test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.wrong";
     const invalidTestResult_NoMatch = {
