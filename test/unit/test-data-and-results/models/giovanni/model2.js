@@ -306,4 +306,65 @@ module.exports = {
       },
     ],
   },
+  multipleRms: {
+    "SUMMARY FOR GC": [
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000149-006) \
+            declares that these products are intend for the Green lane and will remain \
+            in Northern Ireland. ",
+        B: "(NIRMS RMS-GB-000149-007)",
+      },
+      {
+        C: "DESCRIPTION",
+        F: "Country of Origin",
+        G: "Qauntity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        F: "IT",
+        G: 17,
+        H: 40.8,
+        E: "1902209990",
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        F: "IT",
+        G: 10,
+        H: 24,
+        E: "1902209990",
+      },
+    ],
+  },
+  missingKgunit: {
+    "SUMMARY FOR GC": [
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000149-006) \
+            declares that these products are intend for the Green lane and will remain \
+            in Northern Ireland. ",
+      },
+      {
+        C: "DESCRIPTION",
+        F: "Country of Origin",
+        G: "Qauntity",
+        H: "Net Weight",
+        E: "Commodity Code",
+      },
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        F: "IT",
+        G: 17,
+        H: 40.8,
+        E: "1902209990",
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        F: "IT",
+        G: 10,
+        H: 24,
+        E: "1902209990",
+      },
+    ],
+  },
 };
