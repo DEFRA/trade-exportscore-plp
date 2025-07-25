@@ -93,17 +93,19 @@ function findAllMatches(regex, array, matches) {
       const match = value.match(searchPattern);
 
       if (match) {
-        match.forEach((m) => {
-          if (
-            !matches.find(
-              (v) => v.toLocaleUpperCase() === m.toLocaleUpperCase(),
-            )
-          ) {
-            matches.push(m);
-          }
-        });
+        matches = addMatch(match, matches);
       }
     });
+  });
+
+  return matches;
+}
+
+function addMatch(match, matches) {
+  match.forEach((m) => {
+    if (!matches.find((v) => v.toLocaleUpperCase() === m.toLocaleUpperCase())) {
+      matches.push(m);
+    }
   });
 
   return matches;
