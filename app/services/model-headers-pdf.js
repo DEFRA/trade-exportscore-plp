@@ -31,7 +31,7 @@ const headers = {
   },
   BOOKER1: {
     establishmentNumber: {
-      regex: /^RMS-GB-000077/i,
+      regex: /^RMS-GB-000077-\d{3}$/i,
     },
     headers: {
       description: {
@@ -66,7 +66,7 @@ const headers = {
   },
   BOOKER1L: {
     establishmentNumber: {
-      regex: /^RMS-GB-000077/i,
+      regex: /^RMS-GB-000077-\d{3}$/i,
     },
     totals: /^0 Boxes/i,
     minHeadersY: 189,

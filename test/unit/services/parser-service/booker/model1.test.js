@@ -55,4 +55,14 @@ describe("findParser", () => {
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
   });
+
+  test("returns multiple rms failure reason", async () => {
+    extractPdf.mockImplementation(() => {
+      return model.multipleRms;
+    });
+    const result = await parserService.findParser({}, filename);
+    expect(result.business_checks.failure_reasons).toBe(
+      "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+    );
+  });
 });
