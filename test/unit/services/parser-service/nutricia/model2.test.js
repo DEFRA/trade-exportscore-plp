@@ -40,4 +40,37 @@ describe("matchesNutriciaModel2", () => {
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
   });
+
+  test("matches valid Nutricia Model 2 file", async () => {
+    const result = await parserService.findParser(model.matchModel, filename);
+
+    expect(result.parserModel).toBe(parserModel.NUTRICIA2);
+  });
+
+  test("return check rms establishment number", async () => {
+    const result = await parserService.findParser(
+      model.hasSupplierButNotRms,
+      filename,
+    );
+
+    expect(result.business_checks.failure_reasons).toBe(
+      "Check GB Establishment RMS Number.",
+    );
+    expect(result.parserModel).toBe(parserModel.NOREMOS);
+  });
+
+  test("return no match when contains rms number but not supplier", async () => {
+    const result = await parserService.findParser(
+      model.hasRmsButNotSupplier,
+      filename,
+    );
+
+    expect(result.parserModel).toBe(parserModel.NOMATCH);
+  });
+
+  test("returns multiple rms numbers failure reason", async () => {
+    const result = await parserService.findParser(model.multipleRms, filename);
+
+    expect(result.business_checks.failure_reasons).toBe("Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n");
+  })
 });

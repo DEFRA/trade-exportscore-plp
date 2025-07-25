@@ -15,6 +15,7 @@ function parse(packingListJson) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let packingListContentsTemp = [];
+    let establishmentNumbers = [];
     const headerTitles = Object.values(headers.GIOVANNI2.regex);
     const callback = function (x) {
       return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
@@ -28,6 +29,12 @@ function parse(packingListJson) {
     );
 
     for (const sheet of sheets) {
+      establishmentNumbers = regex.findAllMatches(
+        /RMS-GB-\d{6}-\d{3}/i,
+        packingListJson[sheet],
+        establishmentNumbers,
+      );
+
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
         headerRow,
@@ -54,7 +61,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.GIOVANNI2,
-      [],
+      establishmentNumbers,
       headers.GIOVANNI2.findUnitInHeader,
     );
   } catch (err) {

@@ -13,7 +13,7 @@ module.exports = {
       {},
       {},
       { A: "NIRMS NUMBER" },
-      { A: "RMS-GB-000133" },
+      { A: "RMS-GB-000133-000" },
       {},
       {},
       {},
@@ -365,7 +365,7 @@ module.exports = {
       {},
       {},
       { A: "NIRMS NUMBER" },
-      { A: "RMS-GB-000133" },
+      { A: "RMS-GB-000133-000" },
       {},
       {},
       {},
@@ -427,6 +427,59 @@ module.exports = {
       },
       {
         C: null,
+      },
+    ],
+  },
+  matchModel: {
+    sheet: [
+      {
+        A: "RMS-GB-000133",
+        B: "RMS-GB-000000-000",
+      },
+      {
+        C: "Material description",
+        E: "Commodity code",
+        F: "coo",
+        G: "Order qty",
+        H: "Order net weight",
+      },
+    ],
+  },
+  hasSupplierButNotRms: {
+    sheet: [
+      {
+        A: "RMS-GB-000133",
+      },
+    ],
+  },
+  hasRmsButNotSupplier: {
+    sheet: [
+      {
+        A: "RMS-GB-000000-000",
+        B: "RMS-GB-000000",
+      },
+    ],
+  },
+  multipleRms: {
+    sheet: [
+      {
+        A: "RMS-GB-000000-000",
+        B: "RMS-GB-000000-001",
+        C: "RMS-GB-000133",
+      },
+      {
+        C: "Material description",
+        E: "Commodity code",
+        F: "coo",
+        G: "Order qty",
+        H: "Order net weight kg",
+      },
+      {
+        C: "ACT 00  YE&RD FRU 6X8X115",
+        E: "403209100",
+        F: "FR",
+        G: 5,
+        H: 1.3,
       },
     ],
   },

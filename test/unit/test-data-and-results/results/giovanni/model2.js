@@ -129,4 +129,67 @@ module.exports = {
       },
     ],
   },
+  multipleRms: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+    },
+    items: [
+      {
+        commodity_code: "1902209990",
+        description: "SPINACH AND RICOTTA TORT",
+        number_of_packages: 17,
+        total_net_weight_kg: 40.8,
+        nature_of_products: null,
+        type_of_treatment: null,
+        country_of_origin: "IT",
+        total_net_weight_unit: "KG",
+      },
+      {
+        commodity_code: "1902209990",
+        description: "FOUR CHEESE TORT",
+        number_of_packages: 10,
+        total_net_weight_kg: 24,
+        nature_of_products: null,
+        type_of_treatment: null,
+        country_of_origin: "IT",
+        total_net_weight_unit: "KG",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-006", "RMS-GB-000149-007"],
+    registration_approval_number: "RMS-GB-000149-006",
+    parserModel: parserModel.GIOVANNI2,
+  },
+  missingKgunit: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: "Net Weight Unit of Measure (kg) not found.\n",
+    },
+    items: [
+      {
+        commodity_code: "1902209990",
+        description: "SPINACH AND RICOTTA TORT",
+        number_of_packages: 17,
+        total_net_weight_kg: 40.8,
+        nature_of_products: null,
+        type_of_treatment: null,
+        country_of_origin: "IT",
+        total_net_weight_unit: null,
+      },
+      {
+        commodity_code: "1902209990",
+        description: "FOUR CHEESE TORT",
+        number_of_packages: 10,
+        total_net_weight_kg: 24,
+        nature_of_products: null,
+        type_of_treatment: null,
+        country_of_origin: "IT",
+        total_net_weight_unit: null,
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-006"],
+    registration_approval_number: "RMS-GB-000149-006",
+    parserModel: parserModel.GIOVANNI2,
+  },
 };

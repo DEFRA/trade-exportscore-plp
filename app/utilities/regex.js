@@ -94,7 +94,11 @@ function findAllMatches(regex, array, matches) {
 
       if (match) {
         match.forEach((m) => {
-          if (!matches.includes(m)) {
+          if (
+            !matches.find(
+              (v) => v.toLocaleUpperCase() === m.toLocaleUpperCase(),
+            )
+          ) {
             matches.push(m);
           }
         });
