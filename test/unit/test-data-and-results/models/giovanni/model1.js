@@ -313,4 +313,68 @@ module.exports = {
       },
     ],
   },
+  multipleRms: {
+    RANA: [
+      {
+        A: "NIRMS NUMBER",
+      },
+      {
+        A: "RMS-GB-000153",
+        B: "RMS-GB-000153-001",
+        C: "RMS-GB-000153-002",
+      },
+      {
+        C: "DESCRIPTION",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        F: "IT",
+        G: 17,
+        H: 40.8,
+        E: "1902209990",
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        F: "IT",
+        G: 10,
+        H: 24,
+        E: "1902209990",
+      },
+    ],
+  },
+  missingKgunit: {
+    RANA: [
+      {
+        A: "NIRMS NUMBER",
+      },
+      {
+        A: "RMS-GB-000153",
+      },
+      {
+        C: "DESCRIPTION",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight",
+        E: "Commodity Code",
+      },
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        F: "IT",
+        G: 17,
+        H: 40.8,
+        E: "1902209990",
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        F: "IT",
+        G: 10,
+        H: 24,
+        E: "1902209990",
+      },
+    ],
+  },
 };

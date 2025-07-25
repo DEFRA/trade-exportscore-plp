@@ -37,4 +37,17 @@ describe("matchesNutriciaModel1", () => {
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
   });
+  test("matches valid Nutricia Model 1 file, calls parser and returns all_required_fields_present as false for multiple rms", async () => {
+    const result = await parserService.findParser(model.multipleRms, filename);
+
+    expect(result).toMatchObject(test_results.multipleRms);
+  });
+  test("matches valid Nutricia Model 1 file, calls parser and returns all_required_fields_present as false for missing kg unit", async () => {
+    const result = await parserService.findParser(
+      model.missingKgunit,
+      filename,
+    );
+
+    expect(result).toMatchObject(test_results.missingKgunit);
+  });
 });

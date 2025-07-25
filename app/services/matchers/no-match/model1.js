@@ -27,15 +27,13 @@ function rmsExceptions(y) {
   const sainsburysRegex = /^RMS-GB-000094-\d{3}​$/i;
   const giovanni1Regex = /^RMS-GB-000153$/i;
   const kepakRegex = /^RMS-GB-000280$/i;
-  const nutriciaRegex = /^RMS-GB-000133$/i;
 
   return (
     giovanni2Regex.test(y) ||
     cdsRegex.test(y) ||
     sainsburysRegex.test(y) ||
     giovanni1Regex.test(y) ||
-    kepakRegex.test(y) ||
-    nutriciaRegex.test(y)
+    kepakRegex.test(y)
   );
 }
 

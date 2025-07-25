@@ -139,7 +139,7 @@ const headers = {
     },
     regex: {
       description: /Description of goods/i,
-      commodity_code: /Commodity Code/i,
+      commodity_code: /^Commodity Code$/i,
       number_of_packages: /No. of packages/i,
       total_net_weight_kg: /Item Net Weight/i,
       nature_of_products: /Nature of Product/i,
@@ -253,7 +253,7 @@ const headers = {
   },
   NUTRICIA1: {
     establishmentNumber: {
-      regex: /RMS-GB-000133(-\d{3})?/i,
+      regex: /^RMS-GB-000133(-\d{3})?$/i,
     },
     regex: {
       description: /DESCRIPTION/i,
@@ -266,7 +266,7 @@ const headers = {
   },
   NUTRICIA2: {
     establishmentNumber: {
-      regex: /RMS-GB-000133(-\d{3})?/i,
+      regex: /^RMS-GB-000133(-\d{3})?$/i,
     },
     regex: {
       description: /Material description/i,
