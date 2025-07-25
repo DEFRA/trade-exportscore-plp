@@ -6,7 +6,7 @@ const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapPdfNonAiParser } = require("../../../services/parser-map");
-const { extractPdf } = require("../../../utilities/pdf-helper");
+const { extractPdf, extractEstablishmentNumbers } = require("../../../utilities/pdf-helper");
 
 async function parse(packingList) {
   try {
@@ -27,12 +27,14 @@ async function parse(packingList) {
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
+    const establishmentNumbers = extractEstablishmentNumbers(pdfJson);
+
     return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,
       parserModel.GIOVANNI3,
-      [],
+      establishmentNumbers,
       headers.GIOVANNI3.findUnitInHeader,
     );
   } catch (err) {
