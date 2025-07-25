@@ -6,20 +6,20 @@ const test_results = require("../../../test-data-and-results/results/giovanni/mo
 const filename = "packinglist-giovanni-model1.xlsx";
 
 describe("matchesGiovanniModel2", () => {
-  /* test("matches valid Giovanni Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
+  test("matches valid Giovanni Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toMatchObject(test_results.validTestResult);
-  }); */
+  });
 
-  /* test("matches valid Giovanni Model 2 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
+  test("matches valid Giovanni Model 2 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
     const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
     );
 
     expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
-  }); */
+  });
 
   test("returns 'No Match' for incorrect file extension", async () => {
     const filename = "packinglist.wrong";
@@ -36,5 +36,18 @@ describe("matchesGiovanniModel2", () => {
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
+  });
+  test("matches valid Giovanni Model 2 file, calls parser and returns all_required_fields_present as false for multiple rms", async () => {
+    const result = await parserService.findParser(model.multipleRms, filename);
+
+    expect(result).toMatchObject(test_results.multipleRms);
+  });
+  test("matches valid Giovanni Model 2 file, calls parser and returns all_required_fields_present as false for missing kg unit", async () => {
+    const result = await parserService.findParser(
+      model.missingKgunit,
+      filename,
+    );
+
+    expect(result).toMatchObject(test_results.missingKgunit);
   });
 });

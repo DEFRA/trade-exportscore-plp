@@ -173,7 +173,7 @@ const headers = {
   },
   GIOVANNI1: {
     establishmentNumber: {
-      regex: /RMS-GB-000153(-\d{3})?/i,
+      regex: /^RMS-GB-000153(-\d{3})?$/i,
     },
     regex: {
       description: /DESCRIPTION/i,
