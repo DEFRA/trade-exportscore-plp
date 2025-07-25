@@ -40,7 +40,7 @@ function rmsExceptions(y) {
 async function noRemosMatchPdf(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);
-    const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
+    const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
     for (const page of pdfJson.pages) {
       const result = regex.findMatch(remosRegex, page.content);
       if (result) {
