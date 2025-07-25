@@ -1,6 +1,3 @@
-const { missingKgunit } = require("../asda/model3");
-const { multipleRms } = require("./model1");
-
 module.exports = {
   validModel: {
     pages: [
