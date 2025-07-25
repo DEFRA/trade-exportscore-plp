@@ -103,11 +103,7 @@ function findAllMatches(regex, array, matches) {
 
 function addMatch(match, matches) {
   match.forEach((m) => {
-    if (
-      !matches.find(
-        (v) => v.toLocaleUpperCase() === m.toLocaleUpperCase(),
-      )
-    ) {
+    if (!matches.find((v) => v.toLocaleUpperCase() === m.toLocaleUpperCase())) {
       matches.push(m);
     }
   });

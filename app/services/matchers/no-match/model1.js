@@ -41,8 +41,11 @@ async function noRemosMatchPdf(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);
     const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
+    const icelandRegex = /RMS-GB-000040/i;
     for (const page of pdfJson.pages) {
-      const result = regex.findMatch(remosRegex, page.content);
+      const result =
+        regex.findMatch(remosRegex, page.content) ||
+        regex.findMatch(icelandRegex, page.content);
       if (result) {
         return result;
       }
