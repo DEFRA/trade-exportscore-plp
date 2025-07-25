@@ -144,4 +144,43 @@ module.exports = {
       },
     },
   },
+  missingKgunit: {
+    fields: {
+      NIRMSNumber: {
+        content: "RMS-GB-000021-000",
+      },
+      TotalNetWeightHeader: {
+        content: "TOTAL NET WEIGHT",
+      },
+      PackingListContents: {
+        values: [
+          {
+            properties: {
+              "Short description": {
+                value: "SB* 220M CAPPUCI CHILLED CUP",
+              },
+              Article: {
+                value: "2202999990",
+              },
+              "ORDER QTY": {
+                value: 10,
+              },
+              "TOTAL NET WEIGHT kg": {
+                content: "2.3275",
+              },
+              "Treatment Type": {
+                value: "Frozen",
+              },
+              "Nature of Product": {
+                value: "Product",
+              },
+              "GB Place of Dispatch": {
+                value: "RMS-GB-000021-001",
+              },
+            },
+          },
+        ],
+      },
+    },
+  },
 };

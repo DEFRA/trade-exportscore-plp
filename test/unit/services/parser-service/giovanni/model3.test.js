@@ -36,7 +36,6 @@ describe("findParser", () => {
     expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
   });
 
-
   test("parses model multiple RMS", async () => {
     extractPdf.mockImplementation(() => {
       return model.multipleRms;
@@ -50,7 +49,7 @@ describe("findParser", () => {
     extractPdf.mockImplementation(() => {
       return model.missingKgunit;
     });
-    const result = await parserService.findParser({}, filename)
+    const result = await parserService.findParser({}, filename);
 
     expect(result).toMatchObject(test_results.missingKgTestResult);
   });
