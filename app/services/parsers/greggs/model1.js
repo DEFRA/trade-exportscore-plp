@@ -35,7 +35,7 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
 
     if (!!sanitizedFullPackingList) {
       const pdfJson = await extractPdf(sanitizedFullPackingList);
-      establishmentNumbers = extractEstablishmentNumbers(pdfJson);
+      establishmentNumbers = extractEstablishmentNumbers(pdfJson, headers.GREGGS1.establishmentNumber.regex);
     }
 
     return combineParser.combine(

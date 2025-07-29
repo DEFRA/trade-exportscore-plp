@@ -141,7 +141,7 @@ const headers = {
   },
   GREGGS1: {
     establishmentNumber: {
-      regex: /^RMS-GB-000021-\d{3}$/i,
+      regex: /^RMS-GB-000021-\d{3}(?: Packing List)?$/i,
     },
     headers: {
       commodity_code: "Article",
