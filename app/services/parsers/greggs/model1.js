@@ -6,10 +6,16 @@ const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const {
+  extractPdf,
+  extractEstablishmentNumbers,
+} = require("../../../utilities/pdf-helper");
 
-async function parse(packingListDocument) {
+async function parse(packingListDocument, sanitizedFullPackingList) {
   try {
     let establishmentNumber;
+    let establishmentNumbers;
+
     if (
       regex.findMatch(headers.GREGGS1.establishmentNumber.regex, [
         packingListDocument.fields.NIRMSNumber,
@@ -27,12 +33,20 @@ async function parse(packingListDocument) {
 
     const packingListContents = mapPdfParser(packingListDocument, "GREGGS1");
 
+    if (!!sanitizedFullPackingList) {
+      const pdfJson = await extractPdf(sanitizedFullPackingList);
+      establishmentNumbers = extractEstablishmentNumbers(
+        pdfJson,
+        headers.GREGGS1.establishmentNumber.regex,
+      );
+    }
+
     return combineParser.combine(
       establishmentNumber,
       packingListContents,
       true,
       parserModel.GREGGS1,
-      [],
+      establishmentNumbers,
       headers.GREGGS1.findUnitInHeader,
     );
   } catch (err) {
