@@ -71,6 +71,8 @@ describe("matchesNutriciaModel2", () => {
   test("returns multiple rms numbers failure reason", async () => {
     const result = await parserService.findParser(model.multipleRms, filename);
 
-    expect(result.business_checks.failure_reasons).toBe("Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n");
-  })
+    expect(result.business_checks.failure_reasons).toBe(
+      "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+    );
+  });
 });

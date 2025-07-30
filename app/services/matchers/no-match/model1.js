@@ -3,6 +3,7 @@ const { extractPdf } = require("../../../utilities/pdf-helper");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const headersPdf = require("../../model-headers-pdf");
 
 function noRemosMatch(sanitisedPackingList, _filename) {
   const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
@@ -40,9 +41,18 @@ function rmsExceptions(y) {
 async function noRemosMatchPdf(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);
-    const remosRegex = /RMS-GB-(\d{6})(-\d{3})?/i;
+
     for (const page of pdfJson.pages) {
-      const result = regex.findMatch(remosRegex, page.content);
+      const result =
+        regex.findMatch(regex.remosRegex, page.content) ||
+        regex.findMatch(
+          headersPdf.ICELAND1.establishmentNumber.regex,
+          page.content,
+        ) ||
+        regex.findMatch(
+          headersPdf.GREGGS1.establishmentNumber.regex,
+          page.content,
+        );
       if (result) {
         return result;
       }

@@ -78,11 +78,11 @@ function getHeaders(pageContent, model) {
   }
 }
 
-function extractEstablishmentNumbers(pdfJson) {
+function extractEstablishmentNumbers(pdfJson, remosRegex = regex.remosRegex) {
   let establishmentNumbers = [];
   for (const page of pdfJson.pages) {
     establishmentNumbers = regex.findAllMatches(
-      regex.remosRegex,
+      remosRegex,
       page.content,
       establishmentNumbers,
     );

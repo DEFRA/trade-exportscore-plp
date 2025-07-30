@@ -19,6 +19,46 @@ module.exports = {
     registration_approval_number: "RMS-GB-000149-002",
     parserModel: parser_model.GIOVANNI3,
   },
+  missingKgTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: `Net Weight Unit of Measure (kg) not found.
+`,
+    },
+    items: [
+      {
+        description: "HAM AND CHEESE TORT",
+        commodity_code: "1902209990",
+        number_of_packages: "20",
+        total_net_weight_kg: "48",
+        total_net_weight_unit: null,
+        type_of_treatment: null,
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-002"],
+    registration_approval_number: "RMS-GB-000149-002",
+    parserModel: parser_model.GIOVANNI3,
+  },
+  multipleRmsTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: `Multiple GB Place of Dispatch (Establishment) numbers found on packing list.
+`,
+    },
+    items: [
+      {
+        description: "HAM AND CHEESE TORT",
+        commodity_code: "1902209990",
+        number_of_packages: "20",
+        total_net_weight_kg: "48",
+        total_net_weight_unit: "KG",
+        type_of_treatment: null,
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-002", "RMS-GB-000149-003"],
+    registration_approval_number: "RMS-GB-000149-002",
+    parserModel: parser_model.GIOVANNI3,
+  },
   emptyTestResult: {
     business_checks: {
       all_required_fields_present: true,
