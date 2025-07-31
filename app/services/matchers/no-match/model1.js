@@ -41,8 +41,18 @@ function rmsExceptions(y) {
 async function noRemosMatchPdf(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);
+
     for (const page of pdfJson.pages) {
-      const result = regex.findMatch(regex.remosRegex, page.content) || regex.findMatch(headersPdf.MANDS1.establishmentNumber.regex, page.content);
+      const result =
+        regex.findMatch(regex.remosRegex, page.content) ||
+        regex.findMatch(
+          headersPdf.ICELAND1.establishmentNumber.regex,
+          page.content,
+        ) ||
+        regex.findMatch(
+          headersPdf.GREGGS1.establishmentNumber.regex,
+          page.content,
+        );
       if (result) {
         return result;
       }
