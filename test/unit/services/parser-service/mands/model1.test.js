@@ -17,7 +17,10 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../../../../app/services/document-intelligence");
-const { extractPdf, extractEstablishmentNumbers, } = require("../../../../../app/utilities/pdf-helper");
+const {
+  extractPdf,
+  extractEstablishmentNumbers,
+} = require("../../../../../app/utilities/pdf-helper");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
@@ -30,8 +33,8 @@ describe("findParser", () => {
     });
 
     extractPdf.mockImplementation(() => {
-  return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-});
+      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+    });
     const result = await parserService.findParser(model.validModel, filename);
     expect(result).toMatchObject(test_results.validTestResult);
   });
@@ -40,9 +43,9 @@ describe("findParser", () => {
     runAnalysis.mockImplementationOnce(() => {
       return model.invalidModel_MissingColumnCells;
     });
-extractPdf.mockImplementation(() => {
-  return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-});
+    extractPdf.mockImplementation(() => {
+      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+    });
     const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
@@ -63,8 +66,8 @@ extractPdf.mockImplementation(() => {
       parserModel: parser_model.NOMATCH,
     };
     extractPdf.mockImplementation(() => {
-  return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-});
+      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+    });
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
@@ -76,8 +79,8 @@ extractPdf.mockImplementation(() => {
         pages: [
           {
             content: [
-              { str: "RMS-GB-000021-000" },
-              { str: "RMS-GB-000021-001" },
+              { str: "RMS-GB-000008-000" },
+              { str: "RMS-GB-000008-001" },
             ],
           },
         ],
@@ -85,7 +88,7 @@ extractPdf.mockImplementation(() => {
     });
 
     extractEstablishmentNumbers.mockImplementation(() => {
-      return ["RMS-GB-000021-000", "RMS-GB-000021-001"];
+      return ["RMS-GB-000008-000", "RMS-GB-000008-001"];
     });
 
     runAnalysis.mockImplementationOnce(() => {
@@ -109,7 +112,6 @@ extractPdf.mockImplementation(() => {
     });
 
     const result = await parserService.findParser({}, filename);
-console.log(result)
     expect(result.business_checks.failure_reasons).toBe(
       "Net Weight Unit of Measure (kg) not found.\n",
     );

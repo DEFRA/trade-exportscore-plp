@@ -1,4 +1,4 @@
-const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
+const remosRegex = /^(RMS-GB-\d{6}-\d{3})$/i;
 
 // Helper function to validate string properties and create a search pattern
 function createSearchPattern(regex) {
@@ -84,7 +84,24 @@ function findUnit(header) {
 
 function findAllMatches(regex, array, matches) {
   const searchPattern = createSearchPattern(regex);
+ 
+  array.forEach((obj) => {
+    const stringProperties = getStringProperties(obj);
+ 
+    stringProperties.forEach((key) => {
+      const value = obj[key];
+      const match = value.match(searchPattern);
+ 
+      if (match) {
+        matches = addMatch(match, matches);
+      }
+    });
+  });
+ 
+  return matches;
+}
 
+function findAllMatchesPdf(searchPattern, array, matches) {
   array.forEach((obj) => {
     const stringProperties = getStringProperties(obj);
 
@@ -93,11 +110,10 @@ function findAllMatches(regex, array, matches) {
       const match = value.match(searchPattern);
 
       if (match) {
-        matches = addMatch(match, matches);
-      }
+        matches = addMatchPdf(match[1], matches);
+      }   
     });
   });
-
   return matches;
 }
 
@@ -107,7 +123,14 @@ function addMatch(match, matches) {
       matches.push(m);
     }
   });
-
+ 
+  return matches;
+}
+ 
+function addMatchPdf(match, matches) {
+    if (!matches.find((v) => v.toLocaleUpperCase() === match.toLocaleUpperCase())) {
+      matches.push(match);
+    }
   return matches;
 }
 
@@ -118,4 +141,5 @@ module.exports = {
   findUnit,
   findAllMatches,
   remosRegex,
+  findAllMatchesPdf,
 };

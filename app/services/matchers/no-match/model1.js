@@ -52,6 +52,10 @@ async function noRemosMatchPdf(packingList) {
         regex.findMatch(
           headersPdf.GREGGS1.establishmentNumber.regex,
           page.content,
+        ) ||
+        regex.findMatch(
+          headersPdf.MANDS1.establishmentNumber.regex,
+          page.content,
         );
       if (result) {
         return result;

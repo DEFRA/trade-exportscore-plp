@@ -24,12 +24,13 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
     }
 
     const packingListContents = mapPdfParser(packingListDocument, "MANDS1");
-     if (!!sanitizedFullPackingList) {
+    if (!!sanitizedFullPackingList) {
       const pdfJson = await extractPdf(sanitizedFullPackingList);
-       establishmentNumbers = extractEstablishmentNumbers(pdfJson, headers.MANDS1.establishmentNumber.regex)
-       //.map(str => str.split(" ")[3]);
-     }
-     console.log(establishmentNumbers);
+      establishmentNumbers = extractEstablishmentNumbers(
+        pdfJson,
+        headers.MANDS1.establishmentNumber.regex,
+      );
+    }
 
     return combineParser.combine(
       establishmentNumber,
