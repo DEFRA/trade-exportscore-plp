@@ -17,7 +17,7 @@ const headers = {
   },
   MANDS1: {
     establishmentNumber: {
-      regex: /^RMS-GB-000008-\d{3}$/i,
+      regex: /^(?:Depot Approval Number:\s)?RMS-GB-000008-\d{3}$/i,
     },
     headers: {
       description: "Description of Goods",
