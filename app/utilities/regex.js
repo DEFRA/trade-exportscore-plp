@@ -1,4 +1,4 @@
-const remosRegex = /^(RMS-GB-\d{6}-\d{3})$/i;
+const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
 
 // Helper function to validate string properties and create a search pattern
 function createSearchPattern(regex) {
@@ -82,55 +82,28 @@ function findUnit(header) {
   return null;
 }
 
-function findAllMatches(regex, array, matches) {
-  const searchPattern = createSearchPattern(regex);
- 
+function findAllMatches(searchPattern, array, matches) {
   array.forEach((obj) => {
     const stringProperties = getStringProperties(obj);
- 
+
     stringProperties.forEach((key) => {
       const value = obj[key];
       const match = value.match(searchPattern);
- 
+
       if (match) {
-        matches = addMatch(match, matches);
+        matches = addMatch(match[1] ?? match[0], matches);
       }
-    });
-  });
- 
-  return matches;
-}
-
-function findAllMatchesPdf(searchPattern, array, matches) {
-  array.forEach((obj) => {
-    const stringProperties = getStringProperties(obj);
-
-    stringProperties.forEach((key) => {
-      const value = obj[key];
-      const match = value.match(searchPattern);
-
-      if (match) {
-        matches = addMatchPdf(match[1], matches);
-      }   
     });
   });
   return matches;
 }
 
 function addMatch(match, matches) {
-  match.forEach((m) => {
-    if (!matches.find((v) => v.toLocaleUpperCase() === m.toLocaleUpperCase())) {
-      matches.push(m);
-    }
-  });
- 
-  return matches;
-}
- 
-function addMatchPdf(match, matches) {
-    if (!matches.find((v) => v.toLocaleUpperCase() === match.toLocaleUpperCase())) {
-      matches.push(match);
-    }
+  if (
+    !matches.find((v) => v.toLocaleUpperCase() === match.toLocaleUpperCase())
+  ) {
+    matches.push(match);
+  }
   return matches;
 }
 
@@ -141,5 +114,4 @@ module.exports = {
   findUnit,
   findAllMatches,
   remosRegex,
-  findAllMatchesPdf,
 };

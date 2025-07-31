@@ -81,7 +81,7 @@ function getHeaders(pageContent, model) {
 function extractEstablishmentNumbers(pdfJson, remosRegex = regex.remosRegex) {
   let establishmentNumbers = [];
   for (const page of pdfJson.pages) {
-    establishmentNumbers = regex.findAllMatchesPdf(
+    establishmentNumbers = regex.findAllMatches(
       remosRegex,
       page.content,
       establishmentNumbers,
