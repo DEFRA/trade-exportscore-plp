@@ -18,6 +18,8 @@ const headers = {
   MANDS1: {
     establishmentNumber: {
       regex: /^(?:Depot Approval Number:\s)?(RMS-GB-000008-\d{3})$/i,
+      establishmentRegex:
+        /^(?:Depot Approval Number:\s)?(RMS-GB-\d{6}-\d{3})$/i,
     },
     headers: {
       description: "Description of Goods",
@@ -142,6 +144,7 @@ const headers = {
   GREGGS1: {
     establishmentNumber: {
       regex: /^(RMS-GB-000021-\d{3})(?: Packing List)?$/i,
+      establishmentRegex: /^(RMS-GB-\d{6}-\d{3})(?: Packing List)?$/i,
     },
     headers: {
       commodity_code: "Article",

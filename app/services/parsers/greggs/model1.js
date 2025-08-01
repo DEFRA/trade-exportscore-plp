@@ -37,7 +37,7 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
       const pdfJson = await extractPdf(sanitizedFullPackingList);
       establishmentNumbers = extractEstablishmentNumbers(
         pdfJson,
-        headers.GREGGS1.establishmentNumber.regex,
+        headers.GREGGS1.establishmentNumber.establishmentRegex,
       );
     }
 
