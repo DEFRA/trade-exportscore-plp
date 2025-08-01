@@ -82,9 +82,7 @@ function findUnit(header) {
   return null;
 }
 
-function findAllMatches(regex, array, matches) {
-  const searchPattern = createSearchPattern(regex);
-
+function findAllMatches(searchPattern, array, matches) {
   array.forEach((obj) => {
     const stringProperties = getStringProperties(obj);
 
@@ -93,21 +91,19 @@ function findAllMatches(regex, array, matches) {
       const match = value.match(searchPattern);
 
       if (match) {
-        matches = addMatch(match, matches);
+        matches = addMatch(match[1] ?? match[0], matches);
       }
     });
   });
-
   return matches;
 }
 
 function addMatch(match, matches) {
-  match.forEach((m) => {
-    if (!matches.find((v) => v.toLocaleUpperCase() === m.toLocaleUpperCase())) {
-      matches.push(m);
-    }
-  });
-
+  if (
+    !matches.find((v) => v.toLocaleUpperCase() === match.toLocaleUpperCase())
+  ) {
+    matches.push(match);
+  }
   return matches;
 }
 

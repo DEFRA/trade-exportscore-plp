@@ -63,7 +63,7 @@ function parse(packingListJson) {
 
 function appendDistinctEstablishmentNumbers(establishmentNumbers, page) {
   establishmentNumbers = regex.findAllMatches(
-    new RegExp(/^RMS-GB-\d{6}-\d{3}(?:\u200B)?$/),
+    new RegExp(/^(RMS-GB-\d{6}-\d{3})(?:\u200B)?$/),
     page,
     establishmentNumbers,
   );

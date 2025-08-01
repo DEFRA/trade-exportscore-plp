@@ -17,14 +17,13 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../../../../app/services/document-intelligence");
-const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
+const {
+  extractPdf,
+  extractEstablishmentNumbers,
+} = require("../../../../../app/utilities/pdf-helper");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
-});
-
-extractPdf.mockImplementation(() => {
-  return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
 });
 
 describe("findParser", () => {
@@ -33,6 +32,9 @@ describe("findParser", () => {
       return model.validModel;
     });
 
+    extractPdf.mockImplementation(() => {
+      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+    });
     const result = await parserService.findParser(model.validModel, filename);
     expect(result).toMatchObject(test_results.validTestResult);
   });
@@ -41,7 +43,9 @@ describe("findParser", () => {
     runAnalysis.mockImplementationOnce(() => {
       return model.invalidModel_MissingColumnCells;
     });
-
+    extractPdf.mockImplementation(() => {
+      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+    });
     const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
@@ -61,8 +65,77 @@ describe("findParser", () => {
       registration_approval_number: null,
       parserModel: parser_model.NOMATCH,
     };
+    extractPdf.mockImplementation(() => {
+      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+    });
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
+  });
+
+  test("parses model multiple RMS", async () => {
+    extractPdf.mockImplementation(() => {
+      return {
+        pages: [
+          {
+            content: [
+              { str: "RMS-GB-000008-000" },
+              { str: "RMS-GB-000008-001" },
+            ],
+          },
+        ],
+      };
+    });
+
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000008-000", "RMS-GB-000008-001"];
+    });
+
+    runAnalysis.mockImplementationOnce(() => {
+      return model.validModel;
+    });
+
+    const result = await parserService.findParser({}, filename);
+
+    expect(result.business_checks.failure_reasons).toBe(
+      "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+    );
+  });
+
+  test("parses model missing unit of weight", async () => {
+    extractPdf.mockImplementation(() => {
+      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+    });
+
+    runAnalysis.mockImplementationOnce(() => {
+      return model.missingKgunit;
+    });
+
+    const result = await parserService.findParser({}, filename);
+    expect(result.business_checks.failure_reasons).toBe(
+      "Net Weight Unit of Measure (kg) not found.\n",
+    );
+  });
+  test("extracts rms number from sentence string", async () => {
+    extractPdf.mockImplementation(() => {
+      return {
+        pages: [
+          {
+            content: [{ str: "Depot Approval Number: RMS-GB-000008-001" }],
+          },
+        ],
+      };
+    });
+
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000008-001"];
+    });
+
+    runAnalysis.mockImplementationOnce(() => {
+      return model.validModel;
+    });
+
+    const result = await parserService.findParser({}, filename);
+    expect(result.establishment_numbers).toEqual(["RMS-GB-000008-001"]);
   });
 });

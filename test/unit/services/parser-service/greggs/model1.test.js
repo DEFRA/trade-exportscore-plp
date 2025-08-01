@@ -122,4 +122,28 @@ describe("findParser", () => {
       "Net Weight Unit of Measure (kg) not found.\n",
     );
   });
+
+  test("extracts rms number from sentence string", async () => {
+    extractPdf.mockImplementation(() => {
+      return {
+        pages: [
+          {
+            content: [{ str: "RMS-GB-000021-000 Packing List" }],
+          },
+        ],
+      };
+    });
+
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000021-000"];
+    });
+
+    runAnalysis.mockImplementationOnce(() => {
+      return model.validModel;
+    });
+
+    const result = await parserService.findParser({}, filename);
+
+    expect(result.establishment_numbers).toEqual(["RMS-GB-000021-000"]);
+  });
 });

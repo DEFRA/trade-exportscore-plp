@@ -223,9 +223,9 @@ describe("findAllMatches function", () => {
       { name: "Jane Smith", age: 25, city: "Paris" },
     ];
 
-    expect(regex.findAllMatches("John", array, [])).toStrictEqual(["John"]); // Matches 'John'
-    expect(regex.findAllMatches("Doe", array, [])).toStrictEqual(["Doe"]); // Matches 'Doe'
-    expect(regex.findAllMatches("Smith", array, [])).toStrictEqual(["Smith"]); // Matches 'Jane Smith'
+    expect(regex.findAllMatches(/John/, array, [])).toStrictEqual(["John"]); // Matches 'John'
+    expect(regex.findAllMatches(/Doe/, array, [])).toStrictEqual(["Doe"]); // Matches 'Doe'
+    expect(regex.findAllMatches(/Smith/, array, [])).toStrictEqual(["Smith"]); // Matches 'Jane Smith'
   });
 
   it("should return the matching substring from a complex string", () => {
@@ -245,8 +245,8 @@ describe("findAllMatches function", () => {
       { name: "Jane Smith", age: 25, city: "Paris" },
     ];
 
-    expect(regex.findAllMatches("Berlin", array, [])).toStrictEqual([]); // No match
-    expect(regex.findAllMatches("Michael", array, [])).toStrictEqual([]); // No match
+    expect(regex.findAllMatches(/Berlin/, array, [])).toStrictEqual([]); // No match
+    expect(regex.findAllMatches(/Michael/, array, [])).toStrictEqual([]); // No match
   });
 
   it("should skip non-string values and return matching string values", () => {
@@ -256,8 +256,8 @@ describe("findAllMatches function", () => {
       { job: "Engineer", salary: 50000, active: true },
     ];
 
-    expect(regex.findAllMatches("John", array, [])).toStrictEqual(["John"]); // Matches 'John'
-    expect(regex.findAllMatches("Engineer", array, [])).toStrictEqual([
+    expect(regex.findAllMatches(/John/, array, [])).toStrictEqual(["John"]); // Matches 'John'
+    expect(regex.findAllMatches(/Engineer/, array, [])).toStrictEqual([
       "Engineer",
     ]); // Matches 'Engineer'
     expect(regex.findAllMatches("50000", array, [])).toStrictEqual([]); // Should not match number values
