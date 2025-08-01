@@ -30,7 +30,7 @@ function parse(packingListJson) {
 
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
-        regex.remosRegex,
+        /(RMS-GB-\d{6}-\d{3})/i,
         packingListJson[sheet],
         establishmentNumbers,
       );
