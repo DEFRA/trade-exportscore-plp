@@ -17,7 +17,7 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../../../../app/services/document-intelligence");
-const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
+const { extractPdf, extractEstablishmentNumbersFromString } = require("../../../../../app/utilities/pdf-helper");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
@@ -65,5 +65,22 @@ describe("findParser", () => {
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
+  });
+
+  test("returns multiple establishment numbers", async () => {
+    runAnalysis.mockImplementationOnce(() => {
+      return model.validModel;
+    });
+
+    extractEstablishmentNumbersFromString.mockImplementation(() => {
+      return ["RMS-GB-000040-001", "RMS-GB-000040-000"]
+    })
+
+    const result = await parserService.findParser(
+      model.validModel,
+      filename,
+    );
+
+    expect(result.business_checks.failure_reasons).toBe("Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n")
   });
 });
