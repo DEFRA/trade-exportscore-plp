@@ -5,6 +5,7 @@ const headers = {
     establishmentNumber: {
       regex: /RMS-GB-000040/i,
       value: "RMS-GB-000040",
+      establishmentRegex: /RMS-GB-\d{6}-(?:\s)?\d{3}/gi,
     },
     headers: {
       description: "Part Description",

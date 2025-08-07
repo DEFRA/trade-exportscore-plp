@@ -246,3 +246,52 @@ describe("extractEstablishmentNumbers", () => {
     expect(result).toEqual(expected);
   });
 });
+
+describe("extractEstablishmentNumbersFromString", () => {
+  test("returns empty array for empty pdfJson", () => {
+    const pdfJson = { pages: [] };
+    const result = pdfHelper.extractEstablishmentNumbersFromString(
+      pdfJson,
+      /RMS-GB-\d{6}-\d{3}/i,
+    );
+    expect(result).toEqual([]);
+  });
+
+  test("extracts single establishment number from pdfJson", () => {
+    const pdfJson = {
+      pages: [
+        {
+          content: [{ str: "RMS-GB-000000-000" }, { str: "Some other text" }],
+        },
+      ],
+    };
+
+    const expected = ["RMS-GB-000000-000"];
+    const result = pdfHelper.extractEstablishmentNumbersFromString(
+      pdfJson,
+      /RMS-GB-\d{6}-\d{3}/i,
+    );
+    expect(result).toEqual(expected);
+  });
+
+  test("extracts multiple establishment numbers from pdfJson", () => {
+    const pdfJson = {
+      pages: [
+        {
+          content: [
+            { str: "RMS-GB-000000-000" },
+            { str: "Some other text" },
+            { str: "RMS-GB-000000-001" },
+          ],
+        },
+      ],
+    };
+
+    const expected = ["RMS-GB-000000-000", "RMS-GB-000000-001"];
+    const result = pdfHelper.extractEstablishmentNumbersFromString(
+      pdfJson,
+      /RMS-GB-\d{6}-\d{3}/gi,
+    );
+    expect(result).toEqual(expected);
+  });
+});
