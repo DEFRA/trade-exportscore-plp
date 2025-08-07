@@ -114,4 +114,5 @@ module.exports = {
   findUnit,
   findAllMatches,
   remosRegex,
+  addMatch,
 };

@@ -90,6 +90,20 @@ function extractEstablishmentNumbers(pdfJson, remosRegex = regex.remosRegex) {
   return establishmentNumbers;
 }
 
+function extractEstablishmentNumbersFromString(pdfJson, remosRegex) {
+  let establishmentNumbers = [];
+
+  pdfJson.pages.forEach((page) => {
+    const pageText = page.content.map((item) => item.str).join("");
+    const matches = pageText.match(remosRegex);
+    matches.forEach((match) => {
+      establishmentNumbers = regex.addMatch(match, establishmentNumbers);
+    });
+  });
+
+  return establishmentNumbers;
+}
+
 module.exports = {
   getHeaders,
   extractPdf,
@@ -97,4 +111,5 @@ module.exports = {
   removeEmptyStringElements,
   sanitise,
   extractEstablishmentNumbers,
+  extractEstablishmentNumbersFromString,
 };
