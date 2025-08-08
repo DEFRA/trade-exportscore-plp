@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       applicationId: DataTypes.BIGINT,
       countryOfOrigin: DataTypes.STRING,
       totalWeightUnit: DataTypes.STRING,
+      nirms: DataTypes.BOOLEAN,
     },
     {
       freezeTableName: true,
