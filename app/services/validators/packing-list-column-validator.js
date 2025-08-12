@@ -22,90 +22,95 @@ function validatePackingList(packingList) {
 }
 
 function validatePackingListByIndexAndType(packingList) {
-  const missingIdentifier = findItems(packingList.items, hasMissingIdentifier);
-  const invalidProductCodes = findItems(
-    packingList.items,
-    hasInvalidProductCode,
-  );
-  const missingDescription = findItems(
-    packingList.items,
-    hasMissingDescription,
-  );
+  const basicValidationResults = getBasicValidationResults(packingList);
+  const packingListStatusResults = getPackingListStatusResults(packingList);
+  const countryOfOriginResults =
+    getCountryOfOriginValidationResults(packingList);
 
-  const missingPackages = findItems(packingList.items, hasMissingPackages);
-  const invalidPackages = findItems(packingList.items, wrongTypeForPackages);
-  const missingNetWeight = findItems(packingList.items, hasMissingNetWeight);
-  const invalidNetWeight = findItems(packingList.items, wrongTypeNetWeight);
-  const missingNetWeightUnit = findItems(
-    packingList.items,
-    hasMissingNetWeightUnit,
-  );
+  return {
+    ...basicValidationResults,
+    ...packingListStatusResults,
+    ...countryOfOriginResults,
+    hasAllFields: calculateHasAllFields(
+      basicValidationResults,
+      packingListStatusResults,
+    ),
+  };
+}
 
+function getBasicValidationResults(packingList) {
+  return {
+    missingIdentifier: findItems(packingList.items, hasMissingIdentifier),
+    invalidProductCodes: findItems(packingList.items, hasInvalidProductCode),
+    missingDescription: findItems(packingList.items, hasMissingDescription),
+    missingPackages: findItems(packingList.items, hasMissingPackages),
+    invalidPackages: findItems(packingList.items, wrongTypeForPackages),
+    missingNetWeight: findItems(packingList.items, hasMissingNetWeight),
+    invalidNetWeight: findItems(packingList.items, wrongTypeNetWeight),
+    missingNetWeightUnit: findItems(packingList.items, hasMissingNetWeightUnit),
+  };
+}
+
+function getPackingListStatusResults(packingList) {
   const hasRemos = packingList.registration_approval_number !== null;
   const isEmpty = packingList.items.length === 0;
   const missingRemos =
     packingList.registration_approval_number === null ||
     packingList.parserModel === parserModel.NOREMOS;
   const noMatch = packingList.parserModel === parserModel.NOMATCH;
-
-  const hasAllItems =
-    missingIdentifier.length +
-      missingDescription.length +
-      missingPackages.length +
-      missingNetWeight.length +
-      missingNetWeightUnit.length ===
-    0;
-
-  const allItemsValid =
-    invalidPackages.length +
-      invalidNetWeight.length +
-      invalidProductCodes.length ===
-    0;
-
   const hasSingleRms = packingList.establishment_numbers.length <= 1;
 
-  const missingNirms = packingList.validateCountryOfOrigin
-    ? findItems(packingList.items, hasMissingNirms)
-    : [];
-
-  const invalidNirms = packingList.validateCountryOfOrigin
-    ? findItems(packingList.items, hasInvalidNirms)
-    : [];
-
-  const missingCoO = packingList.validateCountryOfOrigin
-    ? findItems(packingList.items, hasMissingCoO)
-    : [];
-
-  const invalidCoO = packingList.validateCountryOfOrigin
-    ? findItems(packingList.items, hasInvalidCoO)
-    : [];
-
-  const highRiskProducts = packingList.validateCountryOfOrigin
-    ? findItems(packingList.items, hasHighRiskProducts)
-    : [];
-
   return {
-    missingIdentifier,
-    invalidProductCodes,
-    missingDescription,
-    missingPackages,
-    invalidPackages,
-    missingNetWeight,
-    invalidNetWeight,
-    missingNetWeightUnit,
     hasRemos,
     isEmpty,
     missingRemos,
     noMatch,
-    hasAllFields:
-      hasAllItems && allItemsValid && hasRemos && !isEmpty && !missingRemos,
     hasSingleRms,
-    missingNirms,
-    invalidNirms,
-    missingCoO,
-    invalidCoO,
-    highRiskProducts,
   };
+}
+
+function getCountryOfOriginValidationResults(packingList) {
+  if (!packingList.validateCountryOfOrigin) {
+    return {
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
+    };
+  }
+
+  return {
+    missingNirms: findItems(packingList.items, hasMissingNirms),
+    invalidNirms: findItems(packingList.items, hasInvalidNirms),
+    missingCoO: findItems(packingList.items, hasMissingCoO),
+    invalidCoO: findItems(packingList.items, hasInvalidCoO),
+    highRiskProducts: findItems(packingList.items, hasHighRiskProducts),
+  };
+}
+
+function calculateHasAllFields(basicResults, statusResults) {
+  const hasAllItems =
+    basicResults.missingIdentifier.length +
+      basicResults.missingDescription.length +
+      basicResults.missingPackages.length +
+      basicResults.missingNetWeight.length +
+      basicResults.missingNetWeightUnit.length ===
+    0;
+
+  const allItemsValid =
+    basicResults.invalidPackages.length +
+      basicResults.invalidNetWeight.length +
+      basicResults.invalidProductCodes.length ===
+    0;
+
+  return (
+    hasAllItems &&
+    allItemsValid &&
+    statusResults.hasRemos &&
+    !statusResults.isEmpty &&
+    !statusResults.missingRemos
+  );
 }
 
 function findItems(items, fn) {
