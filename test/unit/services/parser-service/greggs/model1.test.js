@@ -2,6 +2,7 @@ const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/greggs/model1");
 const parser_model = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/greggs/model1");
+const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 const filename = "greggs-model1.pdf";
 
@@ -103,7 +104,7 @@ describe("findParser", () => {
     const result = await parserService.findParser({}, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
-      "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+      failureReasonsDescriptions.MULTIPLE_RMS,
     );
   });
 

@@ -2,6 +2,7 @@ const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/iceland/model1");
 const parser_model = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/iceland/model1");
+const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 const filename = "iceland-model1.pdf";
 
@@ -17,7 +18,10 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../../../../app/services/document-intelligence");
-const { extractPdf, extractEstablishmentNumbersFromString } = require("../../../../../app/utilities/pdf-helper");
+const {
+  extractPdf,
+  extractEstablishmentNumbersFromString,
+} = require("../../../../../app/utilities/pdf-helper");
 
 createDocumentIntelligenceClient.mockImplementation(() => {
   return jest.fn();
@@ -73,14 +77,13 @@ describe("findParser", () => {
     });
 
     extractEstablishmentNumbersFromString.mockImplementation(() => {
-      return ["RMS-GB-000040-001", "RMS-GB-000040-000"]
-    })
+      return ["RMS-GB-000040-001", "RMS-GB-000040-000"];
+    });
 
-    const result = await parserService.findParser(
-      model.validModel,
-      filename,
+    const result = await parserService.findParser(model.validModel, filename);
+
+    expect(result.business_checks.failure_reasons).toBe(
+      failureReasonsDescriptions.MULTIPLE_RMS,
     );
-
-    expect(result.business_checks.failure_reasons).toBe("Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n")
   });
 });
