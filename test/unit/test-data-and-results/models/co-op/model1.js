@@ -1,5 +1,3 @@
-const { missingKgunit } = require("../tjmorris/model2");
-
 module.exports = {
   validModel: {
     "Input Packing Sheet": [
@@ -10,6 +8,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package KG",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: "RMS-GB-000009-001",
@@ -17,6 +16,7 @@ module.exports = {
         P: "0709601000",
         Q: 12,
         S: 12,
+        Y: "no",
       },
       {
         E: "RMS-GB-000009-001",
@@ -24,6 +24,7 @@ module.exports = {
         P: "0709601001",
         Q: 1,
         S: 1,
+        Y: "no",
       },
     ],
   },
@@ -36,6 +37,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package KG",
         S: "NW total",
+        Y: "NIRMS",
       },
     ],
   },
@@ -48,6 +50,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package KG",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: "RMS-GB-000009-001",
@@ -55,6 +58,7 @@ module.exports = {
         P: "0709601000",
         Q: 12,
         S: 12,
+        Y: "no",
       },
     ],
     sheet2: [
@@ -65,6 +69,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package KG",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: "RMS-GB-000009-001",
@@ -72,6 +77,7 @@ module.exports = {
         P: "0707000599",
         Q: 10,
         S: 58.8,
+        Y: "no",
       },
     ],
   },
@@ -84,6 +90,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package KG",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: "RMS-GB-000009-001",
@@ -91,6 +98,7 @@ module.exports = {
         P: "0709601000",
         Q: null,
         S: 12,
+        Y: "no",
       },
       {
         E: "RMS-GB-000009-001",
@@ -98,6 +106,7 @@ module.exports = {
         P: null,
         Q: 1,
         S: 1,
+        Y: "no",
       },
     ],
   },
@@ -111,6 +120,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package KG",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: "RMS-GB-000009-001",
@@ -125,6 +135,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package KG",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: "INCORRECT",
@@ -160,6 +171,7 @@ module.exports = {
         L: "Product Type/ Category",
         P: "Tariff Code EU",
         O: "Product/ Part Number description",
+        Y: "NIRMS",
       },
       {
         E: "RMS-GB-000009-001",
@@ -186,6 +198,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: null,
@@ -201,6 +214,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package KG",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: "RMS-GB-000009-001",
@@ -208,6 +222,7 @@ module.exports = {
         P: "0709601000",
         Q: 12,
         S: 12,
+        Y: "no",
       },
       {
         E: "RMS-GB-000009-002",
@@ -215,6 +230,7 @@ module.exports = {
         P: "0709601001",
         Q: 1,
         S: 1,
+        Y: "no",
       },
     ],
   },
@@ -227,6 +243,7 @@ module.exports = {
         Q: "Packages",
         R: "Net Weight/Package",
         S: "NW total",
+        Y: "NIRMS",
       },
       {
         E: "RMS-GB-000009-001",
@@ -234,6 +251,7 @@ module.exports = {
         P: "0709601000",
         Q: 12,
         S: 12,
+        Y: "no",
       },
       {
         E: "RMS-GB-000009-001",
@@ -241,6 +259,7 @@ module.exports = {
         P: "0709601001",
         Q: 1,
         S: 1,
+        Y: "no",
       },
     ],
   },

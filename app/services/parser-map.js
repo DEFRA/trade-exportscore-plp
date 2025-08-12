@@ -26,6 +26,13 @@ function findHeaderCols(header, packingListHeader) {
       },
     );
   }
+  if (header.type_of_treatment) {
+    headerCols.type_of_treatment = Object.keys(packingListHeader).find(
+      (key) => {
+        return header.type_of_treatment.test(packingListHeader[key]);
+      },
+    );
+  }
   if (header.nirms) {
     headerCols.nirms = Object.keys(packingListHeader).find((key) => {
       return header.nirms.test(packingListHeader[key]);
