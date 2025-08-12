@@ -117,19 +117,27 @@ function hasHighRiskProducts(item) {
 }
 
 function isNirms(nirms) {
-  if (typeof nirms !== "string") return false;
+  if (typeof nirms !== "string") {
+    return false;
+  }
   const nirmsValues = ["yes", "nirms", "green", "y", "g"];
   return nirmsValues.includes(nirms.trim().toLowerCase());
 }
 
 function isNotNirms(nirms) {
-  if (typeof nirms !== "string") return false;
+  if (typeof nirms !== "string") {
+    return false;
+  }
   const notNirmsValues = ["no", "non-nirms", "non nirms", "red", "n", "r"];
   return notNirmsValues.includes(nirms.trim().toLowerCase());
 }
 
-function isInvalidCoO(country_of_origin) {
-  const normalizedValue = country_of_origin.trim().toLowerCase();
+function isInvalidCoO(countryOfOrigin) {
+  if (isNullOrEmptyString(countryOfOrigin)) {
+    return false;
+  }
+
+  const normalizedValue = countryOfOrigin.trim().toLowerCase();
 
   // Special case for "x"
   if (normalizedValue === "x") {
@@ -144,11 +152,13 @@ function isInvalidCoO(country_of_origin) {
   }
 
   // Single value case
-  return !isValidIsoCode(country_of_origin);
+  return !isValidIsoCode(countryOfOrigin);
 }
 
 function isValidIsoCode(code) {
-  if (!code || typeof code !== "string") return false;
+  if (!code || typeof code !== "string") {
+    return false;
+  }
   const normalisedCode = code.toLowerCase();
   return isoCodesData.some(
     (isoCode) => isoCode.toLowerCase() === normalisedCode,
@@ -156,37 +166,30 @@ function isValidIsoCode(code) {
 }
 
 // Checks if the combination exists in highRiskProductsData
-function isHighRiskProducts(
-  country_of_origin,
-  commodity_code,
-  type_of_treatment,
-) {
+function isHighRiskProducts(countryOfOrigin, commodityCode, typeOfTreatment) {
   return highRiskProductsData.some(
     (item) =>
-      isCountryOfOriginMatching(country_of_origin, item.country_of_origin) &&
-      commodity_code
+      isCountryOfOriginMatching(countryOfOrigin, item.country_of_origin) &&
+      commodityCode
         ?.toLowerCase()
         .startsWith(item.commodity_code?.toLowerCase()) &&
-      isTreatmentTypeMatching(type_of_treatment, item.type_of_treatment),
+      isTreatmentTypeMatching(typeOfTreatment, item.type_of_treatment),
   );
 }
 
 // Helper function to check if country of origin matches (handles comma-separated values)
-function isCountryOfOriginMatching(
-  country_of_origin,
-  high_risk_country_of_origin,
-) {
+function isCountryOfOriginMatching(countryOfOrigin, highRiskCountryOfOrigin) {
   if (
-    isNullOrEmptyString(country_of_origin) ||
-    isNullOrEmptyString(high_risk_country_of_origin)
+    isNullOrEmptyString(countryOfOrigin) ||
+    isNullOrEmptyString(highRiskCountryOfOrigin)
   ) {
     return false;
   }
 
-  const normalizedCountry = country_of_origin.toLowerCase();
-  const normalizedHighRiskCountry = high_risk_country_of_origin.toLowerCase();
+  const normalizedCountry = countryOfOrigin.toLowerCase();
+  const normalizedHighRiskCountry = highRiskCountryOfOrigin.toLowerCase();
 
-  // Check if country_of_origin contains comma-separated values
+  // Check if countryOfOrigin contains comma-separated values
   if (normalizedCountry.includes(",")) {
     const countryCodes = normalizedCountry.split(",");
     // Check if any of the country codes matches the high risk country
@@ -200,21 +203,17 @@ function isCountryOfOriginMatching(
 }
 
 // Helper function to check if treatment type matches
-function isTreatmentTypeMatching(
-  type_of_treatment,
-  high_risk_type_of_treatment,
-) {
-  // If high risk treatment type or type_of_treatment is not specified, skip the treatment type check
+function isTreatmentTypeMatching(typeOfTreatment, highRiskTypeOfTreatment) {
+  // If high risk treatment type or typeOfTreatment is not specified, skip the treatment type check
   if (
-    isNullOrEmptyString(high_risk_type_of_treatment) ||
-    isNullOrEmptyString(type_of_treatment)
+    isNullOrEmptyString(highRiskTypeOfTreatment) ||
+    isNullOrEmptyString(typeOfTreatment)
   ) {
     return true;
   }
 
   return (
-    high_risk_type_of_treatment?.toLowerCase() ===
-    type_of_treatment?.toLowerCase()
+    highRiskTypeOfTreatment?.toLowerCase() === typeOfTreatment?.toLowerCase()
   );
 }
 
