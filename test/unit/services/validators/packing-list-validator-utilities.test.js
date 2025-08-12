@@ -4,11 +4,33 @@ const {
   hasMissingIdentifier,
   hasMissingNetWeight,
   hasMissingPackages,
+  hasMissingNirms,
+  hasInvalidNirms,
+  hasMissingCoO,
+  hasInvalidCoO,
+  hasHighRiskProducts,
   wrongTypeForPackages,
   wrongTypeNetWeight,
   removeBadData,
   removeEmptyItems,
 } = require("../../../../app/services/validators/packing-list-validator-utilities");
+
+jest.mock("../../../../app/services/data/data-iso-codes.json", () => [
+  "VALID_ISO",
+  "HIGH_RISK_ISO",
+]);
+jest.mock("../../../../app/services/data/data-high-risk-products.json", () => [
+  {
+    country_of_origin: "HIGH_RISK_ISO",
+    commodity_code: "HIGH_RISK_COMMODITY_1",
+    type_of_treatment: "HIGH_RISK_TREATMENT",
+  },
+  {
+    country_of_origin: "HIGH_RISK_ISO",
+    commodity_code: "HIGH_RISK_COMMODITY_2",
+    type_of_treatment: null,
+  },
+]);
 
 describe("validator function tests", () => {
   test.each([
@@ -84,6 +106,125 @@ describe("validator function tests", () => {
     const item = { number_of_packages };
     expect(wrongTypeForPackages(item)).toBe(expected);
   });
+
+  test.each([
+    [null, true], // Null value
+    ["", true], // Empty value
+    ["NIRMS", false], // Value
+  ])("hasMissingNirms", (nirms, expected) => {
+    const item = { nirms };
+    expect(hasMissingNirms(item)).toBe(expected);
+  });
+
+  test.each([
+    ["INVALID ", true], // Invalid Value
+    ["ni rms", true], // Invalid Value
+    [1, true], // No string value
+    ["Yes", false], // Valid Value
+    ["NIRMS", false], // Valid Value
+    ["Green", false], // Valid Value
+    ["Y", false], // Valid Value
+    ["G", false], // Valid Value
+    ["No", false], // Valid Value
+    ["Non-NIRMS", false], // Valid Value
+    ["Non NIRMS", false], // Valid Value
+    ["Red", false], // Valid Value
+    ["N", false], // Valid Value
+    ["R", false], // Valid Value
+    ["nirms", false], // Case insensitive
+    ["", false], // Empty value should be handled by hasMissingNirms
+  ])("hasInvalidNirms", (nirms, expected) => {
+    const item = { nirms };
+    expect(hasInvalidNirms(item)).toBe(expected);
+  });
+
+  test.each([
+    ["NIRMS", null, true], // Nirms, missing value
+    ["NON-NIRMS", null, false], // Non-NIRMS, missing value
+    ["NIRMS", "VALID_ISO", false], // Nirms, valid value
+  ])("hasMissingCoO", (nirms, country_of_origin, expected) => {
+    const item = { nirms, country_of_origin };
+    expect(hasMissingCoO(item)).toBe(expected);
+  });
+
+  test.each([
+    ["NIRMS", "INVALID_ISO", true], // Nirms, invalid value
+    ["NIRMS", "VALID_ISO HIGH_RISK_ISO", true], // Nirms, Multiple ISO codes not comma separated
+    ["NIRMS", "VALID_ISO, INVALID_ISO", true], // Nirms, Multiple ISO codes comma separated, one invalid
+    ["NON-NIRMS", null, false], // Non-NIRMS, missing value, should be handled by hasMissingCoO
+    ["NIRMS", "VALID_ISO", false], // Nirms, valid value
+    ["NIRMS", "X", false], // Nirms, Specific 'X' value, should be ignored
+    ["NIRMS", "x", false], // Nirms, Specific 'x' value, should be ignored
+    ["NIRMS", "VALID_ISO, HIGH_RISK_ISO", false], // Nirms, Multiple ISO codes comma separated
+  ])("hasInvalidCoO", (nirms, country_of_origin, expected) => {
+    const item = { nirms, country_of_origin };
+    expect(hasInvalidCoO(item)).toBe(expected);
+  });
+
+  test.each([
+    [
+      "NIRMS",
+      "HIGH_RISK_ISO",
+      "HIGH_RISK_COMMODITY_1",
+      "HIGH_RISK_TREATMENT",
+      true,
+    ], // Exact matching value with treatment type
+    [
+      "NIRMS",
+      "VALID_ISO, HIGH_RISK_ISO",
+      "HIGH_RISK_COMMODITY_1",
+      "HIGH_RISK_TREATMENT",
+      true,
+    ], // Matching value with multiple countries of origin
+    [
+      "NIRMS",
+      "HIGH_RISK_ISO",
+      "HIGH_RISK_COMMODITY_1_LONG",
+      "HIGH_RISK_TREATMENT",
+      true,
+    ], // Matching value with longer commodity code
+    [
+      "nirms",
+      "high_risk_iso",
+      "high_risk_commodity_1",
+      "high_risk_treatment",
+      true,
+    ], // Exact matching value with treatment type case insensitive
+    ["NIRMS", "HIGH_RISK_ISO", "HIGH_RISK_COMMODITY_1", null, true], // no treatment type specified when one should be
+    ["NIRMS", "HIGH_RISK_ISO", "HIGH_RISK_COMMODITY_2", null, true], // Exact matching value without treatment type
+    [
+      "NIRMS",
+      "HIGH_RISK_ISO",
+      "HIGH_RISK_COMMODITY_2",
+      "HIGH_RISK_TREATMENT",
+      true,
+    ], // Matching value with optional treatment type
+    [
+      "NON-NIRMS",
+      "HIGH_RISK_ISO",
+      "HIGH_RISK_COMMODITY_1",
+      "HIGH_RISK_TREATMENT",
+      false,
+    ], // NON NIRMS entry
+    [
+      "NIRMS",
+      "HIGH_RISK_ISO",
+      "HIGH_RISK_COMMODITY_1",
+      "VALID_TREATMENT",
+      false,
+    ], // Value not matching
+  ])(
+    "hasHighRiskProducts",
+    (nirms, country_of_origin, commodity_code, type_of_treatment, expected) => {
+      const item = {
+        nirms,
+        country_of_origin,
+        commodity_code,
+        type_of_treatment,
+      };
+      expect(hasHighRiskProducts(item)).toBe(expected);
+    },
+  );
 });
 
 describe("removeBadData", () => {

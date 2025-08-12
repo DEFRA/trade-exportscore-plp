@@ -3,6 +3,7 @@ const model = require("../../../test-data-and-results/models/booker/model1");
 const parserModel = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/booker/model1");
 const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
+const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 jest.mock("../../../../../app/utilities/pdf-helper", () => {
   const actual = jest.requireActual("../../../../../app/utilities/pdf-helper");
@@ -62,7 +63,7 @@ describe("findParser", () => {
     });
     const result = await parserService.findParser({}, filename);
     expect(result.business_checks.failure_reasons).toBe(
-      "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+      failureReasonsDescriptions.MULTIPLE_RMS,
     );
   });
 });

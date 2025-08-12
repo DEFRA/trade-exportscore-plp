@@ -1,4 +1,5 @@
 const parserModel = require("../../../../../app/services/parser-model");
+const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 module.exports = {
   validTestResult: {
@@ -160,8 +161,7 @@ module.exports = {
     ],
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons:
-        "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+      failure_reasons: failureReasonsDescriptions.MULTIPLE_RMS,
     },
     parserModel: parserModel.SAVERS1,
   },

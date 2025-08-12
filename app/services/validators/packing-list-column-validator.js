@@ -7,8 +7,14 @@ const {
   wrongTypeNetWeight,
   hasInvalidProductCode,
   hasMissingNetWeightUnit,
+  hasMissingNirms,
+  hasInvalidNirms,
+  hasMissingCoO,
+  hasInvalidCoO,
+  hasHighRiskProducts,
 } = require("./packing-list-validator-utilities");
 const parserModel = require("../parser-model");
+const failureReasonsDescriptions = require("./packing-list-failure-reasons");
 
 function validatePackingList(packingList) {
   const validationResult = validatePackingListByIndexAndType(packingList);
@@ -57,6 +63,27 @@ function validatePackingListByIndexAndType(packingList) {
     0;
 
   const hasSingleRms = packingList.establishment_numbers.length <= 1;
+
+  const missingNirms = packingList.validateCountryOfOrigin
+    ? findItems(packingList.items, hasMissingNirms)
+    : [];
+
+  const invalidNirms = packingList.validateCountryOfOrigin
+    ? findItems(packingList.items, hasInvalidNirms)
+    : [];
+
+  const missingCoO = packingList.validateCountryOfOrigin
+    ? findItems(packingList.items, hasMissingCoO)
+    : [];
+
+  const invalidCoO = packingList.validateCountryOfOrigin
+    ? findItems(packingList.items, hasInvalidCoO)
+    : [];
+
+  const highRiskProducts = packingList.validateCountryOfOrigin
+    ? findItems(packingList.items, hasHighRiskProducts)
+    : [];
+
   return {
     missingIdentifier,
     invalidProductCodes,
@@ -73,6 +100,11 @@ function validatePackingListByIndexAndType(packingList) {
     hasAllFields:
       hasAllItems && allItemsValid && hasRemos && !isEmpty && !missingRemos,
     hasSingleRms,
+    missingNirms,
+    invalidNirms,
+    missingCoO,
+    invalidCoO,
+    highRiskProducts,
   };
 }
 
@@ -94,31 +126,51 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
     const checks = [
       {
         collection: validationResult.missingIdentifier,
-        description: "Identifier is missing",
+        description: failureReasonsDescriptions.IDENTIFIER_MISSING,
       },
       {
         collection: validationResult.invalidProductCodes,
-        description: "Product code is invalid",
+        description: failureReasonsDescriptions.PRODUCT_CODE_INVALID,
       },
       {
         collection: validationResult.missingDescription,
-        description: "Product description is missing",
+        description: failureReasonsDescriptions.DESCRIPTION_MISSING,
       },
       {
         collection: validationResult.missingPackages,
-        description: "No of packages is missing",
+        description: failureReasonsDescriptions.PACKAGES_MISSING,
       },
       {
         collection: validationResult.missingNetWeight,
-        description: "Total net weight is missing",
+        description: failureReasonsDescriptions.NET_WEIGHT_MISSING,
       },
       {
         collection: validationResult.invalidPackages,
-        description: "No of packages is invalid",
+        description: failureReasonsDescriptions.PACKAGES_INVALID,
       },
       {
         collection: validationResult.invalidNetWeight,
-        description: "Total net weight is invalid",
+        description: failureReasonsDescriptions.NET_WEIGHT_INVALID,
+      },
+      {
+        collection: validationResult.missingNirms,
+        description: failureReasonsDescriptions.NIRMS_MISSING,
+      },
+      {
+        collection: validationResult.invalidNirms,
+        description: failureReasonsDescriptions.NIRMS_INVALID,
+      },
+      {
+        collection: validationResult.missingCoO,
+        description: failureReasonsDescriptions.COO_MISSING,
+      },
+      {
+        collection: validationResult.invalidCoO,
+        description: failureReasonsDescriptions.COO_INVALID,
+      },
+      {
+        collection: validationResult.highRiskProducts,
+        description: failureReasonsDescriptions.HIGH_RISK,
       },
     ];
     //if the net weight unit is in the header, just the description below is assigned to the failure reason
@@ -126,13 +178,13 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
       validationResult.missingNetWeightUnit.length !== 0 &&
       packingList.unitInHeader
     ) {
-      failureReasons = "Net Weight Unit of Measure (kg) not found.\n";
+      failureReasons = `${failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING}.\n`;
     }
     // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array
     else {
       checks.push({
         collection: validationResult.missingNetWeightUnit,
-        description: "Net Weight Unit of Measure (kg) not found",
+        description: failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
       });
     }
     checks.forEach((check) => {
@@ -223,13 +275,13 @@ function getFailureReasons(validationResult) {
     return null;
   }
   if (validationResult.missingRemos) {
-    return "Check GB Establishment RMS Number.";
+    return failureReasonsDescriptions.MISSING_REMOS;
   }
   if (validationResult.isEmpty) {
-    return "No product line data found.";
+    return failureReasonsDescriptions.EMPTY_DATA;
   }
   if (!validationResult.hasSingleRms) {
-    return "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n";
+    return failureReasonsDescriptions.MULTIPLE_RMS;
   }
   return "";
 }

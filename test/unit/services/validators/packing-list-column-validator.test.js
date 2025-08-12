@@ -1,5 +1,6 @@
 const packingList = require("../../../../app/models/packing-list");
 const packingListValidator = require("../../../../app/services/validators/packing-list-column-validator");
+const failureReasonsDescriptions = require("../../../../app/services/validators/packing-list-failure-reasons");
 
 describe("validatePackingListByIndexAndType", () => {
   test("valid data", () => {
@@ -529,6 +530,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidPackages: [],
       invalidNetWeight: [],
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -537,7 +543,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toBe("No product line data found.");
+    expect(result.failureReasons).toBe(failureReasonsDescriptions.EMPTY_DATA);
   });
 
   test("missing identifier", () => {
@@ -553,6 +559,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [],
       hasSingleRms: true,
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -577,6 +588,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [],
       hasSingleRms: true,
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -585,7 +601,9 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toContain("Product description is missing");
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.DESCRIPTION_MISSING,
+    );
   });
 
   test("missing packages", () => {
@@ -601,6 +619,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [],
       hasSingleRms: true,
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -609,7 +632,9 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toContain("No of packages is missing");
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.PACKAGES_MISSING,
+    );
   });
 
   test("missing net weight", () => {
@@ -625,6 +650,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [],
       hasSingleRms: true,
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -633,7 +663,9 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toContain("Total net weight is missing");
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NET_WEIGHT_MISSING,
+    );
   });
 
   test("missing net weight unit", () => {
@@ -649,6 +681,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [],
       hasSingleRms: true,
       missingNetWeightUnit: [{ rowNumber: 1 }],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -657,7 +694,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain(
-      "Net Weight Unit of Measure (kg) not found",
+      failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
     );
   });
 
@@ -674,6 +711,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [],
       hasSingleRms: true,
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -682,7 +724,9 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toContain("No of packages is invalid");
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.PACKAGES_INVALID,
+    );
   });
 
   test("invalid net weight", () => {
@@ -698,6 +742,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [{ rowNumber: 1 }],
       hasSingleRms: true,
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -706,7 +755,9 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toContain("Total net weight is invalid");
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NET_WEIGHT_INVALID,
+    );
   });
 
   test("invalid product code", () => {
@@ -722,6 +773,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [],
       hasSingleRms: true,
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -730,7 +786,163 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
 
     expect(result.hasAllFields).toBeFalsy();
-    expect(result.failureReasons).toContain("Product code is invalid");
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.PRODUCT_CODE_INVALID,
+    );
+  });
+
+  test("missing nirms", () => {
+    const validationResult = {
+      hasAllFields: false,
+      isEmpty: false,
+      missingIdentifier: [],
+      invalidProductCodes: [],
+      missingDescription: [],
+      missingPackages: [],
+      missingNetWeight: [],
+      invalidPackages: [],
+      invalidNetWeight: [],
+      hasSingleRms: true,
+      missingNetWeightUnit: [],
+      missingNirms: [{ rowNumber: 1 }],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
+    };
+
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NIRMS_MISSING,
+    );
+  });
+
+  test("invalid nirms", () => {
+    const validationResult = {
+      hasAllFields: false,
+      isEmpty: false,
+      missingIdentifier: [],
+      invalidProductCodes: [],
+      missingDescription: [],
+      missingPackages: [],
+      missingNetWeight: [],
+      invalidPackages: [],
+      invalidNetWeight: [],
+      hasSingleRms: true,
+      missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [{ rowNumber: 1 }],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
+    };
+
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NIRMS_INVALID,
+    );
+  });
+  test("missing coo", () => {
+    const validationResult = {
+      hasAllFields: false,
+      isEmpty: false,
+      missingIdentifier: [],
+      invalidProductCodes: [],
+      missingDescription: [],
+      missingPackages: [],
+      missingNetWeight: [],
+      invalidPackages: [],
+      invalidNetWeight: [],
+      hasSingleRms: true,
+      missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [{ rowNumber: 1 }],
+      invalidCoO: [],
+      highRiskProducts: [],
+    };
+
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.COO_MISSING,
+    );
+  });
+
+  test("invalid coo", () => {
+    const validationResult = {
+      hasAllFields: false,
+      isEmpty: false,
+      missingIdentifier: [],
+      invalidProductCodes: [],
+      missingDescription: [],
+      missingPackages: [],
+      missingNetWeight: [],
+      invalidPackages: [],
+      invalidNetWeight: [],
+      hasSingleRms: true,
+      missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [{ rowNumber: 1 }],
+      highRiskProducts: [],
+    };
+
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.COO_INVALID,
+    );
+  });
+
+  test("high risk products", () => {
+    const validationResult = {
+      hasAllFields: false,
+      isEmpty: false,
+      missingIdentifier: [],
+      invalidProductCodes: [],
+      missingDescription: [],
+      missingPackages: [],
+      missingNetWeight: [],
+      invalidPackages: [],
+      invalidNetWeight: [],
+      hasSingleRms: true,
+      missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [{ rowNumber: 1 }],
+    };
+
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.HIGH_RISK,
+    );
   });
 
   test("multiple failures", () => {
@@ -746,6 +958,11 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNetWeight: [{ rowNumber: 1 }],
       hasSingleRms: true,
       missingNetWeightUnit: [],
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -755,10 +972,10 @@ describe("generateFailuresByIndexAndTypes", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain(
-      "Total net weight is invalid in row 1.\n",
+      `${failureReasonsDescriptions.NET_WEIGHT_INVALID} in row 1.\n`,
     );
     expect(result.failureReasons).toContain(
-      "Product description is missing in rows 1 and 2.\n",
+      `${failureReasonsDescriptions.DESCRIPTION_MISSING} in rows 1 and 2.\n`,
     );
   });
 });

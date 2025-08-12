@@ -5,6 +5,7 @@ function combine(
   ParserModel,
   establishmentNumbers = [],
   findUnitInHeader = false,
+  validateCountryOfOrigin = false,
 ) {
   return {
     registration_approval_number: establishmentNumber,
@@ -16,6 +17,7 @@ function combine(
     parserModel: ParserModel,
     establishment_numbers: establishmentNumbers,
     unitInHeader: findUnitInHeader ?? false,
+    validateCountryOfOrigin: validateCountryOfOrigin ?? false,
   };
 }
 
