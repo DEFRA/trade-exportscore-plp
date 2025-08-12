@@ -129,10 +129,6 @@ function isNotNirms(nirms) {
 }
 
 function isInvalidCoO(country_of_origin) {
-  if (isNullOrEmptyString(country_of_origin)) {
-    return false;
-  }
-
   const normalizedValue = country_of_origin.trim().toLowerCase();
 
   // Special case for "x"

@@ -28,7 +28,6 @@ jest.mock("../../../../app/services/data/data-high-risk-products.json", () => [
   {
     country_of_origin: "HIGH_RISK_ISO",
     commodity_code: "HIGH_RISK_COMMODITY_2",
-    type_of_treatment: null,
   },
 ]);
 
@@ -179,10 +178,10 @@ describe("validator function tests", () => {
     [
       "NIRMS",
       "HIGH_RISK_ISO",
-      "HIGH_RISK_COMMODITY_1_LONG",
+      "HIGH_RISK_COMMODITY_1_EXTRA",
       "HIGH_RISK_TREATMENT",
       true,
-    ], // Matching value with longer commodity code
+    ], // Matching value with longer commodity code that starts with value in high risk product list
     [
       "nirms",
       "high_risk_iso",
@@ -190,8 +189,8 @@ describe("validator function tests", () => {
       "high_risk_treatment",
       true,
     ], // Exact matching value with treatment type case insensitive
-    ["NIRMS", "HIGH_RISK_ISO", "HIGH_RISK_COMMODITY_1", null, true], // no treatment type specified when one should be
-    ["NIRMS", "HIGH_RISK_ISO", "HIGH_RISK_COMMODITY_2", null, true], // Exact matching value without treatment type
+    ["NIRMS", "HIGH_RISK_ISO", "HIGH_RISK_COMMODITY_1", null, true], // no treatment type specified in packing list, treatment type specified in high risk product list
+    ["NIRMS", "HIGH_RISK_ISO", "HIGH_RISK_COMMODITY_2", null, true], // Exact matching value without treatment type specified in high risk product list
     [
       "NIRMS",
       "HIGH_RISK_ISO",
