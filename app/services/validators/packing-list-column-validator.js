@@ -128,56 +128,7 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
   } else {
     // build failure reason
     failureReasons = getFailureReasons(validationResult);
-    const checks = [
-      {
-        collection: validationResult.missingIdentifier,
-        description: failureReasonsDescriptions.IDENTIFIER_MISSING,
-      },
-      {
-        collection: validationResult.invalidProductCodes,
-        description: failureReasonsDescriptions.PRODUCT_CODE_INVALID,
-      },
-      {
-        collection: validationResult.missingDescription,
-        description: failureReasonsDescriptions.DESCRIPTION_MISSING,
-      },
-      {
-        collection: validationResult.missingPackages,
-        description: failureReasonsDescriptions.PACKAGES_MISSING,
-      },
-      {
-        collection: validationResult.missingNetWeight,
-        description: failureReasonsDescriptions.NET_WEIGHT_MISSING,
-      },
-      {
-        collection: validationResult.invalidPackages,
-        description: failureReasonsDescriptions.PACKAGES_INVALID,
-      },
-      {
-        collection: validationResult.invalidNetWeight,
-        description: failureReasonsDescriptions.NET_WEIGHT_INVALID,
-      },
-      {
-        collection: validationResult.missingNirms,
-        description: failureReasonsDescriptions.NIRMS_MISSING,
-      },
-      {
-        collection: validationResult.invalidNirms,
-        description: failureReasonsDescriptions.NIRMS_INVALID,
-      },
-      {
-        collection: validationResult.missingCoO,
-        description: failureReasonsDescriptions.COO_MISSING,
-      },
-      {
-        collection: validationResult.invalidCoO,
-        description: failureReasonsDescriptions.COO_INVALID,
-      },
-      {
-        collection: validationResult.highRiskProducts,
-        description: failureReasonsDescriptions.HIGH_RISK,
-      },
-    ];
+    const checks = createValidationChecks(validationResult);
     //if the net weight unit is in the header, just the description below is assigned to the failure reason
     if (
       validationResult.missingNetWeightUnit.length !== 0 &&
@@ -205,6 +156,59 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
     hasAllFields: false,
     failureReasons,
   };
+}
+
+function createValidationChecks(validationResult) {
+  return [
+    {
+      collection: validationResult.missingIdentifier,
+      description: failureReasonsDescriptions.IDENTIFIER_MISSING,
+    },
+    {
+      collection: validationResult.invalidProductCodes,
+      description: failureReasonsDescriptions.PRODUCT_CODE_INVALID,
+    },
+    {
+      collection: validationResult.missingDescription,
+      description: failureReasonsDescriptions.DESCRIPTION_MISSING,
+    },
+    {
+      collection: validationResult.missingPackages,
+      description: failureReasonsDescriptions.PACKAGES_MISSING,
+    },
+    {
+      collection: validationResult.missingNetWeight,
+      description: failureReasonsDescriptions.NET_WEIGHT_MISSING,
+    },
+    {
+      collection: validationResult.invalidPackages,
+      description: failureReasonsDescriptions.PACKAGES_INVALID,
+    },
+    {
+      collection: validationResult.invalidNetWeight,
+      description: failureReasonsDescriptions.NET_WEIGHT_INVALID,
+    },
+    {
+      collection: validationResult.missingNirms,
+      description: failureReasonsDescriptions.NIRMS_MISSING,
+    },
+    {
+      collection: validationResult.invalidNirms,
+      description: failureReasonsDescriptions.NIRMS_INVALID,
+    },
+    {
+      collection: validationResult.missingCoO,
+      description: failureReasonsDescriptions.COO_MISSING,
+    },
+    {
+      collection: validationResult.invalidCoO,
+      description: failureReasonsDescriptions.COO_INVALID,
+    },
+    {
+      collection: validationResult.highRiskProducts,
+      description: failureReasonsDescriptions.HIGH_RISK,
+    },
+  ];
 }
 
 function generateFailureReasonFromRows(description, rows) {
