@@ -263,6 +263,67 @@ module.exports = {
       },
     ],
   },
+  nonNirms: {
+    "Input Packing Sheet": [
+      {
+        E: "Dispatch RMS Establishment",
+        O: "Product/ Part Number description",
+        P: "Tariff Code EU",
+        Q: "Packages",
+        R: "Net Weight/Package KG",
+        S: "NW total",
+        Y: "NIRMS",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+        Y: "no",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+        Y: "non-nirms",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+        Y: "non nirms",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+        Y: "red",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+        Y: "r",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+        Y: "n",
+      },
+    ],
+  },
   invalidNirms: {
     "Input Packing Sheet": [
       {
@@ -323,6 +384,7 @@ module.exports = {
         Q: 12,
         S: 12,
         Y: "yes",
+        Z: "",
       },
       {
         E: "RMS-GB-000009-001",
@@ -426,6 +488,38 @@ module.exports = {
       },
     ],
   },
+  xCoO: {
+    "Input Packing Sheet": [
+      {
+        E: "Dispatch RMS Establishment",
+        O: "Product/ Part Number description",
+        P: "Tariff Code EU",
+        Q: "Packages",
+        R: "Net Weight/Package KG",
+        S: "NW total",
+        Y: "NIRMS",
+        Z: "Country of Origin",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+        Y: "yes",
+        Z: "X",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Ripe And Ready To Eat Avocados 2S.",
+        P: "0709601001",
+        Q: 1,
+        S: 1,
+        Y: "nirms",
+        Z: "x",
+      },
+    ]
+  },
   highRiskProducts: {
     "Input Packing Sheet": [
       {
@@ -466,6 +560,15 @@ module.exports = {
         Q: 12,
         S: 12,
         Y: "yes",
+        Z: "HIGH_RISK_ISO",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Mocked High Risk Product",
+        P: "012",
+        Q: 12,
+        S: 12,
+        Y: "no",
         Z: "HIGH_RISK_ISO",
       },
     ],

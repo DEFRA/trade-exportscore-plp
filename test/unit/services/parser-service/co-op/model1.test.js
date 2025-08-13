@@ -76,6 +76,12 @@ describe("matchesCoopModel1", () => {
     );
   });
 
+  test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as true for valid NIRMS", async () => {
+    const result = await parserService.findParser(model.nonNirms, filename);
+
+    expect(result.business_checks.all_required_fields_present).toBeTruthy();
+  });
+
   test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as false for missing NIRMS", async () => {
     const result = await parserService.findParser(model.missingNirms, filename);
 
@@ -98,6 +104,12 @@ describe("matchesCoopModel1", () => {
     expect(result.business_checks.failure_reasons).toBe(
       'Invalid Country of Origin in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
     );
+  });
+
+  test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as true for X CoO", async () => {
+    const result = await parserService.findParser(model.xCoO, filename);
+
+    expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
 
   test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as false for high risk products", async () => {
