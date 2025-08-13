@@ -7,8 +7,14 @@ const {
   wrongTypeNetWeight,
   hasInvalidProductCode,
   hasMissingNetWeightUnit,
+  hasMissingNirms,
+  hasInvalidNirms,
+  hasMissingCoO,
+  hasInvalidCoO,
+  hasHighRiskProducts,
 } = require("./packing-list-validator-utilities");
 const parserModel = require("../parser-model");
+const failureReasonsDescriptions = require("./packing-list-failure-reasons");
 
 function validatePackingList(packingList) {
   const validationResult = validatePackingListByIndexAndType(packingList);
@@ -16,64 +22,108 @@ function validatePackingList(packingList) {
 }
 
 function validatePackingListByIndexAndType(packingList) {
-  const missingIdentifier = findItems(packingList.items, hasMissingIdentifier);
-  const invalidProductCodes = findItems(
-    packingList.items,
-    hasInvalidProductCode,
-  );
-  const missingDescription = findItems(
-    packingList.items,
-    hasMissingDescription,
-  );
+  const basicValidationResults = getBasicValidationResults(packingList);
+  const packingListStatusResults = getPackingListStatusResults(packingList);
+  const countryOfOriginResults =
+    getCountryOfOriginValidationResults(packingList);
+  return {
+    ...basicValidationResults,
+    ...packingListStatusResults,
+    ...countryOfOriginResults,
+    hasAllFields: calculateHasAllFields(
+      basicValidationResults,
+      packingListStatusResults,
+      countryOfOriginResults,
+    ),
+  };
+}
 
-  const missingPackages = findItems(packingList.items, hasMissingPackages);
-  const invalidPackages = findItems(packingList.items, wrongTypeForPackages);
-  const missingNetWeight = findItems(packingList.items, hasMissingNetWeight);
-  const invalidNetWeight = findItems(packingList.items, wrongTypeNetWeight);
-  const missingNetWeightUnit = findItems(
-    packingList.items,
-    hasMissingNetWeightUnit,
-  );
+function getBasicValidationResults(packingList) {
+  return {
+    missingIdentifier: findItems(packingList.items, hasMissingIdentifier),
+    invalidProductCodes: findItems(packingList.items, hasInvalidProductCode),
+    missingDescription: findItems(packingList.items, hasMissingDescription),
+    missingPackages: findItems(packingList.items, hasMissingPackages),
+    invalidPackages: findItems(packingList.items, wrongTypeForPackages),
+    missingNetWeight: findItems(packingList.items, hasMissingNetWeight),
+    invalidNetWeight: findItems(packingList.items, wrongTypeNetWeight),
+    missingNetWeightUnit: findItems(packingList.items, hasMissingNetWeightUnit),
+  };
+}
 
+function getPackingListStatusResults(packingList) {
   const hasRemos = packingList.registration_approval_number !== null;
   const isEmpty = packingList.items.length === 0;
   const missingRemos =
     packingList.registration_approval_number === null ||
     packingList.parserModel === parserModel.NOREMOS;
   const noMatch = packingList.parserModel === parserModel.NOMATCH;
-
-  const hasAllItems =
-    missingIdentifier.length +
-      missingDescription.length +
-      missingPackages.length +
-      missingNetWeight.length +
-      missingNetWeightUnit.length ===
-    0;
-
-  const allItemsValid =
-    invalidPackages.length +
-      invalidNetWeight.length +
-      invalidProductCodes.length ===
-    0;
-
   const hasSingleRms = packingList.establishment_numbers.length <= 1;
+
   return {
-    missingIdentifier,
-    invalidProductCodes,
-    missingDescription,
-    missingPackages,
-    invalidPackages,
-    missingNetWeight,
-    invalidNetWeight,
-    missingNetWeightUnit,
     hasRemos,
     isEmpty,
     missingRemos,
     noMatch,
-    hasAllFields:
-      hasAllItems && allItemsValid && hasRemos && !isEmpty && !missingRemos,
     hasSingleRms,
   };
+}
+
+function getCountryOfOriginValidationResults(packingList) {
+  if (!packingList.validateCountryOfOrigin) {
+    return {
+      missingNirms: [],
+      invalidNirms: [],
+      missingCoO: [],
+      invalidCoO: [],
+      highRiskProducts: [],
+    };
+  }
+
+  return {
+    missingNirms: findItems(packingList.items, hasMissingNirms),
+    invalidNirms: findItems(packingList.items, hasInvalidNirms),
+    missingCoO: findItems(packingList.items, hasMissingCoO),
+    invalidCoO: findItems(packingList.items, hasInvalidCoO),
+    highRiskProducts: findItems(packingList.items, hasHighRiskProducts),
+  };
+}
+
+function calculateHasAllFields(
+  basicResults,
+  statusResults,
+  countryOfOriginResults,
+) {
+  const hasAllItems =
+    basicResults.missingIdentifier.length +
+      basicResults.missingDescription.length +
+      basicResults.missingPackages.length +
+      basicResults.missingNetWeight.length +
+      basicResults.missingNetWeightUnit.length ===
+    0;
+
+  const allItemsValid =
+    basicResults.invalidPackages.length +
+      basicResults.invalidNetWeight.length +
+      basicResults.invalidProductCodes.length ===
+    0;
+
+  const countryOfOriginValid =
+    countryOfOriginResults.missingNirms.length +
+      countryOfOriginResults.invalidNirms.length +
+      countryOfOriginResults.missingCoO.length +
+      countryOfOriginResults.invalidCoO.length +
+      countryOfOriginResults.highRiskProducts.length ===
+    0;
+
+  return (
+    hasAllItems &&
+    allItemsValid &&
+    countryOfOriginValid &&
+    statusResults.hasRemos &&
+    !statusResults.isEmpty &&
+    !statusResults.missingRemos
+  );
 }
 
 function findItems(items, fn) {
@@ -91,48 +141,19 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
   } else {
     // build failure reason
     failureReasons = getFailureReasons(validationResult);
-    const checks = [
-      {
-        collection: validationResult.missingIdentifier,
-        description: "Identifier is missing",
-      },
-      {
-        collection: validationResult.invalidProductCodes,
-        description: "Product code is invalid",
-      },
-      {
-        collection: validationResult.missingDescription,
-        description: "Product description is missing",
-      },
-      {
-        collection: validationResult.missingPackages,
-        description: "No of packages is missing",
-      },
-      {
-        collection: validationResult.missingNetWeight,
-        description: "Total net weight is missing",
-      },
-      {
-        collection: validationResult.invalidPackages,
-        description: "No of packages is invalid",
-      },
-      {
-        collection: validationResult.invalidNetWeight,
-        description: "Total net weight is invalid",
-      },
-    ];
+    const checks = createValidationChecks(validationResult);
     //if the net weight unit is in the header, just the description below is assigned to the failure reason
     if (
       validationResult.missingNetWeightUnit.length !== 0 &&
       packingList.unitInHeader
     ) {
-      failureReasons = "Net Weight Unit of Measure (kg) not found.\n";
+      failureReasons = `${failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING}.\n`;
     }
     // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array
     else {
       checks.push({
         collection: validationResult.missingNetWeightUnit,
-        description: "Net Weight Unit of Measure (kg) not found",
+        description: failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
       });
     }
     checks.forEach((check) => {
@@ -148,6 +169,59 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
     hasAllFields: false,
     failureReasons,
   };
+}
+
+function createValidationChecks(validationResult) {
+  return [
+    {
+      collection: validationResult.missingIdentifier,
+      description: failureReasonsDescriptions.IDENTIFIER_MISSING,
+    },
+    {
+      collection: validationResult.invalidProductCodes,
+      description: failureReasonsDescriptions.PRODUCT_CODE_INVALID,
+    },
+    {
+      collection: validationResult.missingDescription,
+      description: failureReasonsDescriptions.DESCRIPTION_MISSING,
+    },
+    {
+      collection: validationResult.missingPackages,
+      description: failureReasonsDescriptions.PACKAGES_MISSING,
+    },
+    {
+      collection: validationResult.missingNetWeight,
+      description: failureReasonsDescriptions.NET_WEIGHT_MISSING,
+    },
+    {
+      collection: validationResult.invalidPackages,
+      description: failureReasonsDescriptions.PACKAGES_INVALID,
+    },
+    {
+      collection: validationResult.invalidNetWeight,
+      description: failureReasonsDescriptions.NET_WEIGHT_INVALID,
+    },
+    {
+      collection: validationResult.missingNirms,
+      description: failureReasonsDescriptions.NIRMS_MISSING,
+    },
+    {
+      collection: validationResult.invalidNirms,
+      description: failureReasonsDescriptions.NIRMS_INVALID,
+    },
+    {
+      collection: validationResult.missingCoO,
+      description: failureReasonsDescriptions.COO_MISSING,
+    },
+    {
+      collection: validationResult.invalidCoO,
+      description: failureReasonsDescriptions.COO_INVALID,
+    },
+    {
+      collection: validationResult.highRiskProducts,
+      description: failureReasonsDescriptions.HIGH_RISK,
+    },
+  ];
 }
 
 function generateFailureReasonFromRows(description, rows) {
@@ -223,13 +297,13 @@ function getFailureReasons(validationResult) {
     return null;
   }
   if (validationResult.missingRemos) {
-    return "Check GB Establishment RMS Number.";
+    return failureReasonsDescriptions.MISSING_REMOS;
   }
   if (validationResult.isEmpty) {
-    return "No product line data found.";
+    return failureReasonsDescriptions.EMPTY_DATA;
   }
   if (!validationResult.hasSingleRms) {
-    return "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n";
+    return failureReasonsDescriptions.MULTIPLE_RMS;
   }
   return "";
 }

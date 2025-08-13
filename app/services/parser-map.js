@@ -4,12 +4,14 @@ const regex = require("../utilities/regex");
 
 function findHeaderCols(header, packingListHeader) {
   const headerCols = {};
+  // Process required columns
   const regexHeader = header.regex;
   for (const value in regexHeader) {
     headerCols[value] = Object.keys(packingListHeader).find((key) => {
       return regexHeader[value].test(packingListHeader[key]);
     });
   }
+  // Process optional columns
   if (header.country_of_origin) {
     headerCols.country_of_origin = Object.keys(packingListHeader).find(
       (key) => {
@@ -24,6 +26,18 @@ function findHeaderCols(header, packingListHeader) {
       },
     );
   }
+  if (header.type_of_treatment) {
+    headerCols.type_of_treatment = Object.keys(packingListHeader).find(
+      (key) => {
+        return header.type_of_treatment.test(packingListHeader[key]);
+      },
+    );
+  }
+  if (header.nirms) {
+    headerCols.nirms = Object.keys(packingListHeader).find((key) => {
+      return header.nirms.test(packingListHeader[key]);
+    });
+  }
   return headerCols;
 }
 
@@ -34,6 +48,7 @@ function mapParser(
   header,
   sheetName = null,
 ) {
+  // find columns containing header names
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
   const netWeightUnit = header.findUnitInHeader
     ? (regex.findUnit(
@@ -43,6 +58,8 @@ function mapParser(
         packingListJson[headerRow][headerCols.header_net_weight_unit],
       ))
     : null;
+
+  // parse the packing list contents based on columns identified
   const packingListContents = packingListJson
     .slice(dataRow)
     .map((col, rowPos) => ({
@@ -57,6 +74,7 @@ function mapParser(
         (isNotEmpty(col, headerCols) && netWeightUnit) ??
         null,
       country_of_origin: columnValue(col[headerCols.country_of_origin]),
+      nirms: columnValue(col[headerCols.nirms]),
       row_location: {
         rowNumber: dataRow + rowPos + 1,
         sheetName,

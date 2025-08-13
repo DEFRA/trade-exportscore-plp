@@ -1,4 +1,5 @@
 const parserModel = require("../../../../../app/services/parser-model");
+const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 module.exports = {
   validTestResult: {
@@ -15,6 +16,7 @@ module.exports = {
         total_net_weight_kg: 12,
         total_net_weight_unit: "KG",
         type_of_treatment: null,
+        nirms: "no",
       },
       {
         commodity_code: "0709601001",
@@ -24,6 +26,7 @@ module.exports = {
         total_net_weight_kg: 1,
         total_net_weight_unit: "KG",
         type_of_treatment: null,
+        nirms: "no",
       },
     ],
     establishment_numbers: ["RMS-GB-000009-001"],
@@ -44,6 +47,7 @@ module.exports = {
         total_net_weight_kg: 12,
         total_net_weight_unit: "KG",
         type_of_treatment: null,
+        nirms: "no",
       },
       {
         commodity_code: "0707000599",
@@ -53,6 +57,7 @@ module.exports = {
         total_net_weight_kg: 58.8,
         total_net_weight_unit: "KG",
         type_of_treatment: null,
+        nirms: "no",
       },
     ],
     establishment_numbers: ["RMS-GB-000009-001"],
@@ -74,6 +79,7 @@ module.exports = {
         total_net_weight_kg: 12,
         total_net_weight_unit: "KG",
         type_of_treatment: null,
+        nirms: "no",
       },
       {
         commodity_code: null,
@@ -83,6 +89,7 @@ module.exports = {
         total_net_weight_kg: 1,
         total_net_weight_unit: "KG",
         type_of_treatment: null,
+        nirms: "no",
       },
     ],
     establishment_numbers: ["RMS-GB-000009-001"],
@@ -103,6 +110,7 @@ module.exports = {
         total_net_weight_kg: null,
         total_net_weight_unit: null,
         type_of_treatment: null,
+        nirms: null,
       },
     ],
     registration_approval_number: null,
@@ -111,8 +119,7 @@ module.exports = {
   multipleRms: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons:
-        "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+      failure_reasons: failureReasonsDescriptions.MULTIPLE_RMS,
     },
     items: [
       {
@@ -123,6 +130,7 @@ module.exports = {
         total_net_weight_kg: 12,
         total_net_weight_unit: "KG",
         type_of_treatment: null,
+        nirms: "no",
       },
       {
         commodity_code: "0709601001",
@@ -132,6 +140,7 @@ module.exports = {
         total_net_weight_kg: 1,
         total_net_weight_unit: "KG",
         type_of_treatment: null,
+        nirms: "no",
       },
     ],
     establishment_numbers: ["RMS-GB-000009-001", "RMS-GB-000009-002"],
@@ -152,6 +161,7 @@ module.exports = {
         total_net_weight_kg: 12,
         total_net_weight_unit: null,
         type_of_treatment: null,
+        nirms: "no",
       },
       {
         commodity_code: "0709601001",
@@ -161,6 +171,7 @@ module.exports = {
         total_net_weight_kg: 1,
         total_net_weight_unit: null,
         type_of_treatment: null,
+        nirms: "no",
       },
     ],
     establishment_numbers: ["RMS-GB-000009-001"],

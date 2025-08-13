@@ -2,6 +2,7 @@ const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/nutricia/model2");
 const parserModel = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/nutricia/model2");
+const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 const filename = "packinglist-nutricia-model2.xlsx";
 
@@ -54,7 +55,7 @@ describe("matchesNutriciaModel2", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      "Check GB Establishment RMS Number.",
+      failureReasonsDescriptions.MISSING_REMOS,
     );
     expect(result.parserModel).toBe(parserModel.NOREMOS);
   });
@@ -72,7 +73,7 @@ describe("matchesNutriciaModel2", () => {
     const result = await parserService.findParser(model.multipleRms, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
-      "Multiple GB Place of Dispatch (Establishment) numbers found on packing list.\n",
+      failureReasonsDescriptions.MULTIPLE_RMS,
     );
   });
 });

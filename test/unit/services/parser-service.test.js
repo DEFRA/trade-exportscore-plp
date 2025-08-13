@@ -1,5 +1,7 @@
 const parserModel = require("../../../app/services/parser-model");
 const parserService = require("../../../app/services/parser-service");
+const failureReasonsDescriptions = require("../../../app/services/validators/packing-list-failure-reasons");
+
 jest.mock("../../../app/config", () => {
   return {
     isDiEnabled: true,
@@ -293,7 +295,7 @@ describe("findParser", () => {
       items: [],
       business_checks: {
         all_required_fields_present: false,
-        failure_reasons: "Check GB Establishment RMS Number.",
+        failure_reasons: failureReasonsDescriptions.MISSING_REMOS,
       },
       parserModel: parserModel.NOREMOS,
     };
