@@ -2,6 +2,7 @@ const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/co-op/model1");
 const parserModel = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/co-op/model1");
+const failureReasons = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
@@ -72,7 +73,7 @@ describe("matchesCoopModel1", () => {
     const result = await parserService.findParser(model.invalidNirms, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
-      'Invalid entry for NIRMS/Non-NIRMS goods in sheet "Input Packing Sheet" row 2.\n',
+      failureReasons.NIRMS_INVALID + ' in sheet "Input Packing Sheet" row 2.\n',
     );
   });
 
@@ -86,7 +87,7 @@ describe("matchesCoopModel1", () => {
     const result = await parserService.findParser(model.missingNirms, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
-      'NIRMS/Non-NIRMS goods not specified in sheet "Input Packing Sheet" row 2.\n',
+      failureReasons.NIRMS_MISSING + ' in sheet "Input Packing Sheet" row 2.\n',
     );
   });
 
@@ -94,7 +95,7 @@ describe("matchesCoopModel1", () => {
     const result = await parserService.findParser(model.missingCoO, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
-      'Missing Country of Origin in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
+      failureReasons.COO_MISSING + ' in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
     );
   });
 
@@ -102,7 +103,7 @@ describe("matchesCoopModel1", () => {
     const result = await parserService.findParser(model.invalidCoO, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
-      'Invalid Country of Origin in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
+      failureReasons.COO_INVALID + ' in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
     );
   });
 
@@ -119,7 +120,7 @@ describe("matchesCoopModel1", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      'High risk item identified on the packing list in sheet "Input Packing Sheet" row 2 and sheet "Input Packing Sheet" row 4.\n',
+      failureReasons.HIGH_RISK + ' in sheet "Input Packing Sheet" row 2 and sheet "Input Packing Sheet" row 4.\n',
     );
   });
 });
