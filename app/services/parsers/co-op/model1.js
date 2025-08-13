@@ -53,6 +53,7 @@ function parse(packingListJson) {
       parserModel.COOP1,
       establishmentNumbers,
       headers.COOP1.findUnitInHeader,
+      headers.COOP1.validateCountryOfOrigin,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

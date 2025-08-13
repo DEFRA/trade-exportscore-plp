@@ -171,6 +171,7 @@ function isHighRiskProducts(countryOfOrigin, commodityCode, typeOfTreatment) {
     (item) =>
       isCountryOfOriginMatching(countryOfOrigin, item.country_of_origin) &&
       commodityCode
+        .toString()
         ?.toLowerCase()
         .startsWith(item.commodity_code?.toLowerCase()) &&
       isTreatmentTypeMatching(typeOfTreatment, item.type_of_treatment),

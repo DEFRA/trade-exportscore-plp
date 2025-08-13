@@ -26,7 +26,6 @@ function validatePackingListByIndexAndType(packingList) {
   const packingListStatusResults = getPackingListStatusResults(packingList);
   const countryOfOriginResults =
     getCountryOfOriginValidationResults(packingList);
-
   return {
     ...basicValidationResults,
     ...packingListStatusResults,
@@ -34,6 +33,7 @@ function validatePackingListByIndexAndType(packingList) {
     hasAllFields: calculateHasAllFields(
       basicValidationResults,
       packingListStatusResults,
+      countryOfOriginResults,
     ),
   };
 }
@@ -89,7 +89,11 @@ function getCountryOfOriginValidationResults(packingList) {
   };
 }
 
-function calculateHasAllFields(basicResults, statusResults) {
+function calculateHasAllFields(
+  basicResults,
+  statusResults,
+  countryOfOriginResults,
+) {
   const hasAllItems =
     basicResults.missingIdentifier.length +
       basicResults.missingDescription.length +
@@ -104,9 +108,18 @@ function calculateHasAllFields(basicResults, statusResults) {
       basicResults.invalidProductCodes.length ===
     0;
 
+  const countryOfOriginValid =
+    countryOfOriginResults.missingNirms.length +
+      countryOfOriginResults.invalidNirms.length +
+      countryOfOriginResults.missingCoO.length +
+      countryOfOriginResults.invalidCoO.length +
+      countryOfOriginResults.highRiskProducts.length ===
+    0;
+
   return (
     hasAllItems &&
     allItemsValid &&
+    countryOfOriginValid &&
     statusResults.hasRemos &&
     !statusResults.isEmpty &&
     !statusResults.missingRemos
