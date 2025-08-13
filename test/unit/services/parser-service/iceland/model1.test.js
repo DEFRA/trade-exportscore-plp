@@ -18,6 +18,7 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../../../../app/services/document-intelligence");
+
 const {
   extractPdf,
   extractEstablishmentNumbersFromString,
