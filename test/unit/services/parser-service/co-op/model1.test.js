@@ -95,7 +95,8 @@ describe("matchesCoopModel1", () => {
     const result = await parserService.findParser(model.missingCoO, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.COO_MISSING + ' in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
+      failureReasons.COO_MISSING +
+        ' in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
     );
   });
 
@@ -103,7 +104,8 @@ describe("matchesCoopModel1", () => {
     const result = await parserService.findParser(model.invalidCoO, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.COO_INVALID + ' in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
+      failureReasons.COO_INVALID +
+        ' in sheet "Input Packing Sheet" row 2, sheet "Input Packing Sheet" row 3, sheet "Input Packing Sheet" row 4 in addition to 2 other locations.\n',
     );
   });
 
@@ -120,7 +122,8 @@ describe("matchesCoopModel1", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.HIGH_RISK + ' in sheet "Input Packing Sheet" row 2 and sheet "Input Packing Sheet" row 4.\n',
+      failureReasons.HIGH_RISK +
+        ' in sheet "Input Packing Sheet" row 2 and sheet "Input Packing Sheet" row 4.\n',
     );
   });
 });
