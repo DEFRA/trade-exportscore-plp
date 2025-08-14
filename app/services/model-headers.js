@@ -347,6 +347,8 @@ const headers = {
     },
     findUnitInHeader: true,
     country_of_origin: /Country of Origin/i,
+    nirms: /^NIRMS/i,
+    validateCountryOfOrigin: true,
   },
   TJMORRIS1: {
     establishmentNumber: {
