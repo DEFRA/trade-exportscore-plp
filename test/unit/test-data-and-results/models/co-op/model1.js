@@ -518,7 +518,7 @@ module.exports = {
         Y: "nirms",
         Z: "x",
       },
-    ]
+    ],
   },
   highRiskProducts: {
     "Input Packing Sheet": [
