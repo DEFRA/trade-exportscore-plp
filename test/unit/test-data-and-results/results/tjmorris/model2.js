@@ -1,5 +1,4 @@
 const parserModel = require("../../../../../app/services/parser-model");
-const { multipleRms } = require("../../models/tjmorris/model2");
 const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 module.exports = {
@@ -18,6 +17,7 @@ module.exports = {
         type_of_treatment: "RAW",
         total_net_weight_unit: "Kg",
         country_of_origin: "GB",
+        nirms: "N",
       },
       {
         commodity_code: "1602906100",
@@ -28,6 +28,7 @@ module.exports = {
         type_of_treatment: "FRESH PRODUCTS",
         total_net_weight_unit: "Kg",
         country_of_origin: "GB",
+        nirms: "N",
       },
     ],
     registration_approval_number: "RMS-GB-000010-001",
@@ -48,6 +49,7 @@ module.exports = {
         type_of_treatment: "RAW",
         total_net_weight_unit: "Kg",
         country_of_origin: "GB",
+        nirms: "N",
       },
       {
         commodity_code: "1602906100",
@@ -58,6 +60,7 @@ module.exports = {
         type_of_treatment: "FRESH PRODUCTS",
         total_net_weight_unit: "Kg",
         country_of_origin: "GB",
+        nirms: "N",
       },
     ],
     registration_approval_number: "RMS-GB-000010-001",
@@ -78,6 +81,7 @@ module.exports = {
         type_of_treatment: "RAW",
         total_net_weight_unit: "Kg",
         country_of_origin: "GB",
+        nirms: "N",
       },
       {
         commodity_code: "1602906100",
@@ -88,6 +92,7 @@ module.exports = {
         type_of_treatment: "FRESH PRODUCTS",
         total_net_weight_unit: "Kg",
         country_of_origin: "GB",
+        nirms: "N",
       },
     ],
     registration_approval_number: "RMS-GB-000010-001",
@@ -106,6 +111,7 @@ module.exports = {
         number_of_packages: null,
         total_net_weight_kg: null,
         type_of_treatment: null,
+        nirms: null,
       },
     ],
     registration_approval_number: null,
@@ -126,6 +132,7 @@ module.exports = {
         type_of_treatment: "RAW",
         total_net_weight_unit: "Kg",
         country_of_origin: "GB",
+        nirms: "N",
       },
     ],
     establishment_numbers: ["RMS-GB-000010-001", "RMS-GB-000010-002"],
@@ -147,6 +154,7 @@ module.exports = {
         type_of_treatment: "RAW",
         total_net_weight_unit: null,
         country_of_origin: "GB",
+        nirms: "N",
       },
     ],
     establishment_numbers: ["RMS-GB-000010-001"],

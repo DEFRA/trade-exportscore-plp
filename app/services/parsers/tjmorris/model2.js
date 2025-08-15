@@ -52,6 +52,7 @@ function parse(packingListJson) {
       parserModel.TJMORRIS2,
       establishmentNumbers,
       headers.TJMORRIS2.findUnitInHeader,
+      headers.TJMORRIS2.validateCountryOfOrigin,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
