@@ -373,6 +373,8 @@ const headers = {
     },
     findUnitInHeader: true,
     country_of_origin: /Country of Origin/i,
+    nirms: /^NIRMS Eligible$/i,
+    validateCountryOfOrigin: true,
   },
   WARRENS1: {
     establishmentNumber: {
