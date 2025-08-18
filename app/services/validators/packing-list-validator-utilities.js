@@ -235,4 +235,5 @@ module.exports = {
   hasInvalidCoO,
   hasHighRiskProducts,
   isNirms,
+  isNotNirms,
 };

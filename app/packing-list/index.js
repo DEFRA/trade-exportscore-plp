@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const logger = require("./../utilities/logger");
 const {
   isNirms,
+  isNotNirms,
 } = require("../services/validators/packing-list-validator-utilities");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
@@ -46,6 +47,16 @@ function packingListMapper(packingListJson, applicationId) {
 }
 
 function itemsMapper(o, applicationId) {
+  // Convert NIRMS string value to boolean using validation utilities
+  const getNirmsBooleanValue = (nirmsValue) => {
+    if (isNirms(nirmsValue)) {
+      return true;
+    } else if (isNotNirms(nirmsValue)) {
+      return false;
+    }
+    return null; // For invalid or missing values
+  };
+
   try {
     return {
       itemId: uuidv4(),
@@ -58,7 +69,7 @@ function itemsMapper(o, applicationId) {
       totalWeightUnit: o.total_net_weight_unit,
       applicationId,
       countryOfOrigin: o.country_of_origin,
-      nirms: isNirms(o.nirms),
+      nirms: getNirmsBooleanValue(o.nirms),
     };
   } catch (err) {
     logger.logError(filenameForLogging, "itemsMapper()", err);
