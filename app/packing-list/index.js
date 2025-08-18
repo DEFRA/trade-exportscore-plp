@@ -1,6 +1,9 @@
 const { models, sequelize } = require("../services/database-service");
 const { v4: uuidv4 } = require("uuid");
 const logger = require("./../utilities/logger");
+const {
+  isNirms,
+} = require("../services/validators/packing-list-validator-utilities");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
@@ -55,7 +58,7 @@ function itemsMapper(o, applicationId) {
       totalWeightUnit: o.total_net_weight_unit,
       applicationId,
       countryOfOrigin: o.country_of_origin,
-      nirms: o.nirms,
+      nirms: isNirms(o.nirms),
     };
   } catch (err) {
     logger.logError(filenameForLogging, "itemsMapper()", err);

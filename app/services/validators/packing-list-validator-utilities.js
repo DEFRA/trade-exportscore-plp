@@ -234,4 +234,5 @@ module.exports = {
   hasMissingCoO,
   hasInvalidCoO,
   hasHighRiskProducts,
+  isNirms,
 };
