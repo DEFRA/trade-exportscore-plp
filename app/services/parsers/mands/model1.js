@@ -24,7 +24,7 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
     }
 
     const packingListContents = mapPdfParser(packingListDocument, "MANDS1");
-    if (!!sanitizedFullPackingList) {
+    if (sanitizedFullPackingList) {
       const pdfJson = await extractPdf(sanitizedFullPackingList);
       establishmentNumbers = extractEstablishmentNumbers(
         pdfJson,

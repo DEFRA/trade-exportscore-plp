@@ -53,8 +53,9 @@ function itemsMapper(o, applicationId) {
       return true;
     } else if (isNotNirms(nirmsValue)) {
       return false;
-    }
-    return null; // For invalid or missing values
+    } else {
+      return null;
+    } // For invalid or missing values
   };
 
   try {
