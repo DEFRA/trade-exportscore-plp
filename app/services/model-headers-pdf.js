@@ -28,9 +28,12 @@ const headers = {
       type_of_treatment: "Treatment Type",
       number_of_packages: "Trays/Ctns",
       total_net_weight_kg: "Tot Net Weight (Kg)",
+      country_of_origin: "CountryOfOrigin",
+      nirms: "NIRMS",
     },
+    validateCountryOfOrigin: true,
     findUnitInHeader: true,
-    modelId: "mands1-v4",
+    modelId: "mands1-v5",
   },
   BOOKER1: {
     establishmentNumber: {

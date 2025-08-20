@@ -139,6 +139,9 @@ function mapPdfParser(packingListDocument, key) {
         rowNumber: currentItemNumber,
         pageNumber: currentPageNumber,
       },
+      country_of_origin:
+        row[headers[key].headers.country_of_origin]?.value ?? null,
+      nirms: row[headers[key].headers.nirms]?.value ?? null,
     };
     packingListContents.push(plRow);
   }

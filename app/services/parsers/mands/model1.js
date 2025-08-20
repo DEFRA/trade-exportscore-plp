@@ -39,6 +39,7 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
       parserModel.MANDS1,
       establishmentNumbers,
       headers.MANDS1.findUnitInHeader,
+      headers.MANDS1.validateCountryOfOrigin,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
