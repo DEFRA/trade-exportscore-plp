@@ -163,20 +163,39 @@ git push origin <branch> # Push to remote (NEVER forget this step)
 #### 3. Pull Request Lifecycle (GitHub MCP)
 
 ```
-Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation → Initial Review → Human Approval → Merge
+Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation → Initial Review → PR Maintenance → Human Approval → Merge
 ├── MANDATORY: make prettier (code formatting before ANY commit)
 ├── MANDATORY: npm run test:unit (unit tests must pass before ANY commit)
 ├── MANDATORY: Version increment check vs main branch (with user confirmation)
 ├── MANDATORY: git add . (add ALL changes)
 ├── MANDATORY: git push origin <branch> (push to remote)
 ├── MANDATORY: Initial PR review after creation
+├── MANDATORY: PR maintenance after each commit (update description + add comment)
 ├── Auto-generated descriptions with 🤖 [COPILOT GENERATED] header
 ├── Work item linking (AB#[WorkItemId])
 ├── Continuous feedback on commits
 └── Acceptance criteria validation
 ```
 
-#### 3.1. Copilot Generated Content Headers
+#### 3.1. PR Maintenance (Required After Each Commit)
+
+```markdown
+After EVERY commit pushed to a PR branch:
+
+1. Update PR Description (if significant changes made)
+
+   - Add new sections for major changes
+   - Update quality assurance checklist
+   - Keep description current with latest state
+
+2. Add PR Comment for Each Commit
+   - Title: "Commit: [Brief Description]" (NOT "Latest Commit")
+   - Explain what was changed in this specific commit
+   - Include commit SHA for reference
+   - Use 🤖 [COPILOT GENERATED] header
+```
+
+#### 3.2. Copilot Generated Content Headers
 
 ```markdown
 🤖 [COPILOT GENERATED]
