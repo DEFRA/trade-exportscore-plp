@@ -134,11 +134,38 @@ npm run test:unit     # Run unit tests (MUST pass before PR)
 #### 2.2. Version Management (Required)
 
 ```bash
+```
+
+#### 2.2. Version Management (Required)
+```bash
 # Check version against main branch
 # Current branch version must be higher than main branch
 # Example: main=6.20.5 → current branch=6.20.6+
 # ALWAYS ask user confirmation before incrementing version
 # Update both package.json and package-lock.json
+```
+
+#### 2.3. Git Operations (Required Sequence)
+```bash
+git add .                    # Add ALL changes (not selective files)
+git commit -m "message"      # Commit with comprehensive message
+git push origin <branch>     # Push to remote (NEVER forget this step)
+```
+
+#### 3. Pull Request Lifecycle (GitHub MCP)
+```
+Feature Branch → Pre-PR Quality Gates → Version Check → Git Operations → PR Creation → Initial Review → Human Approval → Merge
+├── MANDATORY: make prettier (code formatting)
+├── MANDATORY: npm run test:unit (unit tests must pass)
+├── MANDATORY: Version increment check vs main branch (with user confirmation)
+├── MANDATORY: git add . (add ALL changes)
+├── MANDATORY: git push origin <branch> (push to remote)
+├── MANDATORY: Initial PR review after creation
+├── Auto-generated descriptions (GitHub Copilot)
+├── Work item linking (AB#[WorkItemId])
+├── Continuous feedback on commits
+└── Acceptance criteria validation
+```
 ```
 
 #### 3. Pull Request Lifecycle (GitHub MCP)
