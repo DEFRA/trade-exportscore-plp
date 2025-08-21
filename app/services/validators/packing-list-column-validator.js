@@ -11,7 +11,7 @@ const {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasHighRiskProducts,
+  hasProhibitedItems,
 } = require("./packing-list-validator-utilities");
 const parserModel = require("../parser-model");
 const failureReasonsDescriptions = require("./packing-list-failure-reasons");
@@ -76,7 +76,7 @@ function getCountryOfOriginValidationResults(packingList) {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      highRiskProducts: [],
+      prohibitedItems: [],
     };
   }
 
@@ -85,7 +85,7 @@ function getCountryOfOriginValidationResults(packingList) {
     invalidNirms: findItems(packingList.items, hasInvalidNirms),
     missingCoO: findItems(packingList.items, hasMissingCoO),
     invalidCoO: findItems(packingList.items, hasInvalidCoO),
-    highRiskProducts: findItems(packingList.items, hasHighRiskProducts),
+    prohibitedItems: findItems(packingList.items, hasProhibitedItems),
   };
 }
 
@@ -113,7 +113,7 @@ function calculateHasAllFields(
       countryOfOriginResults.invalidNirms.length +
       countryOfOriginResults.missingCoO.length +
       countryOfOriginResults.invalidCoO.length +
-      countryOfOriginResults.highRiskProducts.length ===
+      countryOfOriginResults.prohibitedItems.length ===
     0;
 
   return (
@@ -218,8 +218,8 @@ function createValidationChecks(validationResult) {
       description: failureReasonsDescriptions.COO_INVALID,
     },
     {
-      collection: validationResult.highRiskProducts,
-      description: failureReasonsDescriptions.HIGH_RISK,
+      collection: validationResult.prohibitedItems,
+      description: failureReasonsDescriptions.PROHIBITED_ITEM,
     },
   ];
 }
