@@ -241,4 +241,5 @@ module.exports = {
   mapPdfParser,
   mapPdfNonAiParser,
   findHeaderCols,
+  extractNetWeightUnit,
 };
