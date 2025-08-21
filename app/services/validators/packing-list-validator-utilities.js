@@ -1,6 +1,6 @@
 const regex = require("../../utilities/regex");
 const isoCodesData = require("../data/data-iso-codes.json");
-const highRiskProductsData = require("../data/data-high-risk-products.json");
+const prohibitedItemsData = require("../data/data-prohibited-items.json");
 
 function isNullOrEmptyString(value) {
   return value === null || value === undefined || value === "";
@@ -102,13 +102,13 @@ function hasInvalidCoO(item) {
   return isNirms(item.nirms) && isInvalidCoO(item.country_of_origin);
 }
 
-function hasHighRiskProducts(item) {
+function hasProhibitedItems(item) {
   return (
     isNirms(item.nirms) &&
     !isNullOrEmptyString(item.country_of_origin) &&
     !isInvalidCoO(item.country_of_origin) &&
     !isNullOrEmptyString(item.commodity_code) &&
-    isHighRiskProducts(
+    isProhibitedItems(
       item.country_of_origin,
       item.commodity_code,
       item.type_of_treatment,
@@ -165,9 +165,9 @@ function isValidIsoCode(code) {
   );
 }
 
-// Checks if the combination exists in highRiskProductsData
-function isHighRiskProducts(countryOfOrigin, commodityCode, typeOfTreatment) {
-  return highRiskProductsData.some(
+// Checks if the combination exists in prohibitedItemsData
+function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
+  return prohibitedItemsData.some(
     (item) =>
       isCountryOfOriginMatching(countryOfOrigin, item.country_of_origin) &&
       commodityCode
@@ -179,42 +179,50 @@ function isHighRiskProducts(countryOfOrigin, commodityCode, typeOfTreatment) {
 }
 
 // Helper function to check if country of origin matches (handles comma-separated values)
-function isCountryOfOriginMatching(countryOfOrigin, highRiskCountryOfOrigin) {
+function isCountryOfOriginMatching(
+  countryOfOrigin,
+  prohibitedItemCountryOfOrigin,
+) {
   if (
     isNullOrEmptyString(countryOfOrigin) ||
-    isNullOrEmptyString(highRiskCountryOfOrigin)
+    isNullOrEmptyString(prohibitedItemCountryOfOrigin)
   ) {
     return false;
   }
 
   const normalizedCountry = countryOfOrigin.toLowerCase();
-  const normalizedHighRiskCountry = highRiskCountryOfOrigin.toLowerCase();
+  const normalizedProhibitedItemCountry =
+    prohibitedItemCountryOfOrigin.toLowerCase();
 
   // Check if countryOfOrigin contains comma-separated values
   if (normalizedCountry.includes(",")) {
     const countryCodes = normalizedCountry.split(",");
-    // Check if any of the country codes matches the high risk country
+    // Check if any of the country codes matches the prohibited item country
     return countryCodes.some(
-      (code) => code.trim() === normalizedHighRiskCountry,
+      (code) => code.trim() === normalizedProhibitedItemCountry,
     );
   }
 
   // Single value case
-  return normalizedCountry === normalizedHighRiskCountry;
+  return normalizedCountry === normalizedProhibitedItemCountry;
 }
 
 // Helper function to check if treatment type matches
-function isTreatmentTypeMatching(typeOfTreatment, highRiskTypeOfTreatment) {
-  // If high risk treatment type or typeOfTreatment is not specified, skip the treatment type check
+function isTreatmentTypeMatching(
+  typeOfTreatment,
+  prohibitedItemTypeOfTreatment,
+) {
+  // If prohibited item treatment type or typeOfTreatment is not specified, skip the treatment type check
   if (
-    isNullOrEmptyString(highRiskTypeOfTreatment) ||
+    isNullOrEmptyString(prohibitedItemTypeOfTreatment) ||
     isNullOrEmptyString(typeOfTreatment)
   ) {
     return true;
   }
 
   return (
-    highRiskTypeOfTreatment?.toLowerCase() === typeOfTreatment?.toLowerCase()
+    prohibitedItemTypeOfTreatment?.toLowerCase() ===
+    typeOfTreatment?.toLowerCase()
   );
 }
 
@@ -233,7 +241,7 @@ module.exports = {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasHighRiskProducts,
+  hasProhibitedItems,
   isNirms,
   isNotNirms,
 };

@@ -6,18 +6,15 @@ const failureReasons = require("../../../../../app/services/validators/packing-l
 
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "HIGH_RISK_ISO",
+  "PROHIBITED_ITEM_ISO",
 ]);
-jest.mock(
-  "../../../../../app/services/data/data-high-risk-products.json",
-  () => [
-    {
-      country_of_origin: "HIGH_RISK_ISO",
-      commodity_code: "012",
-      type_of_treatment: "HIGH_RISK_TREATMENT",
-    },
-  ],
-);
+jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+  {
+    country_of_origin: "PROHIBITED_ITEM_ISO",
+    commodity_code: "012",
+    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+  },
+]);
 
 const filename = "packinglist-co-op-model1.xlsx";
 
@@ -115,14 +112,14 @@ describe("matchesCoopModel1", () => {
     expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
 
-  test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as false for high risk products", async () => {
+  test("matches valid Co-op Model 1 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
     const result = await parserService.findParser(
-      model.highRiskProducts,
+      model.prohibitedItems,
       filename,
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.HIGH_RISK +
+      failureReasons.PROHIBITED_ITEM +
         ' in sheet "Input Packing Sheet" row 2 and sheet "Input Packing Sheet" row 4.\n',
     );
   });
