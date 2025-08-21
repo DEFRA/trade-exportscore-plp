@@ -183,12 +183,13 @@ git push origin <branch> # Push to remote (NEVER forget this step)
 #### 6. Pull Request Lifecycle (GitHub MCP)
 
 ```
-Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation → Initial Review → PR Maintenance → Human Approval → Merge
+Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation → SonarQube Analysis → Initial Review → PR Maintenance → Human Approval → Merge
 ├── MANDATORY: make prettier (code formatting before ANY commit)
 ├── MANDATORY: npm run test:unit (unit tests must pass before ANY commit)
 ├── MANDATORY: Version increment check vs main branch (with user confirmation)
 ├── MANDATORY: git add . (add ALL changes)
 ├── MANDATORY: git push origin <branch> (push to remote)
+├── MANDATORY: SonarQube branch analysis + PR comment
 ├── MANDATORY: Initial PR review after creation (overall assessment only)
 ├── MANDATORY: PR maintenance ONLY after subsequent commits (not initial commit)
 ├── Auto-generated descriptions with 🤖 [COPILOT GENERATED] header
@@ -202,7 +203,8 @@ Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation �
 **After PR Creation (First Time Only):**
 
 1. **Create PR** with comprehensive description including work item reference
-2. **Perform Initial PR Review** (overall assessment of entire change)
+2. **Run SonarQube Analysis** on current branch and add analysis comment
+3. **Perform Initial PR Review** (overall assessment of entire change)
    - Use overall review comment covering all acceptance criteria
    - Assess complete implementation quality
    - NO individual file comments on initial commit
@@ -215,17 +217,27 @@ Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation �
 After EVERY **subsequent** commit pushed to a PR branch:
 
 1. **Update PR Description** (MANDATORY for keeping PR current)
-
    - Update description to reflect new changes made in subsequent commits
    - Add new sections for major functionality changes
    - Update quality assurance checklist with latest test results
    - Keep description current with latest state of the implementation
    - Ensure description accurately represents the complete PR scope
 
-2. **Add PR Comment for Each Subsequent Commit** (MANDATORY for commit tracking)
+2. **Run SonarQube Analysis** (MANDATORY for code quality tracking)
+   - Execute branch-specific SonarQube analysis on current commit
+   - Generate comprehensive quality report covering all metrics
+   - Include analysis timestamp and commit SHA for traceability
+
+3. **Add PR Comment for Each Subsequent Commit** (MANDATORY for commit tracking)
    - Title: "Commit: [Brief Description]" (NOT "Latest Commit")
    - Explain what was changed in this specific commit
    - Include commit SHA for reference
+   - Use 🤖 [COPILOT GENERATED] header
+
+4. **Add SonarQube Analysis Comment** (MANDATORY for quality tracking)
+   - Follow standardized SonarQube comment format
+   - Include quality gate status, metrics, and any critical issues
+   - Reference specific commit being analyzed
    - Use 🤖 [COPILOT GENERATED] header
 
 **❌ DO NOT ADD**: Individual file comments or commit comments for the initial commit that created the PR.
@@ -346,6 +358,65 @@ make tests                   # Run via scripts/test
 - Architecture planning and epic breakdown
 - Pipeline debugging and process optimization
 
+### SonarQube Integration (Automated Code Quality)
+
+#### PR-Based SonarQube Analysis (MANDATORY)
+
+**Trigger Points:**
+
+1. **PR Creation** → Immediate SonarQube analysis + comment
+2. **Every Commit After PR Creation** → New analysis + updated comment
+3. **Branch-specific Analysis** → Always analyze current branch state
+
+#### SonarQube Workflow Integration
+
+```bash
+# MANDATORY: SonarQube analysis sequence after each commit
+1. Complete standard pre-commit gates (prettier, tests)
+2. Push commit to PR branch
+3. Run SonarQube analysis on current branch
+4. Add analysis results as PR comment
+5. Update PR description with latest quality metrics
+```
+
+#### SonarQube Comment Format (MANDATORY)
+
+**All SonarQube analysis comments must follow this format:**
+
+```markdown
+🤖 [COPILOT GENERATED] - SonarQube Analysis
+
+## Code Quality Report - Branch: `Feature/[WorkItemId]-description`
+
+### 🎯 Quality Gate Status: [PASSED/FAILED]
+
+**Analysis Timestamp**: [ISO DateTime]
+**Commit SHA**: [commit_hash]
+
+### 📊 Metrics Summary
+
+- **Coverage**: X.X%
+- **Duplicated Code**: X.X%
+- **Lines of Code**: X,XXX
+- **Cyclomatic Complexity**: XXX
+
+### 🔍 Issues Overview
+
+- **Bugs**: X
+- **Vulnerabilities**: X
+- **Security Hotspots**: X
+- **Code Smells**: X
+
+### 📈 Ratings
+
+- **Reliability**: [A-E]
+- **Security**: [A-E]
+- **Maintainability**: [A-E]
+
+### 🚨 Critical Issues (if any)
+
+[List critical/blocker issues with file paths and line numbers]
+
 ### Context7 Documentation Priority
 
 **Essential Libraries**: Hapi.js, Jest, Sequelize, Docker, Azure Services
@@ -353,3 +424,4 @@ make tests                   # Run via scripts/test
 **Process**: Library Resolution → Documentation Retrieval → Current Pattern Application
 
 _Rationale: Ensure agents use current documentation and best practices vs outdated patterns_
+```
