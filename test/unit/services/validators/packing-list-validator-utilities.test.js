@@ -8,7 +8,7 @@ const {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasHighRiskProducts,
+  hasProhibitedItems,
   wrongTypeForPackages,
   wrongTypeNetWeight,
   removeBadData,
@@ -17,17 +17,17 @@ const {
 
 jest.mock("../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "HIGH_RISK_ISO",
+  "PROHIBITED_ITEM_ISO",
 ]);
-jest.mock("../../../../app/services/data/data-high-risk-products.json", () => [
+jest.mock("../../../../app/services/data/data-prohibited-items.json", () => [
   {
-    country_of_origin: "HIGH_RISK_ISO",
-    commodity_code: "HIGH_RISK_COMMODITY_1",
-    type_of_treatment: "HIGH_RISK_TREATMENT",
+    country_of_origin: "PROHIBITED_ITEM_ISO",
+    commodity_code: "PROHIBITED_ITEM_COMMODITY_1",
+    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
   },
   {
-    country_of_origin: "HIGH_RISK_ISO",
-    commodity_code: "HIGH_RISK_COMMODITY_2",
+    country_of_origin: "PROHIBITED_ITEM_ISO",
+    commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
   },
 ]);
 
@@ -148,13 +148,13 @@ describe("validator function tests", () => {
 
   test.each([
     ["NIRMS", "INVALID_ISO", true], // Nirms, invalid value
-    ["NIRMS", "VALID_ISO HIGH_RISK_ISO", true], // Nirms, Multiple ISO codes not comma separated
+    ["NIRMS", "VALID_ISO PROHIBITED_ITEM_ISO", true], // Nirms, Multiple ISO codes not comma separated
     ["NIRMS", "VALID_ISO, INVALID_ISO", true], // Nirms, Multiple ISO codes comma separated, one invalid
     ["NON-NIRMS", null, false], // Non-NIRMS, missing value, should be handled by hasMissingCoO
     ["NIRMS", "VALID_ISO", false], // Nirms, valid value
     ["NIRMS", "X", false], // Nirms, Specific 'X' value, should be ignored
     ["NIRMS", "x", false], // Nirms, Specific 'x' value, should be ignored
-    ["NIRMS", "VALID_ISO, HIGH_RISK_ISO", false], // Nirms, Multiple ISO codes comma separated
+    ["NIRMS", "VALID_ISO, PROHIBITED_ITEM_ISO", false], // Nirms, Multiple ISO codes comma separated
   ])("hasInvalidCoO", (nirms, country_of_origin, expected) => {
     const item = { nirms, country_of_origin };
     expect(hasInvalidCoO(item)).toBe(expected);
@@ -163,57 +163,57 @@ describe("validator function tests", () => {
   test.each([
     [
       "NIRMS",
-      "HIGH_RISK_ISO",
-      "HIGH_RISK_COMMODITY_1",
-      "HIGH_RISK_TREATMENT",
+      "PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_1",
+      "PROHIBITED_ITEM_TREATMENT",
       true,
     ], // Exact matching value with treatment type
     [
       "NIRMS",
-      "VALID_ISO, HIGH_RISK_ISO",
-      "HIGH_RISK_COMMODITY_1",
-      "HIGH_RISK_TREATMENT",
+      "VALID_ISO, PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_1",
+      "PROHIBITED_ITEM_TREATMENT",
       true,
     ], // Matching value with multiple countries of origin
     [
       "NIRMS",
-      "HIGH_RISK_ISO",
-      "HIGH_RISK_COMMODITY_1_EXTRA",
-      "HIGH_RISK_TREATMENT",
+      "PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_1_EXTRA",
+      "PROHIBITED_ITEM_TREATMENT",
       true,
-    ], // Matching value with longer commodity code that starts with value in high risk product list
+    ], // Matching value with longer commodity code that starts with value in prohibited item list
     [
       "nirms",
-      "high_risk_iso",
-      "high_risk_commodity_1",
-      "high_risk_treatment",
+      "prohibited_item_iso",
+      "prohibited_item_commodity_1",
+      "prohibited_item_treatment",
       true,
     ], // Exact matching value with treatment type case insensitive
-    ["NIRMS", "HIGH_RISK_ISO", "HIGH_RISK_COMMODITY_1", null, true], // no treatment type specified in packing list, treatment type specified in high risk product list
-    ["NIRMS", "HIGH_RISK_ISO", "HIGH_RISK_COMMODITY_2", null, true], // Exact matching value without treatment type specified in high risk product list
+    ["NIRMS", "PROHIBITED_ITEM_ISO", "PROHIBITED_ITEM_COMMODITY_1", null, true], // no treatment type specified in packing list, treatment type specified in prohibited item list
+    ["NIRMS", "PROHIBITED_ITEM_ISO", "PROHIBITED_ITEM_COMMODITY_2", null, true], // Exact matching value without treatment type specified in prohibited item list
     [
       "NIRMS",
-      "HIGH_RISK_ISO",
-      "HIGH_RISK_COMMODITY_2",
-      "HIGH_RISK_TREATMENT",
+      "PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_2",
+      "PROHIBITED_ITEM_TREATMENT",
       true,
     ], // Matching value with optional treatment type
     [
       "NON-NIRMS",
-      "HIGH_RISK_ISO",
-      "HIGH_RISK_COMMODITY_1",
-      "HIGH_RISK_TREATMENT",
+      "PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_1",
+      "PROHIBITED_ITEM_TREATMENT",
       false,
     ], // NON NIRMS entry
     [
       "NIRMS",
-      "HIGH_RISK_ISO",
-      "HIGH_RISK_COMMODITY_1",
+      "PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_1",
       "VALID_TREATMENT",
       false,
     ], // Value not matching
   ])(
-    "hasHighRiskProducts",
+    "hasProhibitedItems",
     (nirms, country_of_origin, commodity_code, type_of_treatment, expected) => {
       const item = {
         nirms,
@@ -221,7 +221,7 @@ describe("validator function tests", () => {
         commodity_code,
         type_of_treatment,
       };
-      expect(hasHighRiskProducts(item)).toBe(expected);
+      expect(hasProhibitedItems(item)).toBe(expected);
     },
   );
 });

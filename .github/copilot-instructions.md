@@ -104,6 +104,32 @@ exports.parse = (packingListJson) => {
 
 **Priority Libraries**: Hapi.js, Jest, Sequelize, Docker, Azure Services
 
+### Development Lifecycle Checklists
+
+#### 🔥 MANDATORY Pre-Commit Checklist (NEVER SKIP)
+
+**STOP: Before ANY commit, verify ALL steps are complete:**
+
+- [ ] **Code Quality**: `make prettier` (format code)
+- [ ] **Tests**: `npm run test:unit` (all tests must pass)
+- [ ] **Version**: Check version increment vs main branch (ask user confirmation)
+- [ ] **Staging**: `git add .` (stage ALL changes)
+- [ ] **Commit**: `git commit -m "descriptive message"`
+- [ ] **Push**: `git push origin <branch>`
+
+#### 🔥 MANDATORY PR Checklist (NEVER SKIP)
+
+**STOP: Before creating/updating PR, verify ALL steps are complete:**
+
+- [ ] **Initial Review**: Review PR immediately after creation
+- [ ] **Description**: Include 🤖 [COPILOT GENERATED] header
+- [ ] **Work Item**: Link AB#[WorkItemId] in description
+- [ ] **Acceptance Criteria**: Validate all ACs are addressed
+- [ ] **Maintenance**: Add comment for each subsequent commit
+- [ ] **Update**: Keep PR description current with latest changes
+
+---
+
 ### Development Lifecycle
 
 #### 1. Work Item → Feature Branch (Agentic)
@@ -124,20 +150,14 @@ make app-up          # Docker environment
 npm run test:debug   # Debug mode testing
 ```
 
-#### 2.1. Pre-Commit Quality Gates (Mandatory)
+#### 3. Pre-Commit Quality Gates (MANDATORY)
 
 ```bash
 make prettier         # Format code (REQUIRED before ANY commit)
 npm run test:unit     # Run unit tests (MUST pass before ANY commit)
 ```
 
-#### 2.2. Version Management (Required)
-
-```bash
-
-```
-
-#### 2.2. Version Management (Required)
+#### 4. Version Management (Required)
 
 ```bash
 # Check version against main branch
@@ -147,7 +167,7 @@ npm run test:unit     # Run unit tests (MUST pass before ANY commit)
 # Update both package.json and package-lock.json
 ```
 
-#### 2.3. Git Operations (Required Sequence)
+#### 5. Git Operations (Required Sequence)
 
 ```bash
 # MANDATORY: Always run quality gates before committing
@@ -160,7 +180,7 @@ git push origin <branch> # Push to remote (NEVER forget this step)
 
 **Critical Note**: Run `git add .` after **ANY file modification**. If you make edits after initial staging, you MUST run `git add .` again before committing to ensure all changes are included.
 
-#### 3. Pull Request Lifecycle (GitHub MCP)
+#### 6. Pull Request Lifecycle (GitHub MCP)
 
 ```
 Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation → Initial Review → PR Maintenance → Human Approval → Merge
@@ -169,68 +189,64 @@ Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation �
 ├── MANDATORY: Version increment check vs main branch (with user confirmation)
 ├── MANDATORY: git add . (add ALL changes)
 ├── MANDATORY: git push origin <branch> (push to remote)
-├── MANDATORY: Initial PR review after creation
-├── MANDATORY: PR maintenance after each commit (update description + add comment)
+├── MANDATORY: Initial PR review after creation (overall assessment only)
+├── MANDATORY: PR maintenance ONLY after subsequent commits (not initial commit)
 ├── Auto-generated descriptions with 🤖 [COPILOT GENERATED] header
 ├── Work item linking (AB#[WorkItemId])
-├── Continuous feedback on commits
+├── Individual commit comments ONLY for commits after PR creation
 └── Acceptance criteria validation
 ```
 
-#### 3.1. PR Maintenance (Required After Each Commit)
+#### 6.1. PR Creation and Initial Review
 
-```markdown
-After EVERY commit pushed to a PR branch:
+**After PR Creation (First Time Only):**
 
-1. Update PR Description (if significant changes made)
+1. **Create PR** with comprehensive description including work item reference
+2. **Perform Initial PR Review** (overall assessment of entire change)
+   - Use overall review comment covering all acceptance criteria
+   - Assess complete implementation quality
+   - NO individual file comments on initial commit
+   - NO individual commit comments on initial commit
 
-   - Add new sections for major changes
-   - Update quality assurance checklist
-   - Keep description current with latest state
+#### 6.2. PR Maintenance (Required After Subsequent Commits Only)
 
-2. Add PR Comment for Each Commit
+**⚠️ IMPORTANT**: Only perform these steps for commits made AFTER the initial PR creation.
+
+After EVERY **subsequent** commit pushed to a PR branch:
+
+1. **Update PR Description** (MANDATORY for keeping PR current)
+
+   - Update description to reflect new changes made in subsequent commits
+   - Add new sections for major functionality changes
+   - Update quality assurance checklist with latest test results
+   - Keep description current with latest state of the implementation
+   - Ensure description accurately represents the complete PR scope
+
+2. **Add PR Comment for Each Subsequent Commit** (MANDATORY for commit tracking)
    - Title: "Commit: [Brief Description]" (NOT "Latest Commit")
    - Explain what was changed in this specific commit
    - Include commit SHA for reference
    - Use 🤖 [COPILOT GENERATED] header
-```
 
-#### 3.2. Copilot Generated Content Headers
+**❌ DO NOT ADD**: Individual file comments or commit comments for the initial commit that created the PR.
+
+#### 6.3. Copilot Generated Content Headers
+
+All PR descriptions, comments, and reviews generated by Copilot MCP must start with this header:
 
 ```markdown
 🤖 [COPILOT GENERATED]
-
-All PR descriptions, comments, and reviews generated by Copilot MCP must start with this header to distinguish from human-written content.
 ```
 
-```
-
-#### 3. Pull Request Lifecycle (GitHub MCP)
+#### 7. Deployment Pipeline (Azure DevOps)
 
 ```
-
-Feature Branch → Pre-PR Quality Gates → Version Check → PR Creation → Automated Review → Human Approval → Merge
-├── MANDATORY: make prettier (code formatting)
-├── MANDATORY: npm run test:unit (unit tests must pass)
-├── MANDATORY: Version increment check vs main branch (with user confirmation)
-├── Auto-generated descriptions (GitHub Copilot)
-├── Work item linking (AB#[WorkItemId])
-├── Continuous feedback on commits
-└── Acceptance criteria validation
-
-```
-
-#### 4. Deployment Pipeline (Azure DevOps)
-
-```
-
 Merge → Trigger → Environment Chain → Production Gate
 dev1 → tst1 → snd4 → pre1 → prd1
 ├── Automated progression
 ├── Manual production approval
 └── Rollback capability
-
-````
+```
 
 ### Key Commands & Endpoints
 
@@ -257,7 +273,7 @@ make tests                   # Run via scripts/test
 # 2. Register in system
 # 3. Add comprehensive tests
 # 4. Place test files in app/packing-lists/
-````
+```
 
 ### Branch Strategy
 
