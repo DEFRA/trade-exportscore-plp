@@ -37,8 +37,8 @@ function wrongTypeForPackages(item) {
     return false;
   }
 
-  const number_of_packages = Number(item.number_of_packages);
-  return isNaN(number_of_packages) || number_of_packages < 0;
+  const numberOfPackages = Number(item.number_of_packages);
+  return isNaN(numberOfPackages) || numberOfPackages < 0;
 }
 
 function hasMissingNetWeight(item) {
@@ -51,8 +51,8 @@ function wrongTypeNetWeight(item) {
     return false;
   }
 
-  const total_net_weight_kg = Number(item.total_net_weight_kg);
-  return isNaN(total_net_weight_kg) || total_net_weight_kg < 0;
+  const totalNetWeightKg = Number(item.total_net_weight_kg);
+  return isNaN(totalNetWeightKg) || totalNetWeightKg < 0;
 }
 
 function removeEmptyItems(packingListItems) {
