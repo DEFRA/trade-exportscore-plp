@@ -73,10 +73,10 @@ function getYsForRows(pageContent, model) {
 
     const ysInRange = [];
     const filteredYs = sortedYs.filter((y) => y >= firstY);
-
+    const maxRows = 5;
     for (const y of filteredYs) {
       const row = rowsByY[y];
-      if (row.length < 5 || row[0] === "0") {
+      if (row.length < maxRows || row[0] === "0") {
         break; // Stop if row is short or starts with '0'
       }
       ysInRange.push(y);
