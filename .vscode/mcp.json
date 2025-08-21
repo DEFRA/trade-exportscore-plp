@@ -24,6 +24,24 @@
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@azure-devops/mcp", "${input:ado_org}"]
+    },
+    "sonarqube": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "SONARQUBE_TOKEN",
+        "-e",
+        "SONARQUBE_ORG",
+        "mcp/sonarqube"
+      ],
+      "env": {
+        "SONARQUBE_TOKEN": "$SONARQUBE_TOKEN",
+        "SONARQUBE_ORG": "defra",
+        "SONARQUBE_PROJECT": "trade-exportscore-plp"
+      }
     }
   }
 }
