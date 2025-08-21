@@ -18,7 +18,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "HIGH_RISK_ISO",
 ]);
 jest.mock(
-  "../../../../../app/services/data/data-high-risk-products.json",
+  "../../../../../app/services/data/prohibited-items.json",
   () => [
     {
       country_of_origin: "HIGH_RISK_ISO",
