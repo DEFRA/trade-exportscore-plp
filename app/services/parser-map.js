@@ -97,49 +97,79 @@ function isNotEmpty(col, headerCols) {
   );
 }
 
+function extractNetWeightUnit(packingListDocument, key) {
+  if (!headers[key].findUnitInHeader) {
+    return null;
+  }
+  const totalNetWeightHeader =
+    packingListDocument.fields.TotalNetWeightHeader.content;
+  return regex.findUnit(totalNetWeightHeader);
+}
+
+function getPageNumber(row, key, lastPageNumber) {
+  return (
+    row[headers[key].headers.description]?.boundingRegions?.[0]?.pageNumber ??
+    lastPageNumber
+  );
+}
+
+function createPackingListRow(
+  row,
+  key,
+  netWeightUnit,
+  currentItemNumber,
+  currentPageNumber,
+) {
+  return {
+    description: row[headers[key].headers.description]?.value ?? null,
+    nature_of_products:
+      row[headers[key].headers.nature_of_products]?.value ?? null,
+    type_of_treatment:
+      row[headers[key].headers.type_of_treatment]?.value ?? null,
+    commodity_code: row[headers[key].headers.commodity_code]?.value ?? null,
+    number_of_packages:
+      row[headers[key].headers.number_of_packages]?.value ?? null,
+    total_net_weight_kg:
+      parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
+      null,
+    total_net_weight_unit: netWeightUnit ?? null,
+    row_location: {
+      rowNumber: currentItemNumber,
+      pageNumber: currentPageNumber,
+    },
+    nirms: row[headers[key].headers.nirms]?.value ?? null,
+    country_of_origin:
+      row[headers[key].headers.country_of_origin]?.value ?? null,
+  };
+}
+
 function mapPdfParser(packingListDocument, key) {
-  const packingListContents = [];
-  let netWeightUnit;
   if (!packingListDocument.fields.PackingListContents.values) {
     return [];
   }
-  if (headers[key].findUnitInHeader) {
-    const totalNetWeightHeader =
-      packingListDocument.fields.TotalNetWeightHeader.content;
-    netWeightUnit = regex.findUnit(totalNetWeightHeader);
-  }
 
+  const netWeightUnit = extractNetWeightUnit(packingListDocument, key);
+  const packingListContents = [];
   let currentItemNumber = 0;
   let lastPageNumber = 1;
+
   for (const value of packingListDocument.fields.PackingListContents.values) {
     const row = value.properties;
-    const currentPageNumber =
-      row[headers[key].headers.description]?.boundingRegions?.[0]?.pageNumber ??
-      lastPageNumber;
+    const currentPageNumber = getPageNumber(row, key, lastPageNumber);
+
     if (lastPageNumber !== currentPageNumber) {
       lastPageNumber = currentPageNumber;
       currentItemNumber = 0;
     }
     currentItemNumber += 1;
 
-    const plRow = {
-      description: row[headers[key].headers.description]?.value ?? null,
-      nature_of_products:
-        row[headers[key].headers.nature_of_products]?.value ?? null,
-      type_of_treatment:
-        row[headers[key].headers.type_of_treatment]?.value ?? null,
-      commodity_code: row[headers[key].headers.commodity_code]?.value ?? null,
-      number_of_packages:
-        row[headers[key].headers.number_of_packages]?.value ?? null,
-      total_net_weight_kg:
-        parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
-        null,
-      total_net_weight_unit: netWeightUnit ?? null,
-      row_location: {
-        rowNumber: currentItemNumber,
-        pageNumber: currentPageNumber,
-      },
-    };
+    const plRow = createPackingListRow(
+      row,
+      key,
+      netWeightUnit,
+      currentItemNumber,
+      currentPageNumber,
+    );
     packingListContents.push(plRow);
   }
   return packingListContents;
@@ -214,4 +244,5 @@ module.exports = {
   mapPdfParser,
   mapPdfNonAiParser,
   findHeaderCols,
+  extractNetWeightUnit,
 };

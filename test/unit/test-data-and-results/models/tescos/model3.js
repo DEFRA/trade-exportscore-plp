@@ -646,7 +646,7 @@ module.exports = {
       },
     ],
   },
-  highRiskProducts: {
+  prohibitedItems: {
     "Input Data Sheet": [
       {},
       {},
@@ -666,11 +666,11 @@ module.exports = {
         BU: "Net Weight (KG)",
       },
       {
-        E: "HIGH_RISK_ISO",
+        E: "PROHIBITED_ITEM_ISO",
         F: "NIRMS",
         G: "CONTIGO AUTO-POP BOTTLE 720ML",
         L: "012",
-        AS: "HIGH_RISK_TREATMENT",
+        AS: "PROHIBITED_ITEM_TREATMENT",
         AT: "Y",
         BR: 1,
         BT: 1.49,

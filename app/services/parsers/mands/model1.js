@@ -24,7 +24,7 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
     }
 
     const packingListContents = mapPdfParser(packingListDocument, "MANDS1");
-    if (!!sanitizedFullPackingList) {
+    if (sanitizedFullPackingList) {
       const pdfJson = await extractPdf(sanitizedFullPackingList);
       establishmentNumbers = extractEstablishmentNumbers(
         pdfJson,
@@ -39,6 +39,7 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
       parserModel.MANDS1,
       establishmentNumbers,
       headers.MANDS1.findUnitInHeader,
+      headers.MANDS1.validateCountryOfOrigin,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);

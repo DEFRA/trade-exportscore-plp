@@ -11,7 +11,7 @@ const failureReasons = {
   NIRMS_INVALID: "Invalid entry for NIRMS/Non-NIRMS goods",
   COO_MISSING: "Missing Country of Origin",
   COO_INVALID: "Invalid Country of Origin ISO Code",
-  HIGH_RISK: "Prohibited item identified on the packing list",
+  PROHIBITED_ITEM: "Prohibited item identified on the packing list",
   NET_WEIGHT_UNIT_MISSING: "Net Weight Unit of Measure (kg) not found",
   MISSING_REMOS: "Check GB Establishment RMS Number.",
   EMPTY_DATA: "No product line data found.",
