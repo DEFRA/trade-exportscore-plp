@@ -35,17 +35,22 @@ describe("parseIceland1", () => {
     const mockEstablishmentNumbers = ["RMS-GB-000040", "RMS-GB-000041"];
 
     pdfHelper.extractPdf.mockResolvedValue(mockPdfJson);
-    pdfHelper.extractEstablishmentNumbersFromString.mockReturnValue(mockEstablishmentNumbers);
+    pdfHelper.extractEstablishmentNumbersFromString.mockReturnValue(
+      mockEstablishmentNumbers,
+    );
 
     // Call parse with valid model and sanitizedFullPackingList
-    const result = await parser.parse(model.validModel, [{test: "packinglist"}]);
+    const result = await parser.parse(model.validModel, [
+      { test: "packinglist" },
+    ]);
 
     // Verify PDF helper functions were called
-    expect(pdfHelper.extractPdf).toHaveBeenCalledWith([{test: "packinglist"}]);
-    expect(pdfHelper.extractEstablishmentNumbersFromString).toHaveBeenCalledWith(
-      mockPdfJson,
-      expect.any(RegExp)
-    );
+    expect(pdfHelper.extractPdf).toHaveBeenCalledWith([
+      { test: "packinglist" },
+    ]);
+    expect(
+      pdfHelper.extractEstablishmentNumbersFromString,
+    ).toHaveBeenCalledWith(mockPdfJson, expect.any(RegExp));
 
     // Verify establishment numbers are included in result
     expect(result.establishment_numbers).toEqual(mockEstablishmentNumbers);
@@ -57,6 +62,8 @@ describe("parseIceland1", () => {
 
     // Verify PDF helper functions were not called
     expect(pdfHelper.extractPdf).not.toHaveBeenCalled();
-    expect(pdfHelper.extractEstablishmentNumbersFromString).not.toHaveBeenCalled();
+    expect(
+      pdfHelper.extractEstablishmentNumbersFromString,
+    ).not.toHaveBeenCalled();
   });
 });
