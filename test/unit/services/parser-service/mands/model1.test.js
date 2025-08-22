@@ -239,16 +239,16 @@ describe("findParser", () => {
     expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
 
-  test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for high risk products", async () => {
+  test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
     runAnalysis.mockImplementationOnce(() => {
-      return model.highRiskProducts;
+      return model.prohibitedItems;
     });
     extractPdf.mockImplementation(() => {
       return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
     });
 
     const result = await parserService.findParser(
-      model.highRiskProducts,
+      model.prohibitedItems,
       filename,
     );
 

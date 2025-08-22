@@ -708,7 +708,7 @@ module.exports = {
       },
     },
   },
-  highRiskProducts: {
+  prohibitedItems: {
     fields: {
       NIRMSNumber: {
         content: "RMS-GB-000008-001",
@@ -746,7 +746,7 @@ module.exports = {
           {
             properties: {
               "Description of Goods": {
-                value: "High Risk Carrot Product",
+                value: "Prohibited Carrot Product",
               },
               "EU Commodity Code": {
                 value: "012",
@@ -771,7 +771,7 @@ module.exports = {
           {
             properties: {
               "Description of Goods": {
-                value: "High Risk Celery Product",
+                value: "Prohibited Celery Product",
               },
               "EU Commodity Code": {
                 value: "012",

@@ -217,6 +217,7 @@ Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation �
 After EVERY **subsequent** commit pushed to a PR branch:
 
 1. **Update PR Description** (MANDATORY for keeping PR current)
+
    - Update description to reflect new changes made in subsequent commits
    - Add new sections for major functionality changes
    - Update quality assurance checklist with latest test results
@@ -224,11 +225,13 @@ After EVERY **subsequent** commit pushed to a PR branch:
    - Ensure description accurately represents the complete PR scope
 
 2. **Run SonarQube Analysis** (MANDATORY for code quality tracking)
+
    - Execute branch-specific SonarQube analysis on current commit
    - Generate comprehensive quality report covering all metrics
    - Include analysis timestamp and commit SHA for traceability
 
 3. **Add PR Comment for Each Subsequent Commit** (MANDATORY for commit tracking)
+
    - Title: "Commit: [Brief Description]" (NOT "Latest Commit")
    - Explain what was changed in this specific commit
    - Include commit SHA for reference
