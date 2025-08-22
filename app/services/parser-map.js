@@ -137,6 +137,8 @@ function createPackingListRow(
       rowNumber: currentItemNumber,
       pageNumber: currentPageNumber,
     },
+    nirms: row[headers[key].headers.nirms]?.value ?? null,
+    country_of_origin: row[headers[key].headers.country_of_origin]?.value ?? null,
   };
 }
 

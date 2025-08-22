@@ -733,13 +733,13 @@ module.exports = {
                 content: "1.0",
               },
               "Treatment Type": {
-                value: "HIGH_RISK_TREATMENT",
+                value: "PROHIBITED_ITEM_TREATMENT",
               },
               NIRMS: {
                 value: "yes",
               },
               CountryOfOrigin: {
-                value: "HIGH_RISK_ISO",
+                value: "PROHIBITED_ITEM_ISO",
               },
             },
           },
@@ -786,7 +786,7 @@ module.exports = {
                 value: "yes",
               },
               CountryOfOrigin: {
-                value: "HIGH_RISK_ISO",
+                value: "PROHIBITED_ITEM_ISO",
               },
             },
           },

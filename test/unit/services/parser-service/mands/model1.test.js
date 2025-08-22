@@ -15,18 +15,15 @@ jest.mock("../../../../../app/config", () => {
 jest.mock("../../../../../app/utilities/pdf-helper");
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "HIGH_RISK_ISO",
+  "PROHIBITED_ITEM_ISO",
 ]);
-jest.mock(
-  "../../../../../app/services/data/prohibited-items.json",
-  () => [
-    {
-      country_of_origin: "HIGH_RISK_ISO",
-      commodity_code: "012",
-      type_of_treatment: "HIGH_RISK_TREATMENT",
-    },
-  ],
-);
+jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+  {
+    country_of_origin: "PROHIBITED_ITEM_ISO",
+    commodity_code: "012",
+    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+  },
+]);
 
 const {
   createDocumentIntelligenceClient,
@@ -256,7 +253,7 @@ describe("findParser", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasonsDescriptions.HIGH_RISK +
+      failureReasonsDescriptions.PROHIBITED_ITEM +
         " in page 1 row 1 and page 1 row 3.\n",
     );
   });

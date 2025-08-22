@@ -1,17 +1,19 @@
-const { mapPdfParser, extractNetWeightUnit } = require("../../../app/services/parser-map");
+const {
+  mapPdfParser,
+  extractNetWeightUnit,
+} = require("../../../app/services/parser-map");
 
 jest.mock("../../../app/services/model-headers-pdf", () => ({
   MODEL1: {
     headers: {
-      description: 
-        "description"
+      description: "description",
     },
     findUnitInHeader: false,
   },
 }));
 
 jest.mock("../../../app/utilities/regex", () => ({
-  findUnit: jest.fn()
+  findUnit: jest.fn(),
 }));
 
 describe("extractNetWeightUnit", () => {
@@ -19,9 +21,9 @@ describe("extractNetWeightUnit", () => {
     const packingListDocument = {
       fields: {
         TotalNetWeightHeader: {
-          content: "Total Net Weight (kg)"
-        }
-      }
+          content: "Total Net Weight (kg)",
+        },
+      },
     };
 
     const result = extractNetWeightUnit(packingListDocument, "MODEL1");
@@ -32,14 +34,14 @@ describe("extractNetWeightUnit", () => {
 describe("mapPdfParser", () => {
   test("should return empty array when PackingListContents.values is missing", () => {
     const testCaseModel = [
-      { 
-        fields: { 
-          PackingListContents: { } 
-        }
+      {
+        fields: {
+          PackingListContents: {},
+        },
       },
     ];
 
-    testCaseModel.forEach(test => {
+    testCaseModel.forEach((test) => {
       const result = mapPdfParser(test, "ICELAND1");
       expect(result).toEqual([]);
     });
@@ -54,41 +56,41 @@ describe("mapPdfParser", () => {
               properties: {
                 description: {
                   value: "Item 1",
-                  boundingRegions: [{ pageNumber: 1 }]
-                }
-              }
+                  boundingRegions: [{ pageNumber: 1 }],
+                },
+              },
             },
             {
               properties: {
                 description: {
                   value: "Item 2",
-                  boundingRegions: [{ pageNumber: 1 }]
-                }
-              }
+                  boundingRegions: [{ pageNumber: 1 }],
+                },
+              },
             },
             {
               properties: {
                 description: {
                   value: "Item 3",
-                  boundingRegions: [{ pageNumber: 2 }]
-                }
-              }
+                  boundingRegions: [{ pageNumber: 2 }],
+                },
+              },
             },
             {
               properties: {
                 description: {
                   value: "Item 4",
-                  boundingRegions: [{ pageNumber: 2 }]
-                }
-              }
-            }
-          ]
-        }
-      }
+                  boundingRegions: [{ pageNumber: 2 }],
+                },
+              },
+            },
+          ],
+        },
+      },
     };
 
     const result = mapPdfParser(packingListDocument, "MODEL1");
-    
+
     // Verify row numbers reset on new page
     expect(result[0].row_location).toEqual({ rowNumber: 1, pageNumber: 1 });
     expect(result[1].row_location).toEqual({ rowNumber: 2, pageNumber: 1 });

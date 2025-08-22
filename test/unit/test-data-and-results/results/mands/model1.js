@@ -1,4 +1,5 @@
 const parser_model = require("../../../../../app/services/parser-model");
+const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 module.exports = {
   validTestResult: {
@@ -33,7 +34,8 @@ module.exports = {
   invalidTestResult_MissingCells: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Identifier is missing in page 1 row 1.\n",
+      failure_reasons:
+        failureReasonsDescriptions.IDENTIFIER_MISSING + " in page 1 row 1.\n",
     },
     items: [
       {
@@ -83,7 +85,8 @@ module.exports = {
   invalidNirmsTestResult: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "NIRMS entry is invalid in page 1 row 1.\n",
+      failure_reasons:
+        failureReasonsDescriptions.NIRMS_INVALID + " in page 1 row 1.\n",
     },
     items: [
       {
@@ -103,7 +106,8 @@ module.exports = {
   missingNirmsTestResult: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "NIRMS is missing in page 1 row 1.\n",
+      failure_reasons:
+        failureReasonsDescriptions.NIRMS_MISSING + " in page 1 row 1.\n",
     },
     items: [
       {
@@ -124,7 +128,8 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        "Country of origin is missing in page 1 row 2, page 1 row 3, page 1 row 4 in addition to 1 other location.\n",
+        failureReasonsDescriptions.COO_MISSING +
+        " in page 1 row 2, page 1 row 3, page 1 row 4 in addition to 1 other location.\n",
     },
     items: [
       {
@@ -185,7 +190,8 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        "Country of origin is invalid in page 1 row 1, page 1 row 2, page 1 row 3 in addition to 3 other locations.\n",
+        failureReasonsDescriptions.COO_INVALID +
+        " in page 1 row 1, page 1 row 2, page 1 row 3 in addition to 3 other locations.\n",
     },
     items: [
       {
@@ -285,12 +291,14 @@ module.exports = {
   highRiskProductsTestResult: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "High risk product in page 1 row 2 and page 1 row 4.\n",
+      failure_reasons:
+        failureReasonsDescriptions.PROHIBITED_ITEM +
+        " in page 1 row 1, page 1 row 2, page 1 row 3.\n",
     },
     items: [
       {
         description: "Safe Product 1",
-        commodity_code: "1111111111",
+        commodity_code: "012",
         nature_of_products: null,
         number_of_packages: 2,
         total_net_weight_kg: 1.0,
