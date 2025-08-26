@@ -499,6 +499,14 @@ module.exports = {
         O: "PROHIBITED_ITEM_TREATMENT",
         P: "yes",
       },
+      {
+        C: "709200010",
+        F: "ASPARAGUS BUNDLE",
+        G: "PROHIBITED_ITEM_ISO",
+        H: 160,
+        K: 40.0,
+        P: "yes",
+      },
     ],
   },
 };
