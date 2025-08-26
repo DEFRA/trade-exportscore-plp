@@ -150,7 +150,9 @@ const headers = {
       type_of_treatment: /Type of Treatment/i,
     },
     country_of_origin: /Country of Origin/i,
+    nirms: /NIRMS Red\/Green Lane/i,
     findUnitInHeader: true,
+    validateCountryOfOrigin: true,
   },
   FOWLERWELCH1: {
     invalidSheets: [

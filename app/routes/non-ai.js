@@ -29,7 +29,7 @@ module.exports = {
     if (packingList.parserModel !== parserModel.NOMATCH) {
       const randomInt = getRandomInt();
 
-      await createPackingList(packingList, randomInt);
+      //await createPackingList(packingList, randomInt);
     }
 
     return h.response(packingList).code(StatusCodes.OK);
