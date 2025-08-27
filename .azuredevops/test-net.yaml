@@ -16,4 +16,5 @@ jobs:
   displayName: 'Network Connectivity Test'
   steps:
     - script: |
-        echo "hello wworld"
+        echo "hello world"
+      displayName: 'Hello World Test'
