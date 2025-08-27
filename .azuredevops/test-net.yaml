@@ -74,7 +74,7 @@ jobs:
         
         # Port connectivity test
         echo "Testing port 443 connectivity..."
-        timeout 5 bash -c '</dev/tcp/management.azure.com/443' && echo "Port 443 open" || echo "Port 443 blocked"
+        timeout 5 bash -c 'exec 3<>/dev/tcp/management.azure.com/443' && echo "Port 443 open" || echo "Port 443 blocked"
         echo ""
         
         echo "========== Advanced Diagnostics Complete =========="
