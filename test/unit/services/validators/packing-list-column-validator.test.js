@@ -945,6 +945,76 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
+  test("all failures", () => {
+    const validationResult = {
+      hasAllFields: false,
+      isEmpty: false,
+      missingIdentifier: [{ rowNumber: 1 }],
+      invalidProductCodes: [{ rowNumber: 1 }],
+      missingDescription: [{ rowNumber: 1 }],
+      missingPackages: [{ rowNumber: 1 }],
+      missingNetWeight: [{ rowNumber: 1 }],
+      invalidPackages: [{ rowNumber: 1 }],
+      invalidNetWeight: [{ rowNumber: 1 }],
+      hasSingleRms: false,
+      missingNetWeightUnit: [{ rowNumber: 1 }],
+      missingNirms: [{ rowNumber: 1 }],
+      invalidNirms: [{ rowNumber: 1 }],
+      missingCoO: [{ rowNumber: 1 }],
+      invalidCoO: [{ rowNumber: 1 }],
+      prohibitedItems: [{ rowNumber: 1 }],
+    };
+
+    const result = packingListValidator.generateFailuresByIndexAndTypes(
+      validationResult,
+      packingList,
+    );
+
+    expect(result.hasAllFields).toBeFalsy();
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.MULTIPLE_RMS,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.IDENTIFIER_MISSING,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.PRODUCT_CODE_INVALID,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.DESCRIPTION_MISSING,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.PACKAGES_MISSING,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NET_WEIGHT_MISSING,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.PACKAGES_INVALID,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NET_WEIGHT_INVALID,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NIRMS_MISSING,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.NIRMS_INVALID,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.COO_MISSING,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.COO_INVALID,
+    );
+    expect(result.failureReasons).toContain(
+      failureReasonsDescriptions.PROHIBITED_ITEM,
+    );
+  });
+
   test("multiple failures", () => {
     const validationResult = {
       hasAllFields: false,
