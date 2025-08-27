@@ -1,6 +1,18 @@
 trigger: none
 pr: none
 
+stages:
+- stage: PlaceholderStage
+  displayName: 'Pipeline Disabled'
+  jobs:
+  - job: PlaceholderJob
+    displayName: 'Placeholder Job'
+    pool:
+      name: 'DEFRA-COMMON-ubuntu2004-SSV5'
+    steps:
+    - script: echo "This pipeline is currently disabled"
+      displayName: 'Placeholder Script'
+
 # parameters:
 #   - name: MODEL_IDS
 #     displayName: "Model IDs (comma-separated)"
