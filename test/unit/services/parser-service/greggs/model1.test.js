@@ -113,6 +113,10 @@ describe("findParser", () => {
       return { pages: [{ content: [{ remos: "RMS-GB-000021-000" }] }] };
     });
 
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000021-000"];
+    });
+
     runAnalysis.mockImplementationOnce(() => {
       return model.missingKgunit;
     });
