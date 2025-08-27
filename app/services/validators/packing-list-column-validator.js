@@ -142,12 +142,18 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
     // build failure reason
     failureReasons = getFailureReasons(validationResult);
     const checks = createValidationChecks(validationResult);
+
+    // Handle multiple RMS as a special case
+    if (!validationResult.hasSingleRms) {
+      failureReasons += failureReasonsDescriptions.MULTIPLE_RMS;
+    }
+
     //if the net weight unit is in the header, just the description below is assigned to the failure reason
     if (
       validationResult.missingNetWeightUnit.length !== 0 &&
       packingList.unitInHeader
     ) {
-      failureReasons = `${failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING}.\n`;
+      failureReasons += `${failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING}.\n`;
     }
     // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array
     else {
@@ -301,9 +307,6 @@ function getFailureReasons(validationResult) {
   }
   if (validationResult.isEmpty) {
     return failureReasonsDescriptions.EMPTY_DATA;
-  }
-  if (!validationResult.hasSingleRms) {
-    return failureReasonsDescriptions.MULTIPLE_RMS;
   }
   return "";
 }
