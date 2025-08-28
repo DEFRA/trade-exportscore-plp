@@ -17,6 +17,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
       {
         commodity_code: "709599000",
@@ -27,6 +28,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
     ],
     registration_approval_number: "RMS-GB-000323-001",
@@ -47,6 +49,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
       {
         commodity_code: "709599000",
@@ -57,6 +60,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
     ],
     registration_approval_number: "RMS-GB-000323-001",
@@ -66,7 +70,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'Identifier is missing in sheet "Revised" row 46.\nTotal net weight is missing in sheet "Revised" row 47.\n',
+        'Identifier is missing in sheet "Revised" row 3.\nTotal net weight is missing in sheet "Revised" row 4.\n',
     },
     items: [
       {
@@ -78,6 +82,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
       {
         commodity_code: "709599000",
@@ -88,6 +93,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
     ],
     registration_approval_number: "RMS-GB-000323-001",
@@ -117,6 +123,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
       {
         commodity_code: "709599000",
@@ -127,6 +134,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
     ],
     establishment_numbers: ["RMS-GB-000323-001", "RMS-GB-000323-002"],
@@ -148,6 +156,7 @@ module.exports = {
         total_net_weight_unit: null,
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
       {
         commodity_code: "709599000",
@@ -158,6 +167,7 @@ module.exports = {
         total_net_weight_unit: null,
         type_of_treatment: null,
         country_of_origin: "Great Britain",
+        nirms: "no",
       },
     ],
     establishment_numbers: ["RMS-GB-000323-001"],
