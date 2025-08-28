@@ -59,6 +59,7 @@ function parse(packingListJson) {
       parserModel.NISA1,
       establishmentNumbers,
       headers.NISA1.findUnitInHeader,
+      headers.NISA1.validateCountryOfOrigin,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

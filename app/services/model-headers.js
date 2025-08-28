@@ -242,6 +242,10 @@ const headers = {
       header_net_weight_unit: /NET_WEIGHT_PACKAGE/i,
     },
     findUnitInHeader: true,
+    country_of_origin: /COUNTRY_OF_ORIGIN/i,
+    type_of_treatment: /TYPE_OF_TREATMENT/i,
+    nirms: /NIRMS/i,
+    validateCountryOfOrigin: true,
   },
   NISA2: {
     establishmentNumber: {
