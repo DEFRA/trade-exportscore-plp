@@ -12,7 +12,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -22,7 +21,6 @@ module.exports = {
         M: 2,
         O: 2.5,
         U: "N",
-        W: "Processed",
       },
       {
         A: "RMS-GB-000025-001",
@@ -32,7 +30,6 @@ module.exports = {
         M: 1,
         O: 2,
         U: "N",
-        W: "Processed",
       },
     ],
   },
@@ -47,7 +44,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -57,7 +53,6 @@ module.exports = {
         M: 2,
         O: 2.5,
         U: "N",
-        W: "Processed",
       },
       {
         A: "RMS-GB-000025-001",
@@ -67,7 +62,6 @@ module.exports = {
         M: 1,
         O: 2,
         U: "N",
-        W: "Processed",
       },
       {
         M: 3,
@@ -87,7 +81,6 @@ module.exports = {
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
         U: "N",
-        W: "TYPE_OF_TREATMENT",
       },
     ],
   },
@@ -102,7 +95,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -112,7 +104,6 @@ module.exports = {
         M: 4,
         O: 2.4,
         U: "N",
-        W: "Processed",
       },
     ],
     Sheet2: [
@@ -125,7 +116,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -135,7 +125,6 @@ module.exports = {
         M: 4,
         O: 3.2,
         U: "N",
-        W: "Processed",
       },
     ],
   },
@@ -150,7 +139,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -166,7 +154,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "INCORRECT",
@@ -181,7 +168,6 @@ module.exports = {
         C: "DELIVERY_ADDRESS",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-009",
@@ -210,7 +196,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -220,7 +205,6 @@ module.exports = {
         M: null,
         O: 2.5,
         U: "N",
-        W: "Processed",
       },
       {
         A: "RMS-GB-000025-001",
@@ -230,7 +214,6 @@ module.exports = {
         M: 1,
         O: null,
         U: "N",
-        W: "Processed",
       },
     ],
   },
@@ -245,7 +228,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -263,7 +245,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE_KG",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -273,7 +254,6 @@ module.exports = {
         M: 2,
         O: 2.5,
         U: "N",
-        W: "Processed",
       },
       {
         A: "RMS-GB-000025-002",
@@ -283,7 +263,6 @@ module.exports = {
         M: 1,
         O: 2,
         U: "N",
-        W: "Processed",
       },
     ],
   },
@@ -298,7 +277,6 @@ module.exports = {
         O: "NET_WEIGHT_TOTAL",
         P: "NET_WEIGHT_PACKAGE",
         U: "NIRMS",
-        W: "TYPE_OF_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -308,7 +286,6 @@ module.exports = {
         M: 2,
         O: 2.5,
         U: "N",
-        W: "Processed",
       },
       {
         A: "RMS-GB-000025-001",
@@ -318,7 +295,6 @@ module.exports = {
         M: 1,
         O: 2,
         U: "N",
-        W: "Processed",
       },
     ],
   },
