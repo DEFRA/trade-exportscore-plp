@@ -1,14 +1,7 @@
 ---
 description: "Bulk update all Excel files in a specified folder by adding a new column with configurable name and default value, handling variable data structures and hidden sheets"
 mode: "agent"
-tools:
-  [
-    "mcp_excel_excel_read_sheet",
-    "mcp_excel_excel_write_to_sheet",
-    "mcp_excel_excel_describe_sheets",
-    "list_dir",
-    "file_search",
-  ]
+tools: ["mcp_excel_excel_read_sheet", "mcp_excel_excel_write_to_sheet", "mcp_excel_excel_describe_sheets", "list_dir", "file_search"]
 ---
 
 # Excel Bulk Column Updater
