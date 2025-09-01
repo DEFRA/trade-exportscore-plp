@@ -20,6 +20,7 @@ _Reference paths relative to repository root (e.g., `app/services/parsers/co-op/
 2. **Context7 MCP**: Library documentation and current best practices
 3. **GitHub MCP**: Repository operations, PRs, issues, reviews
 4. **Azure DevOps MCP**: Work items, batch operations, hierarchy management
+5. **Excel MCP**: Excel file processing, data manipulation, bulk operations
 
 _Note: Each chatmode provides role-specific MCP tool guidance building on this foundation._
 

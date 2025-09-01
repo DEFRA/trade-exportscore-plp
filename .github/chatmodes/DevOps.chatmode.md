@@ -1,6 +1,6 @@
 ---
 description: "DevOps automation for trade-exportscore-plp: Azure DevOps work items, GitHub PRs, CI/CD pipelines, and full agentic lifecycle management."
-tools: ["sequential-thinking", "context7", "runCommands", "runTasks", "editFiles", "codebase", "changes", "problems", "testFailure", "runTests", "add_comment_to_pending_review", "cancel_workflow_run", "create_and_submit_pull_request_review", "create_branch", "create_gist", "create_or_update_file", "create_pending_pull_request_review", "create_pull_request", "create_pull_request_with_copilot", "create_repository", "delete_file", "delete_pending_pull_request_review", "delete_workflow_run_logs", "dismiss_notification", "download_workflow_run_artifact", "get_code_scanning_alert", "get_commit", "get_dependabot_alert", "get_file_contents", "get_job_logs", "get_latest_release", "get_me", "get_notification_details", "get_pull_request", "get_pull_request_comments", "get_pull_request_diff", "get_pull_request_files", "get_pull_request_reviews", "get_pull_request_status", "get_secret_scanning_alert", "get_tag", "get_team_members", "get_teams", "get_workflow_run", "get_workflow_run_logs", "get_workflow_run_usage", "list_branches", "list_code_scanning_alerts", "list_commits", "list_dependabot_alerts", "list_gists", "list_notifications", "list_pull_requests", "list_releases", "list_secret_scanning_alerts", "list_tags", "list_workflow_jobs", "list_workflow_run_artifacts", "list_workflow_runs", "list_workflows", "manage_notification_subscription", "manage_repository_notification_subscription", "mark_all_notifications_read", "merge_pull_request", "push_files", "request_copilot_review", "rerun_failed_jobs", "rerun_workflow_run", "run_workflow", "search_code", "search_orgs", "search_pull_requests", "search_repositories", "search_users", "submit_pending_pull_request_review", "update_gist", "update_pull_request", "update_pull_request_branch", "build_get_builds", "build_get_changes", "build_get_definition_revisions", "build_get_definitions", "build_get_log", "build_get_log_by_id", "build_get_status", "build_run_build", "build_update_build_stage", "release_get_definitions", "release_get_releases", "search_workitem", "wit_add_child_work_items", "wit_add_work_item_comment", "wit_create_work_item", "wit_get_query", "wit_get_query_results_by_id", "wit_get_work_item", "wit_get_work_item_type", "wit_get_work_items_batch_by_ids", "wit_get_work_items_for_iteration", "wit_link_work_item_to_pull_request", "wit_list_backlog_work_items", "wit_list_backlogs", "wit_list_work_item_comments", "wit_my_work_items", "wit_update_work_item", "wit_update_work_items_batch", "wit_work_item_unlink", "wit_work_items_link", "work_assign_iterations", "work_create_iterations", "work_list_team_iterations"]
+tools: ["sequential-thinking", "context7", "sonarqube", "runCommands", "runTasks", "editFiles", "codebase", "changes", "problems", "testFailure", "runTests", "add_comment_to_pending_review", "cancel_workflow_run", "create_and_submit_pull_request_review", "create_branch", "create_gist", "create_or_update_file", "create_pending_pull_request_review", "create_pull_request", "create_pull_request_with_copilot", "create_repository", "delete_file", "delete_pending_pull_request_review", "delete_workflow_run_logs", "dismiss_notification", "download_workflow_run_artifact", "get_code_scanning_alert", "get_commit", "get_dependabot_alert", "get_file_contents", "get_job_logs", "get_latest_release", "get_me", "get_notification_details", "get_pull_request", "get_pull_request_comments", "get_pull_request_diff", "get_pull_request_files", "get_pull_request_reviews", "get_pull_request_status", "get_secret_scanning_alert", "get_tag", "get_team_members", "get_teams", "get_workflow_run", "get_workflow_run_logs", "get_workflow_run_usage", "list_branches", "list_code_scanning_alerts", "list_commits", "list_dependabot_alerts", "list_gists", "list_notifications", "list_pull_requests", "list_releases", "list_secret_scanning_alerts", "list_tags", "list_workflow_jobs", "list_workflow_run_artifacts", "list_workflow_runs", "list_workflows", "manage_notification_subscription", "manage_repository_notification_subscription", "mark_all_notifications_read", "merge_pull_request", "push_files", "request_copilot_review", "rerun_failed_jobs", "rerun_workflow_run", "run_workflow", "search_code", "search_orgs", "search_pull_requests", "search_repositories", "search_users", "submit_pending_pull_request_review", "update_gist", "update_pull_request", "update_pull_request_branch", "build_get_builds", "build_get_changes", "build_get_definition_revisions", "build_get_definitions", "build_get_log", "build_get_log_by_id", "build_get_status", "build_run_build", "build_update_build_stage", "release_get_definitions", "release_get_releases", "search_workitem", "wit_add_child_work_items", "wit_add_work_item_comment", "wit_create_work_item", "wit_get_query", "wit_get_query_results_by_id", "wit_get_work_item", "wit_get_work_item_type", "wit_get_work_items_batch_by_ids", "wit_get_work_items_for_iteration", "wit_link_work_item_to_pull_request", "wit_list_backlog_work_items", "wit_list_backlogs", "wit_list_work_item_comments", "wit_my_work_items", "wit_update_work_item", "wit_update_work_items_batch", "wit_work_item_unlink", "wit_work_items_link", "work_assign_iterations", "work_create_iterations", "work_list_team_iterations"]
 ---
 
 # DevOps ChatMode for trade-exportscore-plp
@@ -43,6 +43,7 @@ git push origin <branch>
 2. **GitHub MCP**: Branch creation, PR management, repository operations, code reviews
 3. **Azure DevOps MCP**: Work item lifecycle, batch operations, hierarchy management
 4. **Context7 MCP**: DevOps tooling documentation (Azure, Docker, CI/CD best practices)
+5. **SonarQube MCP**: Code quality analysis, technical debt assessment, security scanning
 
 **Key DevOps MCP Operations:**
 
@@ -51,6 +52,7 @@ git push origin <branch>
 - `mcp_ado_wit_create_work_item` → Story/task creation
 - `mcp_ado_wit_update_work_items_batch` → Bulk work item updates
 - `mcp_sequential-th_sequentialthinking` → Complex workflow planning
+- `mcp_sonarqube_*` → Code quality analysis and technical debt assessment
 
 ### Context7 Integration Pattern
 
@@ -310,6 +312,12 @@ make tests                   # Run via scripts/test
 - `mcp_sequential-th_sequentialthinking` → Multi-step problem solving
 - Architecture planning and epic breakdown
 - Pipeline debugging and process optimization
+
+#### SonarQube MCP (Code Quality Analysis)
+
+- `mcp_sonarqube_*` → Code quality analysis and technical debt assessment
+- Security vulnerability scanning and compliance reporting
+- Branch-specific quality gate validation and metrics collection
 
 ### SonarQube Integration (Automated Code Quality)
 

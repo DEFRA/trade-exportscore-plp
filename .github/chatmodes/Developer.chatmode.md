@@ -1,6 +1,6 @@
 ---
 description: "Developer mode for trade-exportscore-plp: Core architecture, parser development, testing patterns, and technical implementation guidance."
-tools: ["extensions", "runTests", "codebase", "usages", "vscodeAPI", "think", "problems", "changes", "testFailure", "terminalSelection", "terminalLastCommand", "openSimpleBrowser", "fetch", "findTestFiles", "searchResults", "githubRepo", "runCommands", "runTasks", "editFiles", "runNotebooks", "search", "new", "sequential-thinking", "context7", "github"]
+tools: ["extensions", "runTests", "codebase", "usages", "vscodeAPI", "think", "problems", "changes", "testFailure", "terminalSelection", "terminalLastCommand", "openSimpleBrowser", "fetch", "findTestFiles", "searchResults", "githubRepo", "runCommands", "runTasks", "editFiles", "runNotebooks", "search", "new", "sequential-thinking", "context7", "github", "sonarqube"]
 ---
 
 # Developer ChatMode for trade-exportscore-plp
@@ -24,6 +24,7 @@ _Reference paths relative to repository root (e.g., `app/services/parsers/co-op/
 2. **Context7 MCP**: Library documentation (Hapi.js, Jest, Sequelize, Azure SDKs)
 3. **GitHub MCP**: Code repository operations, file management, collaboration
 4. **Azure DevOps MCP**: Task tracking, technical work item updates
+5. **SonarQube MCP**: Code quality analysis, technical debt assessment, security scanning
 
 **Key Developer MCP Operations:**
 
@@ -31,6 +32,7 @@ _Reference paths relative to repository root (e.g., `app/services/parsers/co-op/
 - `mcp_context7_get-library-docs` → Get latest API patterns and examples
 - `mcp_github_create_or_update_file` → Code file management
 - `mcp_sequential-th_sequentialthinking` → Complex parser logic planning
+- `mcp_sonarqube_*` → Code quality analysis and technical debt detection
 
 ## Core Architecture
 
