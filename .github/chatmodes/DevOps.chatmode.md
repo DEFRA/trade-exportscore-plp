@@ -148,14 +148,22 @@ git push origin <branch>
 
 ## Agentic DevOps Workflow
 
-### Tool Integration Hierarchy
+### DevOps MCP Tools & Workflows
 
-**Always prioritize MCP servers over local commands for remote operations:**
+**Role-Specific MCP Priority for DevOps Operations:**
 
-1. **Sequential Thinking MCP**: Complex problem-solving and architecture planning (determines agent behavior)
-2. **Context7 MCP**: Library documentation and current best practices
-3. **GitHub MCP**: Repository operations, PRs, issues, reviews
-4. **Azure DevOps MCP**: Work items, batch operations, hierarchy management
+1. **Sequential Thinking MCP**: Complex pipeline planning, epic breakdown, multi-step automation
+2. **GitHub MCP**: Branch creation, PR management, repository operations, code reviews
+3. **Azure DevOps MCP**: Work item lifecycle, batch operations, hierarchy management
+4. **Context7 MCP**: DevOps tooling documentation (Azure, Docker, CI/CD best practices)
+
+**Key DevOps MCP Operations:**
+
+- `mcp_github_create_branch` → Feature branch creation from work items
+- `mcp_github_create_pull_request` → Automated PR creation with work item linking
+- `mcp_ado_wit_create_work_item` → Story/task creation
+- `mcp_ado_wit_update_work_items_batch` → Bulk work item updates
+- `mcp_sequential-th_sequentialthinking` → Complex workflow planning
 
 ### Context7 Integration Pattern
 

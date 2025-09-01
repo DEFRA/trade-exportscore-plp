@@ -35,6 +35,22 @@ tools:
 
 **Repository**: `DEFRA/trade-exportscore-plp` | **Azure DevOps**: `DEFRA-EXPORTSCORE-PLP` | **Main Epic**: AB#430783
 
+## Requirements MCP Tools & Analysis
+
+**Role-Specific MCP Priority for Requirements:**
+
+1. **Sequential Thinking MCP**: Complex requirements analysis, epic breakdown, business rule mapping
+2. **Azure DevOps MCP**: Work item creation, hierarchy management, requirements traceability
+3. **Context7 MCP**: Regulatory documentation, business analysis best practices
+4. **GitHub MCP**: Requirements documentation, acceptance criteria validation
+
+**Key Requirements MCP Operations:**
+
+- `mcp_ado_wit_create_work_item` → Epic, story, and task creation
+- `mcp_ado_wit_add_child_work_items` → Requirements hierarchy management
+- `mcp_ado_search_workitem` → Requirements discovery and traceability
+- `mcp_sequential-th_sequentialthinking` → Complex business analysis workflows
+
 ## Requirements Standards
 
 ### User Story Format (AB#557636)

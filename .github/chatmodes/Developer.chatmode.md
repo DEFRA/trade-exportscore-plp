@@ -43,6 +43,22 @@ tools:
 
 _Reference paths relative to repository root (e.g., `app/services/parsers/co-op/model1.js`). Work items format: `AB#[WorkItemId]`._
 
+## Developer MCP Tools & Patterns
+
+**Role-Specific MCP Priority for Development:**
+
+1. **Sequential Thinking MCP**: Complex architecture planning, parser logic design, debugging workflows
+2. **Context7 MCP**: Library documentation (Hapi.js, Jest, Sequelize, Azure SDKs)
+3. **GitHub MCP**: Code repository operations, file management, collaboration
+4. **Azure DevOps MCP**: Task tracking, technical work item updates
+
+**Key Developer MCP Operations:**
+
+- `mcp_context7_resolve-library-id` → Find current library documentation
+- `mcp_context7_get-library-docs` → Get latest API patterns and examples
+- `mcp_github_create_or_update_file` → Code file management
+- `mcp_sequential-th_sequentialthinking` → Complex parser logic planning
+
 ## Core Architecture
 
 ### Matcher-Parser Pipeline

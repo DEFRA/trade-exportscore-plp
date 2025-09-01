@@ -1,7 +1,14 @@
 ---
 description: "Bulk update all Excel files in a specified folder by adding a new column with configurable name and default value, handling variable data structures and hidden sheets"
 mode: "agent"
-tools: ["mcp_excel_excel_read_sheet", "mcp_excel_excel_write_to_sheet", "mcp_excel_excel_describe_sheets", "list_dir", "file_search"]
+tools:
+  [
+    "mcp_excel_excel_read_sheet",
+    "mcp_excel_excel_write_to_sheet",
+    "mcp_excel_excel_describe_sheets",
+    "list_dir",
+    "file_search",
+  ]
 ---
 
 # Excel Bulk Column Updater
@@ -17,7 +24,7 @@ Systematically update all Excel files in a specified folder by adding or updatin
 ## Primary Objectives
 
 1. **Discover Excel Files**: Locate all .xlsx and .xls files in the specified folder
-2. **Analyze Structure**: Read each file to understand sheet layout and data organization  
+2. **Analyze Structure**: Read each file to understand sheet layout and data organization
 3. **Skip Hidden Sheets**: Identify and ignore any hidden sheets during processing
 4. **Locate Data Tables**: Navigate past header sections to find actual tabular data
 5. **Column Management**: Add new column or update ONLY the specified column values
@@ -34,6 +41,7 @@ Systematically update all Excel files in a specified folder by adding or updatin
 ## Detailed Instructions
 
 ### 1. File Discovery Phase
+
 ```
 - Use list_dir to scan the specified folder path
 - Filter results to include only Excel files (.xlsx, .xls extensions)
@@ -42,7 +50,9 @@ Systematically update all Excel files in a specified folder by adding or updatin
 ```
 
 ### 2. File Analysis Phase
+
 For each Excel file discovered:
+
 ```
 - Use mcp_excel_excel_describe_sheets to get sheet information
 - Identify visible sheets (skip any marked as hidden)
@@ -54,6 +64,7 @@ For each Excel file discovered:
 ```
 
 ### 3. Data Table Detection Strategy
+
 ```
 - Scan from top of sheet downward to find first row with consistent data pattern
 - Look for rows where multiple consecutive cells contain data
@@ -63,6 +74,7 @@ For each Excel file discovered:
 ```
 
 ### 4. Column Processing Logic
+
 ```
 - Check if the specified column name already exists in the data table
 - Identify the exact column position (letter/number) of the target column
@@ -78,11 +90,12 @@ For each Excel file discovered:
 ```
 
 ### 5. Surgical Data Update Strategy
+
 ```
 **CRITICAL**: Use precise cell targeting to avoid any unintended modifications
 
 - Read the current sheet structure to identify exact cell ranges
-- For existing columns: Use column-specific range (e.g., "T2:T218") 
+- For existing columns: Use column-specific range (e.g., "T2:T218")
 - For new columns: Use exact next column range (e.g., "U1:U218")
 - NEVER use wide ranges that could affect other columns
 - Write operations must target ONLY the specific column cells
@@ -91,6 +104,7 @@ For each Excel file discovered:
 ```
 
 ### 5. Data Update Execution
+
 ```
 **STRICT ISOLATION PROTOCOL**:
 - Read existing data to understand current structure
@@ -105,6 +119,7 @@ For each Excel file discovered:
 ```
 
 ### 6. Data Integrity Safeguards
+
 ```
 **MANDATORY VERIFICATION STEPS**:
 - Before any write operation, confirm the exact column position
@@ -141,17 +156,21 @@ Provide structured progress updates during processing:
 ## Excel Bulk Column Update Report
 
 ### 📁 Folder Analysis
+
 - **Target Folder**: [folder path]
 - **Excel Files Found**: X files
 - **Files to Process**: X files
 
 ### 📊 Processing Progress
+
 [Real-time updates for each file]
+
 - ✅ **[filename]**: [sheets processed] sheets updated
 - ⚠️ **[filename]**: [warning details]
 - ❌ **[filename]**: [error details]
 
 ### 📈 Final Summary
+
 - **Total Files Processed**: X/X
 - **Total Sheets Updated**: X
 - **Column Name**: [column name]
@@ -160,12 +179,14 @@ Provide structured progress updates during processing:
 - **Errors Encountered**: X
 
 ### 🔍 Detailed Results
+
 [List each file with specific outcomes]
 ```
 
 ## Quality Validation Criteria
 
 Success is measured by:
+
 - ✅ All accessible Excel files are processed
 - ✅ Hidden sheets are correctly identified and skipped
 - ✅ Data tables are accurately located despite variable headers
@@ -183,6 +204,7 @@ Success is measured by:
 ## Error Recovery
 
 If issues occur:
+
 - Continue processing remaining files after individual failures
 - Provide specific error messages for troubleshooting
 - Distinguish between file access errors vs structural issues
@@ -196,6 +218,7 @@ Begin by asking for the folder path and column details, then execute the systema
 **🚨 ABSOLUTELY NO MODIFICATIONS TO OTHER COLUMNS OR DATA 🚨**
 
 This prompt MUST ensure that:
+
 - Only the specified column is modified
 - No other cells, formulas, or formatting are touched
 - Write operations use precise, column-specific ranges
