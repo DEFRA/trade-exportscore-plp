@@ -118,7 +118,8 @@ describe("findParser", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.PROHIBITED_ITEM + ' in sheet "Customer Order" row 2 and sheet "Customer Order" row 4.\n',
+      failureReasons.PROHIBITED_ITEM +
+        ' in sheet "Customer Order" row 2 and sheet "Customer Order" row 4.\n',
     );
   });
 });
