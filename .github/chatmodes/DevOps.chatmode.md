@@ -267,6 +267,7 @@ make tests                   # Run via scripts/test
 - **main**: Production-ready, protected
 - **develop**: Integration branch
 - **feature/[WorkItemId]-description**: Individual development
+- **bug/[BugId]-description**: Non-emergency bug fixes
 - **hotfix/[BugId]-description**: Emergency fixes
 
 ### Infrastructure

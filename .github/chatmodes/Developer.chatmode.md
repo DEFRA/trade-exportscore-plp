@@ -181,39 +181,28 @@ npm run test:unit     # Run unit tests (MUST pass before ANY commit)
 
 ## Parser Development Guide
 
-### Supported Retailers (33 variants across 22 organizations)
+### Supported Retailers and Parser Categories
 
-#### Excel Parsers (27 variants)
+#### Parser Types and Organization
 
-- **ASDA** (3 variants): ASDA1, ASDA2, ASDA3
-- **BANDM** (1 variant): BANDM1
-- **BOOTS** (1 variant): BOOTS1
-- **BUFFALOAD** (1 variant): BUFFALOAD1
-- **CDS** (1 variant): CDS1
-- **COOP** (1 variant): COOP1
-- **DAVENPORT** (2 variants): DAVENPORT1, DAVENPORT2
-- **FOWLERWELCH** (1 variant): FOWLERWELCH1
-- **GIOVANNI** (2 variants): GIOVANNI1, GIOVANNI2
-- **KEPAK** (1 variant): KEPAK1
-- **MARS** (1 variant): MARS1
-- **NISA** (2 variants): NISA1, NISA2
-- **NUTRICIA** (2 variants): NUTRICIA1, NUTRICIA2
-- **SAINSBURYS** (1 variant): SAINSBURYS1
-- **SAVERS** (1 variant): SAVERS1
-- **TESCO** (3 variants): TESCO1, TESCO2, TESCO3
-- **TJMORRIS** (2 variants): TJMORRIS1, TJMORRIS2
-- **WARRENS** (1 variant): WARRENS1
+Parsers are organized into three main categories defined in `app/services/model-parsers.js`:
 
-#### PDF AI Parsers (3 variants)
+- **Excel Parsers** (`parsersExcel`): JSON conversion from Excel files using regex patterns
+- **PDF AI Parsers** (`parsersPdf`): Azure Form Recognizer for intelligent PDF processing  
+- **PDF Non-AI Parsers** (`parsersPdfNonAi`): Coordinate-based extraction for PDFs
 
-- **ICELAND** (1 variant): ICELAND1
-- **MANDS** (1 variant): MANDS1
-- **GREGGS** (1 variant): GREGGS1
+#### Current Parser Structure
 
-#### PDF Non-AI Parsers (3 variants)
+**Excel Parsers**: Located in `app/services/parsers/[retailer]/` folders, each implementing `model1.js`, `model2.js`, etc.
 
-- **BOOKER** (2 variants): BOOKER1, BOOKER1L
-- **GIOVANNI** (1 variant): GIOVANNI3
+**PDF AI Parsers**: Use Azure Document Intelligence with `modelId` properties and headers in `model-headers-pdf.js`
+
+**PDF Non-AI Parsers**: Use coordinate-based extraction with x/y positioning in `model-headers-pdf.js`
+
+**Dynamic Discovery**: 
+- Parser directories: `find app/services/parsers -type d -maxdepth 1`
+- Current parsers: Check `Object.keys()` of `parsersExcel`, `parsersPdf`, `parsersPdfNonAi` in `model-parsers.js`
+- Parser registry: Complete list maintained in `app/services/model-parsers.js`
 
 ### Parser Implementation Patterns
 
