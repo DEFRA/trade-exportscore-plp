@@ -46,12 +46,9 @@
     "excel": {
       "type": "stdio",
       "command": "npx",
-      "args": [
-          "--yes",
-          "@negokaz/excel-mcp-server"
-      ],
+      "args": ["--yes", "@negokaz/excel-mcp-server"],
       "env": {
-          "EXCEL_MCP_PAGING_CELLS_LIMIT": "4000"
+        "EXCEL_MCP_PAGING_CELLS_LIMIT": "4000"
       }
     }
   }

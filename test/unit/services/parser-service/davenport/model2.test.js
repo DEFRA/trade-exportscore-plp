@@ -136,7 +136,8 @@ describe("matchesDavenportModel2", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.PROHIBITED_ITEM + ' in sheet "Revised" row 3 and sheet "Revised" row 4.\n',
+      failureReasons.PROHIBITED_ITEM +
+        ' in sheet "Revised" row 3 and sheet "Revised" row 4.\n',
     );
   });
 });
