@@ -13,18 +13,32 @@ describe("combineParser", () => {
         total_net_weight_kg: 1.2,
       },
     ];
+    const mockHeader = {
+      findUnitInHeader: false,
+      validateCountryOfOrigin: false,
+      blanketNirms: false,
+    };
     const packingListJson = {
       registration_approval_number: registrationApprovalNumber,
       items,
       business_checks: {
         all_required_fields_present: true,
+        failure_reasons: null,
       },
+      parserModel: "TEST",
+      establishment_numbers: [],
+      unitInHeader: false,
+      validateCountryOfOrigin: false,
+      blanketNirms: false,
     };
 
     const result = parserCombine.combine(
       registrationApprovalNumber,
       items,
       true,
+      "TEST",
+      [],
+      mockHeader,
     );
 
     expect(result).toMatchObject(packingListJson);

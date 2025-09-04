@@ -51,7 +51,7 @@ function parse(packingListJson) {
       true,
       parserModel.KEPAK1,
       establishmentNumbers,
-      headers.KEPAK1.findUnitInHeader,
+      headers.KEPAK1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

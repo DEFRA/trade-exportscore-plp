@@ -52,7 +52,7 @@ function parse(packingListJson) {
       true,
       parserModel.CDS1,
       [],
-      headers.CDS1.findUnitInHeader,
+      headers.CDS1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

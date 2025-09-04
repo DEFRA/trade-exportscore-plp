@@ -39,7 +39,7 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
       true,
       parserModel.ICELAND1,
       establishmentNumbers,
-      headers.ICELAND1.findUnitInHeader,
+      headers.ICELAND1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);

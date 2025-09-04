@@ -63,7 +63,7 @@ function parse(packingListJson) {
       true,
       parserModel.BOOTS1,
       establishmentNumbers,
-      headers.BOOTS1.findUnitInHeader,
+      headers.BOOTS1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
@@ -72,6 +72,8 @@ function parse(packingListJson) {
       [],
       false,
       parserModel.BOOTS1,
+      [],
+      headers.BOOTS1,
     );
   }
 }

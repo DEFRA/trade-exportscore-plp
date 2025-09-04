@@ -47,7 +47,7 @@ async function parse(packingListDocument, sanitizedFullPackingList) {
       true,
       parserModel.GREGGS1,
       establishmentNumbers,
-      headers.GREGGS1.findUnitInHeader,
+      headers.GREGGS1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
