@@ -70,6 +70,7 @@ const headers = {
     },
     country_of_origin: /Country of Origin/i,
     nirms: /Lane/i,
+    validateCountryOfOrigin: true,
     findUnitInHeader: true
   },
   BOOTS1: {
