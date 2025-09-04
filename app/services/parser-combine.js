@@ -6,6 +6,7 @@ function combine(
   establishmentNumbers = [],
   findUnitInHeader = false,
   validateCountryOfOrigin = false,
+  blanketNirms = false,
 ) {
   return {
     registration_approval_number: establishmentNumber,
@@ -18,6 +19,7 @@ function combine(
     establishment_numbers: establishmentNumbers,
     unitInHeader: findUnitInHeader ?? false,
     validateCountryOfOrigin: validateCountryOfOrigin ?? false,
+    blanketNirms: blanketNirms ?? false,
   };
 }
 

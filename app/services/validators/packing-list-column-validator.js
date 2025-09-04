@@ -162,6 +162,22 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
         description: failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
       });
     }
+
+    // if there is a nirms blanket statement, just the description below is assigned to the failure reason
+    if (
+      validationResult.missingNirms.length !== 0 &&
+      packingList.blanketNirms
+    ) {
+      failureReasons += `${failureReasonsDescriptions.NIRMS_MISSING}.\n`;
+    }
+    // if there is no nirms blanket statement, the collection of the row/sheet location and description should be added into the checks array
+    else {
+      checks.push({
+        collection: validationResult.missingNirms,
+        description: failureReasonsDescriptions.NIRMS_MISSING,
+      });
+    }
+
     checks.forEach((check) => {
       if (check.collection.length > 0) {
         failureReasons += generateFailureReasonFromRows(
@@ -206,10 +222,6 @@ function createValidationChecks(validationResult) {
     {
       collection: validationResult.invalidNetWeight,
       description: failureReasonsDescriptions.NET_WEIGHT_INVALID,
-    },
-    {
-      collection: validationResult.missingNirms,
-      description: failureReasonsDescriptions.NIRMS_MISSING,
     },
     {
       collection: validationResult.invalidNirms,

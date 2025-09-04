@@ -63,6 +63,8 @@ function parse(packingListJson) {
       parserModel.BANDM1,
       establishmentNumbers,
       headers.BANDM1.findUnitInHeader,
+      headers.BANDM1.validateCountryOfOrigin,
+      true,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
