@@ -315,6 +315,10 @@ const headers = {
       number_of_packages: /CASE Quantity/i,
       total_net_weight_kg: netWeight,
     },
+    country_of_origin: /Country of Origin/i,
+    type_of_treatment: /Type of Treatment/i,
+    nirms: /NIRMS \/ SPS Item/i,
+    validateCountryOfOrigin: true,
     findUnitInHeader: true,
   },
   TESCO1: {
