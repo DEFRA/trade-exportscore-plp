@@ -193,7 +193,7 @@ git push origin <branch> # Push to remote (NEVER forget this step)
 - **hotfix/** branches → **main** branch (emergency only)
 
 ```
-Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation (to DEVELOP!) → SonarQube Analysis → Initial Review → PR Maintenance → Human Approval → Merge
+Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation (to DEVELOP!) → SonarQube Analysis → Initial Review (COMMENT ONLY) → PR Maintenance → Human Approval → Merge
 ├── MANDATORY: make prettier (code formatting before ANY commit)
 ├── MANDATORY: npm run test:unit (unit tests must pass before ANY commit)
 ├── MANDATORY: Version increment check vs main branch (with user confirmation)
@@ -201,7 +201,7 @@ Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation (
 ├── MANDATORY: git push origin <branch> (push to remote)
 ├── MANDATORY: Verify PR base branch is DEVELOP for feature/bug branches
 ├── MANDATORY: SonarQube branch analysis + PR comment
-├── MANDATORY: Initial PR review after creation (overall assessment only)
+├── MANDATORY: Initial PR review after creation (COMMENT ONLY - never approval)
 ├── MANDATORY: PR maintenance ONLY after subsequent commits (not initial commit)
 ├── Auto-generated descriptions with 🤖 [COPILOT GENERATED] header
 ├── Work item linking (AB#[WorkItemId])
@@ -215,9 +215,12 @@ Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation (
 
 1. **Create PR** with comprehensive description including work item reference
 2. **Run SonarQube Analysis** on current branch and add analysis comment
-3. **Perform Initial PR Review** (overall assessment of entire change)
-   - Use overall review comment covering all acceptance criteria
-   - Assess complete implementation quality
+3. **Perform Initial PR Review** (MANDATORY - as COMMENT, never approval)
+   - Use `mcp_github_create_and_submit_pull_request_review` with `event: COMMENT`
+   - Provide overall assessment of entire change covering all acceptance criteria
+   - Assess complete implementation quality and readiness
+   - Use 🤖 [COPILOT GENERATED] header
+   - **NEVER attempt approval** - always use COMMENT event type
    - NO individual file comments on initial commit
    - NO individual commit comments on initial commit
 
@@ -479,3 +482,4 @@ make tests                   # Run via scripts/test
 5. **NEVER commit with version ≤ main branch version** - This causes build failures
 6. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
 7. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
+8. **INITIAL PR REVIEW MUST BE COMMENT ONLY** - Never attempt approval, always use `event: COMMENT`
