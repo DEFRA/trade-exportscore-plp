@@ -18,13 +18,41 @@ make prettier
 # Step 2: ALWAYS run unit tests
 npm run test:unit
 
-# Step 3: ONLY then proceed with git operations
+# Step 3: ALWAYS verify version increment (AUTOMATED CHECK)
+# Current branch version MUST be > main branch version
+current_version=$(grep '"version"' package.json | cut -d'"' -f4)
+main_version=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+echo "Current: $current_version, Main: $main_version"
+
+# Step 4: ONLY then proceed with git operations
 git add .
 git commit -m "message"
 git push origin <branch>
 ```
 
-**⛔ EXECUTION RULE**: Never run `git commit` without completing Steps 1 & 2 first.
+**⛔ EXECUTION RULE**: Never run `git commit` without completing Steps 1, 2 & 3 first.
+
+## 🚨 VERSION VERIFICATION PROTOCOL 🚨
+
+**BEFORE ANY COMMIT - VERSION MUST BE INCREMENTED:**
+
+### ✅ Version Gates (MANDATORY - NO EXCEPTIONS)
+
+```bash
+# CRITICAL: Feature branch version MUST be higher than main branch
+# Example: main=6.22.0 → feature=6.22.1+ (REQUIRED)
+# Example: main=6.22.5 → feature=6.22.6+ (REQUIRED)
+
+# Auto-check command (MUST pass before commit):
+current=$(grep '"version"' package.json | cut -d'"' -f4)
+main=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+if [[ "$current" == "$main" ]]; then
+  echo "❌ BLOCKED: Version $current equals main branch - MUST INCREMENT"
+  exit 1
+fi
+```
+
+**⛔ EXECUTION RULE**: Never commit with version ≤ main branch version.
 
 ---
 
@@ -72,7 +100,13 @@ git push origin <branch>
 
 - [ ] **Code Quality**: `make prettier` (format code)
 - [ ] **Tests**: `npm run test:unit` (all tests must pass)
-- [ ] **Version**: Check version increment vs main branch (ask user confirmation)
+- [ ] **Version**: MUST be higher than main branch (AUTOMATED CHECK - BLOCKING)
+  ```bash
+  # Auto-verification command (MUST pass):
+  current=$(grep '"version"' package.json | cut -d'"' -f4)
+  main=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+  [[ "$current" != "$main" ]] || { echo "❌ VERSION ERROR: Must increment from $main"; exit 1; }
+  ```
 - [ ] **Staging**: `git add .` (stage ALL changes)
 - [ ] **Commit**: `git commit -m "descriptive message"`
 - [ ] **Push**: `git push origin <branch>`
@@ -81,6 +115,7 @@ git push origin <branch>
 
 **STOP: Before creating/updating PR, verify ALL steps are complete:**
 
+- [ ] **BASE BRANCH**: feature/bug → develop | hotfix → main (CRITICAL!)
 - [ ] **Initial Review**: Review PR immediately after creation
 - [ ] **Description**: Include 🤖 [COPILOT GENERATED] header
 - [ ] **Work Item**: Link AB#[WorkItemId] in description
@@ -120,11 +155,21 @@ npm run test:unit     # Run unit tests (MUST pass before ANY commit)
 #### 4. Version Management (Required)
 
 ```bash
-# Check version against main branch
-# Current branch version must be higher than main branch
-# Example: main=6.20.5 → current branch=6.20.6+
-# ALWAYS ask user confirmation before incrementing version
-# Update both package.json and package-lock.json
+# CRITICAL: Version MUST be incremented from main branch before ANY commit
+# Check version against main branch (AUTOMATED BLOCKING CHECK)
+current_version=$(grep '"version"' package.json | cut -d'"' -f4)
+main_version=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+
+# Example: main=6.20.5 → current branch=6.20.6+ (REQUIRED)
+# NEVER commit with same version as main branch
+# Update both package.json and package-lock.json (BOTH required)
+
+# Auto-block command (integrate into workflow):
+if [[ "$current_version" == "$main_version" ]]; then
+  echo "❌ COMMIT BLOCKED: Version must be > $main_version"
+  echo "Run: npm version patch  # or minor/major as needed"
+  exit 1
+fi
 ```
 
 #### 5. Git Operations (Required Sequence)
@@ -142,15 +187,21 @@ git push origin <branch> # Push to remote (NEVER forget this step)
 
 #### 6. Pull Request Lifecycle (GitHub MCP)
 
+🚨 **CRITICAL PR BASE BRANCH RULE** 🚨
+- **feature/** branches → **develop** branch (NEVER main)
+- **bug/** branches → **develop** branch (NEVER main)  
+- **hotfix/** branches → **main** branch (emergency only)
+
 ```
-Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation → SonarQube Analysis → Initial Review → PR Maintenance → Human Approval → Merge
+Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation (to DEVELOP!) → SonarQube Analysis → Initial Review (COMMENT ONLY) → PR Maintenance → Human Approval → Merge
 ├── MANDATORY: make prettier (code formatting before ANY commit)
 ├── MANDATORY: npm run test:unit (unit tests must pass before ANY commit)
 ├── MANDATORY: Version increment check vs main branch (with user confirmation)
 ├── MANDATORY: git add . (add ALL changes)
 ├── MANDATORY: git push origin <branch> (push to remote)
+├── MANDATORY: Verify PR base branch is DEVELOP for feature/bug branches
 ├── MANDATORY: SonarQube branch analysis + PR comment
-├── MANDATORY: Initial PR review after creation (overall assessment only)
+├── MANDATORY: Initial PR review after creation (COMMENT ONLY - never approval)
 ├── MANDATORY: PR maintenance ONLY after subsequent commits (not initial commit)
 ├── Auto-generated descriptions with 🤖 [COPILOT GENERATED] header
 ├── Work item linking (AB#[WorkItemId])
@@ -164,9 +215,12 @@ Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation �
 
 1. **Create PR** with comprehensive description including work item reference
 2. **Run SonarQube Analysis** on current branch and add analysis comment
-3. **Perform Initial PR Review** (overall assessment of entire change)
-   - Use overall review comment covering all acceptance criteria
-   - Assess complete implementation quality
+3. **Perform Initial PR Review** (MANDATORY - as COMMENT, never approval)
+   - Use `mcp_github_create_and_submit_pull_request_review` with `event: COMMENT`
+   - Provide overall assessment of entire change covering all acceptance criteria
+   - Assess complete implementation quality and readiness
+   - Use 🤖 [COPILOT GENERATED] header
+   - **NEVER attempt approval** - always use COMMENT event type
    - NO individual file comments on initial commit
    - NO individual commit comments on initial commit
 
@@ -229,9 +283,25 @@ dev1 → tst1 → snd4 → pre1 → prd1
 # SAFE COMMIT FUNCTION (Use this instead of raw git commit)
 safe-commit() {
   echo "🔥 MANDATORY: Running pre-commit quality gates..."
+  
+  # Gate 1: Code formatting
   make prettier || { echo "❌ Prettier failed"; return 1; }
+  
+  # Gate 2: Unit tests
   npm run test:unit || { echo "❌ Unit tests failed"; return 1; }
-  echo "✅ Quality gates passed"
+  
+  # Gate 3: Version verification (NEW - CRITICAL)
+  current=$(grep '"version"' package.json | cut -d'"' -f4)
+  main=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4 2>/dev/null || echo "0.0.0")
+  if [[ "$current" == "$main" ]]; then
+    echo "❌ VERSION BLOCKED: Current version $current equals main branch"
+    echo "   REQUIRED: Increment version > $main before commit"
+    echo "   Run: npm version patch  # or minor/major as needed"
+    return 1
+  fi
+  echo "✅ Version check passed: $current > $main"
+  
+  echo "✅ All quality gates passed"
   git add .
   git commit -m "$1"
   git push origin $(git branch --show-current)
@@ -407,5 +477,9 @@ make tests                   # Run via scripts/test
 
 1. **NEVER run `git commit` directly** - Always use the safe-commit pattern or verify gates first
 2. **ALWAYS check the COMMIT VERIFICATION PROTOCOL** before any git operations
-3. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
-4. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
+3. **ALWAYS check the VERSION VERIFICATION PROTOCOL** before any commit
+4. **ALWAYS verify PR base branch: feature/bug → develop, hotfix → main**
+5. **NEVER commit with version ≤ main branch version** - This causes build failures
+6. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
+7. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
+8. **INITIAL PR REVIEW MUST BE COMMENT ONLY** - Never attempt approval, always use `event: COMMENT`
