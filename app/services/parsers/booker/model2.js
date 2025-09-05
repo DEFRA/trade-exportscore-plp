@@ -64,6 +64,7 @@ function parse(packingListJson) {
       parserModel.BOOKER2,
       establishmentNumbers,
       headers.BOOKER2.findUnitInHeader,
+      headers.BOOKER2.validateCountryOfOrigin,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
