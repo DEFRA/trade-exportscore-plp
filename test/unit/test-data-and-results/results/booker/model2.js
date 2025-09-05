@@ -117,7 +117,7 @@ module.exports = {
         parserModel: "booker-2",
         establishment_numbers: ["RMS-GB-000077-001"],
         unitInHeader: true,
-        validateCountryOfOrigin: false
+        validateCountryOfOrigin: true
     },
     validTestResultParserService: {
         registration_approval_number: "RMS-GB-000077-001",
@@ -206,7 +206,7 @@ module.exports = {
         parserModel: "booker-2",
         establishment_numbers: ["RMS-GB-000077-001"],
         unitInHeader: true,
-        validateCountryOfOrigin: false
+        validateCountryOfOrigin: true
     },
     validTestResultForMultipleSheets: {
         registration_approval_number: "RMS-GB-000077-001",
@@ -309,7 +309,7 @@ module.exports = {
         parserModel: "booker-2",
         establishment_numbers: ["RMS-GB-000077-001"],
         unitInHeader: true,
-        validateCountryOfOrigin: false
+        validateCountryOfOrigin: true
     },
     invalidTestResult_MissingCells: {
         registration_approval_number: "RMS-GB-000077-001",
@@ -337,7 +337,7 @@ module.exports = {
         parserModel: "booker-2",
         establishment_numbers: ["RMS-GB-000077-001"],
         unitInHeader: true,
-        validateCountryOfOrigin: false
+        validateCountryOfOrigin: true
     },
     emptyTestResult: {
         business_checks: {
