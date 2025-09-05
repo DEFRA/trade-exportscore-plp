@@ -81,6 +81,7 @@ git push origin <branch>
 
 **STOP: Before creating/updating PR, verify ALL steps are complete:**
 
+- [ ] **BASE BRANCH**: feature/bug → develop | hotfix → main (CRITICAL!)
 - [ ] **Initial Review**: Review PR immediately after creation
 - [ ] **Description**: Include 🤖 [COPILOT GENERATED] header
 - [ ] **Work Item**: Link AB#[WorkItemId] in description
@@ -142,13 +143,19 @@ git push origin <branch> # Push to remote (NEVER forget this step)
 
 #### 6. Pull Request Lifecycle (GitHub MCP)
 
+🚨 **CRITICAL PR BASE BRANCH RULE** 🚨
+- **feature/** branches → **develop** branch (NEVER main)
+- **bug/** branches → **develop** branch (NEVER main)  
+- **hotfix/** branches → **main** branch (emergency only)
+
 ```
-Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation → SonarQube Analysis → Initial Review → PR Maintenance → Human Approval → Merge
+Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation (to DEVELOP!) → SonarQube Analysis → Initial Review → PR Maintenance → Human Approval → Merge
 ├── MANDATORY: make prettier (code formatting before ANY commit)
 ├── MANDATORY: npm run test:unit (unit tests must pass before ANY commit)
 ├── MANDATORY: Version increment check vs main branch (with user confirmation)
 ├── MANDATORY: git add . (add ALL changes)
 ├── MANDATORY: git push origin <branch> (push to remote)
+├── MANDATORY: Verify PR base branch is DEVELOP for feature/bug branches
 ├── MANDATORY: SonarQube branch analysis + PR comment
 ├── MANDATORY: Initial PR review after creation (overall assessment only)
 ├── MANDATORY: PR maintenance ONLY after subsequent commits (not initial commit)
@@ -407,5 +414,6 @@ make tests                   # Run via scripts/test
 
 1. **NEVER run `git commit` directly** - Always use the safe-commit pattern or verify gates first
 2. **ALWAYS check the COMMIT VERIFICATION PROTOCOL** before any git operations
-3. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
-4. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
+3. **ALWAYS verify PR base branch: feature/bug → develop, hotfix → main**
+4. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
+5. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
