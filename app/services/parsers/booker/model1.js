@@ -48,7 +48,7 @@ async function parse(packingList) {
       true,
       parserModel.BOOKER1,
       establishmentNumbers,
-      headers[model].findUnitInHeader,
+      headers[model],
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
@@ -57,7 +57,7 @@ async function parse(packingList) {
       [],
       false,
       parserModel.NOMATCH,
-      headers.BOOKER1.findUnitInHeader,
+      headers.BOOKER1,
     );
   }
 }

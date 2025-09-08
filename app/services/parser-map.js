@@ -58,6 +58,15 @@ function mapParser(
         packingListJson[headerRow][headerCols.header_net_weight_unit],
       ))
     : null;
+  const blanketNirms = regex.test(header.blanketNirms?.regex, packingListJson)
+    ? header.blanketNirms?.value
+    : null;
+  const blanketTreatmentType = regex.test(
+    header.blanketTreatmentType?.regex,
+    packingListJson,
+  )
+    ? header.blanketTreatmentType?.value
+    : null;
 
   // parse the packing list contents based on columns identified
   const packingListContents = packingListJson
@@ -65,7 +74,10 @@ function mapParser(
     .map((col, rowPos) => ({
       description: columnValue(col[headerCols.description]),
       nature_of_products: columnValue(col[headerCols.nature_of_products]),
-      type_of_treatment: columnValue(col[headerCols.type_of_treatment]),
+      type_of_treatment:
+        columnValue(col[headerCols.type_of_treatment]) ??
+        (isNotEmpty(col, headerCols) && blanketTreatmentType) ??
+        null,
       commodity_code: columnValue(col[headerCols.commodity_code]),
       number_of_packages: columnValue(col[headerCols.number_of_packages]),
       total_net_weight_kg: columnValue(col[headerCols.total_net_weight_kg]),
@@ -74,7 +86,10 @@ function mapParser(
         (isNotEmpty(col, headerCols) && netWeightUnit) ??
         null,
       country_of_origin: columnValue(col[headerCols.country_of_origin]),
-      nirms: columnValue(col[headerCols.nirms]),
+      nirms:
+        columnValue(col[headerCols.nirms]) ??
+        (isNotEmpty(col, headerCols) && blanketNirms) ??
+        null,
       row_location: {
         rowNumber: dataRow + rowPos + 1,
         sheetName,
