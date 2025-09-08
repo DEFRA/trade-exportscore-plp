@@ -56,8 +56,7 @@ function parse(packingListJson) {
       true,
       parserModel.DAVENPORT2,
       establishmentNumbers,
-      headers.DAVENPORT2.findUnitInHeader,
-      headers.DAVENPORT2.validateCountryOfOrigin,
+      headers.DAVENPORT2,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

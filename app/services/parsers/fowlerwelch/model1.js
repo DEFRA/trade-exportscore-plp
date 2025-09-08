@@ -68,7 +68,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       true,
       model,
       establishmentNumbers,
-      headers.FOWLERWELCH1.findUnitInHeader,
+      headers.FOWLERWELCH1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

@@ -44,7 +44,7 @@ function parse(packingListJson) {
       true,
       parserModel.MARS1,
       [],
-      headers.MARS1.findUnitInHeader,
+      headers.MARS1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

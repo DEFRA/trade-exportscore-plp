@@ -55,6 +55,16 @@ const headers = {
       total_net_weight_kg: netWeight,
     },
     findUnitInHeader: true,
+    validateCountryOfOrigin: true,
+    country_of_origin: /COUNTRY OF ORIGIN/i,
+    blanketNirms: {
+      regex: /This consignment contains only NIRMS eligible goods/i,
+      value: "NIRMS",
+    },
+    blanketTreatmentType: {
+      regex: /Treatment type: all products are processed/i,
+      value: "Processed",
+    },
   },
   BOOTS1: {
     establishmentNumber: {

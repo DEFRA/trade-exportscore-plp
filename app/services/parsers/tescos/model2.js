@@ -77,7 +77,7 @@ function parse(packingListJson) {
       true,
       parserModel.TESCO2,
       establishmentNumbers,
-      headers.TESCO2.findUnitInHeader,
+      headers.TESCO2,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parsers()", err);

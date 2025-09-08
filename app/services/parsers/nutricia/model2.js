@@ -52,7 +52,7 @@ function parse(packingListJson) {
       true,
       parserModel.NUTRICIA2,
       establishmentNumbers,
-      headers.NUTRICIA2.findUnitInHeader,
+      headers.NUTRICIA2,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

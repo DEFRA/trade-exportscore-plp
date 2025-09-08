@@ -1,6 +1,6 @@
 ---
 description: "DevOps automation for trade-exportscore-plp: Azure DevOps work items, GitHub PRs, CI/CD pipelines, and full agentic lifecycle management."
-tools: ["sequential-thinking", "context7", "sonarqube", "runCommands", "runTasks", "editFiles", "codebase", "changes", "problems", "testFailure", "runTests", "add_comment_to_pending_review", "cancel_workflow_run", "create_and_submit_pull_request_review", "create_branch", "create_gist", "create_or_update_file", "create_pending_pull_request_review", "create_pull_request", "create_pull_request_with_copilot", "create_repository", "delete_file", "delete_pending_pull_request_review", "delete_workflow_run_logs", "dismiss_notification", "download_workflow_run_artifact", "get_code_scanning_alert", "get_commit", "get_dependabot_alert", "get_file_contents", "get_job_logs", "get_latest_release", "get_me", "get_notification_details", "get_pull_request", "get_pull_request_comments", "get_pull_request_diff", "get_pull_request_files", "get_pull_request_reviews", "get_pull_request_status", "get_secret_scanning_alert", "get_tag", "get_team_members", "get_teams", "get_workflow_run", "get_workflow_run_logs", "get_workflow_run_usage", "list_branches", "list_code_scanning_alerts", "list_commits", "list_dependabot_alerts", "list_gists", "list_notifications", "list_pull_requests", "list_releases", "list_secret_scanning_alerts", "list_tags", "list_workflow_jobs", "list_workflow_run_artifacts", "list_workflow_runs", "list_workflows", "manage_notification_subscription", "manage_repository_notification_subscription", "mark_all_notifications_read", "merge_pull_request", "push_files", "request_copilot_review", "rerun_failed_jobs", "rerun_workflow_run", "run_workflow", "search_code", "search_orgs", "search_pull_requests", "search_repositories", "search_users", "submit_pending_pull_request_review", "update_gist", "update_pull_request", "update_pull_request_branch", "build_get_builds", "build_get_changes", "build_get_definition_revisions", "build_get_definitions", "build_get_log", "build_get_log_by_id", "build_get_status", "build_run_build", "build_update_build_stage", "release_get_definitions", "release_get_releases", "search_workitem", "wit_add_child_work_items", "wit_add_work_item_comment", "wit_create_work_item", "wit_get_query", "wit_get_query_results_by_id", "wit_get_work_item", "wit_get_work_item_type", "wit_get_work_items_batch_by_ids", "wit_get_work_items_for_iteration", "wit_link_work_item_to_pull_request", "wit_list_backlog_work_items", "wit_list_backlogs", "wit_list_work_item_comments", "wit_my_work_items", "wit_update_work_item", "wit_update_work_items_batch", "wit_work_item_unlink", "wit_work_items_link", "work_assign_iterations", "work_create_iterations", "work_list_team_iterations"]
+tools: ['runTests', 'codebase', 'problems', 'changes', 'testFailure', 'runCommands', 'runTasks', 'editFiles', 'sequential-thinking', 'add_comment_to_pending_review', 'cancel_workflow_run', 'create_and_submit_pull_request_review', 'create_branch', 'create_gist', 'create_or_update_file', 'create_pending_pull_request_review', 'create_pull_request', 'create_pull_request_with_copilot', 'delete_file', 'delete_pending_pull_request_review', 'delete_workflow_run_logs', 'dismiss_notification', 'download_workflow_run_artifact', 'get_code_scanning_alert', 'get_dependabot_alert', 'get_file_contents', 'get_job_logs', 'get_latest_release', 'get_me', 'get_notification_details', 'get_pull_request', 'get_pull_request_comments', 'get_pull_request_diff', 'get_pull_request_files', 'get_pull_request_reviews', 'get_pull_request_status', 'get_secret_scanning_alert', 'get_tag', 'get_team_members', 'get_teams', 'get_workflow_run', 'get_workflow_run_logs', 'get_workflow_run_usage', 'list_branches', 'list_code_scanning_alerts', 'list_commits', 'list_dependabot_alerts', 'list_gists', 'list_notifications', 'list_pull_requests', 'list_releases', 'list_secret_scanning_alerts', 'list_tags', 'list_workflow_jobs', 'list_workflow_run_artifacts', 'list_workflow_runs', 'list_workflows', 'manage_notification_subscription', 'manage_repository_notification_subscription', 'mark_all_notifications_read', 'merge_pull_request', 'push_files', 'request_copilot_review', 'rerun_failed_jobs', 'rerun_workflow_run', 'run_workflow', 'search_code', 'search_orgs', 'search_pull_requests', 'search_users', 'submit_pending_pull_request_review', 'update_gist', 'update_pull_request', 'update_pull_request_branch', 'create_repository', 'get_commit', 'search_repositories', 'build_get_builds', 'build_get_changes', 'build_get_definition_revisions', 'build_get_definitions', 'build_get_log', 'build_get_log_by_id', 'build_get_status', 'build_run_build', 'build_update_build_stage', 'release_get_definitions', 'search_code', 'search_workitem', 'wit_add_child_work_items', 'wit_add_work_item_comment', 'wit_create_work_item', 'wit_get_query', 'wit_get_query_results_by_id', 'wit_get_work_item', 'wit_get_work_item_type', 'wit_get_work_items_batch_by_ids', 'wit_get_work_items_for_iteration', 'wit_link_work_item_to_pull_request', 'wit_list_backlog_work_items', 'wit_list_backlogs', 'wit_list_work_item_comments', 'wit_my_work_items', 'wit_update_work_item', 'wit_update_work_items_batch', 'wit_work_item_unlink', 'wit_work_items_link', 'work_assign_iterations', 'work_create_iterations', 'work_list_team_iterations', 'release_get_releases', 'sonarqube']
 ---
 
 # DevOps ChatMode for trade-exportscore-plp
@@ -18,13 +18,41 @@ make prettier
 # Step 2: ALWAYS run unit tests
 npm run test:unit
 
-# Step 3: ONLY then proceed with git operations
+# Step 3: ALWAYS verify version increment (AUTOMATED CHECK)
+# Current branch version MUST be > main branch version
+current_version=$(grep '"version"' package.json | cut -d'"' -f4)
+main_version=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+echo "Current: $current_version, Main: $main_version"
+
+# Step 4: ONLY then proceed with git operations
 git add .
 git commit -m "message"
 git push origin <branch>
 ```
 
-**⛔ EXECUTION RULE**: Never run `git commit` without completing Steps 1 & 2 first.
+**⛔ EXECUTION RULE**: Never run `git commit` without completing Steps 1, 2 & 3 first.
+
+## 🚨 VERSION VERIFICATION PROTOCOL 🚨
+
+**BEFORE ANY COMMIT - VERSION MUST BE INCREMENTED:**
+
+### ✅ Version Gates (MANDATORY - NO EXCEPTIONS)
+
+```bash
+# CRITICAL: Feature branch version MUST be higher than main branch
+# Example: main=6.22.0 → feature=6.22.1+ (REQUIRED)
+# Example: main=6.22.5 → feature=6.22.6+ (REQUIRED)
+
+# Auto-check command (MUST pass before commit):
+current=$(grep '"version"' package.json | cut -d'"' -f4)
+main=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+if [[ "$current" == "$main" ]]; then
+  echo "❌ BLOCKED: Version $current equals main branch - MUST INCREMENT"
+  exit 1
+fi
+```
+
+**⛔ EXECUTION RULE**: Never commit with version ≤ main branch version.
 
 ---
 
@@ -72,7 +100,18 @@ git push origin <branch>
 
 - [ ] **Code Quality**: `make prettier` (format code)
 - [ ] **Tests**: `npm run test:unit` (all tests must pass)
-- [ ] **Version**: Check version increment vs main branch (ask user confirmation)
+- [ ] **Version**: MUST be higher than main branch (AUTOMATED CHECK - BLOCKING)
+  ```bash
+  # Auto-verification command (MUST pass):
+  current=$(grep '"version"' package.json | cut -d'"' -f4)
+  main=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+  [[ "$current" != "$main" ]] || { echo "❌ VERSION ERROR: Must increment from $main"; exit 1; }
+  ```
+- [ ] **SonarQube** (OPTIONAL): Run if SONARQUBE_TOKEN is available
+  ```bash
+  # Token availability check:
+  if [ -n "$SONARQUBE_TOKEN" ]; then echo "✅ SonarQube analysis available"; else echo "⚠️ SonarQube token not set - skipping analysis"; fi
+  ```
 - [ ] **Staging**: `git add .` (stage ALL changes)
 - [ ] **Commit**: `git commit -m "descriptive message"`
 - [ ] **Push**: `git push origin <branch>`
@@ -81,10 +120,12 @@ git push origin <branch>
 
 **STOP: Before creating/updating PR, verify ALL steps are complete:**
 
+- [ ] **BASE BRANCH**: feature/bug → develop | hotfix → main (CRITICAL!)
 - [ ] **Initial Review**: Review PR immediately after creation
 - [ ] **Description**: Include 🤖 [COPILOT GENERATED] header
 - [ ] **Work Item**: Link AB#[WorkItemId] in description
 - [ ] **Acceptance Criteria**: Validate all ACs are addressed
+- [ ] **SonarQube Analysis** (IF TOKEN AVAILABLE): Branch-specific quality analysis + PR comment
 - [ ] **Maintenance**: Add comment for each subsequent commit
 - [ ] **Update**: Keep PR description current with latest changes
 
@@ -120,11 +161,21 @@ npm run test:unit     # Run unit tests (MUST pass before ANY commit)
 #### 4. Version Management (Required)
 
 ```bash
-# Check version against main branch
-# Current branch version must be higher than main branch
-# Example: main=6.20.5 → current branch=6.20.6+
-# ALWAYS ask user confirmation before incrementing version
-# Update both package.json and package-lock.json
+# CRITICAL: Version MUST be incremented from main branch before ANY commit
+# Check version against main branch (AUTOMATED BLOCKING CHECK)
+current_version=$(grep '"version"' package.json | cut -d'"' -f4)
+main_version=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+
+# Example: main=6.20.5 → current branch=6.20.6+ (REQUIRED)
+# NEVER commit with same version as main branch
+# Update both package.json and package-lock.json (BOTH required)
+
+# Auto-block command (integrate into workflow):
+if [[ "$current_version" == "$main_version" ]]; then
+  echo "❌ COMMIT BLOCKED: Version must be > $main_version"
+  echo "Run: npm version patch  # or minor/major as needed"
+  exit 1
+fi
 ```
 
 #### 5. Git Operations (Required Sequence)
@@ -142,15 +193,21 @@ git push origin <branch> # Push to remote (NEVER forget this step)
 
 #### 6. Pull Request Lifecycle (GitHub MCP)
 
+🚨 **CRITICAL PR BASE BRANCH RULE** 🚨
+- **feature/** branches → **develop** branch (NEVER main)
+- **bug/** branches → **develop** branch (NEVER main)  
+- **hotfix/** branches → **main** branch (emergency only)
+
 ```
-Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation → SonarQube Analysis → Initial Review → PR Maintenance → Human Approval → Merge
+Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation (to DEVELOP!) → SonarQube Analysis (IF TOKEN AVAILABLE) → Initial Review (COMMENT ONLY) → PR Maintenance → Human Approval → Merge
 ├── MANDATORY: make prettier (code formatting before ANY commit)
 ├── MANDATORY: npm run test:unit (unit tests must pass before ANY commit)
 ├── MANDATORY: Version increment check vs main branch (with user confirmation)
 ├── MANDATORY: git add . (add ALL changes)
 ├── MANDATORY: git push origin <branch> (push to remote)
-├── MANDATORY: SonarQube branch analysis + PR comment
-├── MANDATORY: Initial PR review after creation (overall assessment only)
+├── MANDATORY: Verify PR base branch is DEVELOP for feature/bug branches
+├── CONDITIONAL: SonarQube branch analysis + PR comment (only if SONARQUBE_TOKEN available)
+├── MANDATORY: Initial PR review after creation (COMMENT ONLY - never approval)
 ├── MANDATORY: PR maintenance ONLY after subsequent commits (not initial commit)
 ├── Auto-generated descriptions with 🤖 [COPILOT GENERATED] header
 ├── Work item linking (AB#[WorkItemId])
@@ -164,9 +221,12 @@ Feature Branch → Pre-Commit Quality Gates → Git Operations → PR Creation �
 
 1. **Create PR** with comprehensive description including work item reference
 2. **Run SonarQube Analysis** on current branch and add analysis comment
-3. **Perform Initial PR Review** (overall assessment of entire change)
-   - Use overall review comment covering all acceptance criteria
-   - Assess complete implementation quality
+3. **Perform Initial PR Review** (MANDATORY - as COMMENT, never approval)
+   - Use `mcp_github_create_and_submit_pull_request_review` with `event: COMMENT`
+   - Provide overall assessment of entire change covering all acceptance criteria
+   - Assess complete implementation quality and readiness
+   - Use 🤖 [COPILOT GENERATED] header
+   - **NEVER attempt approval** - always use COMMENT event type
    - NO individual file comments on initial commit
    - NO individual commit comments on initial commit
 
@@ -184,11 +244,12 @@ After EVERY **subsequent** commit pushed to a PR branch:
    - Keep description current with latest state of the implementation
    - Ensure description accurately represents the complete PR scope
 
-2. **Run SonarQube Analysis** (MANDATORY for code quality tracking)
+2. **Run SonarQube Analysis** (CONDITIONAL - only if SONARQUBE_TOKEN available)
 
-   - Execute branch-specific SonarQube analysis on current commit
+   - Execute branch-specific SonarQube analysis on current commit (if token available)
    - Generate comprehensive quality report covering all metrics
    - Include analysis timestamp and commit SHA for traceability
+   - Skip with informative message if token not available
 
 3. **Add PR Comment for Each Subsequent Commit** (MANDATORY for commit tracking)
 
@@ -197,7 +258,7 @@ After EVERY **subsequent** commit pushed to a PR branch:
    - Include commit SHA for reference
    - Use 🤖 [COPILOT GENERATED] header
 
-4. **Add SonarQube Analysis Comment** (MANDATORY for quality tracking)
+4. **Add SonarQube Analysis Comment** (CONDITIONAL - only if analysis was performed)
    - Follow standardized SonarQube comment format
    - Include quality gate status, metrics, and any critical issues
    - Reference specific commit being analyzed
@@ -229,9 +290,32 @@ dev1 → tst1 → snd4 → pre1 → prd1
 # SAFE COMMIT FUNCTION (Use this instead of raw git commit)
 safe-commit() {
   echo "🔥 MANDATORY: Running pre-commit quality gates..."
+  
+  # Gate 1: Code formatting
   make prettier || { echo "❌ Prettier failed"; return 1; }
+  
+  # Gate 2: Unit tests
   npm run test:unit || { echo "❌ Unit tests failed"; return 1; }
-  echo "✅ Quality gates passed"
+  
+  # Gate 3: Version verification (NEW - CRITICAL)
+  current=$(grep '"version"' package.json | cut -d'"' -f4)
+  main=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4 2>/dev/null || echo "0.0.0")
+  if [[ "$current" == "$main" ]]; then
+    echo "❌ VERSION BLOCKED: Current version $current equals main branch"
+    echo "   REQUIRED: Increment version > $main before commit"
+    echo "   Run: npm version patch  # or minor/major as needed"
+    return 1
+  fi
+  echo "✅ Version check passed: $current > $main"
+  
+  # Gate 4: SonarQube check (CONDITIONAL)
+  if [ -n "$SONARQUBE_TOKEN" ]; then
+    echo "✅ SonarQube token available - analysis can be performed in PR"
+  else
+    echo "⚠️ SonarQube token not set - skipping SonarQube quality analysis"
+  fi
+  
+  echo "✅ All quality gates passed"
   git add .
   git commit -m "$1"
   git push origin $(git branch --show-current)
@@ -320,30 +404,48 @@ make tests                   # Run via scripts/test
 - Security vulnerability scanning and compliance reporting
 - Branch-specific quality gate validation and metrics collection
 
-### SonarQube Integration (Automated Code Quality)
+### SonarQube Integration (Conditional Code Quality Analysis)
 
-#### PR-Based SonarQube Analysis (MANDATORY)
+#### SonarQube Token Requirements
 
-**Trigger Points:**
+**Token Setup** (Optional but recommended):
+```bash
+# Check if token is available
+if [ -n "$SONARQUBE_TOKEN" ]; then 
+  echo "✅ SonarQube analysis available"; 
+else 
+  echo "⚠️ SonarQube token not set - quality analysis will be skipped"; 
+fi
 
-1. **PR Creation** → Immediate SonarQube analysis + comment
-2. **Every Commit After PR Creation** → New analysis + updated comment
-3. **Branch-specific Analysis** → Always analyze current branch state
+# To set token (if available):
+export SONARQUBE_TOKEN="your-token-here"
+export SONARQUBE_ORG="defra"
+export SONARQUBE_PROJECT="trade-exportscore-plp"
+```
+
+#### PR-Based SonarQube Analysis (CONDITIONAL)
+
+**Trigger Points** (Only if SONARQUBE_TOKEN available):
+
+1. **PR Creation** → SonarQube analysis + comment (if token available)
+2. **Every Commit After PR Creation** → New analysis + updated comment (if token available)
+3. **Branch-specific Analysis** → Analyze current branch state (if token available)
 
 #### SonarQube Workflow Integration
 
 ```bash
-# MANDATORY: SonarQube analysis sequence after each commit
-1. Complete standard pre-commit gates (prettier, tests)
-2. Push commit to PR branch
-3. Run SonarQube analysis on current branch
-4. Add analysis results as PR comment
-5. Update PR description with latest quality metrics
+# CONDITIONAL: SonarQube analysis sequence (only if token available)
+1. Complete standard pre-commit gates (prettier, tests) - MANDATORY
+2. Push commit to PR branch - MANDATORY
+3. Check for SONARQUBE_TOKEN availability - CONDITIONAL
+4. Run SonarQube analysis on current branch (if token available) - CONDITIONAL
+5. Add analysis results as PR comment (if analysis performed) - CONDITIONAL
+6. Update PR description with latest quality metrics (if available) - CONDITIONAL
 ```
 
-#### SonarQube Comment Format (MANDATORY)
+#### SonarQube Comment Format (CONDITIONAL)
 
-**All SonarQube analysis comments must follow this format:**
+**When SONARQUBE_TOKEN is available, all SonarQube analysis comments must follow this format:**
 
 ```markdown
 🤖 [COPILOT GENERATED] - SonarQube Analysis
@@ -380,6 +482,33 @@ make tests                   # Run via scripts/test
 [List critical/blocker issues with file paths and line numbers]
 ```
 
+**When SONARQUBE_TOKEN is NOT available:**
+
+```markdown
+🤖 [COPILOT GENERATED] - Code Quality Assessment
+
+## Manual Code Quality Review - Branch: `Feature/[WorkItemId]-description`
+
+### ⚠️ SonarQube Analysis: SKIPPED
+**Reason**: SONARQUBE_TOKEN not available in environment
+
+### ✅ Manual Quality Assessment
+
+**Analysis Timestamp**: [ISO DateTime]
+**Commit SHA**: [commit_hash]
+
+- **Unit Tests**: X% coverage (from npm test output)
+- **Code Formatting**: Validated with prettier
+- **ESLint**: No violations detected (if applicable)
+- **Code Review**: Manual inspection completed
+
+### 📋 Quality Metrics (Manual Assessment)
+- **Files Changed**: X
+- **Lines Modified**: X  
+- **Test Coverage**: Maintained/Improved
+- **Code Standards**: Compliant with project patterns
+```
+
 ### Requirements Standards
 
 #### User Story Format (AB#557636)
@@ -407,5 +536,10 @@ make tests                   # Run via scripts/test
 
 1. **NEVER run `git commit` directly** - Always use the safe-commit pattern or verify gates first
 2. **ALWAYS check the COMMIT VERIFICATION PROTOCOL** before any git operations
-3. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
-4. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
+3. **ALWAYS check the VERSION VERIFICATION PROTOCOL** before any commit
+4. **ALWAYS verify PR base branch: feature/bug → develop, hotfix → main**
+5. **NEVER commit with version ≤ main branch version** - This causes build failures
+6. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
+7. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
+8. **INITIAL PR REVIEW MUST BE COMMENT ONLY** - Never attempt approval, always use `event: COMMENT`
+9. **SONARQUBE ANALYSIS IS CONDITIONAL** - Only perform if SONARQUBE_TOKEN is available, otherwise skip with informative message
