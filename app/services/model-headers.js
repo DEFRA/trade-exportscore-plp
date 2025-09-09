@@ -55,6 +55,16 @@ const headers = {
       total_net_weight_kg: netWeight,
     },
     findUnitInHeader: true,
+    validateCountryOfOrigin: true,
+    country_of_origin: /COUNTRY OF ORIGIN/i,
+    blanketNirms: {
+      regex: /This consignment contains only NIRMS eligible goods/i,
+      value: "NIRMS",
+    },
+    blanketTreatmentType: {
+      regex: /Treatment type: all products are processed/i,
+      value: "Processed",
+    },
   },
   BOOKER2: {
     establishmentNumber: {
@@ -332,6 +342,10 @@ const headers = {
       number_of_packages: /CASE Quantity/i,
       total_net_weight_kg: netWeight,
     },
+    country_of_origin: /Country of Origin/i,
+    type_of_treatment: /Type of Treatment/i,
+    nirms: /NIRMS \/ SPS Item/i,
+    validateCountryOfOrigin: true,
     findUnitInHeader: true,
   },
   TESCO1: {

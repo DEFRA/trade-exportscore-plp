@@ -64,8 +64,7 @@ function parse(packingListJson) {
       true,
       parserModel.TESCO3,
       establishmentNumbers,
-      headers.TESCO3.findUnitInHeader,
-      headers.TESCO3.validateCountryOfOrigin,
+      headers.TESCO3,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

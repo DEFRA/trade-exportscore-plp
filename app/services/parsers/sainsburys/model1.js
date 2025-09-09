@@ -53,8 +53,7 @@ function parse(packingListJson) {
       true,
       parserModel.SAINSBURYS1,
       establishmentNumbers,
-      headers.SAINSBURYS1.findUnitInHeader,
-      headers.SAINSBURYS1.validateCountryOfOrigin,
+      headers.SAINSBURYS1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

@@ -52,7 +52,7 @@ function parse(packingListJson) {
       true,
       parserModel.BUFFALOAD1,
       establishmentNumbers,
-      headers.BUFFALOAD1.findUnitInHeader,
+      headers.BUFFALOAD1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

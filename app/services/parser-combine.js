@@ -4,8 +4,7 @@ function combine(
   allRequiredFieldsPresent,
   ParserModel,
   establishmentNumbers = [],
-  findUnitInHeader = false,
-  validateCountryOfOrigin = false,
+  header = null,
 ) {
   return {
     registration_approval_number: establishmentNumber,
@@ -16,8 +15,9 @@ function combine(
     },
     parserModel: ParserModel,
     establishment_numbers: establishmentNumbers,
-    unitInHeader: findUnitInHeader ?? false,
-    validateCountryOfOrigin: validateCountryOfOrigin ?? false,
+    unitInHeader: header?.findUnitInHeader ?? false,
+    validateCountryOfOrigin: header?.validateCountryOfOrigin ?? false,
+    blanketNirms: header?.blanketNirms ?? false,
   };
 }
 
