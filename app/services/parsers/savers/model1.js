@@ -75,8 +75,7 @@ function parse(packingListJson) {
       false,
       parserModel.SAVERS1,
       [],
-      headers.SAVERS1.findUnitInHeader,
-      headers.SAVERS1.validateCountryOfOrigin,
+      headers.SAVERS1,
     );
   }
 }
