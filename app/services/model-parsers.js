@@ -60,6 +60,8 @@ const mandsMatcher = require("./matchers/mands/model1");
 const mandsParser = require("./parsers/mands/model1");
 const bookerMatcher = require("./matchers/booker/model1");
 const bookerParser = require("./parsers/booker/model1");
+const bookerMatcher2 = require("./matchers/booker/model2");
+const bookerParser2 = require("./parsers/booker/model2");
 const greggsMatcher = require("./matchers/greggs/model1");
 const greggsParser = require("./parsers/greggs/model1");
 const giovanniMatcher3 = require("./matchers/giovanni/model3");
@@ -85,6 +87,12 @@ const parsersExcel = {
     matches: (packingList, filename) =>
       bandMMatcher.matches(packingList, filename),
     parse: (packingList, filename) => bandMParser.parse(packingList, filename),
+  },
+  BOOKER2: {
+    matches: (packingList, filename) =>
+      bookerMatcher2.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      bookerParser2.parse(packingList, filename),
   },
   BOOTS1: {
     matches: (packingList, filename) =>
