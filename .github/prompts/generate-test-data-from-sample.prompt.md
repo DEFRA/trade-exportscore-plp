@@ -142,6 +142,9 @@ BOOKER2: {
    - **norms-7digits-in-establishment-number**: Use 7 digits instead of 6 in the establishment number. Implementation depends on establishment pattern:
      - **Single per sheet** (e.g., Booker2): Modify establishment number in header/company information area (e.g., "RMS-GB-000077-001" becomes "RMS-GB-0000777-001")
      - **Per row** (e.g., COOP): Modify establishment numbers in ALL data rows (e.g., "RMS-GB-000009-001" becomes "RMS-GB-0000009-001") (required for complete test coverage)
+   - **nomatch-ni-establishment-number**: Replace GB with NI in the establishment number to test Northern Ireland format rejection. Implementation depends on establishment pattern:
+     - **Single per sheet** (e.g., Booker2): Modify establishment number in header/company information area (e.g., "RMS-GB-000077-001" becomes "RMS-NI-000077-001")
+     - **Per row** (e.g., COOP): Modify establishment numbers in ALL data rows (e.g., "RMS-GB-000009-001" becomes "RMS-NI-000009-001") (required for complete test coverage)
 
    **Net Weight Tests** (`test-scenarios/net-weight/`):
    - **failurereason-net-weight-no-kilos**: Change the header matched by the exporter's `total_net_weight_kg` regex (from model-headers.js) to 'Net Weight' (removes 'Kilos')
