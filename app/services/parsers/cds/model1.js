@@ -51,8 +51,8 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.CDS1,
-      [],
-      headers.CDS1.findUnitInHeader,
+      establishmentNumbers,
+      headers.CDS1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

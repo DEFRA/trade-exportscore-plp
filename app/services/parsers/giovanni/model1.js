@@ -72,7 +72,7 @@ function parse(packingListJson) {
       true,
       parserModel.GIOVANNI1,
       establishmentNumbers,
-      headers.GIOVANNI1.findUnitInHeader,
+      headers.GIOVANNI1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

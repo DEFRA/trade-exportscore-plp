@@ -59,7 +59,7 @@ function parse(packingListJson) {
       true,
       parserModel.NISA2,
       establishmentNumbers,
-      headers.NISA2.findUnitInHeader,
+      headers.NISA2,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

@@ -38,7 +38,7 @@ async function parse(packingList) {
       true,
       parserModel.GIOVANNI3,
       establishmentNumbers,
-      headers.GIOVANNI3.findUnitInHeader,
+      headers.GIOVANNI3,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
