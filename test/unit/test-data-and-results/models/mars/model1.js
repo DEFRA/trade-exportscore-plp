@@ -266,4 +266,43 @@ module.exports = {
       },
     ],
   },
+  multipleRms: {
+    Sheet1: [
+      {
+        A: "RMS-GB-000213-001",
+        B: "RMS-GB-000213-002",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight KG",
+        G: "Commodity Code",
+      },
+      {
+        C: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        D: 8,
+        E: 24,
+        G: "21032000",
+      },
+    ],
+  },
+  missingKgunit: {
+    Sheet1: [
+      {
+        A: "RMS-GB-000213-001",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight",
+        G: "Commodity Code",
+      },
+      {
+        C: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        D: 8,
+        E: 24,
+        G: "21032000",
+      },
+    ],
+  },
 };
