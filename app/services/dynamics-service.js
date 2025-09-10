@@ -4,6 +4,7 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 const dsConfig = config.dynamicsConfig;
+const GET_DISPATCH_LOCATION_METHOD = "getDispatchLocation()";
 
 async function bearerTokenRequest() {
   try {
@@ -40,6 +41,74 @@ async function bearerTokenRequest() {
   }
 }
 
+// Helper function to validate bearer token
+function validateBearerToken(bearerToken) {
+  return (
+    bearerToken &&
+    typeof bearerToken === "string" &&
+    !bearerToken.includes("Error")
+  );
+}
+
+// Helper function to make HTTP request to Dynamics
+async function makeDynamicsRequest(bearerToken, applicationId) {
+  const token = "Bearer " + bearerToken;
+  const url = `${dsConfig.dynamicsUrl}/api/data/v9.2/trd_inspectionlocations(${applicationId})?$select=rms_remosid`;
+
+  const response = await fetch(encodeURI(url), {
+    method: "GET",
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+    },
+  });
+
+  return { response, status: response.status };
+}
+
+// Helper function for retry delays
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Helper function to log success after retry
+function logSuccessAfterRetry(attempt, applicationId) {
+  logger.logInfo(
+    filenameForLogging,
+    GET_DISPATCH_LOCATION_METHOD,
+    `Successfully retrieved record for ${applicationId} after ${attempt} attempts`,
+  );
+}
+
+// Helper function to handle successful response
+async function handleSuccessResponse(response, attempt, applicationId) {
+  const result = await response.json();
+  if (attempt > 1) {
+    logSuccessAfterRetry(attempt, applicationId);
+  }
+  return result.rms_remosid;
+}
+
+// Helper function to log HTTP errors
+function logHttpError(attempt, maxRetries, status, errorText, retryDelayMs) {
+  const isLastAttempt = attempt === maxRetries;
+  const message = isLastAttempt
+    ? `Final attempt failed - HTTP ${status}: ${errorText}`
+    : `HTTP ${status}: ${errorText}, retrying in ${retryDelayMs}ms (attempt ${attempt}/${maxRetries})`;
+
+  logger.logError(filenameForLogging, GET_DISPATCH_LOCATION_METHOD, message);
+}
+
+// Helper function to log catch errors
+function logCatchError(attempt, maxRetries, errorMessage, retryDelayMs) {
+  const isLastAttempt = attempt === maxRetries;
+  const message = isLastAttempt
+    ? `Final attempt failed with error: ${errorMessage}`
+    : `Attempt ${attempt} failed with error: ${errorMessage}, retrying in ${retryDelayMs}ms`;
+
+  logger.logError(filenameForLogging, GET_DISPATCH_LOCATION_METHOD, message);
+}
+
 async function getDispatchLocation(
   applicationId,
   maxRetries = 3,
@@ -49,85 +118,47 @@ async function getDispatchLocation(
     try {
       const bearerToken = await bearerTokenRequest();
 
-      // Check if token request failed
-      if (
-        !bearerToken ||
-        (typeof bearerToken === "string" && bearerToken.includes("Error"))
-      ) {
+      if (!validateBearerToken(bearerToken)) {
         const error = new Error(
           `Failed to obtain bearer token: ${bearerToken}`,
         );
-        logger.logError(filenameForLogging, "getDispatchLocation()", error);
+        logger.logError(
+          filenameForLogging,
+          GET_DISPATCH_LOCATION_METHOD,
+          error,
+        );
         return null;
       }
 
-      const token = "Bearer " + bearerToken;
-      const url = `${dsConfig.dynamicsUrl}/api/data/v9.2/trd_inspectionlocations(${applicationId})?$select=rms_remosid`;
-
-      const response = await fetch(encodeURI(url), {
-        method: "GET",
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      });
-
-      const status = response.status;
+      const { response, status } = await makeDynamicsRequest(
+        bearerToken,
+        applicationId,
+      );
 
       if (response.ok) {
-        const result = await response.json();
-        if (attempt > 1) {
-          logger.logInfo(
-            filenameForLogging,
-            "getDispatchLocation()",
-            `Successfully retrieved record for ${applicationId} after ${attempt} attempts`,
-          );
-        }
-        return result.rms_remosid;
+        return await handleSuccessResponse(response, attempt, applicationId);
       }
 
       const errorText = await response.text();
+      logHttpError(attempt, maxRetries, status, errorText, retryDelayMs);
 
       if (attempt === maxRetries) {
-        logger.logError(
-          filenameForLogging,
-          "getDispatchLocation()",
-          `Final attempt failed - HTTP ${status}: ${errorText}`,
-        );
         return null;
-      } else {
-        logger.logError(
-          filenameForLogging,
-          "getDispatchLocation()",
-          `HTTP ${status}: ${errorText}, retrying in ${retryDelayMs}ms (attempt ${attempt}/${maxRetries})`,
-        );
       }
 
-      // Wait before retrying (except on last attempt)
-      if (attempt < maxRetries) {
-        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
-      }
+      await sleep(retryDelayMs);
     } catch (err) {
+      logCatchError(attempt, maxRetries, err.message, retryDelayMs);
+
       if (attempt === maxRetries) {
-        logger.logError(
-          filenameForLogging,
-          "getDispatchLocation()",
-          `Final attempt failed with error: ${err.message}`,
-        );
         return null;
-      } else {
-        logger.logError(
-          filenameForLogging,
-          "getDispatchLocation()",
-          `Attempt ${attempt} failed with error: ${err.message}, retrying in ${retryDelayMs}ms`,
-        );
-        // Wait before retrying
-        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
       }
+
+      await sleep(retryDelayMs);
     }
   }
 
-  return null; // Should not reach here, but safety fallback
+  return null;
 }
 
 module.exports = { getDispatchLocation, bearerTokenRequest };

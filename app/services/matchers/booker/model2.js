@@ -17,7 +17,10 @@ function matches(packingList, filename) {
     for (const sheet of sheets) {
       // check for correct establishment number
       if (
-        !regex.test(headers.BOOKER2.establishmentNumber.regex, packingList[sheet])
+        !regex.test(
+          headers.BOOKER2.establishmentNumber.regex,
+          packingList[sheet],
+        )
       ) {
         return matcherResult.WRONG_ESTABLISHMENT_NUMBER;
       }
