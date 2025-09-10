@@ -305,6 +305,37 @@ describe("getDispatchLocation", () => {
     );
   });
 
+  test("returns null immediately on 403 without retrying", async () => {
+    global.fetch = jest
+      .fn()
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: true,
+          status: 200,
+          json: () => Promise.resolve({ access_token: "abc" }),
+        }),
+      )
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: false,
+          status: 403,
+          text: () => Promise.resolve("Forbidden"),
+        }),
+      );
+
+    const applicationId = 123;
+    const result = await dynamicsService.getDispatchLocation(applicationId);
+
+    expect(result).toBeNull();
+    // Should only be called twice: once for token, once for the 403 request
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(logger.logError).toHaveBeenCalledWith(
+      expect.any(String),
+      "getDispatchLocation()",
+      "Request failed with non-retryable error - HTTP 403: Forbidden",
+    );
+  });
+
   test("uses custom retry parameters", async () => {
     global.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve({
