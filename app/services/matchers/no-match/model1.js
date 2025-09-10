@@ -24,7 +24,7 @@ function noRemosMatch(sanitisedPackingList, _filename) {
 
 function rmsExceptions(y) {
   const giovanni2Regex = /\(NIRMS RMS-GB-\d{6}-\d{3}\)/i;
-  const cdsRegex = /\/ RMS-GB-000252-\d{3} \//i;
+  const cdsRegex = /\/ RMS-GB-\d{6}-\d{3} \//i;
   const sainsburysRegex = /^RMS-GB-000094-\d{3}​$/i;
   const giovanni1Regex = /^RMS-GB-000153$/i;
   const kepakRegex = /^RMS-GB-000280$/i;

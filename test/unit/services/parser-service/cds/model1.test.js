@@ -52,4 +52,18 @@ describe("matchesCdsModel1", () => {
 
     expect(result).toMatchObject(test_results.missingKgunit);
   });
+  test("returns 'No Match' for invalid rms number 'RMS-GB-000000-000'", async () => {
+    const invalidTestResult_NoMatch = {
+      business_checks: {
+        all_required_fields_present: false,
+        failure_reasons: null,
+      },
+      items: [],
+      registration_approval_number: null,
+      parserModel: parserModel.NOMATCH,
+    };
+    const result = await parserService.findParser(model.invalidRms, filename);
+
+    expect(result).toMatchObject(invalidTestResult_NoMatch);
+  });
 });
