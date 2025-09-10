@@ -223,20 +223,24 @@ function mapPdfNonAiParser(packingListJson, model, ys) {
       rowNumber: row + 1,
       pageNumber: packingListJson.pageInfo.num,
     };
-    plRow.commodity_code = extractIfFirstTenAreDigits(plRow.commodity_code);
+    plRow.commodity_code = extractCommodityCodeDigits(plRow.commodity_code);
     packingListContents.push(plRow);
   });
 
   return packingListContents;
 }
 
-function extractIfFirstTenAreDigits(input) {
+function extractCommodityCodeDigits(input) {
   if (input === null) {
     return null;
   }
 
-  const firstTen = input.slice(0, 10);
-  return /^\d{10}$/.test(firstTen) ? firstTen : input;
+  // Match if input starts with 4 to 14 digits
+  const match = input.match(/^(\d{4,14})/);
+  if (match) {
+    return match[1];
+  }
+  return input;
 }
 
 function findItemContent(packingListJson, header, y) {
