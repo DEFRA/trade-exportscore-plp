@@ -19,6 +19,24 @@ module.exports = {
     registration_approval_number: "RMS-GB-000149-002",
     parserModel: parser_model.GIOVANNI3,
   },
+  validTestResultWithShortCommodityCode: {
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    items: [
+      {
+        description: "HAM AND CHEESE TORT",
+        commodity_code: "902209990",
+        number_of_packages: "20",
+        total_net_weight_kg: "48",
+        total_net_weight_unit: "KG",
+        type_of_treatment: null,
+      },
+    ],
+    registration_approval_number: "RMS-GB-000149-002",
+    parserModel: parser_model.GIOVANNI3,
+  },
   missingKgTestResult: {
     business_checks: {
       all_required_fields_present: false,

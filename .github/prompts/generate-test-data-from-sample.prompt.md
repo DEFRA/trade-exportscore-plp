@@ -6,7 +6,7 @@ description: "Generate a suite of test data and Excel/CSV files for various test
 - Output files should be written to `app/packing-lists/{exporter}/test-scenarios/` relative to `${workspaceFolder}`.
 - The `{exporter}` directory name should be determined from the `${exporterProperty}` value.rter mapping logic from model-headers.js."
 mode: "agent"
-tools: ["mcp_excel_excel_read_sheet", "mcp_excel_excel_write_to_sheet", "mcp_excel_excel_describe_sheets", "list_dir", "file_search"]
+tools: ['codebase', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'extensions', 'editFiles', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'excel']
 ---
 
 # Generate Test Data from Sample File
@@ -119,6 +119,13 @@ BOOKER2: {
    - **success-happy-path**: Exact copy of the input file for baseline validation
    - **nomatch-missing-required-column**: Remove or rename a mandatory column header (from the `regex` property in model-headers.js)
    - **success-missing-optional-column**: Remove or rename an optional column header (from root-level properties like `country_of_origin`, `nirms`, `type_of_treatment` in model-headers.js) - ensure the new header name does not match the original regex pattern
+   - **incorrect_mandatoryheader_totalNetWeight_unparse**: Remove the header name for the total_net_weight_kg column by clearing/deleting the header text that matches the exporter's `total_net_weight_kg` regex pattern (from model-headers.js) - this should cause the parser to fail to identify the mandatory weight column
+   - **incorrect_mandatoryheader_NoofPkgs_unparse**: Remove the header name for the number_of_packages column by clearing/deleting the header text that matches the exporter's `number_of_packages` regex pattern (from model-headers.js) - this should cause the parser to fail to identify the mandatory packages column
+   - **incorrect_mandatoryheader_TreatmentType_unparse**: Remove the header name for the type_of_treatment column by clearing/deleting the header text that matches the exporter's `type_of_treatment` regex pattern (from model-headers.js) - this should cause the parser to fail to identify the mandatory treatment type column
+   - **incorrect_mandatoryheader_CommodityCode_unparse**: Remove the header name for the commodity_code column by clearing/deleting the header text that matches the exporter's `commodity_code` regex pattern (from model-headers.js) - this should cause the parser to fail to identify the mandatory commodity code column
+   - **incorrect_mandatoryheader_Desc_unparse**: Remove the header name for the description column by clearing/deleting the header text that matches the exporter's `description` regex pattern (from model-headers.js) - this should cause the parser to fail to identify the mandatory description column
+   - **missing_mandatoryheader_All_unparse**: Remove ALL mandatory header names by clearing/deleting the header text for all fields in the exporter's `regex` property (from model-headers.js) - this should cause the parser to fail to identify any mandatory columns and result in complete parsing failure
+   - **missing_optionalheader_All_pass**: Remove ALL optional header names by clearing/deleting the header text for all optional fields (root-level properties excluding configuration flags) in the exporter configuration (from model-headers.js) - this should still allow successful parsing since only mandatory headers are required
    - **failurereason-invalid-data-type**: Insert non-numeric values in the columns matched by the exporter's `commodity_code`, `number_of_packages`, and `total_net_weight_kg` regexes (see model-headers.js) - modify only 2-3 data rows, not all rows
    - **success-empty-rows**: Include empty rows in the data section
    - **failurereason-no-rows**: no rows in the data section
