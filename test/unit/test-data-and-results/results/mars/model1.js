@@ -1,4 +1,5 @@
 const parserModel = require("../../../../../app/services/parser-model");
+const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 module.exports = {
   validTestResult: {
@@ -131,5 +132,40 @@ module.exports = {
     ],
     registration_approval_number: "RMS-GB-000213-001",
     parserModel: parserModel.MARS1,
+  },
+  multipleRms: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: failureReasonsDescriptions.MULTIPLE_RMS,
+    },
+    items: [
+      {
+        commodity_code: "21032000",
+        description: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        number_of_packages: 8,
+        total_net_weight_kg: 24.0,
+        total_net_weight_unit: "KG",
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+    ],
+  },
+  missingKgunit: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING + ".\n",
+    },
+    items: [
+      {
+        commodity_code: "21032000",
+        description: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        number_of_packages: 8,
+        total_net_weight_kg: 24.0,
+        total_net_weight_unit: null,
+        nature_of_products: null,
+        type_of_treatment: null,
+      },
+    ],
   },
 };
