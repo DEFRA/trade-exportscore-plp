@@ -29,6 +29,7 @@ const ParserModel = {
   ICELAND1: "iceland-1",
   MANDS1: "mands-1",
   BOOKER1: "booker-1",
+  BOOKER2: "booker-2",
   BOOTS1: "boots-1",
   SAVERS1: "savers-1",
   GREGGS1: "greggs-1",
