@@ -216,7 +216,7 @@ module.exports = {
         A: "Despatch Location : ",
       },
       {
-        A: "RMS-GB-000213",
+        A: "RMS-GB-000213-001",
       },
       {
         C: "Description",
@@ -245,7 +245,7 @@ module.exports = {
   incorrectHeaderMultiple: {
     Sheet1: [
       {
-        A: "RMS-GB-000213",
+        A: "RMS-GB-000213-001",
       },
       {
         C: "Description",
@@ -256,7 +256,7 @@ module.exports = {
     ],
     Sheet2: [
       {
-        A: "RMS-GB-000213",
+        A: "RMS-GB-000213-001",
       },
       {
         C: "Invalid",
