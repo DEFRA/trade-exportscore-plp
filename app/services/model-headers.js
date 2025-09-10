@@ -245,7 +245,7 @@ const headers = {
   },
   MARS1: {
     establishmentNumber: {
-      regex: /RMS-GB-000213(-\d{3})?/i,
+      regex: /^RMS-GB-000213-\d{3}$/i,
     },
     regex: {
       description: /Description/i,
