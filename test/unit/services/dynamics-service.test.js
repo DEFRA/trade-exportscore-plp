@@ -141,7 +141,7 @@ describe("getDispatchLocation", () => {
     expect(logger.logError).toHaveBeenCalled();
   });
 
-  test("retries on HTTP error and succeeds", async () => {
+  test("returns null immediately on HTTP error without retrying", async () => {
     global.fetch = jest
       .fn()
       .mockImplementationOnce(() =>
@@ -157,39 +157,22 @@ describe("getDispatchLocation", () => {
           status: 500,
           text: () => Promise.resolve("Internal Server Error"),
         }),
-      )
-      .mockImplementationOnce(() =>
-        Promise.resolve({
-          ok: true,
-          status: 200,
-          json: () => Promise.resolve({ access_token: "abc" }),
-        }),
-      )
-      .mockImplementationOnce(() =>
-        Promise.resolve({
-          ok: true,
-          status: 200,
-          json: () => Promise.resolve({ rms_remosid: "RMS-GB-000000-000" }),
-        }),
       );
 
     const applicationId = 123;
-    const resultPromise = dynamicsService.getDispatchLocation(applicationId);
+    const result = await dynamicsService.getDispatchLocation(applicationId);
 
-    // Fast-forward all timers to handle retry delays
-    await jest.runAllTimersAsync();
-
-    const result = await resultPromise;
-
-    expect(result).toBe("RMS-GB-000000-000");
-    expect(logger.logInfo).toHaveBeenCalledWith(
+    expect(result).toBeNull();
+    // Should only be called twice: once for token, once for the HTTP error request
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(logger.logError).toHaveBeenCalledWith(
       expect.any(String),
       "getDispatchLocation()",
-      "Successfully retrieved record for 123 after 2 attempts",
+      "Request failed - HTTP 500: Internal Server Error",
     );
   });
 
-  test("returns null after max retries exceeded", async () => {
+  test("returns null after max retries exceeded on fetch failures", async () => {
     global.fetch = jest
       .fn()
       // First bearer token request (succeeds)
@@ -200,14 +183,8 @@ describe("getDispatchLocation", () => {
           json: () => Promise.resolve({ access_token: "abc" }),
         }),
       )
-      // First API call (fails)
-      .mockImplementationOnce(() =>
-        Promise.resolve({
-          ok: false,
-          status: 500,
-          text: () => Promise.resolve("Internal Server Error"),
-        }),
-      )
+      // First API call (network failure)
+      .mockImplementationOnce(() => Promise.reject(new Error("Network error")))
       // Second bearer token request (succeeds)
       .mockImplementationOnce(() =>
         Promise.resolve({
@@ -216,14 +193,8 @@ describe("getDispatchLocation", () => {
           json: () => Promise.resolve({ access_token: "abc" }),
         }),
       )
-      // Second API call (fails - final attempt)
-      .mockImplementationOnce(() =>
-        Promise.resolve({
-          ok: false,
-          status: 500,
-          text: () => Promise.resolve("Internal Server Error"),
-        }),
-      );
+      // Second API call (network failure - final attempt)
+      .mockImplementationOnce(() => Promise.reject(new Error("Network error")));
 
     const applicationId = 123;
     const resultPromise = dynamicsService.getDispatchLocation(
@@ -241,7 +212,7 @@ describe("getDispatchLocation", () => {
     expect(logger.logError).toHaveBeenCalledWith(
       expect.any(String),
       "getDispatchLocation()",
-      "Final attempt failed - HTTP 500: Internal Server Error",
+      "Final attempt failed with error: Network error",
     );
   });
 
@@ -332,30 +303,39 @@ describe("getDispatchLocation", () => {
     expect(logger.logError).toHaveBeenCalledWith(
       expect.any(String),
       "getDispatchLocation()",
-      "Request failed with non-retryable error - HTTP 403: Forbidden",
+      "Request failed - HTTP 403: Forbidden",
     );
   });
 
-  test("uses custom retry parameters", async () => {
-    global.fetch = jest.fn().mockImplementation(() =>
-      Promise.resolve({
-        ok: false,
-        status: 500,
-        text: () => Promise.resolve("Server Error"),
-      }),
-    );
+  test("uses custom retry parameters for fetch failures", async () => {
+    global.fetch = jest
+      .fn()
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: true,
+          status: 200,
+          json: () => Promise.resolve({ access_token: "abc" }),
+        }),
+      )
+      .mockImplementation(() => Promise.reject(new Error("Network error")));
 
     const applicationId = 123;
     const maxRetries = 1;
     const retryDelayMs = 500;
 
-    const result = await dynamicsService.getDispatchLocation(
+    const resultPromise = dynamicsService.getDispatchLocation(
       applicationId,
       maxRetries,
       retryDelayMs,
     );
 
+    // Fast-forward all timers to handle retry delays
+    await jest.runAllTimersAsync();
+
+    const result = await resultPromise;
+
     expect(result).toBeNull();
-    expect(fetch).toHaveBeenCalledTimes(1);
+    // Should be called twice: once for token, once for the failed request (no retries since maxRetries=1)
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 });

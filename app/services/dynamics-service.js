@@ -71,49 +71,22 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Helper function to check if status code should not be retried
-function shouldNotRetry(status) {
-  return status === 403;
-}
-
-// Helper function to log success after retry
-function logSuccessAfterRetry(attempt, applicationId) {
-  logger.logInfo(
-    filenameForLogging,
-    GET_DISPATCH_LOCATION_METHOD,
-    `Successfully retrieved record for ${applicationId} after ${attempt} attempts`,
-  );
-}
-
 // Helper function to handle successful response
 async function handleSuccessResponse(response, attempt, applicationId) {
   const result = await response.json();
   if (attempt > 1) {
-    logSuccessAfterRetry(attempt, applicationId);
+    logger.logInfo(
+      filenameForLogging,
+      GET_DISPATCH_LOCATION_METHOD,
+      `Successfully retrieved record for ${applicationId} after ${attempt} attempts`,
+    );
   }
   return result.rms_remosid;
 }
 
-// Helper function to log HTTP errors
-function logHttpError(
-  attempt,
-  maxRetries,
-  status,
-  errorText,
-  retryDelayMs,
-  shouldRetry = true,
-) {
-  const isLastAttempt = attempt === maxRetries;
-  let message;
-
-  if (!shouldRetry) {
-    message = `Request failed with non-retryable error - HTTP ${status}: ${errorText}`;
-  } else {
-    message = isLastAttempt
-      ? `Final attempt failed - HTTP ${status}: ${errorText}`
-      : `HTTP ${status}: ${errorText}, retrying in ${retryDelayMs}ms (attempt ${attempt}/${maxRetries})`;
-  }
-
+// Helper function to log HTTP errors (no retries)
+function logHttpError(status, errorText) {
+  const message = `Request failed - HTTP ${status}: ${errorText}`;
   logger.logError(filenameForLogging, GET_DISPATCH_LOCATION_METHOD, message);
 }
 
@@ -157,29 +130,12 @@ async function getDispatchLocation(
         return await handleSuccessResponse(response, attempt, applicationId);
       }
 
+      // Any HTTP error response - don't retry, return immediately
       const errorText = await response.text();
-
-      // Don't retry for 403 (Forbidden) status codes
-      if (shouldNotRetry(status)) {
-        logHttpError(
-          attempt,
-          maxRetries,
-          status,
-          errorText,
-          retryDelayMs,
-          false,
-        );
-        return null;
-      }
-
-      logHttpError(attempt, maxRetries, status, errorText, retryDelayMs);
-
-      if (attempt === maxRetries) {
-        return null;
-      }
-
-      await sleep(retryDelayMs);
+      logHttpError(status, errorText);
+      return null;
     } catch (err) {
+      // Only retry on fetch failures (network errors)
       logCatchError(attempt, maxRetries, err.message, retryDelayMs);
 
       if (attempt === maxRetries) {
