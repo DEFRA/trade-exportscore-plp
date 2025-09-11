@@ -28,6 +28,15 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
+    const notDragDownCallback = function (item) {
+      return !(
+        item.description === 0 &&
+        item.commodity_code === 0 &&
+        item.number_of_packages === 0 &&
+        item.total_net_weight_kg === 0
+      );
+    };
+
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
@@ -42,6 +51,10 @@ function parse(packingListJson) {
         headers.KEPAK1,
         sheet,
       );
+
+      packingListContentsTemp =
+        packingListContentsTemp.filter(notDragDownCallback);
+
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 
