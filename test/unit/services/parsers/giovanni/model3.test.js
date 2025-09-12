@@ -32,7 +32,9 @@ describe("parse", () => {
     });
     const result = await parser.parse({});
 
-    expect(result).toMatchObject(test_results.validTestResultWithShortCommodityCode);
+    expect(result).toMatchObject(
+      test_results.validTestResultWithShortCommodityCode,
+    );
   });
 
   test("should call logger.logError when an error is thrown", async () => {
