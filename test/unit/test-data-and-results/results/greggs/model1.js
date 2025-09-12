@@ -18,6 +18,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000021-000",
+    establishment_numbers: ["RMS-GB-000021-000"],
     parserModel: parser_model.GREGGS1,
   },
   emptyTestResult: {
@@ -46,6 +47,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000021-000",
+    establishment_numbers: ["RMS-GB-000021-000"],
     parserModel: parser_model.GREGGS1,
   },
 };

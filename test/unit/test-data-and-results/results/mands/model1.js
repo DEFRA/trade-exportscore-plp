@@ -20,6 +20,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000008-001",
+    establishment_numbers: ["RMS-GB-000008-001"],
     parserModel: parser_model.MANDS1,
   },
   emptyTestResult: {
@@ -50,6 +51,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000008-001",
+    establishment_numbers: ["RMS-GB-000008-001"],
     parserModel: parser_model.MANDS1,
   },
   nonNirmsTestResult: {

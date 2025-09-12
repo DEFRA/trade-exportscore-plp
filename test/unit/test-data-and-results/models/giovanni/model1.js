@@ -4,6 +4,12 @@ module.exports = {
   validModel: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
@@ -35,6 +41,12 @@ module.exports = {
   validHeadersNoData: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
@@ -50,6 +62,12 @@ module.exports = {
   },
   validModelMultipleSheets: {
     Sheet1: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "NIRMS NUMBER",
       },
@@ -72,6 +90,12 @@ module.exports = {
       },
     ],
     Sheet2: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "NIRMS NUMBER",
       },
@@ -96,6 +120,12 @@ module.exports = {
   },
   invalidModel_MissingColumnCells: {
     RANA: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "RMS-GB-000153",
       },
@@ -216,6 +246,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000153",
+    establishment_numbers: ["RMS-GB-000149-005"],
     parserModel: parserModel.GIOVANNI1,
   },
   invalidTestResult_MissingCells: {
@@ -241,6 +272,7 @@ module.exports = {
       },
     ],
     registration_approval_number: "RMS-GB-000153",
+    establishment_numbers: ["RMS-GB-000149-005"],
     parserModel: parserModel.GIOVANNI1,
   },
   incorrectEstablishmentNumber: {
@@ -348,6 +380,12 @@ module.exports = {
   },
   missingKgunit: {
     RANA: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "NIRMS NUMBER",
       },

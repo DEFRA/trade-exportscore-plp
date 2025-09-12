@@ -37,6 +37,10 @@ describe("findParser", () => {
       return { pages: [{ content: [{ remos: "RMS-GB-000021-000" }] }] };
     });
 
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000021-000"];
+    });
+
     const result = await parserService.findParser(model.validModel, filename);
 
     expect(result).toMatchObject(test_results.validTestResult);
@@ -49,6 +53,10 @@ describe("findParser", () => {
 
     extractPdf.mockImplementation(() => {
       return { pages: [{ content: [{ remos: "RMS-GB-000021-000" }] }] };
+    });
+
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000021-000"];
     });
 
     const result = await parserService.findParser(

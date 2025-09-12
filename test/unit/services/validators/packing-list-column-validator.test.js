@@ -73,7 +73,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.invalidNetWeight.length).toBe(0);
     expect(result.hasRemos).toBeFalsy();
     expect(result.isEmpty).toBeFalsy();
-    expect(result.hasSingleRms).toBeTruthy();
+    expect(result.hasSingleRms).toBeFalsy();
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 

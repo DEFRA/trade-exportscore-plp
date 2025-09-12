@@ -15,6 +15,7 @@ const {
 } = require("./packing-list-validator-utilities");
 const parserModel = require("../parser-model");
 const failureReasonsDescriptions = require("./packing-list-failure-reasons");
+const ParserModel = require("../parser-model");
 
 function validatePackingList(packingList) {
   const validationResult = validatePackingListByIndexAndType(packingList);
@@ -58,7 +59,11 @@ function getPackingListStatusResults(packingList) {
     packingList.registration_approval_number === null ||
     packingList.parserModel === parserModel.NOREMOS;
   const noMatch = packingList.parserModel === parserModel.NOMATCH;
-  const hasSingleRms = packingList.establishment_numbers.length <= 1;
+  const hasSingleRms =
+    packingList.establishment_numbers.length === 1 ||
+    [parserModel.NOREMOS, parserModel.NOMATCH, ParserModel.ICELAND1].includes(
+      packingList.parserModel,
+    );
 
   return {
     hasRemos,

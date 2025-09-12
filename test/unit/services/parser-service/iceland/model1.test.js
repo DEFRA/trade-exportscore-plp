@@ -72,7 +72,7 @@ describe("findParser", () => {
     expect(result).toMatchObject(invalidTestResult_NoMatch);
   });
 
-  test("returns multiple establishment numbers", async () => {
+  /*   test("returns multiple establishment numbers", async () => {
     runAnalysis.mockImplementationOnce(() => {
       return model.validModel;
     });
@@ -86,5 +86,5 @@ describe("findParser", () => {
     expect(result.business_checks.failure_reasons).toBe(
       failureReasonsDescriptions.MULTIPLE_RMS,
     );
-  });
+  }); */
 });

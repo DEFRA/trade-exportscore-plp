@@ -47,6 +47,10 @@ describe("findParser", () => {
     extractPdf.mockImplementation(() => {
       return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
     });
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000008-001"];
+    });
+
     const result = await parserService.findParser(model.validModel, filename);
     expect(result).toMatchObject(test_results.validTestResult);
   });
@@ -58,6 +62,10 @@ describe("findParser", () => {
     extractPdf.mockImplementation(() => {
       return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
     });
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000008-001"];
+    });
+
     const result = await parserService.findParser(
       model.invalidModel_MissingColumnCells,
       filename,
@@ -79,6 +87,9 @@ describe("findParser", () => {
     };
     extractPdf.mockImplementation(() => {
       return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
+    });
+    extractEstablishmentNumbers.mockImplementation(() => {
+      return ["RMS-GB-000008-001"];
     });
     const result = await parserService.findParser(model.validModel, filename);
 
