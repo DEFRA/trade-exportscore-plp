@@ -1,6 +1,6 @@
 ---
 description: "Requirements and business analysis for trade-exportscore-plp: User stories, acceptance criteria, business rules, and regulatory compliance."
-tools: ["extensions", "runTests", "codebase", "usages", "vscodeAPI", "think", "problems", "changes", "testFailure", "terminalSelection", "terminalLastCommand", "openSimpleBrowser", "fetch", "findTestFiles", "searchResults", "githubRepo", "runCommands", "runTasks", "editFiles", "runNotebooks", "search", "new", "sequential-thinking", "ado"]
+tools: ["extensions", "runTests", "codebase", "usages", "vscodeAPI", "think", "problems", "changes", "testFailure", "terminalSelection", "terminalLastCommand", "openSimpleBrowser", "fetch", "findTestFiles", "searchResults", "githubRepo", "runCommands", "runTasks", "editFiles", "runNotebooks", "search", "new", "sequential-thinking", "ado", "github", "context7", "spec-driven"]
 ---
 
 # Requirements ChatMode for trade-exportscore-plp

@@ -50,6 +50,13 @@
       "env": {
         "EXCEL_MCP_PAGING_CELLS_LIMIT": "4000"
       }
+    },
+    "spec-driven": {
+      "command": "npx",
+      "args": ["-y", "spec-driven-mcp"],
+      "env": {
+        "SPEC_ROOT_DIR": "/home/david/git/defra/trade-exportscore-plp"
+      }
     }
   }
 }
