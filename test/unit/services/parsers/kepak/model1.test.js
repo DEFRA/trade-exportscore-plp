@@ -16,6 +16,12 @@ describe("parseKepakModel1", () => {
     expect(result).toMatchObject(test_results.validTestResultForMultipleSheets);
   });
 
+  test("parses valid json with dragdown", () => {
+    const result = parser.parse(model.validModelWithDragdown);
+
+    expect(result).toMatchObject(test_results.validTestResult);
+  });
+
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
 
