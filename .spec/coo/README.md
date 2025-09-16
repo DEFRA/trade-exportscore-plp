@@ -42,13 +42,15 @@ TRADER_NAME: {
 
 ## Trader Specifications
 
-| Trader      | Work Item | Specification File                                                                       | Status              | Key Features                                   |
-| ----------- | --------- | ---------------------------------------------------------------------------------------- | ------------------- | ---------------------------------------------- |
-| Mars        | AB#599300 | [AB599300-mars-coo-validation-spec.md](AB599300-mars-coo-validation-spec.md)             | Specification Ready | Standard CoO validation                        |
-| ASDA 3      | AB#591514 | [AB591514-asda3-coo-validation-spec.md](AB591514-asda3-coo-validation-spec.md)           | Specification Ready | Full NIRMS value set support                   |
-| B&M         | AB#591516 | [AB591516-bandm-coo-validation-spec.md](AB591516-bandm-coo-validation-spec.md)           | ✅ **IMPLEMENTED**  | Live in PR #362 - blanket statement processing |
-| Savers      | AB#591540 | [AB591540-savers-coo-validation-spec.md](AB591540-savers-coo-validation-spec.md)         | ✅ **IMPLEMENTED**  | Live in PR #364                                |
-| Sainsbury's | AB#591539 | [AB591539-sainsburys-coo-validation-spec.md](AB591539-sainsburys-coo-validation-spec.md) | ✅ **IMPLEMENTED**  | Live in PR #337 - dual column mapping          |
+| Ticket ID | Title                                     | Current Status  | Sprint Assignment | Specification File                                                                       |
+| --------- | ----------------------------------------- | --------------- | ----------------- | ---------------------------------------------------------------------------------------- |
+| AB#591539 | Sainsburys - Country of Origin Validation | 🔒 **Closed**   | NIRMS Sprint 27   | [AB591539-sainsburys-coo-validation-spec.md](AB591539-sainsburys-coo-validation-spec.md) |
+| AB#591516 | B&M - Country of Origin Validation        | ✅ **Resolved** | NIRMS Sprint 29   | [AB591516-bandm-coo-validation-spec.md](AB591516-bandm-coo-validation-spec.md)           |
+| AB#591540 | Savers - Country of Origin Validation     | ✅ **Resolved** | NIRMS Sprint 29   | [AB591540-savers-coo-validation-spec.md](AB591540-savers-coo-validation-spec.md)         |
+| AB#591514 | ASDA 3 - Country of Origin Validation     | ⭐ **New**      | NIRMS Sprint 30   | [AB591514-asda3-coo-validation-spec.md](AB591514-asda3-coo-validation-spec.md)           |
+| AB#591527 | Giovanni 1 - Country of Origin Validation | 📋 **Specification Ready** | NIRMS Sprint 30   | [AB591527-giovanni1-coo-validation-spec.md](AB591527-giovanni1-coo-validation-spec.md)   |
+| AB#591532 | Kepak - Country of Origin Validation      | ⭐ **New**      | NIRMS Sprint 30   | [AB591532-kepak-coo-validation-spec.md](AB591532-kepak-coo-validation-spec.md)           |
+| AB#599300 | Mars - Country of Origin Validation       | ⭐ **New**      | NIRMS Sprint 30   | [AB599300-mars-coo-validation-spec.md](AB599300-mars-coo-validation-spec.md)             |
 
 ## Foundation Work Item
 
