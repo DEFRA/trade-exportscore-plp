@@ -26,6 +26,17 @@ describe("parse", () => {
     expect(result).toMatchObject(test_results.validTestResult);
   });
 
+  test("parses model with short commodity code", async () => {
+    extractPdf.mockImplementation(() => {
+      return model.validModelWithShortCommodityCode;
+    });
+    const result = await parser.parse({});
+
+    expect(result).toMatchObject(
+      test_results.validTestResultWithShortCommodityCode,
+    );
+  });
+
   test("should call logger.logError when an error is thrown", async () => {
     extractPdf.mockImplementation(() => {
       throw new Error();

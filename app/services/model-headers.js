@@ -68,7 +68,7 @@ const headers = {
   },
   BOOKER2: {
     establishmentNumber: {
-      regex: /RMS-GB-000077-\d{3}/i
+      regex: /RMS-GB-000077-\d{3}/i,
     },
     regex: {
       description: /Description of Goods/i,
@@ -81,7 +81,7 @@ const headers = {
     country_of_origin: /Country of Origin/i,
     nirms: /Lane/i,
     validateCountryOfOrigin: true,
-    findUnitInHeader: true
+    findUnitInHeader: true,
   },
   BOOTS1: {
     establishmentNumber: {

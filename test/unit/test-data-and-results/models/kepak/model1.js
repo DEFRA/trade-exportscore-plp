@@ -1,3 +1,5 @@
+const { validModelWithDragdown } = require("../fowlerwelch/model1");
+
 module.exports = {
   validModel: {
     KEPAK: [
@@ -41,6 +43,58 @@ module.exports = {
         F: "GB",
         G: 22,
         H: 27.632,
+      },
+    ],
+  },
+  validModelWithDragdown: {
+    KEPAK: [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      { I: "RMS-GB-000149-005" },
+      {},
+      { A: "RMS-GB-000280" },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      {
+        C: "RS DOUBLE DECKER STD",
+        E: "1602509590",
+        F: "GB",
+        G: 32,
+        H: 30.336,
+      },
+      {
+        C: "RS BBQ RIB STD 8X157G",
+        E: "1602493000",
+        F: "GB",
+        G: 22,
+        H: 27.632,
+      },
+      {
+        C: 0,
+        E: 0,
+        F: 0,
+        G: 0,
+        H: 0,
       },
     ],
   },
