@@ -113,7 +113,9 @@ This prompt MUST generate exactly ONE specification file with the following requ
    - For ticket 591514: `AB591514-asda3-coo-validation-spec.md`
    - For ticket 591516: `AB591516-bandm-coo-validation-spec.md`
 
-4. **Content Generation**: Use `create_file` tool to generate the complete specification content in one operation
+4. **Content Generation**: Use `create_file` tool for new files or `replace_string_in_file` tool for targeted updates to existing files
+
+5. **File Existence Handling**: **INTELLIGENT UPDATE** - If a specification file already exists in the `.spec/coo/` folder, use `replace_string_in_file` to make targeted corrections rather than complete regeneration
 
 ### **NO SPEC-DRIVEN MCP INTEGRATION**
 
@@ -244,7 +246,7 @@ Commodity Code Header: Commodity Code [column E]
 - Blanket NIRMS statement present + CoO validation + prohibited items checking
 - Variable treatment type but no special treatment validation required (CoO focus only)
 - Examples: Kepak, Giovanni 1
-- **BAC Pattern**: BAC1 (NIRMS statement), BAC2-BAC6 (CoO validation), BAC7-BAC10 (Prohibited items)
+- **BAC Pattern**: BAC1 (NIRMS statement), BAC2-BAC6 (CoO validation), BAC7-BAC10 (Prohibited items with "matches an item on the prohibited list in more than 3 instances" wording)
 - **Technical Requirements**: TR1-TR7 (implementation specifics), IC1-IC5 (constraints), DIR1-DIR4 (data integration with blanket patterns)
 
 ### NIRMS Value Pattern Recognition
@@ -262,7 +264,9 @@ Commodity Code Header: Commodity Code [column E]
 ### 0. Single File Generation Process
 
 ```
-- Generate single complete specification file using create_file tool
+- Check if specification file already exists using get_file_contents tool
+- If file exists: Use replace_string_in_file for targeted corrections (e.g., fix BAC wording, update technical requirements)
+- If file doesn't exist: Generate complete specification file using create_file tool
 - Include comprehensive business context from ADO ticket analysis
 - Use verified implementation patterns from workspace analysis
 - Apply trader-specific header mappings and validation rules
@@ -328,7 +332,7 @@ Commodity Code Header: Commodity Code [column E]
 **Variable Blanket Statement Template (10 BACs + Technical Requirements):**
   * BAC1: NIRMS statement validation
   * BAC2-BAC6: CoO validation scenarios (null, invalid, multiple errors, X placeholder) - **CRITICAL: BAC4/BAC5/BAC8/BAC10 require specific "more than 3" conditions**
-  * BAC7-BAC10: Prohibited items scenarios (with/without treatment type, multiple errors) - **CRITICAL: BAC8/BAC10 require "more than 3 items on prohibited list"**
+  * BAC7-BAC10: Prohibited items scenarios (with/without treatment type, multiple errors) - **CRITICAL: BAC8/BAC10 require "item on prohibited list in more than 3 instances"**
   * TR1-TR7: Technical implementation requirements
   * IC1-IC5: Implementation constraints
   * DIR1-DIR4: Data integration requirements (with blanket + treatment patterns)
@@ -369,16 +373,22 @@ Execute this IMPLEMENTATION-FIRST systematic approach for **single file generati
 
 ### **PHASE 3: ACCURATE SPECIFICATION GENERATION**
 
-13. **Generate Business ACs**: Create appropriate acceptance criteria based on validation approach
-14. **Generate Technical Requirements**: Create TR requirements that document actual implementation patterns
-15. **Generate Implementation Constraints**: Create IC requirements based on real architectural decisions  
-16. **Generate Data Integration Requirements**: Create DIR requirements using verified workspace patterns
-17. **Real-Time Verification**: After each section, validate against actual implementation
-18. **Generate Technical Implementation**: Document actual patterns from workspace (no theoretical code)
-19. **Final Accuracy Check**: Ensure 100% specification accuracy against real implementation
-20. **File Generation**: **MANDATORY** - Use `create_file` tool to save complete specification with proper naming convention in `/home/david/git/defra/trade-exportscore-plp/.spec/coo/` directory - DO NOT generate content without writing to file
-21. **Update README.md**: Add new specification entry with implementation status in `.spec/coo/README.md`
-22. **Completion Validation**: Verify all content reflects actual workspace implementation
+13. **Check Existing File**: Use `get_file_contents` to check if specification file already exists
+14. **Determine Update Strategy**: 
+    - If file exists: Identify specific sections needing updates (e.g., BAC wording corrections)
+    - If file doesn't exist: Prepare complete specification generation
+15. **Generate Business ACs**: Create appropriate acceptance criteria based on validation approach
+16. **Generate Technical Requirements**: Create TR requirements that document actual implementation patterns
+17. **Generate Implementation Constraints**: Create IC requirements based on real architectural decisions  
+18. **Generate Data Integration Requirements**: Create DIR requirements using verified workspace patterns
+19. **Real-Time Verification**: After each section, validate against actual implementation
+20. **Generate Technical Implementation**: Document actual patterns from workspace (no theoretical code)
+21. **Final Accuracy Check**: Ensure 100% specification accuracy against real implementation
+22. **File Generation**: 
+    - **If file exists**: Use `replace_string_in_file` for targeted corrections (e.g., fix "matches more than 3 items" to "matches an item... in more than 3 instances")
+    - **If file doesn't exist**: Use `create_file` to save complete specification with proper naming convention in `/home/david/git/defra/trade-exportscore-plp/.spec/coo/` directory
+23. **Update README.md**: Add new specification entry with implementation status in `.spec/coo/README.md` (only if new file)
+24. **Completion Validation**: Verify all content reflects actual workspace implementation
 
 ## Output Format
 
@@ -442,9 +452,11 @@ Generate a complete specification file with this structure:
 - Always end with `-coo-validation-spec.md`
 
 **Existing File Update Policy**:
-- **If specification file already exists** for the provided ADO ticket, **update it from scratch**
-- Preserve the existing filename format but regenerate all content based on current ADO ticket data
-- Ensure complete specification replacement with updated business context and requirements
+- **If specification file already exists** in the `.spec/coo/` folder for the provided ADO ticket, **update it intelligently using replace_string_in_file tool**
+- **INTELLIGENT UPDATE APPROACH**: Identify specific sections that need updating and use targeted replacements
+- **PRESERVE STRUCTURE**: Maintain existing file structure and only update content that differs from ADO ticket requirements
+- **TARGETED CORRECTIONS**: Focus on fixing specific issues (e.g., BAC wording, technical requirements) rather than complete regeneration
+- **NO COMPLETE OVERWRITE**: Use surgical updates to preserve existing content while fixing identified issues
    - Mars: True=Green, False=Red (only these two values)
    - Add other irregular patterns as discovered
 
@@ -533,7 +545,7 @@ The {Trader Name} packing list uses the following column structure:
 [BAC2-BAC4: Missing CoO with NIRMS present]
 [BAC5-BAC6: Invalid CoO format]
 [BAC7: CoO placeholder acceptance] 
-[BAC8-BAC9: Prohibited items scenarios]
+[BAC8-BAC9: Prohibited items scenarios using "matches an item on the prohibited list in more than 3 instances"]
 
 ### Technical Requirements (TR) - Implementation Specifics
 
@@ -961,6 +973,35 @@ Success is measured by:
 - ✅ All configuration examples match actual model-headers.js structure
 - ❌ **BLOCKING**: Any theoretical content or generic templates in final specification
 
+## Targeted Update Strategies
+
+### Common Issues Requiring File Updates
+
+When an existing specification file needs corrections, use these targeted update approaches:
+
+#### BAC Wording Corrections
+- **Issue**: Incorrect prohibited items wording (e.g., "matches more than 3 items" vs "matches an item... in more than 3 instances")
+- **Solution**: Use `replace_string_in_file` to fix specific BAC text while preserving surrounding content
+- **Pattern**: Target exact BAC text including Given/When/Then structure
+
+#### Technical Requirements Updates
+- **Issue**: Missing or incorrect technical implementation details
+- **Solution**: Replace specific TR/IC/DIR sections while maintaining overall structure
+- **Pattern**: Target individual requirement blocks (TR1, IC2, etc.)
+
+#### Header Configuration Corrections
+- **Issue**: Incorrect regex patterns or column mappings
+- **Solution**: Replace configuration sections in Technical Implementation
+- **Pattern**: Target specific code blocks or configuration objects
+
+### File Update Workflow
+
+1. **Identify Issue**: Determine what specific content needs correction
+2. **Locate Content**: Use existing file structure to find target sections
+3. **Prepare Replacement**: Generate corrected content maintaining existing format
+4. **Apply Update**: Use `replace_string_in_file` with sufficient context (3-5 lines before/after)
+5. **Verify Result**: Ensure update maintains file integrity and addresses issue
+
 ## Error Handling
 
 Handle these scenarios gracefully:
@@ -971,6 +1012,7 @@ Handle these scenarios gracefully:
 - **Incomplete Description**: Do not proceed with incomplete header information
 - **Format Mismatch**: Guide user to proper description format requirements
 - **File System Issues**: Handle directory creation and file permission problems appropriately
+- **Update Conflicts**: If targeted update fails, provide clear error message and suggest manual review
 
 ## Sample Specification Patterns
 
@@ -1308,8 +1350,8 @@ Before completing specification generation:
 2. **🚨 CRITICAL: Variable Blanket Statement "More Than 3" Pattern Validation 🚨**:
    - **BAC4 VALIDATION**: Must contain exact text "And the CoO value is null for more than 3 line items"
    - **BAC5 VALIDATION**: Must contain exact text "And there are more than 3 line items with these CoO-related errors"
-   - **BAC8 VALIDATION**: Must contain exact text "matches more than 3 items on the prohibited list" (NOT "matches an item")
-   - **BAC10 VALIDATION**: Must contain exact text "matches more than 3 items on the prohibited list" (NOT "matches an item")
+   - **BAC8 VALIDATION**: Must contain exact text "matches an item on the prohibited item list in more than 3 instances" (NOT "matches an item")
+   - **BAC10 VALIDATION**: Must contain exact text "matches an item on the prohibited list in more than 3 instances" (NOT "matches an item")
    - **ENFORCEMENT**: Any specification missing these exact conditions is INCORRECT and must be regenerated
    - **REFERENCE**: Based on corrected patterns from AB#591527 analysis
 
@@ -1367,6 +1409,7 @@ Handle these scenarios gracefully:
 - **Incomplete Description**: Do not proceed with incomplete header information
 - **Format Mismatch**: Guide user to proper description format requirements
 - **File System Issues**: Handle directory creation and file permission problems appropriately
+- **Update Conflicts**: If targeted update fails, provide clear error message and suggest manual review
 
 ## CRITICAL REMINDER
 
