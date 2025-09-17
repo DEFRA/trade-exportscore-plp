@@ -29,25 +29,47 @@ Generate and seed test data and Excel/CSV files for country of origin, NIRMS, an
 5. **After mutation,** verify that the file is no longer identical to the template.
 6. **Track mutation progress** using PowerShell commands to ensure all files have been modified.
 
+
 ## Scenarios (STRICTLY FOLLOW THIS LIST)
 
-- failurereason-country-of-origin-missing: Set blank/empty values in the column matched by the exporter's `country_of_origin` property (only if exporter has country_of_origin column and validateCountryOfOrigin is true).
-- failurereason-country-of-origin-invalid-format: Set values that are not 2-digit ISO codes or "X" in the column matched by the exporter's `country_of_origin` property (only if exporter has country_of_origin column and validateCountryOfOrigin is true).
-- success-country-of-origin-valid-iso: Set valid 2-digit ISO country codes in the column matched by the exporter's `country_of_origin` property (only if exporter has country_of_origin column).
-- success-country-of-origin-x-value: Set "X" values in the column matched by the exporter's `country_of_origin` property (only if exporter has country_of_origin column).
-- failurereason-nirms-blank-value: Set blank/empty values in the column matched by the exporter's `nirms` property (only if exporter has nirms column).
-- failurereason-nirms-invalid-value: Set invalid values in the column matched by the exporter's `nirms` property (only if exporter has nirms column).
-- failurereason-prohibited-item: Set a combination of country_of_origin, commodity_code, and type_of_treatment values that match an entry in the prohibited items list (only if exporter has all three required fields).
+- **ac1_NotNirms_Pass**: Set NIRMS column to a valid non-NIRMS value (e.g. "NON-NIRMS" or "No") for 2-3 data rows.
+- **ac2_NullNirms_Fail**: Set NIRMS column to blank/empty for 2-3 data rows.
+- **ac3_InvalidNirms_Fail**: Set NIRMS column to invalid values (e.g. "INVALID", "123", "Maybe") for 2-3 data rows.
+- **ac4_NullNirmsMultiple_Fail**: Set NIRMS column to blank/empty for multiple data rows (at least 3).
+- **ac5_InvalidNirmsMultiple_Fail**: Set NIRMS column to different invalid values for multiple data rows.
+- **ac6_NullCoO_Fail**: Set country_of_origin column to blank/empty for 2-3 data rows.
+- **ac7_InvalidCoO_Fail**: Set country_of_origin column to invalid values (e.g. "123", "GBR", "INVALID") for 2-3 data rows.
+- **ac8_NullCoOMultiple_Fail**: Set country_of_origin column to blank/empty for multiple data rows (at least 3).
+- **ac9_InvalidCoOMultiple_Fail**: Set country_of_origin column to different invalid values for multiple data rows.
+- **ac10_xCoO_Pass**: Set country_of_origin column to "X" for 2-3 data rows.
+- **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: Set country_of_origin to a high-risk value and type_of_treatment to a specified value that should fail validation.
+- **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Set multiple rows with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
+- **ac13_HighRiskCoOTreatmentTypeNotSpecified_Fail**: Set country_of_origin to a high-risk value and leave type_of_treatment blank or not specified for 2-3 data rows.
+- **ac14_HighRiskCoOTreatmentTypeNotSpecified_COO_InvalidMultiple_Fail**: Set multiple rows with high-risk country_of_origin, missing type_of_treatment, and invalid country_of_origin values.
+- **ac14_HighRiskCoOTreatmentTypeNotSpecifiedMultiple_Fail**: Set multiple rows with high-risk country_of_origin and missing type_of_treatment.
+- **Happypath**: No mutation; copy the original happy path file.
 
-## Documentation: Country of Origin, NIRMS, and Prohibited Items Scenario Types
+**You must generate and mutate all scenarios above.**
 
-- **failurereason-country-of-origin-missing**: Set blank/empty values in the country_of_origin column (only if exporter has country_of_origin column and validateCountryOfOrigin is true).
-- **failurereason-country-of-origin-invalid-format**: Set values that are not 2-digit ISO codes or "X" in the country_of_origin column (only if exporter has country_of_origin column and validateCountryOfOrigin is true).
-- **success-country-of-origin-valid-iso**: Set valid 2-digit ISO country codes in the country_of_origin column (only if exporter has country_of_origin column).
-- **success-country-of-origin-x-value**: Set "X" values in the country_of_origin column (only if exporter has country_of_origin column).
-- **failurereason-nirms-blank-value**: Set blank/empty values in the nirms column (only if exporter has nirms column).
-- **failurereason-nirms-invalid-value**: Set invalid values in the nirms column (only if exporter has nirms column).
-- **failurereason-prohibited-item**: Set a combination of country_of_origin, commodity_code, and type_of_treatment values that match an entry in the prohibited items list (only if exporter has all three required fields).
+
+## Documentation: Country of Origin, NIRMS, and High-Risk/Prohibited Items Scenario Types
+
+- **ac1_NotNirms_Pass**: NIRMS column set to a valid non-NIRMS value (e.g. "NON-NIRMS" or "No"). Should pass validation.
+- **ac2_NullNirms_Fail**: NIRMS column set to blank/empty. Should fail validation.
+- **ac3_InvalidNirms_Fail**: NIRMS column set to invalid values (e.g. "INVALID", "123", "Maybe"). Should fail validation.
+- **ac4_NullNirmsMultiple_Fail**: NIRMS column set to blank/empty for multiple rows. Should fail validation for all.
+- **ac5_InvalidNirmsMultiple_Fail**: NIRMS column set to different invalid values for multiple rows. Should fail validation for all.
+- **ac6_NullCoO_Fail**: country_of_origin column set to blank/empty. Should fail validation.
+- **ac7_InvalidCoO_Fail**: country_of_origin column set to invalid values (e.g. "123", "GBR", "INVALID"). Should fail validation.
+- **ac8_NullCoOMultiple_Fail**: country_of_origin column set to blank/empty for multiple rows. Should fail validation for all.
+- **ac9_InvalidCoOMultiple_Fail**: country_of_origin column set to different invalid values for multiple rows. Should fail validation for all.
+- **ac10_xCoO_Pass**: country_of_origin column set to "X". Should pass validation.
+- **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: country_of_origin set to a high-risk value and type_of_treatment to a specified value that should fail validation (e.g. prohibited combination).
+- **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Multiple rows with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
+- **ac13_HighRiskCoOTreatmentTypeNotSpecified_Fail**: country_of_origin set to a high-risk value and type_of_treatment left blank or not specified. Should fail validation.
+- **ac14_HighRiskCoOTreatmentTypeNotSpecified_COO_InvalidMultiple_Fail**: Multiple rows with high-risk country_of_origin, missing type_of_treatment, and invalid country_of_origin values. Should fail validation for all.
+- **ac14_HighRiskCoOTreatmentTypeNotSpecifiedMultiple_Fail**: Multiple rows with high-risk country_of_origin and missing type_of_treatment. Should fail validation for all.
+- **Happypath**: No mutation; copy the original happy path file. Should pass validation.
 
 ## NIRMS and Country of Origin Validation Patterns
 
