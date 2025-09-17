@@ -59,12 +59,14 @@ The Giovanni 1 packing list uses the following column structure:
 ### Business Acceptance Criteria (BAC)
 
 #### BAC1: Null NIRMS Value
+
 **Given** a Giovanni 1 packing list does not have the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "NIRMS/Non-NIRMS goods not specified"
 
 #### BAC2: Null CoO Value
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is null  
 **When** the packing list is submitted  
@@ -72,6 +74,7 @@ The Giovanni 1 packing list uses the following column structure:
 **And** the failure reason is: "Missing Country of Origin in sheet X row Y"
 
 #### BAC3: Invalid CoO Value
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is not a valid ISO 2-digit country code  
 **And** the CoO value is not a comma-separated list of valid ISO 2-digit country codes  
@@ -81,6 +84,7 @@ The Giovanni 1 packing list uses the following column structure:
 **And** the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y"
 
 #### BAC4: Null CoO Value, More Than 3
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is null for more than 3 line items  
 **When** the packing list is submitted  
@@ -88,6 +92,7 @@ The Giovanni 1 packing list uses the following column structure:
 **And** the failure reason is: "Missing Country of Origin in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
 #### BAC5: Invalid CoO Value, More Than 3
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is not a valid ISO 2-digit country code  
 **And** the CoO value is not a comma-separated list of valid ISO 2-digit country codes  
@@ -98,12 +103,14 @@ The Giovanni 1 packing list uses the following column structure:
 **And** the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
 #### BAC6: CoO Value is X or x
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is X or x  
 **When** the packing list is submitted  
 **Then** the packing list will pass
 
 #### BAC7: Prohibited Item with Treatment Type
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
@@ -114,6 +121,7 @@ The Giovanni 1 packing list uses the following column structure:
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 
 #### BAC8: Prohibited Item, More Than 3 (Treatment Type specified)
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
@@ -124,6 +132,7 @@ The Giovanni 1 packing list uses the following column structure:
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
 #### BAC9: Prohibited Item without Treatment Type
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
@@ -134,6 +143,7 @@ The Giovanni 1 packing list uses the following column structure:
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 
 #### BAC10: Prohibited Item, More Than 3 (no Treatment Type specified)
+
 **Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
@@ -209,7 +219,7 @@ GIOVANNI1: {
   },
   country_of_origin: /Country of Origin/i, // VERIFIED: Already exists
   findUnitInHeader: true,                  // VERIFIED: Already exists
-  
+
   // NEW ADDITION for CoO validation:
   validateCountryOfOrigin: true,           // REQUIRED: Enable CoO validation
 }
@@ -280,7 +290,7 @@ return combineParser.combine(
   true,
   parserModel.GIOVANNI1,
   establishmentNumbers,
-  headers.GIOVANNI1,  // This passes validateCountryOfOrigin flag
+  headers.GIOVANNI1, // This passes validateCountryOfOrigin flag
 );
 ```
 
@@ -326,7 +336,7 @@ function combine(
     parserModel: ParserModel,
     establishment_numbers: establishmentNumbers,
     unitInHeader: header?.findUnitInHeader ?? false,
-    validateCountryOfOrigin: header?.validateCountryOfOrigin ?? false,  // CoO validation flag
+    validateCountryOfOrigin: header?.validateCountryOfOrigin ?? false, // CoO validation flag
     blanketNirms: header?.blanketNirms ?? false,
   };
 }
@@ -338,15 +348,29 @@ The existing validation infrastructure includes these actual functions from the 
 
 ```javascript
 // From packing-list-validator-utilities.js (actual implementation)
-function hasMissingNirms(item) { /* actual implementation */ }
-function hasInvalidNirms(item) { /* actual implementation */ }
-function hasMissingCoO(item) { /* actual implementation */ }
-function hasInvalidCoO(item) { /* actual implementation */ }
-function hasProhibitedItems(item) { /* actual implementation */ }
+function hasMissingNirms(item) {
+  /* actual implementation */
+}
+function hasInvalidNirms(item) {
+  /* actual implementation */
+}
+function hasMissingCoO(item) {
+  /* actual implementation */
+}
+function hasInvalidCoO(item) {
+  /* actual implementation */
+}
+function hasProhibitedItems(item) {
+  /* actual implementation */
+}
 
 // Standard NIRMS value recognition (actual implementation)
-function isNirms(nirms) { /* actual implementation */ }
-function isNotNirms(nirms) { /* actual implementation */ }
+function isNirms(nirms) {
+  /* actual implementation */
+}
+function isNotNirms(nirms) {
+  /* actual implementation */
+}
 ```
 
 ### Real Implementation Pattern (Variable Blanket Statement)
@@ -362,8 +386,9 @@ function isNotNirms(nirms) { /* actual implementation */ }
 ### VERIFICATION CHECKPOINT
 
 **Before completing Technical Implementation section:**
+
 - ✅ All code examples extracted from actual workspace files
-- ✅ All function signatures match verified workspace implementation  
+- ✅ All function signatures match verified workspace implementation
 - ✅ All configuration matches actual model-headers.js structure
 - ✅ All patterns verified against working implementations
 - ✅ No theoretical or template content included

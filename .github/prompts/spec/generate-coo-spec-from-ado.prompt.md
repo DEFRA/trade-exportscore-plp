@@ -20,7 +20,7 @@ Automatically generate complete Country of Origin (CoO) validation specification
 3. **THIRD**: Generate specifications that document reality (not theory)
 4. **FOURTH**: Verify 100% accuracy against actual implementation before completion
 
-**IMPORTANT**: Generate specifications that accurately reflect the validation approach - individual column validation requires 14 acceptance criteria, while blanket statement validation requires 9 acceptance criteria.
+**CRITICAL**: ALWAYS regenerate specifications with correct validation patterns - individual column validation requires 14 acceptance criteria, fixed blanket statement validation requires 9 acceptance criteria, variable blanket statement validation requires 10 acceptance criteria. ADO ticket ACs may be incorrect and must be overridden with proper patterns.
 
 ## 🚨 MANDATORY IMPLEMENTATION-FIRST METHODOLOGY 🚨
 
@@ -113,9 +113,14 @@ This prompt MUST generate exactly ONE specification file with the following requ
    - For ticket 591514: `AB591514-asda3-coo-validation-spec.md`
    - For ticket 591516: `AB591516-bandm-coo-validation-spec.md`
 
-4. **Content Generation**: Use `create_file` tool for new files or `replace_string_in_file` tool for targeted updates to existing files
+4. **Content Generation**: Use `create_file` tool for new files or `replace_string_in_file` tool to replace entire content of existing files
 
-5. **File Existence Handling**: **INTELLIGENT UPDATE** - If a specification file already exists in the `.spec/coo/` folder, use `replace_string_in_file` to make targeted corrections rather than complete regeneration
+5. **File Existence Handling**: **ALWAYS UPDATE CONTENT** - Always update the complete specification file content using `replace_string_in_file` tool to replace the entire file content while preserving the file itself. Never delete and recreate files. ADO ticket ACs may be incorrect and the specification must reflect the proper validation patterns.
+
+**CRITICAL: CONTENT REPLACEMENT METHODOLOGY**
+- If file exists: Use `replace_string_in_file` with the entire existing file content as `oldString` and the complete new specification as `newString`
+- If file doesn't exist: Use `create_file` tool to create new file
+- NEVER delete existing files and recreate them - only update content within existing files
 
 ### **NO SPEC-DRIVEN MCP INTEGRATION**
 
@@ -264,9 +269,9 @@ Commodity Code Header: Commodity Code [column E]
 ### 0. Single File Generation Process
 
 ```
-- Check if specification file already exists using get_file_contents tool
-- If file exists: Use replace_string_in_file for targeted corrections (e.g., fix BAC wording, update technical requirements)
-- If file doesn't exist: Generate complete specification file using create_file tool
+- ALWAYS regenerate complete specification content using replace_string_in_file tool to update file content
+- Check for existing files and replace entire content while preserving the file itself
+- ADO ticket acceptance criteria may be incorrect and must be corrected in the specification
 - Include comprehensive business context from ADO ticket analysis
 - Use verified implementation patterns from workspace analysis
 - Apply trader-specific header mappings and validation rules
@@ -451,12 +456,12 @@ Generate a complete specification file with this structure:
 - Trader name in lowercase with hyphens (e.g., "B&M" → "bandm", "ASDA 3" → "asda3", "Giovanni 1" → "giovanni1")
 - Always end with `-coo-validation-spec.md`
 
-**Existing File Update Policy**:
-- **If specification file already exists** in the `.spec/coo/` folder for the provided ADO ticket, **update it intelligently using replace_string_in_file tool**
-- **INTELLIGENT UPDATE APPROACH**: Identify specific sections that need updating and use targeted replacements
-- **PRESERVE STRUCTURE**: Maintain existing file structure and only update content that differs from ADO ticket requirements
-- **TARGETED CORRECTIONS**: Focus on fixing specific issues (e.g., BAC wording, technical requirements) rather than complete regeneration
-- **NO COMPLETE OVERWRITE**: Use surgical updates to preserve existing content while fixing identified issues
+**File Content Update Policy**:
+- **ALWAYS UPDATE CONTENT**: Always update the complete specification file content using `replace_string_in_file` tool to replace entire content while preserving the file
+- **CORRECT ADO DISCREPANCIES**: ADO ticket acceptance criteria may be incorrect - generate proper validation patterns regardless
+- **COMPLETE CONTENT REPLACEMENT**: Replace entire file content with correct validation approach while keeping the file itself
+- **NO CONTENT PRESERVATION**: Do not preserve existing content - replace with fresh specification with accurate patterns
+- **VALIDATION-DRIVEN**: Focus on correct validation patterns (14 BACs for individual column, 9 BACs for fixed blanket, 10 BACs for variable blanket) rather than ADO ticket accuracy
    - Mars: True=Green, False=Red (only these two values)
    - Add other irregular patterns as discovered
 
@@ -1254,9 +1259,9 @@ Generate these business acceptance criteria patterns:
 
 **Prohibited Items Validation (BAC7-BAC10):**
 - **BAC7**: Prohibited Item with Treatment Type (single failure)
-- **BAC8**: Prohibited Item, More Than 3 (Treatment Type specified - multiple failures) - **CRITICAL: Must include "matches more than 3 items on the prohibited list" condition**
+- **BAC8**: Prohibited Item, More Than 3 (Treatment Type specified - multiple failures) - **CRITICAL: Must include "matches an item on the prohibited list in more than 3 instances" condition**
 - **BAC9**: Prohibited Item without Treatment Type (single failure)
-- **BAC10**: Prohibited Items, More Than 3 (no Treatment Type specified - multiple failures) - **CRITICAL: Must include "matches more than 3 items on the prohibited list" condition**
+- **BAC10**: Prohibited Items, More Than 3 (no Treatment Type specified - multiple failures) - **CRITICAL: Must include "matches an item on the prohibited list in more than 3 instances" condition**
 
 **CRITICAL: Variable Blanket Statement Template Requirements**
 - **DO NOT** use specific treatment type values like 'Processed' in BAC7 and BAC8 Gherkin scenarios
@@ -1310,8 +1315,8 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 **🚨 MANDATORY "MORE THAN 3" PATTERN REQUIREMENTS:**
 - **BAC4 REQUIREMENT**: MUST include "for more than 3 line items" after "the CoO value is null"
 - **BAC5 REQUIREMENT**: MUST include "And there are more than 3 line items with these CoO-related errors" as separate And clause
-- **BAC8 REQUIREMENT**: MUST include "matches more than 3 items on the prohibited list" NOT "matches an item on the prohibited list"
-- **BAC10 REQUIREMENT**: MUST include "matches more than 3 items on the prohibited list" NOT "matches an item on the prohibited list"
+- **BAC8 REQUIREMENT**: MUST include "matches an item on the prohibited list in more than 3 instances" NOT "matches an item on the prohibited list"
+- **BAC10 REQUIREMENT**: MUST include "matches an item on the prohibited list in more than 3 instances" NOT "matches an item on the prohibited list"
 - **ENFORCEMENT**: Any specification missing these exact conditions is INCORRECT and must be regenerated
 
 ### Quality Assurance Checklist

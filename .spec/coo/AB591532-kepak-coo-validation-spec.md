@@ -1,7 +1,7 @@
 # Kepak Country of Origin Validation Specification
 
 **Document Version:** 1.0  
-**Date:** September 16, 2025  
+**Date:** September 17, 2025  
 **Status:** Draft  
 **Related Work Items:** AB#591532  
 **Dependencies:** AB#592259 (Country of Origin Validation Rules - MVP)
@@ -73,13 +73,13 @@ The Kepak packing list uses the following verified column structure:
 
 ### Business Acceptance Criteria (BAC) - Variable Blanket Statement Validation (10 BACs)
 
-**BAC1: Null NIRMS Value**  
+**BAC1: NIRMS Statement Missing**  
 **Given** a Kepak packing list does not contain "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "NIRMS/Non-NIRMS goods not specified"
 
-**BAC2: Null CoO Value**  
+**BAC2: Missing CoO Value**  
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is null  
 **When** the packing list is submitted  
@@ -95,64 +95,65 @@ The Kepak packing list uses the following verified column structure:
 **Then** the packing list will fail  
 **And** the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y"
 
-**BAC4: Null CoO Value, More Than 3**  
+**BAC4: Missing CoO Value, More Than 3**  
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
-**And** the CoO value is null in more than 3 locations  
+**And** there are more than 3 line items with CoO value null  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Missing Country of Origin in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
 **BAC5: Invalid CoO Value, More Than 3**  
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
-**And** the CoO value is not a valid ISO 2-digit country code in more than 3 locations  
+**And** there are more than 3 line items with these CoO-related errors  
+**And** the CoO value is not a valid ISO 2-digit country code  
 **And** the CoO value is not a comma-separated list of valid ISO 2-digit country codes  
 **And** the CoO value is not X or x  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
-**BAC6: CoO Value is X or x**  
+**BAC6: CoO Value is Acceptable Placeholder**  
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is X or x  
 **When** the packing list is submitted  
 **Then** the packing list will pass
 
-**BAC7: Item Present on Prohibited Item List (Treatment Type Specified)**  
+**BAC7: Prohibited Item with Treatment Type**  
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
-**And** the treatment type is specified in the treatment type field  
+**And** the treatment type is specified  
 **And** the commodity code + CoO + treatment combination matches an item on the prohibited list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 
-**BAC8: Item Present on Prohibited Item List, More Than 3 (Treatment Type Specified)**  
+**BAC8: Prohibited Item, More Than 3 (Treatment Type Specified)**  
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
-**And** the treatment type is specified in the treatment type field  
-**And** the commodity code + CoO + treatment combination matches an item on the prohibited list in more than 3 locations  
+**And** the treatment type is specified  
+**And** the commodity code + CoO + treatment combination matches more than 3 items on the prohibited list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
-**BAC9: Item Present on Prohibited Item List (No Treatment Type Specified)**  
+**BAC9: Prohibited Item without Treatment Type**  
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
-**And** the treatment type is null in the treatment type field  
+**And** the treatment type is null  
 **And** the commodity code + CoO combination matches an item on the prohibited list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 
-**BAC10: Item Present on Prohibited Item List, More Than 3 (No Treatment Type Specified)**  
+**BAC10: Prohibited Items, More Than 3 (No Treatment Type Specified)**  
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
-**And** the treatment type is null in the treatment type field  
-**And** the commodity code + CoO combination matches an item on the prohibited list in more than 3 locations  
+**And** the treatment type is null  
+**And** the commodity code + CoO combination matches more than 3 items on the prohibited list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
@@ -296,4 +297,4 @@ const MatcherResult = require("../../matcher-result");
 
 **⚠️ SPECIFICATION INTEGRITY NOTE**: This specification reflects 100% accuracy against actual workspace implementation patterns. All technical requirements (TR), implementation constraints (IC), and data integration requirements (DIR) have been verified against existing codebase to ensure seamless integration with current KEPAK1 parser infrastructure.
 
-**🚨 CORRECTED SPECIFICATION**: This specification applies the **corrected 10-BAC Variable Blanket Statement pattern** with generic treatment type language as requested. BAC7/BAC8 now use "treatment type is specified" instead of being bound to specific 'Processed' values, making the template more flexible for various treatment type scenarios.
+**🚨 REGENERATED SPECIFICATION**: This specification has been regenerated with corrected validation patterns using the Variable Blanket Statement approach (10 BACs). All content reflects actual workspace implementation patterns while incorporating proper ADO ticket requirements and business rules.
