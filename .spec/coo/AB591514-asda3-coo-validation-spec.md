@@ -1,10 +1,12 @@
 # ASDA 3 Country of Origin Validation Specification
 
-**Document Version:** 1.0  
-**Date:** September 15, 2025  
-**Status:** Draft  
+**Document Version:** 3.0  
+**Date:** September 17, 2025  
+**Status:** Implementation Ready  
 **Related Work Items:** AB#591514  
 **Dependencies:** AB#592259 (Country of Origin Validation Rules - MVP)
+
+**✅ CORRECTED METHODOLOGY APPLIED:** This specification has been regenerated using the corrected business-requirements-first methodology. ADO ticket requirements are treated as authoritative business specifications, with workspace analysis providing technical implementation guidance only.
 
 ## Overview
 
@@ -26,20 +28,24 @@ This specification defines the implementation requirements for Country of Origin
 - Check against prohibited items list
 - Generate comprehensive error messages with location details
 
-## ASDA 3 Trader Format Specification
+## Business Requirements (FROM ADO TICKET AB#591514)
 
-### Column Mapping
+### User Story (Authoritative from ADO)
 
-The ASDA 3 packing list uses the following column structure:
+**As a** caseworker  
+**I want** the Packing List Parser to help me validate Country of Origin (CoO) entries on ASDA 3 packing lists  
+**So that** I can make informed decisions about accepting or rejecting General Certificate (GC) applications in line with NIRMS requirements
+
+### ASDA 3 Enhanced Format Specification (Business Requirements)
+
+The ADO ticket specifies the required ASDA 3 format for CoO validation:
 
 - **Column C:** 'NIRMs/Non-NIRMs' - NIRMS classification values
 - **Column E:** 'Treatment Type' - Treatment type information
 - **Column M:** 'Commodity Code' - Product commodity codes
 - **Column N:** 'Country of Origin' - Country of Origin values
 
-### NIRMS Value Mapping
-
-**ASDA 3 will follow the standard NIRMS values as defined in AB#592259:**
+### NIRMS Value Mapping (Business Standards)
 
 **True Values (NIRMS = Yes, case insensitive):**
 
@@ -49,11 +55,87 @@ The ASDA 3 packing list uses the following column structure:
 
 - No | Non-NIRMS | Non NIRMS | Red | N | R
 
-## Requirements Specification
+### Scope (Business Requirements)
+
+- Collect relevant CoO fields from ASDA 3 enhanced trader format
+- Provide basic validation for Country of Origin compliance
+- Enforce NIRMS scheme validation rules
+- Check against prohibited items list
+- Generate comprehensive error messages with location details
+
+## Technical Context (FROM WORKSPACE ANALYSIS)
+
+### Current ASDA3 Implementation Status
+
+**Existing ASDA3 Configuration** (verified from `app/services/model-headers.js`):
+
+```javascript
+ASDA3: {
+  establishmentNumber: {
+    regex: /^RMS-GB-000015-\d{3}$/i,
+  },
+  regex: {
+    description: /Description Of All Retail Goods/i,
+    nature_of_products: /Nature of Product/i,
+    type_of_treatment: /Treatment Type/i,
+    number_of_packages: /Number of Packages/i,
+    total_net_weight_kg: /Net Weight/i,
+  },
+  total_net_weight_unit: /kilograms\/grams/i,
+}
+```
+
+**Current ASDA3 Parser** (verified from `app/services/parsers/asda/model3.js`):
+
+- Uses standard parser pattern with 5-parameter `combineParser.combine()` signature
+- No CoO validation currently enabled
+- Follows established ASDA parser architecture
+
+### CoO Validation Implementation Patterns (From Existing Implementations)
+
+**Established CoO Configuration Pattern** (from SAINSBURYS1, SAVERS1, NISA1, TESCO3, TJMORRIS2):
+
+```javascript
+// Configuration pattern for CoO validation
+{
+  validateCountryOfOrigin: true,           // Enables CoO validation
+  country_of_origin: /Country of Origin/i, // CoO field mapping
+  nirms: /NIRMS or non-NIRMS/i,           // NIRMS field mapping
+  findUnitInHeader: true,                 // Weight unit detection
+}
+```
+
+**Parser Integration Pattern** (6-parameter combineParser signature):
+
+```javascript
+return combineParser.combine(
+  establishmentNumber,
+  packingListContents,
+  true,
+  parserModel.RETAILER,
+  establishmentNumbers,
+  headers.RETAILER, // Headers parameter enables CoO validation
+);
+```
+
+### Available Validation Infrastructure
+
+**Validation Functions** (existing in `packing-list-validator-utilities.js`):
+
+- `hasMissingNirms(item)`, `hasInvalidNirms(item)`
+- `hasMissingCoO(item)`, `hasInvalidCoO(item)`
+- `hasProhibitedItems(item)`
+- `isNirms(value)`, `isNotNirms(value)`
+
+**Integration Method**: CoO validation is automatically triggered when `validateCountryOfOrigin: true` is set in header configuration.
 
 ## Requirements Specification
 
-### Business Acceptance Criteria (BAC)
+## Requirements Specification
+
+### Business Acceptance Criteria (BAC) - Individual Column Validation Pattern
+
+**Implementation Approach**: ASDA 3 requires individual column validation (14 BACs) following the enhanced methodology.
 
 #### BAC1: NOT within NIRMS Scheme
 
@@ -169,13 +251,13 @@ Then the packing list will pass
 #### BAC11: Item Present on Prohibited Item List (Treatment Type specified)
 
 ```gherkin
-Given an ASDA 3 packing list item has a NIRMS value specified
+Given an ASDA 3 packing list item has a NIRMS value specified in the 'NIRMs/Non-NIRMs' column [column C]
 And it contains a True value below (case insensitive):
   • Yes | NIRMS | Green | Y | G
-And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
+And the CoO value is valid (ISO code, comma-separated list, or "X"/"x") in the 'Country of Origin' column [column N]
 And the commodity code is specified in the 'Commodity Code' column [column M]
 And the treatment type is specified in the 'Treatment Type' column [column E]
-And the commodity code starts with and CoO, and treatment type matches an item on the prohibited item list
+And the commodity code + CoO + treatment combination matches an item on the prohibited list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
@@ -184,13 +266,13 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 #### BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
 
 ```gherkin
-Given an ASDA 3 packing list have more than 3 items that have a NIRMS value specified
+Given an ASDA 3 packing list has more than 3 items that have a NIRMS value specified in the 'NIRMs/Non-NIRMs' column [column C]
 And it contains a True value below (case insensitive):
   • Yes | NIRMS | Green | Y | G
-And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
+And the CoO value is valid (ISO code, comma-separated list, or "X"/"x") in the 'Country of Origin' column [column N]
 And the commodity code is specified in the 'Commodity Code' column [column M]
 And the treatment type is specified in the 'Treatment Type' column [column E]
-And the commodity code starts with, and CoO, and treatment type matches an item on the prohibited item list
+And the commodity code + CoO + treatment combination matches an item on the prohibited list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
@@ -199,13 +281,13 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 #### BAC13: Item Present on Prohibited Item List (no Treatment Type specified)
 
 ```gherkin
-Given an ASDA 3 packing list item has a NIRMS value specified
+Given an ASDA 3 packing list item has a NIRMS value specified in the 'NIRMs/Non-NIRMs' column [column C]
 And it contains a True value below (case insensitive):
   • Yes | NIRMS | Green | Y | G
-And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
+And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes) in the 'Country of Origin' column [column N]
 And the commodity code is specified in the 'Commodity Code' column [column M]
 And treatment type is not specified (null) in the 'Treatment Type' column [column E]
-And the commodity code starts with, and CoO matches an item on the prohibited item list
+And the commodity code + CoO combination matches an item on the prohibited list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
@@ -214,198 +296,293 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 #### BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
 
 ```gherkin
-Given an ASDA 3 packing list have more than 3 items that have a NIRMS value specified
+Given an ASDA 3 packing list has more than 3 items that have a NIRMS value specified in the 'NIRMs/Non-NIRMs' column [column C]
 And it contains a True value below (case insensitive):
   • Yes | NIRMS | Green | Y | G
-And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
+And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes) in the 'Country of Origin' column [column N]
 And the commodity code is specified in the 'Commodity Code' column [column M]
 And treatment type is not specified (null) in the 'Treatment Type' column [column E]
-And the commodity code starts with, and CoO matches an item on the prohibited item list
+And the commodity code + CoO combination matches an item on the prohibited list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-### Technical Requirements (TR) - Implementation Specifics
+### Technical Requirements (TR) - How to Implement ADO Business Requirements
 
-**TR1: Parser Configuration** - The system SHALL set validateCountryOfOrigin flag to true in model-headers.js WHEN enabling CoO validation for ASDA 3 (VERIFIED: Pattern confirmed in SAVERS1, SAINSBURYS1, NISA1 implementations)
+**TR1: Parser Configuration Enhancement** - The system SHALL add `validateCountryOfOrigin: true` flag to ASDA3 configuration in model-headers.js to enable CoO validation for ADO business requirements (Implementation Pattern: Verified in SAINSBURYS1, SAVERS1, NISA1, TJMORRIS2, TESCO3)
 
-**TR2: Parser Function Signature** - The system SHALL use the 6-parameter combineParser.combine() signature WHEN enabling CoO validation for ASDA 3 (VERIFIED: Exact signature extracted from SAVERS1 implementation)
+**TR2: Parser Function Signature Update** - The system SHALL update ASDA3 parser to use 6-parameter combineParser.combine() signature to support ADO validation requirements (Implementation Pattern: Confirmed in all CoO-enabled parsers)
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in packing-list-validator-utilities.js)
+**TR3: Field Mapping Addition** - The system SHALL add CoO field mappings (`country_of_origin`, `nirms`, `commodity_code`) to ASDA3 header configuration to support ADO column specifications (Implementation Pattern: Standard approach across CoO-enabled retailers)
 
-**TR4: Data Processing Pattern** - The system SHALL use mapParser() with ASDA3 header configuration WHEN processing packing list data (VERIFIED: Pattern confirmed in existing ASDA3 parser implementation)
+**TR4: Validation Integration** - The system SHALL leverage existing validation utilities (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) that automatically handle ADO acceptance criteria when CoO validation is enabled
 
-**TR5: Standard Parser Flow** - The system SHALL follow the verified parser pattern: extract establishment number → find headers with rowFinder → process with mapParser → combine with combineParser → automatic validation (VERIFIED: Flow confirmed in ASDA3 model3.js implementation)
+**TR5: Standard Parser Enhancement** - The system SHALL follow established parser enhancement pattern: maintain existing flow (establishment number extraction → header finding → mapParser processing) while adding CoO validation capabilities
 
-**TR6: Error Handling** - The system SHALL return combineParser.combine() with appropriate error parameters WHEN parser encounters errors (VERIFIED: Error handling pattern confirmed in ASDA3 implementation)
+**TR6: Error Handling Consistency** - The system SHALL maintain current error handling patterns while enabling automatic validation error reporting for ADO business scenarios
 
-**TR7: Header Structure Integration** - The system SHALL use rowFinder() with matchesHeader callback and ASDA3 header structure WHEN locating header rows (VERIFIED: Pattern confirmed in ASDA3 model3.js implementation)
+**TR7: Architecture Compliance** - The system SHALL follow established CoO integration patterns used by other retailers to implement ADO business requirements without disrupting existing ASDA3 functionality
 
-### Implementation Constraints (IC) - Architecture Decisions
+### Implementation Constraints (IC) - Current Architecture Integration
 
-**IC1: Header Pattern Compliance** - MUST use headers.ASDA3.regex structure verified in model-headers.js (NOT generic fieldMapping patterns) (VERIFIED: Structure confirmed in workspace)
+**IC1: Configuration Pattern Compliance** - MUST extend existing ASDA3 headers configuration structure in model-headers.js rather than creating new configuration format (Current Pattern: Verified structure at lines 32-44)
 
-**IC2: Validation Pipeline Integration** - MUST integrate with existing validation pipeline infrastructure through combineParser.combine() function with 6-parameter signature (VERIFIED: Integration pattern confirmed in SAVERS1)
+**IC2: Parser Architecture Preservation** - MUST maintain current ASDA3 parser flow while adding CoO validation capability through established 6-parameter combineParser integration pattern (Current Architecture: model3.js structure confirmed)
 
-**IC3: Parser Architecture Consistency** - MUST follow established parser patterns used by SAINSBURYS1, SAVERS1, NISA1 implementations (VERIFIED: Architecture confirmed across similar implementations)
+**IC3: Validation Pipeline Integration** - MUST leverage existing validation infrastructure rather than implementing custom validation logic (Existing Infrastructure: Validation utilities confirmed operational)
 
-**IC4: Configuration-Driven Validation** - MUST enable CoO validation through validateCountryOfOrigin flag in model-headers.js with existing configuration structure (VERIFIED: Flag usage confirmed in SAVERS1, SAINSBURYS1 implementations)
+**IC4: Establishment Number Consistency** - MUST maintain existing establishment number pattern `/^RMS-GB-000015-\d{3}$/i` for ASDA3 trader identification (Current Configuration: Verified in model-headers.js)
 
-**IC5: Error Location Tracking** - MUST provide sheet name and row number information using existing error tracking patterns (VERIFIED: Error tracking pattern confirmed in validation utilities)
+**IC5: Error Handling Continuity** - MUST preserve existing error handling and logging patterns while adding CoO validation error reporting (Current Pattern: combineParser error handling confirmed)
 
-### Data Integration Requirements (DIR) - Trader-Specific Mappings
+### Data Integration Requirements (DIR) - Supporting ADO Business Requirements
 
-**DIR1: Establishment Number Pattern** - The system SHALL use establishment number regex /^RMS-GB-000015-\d{3}$/i verified in ASDA3 model-headers.js configuration (VERIFIED: Pattern extracted from real configuration)
+**DIR1: Establishment Number Continuity** - The system SHALL maintain existing establishment number pattern `/^RMS-GB-000015-\d{3}$/i` for ASDA3 trader identification while adding CoO validation capability (Current Pattern: Confirmed in model-headers.js lines 32-44)
 
-**DIR2: Column Mapping Configuration** - The system SHALL map ASDA 3 columns using header mappings verified in model-headers.js: description, nature_of_products, type_of_treatment, number_of_packages, total_net_weight_kg PLUS country_of_origin and nirms fields (VERIFIED: Mappings confirmed in existing ASDA3 configuration)
+**DIR2: Enhanced Column Mapping Strategy** - The system SHALL extend current ASDA3 configuration to support ADO column specifications by adding CoO field mappings to existing header structure:
 
-**DIR3: NIRMS Recognition Pattern** - The system SHALL recognize standard NIRMS values using verified patterns in isNirms() and isNotNirms() functions for ASDA 3 (VERIFIED: Recognition patterns confirmed in packing-list-validator-utilities.js)
+**Current ASDA3 Fields** (maintain existing mappings):
 
-### Technical Implementation (TI) - Code Changes Required
+- `description: /Description Of All Retail Goods/i`
+- `nature_of_products: /Nature of Product/i`
+- `type_of_treatment: /Treatment Type/i`
+- `number_of_packages: /Number of Packages/i`
+- `total_net_weight_kg: /Net Weight/i`
 
-#### TI1: model-headers.js Configuration Update
+**New CoO Fields** (add to support ADO requirements):
+
+- `country_of_origin: /Country of Origin/i` (for ADO Column N)
+- `nirms: /NIRMs\/Non-NIRMs/i` (for ADO Column C)
+- `commodity_code: /Commodity Code/i` (for ADO Column M)
+
+**DIR3: Validation Configuration** - The system SHALL add `validateCountryOfOrigin: true` flag to enable automatic processing of ADO acceptance criteria through existing validation pipeline
+
+**DIR4: NIRMS Value Recognition** - The system SHALL leverage existing isNirms() and isNotNirms() functions that automatically recognize ADO-specified NIRMS values (Yes|NIRMS|Green|Y|G for true, No|Non-NIRMS|Non NIRMS|Red|N|R for false)
+
+### Technical Implementation (TI) - Code Changes to Support ADO Requirements
+
+#### TI1: model-headers.js Configuration Enhancement
 
 **File**: `app/services/model-headers.js`
 
-Add validateCountryOfOrigin and additional field mappings to ASDA3 configuration:
+**Current ASDA3 Configuration** (lines 32-44):
 
 ```javascript
 ASDA3: {
   establishmentNumber: {
-    regex: /^RMS-GB-000015-\d{3}$/i
+    regex: /^RMS-GB-000015-\d{3}$/i,
   },
-  validateCountryOfOrigin: true,  // NEW: Enable CoO validation
   regex: {
     description: /Description Of All Retail Goods/i,
     nature_of_products: /Nature of Product/i,
     type_of_treatment: /Treatment Type/i,
     number_of_packages: /Number of Packages/i,
     total_net_weight_kg: /Net Weight/i,
-    country_of_origin: /Country of Origin/i,  // NEW: CoO field mapping
-    nirms: /NIRMs\/Non-NIRMs/i,              // NEW: NIRMS field mapping
   },
   total_net_weight_unit: /kilograms\/grams/i,
-},
+}
+```
+
+**Enhanced Configuration** (to support ADO business requirements):
+
+```javascript
+ASDA3: {
+  establishmentNumber: {
+    regex: /^RMS-GB-000015-\d{3}$/i,
+  },
+  regex: {
+    description: /Description Of All Retail Goods/i,
+    nature_of_products: /Nature of Product/i,
+    type_of_treatment: /Treatment Type/i,
+    number_of_packages: /Number of Packages/i,
+    total_net_weight_kg: /Net Weight/i,
+  },
+  total_net_weight_unit: /kilograms\/grams/i,
+  // Add CoO validation to support ADO Column specifications
+  validateCountryOfOrigin: true,                    // Enable CoO validation
+  country_of_origin: /Country of Origin/i,          // ADO Column N
+  nirms: /NIRMs\/Non-NIRMs/i,                      // ADO Column C
+  commodity_code: /Commodity Code/i,                // ADO Column M
+}
 ```
 
 #### TI2: Parser Function Signature Update
 
 **File**: `app/services/parsers/asda/model3.js`
 
-Update combineParser.combine() call to include headers parameter:
+**Current Implementation** (5-parameter signature):
 
 ```javascript
-// BEFORE (current 5-parameter signature):
+// Current combineParser.combine() call
 return combineParser.combine(
   establishmentNumber,
   packingListContents,
   true,
   parserModel.ASDA3,
   establishmentNumbers,
-);
-
-// AFTER (6-parameter signature for CoO validation):
-return combineParser.combine(
-  establishmentNumber,
-  packingListContents,
-  true,
-  parserModel.ASDA3,
-  establishmentNumbers,
-  headers.ASDA3, // NEW: Headers parameter enables CoO validation
 );
 ```
 
-#### TI3: Headers Import Statement
+**Enhanced Implementation** (6-parameter signature to support ADO validation):
+
+```javascript
+// Enhanced combineParser.combine() call for ADO CoO requirements
+return combineParser.combine(
+  establishmentNumber,
+  packingListContents,
+  true,
+  parserModel.ASDA3,
+  establishmentNumbers,
+  headers.ASDA3, // NEW: Headers parameter enables ADO CoO validation
+);
+```
+
+**Implementation Pattern**: Follows established CoO integration used by SAINSBURYS1, SAVERS1, NISA1, TESCO3, TJMORRIS2.
+
+#### TI3: Headers Import Addition
 
 **File**: `app/services/parsers/asda/model3.js`
 
-Add headers import to enable access to ASDA3 header configuration:
+**Current Imports**:
 
 ```javascript
-const headers = require("../../model-headers"); // NEW: Import headers
-const combineParser = require("../combine-parser");
-const logger = require("../../../utilities/logger");
-const mapParser = require("../map-parser");
+const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
-const rowFinder = require("../../../utilities/row-finder");
+const { rowFinder } = require("../../../utilities/row-finder");
+const { mapParser } = require("../../parser-map");
+// ... other existing imports
 ```
 
-#### TI4: Validation Function Integration
+**Enhanced Imports** (add headers import for ADO CoO support):
 
-**Functions Available** (already implemented in `app/services/validators/packing-list-validator-utilities.js`):
+```javascript
+const combineParser = require("../../parser-combine");
+const parserModel = require("../../parser-model");
+const headers = require("../../model-headers"); // NEW: Enable ADO CoO configuration
+const { rowFinder } = require("../../../utilities/row-finder");
+const { mapParser } = require("../../parser-map");
+// ... other existing imports
+```
 
-- `hasMissingNirms(item)` - Detects null/undefined NIRMS values
-- `hasInvalidNirms(item)` - Validates NIRMS value format
-- `hasMissingCoO(item)` - Detects null/undefined CoO values for NIRMS items
-- `hasInvalidCoO(item)` - Validates CoO ISO code format
-- `hasProhibitedItems(item)` - Checks against prohibited items list
+#### TI4: Automatic Validation Integration
 
-These functions are automatically triggered when validateCountryOfOrigin is enabled.
+**No Additional Code Required** - ADO acceptance criteria (AC1-AC14) are automatically handled by existing validation infrastructure when `validateCountryOfOrigin: true` is enabled:
 
-#### TI5: Error Message Integration
+**Available Validation Functions** (`packing-list-validator-utilities.js`):
 
-**Functions Available** (already implemented in validation utilities):
+- `hasMissingNirms(item)` - Implements BAC2, BAC4 (null NIRMS detection)
+- `hasInvalidNirms(item)` - Implements BAC3, BAC5 (invalid NIRMS validation)
+- `hasMissingCoO(item)` - Implements BAC6, BAC8 (missing CoO for NIRMS items)
+- `hasInvalidCoO(item)` - Implements BAC7, BAC9 (CoO format validation)
+- `hasProhibitedItems(item)` - Implements BAC11-BAC14 (prohibited items checking)
 
-Standard error messages are automatically applied:
+**Automatic Error Messages** - Standard error messages match ADO acceptance criteria:
 
-- "NIRMS/Non-NIRMS goods not specified in sheet X row Y"
-- "Invalid entry for NIRMS/Non-NIRMS goods in sheet X row Y"
-- "Missing Country of Origin in sheet X row Y"
-- "Invalid Country of Origin ISO Code in sheet X row Y"
-- "Prohibited item identified on the packing list in sheet X row Y"
+- "NIRMS/Non-NIRMS goods not specified in sheet X row Y" (BAC2, BAC4)
+- "Invalid entry for NIRMS/Non-NIRMS goods in sheet X row Y" (BAC3, BAC5)
+- "Missing Country of Origin in sheet X row Y" (BAC6, BAC8)
+- "Invalid Country of Origin ISO Code in sheet X row Y" (BAC7, BAC9)
+- "Prohibited item identified on the packing list in sheet X row Y" (BAC11-BAC14)
 
-Batch error handling (>3 items) automatically includes "in addition to Z other locations".
+**Automatic NIRMS Recognition** - Existing functions handle ADO value mapping:
 
-#### TI6: Standard NIRMS Recognition
+- `isNirms()`: Recognizes ADO True values (Yes|NIRMS|Green|Y|G) case insensitive
+- `isNotNirms()`: Recognizes ADO False values (No|Non-NIRMS|Non NIRMS|Red|N|R) case insensitive
 
-**Values** (already implemented in validation utilities):
+**Automatic CoO Validation** - Existing functions handle ADO format requirements:
 
-- **isNirms()**: ["yes", "nirms", "green", "y", "g"] (case insensitive)
-- **isNotNirms()**: ["no", "non-nirms", "non nirms", "red", "n", "r"] (case insensitive)
+- ISO 2-digit country codes (BAC7, BAC9)
+- Comma-separated ISO codes (BAC7, BAC9)
+- Special "X"/"x" values pass validation (BAC10)
 
-These recognition patterns are automatically applied when validateCountryOfOrigin is enabled.
+### Implementation Summary
 
-#### TI7: CoO Format Validation
+**ADO Business Requirements Status**:
 
-**Valid Formats** (already implemented in validation utilities):
+- ✅ **All 14 Acceptance Criteria (AC1-AC14) documented from ADO ticket**
+- ✅ **Column specifications (C, E, M, N) treated as business requirements**
+- ✅ **NIRMS value mapping aligned with ADO specifications**
+- ✅ **Prohibited items logic correctly results in validation failure**
 
-- Single ISO 2-digit country code (e.g., "GB", "FR")
-- Comma-separated ISO codes (e.g., "GB,FR,DE")
-- Special values: "X" or "x" (pass validation)
-- Invalid: Any other format triggers validation failure
+**Technical Implementation Status**:
 
-### Configuration Summary
+- ✅ **Validation functions exist and operational** (packing-list-validator-utilities.js confirmed)
+- ✅ **Error message templates implemented** (match ADO acceptance criteria exactly)
+- ✅ **NIRMS recognition patterns functional** (support ADO value specifications)
+- ✅ **CoO format validation operational** (handles ADO format requirements)
+- ✅ **ASDA3 base configuration exists** (model-headers.js lines 32-44 confirmed)
+- 🔧 **Configuration Enhancement Required**: Add 4 properties to enable ADO validation
+- 🔧 **Parser Enhancement Required**: Add 1 parameter to enable CoO validation pipeline
 
-**Implementation Status**:
+**Implementation Effort**: **Minimal** - Add 4 configuration properties and 1 parameter to leverage existing validation infrastructure for ADO business requirements.
 
-- ✅ Validation functions exist and functional
-- ✅ Error message templates implemented
-- ✅ NIRMS recognition patterns confirmed
-- ✅ CoO format validation operational
-- ❌ ASDA3 configuration missing validateCountryOfOrigin flag
-- ❌ ASDA3 parser missing 6th parameter for headers
-- ❌ ASDA3 configuration missing country_of_origin and nirms field mappings
-
-**Integration Effort**: Minimal - requires only configuration changes to enable existing validation pipeline for ASDA 3.
+**Business Value**: Enables compliance with ADO ticket AB#591514 requirements using proven validation patterns from existing CoO implementations.
 
 ---
 
-**Specification Complete**: This document provides comprehensive requirements for enabling ASDA 3 Country of Origin validation using verified implementation patterns from the trade-exportscore-plp workspace.
+## Validation Summary
 
-## Technical Implementation
+**✅ CORRECTED METHODOLOGY VALIDATION**:
 
-### Parser Integration Pattern (Actual Implementation)
+**Business Requirements Authority** (from ADO ticket AB#591514):
 
-CoO validation follows the standard parser architecture used across the codebase:
+- All 14 acceptance criteria (AC1-AC14) implemented as business requirements
+- Column specifications (C, E, M, N) treated as format enhancement requirements
+- NIRMS value mapping follows ADO business standards
+- Prohibited items logic correctly results in validation failure per business rules
 
-1. **Parser Structure** (based on SAINSBURYS1, SAVERS1, NISA1 implementations):
+**Technical Implementation Feasibility** (from workspace analysis):
+
+- Existing validation infrastructure supports all ADO requirements automatically
+- Established CoO patterns from 5 retailers provide proven implementation approach
+- Minimal code changes required (4 configuration properties + 1 parameter)
+- Current ASDA3 architecture fully compatible with CoO enhancement
+
+**Requirements Integration Validation**:
+
+- Business requirements (ADO) drive what to implement ✅
+- Technical analysis (workspace) defines how to implement ✅
+- No conflict between business needs and technical capabilities ✅
+- Implementation approach leverages existing proven patterns ✅
+
+---
+
+**Specification Status**: **Implementation Ready** - This document provides complete requirements for implementing ADO ticket AB#591514 using corrected business-requirements-first methodology with technical implementation guidance from existing CoO validation patterns.
+
+## Implementation Roadmap
+
+### Development Approach
+
+**Phase 1: Configuration Enhancement**
+
+1. Add CoO field mappings to ASDA3 configuration (model-headers.js)
+2. Enable validation flag (`validateCountryOfOrigin: true`)
+3. Update parser to use 6-parameter combineParser signature
+
+**Phase 2: Integration Testing**
+
+1. Verify ADO acceptance criteria through automated validation
+2. Test with sample data matching ADO column specifications
+3. Confirm error messages align with ADO requirements
+
+**Phase 3: Business Validation**
+
+1. Validate against ADO business scenarios
+2. Confirm prohibited items checking functionality
+3. Verify NIRMS value recognition per ADO standards
+
+### Technical Implementation Pattern
+
+CoO validation for ASDA 3 follows the established architecture pattern:
+
+1. **Enhanced Parser Structure** (supporting ADO requirements):
 
    ```javascript
-   // Standard parser imports and structure
+   // Standard parser structure enhanced for CoO validation
    const combineParser = require("../../parser-combine");
    const parserModel = require("../../parser-model");
-   const headers = require("../../model-headers");
+   const headers = require("../../model-headers"); // NEW: For CoO configuration
    const { mapParser } = require("../../parser-map");
    const regex = require("../../../utilities/regex");
    const { rowFinder } = require("../../../utilities/row-finder");
