@@ -34,6 +34,7 @@ Generate and seed test data and Excel/CSV files for establishment number validat
 
 For each scenario below, generate a file named `{ScenarioName}.xlsx` and mutate the establishment number(s) in all data rows as described:
 
+- **Happypath**: No mutation; copy the original happy path file.
 - **RMSHasWrongFinal3DigitsShould_Pass**: Change the last 3 digits of the RMS number (e.g. RMS-GB-000015-666)
 - **LowercaseAndMalformedPrefixInEstablishmentNumber_Pass**: Use lowercase and malformed prefix (e.g. rms-gb-000015-010)
 - **MixedCaseEstablishmentNumberFormat_Pass**: Use mixed case (e.g. Rms-Gb-000015-010)

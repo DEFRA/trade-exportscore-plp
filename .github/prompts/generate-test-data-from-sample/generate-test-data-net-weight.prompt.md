@@ -13,18 +13,47 @@ Generate and seed test data and Excel/CSV files for net weight validation scenar
 1. **Copy the happy path sample file** to each scenario filename in `app/packing-lists/{exporter}/test-scenarios/net-weight/` using PowerShell or CLI. Do not create blank files from scratch.
 2. **For each scenario below,** use MCP Excel tools to apply the described mutations to the copied file. Never modify the original template file.
 3. **For each scenario,** modify only the header row.
-4. **After mutation,** verify that the file is no longer identical to the template.
-5. **Track mutation progress** using PowerShell commands to ensure all files have been modified.
+4. **For scenarios involving headers,** modify only the header row. For data scenarios, modify only 2-3 data rows unless otherwise stated.
+5. **After mutation,** verify that the file is no longer identical to the template.
+6. **Track mutation progress** using PowerShell commands to ensure all files have been modified.
+
+
 
 ## Scenarios (STRICTLY FOLLOW THIS LIST)
 
-- failurereason-net-weight-no-kilos: Change the header matched by the exporter's `total_net_weight_kg` regex to 'Net Weight' (removes 'Kilos').
-- failurereason-net-weight-lbs: Change the header matched by the exporter's `total_net_weight_kg` regex to 'Net Weight (lbs)' (uses pounds instead of kilos).
+You must generate and mutate **all 329 scenarios** below. Each scenario must be created as a separate Excel file, mutated as described, and placed in the output directory. Do not skip any scenario.
 
-## Documentation: Net Weight Scenario Types
+- **Alpha_Numeric_TotalNetWeight_Unparse**: Set total net weight to an alphanumeric value (e.g. 'Net We1ght').
+- **Alpha_Numeric_UOM_Weight**: Set the unit of measure to an alphanumeric value (e.g. 'K9G').
+- **Ambiguous_Units_in_Header_Pass**: Use ambiguous units in the header (e.g. 'Total Net Weight (Lbs/KGLbs)').
+- **Data_empty_Netweight_Fail**: Leave total net weight cells empty.
+- **Data_empty_NetweightUOM**: Leave unit of measure cells empty.
+- **Extra_Spaces_In_Header_Unparse**: Add extra spaces in the net weight header (e.g. 'Total  Net  Weight').
+- **Happypath**: No mutation; copy the original happy path file.
+- **Header_Typos_or_SpecialCharacters_Unparse**: Introduce typos or special characters in the net weight header (e.g. 'Tot@l Net We!ght').
+- **Header_With_Extra_Parentheses_Pass**: Add extra parentheses in the net weight header (e.g. 'Total Net Weight (KG) ()').
+- **Header_With_Multiple_Units**: Add multiple units in the header (e.g. 'Total Net Weight (KG/LB)').
+- **Header_With_Unit_And_Symbols_Pass**: Add symbols to the unit in the header (e.g. 'Total Net Weight (KG*)').
+- **Incorrect_NetweightData_All_Fail**: Set all net weight data to invalid values (e.g. 'abc', '-1', '9999999999').
+- **Invalid_Unit_Type_Fail**: Set unit of measure to an invalid type (e.g. 'LBS' if only 'KG' is valid).
+- **Malformed_Header_Unit_Pass**: Malform the unit in the header (e.g. 'Total Net Weight (K-G)').
+- **Missing_Header_Netweight_Unparse**: Remove the net weight header column.
+- **Missing_Header_NetweightUOM**: Remove the unit of measure header column.
+- **Missing_Paranthesis_in_Uom_Pass**: Remove parentheses from the unit in the header (e.g. 'Total Net Weight KG').
+- **Missing_UOM_Weight_Fail**: Remove all unit of measure data.
+- **MissingNetweightUOM_excludeKG**: Remove the unit of measure column if it only contains 'KG'.
+- **MixedCase_Header_Pass**: Change the net weight header to mixed case (e.g. 'ToTal nEt WeIGHt').
+- **MixedUnits_And_Casing_Pass**: Use mixed units and casing in the unit of measure data (e.g. 'Kg', 'kG', 'KG').
+- **Netweight_HasEmpty_Parentheses_Fail**: Use empty parentheses in the header (e.g. 'Total Net Weight ()').
+- **Splcharacters_Header_Netweight_Unparse**: Add special characters to the net weight header (e.g. 'Total Net Weight #$%').
+- **TotalNetWeight_Without_UOMWeight**: Remove the unit of measure from the header (e.g. 'Total Net Weight').
+- **Unit_Missing_Weight_Present_Fail**: Remove unit of measure data but keep net weight data.
+- **UOMWeight_Without_TotalNetWeight_Unparse**: Remove the net weight column but keep the unit of measure column.
+- **Valid_Unit_KG_Parentheses**: Use 'KG' in parentheses in the header (e.g. 'Total Net Weight (KG)').
+- **Zero_Data_TotalNetWeight_Pass**: Set total net weight data to zero.
+- **Zero_Data_UOM**: Set unit of measure data to zero.
 
-- **failurereason-net-weight-no-kilos**: The header matched by the exporter's `total_net_weight_kg` regex is changed to 'Net Weight' (removes 'Kilos').
-- **failurereason-net-weight-lbs**: The header matched by the exporter's `total_net_weight_kg` regex is changed to 'Net Weight (lbs)' (uses pounds instead of kilos).
+**You must generate and mutate all 29 scenarios above.**
 
 ## Output
 - Place all generated files in `app/packing-lists/{exporter}/test-scenarios/net-weight/`.
