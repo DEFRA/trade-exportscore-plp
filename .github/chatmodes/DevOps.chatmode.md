@@ -34,25 +34,51 @@ git push origin <branch>
 
 ## 🚨 VERSION VERIFICATION PROTOCOL 🚨
 
-**BEFORE ANY COMMIT - VERSION MUST BE INCREMENTED:**
+**BEFORE ANY COMMIT - SMART VERSION MANAGEMENT:**
 
 ### ✅ Version Gates (MANDATORY - NO EXCEPTIONS)
 
 ```bash
-# CRITICAL: Feature branch version MUST be higher than main branch
-# Example: main=6.22.0 → feature=6.22.1+ (REQUIRED)
-# Example: main=6.22.5 → feature=6.22.6+ (REQUIRED)
+# CRITICAL: Check remote branches first, rebase if needed, version only incremented if required
 
-# Auto-check command (MUST pass before commit):
+# Step 1: Fetch latest remote branches
+git fetch origin main
+git fetch origin develop
+
+# Step 2: Check versions across all relevant branches
 current=$(grep '"version"' package.json | cut -d'"' -f4)
-main=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
-if [[ "$current" == "$main" ]]; then
-  echo "❌ BLOCKED: Version $current equals main branch - MUST INCREMENT"
+main_version=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
+develop_version=$(git show origin/develop:package.json | grep '"version"' | cut -d'"' -f4)
+
+echo "Current: $current, Main: $main_version, Develop: $develop_version"
+
+# Step 3: Determine highest remote version
+if [[ "$main_version" > "$develop_version" ]]; then
+  highest_remote="$main_version"
+  highest_branch="main"
+else
+  highest_remote="$develop_version"
+  highest_branch="develop"
+fi
+
+# Step 4: Smart branching strategy
+if [[ "$current" < "$develop_version" ]]; then
+  echo "🔄 REBASE REQUIRED: Current branch behind develop ($develop_version)"
+  echo "Run: git rebase origin/develop  # Inherits latest version"
   exit 1
+elif [[ "$develop_version" <= "$main_version" ]]; then
+  echo "❌ VERSION BLOCKED: Develop ($develop_version) not > Main ($main_version)"
+  echo "Someone needs to increment develop branch first"
+  exit 1
+else
+  echo "✅ Version strategy valid: Develop ($develop_version) > Main ($main_version)"
 fi
 ```
 
-**⛔ EXECUTION RULE**: Never commit with version ≤ main branch version.
+**🎯 EXECUTION RULES**:
+- **Rebase to develop** if current branch is behind
+- **Version requirement**: develop > main (not individual increment)
+- **Inherit versions** through rebasing, only increment when truly needed
 
 ---
 
@@ -158,25 +184,37 @@ make prettier         # Format code (REQUIRED before ANY commit)
 npm run test:unit     # Run unit tests (MUST pass before ANY commit)
 ```
 
-#### 4. Version Management (Required)
+#### 4. Smart Version Management (Required)
 
 ```bash
-# CRITICAL: Version MUST be incremented from main branch before ANY commit
-# Check version against main branch (AUTOMATED BLOCKING CHECK)
+# SMART VERSION STRATEGY: Rebase-first, inherit versions, minimal increments
+
+# Step 1: Fetch latest from integration branches
+git fetch origin main
+git fetch origin develop
+
+# Step 2: Check if rebase to develop is needed
 current_version=$(grep '"version"' package.json | cut -d'"' -f4)
+develop_version=$(git show origin/develop:package.json | grep '"version"' | cut -d'"' -f4)
+
+if [[ "$current_version" < "$develop_version" ]]; then
+  echo "🔄 REBASE RECOMMENDED: Branch behind develop"
+  echo "Consider: git rebase origin/develop  # Inherits latest version automatically"
+fi
+
+# Step 3: Verify develop > main requirement (not individual increment)
 main_version=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
-
-# Example: main=6.20.5 → current branch=6.20.6+ (REQUIRED)
-# NEVER commit with same version as main branch
-# Update both package.json and package-lock.json (BOTH required)
-
-# Auto-block command (integrate into workflow):
-if [[ "$current_version" == "$main_version" ]]; then
-  echo "❌ COMMIT BLOCKED: Version must be > $main_version"
-  echo "Run: npm version patch  # or minor/major as needed"
-  exit 1
+if [[ "$develop_version" > "$main_version" ]]; then
+  echo "✅ Version strategy valid: develop ($develop_version) > main ($main_version)"
+else
+  echo "❌ VERSION ISSUE: develop should be > main for proper workflow"
 fi
 ```
+
+**🎯 KEY PRINCIPLES**:
+- **Rebase to develop** when branch is behind (inherits version automatically)
+- **Version requirement**: develop > main (not every commit increment)
+- **Minimal versioning**: Only increment when adding significant changes to develop
 
 #### 5. Git Operations (Required Sequence)
 
@@ -297,16 +335,27 @@ safe-commit() {
   # Gate 2: Unit tests
   npm run test:unit || { echo "❌ Unit tests failed"; return 1; }
   
-  # Gate 3: Version verification (NEW - CRITICAL)
+  # Gate 3: Smart version verification
+  git fetch origin main develop
   current=$(grep '"version"' package.json | cut -d'"' -f4)
-  main=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4 2>/dev/null || echo "0.0.0")
-  if [[ "$current" == "$main" ]]; then
-    echo "❌ VERSION BLOCKED: Current version $current equals main branch"
-    echo "   REQUIRED: Increment version > $main before commit"
-    echo "   Run: npm version patch  # or minor/major as needed"
-    return 1
+  main_version=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4 2>/dev/null || echo "0.0.0")
+  develop_version=$(git show origin/develop:package.json | grep '"version"' | cut -d'"' -f4 2>/dev/null || echo "0.0.0")
+  
+  # Check if rebase is needed
+  if [[ "$current" < "$develop_version" ]]; then
+    echo "🔄 REBASE RECOMMENDED: Current ($current) < develop ($develop_version)"
+    echo "   Consider: git rebase origin/develop  # Auto-inherits latest version"
+    read -p "Continue anyway? (y/N): " -n 1 -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then return 1; fi
+    echo
   fi
-  echo "✅ Version check passed: $current > $main"
+  
+  # Verify develop > main requirement
+  if [[ "$develop_version" > "$main_version" ]]; then
+    echo "✅ Version strategy valid: develop ($develop_version) > main ($main_version)"
+  else
+    echo "⚠️ WARNING: develop ($develop_version) should be > main ($main_version)"
+  fi
   
   # Gate 4: SonarQube check (CONDITIONAL)
   if [ -n "$SONARQUBE_TOKEN" ]; then
@@ -319,7 +368,7 @@ safe-commit() {
   git add .
   git commit -m "$1"
   git push origin $(git branch --show-current)
-  echo "✅ Commit completed with quality gates"
+  echo "✅ Commit completed with smart version management"
 }
 
 # Development
@@ -538,8 +587,9 @@ export SONARQUBE_PROJECT="trade-exportscore-plp"
 2. **ALWAYS check the COMMIT VERIFICATION PROTOCOL** before any git operations
 3. **ALWAYS check the VERSION VERIFICATION PROTOCOL** before any commit
 4. **ALWAYS verify PR base branch: feature/bug → develop, hotfix → main**
-5. **NEVER commit with version ≤ main branch version** - This causes build failures
+5. **SMART VERSION MANAGEMENT** - Rebase to develop when behind, ensure develop > main workflow
 6. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
 7. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
-8. **INITIAL PR REVIEW MUST BE COMMENT ONLY** - Never attempt approval, always use `event: COMMENT`
-9. **SONARQUBE ANALYSIS IS CONDITIONAL** - Only perform if SONARQUBE_TOKEN is available, otherwise skip with informative message
+8. **REBASE FIRST APPROACH** - When branch is behind develop, recommend rebase to inherit latest version
+9. **INITIAL PR REVIEW MUST BE COMMENT ONLY** - Never attempt approval, always use `event: COMMENT`
+10. **SONARQUBE ANALYSIS IS CONDITIONAL** - Only perform if SONARQUBE_TOKEN is available, otherwise skip with informative message
