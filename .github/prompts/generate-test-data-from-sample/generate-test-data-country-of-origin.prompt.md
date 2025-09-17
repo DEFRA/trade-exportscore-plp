@@ -4,33 +4,11 @@ mode: "agent"
 ---
 
 
-# Country of Origin Tests Scenario Generation and Seeding
+# Country of Origin Test Scenarios
 
-Generate and seed test data and Excel/CSV files for country of origin, NIRMS, and prohibited items validation scenarios. Each scenario must be based on the provided happy path sample file, with targeted mutations as described below. All files must be placed in `test-scenarios/country-of-origin/`.
+_Follow the generic instructions in `generate-test-data-from-sample.prompt.md` for folder creation, copying, and mutation steps._
 
-
-## Instructions to Create Folders, Copy, and Seed Data
-
-1. **Create the scenario folder** (if it does not exist):
-
-	```powershell
-	New-Item -ItemType Directory -Path "app/packing-lists/{exporter}/test-scenarios/country-of-origin" -Force
-	```
-
-2. **Copy the happy path sample file** to each scenario filename in `app/packing-lists/{exporter}/test-scenarios/country-of-origin/` using PowerShell or CLI. Do not create blank files from scratch. Example:
-
-	```powershell
-	Copy-Item "app/packing-lists/{exporter}/HappyPath.xlsx" "app/packing-lists/{exporter}/test-scenarios/country-of-origin/failurereason-country-of-origin-missing.xlsx"
-	# Repeat for each scenario file listed below...
-	```
-
-3. **For each scenario below,** use MCP Excel tools to apply the described mutations to the copied file. Never modify the original template file.
-4. **Unless otherwise stated,** modify only 2-3 data rows per scenario.
-5. **After mutation,** verify that the file is no longer identical to the template.
-6. **Track mutation progress** using PowerShell commands to ensure all files have been modified.
-
-
-## Scenarios (STRICTLY FOLLOW THIS LIST)
+## Scenarios
 
 - **ac1_NotNirms_Pass**: Set NIRMS column to a valid non-NIRMS value (e.g. "NON-NIRMS" or "No") for 2-3 data rows.
 - **ac2_NullNirms_Fail**: Set NIRMS column to blank/empty for 2-3 data rows.

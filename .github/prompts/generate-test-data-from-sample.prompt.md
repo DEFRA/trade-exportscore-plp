@@ -263,4 +263,25 @@ Get-ChildItem -Path "app/packing-lists/{exporter}/test-scenarios" -Recurse -File
 
 This systematic approach prevents the column mapping errors encountered during initial BOOKER2 implementation.
 
+# Generic Test Data Scenario Generation and Seeding Instructions
+
+These steps apply to all scenario-based test data generation:
+
+1. **Create the scenario folder** (if it does not exist):
+   ```powershell
+   New-Item -ItemType Directory -Path "app/packing-lists/{exporter}/test-scenarios/{scenario-folder}" -Force
+   ```
+2. **Copy the happy path sample file** to each scenario filename in the relevant test-scenarios folder using PowerShell or CLI. Do not create blank files from scratch. Example:
+   ```powershell
+   Copy-Item "app/packing-lists/{exporter}/HappyPath.xlsx" "app/packing-lists/{exporter}/test-scenarios/{scenario-folder}/<scenario-file>.xlsx"
+   ```
+3. **For each scenario,** use MCP Excel tools to apply the described mutations to the copied file. Never modify the original template file.
+4. **Unless otherwise stated,** modify only the relevant rows/fields as specified by the scenario.
+5. **After mutation,** verify that the file is no longer identical to the template.
+6. **Track mutation progress** using PowerShell or CLI commands to ensure all files have been modified.
+
+Refer to the field-specific prompt for the scenario list and mutation details.
+
+---
+
 

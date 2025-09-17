@@ -4,35 +4,11 @@ mode: "agent"
 ---
 
 
-# Single RMS Tests Scenario Generation and Seeding
+# Single RMS Test Scenarios
 
-Generate and seed test data and Excel/CSV files for establishment number validation scenarios. Each scenario must be based on the provided happy path sample file, with targeted mutations as described below. All files must be placed in `test-scenarios/single-rms/`.
+_Follow the generic instructions in `generate-test-data-from-sample.prompt.md` for folder creation, copying, and mutation steps._
 
-
-## Instructions to Create Folders, Copy, and Seed Data
-
-1. **Create the scenario folder** (if it does not exist):
-
-	```powershell
-	New-Item -ItemType Directory -Path "app/packing-lists/{exporter}/test-scenarios/single-rms" -Force
-	```
-
-2. **Copy the happy path sample file** to each scenario filename in `app/packing-lists/{exporter}/test-scenarios/single-rms/` using PowerShell or CLI. Do not create blank files from scratch. Example:
-
-	```powershell
-	Copy-Item "app/packing-lists/{exporter}/HappyPath.xlsx" "app/packing-lists/{exporter}/test-scenarios/single-rms/norms-missing-establishment-number.xlsx"
-	# Repeat for each scenario file listed below...
-	```
-
-3. **For each scenario below,** use MCP Excel tools to apply the described mutations to the copied file. Never modify the original template file.
-4. **For per-row establishment number patterns,** modify ALL data rows. For single per sheet, modify only the header/company area.
-5. **After mutation,** verify that the file is no longer identical to the template.
-6. **Track mutation progress** using PowerShell commands to ensure all files have been modified.
-
-
-## Scenarios (GENERATE USING FILENAME AND MUTATION INSTRUCTIONS)
-
-For each scenario below, generate a file named `{ScenarioName}.xlsx` and mutate the establishment number(s) in all data rows as described:
+## Scenarios
 
 - **Happypath**: No mutation; copy the original happy path file.
 - **RMSHasWrongFinal3DigitsShould_Pass**: Change the last 3 digits of the RMS number (e.g. RMS-GB-000015-666)
@@ -59,25 +35,4 @@ For each scenario below, generate a file named `{ScenarioName}.xlsx` and mutate 
 - **TC_InvalidFormat_RmsGb_15_10_Fail**: Use short format (e.g. RMS-GB-15-10)
 - **RMSWithExtraDashEstablishmentNumberAtStartandEnd_Fail**: Add extra dash at start and end (e.g. -RMS-GB-000015-010-)
 
-For each scenario, mutate the establishment number(s) in all data rows to match the described pattern. If multiple RMS numbers are listed, set them in consecutive rows. If the scenario is for an empty RMS, clear the establishment number in all data rows. If the value is malformed, use it as-is. Document the expected result and failure reason in the scenario folder's README for traceability.
-
-## Documentation: Single RMS Scenario Types
-
-Each scenario is named after its output filename (e.g. `RMSHasWrongFinal3DigitsShould_Pass.xlsx`).
-
-- The RMS number(s) in all data rows are mutated according to the scenario description in the scenario list above.
-- If multiple RMS numbers are listed, set them in consecutive rows.
-- If the scenario is for an empty RMS, clear the establishment number in all data rows.
-- If the value is malformed, use it as-is.
-
-For each scenario, document the following in the scenario folder's README:
-- **Scenario Filename**
-- **Mutation Applied** (how the RMS number(s) were changed)
-- **Expected Result** (e.g. Pass, Fail, Unparse)
-- **Failure Reason** (if applicable)
-
-This ensures traceability between the test data, the mutation applied, and the expected parser behavior.
-
-## Output
-- Place all generated files in `app/packing-lists/{exporter}/test-scenarios/single-rms/`.
-- Ensure all files have appropriate mutations applied.
+**You must generate and mutate all scenarios above.**

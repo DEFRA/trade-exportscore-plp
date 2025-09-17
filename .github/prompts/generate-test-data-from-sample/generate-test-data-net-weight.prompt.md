@@ -4,24 +4,11 @@ mode: "agent"
 ---
 
 
-# Net Weight Tests Scenario Generation and Seeding
+# Net Weight Test Scenarios
 
-Generate and seed test data and Excel/CSV files for net weight validation scenarios. Each scenario must be based on the provided happy path sample file, with targeted mutations as described below. All files must be placed in `test-scenarios/net-weight/`.
+_Follow the generic instructions in `generate-test-data-from-sample.prompt.md` for folder creation, copying, and mutation steps._
 
-## Instructions to Create and Seed Data
-
-1. **Copy the happy path sample file** to each scenario filename in `app/packing-lists/{exporter}/test-scenarios/net-weight/` using PowerShell or CLI. Do not create blank files from scratch.
-2. **For each scenario below,** use MCP Excel tools to apply the described mutations to the copied file. Never modify the original template file.
-3. **For each scenario,** modify only the header row.
-4. **For scenarios involving headers,** modify only the header row. For data scenarios, modify only 2-3 data rows unless otherwise stated.
-5. **After mutation,** verify that the file is no longer identical to the template.
-6. **Track mutation progress** using PowerShell commands to ensure all files have been modified.
-
-
-
-## Scenarios (STRICTLY FOLLOW THIS LIST)
-
-You must generate and mutate **all 329 scenarios** below. Each scenario must be created as a separate Excel file, mutated as described, and placed in the output directory. Do not skip any scenario.
+## Scenarios
 
 - **Alpha_Numeric_TotalNetWeight_Unparse**: Set total net weight to an alphanumeric value (e.g. 'Net We1ght').
 - **Alpha_Numeric_UOM_Weight**: Set the unit of measure to an alphanumeric value (e.g. 'K9G').
