@@ -776,7 +776,7 @@ Success is measured by:
 - ✅ Technical implementation documenting **ACTUAL workspace patterns** (no theoretical content)
 - ✅ Requirements bridge gap between business needs and **VERIFIED implementation details**
 - ✅ File saved with proper naming convention in correct directory
-- ✅ README.md updated with new specification entry in trader specifications table
+- ✅ Overview.md updated with new specification entry in trader specifications table
 - ✅ All business rules and validation patterns accurately captured **from actual implementation**
 - ✅ Trader-specific customization appropriately applied **based on workspace verification**
 - ✅ **CRITICAL**: Specification documents actual implementation (not theoretical requirements)
@@ -902,9 +902,9 @@ Examples matching existing files:
 - AB599300-mars-coo-validation-spec.md
 ```
 
-**MANDATORY README.md UPDATE**:
+**MANDATORY Overview.md UPDATE**:
 
-After generating the specification file, you MUST update the trader specifications table in `/home/david/git/defra/trade-exportscore-plp/.spec/coo/README.md` by adding a new row:
+After generating the specification file, you MUST update the trader specifications table in `/home/david/git/defra/trade-exportscore-plp/.spec/coo/Overview.md` by adding a new row:
 
 ```markdown
 | {Trader Name} | {ADO_TICKET} | [AB{TICKET_NUMBER}-{trader}-coo-validation-spec.md](AB{TICKET_NUMBER}-{trader}-coo-validation-spec.md) | Specification Ready | {Key Features Description} |

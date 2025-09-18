@@ -60,7 +60,7 @@ Systematically verify that technical implementation sections in specification fi
 ```
 - Search .spec/coo/ directory for files matching work item number pattern
 - Look for ADO prefix pattern: AB{work_item}-{trader}-{type}-spec.md
-- Check .spec/coo/README.md for status tracking and PR references
+- Check .spec/coo/Overview.md for status tracking and PR references
 - Verify specification is marked as "IMPLEMENTED" with correct PR number
 - Extract key technical sections for verification:
   * Implementation Requirements section

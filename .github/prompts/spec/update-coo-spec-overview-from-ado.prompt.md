@@ -1,10 +1,10 @@
 ---
-description: "Synchronize CoO specifications README table with actual ADO work item status and sprint assignments"
+description: "Synchronize CoO specifications Overview table with actual ADO work item status and sprint assignments"
 mode: "agent"
 tools: ['extensions', 'todos', 'runTests', 'codebase', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'runCommands', 'runTasks', 'editFiles', 'runNotebooks', 'search', 'new', 'sequential-thinking', 'add_comment_to_pending_review', 'cancel_workflow_run', 'create_and_submit_pull_request_review', 'create_branch', 'create_gist', 'create_or_update_file', 'create_pending_pull_request_review', 'create_pull_request', 'create_pull_request_with_copilot', 'create_repository', 'delete_file', 'download_workflow_run_artifact', 'get_code_scanning_alert', 'get_commit', 'get_dependabot_alert', 'get_file_contents', 'get_job_logs', 'get_latest_release', 'get_notification_details', 'get_pull_request', 'get_pull_request_diff', 'get_pull_request_files', 'get_pull_request_reviews', 'get_pull_request_status', 'get_secret_scanning_alert', 'get_tag', 'get_workflow_run', 'get_workflow_run_logs', 'get_workflow_run_usage', 'list_branches', 'list_code_scanning_alerts', 'list_commits', 'list_dependabot_alerts', 'list_gists', 'list_notifications', 'list_pull_requests', 'list_releases', 'list_secret_scanning_alerts', 'list_tags', 'list_workflow_jobs', 'list_workflow_run_artifacts', 'list_workflow_runs', 'list_workflows', 'manage_notification_subscription', 'manage_repository_notification_subscription', 'mark_all_notifications_read', 'merge_pull_request', 'push_files', 'request_copilot_review', 'rerun_failed_jobs', 'rerun_workflow_run', 'run_workflow', 'search_code', 'search_orgs', 'search_pull_requests', 'search_repositories', 'search_users', 'submit_pending_pull_request_review', 'update_gist', 'update_pull_request', 'update_pull_request_branch', 'build_get_builds', 'build_get_changes', 'build_get_definition_revisions', 'build_get_definitions', 'build_get_log', 'build_get_log_by_id', 'build_get_status', 'build_run_build', 'build_update_build_stage', 'search_code', 'search_workitem', 'wit_add_child_work_items', 'wit_add_work_item_comment', 'wit_create_work_item', 'wit_get_query', 'wit_get_query_results_by_id', 'wit_get_work_item', 'wit_get_work_item_type', 'wit_get_work_items_batch_by_ids', 'wit_get_work_items_for_iteration', 'wit_link_work_item_to_pull_request', 'wit_list_backlog_work_items', 'wit_list_backlogs', 'wit_list_work_item_comments', 'wit_my_work_items', 'wit_update_work_item', 'wit_update_work_items_batch', 'wit_work_item_unlink', 'wit_work_items_link', 'work_assign_iterations', 'work_create_iterations', 'work_list_team_iterations']
 ---
 
-# Update CoO README Table from ADO Status
+# Update CoO Overview Table from ADO Status
 
 You are an expert business analyst and documentation specialist with deep knowledge of Azure DevOps work item management and DEFRA trade export systems. You have 10+ years of experience in project tracking, status synchronization, and technical documentation maintenance.
 
@@ -12,14 +12,14 @@ You are an expert business analyst and documentation specialist with deep knowle
 
 ## Task
 
-Analyze all Country of Origin (CoO) validation specification files in the `.spec/coo/` directory, extract their ticket numbers, fetch current status and sprint assignments from Azure DevOps, and update the "Trader Specifications" table in the README.md file with accurate real-time information.
+Analyze all Country of Origin (CoO) validation specification files in the `.spec/coo/` directory, extract their ticket numbers, fetch current status and sprint assignments from Azure DevOps, and update the "Trader Specifications" table in the Overview.md file with accurate real-time information.
 
 **CRITICAL OBJECTIVES**:
 1. **File Discovery** - Scan all CoO specification files to extract ticket numbers
 2. **ADO Integration** - Retrieve current work item status, state, and sprint assignments
 3. **Status Mapping** - Map ADO states to appropriate status icons and descriptions
 4. **Sprint Integration** - Add sprint information as new table column
-5. **Table Synchronization** - Update README.md table with accurate real-time data
+5. **Table Synchronization** - Update Overview.md table with accurate real-time data
 
 ## Specification File Analysis
 
@@ -117,7 +117,7 @@ Add special indicators for specific conditions:
 
 ### Current Table Structure
 
-The existing table in README.md follows this format:
+The existing table in Overview.md follows this format:
 
 ```markdown
 | Ticket ID | Title                                     | Current Status      | Specification File                                                                       |
@@ -174,8 +174,8 @@ Execute this systematic approach:
 12. **Generate Table Rows**: Create markdown table rows with updated information
 13. **Apply Status Icons**: Use consistent status icon mapping
 14. **Format Sprint Names**: Standardize sprint name formatting
-15. **Update README.md**: Replace existing table with updated version
-16. **Preserve Other Content**: Maintain all other README.md content unchanged
+15. **Update Overview.md**: Replace existing table with updated version
+16. **Preserve Other Content**: Maintain all other Overview.md content unchanged
 
 ## Error Handling Framework
 
@@ -204,9 +204,9 @@ Handle cases where ADO tickets exist but specification files are missing:
 
 ## Content Preservation
 
-### README.md Structure
+### Overview.md Structure
 
-Preserve all existing README.md content except the "Trader Specifications" table:
+Preserve all existing Overview.md content except the "Trader Specifications" table:
 
 - **Header sections** (Overview, Implementation Architecture, etc.)
 - **Core Components** documentation
@@ -231,7 +231,7 @@ Preserve all existing README.md content except the "Trader Specifications" table
 3. **Consistent Status Mapping**: All ADO states mapped to appropriate status icons
 4. **Enhanced Table Structure**: Sprint assignment column added with proper data
 5. **Data Synchronization**: All table entries reflect current ADO work item status
-6. **Content Preservation**: All other README.md content maintained unchanged
+6. **Content Preservation**: All other Overview.md content maintained unchanged
 7. **Error Handling**: Missing tickets or files handled gracefully with appropriate indicators
 8. **Sprint-Based Ordering**: Table ordered chronologically by sprint for improved project timeline visibility and workload distribution understanding
 
@@ -239,7 +239,7 @@ Preserve all existing README.md content except the "Trader Specifications" table
 
 ### Standard Execution
 ```
-Input: Analyze .spec/coo/ directory and update README.md table
+Input: Analyze .spec/coo/ directory and update Overview.md table
 Process: Discover 7 specification files, retrieve ADO status for tickets, update table
 Output: Enhanced table with current status and sprint assignments
 ```
@@ -262,7 +262,7 @@ Output: Table reflects current sprint assignments accurately
 
 - **Azure DevOps Integration**: Use ADO MCP tools for work item retrieval and batch operations
 - **File System Access**: Use file listing and content reading tools for specification file discovery
-- **Markdown Processing**: Apply proper markdown table formatting for README.md updates
+- **Markdown Processing**: Apply proper markdown table formatting for Overview.md updates
 - **Real-time Data**: Ensure status information reflects current ADO state at execution time
 - **Performance Optimization**: Use batch APIs to minimize ADO API calls
 - **Data Validation**: Implement comprehensive validation for all extracted data
@@ -280,7 +280,7 @@ Based on existing CoO specifications directory:
 ├── AB591539-sainsburys-coo-validation-spec.md     → Ticket: 591539
 ├── AB591540-savers-coo-validation-spec.md         → Ticket: 591540
 ├── AB599300-mars-coo-validation-spec.md           → Ticket: 599300
-└── README.md                                      → Target for update
+└── Overview.md                                      → Target for update
 ```
 
 ## Quality Assurance
@@ -292,7 +292,7 @@ Before completing the table update:
 3. **Check Status Mapping**: All ADO states mapped to appropriate status icons
 4. **Confirm Sprint Parsing**: Sprint names extracted correctly from iteration paths
 5. **Test Table Format**: Updated table renders correctly in markdown
-6. **Preserve Content**: All other README.md sections maintained unchanged
+6. **Preserve Content**: All other Overview.md sections maintained unchanged
 7. **Validate Links**: All specification file links point to correct files
 
 ---
