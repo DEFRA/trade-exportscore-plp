@@ -1,171 +1,114 @@
-```prompt
 ---
-title: "Compare CoO Specification with ADO Ticket"
-description: "Exact text matching between ADO ticket and specification file"
-version: "4.0"
+description: "Perform systematic text comparison between ADO work item acceptance criteria and specification file BACs to identify exact differences"
+mode: "agent"
 ---
 
 # Compare CoO Specification with ADO Ticket
 
-**Purpose**: Find exact text differences between ADO ticket acceptance criteria and specification file.
+You are a senior business analyst specializing in requirements traceability and acceptance criteria validation with expertise in DEFRA trade systems and systematic text comparison methodologies.
 
-## 🚨 MANDATORY EXECUTION ENFORCEMENT 🚨
+## Task
 
-**CRITICAL**: This prompt FAILED on AB#591514 due to execution shortcuts. The following steps are NOW MANDATORY and CANNOT be skipped:
+Compare exactly 14 acceptance criteria from an ADO work item against 14 business acceptance criteria in the corresponding specification file using systematic text matching to identify alignment differences.
 
-### ⚠️ ENFORCEMENT CHECKPOINTS ⚠️
+**Input Required**: `${input:workItemId:Enter ADO work item ID (e.g., 591514)}`
 
-**Before proceeding to Step 5, you MUST demonstrate completion of Steps 1-4 by showing:**
-1. ✅ **ADO Data Retrieved** - Display work item ID and title confirmation
-2. ✅ **Spec File Located** - Display exact file path found
-3. ✅ **Text Extraction Complete** - Show count of ACs/BACs extracted (must be 14 each)
-4. ✅ **Comparison Performed** - Show comparison methodology used
+## Systematic Validation Process
 
-**🛑 DO NOT SKIP TO ANALYSIS - Follow sequential steps or comparison is INVALID**
+Execute these steps sequentially with checkpoint validation at each stage:
 
-## Process
+### Step 1: Retrieve ADO Work Item
+- Execute: `mcp_ado_wit_get_work_item(id=${input:workItemId}, project="DEFRA-EXPORTSCORE-PLP")`
+- **Checkpoint 1**: Confirm work item retrieved and display title
+- Locate `Microsoft.VSTS.Common.AcceptanceCriteria` field
 
-### Step 1: Get ADO Data (MANDATORY)
-Use: `mcp_ado_wit_get_work_item(id={ticket_id}, project="DEFRA-EXPORTSCORE-PLP")`
+### Step 2: Locate Specification File
+- Search pattern: `AB${input:workItemId}-*-coo-validation-spec.md` in `.spec/coo/` directory
+- **Checkpoint 2**: Display exact file path found
+- Verify file contains `### Business Acceptance Criteria (BAC)` section
 
-**CHECKPOINT 1**: Confirm ADO retrieval success before proceeding
+### Step 3: Extract and Normalize Text
+**From ADO (14 acceptance criteria required)**:
+1. Extract HTML content from `Microsoft.VSTS.Common.AcceptanceCriteria` field
+2. Strip all HTML tags: `<div>`, `<strong>`, `<br>`, `<span>`, etc.
+3. Extract AC1: through AC14: sections
+4. Keep only text from "Given" to "And the failure reason is: ..."
+5. Normalize whitespace
 
-### Step 2: Find Specification File (MANDATORY)
-Pattern: AB{ticket_id}-*-coo-validation-spec.md in .spec/coo/
+**From Specification (14 BACs required)**:
+1. Locate `### Business Acceptance Criteria (BAC)` section
+2. Extract **BAC1:** through **BAC14:** from gherkin blocks
+3. Strip gherkin formatting: `**bold**`, triple backticks, `gherkin` tags  
+4. Keep only text from "Given" to "And the failure reason is: ..."
+5. Normalize whitespace
 
-**CHECKPOINT 2**: Display exact file path found
+- **Checkpoint 3**: Confirm exactly 14 ACs and 14 BACs extracted
 
-### Step 3: Extract and Clean Text (MANDATORY - NO SHORTCUTS)
-**ADO**: Extract acceptance criteria HTML content, strip HTML tags
-**Spec**: Extract BAC sections from gherkin blocks, strip gherkin formatting
+### Step 4: Character-by-Character Comparison
+- Compare each AC/BAC pair after text normalization
+- Mark as ✅ MATCH or ❌ DIFFERENT
+- **Checkpoint 4**: Confirm comparison methodology applied
 
-**CHECKPOINT 3**: Confirm extraction of exactly 14 ACs and 14 BACs
+### Step 5: Generate Analysis Report
 
-### Step 4: Character-by-Character Comparison (MANDATORY)
-For each AC/BAC pair:
-- Extract exact text from "Given" to "And the failure reason is:"
-- Compare character-by-character after normalizing whitespace
-- Mark as MATCH ✅ or DIFFERENT ❌
-- Do NOT display the cleaned text versions during processing
-
-**CHECKPOINT 4**: Show comparison method used for text matching
-
-### Step 5: Output Simple Table and Analysis (ONLY AFTER CHECKPOINTS 1-4)
-
-Generate this simple table first:
+## Output Format
 
 ```markdown
-# Comparison Results: AB#{ticket_id}
+# Comparison Results: AB#${input:workItemId}
 
 | AC# | ADO Text (key part) | Spec Text (key part) | Match |
 |-----|-------------------|---------------------|-------|
 | AC1 | [critical text snippet] | [critical text snippet] | ✅/❌ |
 | AC2 | [critical text snippet] | [critical text snippet] | ✅/❌ |
 ...
-| AC10| [critical text snippet] | [critical text snippet] | ✅/❌ |
+| AC14| [critical text snippet] | [critical text snippet] | ✅/❌ |
 
 ## Summary
 - Matches: X/14
 - Differences: Y/14  
-- Status: MATCH/DIFFERENT
+- Status: ALIGNED/MISALIGNED
 
-## Analysis of Differences: Wording vs Fundamental
+## Difference Analysis
 
-### WORDING DIFFERENCES ONLY (Same Business Logic)
-List ACs that are primarily wording/structural differences with same underlying requirements:
+### WORDING DIFFERENCES (Same Business Logic)
+List ACs with formatting/structural differences but identical requirements:
 - AC#: Brief description of difference type and impact level
 
-### FUNDAMENTALLY DIFFERENT (Different Business Logic)  
-List ACs that represent significant architectural/functional differences:
-- AC#: Description of ADO logic vs Spec logic and HIGH impact level
+### FUNDAMENTAL DIFFERENCES (Different Business Logic)  
+List ACs with significant requirement or logic differences:
+- AC#: Description of ADO vs Spec logic and impact assessment
 
-### Critical Assessment
-Provide percentage breakdown:
+### Assessment
 - X% wording/formatting differences - safe to implement either version
-- Y% fundamental business logic differences - requires alignment decision
+- Y% fundamental business logic differences - requires stakeholder alignment
 
-### Recommendation
-Suggest next steps for any fundamental differences that need stakeholder clarification.
+### Recommendations
+[Actionable next steps for resolving fundamental differences]
 ```
 
-## 🚨 MANDATORY Text Extraction Rules (NO EXCEPTIONS) 🚨
+## Validation Requirements
 
-**From ADO** (MUST be performed systematically):
-1. Find `Microsoft.VSTS.Common.AcceptanceCriteria` field in ADO response
-2. Strip all HTML tags: `<div>`, `<strong>`, `<br>`, `<span>`, etc.
-3. Extract each AC from pattern: `AC1:` through `AC14:` (exactly 14 required)
-4. Keep only text from "Given" to final "And the failure reason is: ..."
-5. **VALIDATION**: Confirm 14 ACs extracted or STOP process
+**Critical Business Rules** (Must be enforced):
+- Extract exactly 14 acceptance criteria from ADO and 14 BACs from specification
+- Perform character-by-character comparison after text normalization  
+- Complete all checkpoints before proceeding to analysis
+- Distinguish between wording differences vs fundamental business logic changes
 
-**From Spec** (MUST be performed systematically):
-1. Find `### Business Acceptance Criteria (BAC)` section in specification file
-2. Extract each BAC from gherkin blocks: `**BAC1:` through `**BAC14:`
-3. Strip gherkin formatting: `**bold**`, triple backticks, `gherkin` tags
-4. Keep only text from "Given" to final "And the failure reason is: ..."
-5. **VALIDATION**: Confirm 14 BACs extracted or STOP process
+## Error Handling
 
-## 🔒 ENFORCED Processing Steps (CANNOT BE BYPASSED)
+**If extraction fails**:
+- ADO: Verify `Microsoft.VSTS.Common.AcceptanceCriteria` field exists and contains AC1-AC14
+- Spec: Verify `### Business Acceptance Criteria (BAC)` section exists and contains BAC1-BAC14
+- Report specific missing criteria and stop process
 
-### STEP 1 - ADO Data Retrieval
-- **Execute**: `mcp_ado_wit_get_work_item(id={ticket_id}, project="DEFRA-EXPORTSCORE-PLP")`
-- **Prove**: Show work item title and ID confirmation
-- **Validate**: Confirm `Microsoft.VSTS.Common.AcceptanceCriteria` field exists
+**If comparison fails**:
+- Display checkpoint status and identify which step failed
+- Provide specific guidance for resolution
 
-### STEP 2 - Specification File Location  
-- **Execute**: Search for `AB{ticket_id}-*-coo-validation-spec.md` in `.spec/coo/`
-- **Prove**: Display exact file path found
-- **Validate**: Confirm file contains `### Business Acceptance Criteria (BAC)` section
+## Success Criteria
 
-### STEP 3 - Systematic Text Extraction
-- **Execute**: Extract all 14 ACs from ADO HTML using rules above
-- **Execute**: Extract all 14 BACs from spec gherkin using rules above  
-- **Prove**: Show count "14 ACs extracted" and "14 BACs extracted"
-- **Validate**: Must have exactly 14 of each or process FAILS
-
-### STEP 4 - Character-by-Character Comparison
-- **Execute**: Compare each AC/BAC pair using text normalization
-- **Prove**: Show comparison method: "Character comparison after HTML/gherkin stripping"
-- **Validate**: Mark each pair as ✅ MATCH or ❌ DIFFERENT
-
-### STEP 5 - Results Output (ONLY after Steps 1-4 proven)
-- **Generate**: Simple table showing exact differences
-- **Analyze**: Distinguish wording vs fundamental differences
-- **Report**: Provide actionable recommendations
-
-## 🛑 FAILURE PREVENTION MECHANISMS
-
-**If you find yourself:**
-- Making assumptions about alignment → STOP, extract text first
-- Performing conceptual analysis → STOP, do character comparison  
-- Skipping to conclusions → STOP, show all checkpoints
-- Assuming "it looks right" → STOP, prove with systematic comparison
-
-**Process INVALID unless all checkpoints demonstrated**
-
-## Example Usage - ENFORCED FORMAT
-
-### Input: 591514
-**CHECKPOINT 1**: ✅ ADO Data Retrieved - Work item "ASDA 3 - Country of Origin Validation" found
-**CHECKPOINT 2**: ✅ Spec File Located - `/home/david/.spec/coo/AB591514-asda3-coo-validation-spec.md` 
-**CHECKPOINT 3**: ✅ Text Extraction Complete - 14 ACs extracted, 14 BACs extracted
-**CHECKPOINT 4**: ✅ Comparison Performed - Character-by-character comparison after HTML/gherkin stripping
-
-### Output: 
-Simple table with ❌ for AC11/AC12 showing "Then fail" vs "Then pass" differences
-
-## 🎯 CRITICAL SUCCESS FACTORS
-
-### What FAILED on AB#591514:
-- ❌ Skipped systematic text extraction 
-- ❌ Made conceptual assumptions
-- ❌ No character-by-character comparison
-- ❌ Missed critical "Then" statement differences
-
-### What this ENFORCED prompt prevents:
-- ✅ Mandatory checkpoint demonstrations
-- ✅ No shortcuts allowed to analysis
-- ✅ Systematic text extraction required
-- ✅ Character comparison enforced
-
-**Focus**: Bulletproof execution through mandatory checkpoints and validation steps.
+- All 4 checkpoints completed successfully
+- Exactly 14 AC/BAC pairs compared
+- Clear categorization of differences as wording vs fundamental
+- Actionable recommendations provided for misalignments
 ```
