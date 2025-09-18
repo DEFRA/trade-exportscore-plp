@@ -75,7 +75,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'No of packages is missing in sheet "RANA" row 3.\nTotal net weight is missing in sheet "RANA" row 4.\n',
+        'No of packages is missing in sheet "RANA" row 5.\nTotal net weight is missing in sheet "RANA" row 6.\n',
     },
     items: [
       {

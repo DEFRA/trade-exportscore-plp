@@ -53,7 +53,8 @@ function parse(packingListJson) {
           row.commodity_code === null &&
           row.number_of_packages === null &&
           (row.total_net_weight_kg === 0 || row.total_net_weight_kg === null) &&
-          (row.type_of_treatment === "Ambient" || row.type_of_treatment === "Frozen")
+          (row.type_of_treatment === "Ambient" ||
+            row.type_of_treatment === "Frozen")
         ),
     );
 
