@@ -26,13 +26,13 @@ function rmsExceptions(y) {
   const giovanni2Regex = /\(NIRMS RMS-GB-\d{6}-\d{3}\)/i;
   const cdsRegex = /\/ RMS-GB-000252-\d{3} \//i;
   const sainsburysRegex = /^RMS-GB-000094-\d{3}​$/i;
-  const giovanni1Regex = /^RMS-GB-000153$/i;
+  const booker2 = /RMS-GB-000077-\d{3}/i;
 
   return (
     giovanni2Regex.test(y) ||
     cdsRegex.test(y) ||
     sainsburysRegex.test(y) ||
-    giovanni1Regex.test(y)
+    booker2.test(y)
   );
 }
 
