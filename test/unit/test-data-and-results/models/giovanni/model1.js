@@ -3,7 +3,7 @@ const parserModel = require("../../../../../app/services/parser-model");
 module.exports = {
   validModel: {
     RANA: [
-       {
+      {
         I: "NIRMS NUMBER",
       },
       {
@@ -40,7 +40,7 @@ module.exports = {
   },
   validHeadersNoData: {
     RANA: [
-       {
+      {
         I: "NIRMS NUMBER",
       },
       {
@@ -62,7 +62,7 @@ module.exports = {
   },
   validModelMultipleSheets: {
     Sheet1: [
-       {
+      {
         I: "NIRMS NUMBER",
       },
       {
@@ -90,7 +90,7 @@ module.exports = {
       },
     ],
     Sheet2: [
-       {
+      {
         I: "NIRMS NUMBER",
       },
       {
@@ -120,7 +120,7 @@ module.exports = {
   },
   invalidModel_MissingColumnCells: {
     RANA: [
-       {
+      {
         I: "NIRMS NUMBER",
       },
       {
@@ -154,7 +154,7 @@ module.exports = {
   },
   incorrectEstablishmentNumber: {
     RANA: [
-       {
+      {
         I: "NIRMS NUMBER",
       },
       {
@@ -188,7 +188,7 @@ module.exports = {
   },
   incorrectHeader: {
     RANA: [
-       {
+      {
         I: "NIRMS NUMBER",
       },
       {
