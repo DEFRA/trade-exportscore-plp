@@ -9,7 +9,7 @@ You are a senior business analyst specializing in requirements traceability and 
 
 ## Task
 
-Compare exactly 14 acceptance criteria from an ADO work item against 14 business acceptance criteria in the corresponding specification file using systematic text matching to identify alignment differences.
+Compare all acceptance criteria from an ADO work item against all business acceptance criteria in the corresponding specification file using systematic text matching to identify alignment differences. Handle any number of criteria and provide detailed mismatch analysis when counts differ.
 
 **Input Required**: `${input:workItemId:Enter ADO work item ID (e.g., 591514)}`
 
@@ -28,26 +28,37 @@ Execute these steps sequentially with checkpoint validation at each stage:
 - Verify file contains `### Business Acceptance Criteria (BAC)` section
 
 ### Step 3: Extract and Normalize Text
-**From ADO (14 acceptance criteria required)**:
+**From ADO (extract all acceptance criteria)**:
 1. Extract HTML content from `Microsoft.VSTS.Common.AcceptanceCriteria` field
 2. Strip all HTML tags: `<div>`, `<strong>`, `<br>`, `<span>`, etc.
-3. Extract AC1: through AC14: sections
+3. Extract all AC sections matching pattern `AC\d+:`
 4. Keep only text from "Given" to "And the failure reason is: ..."
 5. Normalize whitespace
+6. Count total number of ACs found
 
-**From Specification (14 BACs required)**:
+**From Specification (extract all BACs)**:
 1. Locate `### Business Acceptance Criteria (BAC)` section
-2. Extract **BAC1:** through **BAC14:** from gherkin blocks
+2. Extract all BAC sections matching pattern `BAC\d+:` from gherkin blocks
 3. Strip gherkin formatting: `**bold**`, triple backticks, `gherkin` tags  
 4. Keep only text from "Given" to "And the failure reason is: ..."
 5. Normalize whitespace
+6. Count total number of BACs found
 
-- **Checkpoint 3**: Confirm exactly 14 ACs and 14 BACs extracted
+- **Checkpoint 3**: Display counts found (ADO: X ACs, Spec: Y BACs) and proceed to alignment analysis
 
-### Step 4: Character-by-Character Comparison
+### Step 4: Alignment Analysis and Comparison
+**If counts match (ADO ACs = Spec BACs)**:
 - Compare each AC/BAC pair after text normalization
 - Mark as ✅ MATCH or ❌ DIFFERENT
-- **Checkpoint 4**: Confirm comparison methodology applied
+- Proceed to standard comparison analysis
+
+**If counts differ (ADO ACs ≠ Spec BACs)**:
+- Identify which criteria exist in ADO but not in Spec
+- Identify which criteria exist in Spec but not in ADO  
+- For criteria that exist in both, perform text comparison
+- Generate comprehensive mismatch analysis
+
+- **Checkpoint 4**: Confirm alignment analysis methodology applied
 
 ### Step 5: Generate Analysis Report
 
@@ -56,50 +67,91 @@ Execute these steps sequentially with checkpoint validation at each stage:
 ```markdown
 # Comparison Results: AB#${input:workItemId}
 
+## Criteria Count Analysis
+- **ADO Work Item**: X acceptance criteria (AC1-ACX)
+- **Specification**: Y business acceptance criteria (BAC1-BACY)  
+- **Count Match**: ✅ ALIGNED / ❌ MISALIGNED (X vs Y)
+
+## Alignment Analysis
+
+### Criteria Present in Both ADO and Spec
 | AC# | ADO Text (key part) | Spec Text (key part) | Match |
 |-----|-------------------|---------------------|-------|
-| AC1 | [critical text snippet] | [critical text snippet] | ✅/❌ |
-| AC2 | [critical text snippet] | [critical text snippet] | ✅/❌ |
-...
-| AC14| [critical text snippet] | [critical text snippet] | ✅/❌ |
+| AC1/BAC1 | [critical text snippet] | [critical text snippet] | ✅/❌ |
+| AC2/BAC2 | [critical text snippet] | [critical text snippet] | ✅/❌ |
+... [for all matching numbered pairs]
+
+### Criteria Only in ADO (Missing from Spec)
+- **AC#**: [Brief description of ADO-only criterion]
+... [list all ADO criteria without corresponding BAC]
+
+### Criteria Only in Spec (Missing from ADO)  
+- **BAC#**: [Brief description of Spec-only criterion]
+... [list all Spec criteria without corresponding AC]
 
 ## Summary
-- Matches: X/14
-- Differences: Y/14  
-- Status: ALIGNED/MISALIGNED
+- **Criteria Counts**: ADO=X, Spec=Y  
+- **Perfect Matches**: Z criteria
+- **Text Differences**: W criteria (same logic, different wording)
+- **Logic Differences**: V criteria (different business requirements)
+- **ADO-Only Criteria**: U criteria
+- **Spec-Only Criteria**: T criteria
+- **Overall Status**: FULLY_ALIGNED / PARTIALLY_ALIGNED / MISALIGNED
 
 ## Difference Analysis
 
 ### WORDING DIFFERENCES (Same Business Logic)
 List ACs with formatting/structural differences but identical requirements:
-- AC#: Brief description of difference type and impact level
+- AC#/BAC#: Brief description of difference type and impact level
 
 ### FUNDAMENTAL DIFFERENCES (Different Business Logic)  
 List ACs with significant requirement or logic differences:
-- AC#: Description of ADO vs Spec logic and impact assessment
+- AC#/BAC#: Description of ADO vs Spec logic and impact assessment
+
+### MISSING CRITERIA IMPACT
+**ADO-Only Criteria (not in Spec)**:
+- Impact: Requirements defined in ADO but not documented in specification
+- Risk: Implementation may not match specification expectations
+
+**Spec-Only Criteria (not in ADO)**:
+- Impact: Specification requirements not reflected in ADO work item  
+- Risk: Implementation may include unexpected validation not tracked in ADO
 
 ### Assessment
-- X% wording/formatting differences - safe to implement either version
-- Y% fundamental business logic differences - requires stakeholder alignment
+- X% perfect matches - no action required
+- Y% wording/formatting differences - safe to implement either version  
+- Z% fundamental business logic differences - requires stakeholder alignment
+- W% missing criteria - requires criteria synchronization
 
 ### Recommendations
-[Actionable next steps for resolving fundamental differences]
+**Immediate Actions**:
+[Actionable next steps for resolving fundamental differences and missing criteria]
+
+**Stakeholder Alignment Required**:
+[Areas requiring business stakeholder input and decisions]
 ```
 
 ## Validation Requirements
 
 **Critical Business Rules** (Must be enforced):
-- Extract exactly 14 acceptance criteria from ADO and 14 BACs from specification
-- Perform character-by-character comparison after text normalization  
+- Extract all acceptance criteria from ADO and all BACs from specification (flexible count)
+- Handle count mismatches gracefully with detailed analysis
+- Perform character-by-character comparison after text normalization for matching criteria
 - Complete all checkpoints before proceeding to analysis
 - Distinguish between wording differences vs fundamental business logic changes
+- Identify and analyze missing criteria in both directions (ADO→Spec, Spec→ADO)
 
 ## Error Handling
 
 **If extraction fails**:
-- ADO: Verify `Microsoft.VSTS.Common.AcceptanceCriteria` field exists and contains AC1-AC14
-- Spec: Verify `### Business Acceptance Criteria (BAC)` section exists and contains BAC1-BAC14
-- Report specific missing criteria and stop process
+- ADO: Verify `Microsoft.VSTS.Common.AcceptanceCriteria` field exists and contains at least one AC
+- Spec: Verify `### Business Acceptance Criteria (BAC)` section exists and contains at least one BAC
+- Report extraction status showing what was found vs what was expected
+- Continue with available criteria if at least one is found in each source
+
+**If no criteria found**:
+- Report complete extraction failure and stop process
+- Provide specific guidance for locating criteria in each source
 
 **If comparison fails**:
 - Display checkpoint status and identify which step failed
@@ -108,7 +160,10 @@ List ACs with significant requirement or logic differences:
 ## Success Criteria
 
 - All 4 checkpoints completed successfully
-- Exactly 14 AC/BAC pairs compared
-- Clear categorization of differences as wording vs fundamental
-- Actionable recommendations provided for misalignments
+- All available AC/BAC criteria extracted and analyzed (flexible count)
+- Count mismatch analysis provided when ADO and Spec counts differ
+- Clear categorization of differences as wording vs fundamental vs missing
+- Missing criteria identified in both directions (ADO-only and Spec-only)
+- Actionable recommendations provided for all types of misalignments
+- Comprehensive impact assessment for missing criteria
 ```

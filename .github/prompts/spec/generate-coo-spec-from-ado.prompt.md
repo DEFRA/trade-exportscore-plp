@@ -57,9 +57,26 @@ Generate exactly ONE specification file:
 - **Examples**: `AB591514-asda3-coo-validation-spec.md`, `AB591516-bandm-coo-validation-spec.md`
 
 **Content Handling**:
-- Use `editFiles` for new files or to replace entire content of existing files
+- **File Existence Check**: First check if the specification file already exists using `get_file_contents`
+- **New Files**: Use `editFiles` to create new specification files
+- **Existing Files**: **MANDATORY - CLEAR CONTENT FIRST**: Use `editFiles` to completely clear existing file content and regenerate from scratch (do NOT delete and recreate)
 - Always update complete specification content to reflect proper validation patterns
 - ADO ticket ACs may be incorrect - specification must use correct patterns
+
+**🚨 MANDATORY FILE UPDATE STRATEGY**:
+1. Check if file exists: `AB{TICKET_NUMBER}-{trader_lowercase}-coo-validation-spec.md`
+2. **If file exists**: 
+   - **STEP 1**: Use `editFiles` to clear ALL existing content (replace entire file with empty content)
+   - **STEP 2**: Use `editFiles` to write complete new specification content from scratch
+   - **RATIONALE**: Ensures no partial updates or remnant content from previous versions
+3. If file doesn't exist: Use `editFiles` to create new file with specification content
+4. Preserve file path and naming convention in both cases
+
+**CRITICAL: Content Regeneration Requirements**:
+- **NO PARTIAL UPDATES**: Never attempt to update specific sections of existing files
+- **COMPLETE REPLACEMENT**: Always generate entire specification content from current ADO ticket analysis
+- **FRESH START**: Existing content must be completely cleared before writing new content
+- **VERIFICATION**: Ensure final file contains only newly generated content based on current requirements
 
 ## Critical Implementation Requirements
 
@@ -185,9 +202,47 @@ Treatment Blanket Statement Location: Cell H:I17, value is 'Processed'
    - Determine trader and validation approach
 
 3. **Generate Specification**
+   - Check if specification file already exists using `get_file_contents` tool
+   - **🚨 MANDATORY: If file exists, CLEAR CONTENT FIRST**:
+     - STEP 1: Use `editFiles` to clear entire existing file content (replace with empty content)
+     - STEP 2: Use `editFiles` to write complete new specification from scratch
+   - If file doesn't exist: Use `editFiles` to create new file with specification content
    - Create file with correct BAC count (14/9/10) and TR/IC/DIR requirements
    - Use verified workspace patterns in technical sections
    - Save to `/home/david/git/defra/trade-exportscore-plp/.spec/coo/` with naming convention `AB{number}-{trader}-coo-validation-spec.md`
+
+## File Management Workflow
+
+### Specification File Handling
+
+**🚨 MANDATORY PROCESS**: Always check for existing files and clear content completely before regeneration.
+
+1. **File Existence Check**:
+   ```
+   File Path: /home/david/git/defra/trade-exportscore-plp/.spec/coo/AB{ticket}-{trader}-coo-validation-spec.md
+   Tool: get_file_contents
+   Purpose: Determine if file already exists
+   ```
+
+2. **🚨 MANDATORY Content Generation Strategy**:
+   - **If file EXISTS**: 
+     - **STEP 1**: Use `editFiles` to clear ALL existing content (set file content to empty string "")
+     - **STEP 2**: Use `editFiles` to write complete new specification content from scratch
+     - **RATIONALE**: Prevents any remnant content, partial updates, or version conflicts
+   - **If file DOES NOT exist**: Use `editFiles` to create new file with specification content
+   - **NEVER use**: File deletion, recreation, or partial content updates
+
+3. **🚨 MANDATORY Content Replacement Rules**:
+   - **COMPLETE CLEARING**: First operation must clear entire existing file content to empty string
+   - **FRESH REGENERATION**: Second operation writes complete new specification from current ADO analysis
+   - **NO PRESERVATION**: Preserve no existing content - full regeneration based on current ADO ticket
+   - **SINGLE SOURCE**: Final content reflects only current ADO ticket requirements and verified workspace patterns
+
+4. **Verification Steps**:
+   - Confirm file path matches naming convention
+   - Verify content includes all required sections (BACs, TRs, ICs, DIRs)
+   - Ensure technical patterns match verified workspace implementation
+   - **CRITICAL**: Verify no remnant content from previous versions exists
 
 ## Output Format
 
@@ -279,14 +334,10 @@ The {Trader Name} packing list uses the following column structure:
 **{Trader Name}-specific False Values (NIRMS = No):**
 - {irregular_false_values} (case insensitive)
 
-[For Blanket Statements (like B&M):]
-#### Blanket Statement Detection
-
-- **NIRMS Statement**: `"{blanket_nirms_statement}"`
-  - **Detection**: Uses `regex.test()` against entire sheet data
-  - **Location**: Not cell-specific - searches entire document
-  - **Purpose**: When detected, sets all items to `nirms: "NIRMS"`
-  - **Configuration**: `blanketNirms` object in `model-headers.js`
+[For Blanket Statements (like B&M and Giovanni 1):]
+**NIRMS Statement Location:** {statement_location}  
+**NIRMS Statement Value:** '{blanket_nirms_statement}'  
+**Treatment Blanket Location:** {treatment_location}
 
 ## Acceptance Criteria
 
@@ -600,9 +651,33 @@ function getCountryOfOriginValidationResults(packingList) {
   };
 }
 ```
+
+### 🚨 MANDATORY File Content Replacement Protocol
+
+**When specification file already exists, follow this EXACT sequence**:
+
+```javascript
+// STEP 1: Clear existing content completely
+editFiles(filePath, ""); // Replace entire file content with empty string
+
+// STEP 2: Write new specification content from scratch  
+editFiles(filePath, newCompleteSpecificationContent); // Write full new content
 ```
 
-### File Naming Convention
+**Example Implementation**:
+```
+File: /home/david/git/defra/trade-exportscore-plp/.spec/coo/AB591532-kepak-coo-validation-spec.md
+
+STEP 1: editFiles("/home/david/git/defra/trade-exportscore-plp/.spec/coo/AB591532-kepak-coo-validation-spec.md", "")
+STEP 2: editFiles("/home/david/git/defra/trade-exportscore-plp/.spec/coo/AB591532-kepak-coo-validation-spec.md", "# Kepak Country of Origin Validation Specification (AB#591532)...")
+```
+
+**RATIONALE**: This two-step process ensures:
+- No partial updates or mixed content from different generations
+- Complete regeneration based on current ADO ticket requirements
+- Clean slate for specification content that reflects current analysis
+- No remnant sections or outdated content from previous versions
+```
 
 ### File Naming Convention
 

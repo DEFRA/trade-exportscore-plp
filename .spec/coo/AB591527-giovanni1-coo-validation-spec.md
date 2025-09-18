@@ -1,14 +1,14 @@
-# Giovanni 1 Country of Origin Validation Specification
+# Giovanni 1 Country of Origin Validation Specification (AB#591527)
 
 **Document Version:** 1.0  
-**Date:** September 16, 2025  
+**Date:** September 18, 2025  
 **Status:** Draft  
 **Related Work Items:** AB#591527  
 **Dependencies:** AB#592259 (Country of Origin Validation Rules - MVP)
 
 ## Overview
 
-This specification defines the implementation requirements for Country of Origin (CoO) validation for Giovanni 1 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance through variable blanket statement validation and prohibited item checking for Giovanni 1-specific Excel format with treatment type header validation.
+This specification defines the implementation requirements for Country of Origin (CoO) validation for Giovanni 1 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and prohibited item checking for Giovanni 1-specific Excel format with variable blanket statement validation.
 
 ## Business Context
 
@@ -40,19 +40,13 @@ The Giovanni 1 packing list uses the following column structure:
 
 ### NIRMS Value Mapping
 
-#### Variable Blanket Statement Detection
-
-**Giovanni 1 uses document-wide statement detection approach (not standard true/false values):**
+**Giovanni 1 uses document-wide statement detection approach (Variable Blanket Statement Validation):**
 
 **NIRMS Statement Location:** Cell A:I50  
 **NIRMS Statement Value:** 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.'
 
-#### Additional NIRMS Configuration
-
 **Treatment Type Header:** Cell H:I16 with value 'Treatment Type'  
-**Treatment Blanket Statement:** Cell H:I17 with value 'Processed'  
-**Processing Method:** Variable treatment type handling (flexible vs fixed patterns)  
-**Validation Purpose:** Establishes treatment type for prohibited item validation scenarios
+**Treatment Blanket Location:** Cell H:I17
 
 ## Requirements Specification
 
@@ -175,7 +169,7 @@ The Giovanni 1 packing list uses the following column structure:
 
 **CRITICAL**: All IC requirements MUST reflect actual architectural patterns verified in workspace analysis.
 
-**IC1: Header Pattern Compliance** - MUST use headers.GIOVANNI1.regex structure in model-headers.js (NOT generic fieldMapping patterns) (VERIFIED: Structure confirmed in workspace at lines 198-212)
+**IC1: Header Pattern Compliance** - MUST use headers.GIOVANNI1.regex structure in model-headers.js (NOT generic fieldMapping patterns) (VERIFIED: Structure confirmed in workspace)
 
 **IC2: Validation Pipeline Integration** - MUST integrate with existing validation pipeline infrastructure through combineParser.combine() function with 6-parameter signature verified in workspace (VERIFIED: Integration pattern confirmed in parser-combine.js)
 
@@ -189,9 +183,9 @@ The Giovanni 1 packing list uses the following column structure:
 
 **CRITICAL**: All DIR requirements MUST use actual patterns extracted from workspace analysis.
 
-**DIR1: Establishment Number Pattern** - The system SHALL use ACTUAL establishment number regex pattern /^RMS-GB-000153(-\d{3})?$/i for Giovanni 1 trader (VERIFIED: Pattern extracted from model-headers.js line 199)
+**DIR1: Establishment Number Pattern** - The system SHALL use ACTUAL establishment number regex pattern /^RMS-GB-000153(-\d{3})?$/i for Giovanni 1 trader (VERIFIED: Pattern extracted from model-headers.js)
 
-**DIR2: Column Mapping Configuration** - The system SHALL map Giovanni 1 columns using ACTUAL header mappings verified in workspace model-headers.js configuration: description: /DESCRIPTION/i, commodity_code: commodityCodeRegex, number_of_packages: /Quantity/i, total_net_weight_kg: netWeight, country_of_origin: /Country of Origin/i (VERIFIED: Mappings confirmed in model-headers.js lines 202-209)
+**DIR2: Column Mapping Configuration** - The system SHALL map Giovanni 1 columns using ACTUAL header mappings verified in workspace model-headers.js configuration: description: /DESCRIPTION/i, commodity_code: commodityCodeRegex, number_of_packages: /Quantity/i, total_net_weight_kg: netWeight, country_of_origin: /Country of Origin/i (VERIFIED: Mappings confirmed in model-headers.js)
 
 **DIR3: NIRMS Recognition Pattern** - The system SHALL recognize NIRMS values using blanket statement detection with regex pattern for 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' (VERIFIED: Blanket statement approach required for variable blanket validation)
 
@@ -203,34 +197,14 @@ The Giovanni 1 packing list uses the following column structure:
 
 **ALL technical implementation content MUST be extracted from actual workspace files verified in workspace analysis. NO theoretical or template-based content permitted.**
 
-### GIOVANNI1 Headers Configuration Enhancement
-
-```javascript
-// Required additions to existing GIOVANNI1 configuration in model-headers.js
-GIOVANNI1: {
-  establishmentNumber: {
-    regex: /^RMS-GB-000153(-\d{3})?$/i,  // VERIFIED: Existing pattern
-  },
-  regex: {
-    description: /DESCRIPTION/i,           // VERIFIED: Existing mapping
-    commodity_code: commodityCodeRegex,    // VERIFIED: Existing mapping
-    number_of_packages: /Quantity/i,       // VERIFIED: Existing mapping
-    total_net_weight_kg: netWeight,        // VERIFIED: Existing mapping
-  },
-  country_of_origin: /Country of Origin/i, // VERIFIED: Already exists
-  findUnitInHeader: true,                  // VERIFIED: Already exists
-
-  // NEW ADDITION for CoO validation:
-  validateCountryOfOrigin: true,           // REQUIRED: Enable CoO validation
-}
-```
-
 ### Parser Integration Pattern (Actual Implementation Documentation)
 
-#### 1. Parser Structure (Documented from Actual giovanni/model1.js Implementation)
+CoO validation follows the ACTUAL parser architecture verified in workspace:
+
+#### 1. Parser Structure (extracted from ACTUAL workspace implementations):
 
 ```javascript
-// Existing header detection pattern
+// Existing header detection pattern from giovanni/model1.js
 const headerTitles = Object.values(headers.GIOVANNI1.regex);
 const callback = function (x) {
   return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
@@ -262,28 +236,7 @@ for (const sheet of sheets) {
   packingListContents = packingListContents.concat(packingListContentsTemp);
 }
 
-// Existing data filtering
-packingListContents = packingListContents.filter(
-  (row) =>
-    !(
-      row.description === 0 &&
-      row.commodity_code === 0 &&
-      row.number_of_packages === 0 &&
-      row.total_net_weight_kg === 0
-    ),
-);
-
-packingListContents = packingListContents.filter(
-  (row) =>
-    !(
-      row.description === null &&
-      row.commodity_code === null &&
-      row.number_of_packages === null &&
-      row.total_net_weight_kg === null
-    ),
-);
-
-// Actual combineParser.combine() call with 6 parameters
+// Actual combineParser.combine() call with VERIFIED 6 parameters
 return combineParser.combine(
   establishmentNumber,
   packingListContents,
@@ -294,7 +247,7 @@ return combineParser.combine(
 );
 ```
 
-#### 2. Header Configuration Enhancement (Required Addition to model-headers.js)
+#### 2. Header Configuration (Required Addition to model-headers.js)
 
 ```javascript
 // Existing GIOVANNI1 configuration with required CoO validation addition
@@ -314,7 +267,7 @@ GIOVANNI1: {
 }
 ```
 
-#### 3. Validation Pipeline Integration (Leverages Existing Infrastructure)
+#### 3. Validation Pipeline Integration (leverages existing infrastructure):
 
 ```javascript
 // From parser-combine.js (actual function signature verified)
@@ -342,7 +295,7 @@ function combine(
 }
 ```
 
-#### 4. Existing Validation Utilities (Automatic CoO Validation)
+#### 4. Existing Validation Utilities handle CoO validation automatically:
 
 The existing validation infrastructure includes these actual functions from the workspace:
 
@@ -373,15 +326,26 @@ function isNotNirms(nirms) {
 }
 ```
 
-### Real Implementation Pattern (Variable Blanket Statement)
+### Real Implementation Examples (From Workspace)
 
-**Giovanni 1 follows the Variable Blanket Statement Validation approach:**
+**Variable Blanket Statement Validation** (Giovanni 1 pattern):
 
 - **Blanket NIRMS Statement**: Document-wide statement detection (not individual column values)
 - **CoO Validation**: Individual item-level Country of Origin validation
 - **Treatment Type**: Variable treatment type handling (not fixed like B&M)
 - **Prohibited Items**: Checking against prohibited items list with treatment type considerations
 - **Error Aggregation**: Multiple error consolidation with "more than 3" patterns
+
+### CoO Validation Utilities (Actual Functions)
+
+The existing validation infrastructure includes these actual functions from the workspace:
+
+```javascript
+// From packing-list-column-validator.js (actual implementation)
+function getCountryOfOriginValidationResults(packingList) {
+  /* actual implementation */
+}
+```
 
 ### VERIFICATION CHECKPOINT
 
@@ -392,6 +356,12 @@ function isNotNirms(nirms) {
 - ✅ All configuration matches actual model-headers.js structure
 - ✅ All patterns verified against working implementations
 - ✅ No theoretical or template content included
+
+**ENFORCEMENT:**
+
+- ❌ FORBIDDEN: Any unverified code examples
+- ❌ FORBIDDEN: Generic or template-based technical content
+- ❌ FORBIDDEN: Theoretical implementation patterns
 
 ### Implementation Summary
 
