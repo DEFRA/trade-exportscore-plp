@@ -1,9 +1,9 @@
 # Kepak Country of Origin Validation Specification (AB#591532)
 
-**Generated**: September 17, 2025  
-**Methodology**: Business-Requirements-First Approach (Corrected)  
-**Authority**: ADO Ticket AB#591532 as business requirements source  
-**Technical Context**: Current workspace implementation patterns
+> **Generated using business-requirements-first methodology**  
+> **ADO Source**: DEFRA-EXPORTSCORE-PLP Work Item #591532  
+> **Business Authority**: DEFRA caseworker validation requirements for NIRMS compliance  
+> **Generated**: 2025-01-18T15:42:00Z
 
 ---
 
@@ -18,9 +18,83 @@ This specification defines the implementation requirements for Country of Origin
 **Validation Approach**: Variable Blanket Statement Validation (10 ACs)  
 **Current Parser**: KEPAK1 (requires CoO validation enhancement)
 
-## Business Requirements (FROM ADO TICKET AB#591532)
+## Business Requirements (FROM ADO #591532)
 
-### Format Requirements
+### Business Context
+
+As a **DEFRA caseworker** processing trade export documentation, I need **Country of Origin validation for Kepak packing lists** so that **I can ensure NIRMS compliance and identify prohibited items requiring additional verification** according to Northern Ireland trade regulations.
+
+### User Story
+
+**As a** DEFRA caseworker  
+**I want** to validate Country of Origin values in Kepak Excel packing lists against NIRMS requirements  
+**So that** I can ensure regulatory compliance and flag prohibited items for manual review
+
+### Business Requirements
+
+**BR1: NIRMS Statement Validation** - The system SHALL validate that Kepak packing lists contain the required NIRMS statement for Country of Origin compliance verification
+
+**BR2: Country of Origin Field Processing** - The system SHALL extract and validate Country of Origin values from Column F in Kepak Excel format according to established column mappings
+
+**BR3: Prohibited Item Detection** - The system SHALL identify items with invalid or missing Country of Origin values that require manual caseworker intervention
+
+**BR4: Treatment Type Integration** - The system SHALL correlate Country of Origin validation with treatment type requirements for comprehensive compliance checking
+
+**BR5: Error Aggregation** - The system SHALL provide consolidated error reporting when multiple validation failures occur within a single packing list
+
+### Trader Format Specifications (FROM ADO)
+
+**Column Mappings** (Kepak-Specific):
+
+- **Column C**: DESCRIPTION (Product description)
+- **Column E**: Commodity Code (Trade classification)
+- **Column F**: Country of Origin (CoO validation target)
+- **Column G**: Quantity (Package count)
+- **Column H**: Net Weight KG (Weight measurement)
+
+**Document Structure**:
+
+- **NIRMS Statement Location**: A:I50 (Variable statement validation)
+- **Treatment Blanket Statement**: H:I17 with value "Processed"
+- **Establishment Pattern**: RMS-GB-000280 (Kepak-specific)
+
+### Acceptance Criteria (FROM ADO - 10 BUSINESS REQUIREMENTS)
+
+**AC1 - Missing NIRMS Statement Validation**  
+**Given** a Kepak packing list without required NIRMS statement, **When** the system processes the document, **Then** the system SHALL return validation error "Missing NIRMS statement in packing list" **And** mark the document for manual review
+
+**AC2 - Missing Country of Origin Values**  
+**Given** a Kepak packing list with empty Country of Origin fields, **When** the system validates Column F entries, **Then** the system SHALL identify missing CoO values **And** aggregate errors for consolidated reporting
+
+**AC3 - Invalid Country of Origin Codes**  
+**Given** a Kepak packing list with invalid Country of Origin codes, **When** the system validates against approved country lists, **Then** the system SHALL flag invalid codes **And** provide specific error details for each occurrence
+
+**AC4 - Prohibited Items Without Treatment Type**  
+**Given** a Kepak packing list containing prohibited items without specified treatment types, **When** the system correlates CoO with treatment requirements, **Then** the system SHALL identify non-compliant items **And** require manual intervention
+
+**AC5 - Prohibited Items With Incorrect Treatment Type**  
+**Given** a Kepak packing list containing prohibited items with incorrect treatment specifications, **When** the system validates treatment type against CoO requirements, **Then** the system SHALL flag treatment mismatches **And** generate compliance alerts
+
+**AC6 - Valid NIRMS Statement Processing**  
+**Given** a Kepak packing list with valid NIRMS statement, **When** the system processes the document, **Then** the system SHALL extract the statement content **And** proceed with standard CoO validation workflow
+
+**AC7 - Valid Country of Origin Processing**  
+**Given** a Kepak packing list with valid Country of Origin values, **When** the system validates Column F entries, **Then** the system SHALL accept valid codes **And** continue processing without errors
+
+**AC8 - Treatment Type Correlation**  
+**Given** a Kepak packing list with valid treatment types, **When** the system correlates with Country of Origin requirements, **Then** the system SHALL validate treatment appropriateness **And** approve compliant combinations
+
+**AC9 - Error Aggregation for Multiple Failures**  
+**Given** a Kepak packing list with more than 3 validation errors, **When** the system processes all entries, **Then** the system SHALL provide consolidated error reporting **And** include location details for each failure
+
+**AC10 - Comprehensive Validation Summary**  
+**Given** completed Kepak packing list validation, **When** the system generates final results, **Then** the system SHALL provide comprehensive validation summary **And** include pass/fail status for each requirement category
+
+---
+
+### Legacy Business Acceptance Criteria (DETAILED - FROM ADO TICKET)
+
+#### Format Requirements
 
 **Trader Format Specification** (From ADO Business Requirements):
 
