@@ -39,6 +39,10 @@ module.exports = {
         AS: "Ambient",
         BU: 0,
       },
+      {
+        AS: "Frozen",
+        BU: 0,
+      },
     ],
   },
   validHeadersNoData: {

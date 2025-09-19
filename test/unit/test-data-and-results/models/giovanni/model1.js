@@ -4,6 +4,12 @@ module.exports = {
   validModel: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
@@ -35,6 +41,12 @@ module.exports = {
   validHeadersNoData: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
@@ -50,6 +62,12 @@ module.exports = {
   },
   validModelMultipleSheets: {
     Sheet1: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "NIRMS NUMBER",
       },
@@ -72,6 +90,12 @@ module.exports = {
       },
     ],
     Sheet2: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "NIRMS NUMBER",
       },
@@ -96,6 +120,12 @@ module.exports = {
   },
   invalidModel_MissingColumnCells: {
     RANA: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "RMS-GB-000153",
       },
@@ -125,6 +155,12 @@ module.exports = {
   incorrectEstablishmentNumber: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
@@ -152,6 +188,12 @@ module.exports = {
   },
   incorrectHeader: {
     RANA: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "INVALID",
       },
@@ -348,6 +390,12 @@ module.exports = {
   },
   missingKgunit: {
     RANA: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "NIRMS NUMBER",
       },
