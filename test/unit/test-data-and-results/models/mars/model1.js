@@ -1,4 +1,5 @@
 const parserModel = require("../../../../../app/services/parser-model");
+const { missingCoO } = require("../co-op/model1");
 
 module.exports = {
   validModel: {
@@ -345,5 +346,143 @@ module.exports = {
         J: "Red Lane - No OCR",
       },
     ],
+  },
+  missingCoO: {
+    Sheet1: [
+      {
+        A: "Despatch Location : ",
+      },
+      {
+        A: "RMS-GB-000213-001",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight KG",
+        G: "Commodity Code",
+        H: "Country Code",
+        I: "Type of Treatment",
+        J: "SPS",
+      },
+      {
+        C: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        D: 8,
+        E: 24,
+        G: "21032000",
+        I: "Ambient",
+        J: "Green Lane - OCR",
+      },
+    ]
+  },
+  invalidCoO: {
+    Sheet1: [
+      {
+        A: "Despatch Location : ",
+      },
+      {
+        A: "RMS-GB-000213-001",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight KG",
+        G: "Commodity Code",
+        H: "Country Code",
+        I: "Type of Treatment",
+        J: "SPS",
+      },
+      {
+        C: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        D: 8,
+        E: 24,
+        G: "21032000",
+        H: "Great Britain",
+        I: "Ambient",
+        J: "Green Lane - OCR",
+      },
+    ]
+  },
+  missingNirms: {
+    Sheet1: [
+      {
+        A: "Despatch Location : ",
+      },
+      {
+        A: "RMS-GB-000213-001",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight KG",
+        G: "Commodity Code",
+        H: "Country Code",
+        I: "Type of Treatment",
+        J: "SPS",
+      },
+      {
+        C: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        D: 8,
+        E: 24,
+        G: "21032000",
+        H: "GB",
+        I: "Ambient",
+      },
+    ]
+  },
+  invalidNirms: {
+    Sheet1: [
+      {
+        A: "Despatch Location : ",
+      },
+      {
+        A: "RMS-GB-000213-001",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight KG",
+        G: "Commodity Code",
+        H: "Country Code",
+        I: "Type of Treatment",
+        J: "SPS",
+      },
+      {
+        C: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        D: 8,
+        E: 24,
+        G: "21032000",
+        H: "Great Britain",
+        I: "Ambient",
+        J: "SPS",
+      },
+    ]
+  },
+  prohibitedItem: {
+    Sheet1: [
+      {
+        A: "Despatch Location : ",
+      },
+      {
+        A: "RMS-GB-000213-001",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight KG",
+        G: "Commodity Code",
+        H: "Country Code",
+        I: "Type of Treatment",
+        J: "SPS",
+      },
+      {
+        C: "PROHIBITED ITEM",
+        D: 8,
+        E: 24,
+        G: "07061000", // Prohibited commodity code from CN
+        H: "CN", // China - prohibited country
+        I: "Chilled",
+        J: "Green Lane - OCR",
+      },
+    ]
   },
 };
