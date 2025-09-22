@@ -51,6 +51,7 @@ The Giovanni 1 packing list uses the following column structure:
 ### Business Acceptance Criteria (BAC)
 
 **BAC1: Missing NIRMS Statement**
+
 ```gherkin
 Given a Giovanni 1 packing list does not have the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 When the packing list is submitted
@@ -59,6 +60,7 @@ And the failure reason is: "NIRMS/Non-NIRMS goods not specified"
 ```
 
 **BAC2: Null CoO Value**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is null
@@ -68,6 +70,7 @@ And the failure reason is: "Missing Country of Origin in sheet X row Y"
 ```
 
 **BAC3: Invalid CoO Value**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is not a valid ISO 2-digit country code
@@ -79,6 +82,7 @@ And the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y"
 ```
 
 **BAC4: Null CoO Value, More Than 3**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is null for more than 3 line items
@@ -88,6 +92,7 @@ And the failure reason is: "Missing Country of Origin in sheet X row Y, sheet X 
 ```
 
 **BAC5: Invalid CoO Value, More Than 3**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is not a valid ISO 2-digit country code
@@ -100,6 +105,7 @@ And the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y,
 ```
 
 **BAC6: CoO Value is X or x**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is X or x
@@ -108,6 +114,7 @@ Then the packing list will pass
 ```
 
 **BAC7: Prohibited Item with Treatment Type**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
@@ -120,6 +127,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 ```
 
 **BAC8: Prohibited Item, More Than 3 (Treatment Type specified)**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
@@ -132,6 +140,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 ```
 
 **BAC9: Prohibited Item without Treatment Type**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
@@ -144,6 +153,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 ```
 
 **BAC10: Prohibited Item, More Than 3 (no Treatment Type specified)**
+
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)

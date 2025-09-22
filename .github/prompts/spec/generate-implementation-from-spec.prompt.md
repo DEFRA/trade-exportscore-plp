@@ -39,6 +39,14 @@ Generate technically accurate implementation files with suffix `*-implementation
 - **Debug**: If validation fails with "NIRMS/Non-NIRMS goods not specified", check blanket statement detection
 - **⚠️ CRITICAL**: Blanket statement detection fails silently without proper configuration structure
 
+**❌ ERROR 4.1: Type 3 vs Type 4 Treatment Type Value Confusion**
+- **Problem**: Adding `value: "Processed"` to `blanketTreatmentType` for Type 4 Dynamic implementations
+- **Solution**: 
+  - **Type 3 (Fixed)**: `blanketTreatmentType: { regex: /pattern/i, value: "Processed" }` - fixed value assigned
+  - **Type 4 (Dynamic)**: `blanketTreatmentType: { regex: /pattern/i }` - NO value property, treatment extracted dynamically
+- **Example**: GIOVANNI1 (Type 4) should NOT have `value: "Processed"` - treatment type comes from document content
+- **⚠️ CRITICAL**: Type 4 Dynamic means values are extracted from document, not assigned from configuration
+
 **❌ ERROR 5: Prohibited Items Test Data Using Non-Prohibited Items**
 - **Problem**: Test data uses commodity codes that aren't actually in the prohibited items list
 - **Solution**: Use actual prohibited items from `app/services/data/data-prohibited-items.json`
@@ -113,7 +121,7 @@ Analyze the specification to identify which of the 4 CoO validation implementati
   - Variable statement content with trader-specific elements (establishment numbers, etc.)
   - Dynamic statement text that changes based on context
   - May include both NIRMS and treatment type blanket statements
-- **Implementation Pattern**: `blanketNirms: { regex: /variable_pattern/i, value: "NIRMS" }` + optional `blanketTreatmentType: { regex: /variable_pattern/i, value: "Processed" }`
+- **Implementation Pattern**: `blanketNirms: { regex: /variable_pattern/i, value: "NIRMS" }` + optional `blanketTreatmentType: { regex: /variable_pattern/i }` ⚠️ **NO VALUE for Type 4 - treatment extracted dynamically**
 
 **🎯 REQUIREMENT**: Must determine type before proceeding to Step 2.
 
@@ -199,10 +207,10 @@ This implementation follows the [Type X] CoO validation pattern:
     number_of_packages: /[packages_pattern]/i,
     total_net_weight_kg: /[weight_pattern]/i,
   },
-  country_of_origin: /[coo_pattern]/i,        // ← ADD if CoO column pattern needed
-  type_of_treatment: /[treatment_pattern]/i,  // ← ADD if treatment validation needed
-  nirms: /[standard_nirms_pattern]/i,         // ← ADD if standard NIRMS column pattern needed
-  validateCountryOfOrigin: true,              // ← ENABLE CoO validation
+  country_of_origin: /[coo_pattern]/i,
+  type_of_treatment: /[treatment_pattern]/i,
+  nirms: /[standard_nirms_pattern]/i,
+  validateCountryOfOrigin: true,
 }
 ```
 
@@ -218,10 +226,10 @@ This implementation follows the [Type X] CoO validation pattern:
     number_of_packages: /[packages_pattern]/i,
     total_net_weight_kg: /[weight_pattern]/i,
   },
-  country_of_origin: /[coo_pattern]/i,        // ← ADD if CoO column pattern needed
-  type_of_treatment: /[treatment_pattern]/i,  // ← ADD if treatment validation needed
-  nirms: /[custom_nirms_pattern]/i,              // ← ADD custom NIRMS pattern (e.g., /Lane/i, /Green|Red/i)
-  validateCountryOfOrigin: true,                 // ← ENABLE CoO validation
+  country_of_origin: /[coo_pattern]/i,
+  type_of_treatment: /[treatment_pattern]/i,
+  nirms: /[custom_nirms_pattern]/i,
+  validateCountryOfOrigin: true,
 }
 ```
 
@@ -237,14 +245,14 @@ This implementation follows the [Type X] CoO validation pattern:
     number_of_packages: /[packages_pattern]/i,
     total_net_weight_kg: /[weight_pattern]/i,
   },
-  country_of_origin: /[coo_pattern]/i,           // ← ADD CoO column pattern
-  validateCountryOfOrigin: true,                 // ← ENABLE CoO validation  
-  findUnitInHeader: true,                        // ← ENABLE weight unit detection
-  blanketNirms: {                                // ← ADD fixed blanket NIRMS statement (if needed)
+  country_of_origin: /[coo_pattern]/i,
+  validateCountryOfOrigin: true,
+  findUnitInHeader: true,
+  blanketNirms: {
     regex: /[fixed_nirms_statement]/i,
     value: "NIRMS",
   },
-  blanketTreatmentType: {                        // ← ADD fixed blanket treatment (if needed)
+  blanketTreatmentType: {
     regex: /[fixed_treatment_statement]/i,
     value: "Processed",
   },
@@ -263,16 +271,15 @@ This implementation follows the [Type X] CoO validation pattern:
     number_of_packages: /[packages_pattern]/i,
     total_net_weight_kg: /[weight_pattern]/i,
   },
-  country_of_origin: /[coo_pattern]/i,           // ← ADD CoO column pattern
-  validateCountryOfOrigin: true,                 // ← ENABLE CoO validation
-  findUnitInHeader: true,                        // ← ENABLE weight unit detection  
-  blanketNirms: {                                // ← ADD dynamic blanket NIRMS statement (REQUIRED STRUCTURE)
-    regex: /[variable_nirms_statement]/i,        // Dynamic regex accommodating trader variations
-    value: "NIRMS",                              // ⚠️ CRITICAL: Required for blanket statement detection
+  country_of_origin: /[coo_pattern]/i,
+  validateCountryOfOrigin: true,
+  findUnitInHeader: true,
+  blanketNirms: {
+    regex: /[variable_nirms_statement]/i,
+    value: "NIRMS",
   },
-  blanketTreatmentType: {                        // ← ADD if specification mentions treatment blanket statements
-    regex: /[variable_treatment_statement]/i,    // Dynamic regex for treatment variations  
-    value: "Processed",                          // ⚠️ CRITICAL: Required for blanket statement detection
+  blanketTreatmentType: {
+    regex: /[variable_treatment_statement]/i,
   },
 }
 ```
@@ -283,14 +290,13 @@ This implementation follows the [Type X] CoO validation pattern:
 
 **Required Changes:** (Usually minimal - configuration does the work)
 ```javascript
-// Standard parser pattern - usually only need to update combineParser.combine() call
 return combineParser.combine(
   establishmentNumber,
   packingListContents,
   allRequiredFieldsPresent,
   parserModel.[RETAILER],
   establishmentNumbers,
-  headers.[RETAILER]  // ← Pass complete headers object for validation access
+  headers.[RETAILER]
 );
 ```
 
@@ -307,18 +313,13 @@ return combineParser.combine(
 **MANDATORY Test Data Model Creation:**
 For every test case `model.[testDataName]`, you MUST create corresponding export in the test data models file:
 ```javascript
-// Example: test uses model.validCooModel
 module.exports = {
   validCooModel: {
-    // Complete test data structure matching parser expectations
     [SHEET_NAME]: [
-      // Test data rows with blanket statement text matching regex exactly
     ],
   },
   missingBlanketStatement: {
-    // Test data without required blanket statement
   },
-  // ... ALL other test data models referenced in tests
 };
 ```
 
@@ -335,7 +336,7 @@ invalidTestResult_MissingCells: {
 // AFTER (updated for CoO validation):
 invalidTestResult_MissingCells: {
   business_checks: {
-    failure_reasons: 'Other errors...',  // ← Remove NIRMS error when blanket statement detected
+    failure_reasons: 'Other errors...',
   },
 },
 ```
@@ -344,17 +345,14 @@ invalidTestResult_MissingCells: {
 ```javascript
 describe('[RETAILER] CoO Validation Tests - Type 1', () => {
   test('Valid packing list with conventional NIRMS values', () => {
-    // Test standard NIRMS values: Yes|NIRMS|Green|Y|G
     expect(result.business_checks.failure_reasons).toBeNull();
   });
   
   test('Invalid conventional NIRMS values - validation errors', () => {
-    // Test invalid values outside standard patterns
     expect(result.business_checks.failure_reasons).toContain('NIRMS/Non-NIRMS goods not specified');
   });
   
   test('Missing CoO values with valid NIRMS', () => {
-    // Test CoO validation when NIRMS = true but CoO missing
     expect(result.business_checks.failure_reasons).toContain('Missing Country of Origin');
   });
 });
@@ -364,18 +362,15 @@ describe('[RETAILER] CoO Validation Tests - Type 1', () => {
 ```javascript
 describe('[RETAILER] CoO Validation Tests - Type 2', () => {
   test('Valid packing list with unconventional NIRMS values', () => {
-    // Test trader-specific NIRMS values (e.g., Mars: Green/Red)
     expect(result.business_checks.failure_reasons).toBeNull();
   });
   
   test('Invalid unconventional NIRMS values - validation errors', () => {
-    // Test invalid values outside trader-specific patterns  
     expect(result.business_checks.failure_reasons).toContain('Invalid entry for NIRMS/Non-NIRMS goods');
   });
   
   test('Unconventional NIRMS value mapping', () => {
-    // Test that trader-specific values map correctly (e.g., Green=NIRMS, Red=Non-NIRMS)
-    expect(result.items[0].nirms).toBe('NIRMS'); // When input is 'Green'
+    expect(result.items[0].nirms).toBe('NIRMS');
   });
 });
 ```
@@ -384,17 +379,14 @@ describe('[RETAILER] CoO Validation Tests - Type 2', () => {
 ```javascript  
 describe('[RETAILER] CoO Validation Tests - Type 3', () => {
   test('Valid packing list with fixed blanket statement', () => {
-    // Test presence of required fixed blanket statement
     expect(result.business_checks.failure_reasons).toBeNull();
   });
   
   test('Missing fixed blanket statement - validation fails', () => {
-    // Test absence of required blanket statement
     expect(result.business_checks.failure_reasons).toContain('NIRMS/Non-NIRMS goods not specified');
   });
   
   test('Fixed blanket statement sets all items to NIRMS', () => {
-    // Test that blanket statement applies to all items uniformly
     expect(result.items.every(item => item.nirms === 'NIRMS')).toBe(true);
   });
 });
@@ -404,43 +396,29 @@ describe('[RETAILER] CoO Validation Tests - Type 3', () => {
 ```javascript
 describe('[RETAILER] CoO Validation Tests - Type 4', () => {
   test('Valid packing list with dynamic blanket statement', () => {
-    // ⚠️ CRITICAL: Test data model.validCooModel must exist with exact blanket statement text
     const result = await parserService.findParser(model.validCooModel, filename);
     expect(result.business_checks.failure_reasons).toBeNull();
   });
   
   test('BAC1: Missing dynamic blanket statement - validation fails', () => {
-    // ⚠️ CRITICAL: Test data model.missingBlanketStatement must exist without blanket statement
     const result = await parserService.findParser(model.missingBlanketStatement, filename);  
     expect(result.business_checks.failure_reasons).toContain('NIRMS/Non-NIRMS goods not specified');
   });
   
   test('Dynamic blanket statement with establishment number variation', () => {
-    // ⚠️ CRITICAL: Test data model.dynamicVariation must exist with different establishment number
     const result = await parserService.findParser(model.dynamicVariation, filename);
     expect(result.items.every(item => item.nirms === 'NIRMS')).toBe(true);
   });
   
   test('BAC2: Missing CoO values with blanket statement - validation errors', () => {
-    // ⚠️ CRITICAL: Test data model.missingCooValues must exist with blanket statement but missing CoO
     const result = await parserService.findParser(model.missingCooValues, filename);
     expect(result.business_checks.failure_reasons).toContain('Missing Country of Origin');
   });
   
   test('BAC7-10: Prohibited items validation with treatment type', () => {
-    // ⚠️ CRITICAL: Use actual prohibited commodity code from data-prohibited-items.json
-    // Example: "08045000" from "GB" is actually prohibited
     const result = await parserService.findParser(model.prohibitedItems, filename);
     expect(result.business_checks.failure_reasons).toContain('Prohibited item identified on the packing list');
   });
-  
-  // ⚠️ CRITICAL: Create ALL test data models referenced above:
-  // - model.validCooModel
-  // - model.missingBlanketStatement  
-  // - model.dynamicVariation
-  // - model.missingCooValues
-  // - model.prohibitedItems
-  // And any other models referenced in additional test cases
 });
 ```
 
@@ -482,7 +460,8 @@ If tests fail with "NIRMS/Non-NIRMS goods not specified":
 **⚠️ CRITICAL: Implementation is NOT complete until ALL items checked:**
 
 - [ ] **Configuration Update**: model-headers.js updated with correct patterns and validation flags
-  - [ ] For blanket statements: Both `regex` AND `value` properties present
+  - [ ] For Type 3 blanket statements: Both `regex` AND `value` properties present for blanketNirms and blanketTreatmentType
+  - [ ] For Type 4 blanket statements: `regex` AND `value` properties for blanketNirms, only `regex` property for blanketTreatmentType
   - [ ] Only specified configuration elements added (no cross-retailer copying)
 - [ ] **Parser Integration**: Parser uses standard combineParser.combine() pattern
 - [ ] **Test Data Models Created**: ALL test data models exist for every test case reference
@@ -497,7 +476,8 @@ If tests fail with "NIRMS/Non-NIRMS goods not specified":
   - [ ] 100% test pass rate: `npm test -- --testPathPattern="[retailer]/model1.test.js"`
 - [ ] **Blanket Statement Detection Verified**: If using blanket statements
   - [ ] Regex tested against actual test data text
-  - [ ] Configuration includes both `regex` and `value` properties
+  - [ ] For Type 3: Configuration includes both `regex` and `value` properties for all blanket statements
+  - [ ] For Type 4: Configuration includes `regex` and `value` for blanketNirms, only `regex` for blanketTreatmentType
   - [ ] No "NIRMS/Non-NIRMS goods not specified" errors in passing tests
 - [ ] **Integration Testing**: Parser works with matcher and validation pipeline
 - [ ] **Error Handling**: All error scenarios return proper error format
@@ -577,7 +557,8 @@ Before finalizing implementation guide:
 5. **Treatment Type Blanket Detection**: For Type 3/4, does specification require treatment type blankets?
    - Check for: "Treatment Type Header", "Treatment Blanket Location" references
    - Check for: BACs distinguishing "treatment type is specified" vs "treatment type null"
-   - Add `blanketTreatmentType` configuration if found
+   - **Type 3 (Fixed)**: Add `blanketTreatmentType: { regex: /pattern/i, value: "Processed" }` if found
+   - **Type 4 (Dynamic)**: Add `blanketTreatmentType: { regex: /pattern/i }` WITHOUT value - treatment extracted dynamically
 6. **Testing Coverage**: Do tests cover type-specific scenarios (column vs blanket validation)?
 7. **Test Data Completeness**: Do ALL test data models exist?
    - **⚠️ CRITICAL**: Every `model.[name]` reference must have corresponding export
@@ -636,13 +617,12 @@ Before finalizing implementation guide:
 module.exports = {
   validCooModel: { /* test data */ },
   missingBlanketStatement: { /* test data */ },
-  dynamicVariation: { /* test data */ },
-  missingCooValues: { /* test data */ },
-  invalidCooFormat: { /* test data */ },
-  cooPlaceholderX: { /* test data */ },
-  multipleCooErrors: { /* test data */ },
-  prohibitedItems: { /* test data */ },
-  // Every test reference must have corresponding export
+  dynamicVariation: { },
+  missingCooValues: { },
+  invalidCooFormat: { },
+  cooPlaceholderX: { },
+  multipleCooErrors: { },
+  prohibitedItems: { },
 };
 ```
 
@@ -666,8 +646,7 @@ grep -i "GB" app/services/data/data-prohibited-items.json
 
 **Fix**: Update test result expectations:
 ```javascript
-// Remove outdated NIRMS errors when blanket statement now works
-failure_reasons: 'Other errors...'  // Remove NIRMS error text
+failure_reasons: 'Other errors...'
 ```
 
 ## Example Usage
