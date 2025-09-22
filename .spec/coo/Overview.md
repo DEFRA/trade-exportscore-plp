@@ -42,16 +42,16 @@ TRADER_NAME: {
 
 ## Trader Specifications
 
-| Ticket ID | Title                                               | Current Status  | Sprint Assignment | Assignee     | Specification File                                                                       |
-| --------- | --------------------------------------------------- | --------------- | ----------------- | ------------ | ---------------------------------------------------------------------------------------- |
-| AB#591539 | Sainsburys - Country of Origin Validation           | ✅ **Closed**   | NIRMS Sprint 27   | Devi D.      | [AB591539-sainsburys-coo-validation-spec.md](AB591539-sainsburys-coo-validation-spec.md) |
-| AB#591516 | B&M - Country of Origin Validation                  | 🔄 **Resolved** | NIRMS Sprint 29   | Devi D.      | [AB591516-bandm-coo-validation-spec.md](AB591516-bandm-coo-validation-spec.md)           |
-| AB#591540 | Savers - Country of Origin Validation               | 🔄 **Resolved** | NIRMS Sprint 29   | Devi D.      | [AB591540-savers-coo-validation-spec.md](AB591540-savers-coo-validation-spec.md)         |
-| AB#591514 | ASDA 3 - Country of Origin Validation               | 📋 **New**      | NIRMS Sprint 30   | Hanna S-A.   | [AB591514-asda3-coo-validation-spec.md](AB591514-asda3-coo-validation-spec.md)           |
-| AB#591527 | Giovanni 1 - Country of Origin Validation           | 📋 **New**      | NIRMS Sprint 30   | David P.     | [AB591527-giovanni1-coo-validation-spec.md](AB591527-giovanni1-coo-validation-spec.md)   |
-| AB#591532 | Kepak - Country of Origin Validation                | ⚡ **Active**   | NIRMS Sprint 30   | Hanna S-A.   | [AB591532-kepak-coo-validation-spec.md](AB591532-kepak-coo-validation-spec.md)           |
-| AB#599300 | Mars - Country of Origin Validation                 | � **New**       | NIRMS Sprint 30   | John F.      | [AB599300-mars-coo-validation-spec.md](AB599300-mars-coo-validation-spec.md)             |
-| AB#603666 | ASDA 4 - Create new parser model for ASDA .csv file | 📋 **New**      | NIRMS Sprint 31   | Not Assigned | [AB603666-asda4-coo-validation-spec.md](AB603666-asda4-coo-validation-spec.md)           |
+| Ticket ID | Title                                               | Current Status      | Sprint Assignment | Assignee     | Specification File                                                                       |
+| --------- | --------------------------------------------------- | ------------------- | ----------------- | ------------ | ---------------------------------------------------------------------------------------- |
+| AB#591539 | Sainsburys - Country of Origin Validation           | ✅ **Closed**       | NIRMS Sprint 27   | Devi D.      | [AB591539-sainsburys-coo-validation-spec.md](AB591539-sainsburys-coo-validation-spec.md) |
+| AB#591516 | B&M - Country of Origin Validation                  | 🔄 **Resolved**     | NIRMS Sprint 29   | Devi D.      | [AB591516-bandm-coo-validation-spec.md](AB591516-bandm-coo-validation-spec.md)           |
+| AB#591540 | Savers - Country of Origin Validation               | 🔄 **Resolved**     | NIRMS Sprint 29   | Devi D.      | [AB591540-savers-coo-validation-spec.md](AB591540-savers-coo-validation-spec.md)         |
+| AB#591514 | ASDA 3 - Country of Origin Validation               | 📋 **New**          | NIRMS Sprint 30   | Hanna S-A.   | [AB591514-asda3-coo-validation-spec.md](AB591514-asda3-coo-validation-spec.md)           |
+| AB#591527 | Giovanni 1 - Country of Origin Validation           | ✅ **Complete**     | NIRMS Sprint 30   | David P.     | [AB591527-giovanni1-coo-validation-spec.md](AB591527-giovanni1-coo-validation-spec.md)   |
+| AB#591532 | Kepak - Country of Origin Validation                | ⚡ **Active**       | NIRMS Sprint 30   | Hanna S-A.   | [AB591532-kepak-coo-validation-spec.md](AB591532-kepak-coo-validation-spec.md)           |
+| AB#599300 | Mars - Country of Origin Validation                 | � **New**           | NIRMS Sprint 30   | John F.      | [AB599300-mars-coo-validation-spec.md](AB599300-mars-coo-validation-spec.md)             |
+| AB#603666 | ASDA 4 - Create new parser model for ASDA .csv file | Specification Ready | NIRMS Sprint 31   | Not Assigned | [AB603666-asda4-coo-validation-spec.md](AB603666-asda4-coo-validation-spec.md)           |
 
 ## Foundation Work Item
 
