@@ -27,26 +27,41 @@ Generate complete Country of Origin (CoO) validation specifications using **impl
 
 ## Implementation-First Methodology
 
-### Phase 0: Workspace Analysis (Required First)
+### 🚨 MANDATORY Phase 0: Workspace Analysis (MUST COMPLETE FIRST)
 
-Before generating any specification content, you MUST:
+**BLOCKING REQUIREMENT**: You CANNOT generate any specification content until Phase 0 is 100% complete with verified patterns.
 
-1. **Examine Existing Implementations**
-   - Use `codebase` tool to find existing CoO implementations (SAINSBURYS1, SAVERS1, etc.)
-   - Analyze target trader's actual parser implementation
-   - Extract real regex patterns, function signatures, and configuration structures
+**MANDATORY EXECUTION ORDER**:
+1. **FIRST**: Complete entire Phase 0 workspace analysis
+2. **SECOND**: Fetch and analyze ADO ticket  
+3. **THIRD**: Generate specification with verified patterns
+4. **FOURTH**: Update Overview.md
 
-2. **Verify Implementation Patterns**
+**Phase 0 Requirements - MUST COMPLETE BEFORE ANY SPECIFICATION GENERATION:**
+
+1. **🚨 MANDATORY: Examine Existing Implementations**
+   - Use `semantic_search` or `grep_search` tools to find existing CoO implementations (SAINSBURYS1, SAVERS1, BANDM1, NISA1, TJMORRIS2, TESCO3, etc.)
+   - Use `read_file` to analyze actual parser implementations in `app/services/parsers/`
+   - Use `read_file` to extract REAL regex patterns, function signatures, and configuration structures from `app/services/model-headers.js`
+
+2. **🚨 MANDATORY: Verify Implementation Patterns**
    - Extract actual regex patterns from model-headers.js (NOT templates)
-   - Verify combineParser.combine() function signature and parameters
-   - Document real validation function names (hasMissingCoO, hasInvalidCoO, etc.)
-   - Confirm validateCountryOfOrigin flag usage
+   - Verify combineParser.combine() function signature and parameters using `grep_search` or `semantic_search`
+   - Document real validation function names (hasMissingCoO, hasInvalidCoO, etc.) from actual files
+   - Confirm validateCountryOfOrigin flag usage in existing configurations
 
-3. **Accuracy Checkpoint**
+3. **🚨 MANDATORY: Accuracy Checkpoint**
    - ✅ All patterns verified against actual workspace code
-   - ✅ Real function signatures documented  
+   - ✅ Real function signatures documented with file references  
    - ✅ No theoretical content used
-   - ❌ STOP if any pattern cannot be verified in actual implementation
+   - ❌ **BLOCKING**: STOP if any pattern cannot be verified in actual implementation
+
+**🚨 VERIFICATION REQUIREMENTS FOR PHASE 0 COMPLETION:**
+- **TR Requirements**: ALL TR1-TR7 MUST reference actual verified patterns with "(VERIFIED: Pattern confirmed in actual [filename])"
+- **IC Requirements**: ALL IC1-IC5 MUST reference actual architectural decisions with "(VERIFIED: Structure confirmed in workspace)"  
+- **DIR Requirements**: ALL DIR1-DIR4 MUST use actual patterns with "(VERIFIED: [specific pattern] extracted from real configuration)"
+
+**CRITICAL**: If Phase 0 is not completed with full verification, the specification will lack the required "(VERIFIED: ...)" annotations and will be INCORRECT.
 
 ## File Generation Requirements
 
@@ -169,25 +184,31 @@ Treatment Blanket Statement Location: Cell H:I17, value is 'Processed'
 
 ## Processing Workflow
 
-### 1. Workspace Analysis
-- Use `codebase` tool to examine existing CoO implementations
-- Extract actual regex patterns from model-headers.js
-- Verify combineParser.combine() signatures and validation functions
-- Document real configuration structures (validateCountryOfOrigin, etc.)
+**🚨 MANDATORY EXECUTION ORDER - STRICTLY ENFORCED**:
 
-### 2. ADO Ticket Analysis  
+### 1. 🚨 PHASE 0: MANDATORY Workspace Analysis (MUST COMPLETE FIRST)
+- **BLOCKING**: Use `semantic_search` and `read_file` tools to examine existing CoO implementations
+- **BLOCKING**: Extract actual regex patterns from model-headers.js using `read_file`
+- **BLOCKING**: Verify combineParser.combine() signatures and validation functions using `grep_search`
+- **BLOCKING**: Document real configuration structures (validateCountryOfOrigin, etc.) with file references
+- **VERIFICATION CHECKPOINT**: Ensure ALL TR/IC/DIR requirements can be populated with "(VERIFIED: ...)" annotations
+
+### 2. ADO Ticket Analysis (ONLY AFTER PHASE 0 COMPLETE)
 - Fetch work item using `wit_get_work_item`
 - Extract trader name from title and header specifications from description
 - Parse 'Specifications' section for cell locations and column mappings
 - Determine validation approach (14/9/10 BACs) based on header structure
 
-### 3. Specification Generation
-- Generate appropriate BAC count based on validation approach:
+### 3. Specification Generation (ONLY AFTER PHASES 0 AND 1 COMPLETE)
+- **CRITICAL**: Generate appropriate BAC count based on validation approach:
   - **Individual Column (14 BACs)**: BAC1-BAC5 (NIRMS), BAC6-BAC10 (CoO), BAC11-BAC14 (Prohibited)
   - **Fixed Blanket (9 BACs)**: BAC1 (statement), BAC2-BAC6 (CoO), BAC7-BAC9 (Prohibited)  
   - **Variable Blanket (10 BACs)**: BAC1 (statement), BAC2-BAC6 (CoO), BAC7-BAC10 (Prohibited)
-- Include Technical Requirements (TR1-TR7), Implementation Constraints (IC1-IC5), Data Integration Requirements (DIR1-DIR4)
-- Use verified workspace patterns in technical implementation
+- **MANDATORY**: Include Technical Requirements (TR1-TR7) with verified "(VERIFIED: ...)" annotations
+- **MANDATORY**: Include Implementation Constraints (IC1-IC5) with verified "(VERIFIED: ...)" annotations  
+- **MANDATORY**: Include Data Integration Requirements (DIR1-DIR4) with verified "(VERIFIED: ...)" annotations
+
+**🚨 GENERATION BLOCKING RULE**: If Phase 0 was not completed with workspace verification, the TR/IC/DIR sections will be missing the required "(VERIFIED: ...)" annotations, making the specification INVALID and INCOMPLETE.
 
 ## Execution Steps
 
@@ -266,8 +287,6 @@ Column mappings and NIRMS value patterns from ADO + workspace analysis.
 - **Implementation Constraints (IC1-IC5)**: Architecture decisions from workspace patterns
 - **Data Integration Requirements (DIR1-DIR4)**: Trader-specific mappings from actual configuration
 
-## Technical Implementation
-Auto-generated from verified workspace patterns (TR + IC + DIR + existing code).
 ```
 
 ## File Requirements
@@ -357,327 +376,55 @@ The {Trader Name} packing list uses the following column structure:
 
 ### Technical Requirements (TR) - Implementation Specifics
 
-**CRITICAL**: All TR requirements MUST reflect actual implementation patterns verified in PHASE 0.
+**🚨 CRITICAL GENERATION RULE**: ALL TR requirements MUST include "(VERIFIED: ...)" annotations from Phase 0 workspace analysis. If Phase 0 was not completed, TR requirements will be MISSING these annotations and the specification is INCORRECT.
 
-**TR1: Parser Configuration** - The system SHALL set validateCountryOfOrigin flag to true in model-headers.js WHEN enabling CoO validation for {Trader Name} (VERIFIED: Pattern confirmed in actual model-headers.js)
+**🚨 MANDATORY TR TEMPLATE WITH VERIFICATION ANNOTATIONS**:
 
-**TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature verified in workspace WHEN returning parser results (VERIFIED: Exact signature extracted from actual implementation)
+**TR1: Parser Configuration** - The system SHALL set validateCountryOfOrigin flag to true in model-headers.js WHEN enabling CoO validation for {Trader Name} (VERIFIED: Pattern confirmed in actual model-headers.js - flag found in SAINSBURYS1, SAVERS1, BANDM1, NISA1, TJMORRIS2, TESCO3 configurations)
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual codebase)
+**TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature verified in workspace WHEN returning parser results (VERIFIED: Exact 6-parameter signature extracted from actual parser implementations - establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel, establishmentNumbers, headers)
 
-**TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in actual parser implementation)
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual packing-list-validator-utilities.js file)
 
-**TR5: Standard Parser Flow** - The system SHALL follow the ACTUAL parser pattern verified in workspace: extract establishment number → find headers with rowFinder → process with mapParser → combine with combineParser → automatic validation (VERIFIED: Flow confirmed in similar implementations)
+**TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in actual parser implementations - mapParser() with headerRow, dataRow, headers configuration parameters)
 
-**TR6: Error Handling** - The system SHALL return combineParser.combine() with ACTUAL error parameters verified in workspace WHEN parser encounters errors (VERIFIED: Error handling pattern confirmed in actual implementation)
+**TR5: Standard Parser Flow** - The system SHALL follow the ACTUAL parser pattern verified in workspace: extract establishment number → find headers with rowFinder → process with mapParser → combine with combineParser → automatic validation (VERIFIED: Flow confirmed in similar implementations across app/services/parsers/ directory)
 
-**TR7: Header Structure Integration** - The system SHALL use rowFinder() with matchesHeader callback and ACTUAL header structure verified in model-headers.js WHEN locating header rows (VERIFIED: Pattern confirmed in actual implementation)
+**TR6: Error Handling** - The system SHALL return combineParser.combine() with ACTUAL error parameters verified in workspace WHEN parser encounters errors (VERIFIED: Error handling pattern confirmed in actual implementation - combineParser.combine(null, [], false, parserModel.NOMATCH))
+
+**TR7: Header Structure Integration** - The system SHALL use rowFinder() with matchesHeader callback and ACTUAL header structure verified in model-headers.js WHEN locating header rows (VERIFIED: Pattern confirmed in actual implementation - rowFinder with headerCallback function using matchesHeader and MatcherResult.CORRECT)
 
 ### Implementation Constraints (IC) - Architecture Decisions
 
-**CRITICAL**: All IC requirements MUST reflect actual architectural patterns verified in PHASE 0.
+**🚨 CRITICAL GENERATION RULE**: ALL IC requirements MUST include detailed "(VERIFIED: ...)" annotations from Phase 0 workspace analysis. If Phase 0 was not completed, IC requirements will be MISSING these annotations and the specification is INCORRECT.
 
-**IC1: Header Pattern Compliance** - MUST use headers.{TRADER_NAME}.regex structure verified in actual model-headers.js (NOT generic fieldMapping patterns) (VERIFIED: Structure confirmed in workspace)
+**🚨 MANDATORY IC TEMPLATE WITH VERIFICATION ANNOTATIONS**:
 
-**IC2: Validation Pipeline Integration** - MUST integrate with existing validation pipeline infrastructure through combineParser.combine() function with ACTUAL signature verified in workspace (VERIFIED: Integration pattern confirmed)
+**IC1: Header Pattern Compliance** - MUST use headers.{TRADER_NAME}.regex structure verified in actual model-headers.js (NOT generic fieldMapping patterns) (VERIFIED: Structure confirmed in workspace - headers.SAINSBURYS1.regex, headers.SAVERS1.regex, headers.BANDM1.regex patterns found in actual model-headers.js)
 
-**IC3: Parser Architecture Consistency** - MUST follow established parser patterns used by ACTUAL implementations verified in workspace (SAINSBURYS1, SAVERS1, NISA1 etc.) (VERIFIED: Architecture confirmed across similar implementations)
+**IC2: Validation Pipeline Integration** - MUST integrate with existing validation pipeline infrastructure through combineParser.combine() function with ACTUAL signature verified in workspace (VERIFIED: Integration pattern confirmed - 6-parameter signature (establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel, establishmentNumbers, headers) found in multiple parser implementations)
 
-**IC4: Configuration-Driven Validation** - MUST enable CoO validation through validateCountryOfOrigin flag in model-headers.js with ACTUAL configuration structure verified in workspace (VERIFIED: Flag usage confirmed in actual implementations)
+**IC3: Parser Architecture Consistency** - MUST follow established parser patterns used by ACTUAL implementations verified in workspace (SAINSBURYS1, SAVERS1, NISA1 etc.) (VERIFIED: Architecture confirmed across similar implementations - standard pattern: regex.findMatch for establishment numbers, rowFinder for headers, mapParser for data processing, combineParser.combine for results)
 
-**IC5: Error Location Tracking** - MUST provide sheet name and row number information using ACTUAL error tracking patterns verified in workspace implementations (VERIFIED: Error tracking pattern confirmed)
+**IC4: Configuration-Driven Validation** - MUST enable CoO validation through validateCountryOfOrigin flag in model-headers.js with ACTUAL configuration structure verified in workspace (VERIFIED: Flag usage confirmed in actual implementations - validateCountryOfOrigin: true found in SAINSBURYS1, SAVERS1, BANDM1, NISA1, TJMORRIS2, TESCO3, COOP1, DAVENPORT2, BOOKER2 configurations)
+
+**IC5: Error Location Tracking** - MUST provide sheet name and row number information using ACTUAL error tracking patterns verified in workspace implementations (VERIFIED: Error tracking pattern confirmed - sheet parameter passed to mapParser() function, row numbers tracked through dataRow variable in parser implementations)
 
 ### Data Integration Requirements (DIR) - Trader-Specific Mappings
 
-**CRITICAL**: All DIR requirements MUST use actual patterns extracted from workspace in PHASE 0.
+**🚨 CRITICAL GENERATION RULE**: ALL DIR requirements MUST include specific actual patterns from Phase 0 workspace analysis with detailed "(VERIFIED: ...)" annotations. If Phase 0 was not completed, DIR requirements will be MISSING these specific patterns and the specification is INCORRECT.
 
-**DIR1: Establishment Number Pattern** - The system SHALL use ACTUAL establishment number regex pattern verified in workspace model-headers.js for target trader (VERIFIED: Pattern extracted from real configuration)
+**🚨 MANDATORY DIR TEMPLATE WITH ACTUAL PATTERNS AND VERIFICATION ANNOTATIONS**:
 
-**DIR2: Column Mapping Configuration** - The system SHALL map {Trader Name} columns using ACTUAL header mappings verified in workspace model-headers.js configuration (VERIFIED: Mappings confirmed in actual trader configuration)
+**DIR1: Establishment Number Pattern** - The system SHALL use ACTUAL establishment number regex pattern verified in workspace model-headers.js for target trader (VERIFIED: Pattern extracted from real configuration - example: /^RMS-GB-000094(-\d{3})?$/i for SAINSBURYS1, /RMS-GB-000247-(\d{3})?/i for SAVERS1, /^RMS-GB-000005-\d{3}$/i for BANDM1)
 
-**DIR3: NIRMS Recognition Pattern** - The system SHALL recognize NIRMS values using ACTUAL patterns verified in workspace implementation for target trader (VERIFIED: Recognition patterns confirmed in actual codebase)
+**DIR2: Column Mapping Configuration** - The system SHALL map {Trader Name} columns using ACTUAL header mappings verified in workspace model-headers.js configuration (VERIFIED: Mappings confirmed in actual trader configuration - regex patterns like /Product \/ Part Number Description/i, /NIRMS Country of Origin/i, /NIRMS or non-NIRMS/i found in existing configurations)
 
-**DIR4: Field Regex Patterns** - The system SHALL use ACTUAL trader-specific regex patterns verified in workspace model-headers.js: {extracted actual regex patterns for description, commodity_code, country_of_origin, nirms, etc.} (VERIFIED: All regex patterns extracted from real configuration)
+**DIR3: NIRMS Recognition Pattern** - The system SHALL recognize NIRMS values using ACTUAL patterns verified in workspace implementation for target trader (VERIFIED: Recognition patterns confirmed in actual codebase - standard patterns: Yes|NIRMS|Green|Y|G (true), No|Non-NIRMS|Red|N|R (false) OR irregular patterns like Mars: Green (true), Red (false))
 
-## Technical Implementation
+**DIR4: Field Regex Patterns** - The system SHALL use ACTUAL trader-specific regex patterns verified in workspace model-headers.js: {extracted actual regex patterns for description, commodity_code, country_of_origin, nirms, etc.} (VERIFIED: All regex patterns extracted from real configuration - examples: /ITEM DESCRIPTION/i, commodityCodeRegex, /COUNTRY OF ORIGIN/i, /NIRMS \/ SPS Item/i)
 
-### CRITICAL: 100% ACCURACY REQUIREMENT
 
-**ALL technical implementation content MUST be extracted from actual workspace files verified in PHASE 0. NO theoretical or template-based content permitted.**
-
-### Parser Integration Pattern (Actual Implementation Documentation)
-
-CoO validation follows the ACTUAL parser architecture verified in workspace:
-
-1. **Parser Structure** (extracted from ACTUAL workspace implementations):
-
-   ```javascript
-   // VERIFIED: Actual parser imports extracted from workspace
-   const combineParser = require("../../parser-combine");
-   const parserModel = require("../../parser-model");
-   const headers = require("../../model-headers");
-   const { mapParser } = require("../../parser-map");
-   const regex = require("../../../utilities/regex");
-   const { rowFinder } = require("../../../utilities/row-finder");
-   const { matchesHeader } = require("../../matches-header");
-   const MatcherResult = require("../../matcher-result");
-
-   // VERIFIED: Actual function signature extracted from workspace
-   exports.parse = (packingListJson) => {
-     try {
-       const sheets = Object.keys(packingListJson);
-       let packingListContents = [];
-       let establishmentNumbers = [];
-
-       // VERIFIED: Actual establishment number extraction pattern
-       const establishmentNumber = regex.findMatch(
-         {ACTUAL_ESTABLISHMENT_REGEX_EXTRACTED_FROM_WORKSPACE},
-         packingListJson[sheets[0]]
-       );
-
-       // VERIFIED: Actual sheet processing pattern from workspace
-       for (const sheet of sheets) {
-         establishmentNumbers = regex.findAllMatches(
-           regex.remosRegex,
-           packingListJson[sheet],
-           establishmentNumbers
-         );
-
-         // VERIFIED: Actual header finding pattern from workspace
-         const headerTitles = Object.values({ACTUAL_HEADERS_EXTRACTED_FROM_WORKSPACE});
-         const headerCallback = function(x) {
-           return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-         };
-
-         const headerRow = rowFinder(packingListJson[sheet], headerCallback);
-         const dataRow = headerRow + 1;
-
-         // VERIFIED: Actual mapParser usage from workspace
-         packingListContentsTemp = mapParser(
-           packingListJson[sheet],
-           headerRow,
-           dataRow,
-           {ACTUAL_HEADERS_CONFIG_FROM_WORKSPACE},
-           sheet
-         );
-         packingListContents = packingListContents.concat(packingListContentsTemp);
-       }
-
-       // VERIFIED: Actual combineParser function signature from workspace
-       return combineParser.combine(
-         {ACTUAL_COMBINE_PARSER_PARAMETERS_FROM_WORKSPACE}
-       );
-     } catch (error) {
-       logger.logError(filenameForLogging, "parse()", error);
-       // VERIFIED: Actual error handling pattern from workspace
-       return combineParser.combine({ACTUAL_ERROR_PARAMETERS_FROM_WORKSPACE});
-     }
-   };
-   ```
-
-2. **Header Configuration** in `model-headers.js` (VERIFIED: extracted from actual workspace):
-
-   ```javascript
-   // VERIFIED: Actual configuration structure from workspace model-headers.js
-   {TRADER_NAME}: {
-     establishmentNumber: {
-       regex: {ACTUAL_ESTABLISHMENT_REGEX_FROM_WORKSPACE},
-       establishmentRegex: {ACTUAL_ESTABLISHMENT_REGEX_FROM_WORKSPACE}  // For PDF parsers
-     },
-     regex: {
-       // VERIFIED: All regex patterns extracted from actual workspace configuration
-       description: {ACTUAL_DESCRIPTION_REGEX_FROM_WORKSPACE},
-       commodity_code: {ACTUAL_COMMODITY_CODE_REGEX_FROM_WORKSPACE},
-       number_of_packages: {ACTUAL_PACKAGES_REGEX_FROM_WORKSPACE},
-       total_net_weight_kg: {ACTUAL_WEIGHT_REGEX_FROM_WORKSPACE},
-       country_of_origin: {ACTUAL_COUNTRY_OF_ORIGIN_REGEX_FROM_WORKSPACE},
-       nirms: {ACTUAL_NIRMS_REGEX_FROM_WORKSPACE},
-       type_of_treatment: {ACTUAL_TREATMENT_REGEX_FROM_WORKSPACE}
-     },
-     // VERIFIED: Actual flags and configuration from workspace
-     validateCountryOfOrigin: {ACTUAL_FLAG_VALUE_FROM_WORKSPACE},
-     findUnitInHeader: {ACTUAL_FLAG_VALUE_FROM_WORKSPACE},
-     // VERIFIED: Blanket configuration if exists in workspace
-     blanketNirms: {ACTUAL_BLANKET_NIRMS_CONFIG_FROM_WORKSPACE_IF_EXISTS},
-     blanketTreatmentType: {ACTUAL_BLANKET_TREATMENT_CONFIG_FROM_WORKSPACE_IF_EXISTS}
-   }
-   ```
-
-### VERIFICATION CHECKPOINT
-
-**Before completing Technical Implementation section:**
-- ✅ All code examples extracted from actual workspace files
-- ✅ All function signatures match verified workspace implementation
-- ✅ All configuration matches actual model-headers.js structure
-- ✅ All patterns verified against working implementations
-- ✅ No theoretical or template content included
-
-**ENFORCEMENT:**
-- ❌ FORBIDDEN: Any unverified code examples
-- ❌ FORBIDDEN: Generic or template-based technical content
-- ❌ FORBIDDEN: Theoretical implementation patterns
-
-3. **Validation Pipeline Integration** (leverages existing infrastructure):
-
-   The `combineParser.combine()` function automatically passes the `validateCountryOfOrigin` flag:
-   ```javascript
-   // From actual parser-combine.js implementation
-   function combine(
-     establishmentNumber,
-     packingListContents,
-     allRequiredFieldsPresent,
-     ParserModel,
-     establishmentNumbers = [],
-     header = null,
-   ) {
-     return {
-       registration_approval_number: establishmentNumber,
-       items: packingListContents,
-       business_checks: {
-         all_required_fields_present: allRequiredFieldsPresent,
-         failure_reasons: null,
-       },
-       parserModel: ParserModel,
-       establishment_numbers: establishmentNumbers,
-       unitInHeader: header?.findUnitInHeader ?? false,
-       validateCountryOfOrigin: header?.validateCountryOfOrigin ?? false,
-       blanketNirms: header?.blanketNirms ?? false,
-     };
-   }
-   ```
-
-4. **Existing Validation Utilities** handle CoO validation automatically:
-   - `packingListValidator.validatePackingList()` checks the `validateCountryOfOrigin` flag
-   - Uses existing validation functions: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasProhibitedItems()`
-   - Column validator applies CoO validation rules when flag is enabled
-   - No new validation code required - all functionality uses existing utilities
-
-### Real Implementation Examples (From Workspace)
-
-Use these actual patterns from implemented CoO specifications:
-
-**Individual Column Validation** (SAINSBURYS1, SAVERS1, NISA1 pattern):
-- **Column Mapping**: Column P (NIRMS), Column Q (Country of Origin)
-- **NIRMS Values**: Standard true/false mapping (yes|nirms|green|y|g vs no|non-nirms|red|n|r)
-- **Header Flags**: `validateCountryOfOrigin: true` in model-headers.js
-- **Validation**: Uses individual item-level NIRMS and CoO validation
-
-**Blanket Statement Validation** (B&M pattern):
-- **NIRMS Statement**: "This consignment contains only NIRMS eligible goods"
-- **Treatment Statement**: "Treatment type: all products are processed"  
-- **Configuration**: Uses `blanketNirms` and `blanketTreatmentType` objects
-- **Processing**: `mapParser()` applies blanket values to all items when detected
-
-**Irregular NIRMS Values** (Mars pattern if encountered):
-- **Limited Value Set**: Only specific values accepted (not standard NIRMS list)
-- **Custom Mapping**: Trader-specific true/false value recognition
-- **Documentation**: Clearly specify non-standard values in specification
-
-### CoO Validation Utilities (Actual Functions)
-
-The existing validation infrastructure includes these actual functions from the workspace:
-
-```javascript
-// From packing-list-validator-utilities.js (actual implementation)
-function hasMissingNirms(item) {
-  return isNullOrEmptyString(item.nirms);
-}
-
-function hasInvalidNirms(item) {
-  return (
-    !isNullOrEmptyString(item.nirms) &&
-    !isNirms(item.nirms) &&
-    !isNotNirms(item.nirms)
-  );
-}
-
-function hasMissingCoO(item) {
-  return isNirms(item.nirms) && isNullOrEmptyString(item.country_of_origin);
-}
-
-function hasInvalidCoO(item) {
-  return isNirms(item.nirms) && isInvalidCoO(item.country_of_origin);
-}
-
-function hasProhibitedItems(item) {
-  return (
-    isNirms(item.nirms) &&
-    !isNullOrEmptyString(item.country_of_origin) &&
-    !isInvalidCoO(item.country_of_origin) &&
-    !isNullOrEmptyString(item.commodity_code) &&
-    isProhibitedItems(
-      item.country_of_origin,
-      item.commodity_code,
-      item.type_of_treatment,
-    )
-  );
-}
-
-// Standard NIRMS value recognition (actual implementation)
-function isNirms(nirms) {
-  if (typeof nirms !== "string") return false;
-  const nirmsValues = ["yes", "nirms", "green", "y", "g"];
-  return nirmsValues.includes(nirms.trim().toLowerCase());
-}
-
-function isNotNirms(nirms) {
-  if (typeof nirms !== "string") return false;
-  const notNirmsValues = ["no", "non-nirms", "non nirms", "red", "n", "r"];
-  return notNirmsValues.includes(nirms.trim().toLowerCase());
-}
-```
-
-### Validation Pipeline Integration (Actual Flow)
-
-```javascript
-// From packing-list-column-validator.js (actual implementation)
-function getCountryOfOriginValidationResults(packingList) {
-  if (!packingList.validateCountryOfOrigin) {
-    return {
-      missingNirms: [],
-      invalidNirms: [],
-      missingCoO: [],
-      invalidCoO: [],
-      prohibitedItems: [],
-    };
-  }
-
-  return {
-    missingNirms: findItems(packingList.items, hasMissingNirms),
-    invalidNirms: findItems(packingList.items, hasInvalidNirms),
-    missingCoO: findItems(packingList.items, hasMissingCoO),
-    invalidCoO: findItems(packingList.items, hasInvalidCoO),
-    prohibitedItems: findItems(packingList.items, hasProhibitedItems),
-  };
-}
-```
-
-### 🚨 MANDATORY File Content Replacement Protocol
-
-**When specification file already exists, follow this EXACT sequence**:
-
-```javascript
-// STEP 1: Clear existing content completely
-editFiles(filePath, ""); // Replace entire file content with empty string
-
-// STEP 2: Write new specification content from scratch  
-editFiles(filePath, newCompleteSpecificationContent); // Write full new content
-```
-
-**Example Implementation**:
-```
-File: /home/david/git/defra/trade-exportscore-plp/.spec/coo/AB591532-kepak-coo-validation-spec.md
-
-STEP 1: editFiles("/home/david/git/defra/trade-exportscore-plp/.spec/coo/AB591532-kepak-coo-validation-spec.md", "")
-STEP 2: editFiles("/home/david/git/defra/trade-exportscore-plp/.spec/coo/AB591532-kepak-coo-validation-spec.md", "# Kepak Country of Origin Validation Specification (AB#591532)...")
-```
-
-**RATIONALE**: This two-step process ensures:
-- No partial updates or mixed content from different generations
-- Complete regeneration based on current ADO ticket requirements
-- Clean slate for specification content that reflects current analysis
-- No remnant sections or outdated content from previous versions
-```
 
 ### File Naming Convention
 
@@ -773,7 +520,7 @@ Success is measured by:
   - ✅ Technical Requirements (TR1-TR7) with **ACTUAL implementation specifics from workspace**
   - ✅ Implementation Constraints (IC1-IC5) with **ACTUAL architecture decisions from workspace**  
   - ✅ Data Integration Requirements (DIR1-DIR4) with **ACTUAL trader-specific mappings from workspace**
-- ✅ Technical implementation documenting **ACTUAL workspace patterns** (no theoretical content)
+
 - ✅ Requirements bridge gap between business needs and **VERIFIED implementation details**
 - ✅ File saved with proper naming convention in correct directory
 - ✅ Overview.md updated with new specification entry in trader specifications table
@@ -795,7 +542,7 @@ Success is measured by:
 - ✅ Each technical requirement verified against actual implementation
 - ✅ Each implementation constraint reflects actual architectural decisions
 - ✅ Each data integration requirement uses actual workspace patterns
-- ✅ Technical implementation section contains only verified workspace content
+
 - ❌ **BLOCKING**: Any requirement or implementation detail not verified in workspace
 
 ### **FINAL VALIDATION REQUIREMENTS:**
@@ -803,7 +550,14 @@ Success is measured by:
 - ✅ No discrepancies between specification and verified workspace patterns
 - ✅ All code examples extracted from actual workspace files
 - ✅ All configuration examples match actual model-headers.js structure
+- ✅ **MANDATORY**: ALL TR1-TR7 requirements include "(VERIFIED: ...)" annotations with specific details
+- ✅ **MANDATORY**: ALL IC1-IC5 requirements include "(VERIFIED: ...)" annotations with specific details
+- ✅ **MANDATORY**: ALL DIR1-DIR4 requirements include "(VERIFIED: ...)" annotations with actual patterns
 - ❌ **BLOCKING**: Any theoretical content or generic templates in final specification
+- ❌ **BLOCKING**: Any TR/IC/DIR requirement missing "(VERIFIED: ...)" annotation
+- ❌ **BLOCKING**: Any specification generated without completing Phase 0 workspace analysis
+
+**🚨 SPECIFICATION VALIDITY CHECK**: A specification is INVALID if any TR/IC/DIR requirement is missing the "(VERIFIED: ...)" annotation. This indicates Phase 0 workspace analysis was not completed properly.
 
 ## Targeted Update Strategies
 
@@ -817,13 +571,13 @@ When an existing specification file needs corrections, use these targeted update
 - **Pattern**: Target exact BAC text including Given/When/Then structure
 
 #### Technical Requirements Updates
-- **Issue**: Missing or incorrect technical implementation details
+- **Issue**: Missing or incorrect technical requirements details
 - **Solution**: Replace specific TR/IC/DIR sections while maintaining overall structure
 - **Pattern**: Target individual requirement blocks (TR1, IC2, etc.)
 
 #### Header Configuration Corrections
 - **Issue**: Incorrect regex patterns or column mappings
-- **Solution**: Replace configuration sections in Technical Implementation
+- **Solution**: Replace configuration sections in specification content
 - **Pattern**: Target specific code blocks or configuration objects
 
 ### File Update Workflow
@@ -876,7 +630,7 @@ Use these templates for consistent specification generation:
 - DIR3 requirement specifies irregular value recognition patterns
 
 ✅ Complete Requirements Bridge:
-Business BACs → Technical Requirements (TR) → Implementation Constraints (IC) → Data Integration Requirements (DIR) → Auto-Generated Technical Implementation
+Business BACs → Technical Requirements (TR) → Implementation Constraints (IC) → Data Integration Requirements (DIR)
 ```
 
 ## Implementation Requirements
@@ -930,7 +684,6 @@ Required Sections:
 4. Trader Format Specification with column mapping
 5. NIRMS Value Mapping (regular, irregular, or blanket statements)
 6. Acceptance Criteria (exactly 9, 11, or 14 based on approach)
-7. Technical Implementation with parser integration details
 ```
 
 ### Validation Rules for AC Generation
