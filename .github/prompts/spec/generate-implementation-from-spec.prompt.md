@@ -308,7 +308,13 @@ return combineParser.combine(
 - `test/unit/services/parser-service/[retailer]/model1.test.js` - Test cases
 - `test/unit/test-data-and-results/models/[retailer]/model1.js` - Test data models (MUST CREATE ALL)
 - `test/unit/test-data-and-results/results/[retailer]/model1.js` - Expected results (UPDATE EXISTING)
-- Test data in `app/packing-lists/[retailer]/` directory  
+- Test data in `app/packing-lists/[retailer]/` directory
+
+**⚠️ CRITICAL TEST ORGANIZATION:** For ALL CoO validation types, order tests by BAC sequence (BAC1, BAC2, BAC3, etc.) rather than implementation order. This provides:
+- **Better maintainability** - Tests follow logical business requirement progression
+- **Requirement traceability** - Easy to map tests to specific acceptance criteria
+- **Debugging clarity** - Validation issues can be traced to business requirements
+- **Code review efficiency** - Reviewers can follow BAC progression naturally  
 
 **MANDATORY Test Data Model Creation:**
 For every test case `model.[testDataName]`, you MUST create corresponding export in the test data models file:
@@ -344,16 +350,17 @@ invalidTestResult_MissingCells: {
 #### Type 1: Column-Based, Conventional NIRMS Testing
 ```javascript
 describe('[RETAILER] CoO Validation Tests - Type 1', () => {
-  test('Valid packing list with conventional NIRMS values', () => {
-    expect(result.business_checks.failure_reasons).toBeNull();
-  });
-  
-  test('Invalid conventional NIRMS values - validation errors', () => {
+  // Order tests by BAC sequence for maintainability
+  test('BAC1: Invalid conventional NIRMS values - validation errors', () => {
     expect(result.business_checks.failure_reasons).toContain('NIRMS/Non-NIRMS goods not specified');
   });
   
-  test('Missing CoO values with valid NIRMS', () => {
+  test('BAC2: Missing CoO values with valid NIRMS', () => {
     expect(result.business_checks.failure_reasons).toContain('Missing Country of Origin');
+  });
+  
+  test('BAC6: Valid packing list with conventional NIRMS values', () => {
+    expect(result.business_checks.failure_reasons).toBeNull();
   });
 });
 ```
@@ -361,16 +368,17 @@ describe('[RETAILER] CoO Validation Tests - Type 1', () => {
 #### Type 2: Column-Based, Unconventional NIRMS Testing  
 ```javascript
 describe('[RETAILER] CoO Validation Tests - Type 2', () => {
-  test('Valid packing list with unconventional NIRMS values', () => {
-    expect(result.business_checks.failure_reasons).toBeNull();
-  });
-  
-  test('Invalid unconventional NIRMS values - validation errors', () => {
+  // Order tests by BAC sequence for maintainability
+  test('BAC1: Invalid unconventional NIRMS values - validation errors', () => {
     expect(result.business_checks.failure_reasons).toContain('Invalid entry for NIRMS/Non-NIRMS goods');
   });
   
-  test('Unconventional NIRMS value mapping', () => {
+  test('BAC2: Unconventional NIRMS value mapping verification', () => {
     expect(result.items[0].nirms).toBe('NIRMS');
+  });
+  
+  test('BAC6: Valid packing list with unconventional NIRMS values', () => {
+    expect(result.business_checks.failure_reasons).toBeNull();
   });
 });
 ```
@@ -378,12 +386,13 @@ describe('[RETAILER] CoO Validation Tests - Type 2', () => {
 #### Type 3: Blanket Statement, Fixed Testing
 ```javascript  
 describe('[RETAILER] CoO Validation Tests - Type 3', () => {
-  test('Valid packing list with fixed blanket statement', () => {
-    expect(result.business_checks.failure_reasons).toBeNull();
+  // Order tests by BAC sequence for maintainability
+  test('BAC1: Missing fixed blanket statement - validation fails', () => {
+    expect(result.business_checks.failure_reasons).toContain('NIRMS/Non-NIRMS goods not specified');
   });
   
-  test('Missing fixed blanket statement - validation fails', () => {
-    expect(result.business_checks.failure_reasons).toContain('NIRMS/Non-NIRMS goods not specified');
+  test('BAC6: Valid packing list with fixed blanket statement', () => {
+    expect(result.business_checks.failure_reasons).toBeNull();
   });
   
   test('Fixed blanket statement sets all items to NIRMS', () => {
@@ -393,21 +402,13 @@ describe('[RETAILER] CoO Validation Tests - Type 3', () => {
 ```
 
 #### Type 4: Blanket Statement, Dynamic Testing
+
 ```javascript
 describe('[RETAILER] CoO Validation Tests - Type 4', () => {
-  test('Valid packing list with dynamic blanket statement', () => {
-    const result = await parserService.findParser(model.validCooModel, filename);
-    expect(result.business_checks.failure_reasons).toBeNull();
-  });
-  
+  // Order tests by BAC sequence for maintainability
   test('BAC1: Missing dynamic blanket statement - validation fails', () => {
     const result = await parserService.findParser(model.missingBlanketStatement, filename);  
     expect(result.business_checks.failure_reasons).toContain('NIRMS/Non-NIRMS goods not specified');
-  });
-  
-  test('Dynamic blanket statement with establishment number variation', () => {
-    const result = await parserService.findParser(model.dynamicVariation, filename);
-    expect(result.items.every(item => item.nirms === 'NIRMS')).toBe(true);
   });
   
   test('BAC2: Missing CoO values with blanket statement - validation errors', () => {
@@ -415,9 +416,24 @@ describe('[RETAILER] CoO Validation Tests - Type 4', () => {
     expect(result.business_checks.failure_reasons).toContain('Missing Country of Origin');
   });
   
+  test('BAC3: Invalid CoO format - validation errors', () => {
+    const result = await parserService.findParser(model.invalidCooFormat, filename);
+    expect(result.business_checks.failure_reasons).toContain('Invalid Country of Origin');
+  });
+  
+  test('BAC6: Valid packing list with dynamic blanket statement', () => {
+    const result = await parserService.findParser(model.validCooModel, filename);
+    expect(result.business_checks.failure_reasons).toBeNull();
+  });
+  
   test('BAC7-10: Prohibited items validation with treatment type', () => {
     const result = await parserService.findParser(model.prohibitedItems, filename);
     expect(result.business_checks.failure_reasons).toContain('Prohibited item identified on the packing list');
+  });
+  
+  test('Dynamic blanket statement sets all items to NIRMS', () => {
+    const result = await parserService.findParser(model.dynamicVariation, filename);
+    expect(result.items.every(item => item.nirms === 'NIRMS')).toBe(true);
   });
 });
 ```
