@@ -22,12 +22,12 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
-    for (const sheet of sheets) {
-      const headerTitles = Object.values(headers.TESCO1.regex);
-      const headerCallback = function (x) {
+    const headerTitles = Object.values(headers.TESCO1.regex);
+    const headerCallback = function (x) {
         return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
       };
 
+    for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
         packingListJson[sheet],

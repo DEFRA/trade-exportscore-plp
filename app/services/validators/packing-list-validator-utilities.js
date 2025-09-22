@@ -129,13 +129,13 @@ function isNotNirms(nirms) {
   return stringMatchesPattern(nirms, notNirmsPatterns);
 }
 
-function stringMatchesPattern(input, regex) {
+function stringMatchesPattern(input, regexPatterns) {
   if (typeof input !== "string") {
     return false;
   }
 
   const value = input.trim().toLowerCase();
-  return regex.some((pattern) => pattern.test(value));
+  return regexPatterns.some((pattern) => pattern.test(value));
 }
 
 function isInvalidCoO(countryOfOrigin) {
