@@ -17,6 +17,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "IT",
         total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
       {
         commodity_code: "1902209990",
@@ -27,6 +28,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "IT",
         total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
     ],
     registration_approval_number: "RMS-GB-000153",
@@ -47,6 +49,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "IT",
         total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
       {
         commodity_code: "1902209990",
@@ -57,6 +60,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "IT",
         total_net_weight_unit: "KG",
+        nirms: null,
       },
     ],
     registration_approval_number: "RMS-GB-000153",
@@ -75,7 +79,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'No of packages is missing in sheet "RANA" row 5.\nTotal net weight is missing in sheet "RANA" row 6.\n',
+        'NIRMS/Non-NIRMS goods not specified.\nNo of packages is missing in sheet "RANA" row 5.\nTotal net weight is missing in sheet "RANA" row 6.\n',
     },
     items: [
       {
@@ -87,6 +91,7 @@ module.exports = {
         nature_of_products: null,
         type_of_treatment: null,
         country_of_origin: "IT",
+        nirms: null,
       },
       {
         commodity_code: "1902209990",
@@ -97,6 +102,7 @@ module.exports = {
         nature_of_products: null,
         type_of_treatment: null,
         country_of_origin: "IT",
+        nirms: null,
       },
     ],
     registration_approval_number: "RMS-GB-000153",
@@ -125,7 +131,9 @@ module.exports = {
   multipleRms: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: failureReasonsDescriptions.MULTIPLE_RMS,
+      failure_reasons:
+        failureReasonsDescriptions.MULTIPLE_RMS +
+        "NIRMS/Non-NIRMS goods not specified.\n",
     },
     items: [
       {
@@ -137,6 +145,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "IT",
         total_net_weight_unit: "KG",
+        nirms: null,
       },
       {
         commodity_code: "1902209990",
@@ -147,6 +156,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "IT",
         total_net_weight_unit: "KG",
+        nirms: null,
       },
     ],
     registration_approval_number: "RMS-GB-000153",
@@ -155,7 +165,8 @@ module.exports = {
   missingKgunit: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Net Weight Unit of Measure (kg) not found.\n",
+      failure_reasons:
+        "Net Weight Unit of Measure (kg) not found.\nNIRMS/Non-NIRMS goods not specified.\n",
     },
     items: [
       {
@@ -167,6 +178,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "IT",
         total_net_weight_unit: null,
+        nirms: null,
       },
       {
         commodity_code: "1902209990",
@@ -177,6 +189,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "IT",
         total_net_weight_unit: null,
+        nirms: null,
       },
     ],
     registration_approval_number: "RMS-GB-000153",
