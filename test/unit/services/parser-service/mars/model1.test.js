@@ -53,3 +53,18 @@ describe("parsesMarsModel1", () => {
     expect(result).toMatchObject(test_results.missingKgunit);
   });
 });
+
+describe("CoO Validation Tests", () => {
+
+  test.each([
+    { description: "valid Nirms", model: model.missingNirms, expected: "NIRMS/Non-NIRMS goods not specified" },
+    { description: "invalid Nirms", model: model.invalidNirms, expected: "Invalid entry for NIRMS/Non-NIRMS" },
+    { description: "missing CoO", model: model.missingCoO, expected: "Missing Country of Origin" },
+    { description: "invalid CoO", model: model.invalidCoO, expected: "Invalid Country of Origin ISO Code" },
+    { description: "prohibited item", model: model.prohibitedItem, expected: "Prohibited item identified on the packing list" },
+  ])('checks CoO validation for $description', async ({ model, expected }) => {
+    const result = await parserService.findParser(model, filename);
+    expect(result.business_checks.all_required_fields_present).toBeFalsy();
+    expect(result.business_checks.failure_reasons).toContain(expected);
+  });
+});

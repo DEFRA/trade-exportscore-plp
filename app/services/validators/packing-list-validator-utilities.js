@@ -117,19 +117,25 @@ function hasProhibitedItems(item) {
 }
 
 function isNirms(nirms) {
-  if (typeof nirms !== "string") {
-    return false;
-  }
-  const nirmsValues = ["yes", "nirms", "green", "y", "g"];
-  return nirmsValues.includes(nirms.trim().toLowerCase());
+  const nirmsValues = [/^(yes|nirms|green|y|g)$/i, /^green lane/i];
+  return stringMatchesPattern(nirms, nirmsValues);
 }
 
 function isNotNirms(nirms) {
-  if (typeof nirms !== "string") {
+  const notNirmsPatterns = [
+    /^(no|non[- ]?nirms|red|n|r)$/i, //equals
+    /^red lane/i, // starts with
+  ];
+  return stringMatchesPattern(nirms, notNirmsPatterns);
+}
+
+function stringMatchesPattern(input, regexPatterns) {
+  if (typeof input !== "string") {
     return false;
   }
-  const notNirmsValues = ["no", "non-nirms", "non nirms", "red", "n", "r"];
-  return notNirmsValues.includes(nirms.trim().toLowerCase());
+
+  const value = input.trim().toLowerCase();
+  return regexPatterns.some((pattern) => pattern.test(value));
 }
 
 function isInvalidCoO(countryOfOrigin) {
