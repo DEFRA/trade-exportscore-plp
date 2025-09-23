@@ -68,6 +68,13 @@ function mapParser(
     ? header.blanketTreatmentType?.value
     : null;
 
+  // assign treatment type value if singleValueTypeOfTreatment present
+  const singleTreatmentTypeValue = header.singleValueTypeOfTreatment
+    ? packingListJson[header.singleValueTypeOfTreatment.row][
+        header.singleValueTypeOfTreatment.col
+      ]
+    : null;
+
   // parse the packing list contents based on columns identified
   const packingListContents = packingListJson
     .slice(dataRow)
@@ -77,6 +84,7 @@ function mapParser(
       type_of_treatment:
         columnValue(col[headerCols.type_of_treatment]) ??
         (isNotEmpty(col, headerCols) && blanketTreatmentType) ??
+        (isNotEmpty(col, headerCols) && singleTreatmentTypeValue) ??
         null,
       commodity_code: columnValue(col[headerCols.commodity_code]),
       number_of_packages: columnValue(col[headerCols.number_of_packages]),

@@ -242,6 +242,13 @@ const headers = {
     },
     country_of_origin: /Country of Origin/i,
     findUnitInHeader: true,
+    validateCountryOfOrigin: true,
+    blanketNirms: {
+      regex:
+        /The exporter of the products covered by this document \(NIRMS RMS-GB-000280\)\s*\n\s*declares that these products are intend for the Green lane and will remain\s*\n\s*in Northern Ireland./i,
+      value: "NIRMS",
+    },
+    singleValueTypeOfTreatment: { col: "H", row: 16 },
   },
   MARS1: {
     establishmentNumber: {
