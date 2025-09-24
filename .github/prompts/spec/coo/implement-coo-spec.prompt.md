@@ -1,4 +1,4 @@
-# Implement Complete Solution from ADO Ticket Prompt
+# Implement Complete Solution for CoO Spec from ADO Ticket ID Prompt
 
 ## Purpose
 This prompt implements a complete solution from an ADO ticket ID by finding the corresponding specification, implementing the solution according to the implementation guide, and ensuring all unit tests pass for each acceptance criteria.
@@ -7,6 +7,20 @@ This prompt implements a complete solution from an ADO ticket ID by finding the 
 ```
 Follow instructions in [implement-from-ado-ticket.prompt.md]. <ADO_TICKET_ID>
 ```
+
+## Universal Implementation Principles (ALL Types)
+
+**🚨 MANDATORY: These principles apply to ALL CoO validation implementations regardless of type:**
+
+1. **✅ Existing unit tests SHOULD still be passing** - Implementation must not break existing functionality for unrelated models (e.g., implementing ASDA3 CoO validation should not affect ASDA1 or ASDA2 tests)
+
+2. **✅ Test data for existing unit tests should have non-NIRMS values** - Run the Preflight test-data fixer (see Step 3 Preflight) to ensure relevant NIRMS columns contain "Non-NIRMS" values; this centralises fixture updates and prevents duplicated instructions.
+
+3. **✅ Additional columns should NOT be added to regex property in model-headers.js** - CoO fields (nirms, country_of_origin, etc.) are optional additions outside the regex property, not mandatory parsing fields that would break existing parsers
+
+4. **✅ ONLY the relevant model should be updated** - Implementation should be completely isolated to the target model only (e.g., ASDA3 implementation should require zero changes to ASDA1, ASDA2, or any other independent models)
+
+**⚠️ Violation of these principles indicates architectural issues that must be resolved before proceeding.**
 
 ## Instructions
 
@@ -39,6 +53,20 @@ Based on the implementation guide, identify the CoO validation type:
 - Uses `blanketNirms: { regex: /pattern/ }` (no fixed value)
 
 ### Step 3: Implementation Execution
+
+### Preflight: Fix Test Data First
+
+Before making any configuration or parser changes, run the test-data fixer prompt to ensure existing unit tests won't fail due to missing Non-NIRMS values.
+
+Usage:
+```
+Follow instructions in [add-non-nirms-to-existing-test-data.prompt.md]. <ADO_TICKET_ID>
+```
+
+Why: This step proactively updates existing test fixtures (adds `Non-NIRMS` / CoO columns where appropriate) so subsequent implementation and tests focus on behavior changes rather than failing fixtures.
+
+When to skip: Only skip this step if the implementation guide explicitly states no test-data updates are required.
+
 
 #### 3.1 Configuration Updates (model-headers.js)
 Follow the implementation guide's configuration requirements:
@@ -75,23 +103,9 @@ describe('<Parser> CoO Validation Tests - Type <X>', () => {
 
 ### Step 4: Test Data Requirements
 
-#### 4.1 Identify Required Test Files
-From implementation guide, determine:
-- **Test directory**: Usually `app/packing-lists/<retailer>/`
-- **Test file naming**: Pattern from existing files or implementation guide
-- **Number of test files needed**: One per BAC scenario + happy path
+The Preflight step (Step 3) is the authoritative action for updating existing test fixtures. It will add Non‑NIRMS values and the required CoO-related columns to existing models where appropriate. Only create additional packing-list test files when the implementation guide requires BAC scenarios that the Preflight does not cover.
 
-#### 4.2 Test Data Creation Strategy
-**If test files don't exist:**
-1. **Create base template** from existing similar retailer files
-2. **Modify for specific requirements** based on BAC scenarios
-3. **Ensure establishment number matches** parser configuration
-4. **Include required columns/sheets** as specified
-
-**Test Data Patterns by Type:**
-- **Type 1/2**: Individual CoO column variations (valid, invalid, missing, placeholder)
-- **Type 3**: Fixed blanket statement presence/absence + column variations
-- **Type 4**: Dynamic blanket statement variations + column validation
+When additional files are needed, place them under `app/packing-lists/<retailer>/` and mirror the format used by the Preflight prompt. Prefer using the `add-non-nirms-to-existing-test-data.prompt.md` workflow for consistency.
 
 ### Step 5: Comprehensive Test Implementation
 
@@ -126,7 +140,7 @@ Ensure tests cover:
 
 #### 6.2 Test Development
 1. **Create/update test file** with comprehensive BAC coverage
-2. **Create test data files** for each scenario (if needed)
+2. **Create additional test data files only if necessary** — if the Preflight does not supply a specific BAC scenario, add minimal packing-list samples and place them in `app/packing-lists/<retailer>/`. Prefer using the test-data fixer prompt to generate or align fixtures when possible.
 3. **Run tests** to identify any parser issues
 4. **Fix parser issues** (minimal changes only as per implementation guide)
 
