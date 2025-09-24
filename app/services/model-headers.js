@@ -6,6 +6,7 @@ const netWeight = /Net Weight/i;
 
 const headers = {
   ASDA1: {
+    deprecated: true,
     establishmentNumber: {
       regex: /^RMS-GB-000015-\d{3}$/i,
     },
