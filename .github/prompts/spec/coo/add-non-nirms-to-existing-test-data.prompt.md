@@ -10,6 +10,20 @@ tools: ['codebase', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure',
 
 This prompt systematically adds non-NIRMS values to existing test data models to comply with Universal Implementation Principles when implementing CoO validation for specific retailer models. This prevents existing unit tests from failing due to new CoO validation requirements.
 
+**🚨 CRITICAL SCOPE LIMITATION: This prompt ONLY adds the NIRMs/Non-NIRMs column as specified in the ticket. It does NOT add other CoO-related columns like Commodity Code, Country of Origin, or Treatment Type. The header name for the NIRMs column varies by retailer and must match exactly what is specified in the ticket specification.**
+
+**🚨 CRITICAL IMPLEMENTATION RULE: When updating existing test data models, you must ONLY:**
+1. **Add the NIRMs/Non-NIRMs column header** to header rows (with exact name from ticket specification)
+2. **Add "Non-NIRMS" values** to existing data rows in the NIRMs column
+3. **Shift existing columns** to accommodate the new NIRMs column position
+4. **DO NOT add any other CoO-related columns** (Commodity Code, Country of Origin, Treatment Type columns)
+5. **DO NOT modify existing column data** except to shift positions if needed
+
+**Example of CORRECT implementation:**
+- BEFORE: Columns B, C, D, E, F...
+- AFTER: Columns B, C (NIRMs/Non-NIRMs), D, E, F, G... (other columns shifted)
+- Data rows get "Non-NIRMS" in column C, other data shifts accordingly
+
 ## Usage
 
 ```
@@ -101,15 +115,13 @@ From the specification file, extract:
 
 1. **NIRMS Column Name**: Look for column mapping section
    - Example: `Column C: 'NIRMs/Non-NIRMs' - NIRMS classification values`
+   - **Note**: The column header name varies by retailer specification and should match exactly what's specified
 
 2. **NIRMS Value Mapping**: Extract false (non-NIRMS) values
    - **True Values (NIRMS = Yes)**: `Yes | NIRMS | Green | Y | G`
    - **False Values (NIRMS = No)**: `No | Non-NIRMS | Non NIRMS | Red | N | R`
 
-3. **Additional CoO Columns** (if specified):
-   - **Commodity Code Column**: `Column M: 'Commodity Code'`
-   - **Country of Origin Column**: `Column N: 'Country of Origin'`
-   - **Treatment Type Column**: `Column E: 'Treatment Type'`
+**⚠️ IMPORTANT: This prompt ONLY adds the NIRMs/Non-NIRMs column. Do NOT add other CoO columns like Commodity Code, Country of Origin, or Treatment Type - those should already exist in the test data or be added by separate processes.**
 
 ### Step 2: Test Data Model Analysis
 
@@ -148,11 +160,9 @@ function findNextAvailableColumn(row) {
 #### 3.2 Column Assignment Strategy
 Based on specification analysis:
 
-1. **NIRMS Column**: Assign to next available column after existing data
-2. **Additional CoO Columns** (if needed for comprehensive test data):
-   - **Commodity Code**: Next available column after NIRMS
-   - **Country of Origin**: Next available column after Commodity Code
-   - **Treatment Type**: May already exist or need separate column
+1. **NIRMS Column ONLY**: Assign to next available column after existing data
+
+**⚠️ CRITICAL: Do NOT add additional columns like Commodity Code, Country of Origin, or Treatment Type. This prompt focuses exclusively on the NIRMs/Non-NIRMs column as specified in the ticket.**
 
 ### Step 4: Systematic Model Updates
 
@@ -178,9 +188,7 @@ For **EACH** model object in the test data file:
   D: "Treatment Type",
   // ... existing columns
   I: "kilograms/grams",
-  J: "NIRMs/Non-NIRMs",        // ← Added NIRMS column header
-  K: "Commodity Code",          // ← Optional: if specified in spec
-  L: "Country of Origin",       // ← Optional: if specified in spec
+  J: "NIRMs/Non-NIRMs",        // ← Added NIRMS column header (use exact header from spec)
 }
 ```
 
@@ -202,22 +210,20 @@ For **EACH** model object in the test data file:
   D: "Ambient Grocery",
   // ... existing data
   I: "kgs",
-  J: "Non-NIRMS",             // ← Added non-NIRMS value
-  K: "19089000",              // ← Optional: commodity code if specified
-  L: "United Kingdom",        // ← Optional: country of origin if specified
+  J: "Non-NIRMS",             // ← Added non-NIRMS value (from spec mapping)
 }
 ```
+
+**⚠️ IMPORTANT: Only add the NIRMs/Non-NIRMs column. Do NOT add Commodity Code, Country of Origin, or other columns.**
 
 #### 4.2 Model-Specific Update Rules
 
 **validModel / validModelMultipleSheets:**
-- Add NIRMS column header to header rows
-- Add "Non-NIRMS" values to all data rows
-- Add optional CoO columns with valid sample data
+- Add NIRMS column header to header rows (using exact header text from specification)
+- Add "Non-NIRMS" values to all data rows (or appropriate false value from spec)
 
 **validHeadersNoData:**
 - Add NIRMS column header only (no data rows)
-- Add optional CoO column headers
 
 **emptyModel:**
 - Add NIRMS column header to header rows
@@ -251,23 +257,7 @@ From specification false values, choose the clearest option:
 - **Alternative**: `"No"` (if Non-NIRMS not in spec)
 - **Consistent Usage**: Use same value throughout all models
 
-#### 5.2 Additional CoO Values (Optional)
-If specification requires additional CoO columns:
-
-**Commodity Code Values:**
-- **Valid Code**: `"19089000"` (common food commodity code)
-- **Alternative**: Use codes from actual prohibited items list
-- **Consistency**: Use same code across similar test scenarios
-
-**Country of Origin Values:**
-- **Standard Value**: `"United Kingdom"` or `"GB"`
-- **Alternative**: `"US"`, `"FR"` for variety
-- **Placeholder**: `"X"` for placeholder testing (if spec mentions)
-
-**Treatment Type Values:**
-- **Common Values**: `"Ambient Grocery"`, `"Processed"`, `"Fresh"`
-- **Maintain Existing**: If column already exists, keep existing values
-- **Null Handling**: Use `null` for intentionally missing treatment type tests
+**⚠️ REMINDER: Only add NIRMs/Non-NIRMs values. Do not add other CoO-related data.**
 
 ### Step 6: Implementation Execution
 
@@ -365,9 +355,8 @@ fi
 **⚠️ CRITICAL: Updates are NOT complete until ALL items checked:**
 
 - [ ] **Specification Analysis Complete**: ADO ticket specification located and analyzed
-  - [ ] NIRMS column name identified from spec
+  - [ ] NIRMS column name identified from spec (exact header text)
   - [ ] NIRMS false values identified from spec  
-  - [ ] Additional CoO columns identified (if any)
   - [ ] Column mapping strategy determined
 - [ ] **Test Data Structure Analysis**: Current test data model fully analyzed
   - [ ] All model objects identified
@@ -375,13 +364,11 @@ fi
   - [ ] Header and data row patterns identified
   - [ ] Column assignment strategy planned
 - [ ] **Systematic Model Updates**: ALL models updated with appropriate strategy
-  - [ ] Header rows updated with NIRMS column headers
-  - [ ] Data rows updated with "Non-NIRMS" values
+  - [ ] Header rows updated with NIRMS column headers (using exact text from spec)
+  - [ ] Data rows updated with "Non-NIRMS" values (or spec-appropriate false value)
   - [ ] Model-specific rules applied correctly
-  - [ ] Additional CoO columns added (if specified)
 - [ ] **Value Consistency**: Consistent value selection across all models
-  - [ ] Non-NIRMS values match specification
-  - [ ] Additional CoO values are valid and consistent
+  - [ ] Non-NIRMS values match specification exactly
   - [ ] Null handling preserves intentional test patterns
 - [ ] **File Integrity**: Updated file maintains quality standards  
   - [ ] JavaScript syntax remains valid
@@ -454,10 +441,10 @@ Follow instructions in [add-non-nirms-to-existing-test-data.prompt.md]. AB#59151
 ```
 
 ### Expected Outcome
-- ASDA 3 test data models updated with "Non-NIRMS" values in appropriate column
-- Additional CoO columns (Commodity Code, Country of Origin) added if specified  
+- Test data models updated with "Non-NIRMS" values in NIRMs/Non-NIRMs column (using exact header from specification)
 - All existing test patterns preserved (empty rows, missing data, incorrect headers)
 - Unit tests continue to pass without CoO validation failures
+- **ONLY** the NIRMs/Non-NIRMs column added - no other CoO columns
 
 ### Auto-Detection Examples
 
@@ -495,21 +482,17 @@ validModel: {
       C: "Nature of Product",
       // ... existing columns
       I: "kilograms/grams", 
-      J: "NIRMs/Non-NIRMs",
-      K: "Commodity Code", 
-      L: "Country of Origin",
+      J: "NIRMs/Non-NIRMs",    // ← Only add this column, using exact header from spec
     },
     {
       B: "100000261 DAILY CROISSANT CHOCO 1PK",
       C: "Bakery Bought In", 
       // ... existing data
       I: "kgs",
-      J: "Non-NIRMS",
-      K: "19089000",
-      L: "United Kingdom",
+      J: "Non-NIRMS",          // ← Only add this value
     },
   ]
 }
 ```
 
-This ensures that when CoO validation is implemented for the specific model (ASDA3), existing test data won't fail validation due to missing NIRMS values, following the Universal Implementation Principle that "test data for existing unit tests should have non-NIRMS values."
+This ensures that when CoO validation is implemented for the specific model, existing test data won't fail validation due to missing NIRMS values, following the Universal Implementation Principle that "test data for existing unit tests should have non-NIRMS values."
