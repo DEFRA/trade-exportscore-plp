@@ -50,6 +50,46 @@ function mapParser(
 ) {
   // find columns containing header names
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
+
+  // extract blanket values
+  const blanketValues = extractBlanketValues(header, packingListJson, headerCols, headerRow);
+
+  // parse the packing list contents based on columns identified
+  const packingListContents = packingListJson
+    .slice(dataRow)
+    .map((col, rowPos) => {
+      const hasData = isNotEmpty(col, headerCols);
+
+      return {
+        description: columnValue(col[headerCols.description]),
+        nature_of_products: columnValue(col[headerCols.nature_of_products]),
+        type_of_treatment: getTypeOfTreatment(
+          col,
+          headerCols,
+          blanketValues,
+          hasData,
+        ),
+        commodity_code: columnValue(col[headerCols.commodity_code]),
+        number_of_packages: columnValue(col[headerCols.number_of_packages]),
+        total_net_weight_kg: columnValue(col[headerCols.total_net_weight_kg]),
+        total_net_weight_unit: getNetWeightUnit(
+          col,
+          headerCols,
+          blanketValues,
+          hasData,
+        ),
+        country_of_origin: columnValue(col[headerCols.country_of_origin]),
+        nirms: getNirms(col, headerCols, blanketValues, hasData),
+        row_location: {
+          rowNumber: dataRow + rowPos + 1,
+          sheetName,
+        },
+      };
+    });
+  return packingListContents;
+}
+
+function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
   const netWeightUnit = header.findUnitInHeader
     ? (regex.findUnit(
         packingListJson[headerRow][headerCols.total_net_weight_kg],
@@ -75,35 +115,37 @@ function mapParser(
       ]
     : null;
 
-  // parse the packing list contents based on columns identified
-  const packingListContents = packingListJson
-    .slice(dataRow)
-    .map((col, rowPos) => ({
-      description: columnValue(col[headerCols.description]),
-      nature_of_products: columnValue(col[headerCols.nature_of_products]),
-      type_of_treatment:
-        columnValue(col[headerCols.type_of_treatment]) ??
-        (isNotEmpty(col, headerCols) && blanketTreatmentType) ??
-        (isNotEmpty(col, headerCols) && singleTreatmentTypeValue) ??
-        null,
-      commodity_code: columnValue(col[headerCols.commodity_code]),
-      number_of_packages: columnValue(col[headerCols.number_of_packages]),
-      total_net_weight_kg: columnValue(col[headerCols.total_net_weight_kg]),
-      total_net_weight_unit:
-        col[headerCols.total_net_weight_unit] ??
-        (isNotEmpty(col, headerCols) && netWeightUnit) ??
-        null,
-      country_of_origin: columnValue(col[headerCols.country_of_origin]),
-      nirms:
-        columnValue(col[headerCols.nirms]) ??
-        (isNotEmpty(col, headerCols) && blanketNirms) ??
-        null,
-      row_location: {
-        rowNumber: dataRow + rowPos + 1,
-        sheetName,
-      },
-    }));
-  return packingListContents;
+  return {
+    netWeightUnit,
+    blanketNirms,
+    blanketTreatmentType,
+    singleTreatmentTypeValue,
+  };
+}
+
+function getTypeOfTreatment(col, headerCols, blanketValues, hasData) {
+  return (
+    columnValue(col[headerCols.type_of_treatment]) ??
+    (hasData && blanketValues.blanketTreatmentType) ??
+    (hasData && blanketValues.singleTreatmentTypeValue) ??
+    null
+  );
+}
+
+function getNetWeightUnit(col, headerCols, blanketValues, hasData) {
+  return (
+    col[headerCols.total_net_weight_unit] ??
+    (hasData && blanketValues.netWeightUnit) ??
+    null
+  );
+}
+
+function getNirms(col, headerCols, blanketValues, hasData) {
+  return (
+    columnValue(col[headerCols.nirms]) ??
+    (hasData && blanketValues.blanketNirms) ??
+    null
+  );
 }
 
 function columnValue(value) {
