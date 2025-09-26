@@ -1,3 +1,9 @@
+---
+description: "Implements a complete Country of Origin (CoO) validation solution from an ADO ticket ID by finding the specification, implementing according to the implementation guide, and ensuring all BAC-driven unit tests pass."
+mode: "agent"
+model: Claude Sonnet 4 (copilot)
+---
+
 # Implement Complete CoO Solution from ADO Ticket - Optimized
 
 ## Purpose
@@ -159,6 +165,11 @@ validCooModel: {
 
 **Step 7: Create Test Implementation**
 
+MANDATORY NOTE (minimal rule set):
+- All 14 BAC scenarios (BAC1–BAC14) MUST live in the existing single parser-service test file for the model (e.g. `test/unit/services/parser-service/asda/model3.test.js`).
+- Do NOT introduce or keep a separate `*-coo.test.js` file in the final implementation.
+- Each BAC scenario must have a dedicated test named with its BAC identifier; expected messages must be taken from actual system output (never assumed).
+
 **For Each BAC Scenario:**
 1. **Test Case**: Descriptive name matching BAC in `parser-service/` test file
 2. **Test Data Model**: Based on `validCooModel` with single field modification
@@ -179,6 +190,41 @@ describe('<Parser> CoO Validation Tests - Type <X>', () => {
   });
 });
 ```
+- [ ] All referenced models exported
+- [ ] All tests GREEN (`npm run test:unit`)
+
+Fail Criteria (any triggers rejection):
+- Additional CoO-specific test file exists (e.g. `*-coo.test.js`)
+- Missing any BAC scenario
+- Placeholder text like `// TODO`, `"<populate later>"`, or generic `.toContain()` where full object is feasible
+- Summarisation scenarios created with fewer than 4 faulty rows
+- Manually altered error message formatting (extra trimming / normalisation)
+
+Implementation Process For Step 7:
+1. Add ALL BAC model variations with minimal delta from `validCooModel`.
+2. Create initial tests with `.toContain()` or minimal assertions (exploration phase permitted locally).
+3. Run tests, capture actual `failure_reasons` strings.
+4. Replace exploratory assertions with full `toMatchObject` using committed fixture results.
+5. Remove any temporary / exploratory test file.
+6. Re-run full suite to confirm zero regressions.
+
+Standard Test Skeleton (initial phase – may use partial expectations but MUST be upgraded before merge):
+```javascript
+describe('ASDA3 CoO Validation Tests - Type 1', () => {
+  test('BAC1: NOT within NIRMS Scheme - passes validation', async () => {
+    const r = await parserService.findParser(model.nonNirmsModel, filename);
+    expect(r.business_checks.failure_reasons).toBeNull();
+  });
+  // ... BAC2 → BAC14 ...
+});
+```
+
+Final Form (before merge) uses:
+```javascript
+expect(result).toMatchObject(results.bac<N>Result);
+```
+
+No merge while any BAC still relies only on loose `.toContain()` assertions.
 
 ### Phase 4: Validation & Quality Assurance
 

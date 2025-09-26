@@ -2,7 +2,6 @@
 description: "Add non-NIRMS values to existing test data models (streamlined version)"
 mode: "agent"
 model: GPT-5 mini (copilot)
-tools: ['codebase', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'extensions', 'editFiles', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks']
 ---
 
 # Add Non-NIRMS Values to Existing Test Data Models (Streamlined)
@@ -46,28 +45,22 @@ Examples:
 AB591514-asda3 → asda/model3.js  |  AB591516-bandm → bandm/model1.js  |  AB603666-asda4 → asda/model4.js  |  AB591539-sainsburys → sainsburys/model1.js
 
 ## 5. Extract From Spec
-Required extraction only:
-* Exact NIRMS column header text (e.g. `NIRMs/Non-NIRMs`).
-* False (non‑NIRMS) value options: `No | Non-NIRMS | Non NIRMS | Red | N | R` (choose "Non-NIRMS" if available).
-* True values are irrelevant here except to avoid using them for false rows.
+Required extraction only (dynamic — DO NOT hard-code):
+- Exact NIRMS column header text (e.g. `NIRMs/Non-NIRMs`).
+- False (non‑NIRMS) and true value tokens (the spec will typically list accepted values for the NIRMS field). Parse the spec file to extract these tokens rather than using a static list. Use the first available false-value token found (prefer `Non-NIRMS` if present).
+- True values are only needed to avoid accidentally using them for false rows; treat them as additional tokens to exclude.
+
+Notes on extraction: specs commonly present tokens as a pipe-separated list, a comma-separated list, or inline backtick examples. Use a forgiving parser that looks for common anchors ("False", "Non-NIRMS", "No", "Options:", backticked lists, or pattern groups like `No | Non-NIRMS | ...`). If extraction fails, fall back to the safe default set: [`Non-NIRMS`, `No`].
 
 ## 6. Model File Analysis
 For each exported model object (e.g. `validModel`, `multipleRms`, `invalidModel_MissingColumnCells`, etc.):
-1. Gather all column letters used across all its sheets & rows.  
-2. Determine highest letter (lexicographically).  
-3. NewColumn = next letter after highest (e.g. I→J, J→K).  
-4. Add header cell with extracted NIRMS header.  
-5. For every data row (non-empty object after header) add `NewColumn: "Non-NIRMS"` unless the row is intentionally empty `{}` or solely a placeholder (retain emptiness).  
-6. Preserve null/missing patterns elsewhere.  
-
-Pseudo:
-```javascript
-function nextColumn(used) {
-  if (!used.length) return 'A';
-  const last = used.sort().at(-1);
-  return String.fromCharCode(last.charCodeAt(0) + 1);
-}
-```
+1. Collect the set of all column letters used anywhere in the model object across all sheets and rows (headers and data rows). This MUST include keys that appear only in data rows — do not rely on header-only inspection.
+2. If any existing column letter already maps to a header value that matches the exact NIRMS header text (case-insensitive), then no new column is required for that model — use that column and (if necessary) ensure every sheet's header contains the same mapping.
+3. Else, search existing data cells for NIRMS-like tokens using the token set extracted from the spec (case-insensitive). If any existing column contains at least one cell matching a false or true NIRMS token, prefer that column as the NIRMS column (this covers cases where test-data rows were populated but the header was accidentally omitted; example: `multipleRms` used `K` in data but lacked the `K` header). If more than one column contains NIRMS-like values, pick the rightmost one (highest letter) among them to avoid overwriting existing header/data in earlier columns.
+4. If no existing column appears to be the NIRMS column, choose `NewColumn` = next letter after the highest-used column letter (per-model). Example: I → J, J → K.
+5. Add the NIRMS header cell (`NewColumn: <ExactHeaderText>`) into every header object (every sheet's header row) for that model object. If a matching header column already exists (step 2) ensure every sheet's header gets the header text added to that same letter.
+6. For every qualifying data row (non-empty object after header) that does not already have an NIRMS value in the chosen column, append `ChosenColumn: "Non-NIRMS"`. Do NOT populate intentionally-empty rows (`{}`), or rows that intentionally omit values.
+7. Preserve null/missing patterns and do not shift or rename any existing keys.
 
 CRITICAL: Do NOT compute this globally; compute per model object independently.
 
@@ -85,14 +78,59 @@ Fallback (if spec omits it): "No".
 Use exactly one consistent false value for all rows in the file.
 
 ## 9. Implementation Steps (Algorithm)
-1. Load file AST or treat as plain JS object text (simple find/replace acceptable if safe).  
-2. For each exported model key: collect columns → decide `nirmsCol`.  
-3. Insert header field `nirmsCol: <HeaderText>` into each header row (first row of each sheet that already lists column headings).  
-4. Append `nirmsCol: "Non-NIRMS"` to each qualifying data row.  
-5. Do not reorder object keys (append at end for minimal diff).  
-6. Save file.  
-7. Syntax check (`node -c`).  
-8. Run targeted unit tests: `npm run test:unit -- --testPathPattern="<retailer>.*model<modelNumber>"`.  
+1. Load the file as JS text and parse the exported models (or use an AST-based approach if comfortable). A safe plain-text JS-object edit is acceptable so long as keys are not reordered.
+2. For each exported model object (do this independently per model):
+  a. Collect the union of column letters present in every sheet's header row and every data row object.
+  b. If an existing header cell already matches the exact NIRMS header text (case-insensitive), set `chosenCol` to that letter and continue.
+  c. Else, inspect data cells for NIRMS-like tokens (false/true values from the spec). If any column contains such tokens, set `chosenCol` to the rightmost column (highest letter) among those columns.
+  d. Else, compute `chosenCol` = next letter after the highest-used column letter in the union set.
+3. For each sheet in the model object, ensure the sheet's header object includes `chosenCol: <ExactHeaderText>` (append at end of that object if necessary). If a sheet has no header (edge case), create a header object as the first element with only the new header column added (do this only when safe — prefer leaving untouched sheets that are intentionally headerless).
+4. For each data row object in every sheet, if the row is non-empty and does not already contain a value at `chosenCol`, append `chosenCol: "Non-NIRMS"` (or chosen fallback) at the end of that object. Do not populate rows that are `{}` or intentionally malformed.
+5. Preserve all other keys and value ordering where possible; append only.
+6. Save file and run a syntax-only parse: `node -c <file>`.
+7. Optionally `require()` the file to ensure runtime parsing succeeds (no side-effects expected in test-data files).
+8. Run targeted unit tests: `npm run test:unit -- --testPathPattern="<retailer>.*model<modelNumber>" --runInBand`.
+
+Implementation pseudo that encodes the above heuristics:
+```javascript
+function pickNirmsColumn(sheets, headerText, nirmsTokensRegex) {
+  // Collect used letters in header and data rows
+  const used = new Set();
+  const dataCandidateCounts = {}; // letter -> match count
+
+  Object.values(sheets).forEach(sheet => {
+    if (!Array.isArray(sheet) || sheet.length === 0) return;
+    const header = sheet[0] || {};
+    Object.keys(header).forEach(k => used.add(k));
+    for (let i = 1; i < sheet.length; i++) {
+      const row = sheet[i] || {};
+      Object.keys(row).forEach(k => {
+        used.add(k);
+        const v = String(row[k] ?? '').trim();
+        if (nirmsTokensRegex.test(v)) dataCandidateCounts[k] = (dataCandidateCounts[k] || 0) + 1;
+      });
+    }
+  });
+
+  // 1) existing header match
+  for (const sheet of Object.values(sheets)) {
+    if (!Array.isArray(sheet) || sheet.length === 0) continue;
+    const header = sheet[0] || {};
+    for (const [k, v] of Object.entries(header)) {
+      if (String(v).toLowerCase() === headerText.toLowerCase()) return k;
+    }
+  }
+
+  // 2) prefer existing data column that contains NIRMS-like tokens (rightmost)
+  const candidateCols = Object.keys(dataCandidateCounts);
+  if (candidateCols.length) return candidateCols.sort().at(-1);
+
+  // 3) fallback: next letter after highest used
+  if (used.size === 0) return 'A';
+  const highest = Array.from(used).sort().at(-1);
+  return String.fromCharCode(highest.charCodeAt(0) + 1);
+}
+```
 
 ## 10. Verification Script Sketch
 ```javascript
@@ -161,4 +199,4 @@ Per-model column detection ONLY. Never choose a global maximum. Never rewrite ex
 After execution the file diff shows ONLY added `NIRMs/Non-NIRMs` headers and `Non-NIRMS` data fields at the end of relevant row objects (or K for special case like `multipleRms`). No other alterations.
 
 ---
-End of streamlined prompt. Logic & behaviour remain identical to the original verbose version; only redundancy removed and ordering optimized for execution.
+End of streamlined prompt.
