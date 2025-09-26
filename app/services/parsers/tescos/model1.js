@@ -24,8 +24,8 @@ function parse(packingListJson) {
 
     const headerTitles = Object.values(headers.TESCO1.regex);
     const headerCallback = function (x) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      };
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
 
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(

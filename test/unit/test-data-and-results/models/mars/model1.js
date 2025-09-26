@@ -372,7 +372,7 @@ module.exports = {
         I: "Ambient",
         J: "Green Lane - OCR",
       },
-    ]
+    ],
   },
   invalidCoO: {
     Sheet1: [
@@ -400,7 +400,7 @@ module.exports = {
         I: "Ambient",
         J: "Green Lane - OCR",
       },
-    ]
+    ],
   },
   missingNirms: {
     Sheet1: [
@@ -427,7 +427,7 @@ module.exports = {
         H: "GB",
         I: "Ambient",
       },
-    ]
+    ],
   },
   invalidNirms: {
     Sheet1: [
@@ -455,7 +455,7 @@ module.exports = {
         I: "Ambient",
         J: "SPS",
       },
-    ]
+    ],
   },
   prohibitedItem: {
     Sheet1: [
@@ -483,6 +483,6 @@ module.exports = {
         I: "Chilled",
         J: "Green Lane - OCR",
       },
-    ]
+    ],
   },
 };
