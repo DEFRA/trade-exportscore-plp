@@ -15,14 +15,18 @@ This prompt systematically adds non-NIRMS values to existing test data models to
 **🚨 CRITICAL IMPLEMENTATION RULE: When updating existing test data models, you must ONLY:**
 1. **Add the NIRMs/Non-NIRMs column header** to header rows (with exact name from ticket specification)
 2. **Add "Non-NIRMS" values** to existing data rows in the NIRMs column
-3. **Shift existing columns** to accommodate the new NIRMs column position
+3. **DO NOT modify or shift existing column data** - existing data must remain exactly as is
 4. **DO NOT add any other CoO-related columns** (Commodity Code, Country of Origin, Treatment Type columns)
-5. **DO NOT modify existing column data** except to shift positions if needed
+5. **Use a completely new column** that is not already used by any row in the model
+6. **Maintain column consistency** - all header rows and data rows must use the SAME selected column for NIRMs data
 
 **Example of CORRECT implementation:**
-- BEFORE: Columns B, C, D, E, F...
-- AFTER: Columns B, C (NIRMs/Non-NIRMs), D, E, F, G... (other columns shifted)
-- Data rows get "Non-NIRMS" in column C, other data shifts accordingly
+- BEFORE: Columns B, C, D, E, F... (some rows may use up to column J)
+- Analyze ALL rows to find highest used column (e.g., J is used in one row)
+- AFTER: Add NIRMs column to next available column (K in this example)
+- Header rows get "NIRMs/Non-NIRMs" in column K
+- Data rows get "Non-NIRMS" in column K
+- ALL existing data in columns B through J remains unchanged
 
 ## Usage
 
@@ -142,11 +146,24 @@ For each model object:
 
 ### Step 3: Column Detection and Mapping
 
-#### 3.1 Determine Next Available Column
+#### 3.1 Determine Next Available Column (PER MODEL)
 ```javascript
-// Example logic for finding next column
-function findNextAvailableColumn(row) {
-  const usedColumns = Object.keys(row).sort();
+// CRITICAL: Column detection must be done PER MODEL, not globally across all models
+// Each model gets its own next available column based on its individual usage pattern
+function findNextAvailableColumnForModel(singleModel) {
+  const allUsedColumns = new Set();
+  
+  // Analyze THIS SPECIFIC MODEL ONLY - all its sheets and rows
+  Object.values(singleModel).forEach(sheet => {
+    sheet.forEach(row => {
+      Object.keys(row).forEach(col => {
+        allUsedColumns.add(col);
+      });
+    });
+  });
+  
+  // Find next available column after highest used column IN THIS MODEL
+  const usedColumns = Array.from(allUsedColumns).sort();
   const lastColumn = usedColumns[usedColumns.length - 1];
   
   // Convert to next letter (A->B, B->C, etc.)
@@ -155,12 +172,18 @@ function findNextAvailableColumn(row) {
   }
   return 'A';
 }
+
+// WRONG APPROACH: Do NOT analyze all models globally
+// Each model should be independent based on its own column usage
 ```
 
 #### 3.2 Column Assignment Strategy
 Based on specification analysis:
 
-1. **NIRMS Column ONLY**: Assign to next available column after existing data
+1. **PER-MODEL ANALYSIS**: Each model gets its own next available column independently
+2. **NIRMS Column ONLY**: Assign to next available column that is completely unused within that specific model
+3. **NO SHIFTING**: Do not shift or modify existing data - all existing columns remain exactly as they were
+4. **CONSISTENT COLUMN**: Use the SAME column letter for both header rows and data rows across all sheets within each model
 
 **⚠️ CRITICAL: Do NOT add additional columns like Commodity Code, Country of Origin, or Treatment Type. This prompt focuses exclusively on the NIRMs/Non-NIRMs column as specified in the ticket.**
 
@@ -172,7 +195,9 @@ For **EACH** model object in the test data file:
 
 **Header Row Updates:**
 ```javascript
-// BEFORE
+// EXAMPLE: Per-model analysis for different models
+
+// BEFORE - Most models (validModel, emptyModel, etc.) use columns B-I
 {
   B: "Description Of All Retail Goods",
   C: "Nature of Product",
@@ -181,40 +206,86 @@ For **EACH** model object in the test data file:
   I: "kilograms/grams",
 }
 
-// AFTER  
+// AFTER - Most models get column J (next after their last column I)
 {
   B: "Description Of All Retail Goods",
   C: "Nature of Product", 
   D: "Treatment Type",
+  // ... existing columns (UNCHANGED)
+  I: "kilograms/grams",
+  J: "NIRMs/Non-NIRMs",        // ← Most models use column J
+}
+
+// SPECIAL CASE - multipleRms model uses columns B-J
+// BEFORE - multipleRms has data in column J
+{
+  B: "Description Of All Retail Goods",
+  C: "Nature of Product",
+  D: "Treatment Type", 
   // ... existing columns
   I: "kilograms/grams",
-  J: "NIRMs/Non-NIRMs",        // ← Added NIRMS column header (use exact header from spec)
+  // (Some data rows in this model use column J for RMS numbers)
+}
+
+// AFTER - multipleRms gets column K (next after its last column J)  
+{
+  B: "Description Of All Retail Goods",
+  C: "Nature of Product",
+  D: "Treatment Type",
+  // ... existing columns (UNCHANGED)
+  I: "kilograms/grams", 
+  K: "NIRMs/Non-NIRMs",        // ← multipleRms uses column K because it already used J
 }
 ```
 
 **Data Row Updates:**
 ```javascript
-// BEFORE
+// EXAMPLE: Most models get column J for data rows to match their header column J
+
+// BEFORE - Most models (validModel, emptyModel, etc.)
 {
   B: "100000261 DAILY CROISSANT CHOCO 1PK",
   C: "Bakery Bought In",
   D: "Ambient Grocery",
   // ... existing data
   I: "kgs",
+  // No NIRMs data yet
 }
 
-// AFTER
+// AFTER - Most models use column J for NIRMs data
 {
   B: "100000261 DAILY CROISSANT CHOCO 1PK", 
   C: "Bakery Bought In",
   D: "Ambient Grocery",
+  // ... existing data (ALL UNCHANGED)
+  I: "kgs",
+  J: "Non-NIRMS",              // ← Most models use column J for NIRMs data
+}
+
+// SPECIAL CASE - multipleRms model already uses column J for RMS data
+// BEFORE - multipleRms data row with existing RMS in column J
+{
+  B: "100000261 DAILY CROISSANT CHOCO 1PK",
+  C: "Bakery Bought In",
+  D: "Ambient Grocery",
   // ... existing data
   I: "kgs",
-  J: "Non-NIRMS",             // ← Added non-NIRMS value (from spec mapping)
+  J: "RMS-GB-000015-005",      // ← This existing RMS data MUST NOT be modified
+}
+
+// AFTER - multipleRms uses column K for NIRMs data (preserving column J RMS data)
+{
+  B: "100000261 DAILY CROISSANT CHOCO 1PK", 
+  C: "Bakery Bought In",
+  D: "Ambient Grocery",
+  // ... existing data (ALL UNCHANGED)
+  I: "kgs",
+  J: "RMS-GB-000015-005",      // ← Existing RMS data preserved exactly as is
+  K: "Non-NIRMS",              // ← NIRMs data in column K to avoid conflict
 }
 ```
 
-**⚠️ IMPORTANT: Only add the NIRMs/Non-NIRMs column. Do NOT add Commodity Code, Country of Origin, or other columns.**
+**⚠️ CRITICAL: ALL existing data must remain in original columns. Only ADD the new NIRMs column, never modify or shift existing data.**
 
 #### 4.2 Model-Specific Update Rules
 
@@ -265,10 +336,47 @@ From specification false values, choose the clearest option:
 For the specified test data model file:
 
 1. **Read Current File**: Parse existing module.exports structure
-2. **Update Each Model**: Apply the model-specific update rules
-3. **Maintain Formatting**: Preserve existing indentation and structure  
-4. **Validate Syntax**: Ensure JavaScript object syntax remains valid
-5. **Write Updated File**: Save with all models updated
+2. **Analyze Column Usage PER MODEL**: Examine each model individually to determine its highest used column
+3. **Select NIRMs Column PER MODEL**: Choose next available column that is completely unused within that specific model
+4. **Update Each Model**: Apply the model-specific update rules with per-model column selection
+5. **Preserve All Existing Data**: Ensure no existing data is modified or shifted
+6. **Maintain Formatting**: Preserve existing indentation and structure  
+7. **Validate Syntax**: Ensure JavaScript object syntax remains valid
+8. **Write Updated File**: Save with all models updated using their individual NIRMs columns
+
+**Critical Per-Model Column Selection Process:**
+```javascript
+// CORRECT: Analyze EACH model individually
+Object.keys(allTestModels).forEach(modelName => {
+  const singleModel = allTestModels[modelName];
+  
+  // Step 1: Find used columns in THIS MODEL ONLY
+  const modelUsedColumns = new Set();
+  Object.values(singleModel).forEach(sheet => {
+    sheet.forEach(row => {
+      Object.keys(row).forEach(col => modelUsedColumns.add(col));
+    });
+  });
+  
+  // Step 2: Find next available column for THIS MODEL
+  const sortedColumns = Array.from(modelUsedColumns).sort();
+  const nextColumn = String.fromCharCode(
+    sortedColumns[sortedColumns.length - 1].charCodeAt(0) + 1
+  );
+  
+  // Step 3: Use this column for ALL rows in THIS MODEL
+  console.log(`${modelName} will use column ${nextColumn} for NIRMs`);
+});
+
+// WRONG: Do NOT find global highest column and apply to all models
+// This would give incorrect results where most models get over-assigned columns
+```
+const nextColumn = String.fromCharCode(
+  sortedColumns[sortedColumns.length - 1].charCodeAt(0) + 1
+);
+
+// Step 3: Use this SAME column for ALL header rows and data rows
+```
 
 #### 6.2 Update Verification
 ```javascript
@@ -454,10 +562,50 @@ Follow instructions in [add-non-nirms-to-existing-test-data.prompt.md]. AB#59151
 - `AB#603666` → `asda4` → `test/unit/test-data-and-results/models/asda/model4.js`
 - `AB#591539` → `sainsburys` → `test/unit/test-data-and-results/models/sainsburys/model1.js`
 
-### Before/After Example
+### Before/After Example (Per-Model Column Assignment)
 ```javascript
-// BEFORE
+// EXAMPLE 1: Most models (validModel, emptyModel, etc.) - use column J
+// BEFORE - Models that only use columns B-I
 validModel: {
+  Page1_1: [
+    {
+      B: "Description Of All Retail Goods",
+      C: "Nature of Product", 
+      // ... existing columns B through I only
+      I: "kilograms/grams",
+    },
+    {
+      B: "100000261 DAILY CROISSANT CHOCO 1PK",
+      C: "Bakery Bought In",
+      // ... existing data B through I
+      I: "kgs",
+    },
+  ]
+}
+
+// AFTER - These models get column J (next after their highest column I)
+validModel: {
+  Page1_1: [
+    {
+      B: "Description Of All Retail Goods",
+      C: "Nature of Product",
+      // ... existing columns (ALL UNCHANGED)
+      I: "kilograms/grams", 
+      J: "NIRMs/Non-NIRMs",      // ← NIRMs header in column J (next after I)
+    },
+    {
+      B: "100000261 DAILY CROISSANT CHOCO 1PK",
+      C: "Bakery Bought In", 
+      // ... existing data (ALL UNCHANGED)
+      I: "kgs",
+      J: "Non-NIRMS",            // ← NIRMs value in column J
+    },
+  ]
+}
+
+// EXAMPLE 2: multipleRms model - use column K  
+// BEFORE - multipleRms model that uses columns B-J (including J for RMS data)
+multipleRms: {
   Page1_1: [
     {
       B: "Description Of All Retail Goods",
@@ -470,29 +618,40 @@ validModel: {
       C: "Bakery Bought In",
       // ... existing data
       I: "kgs",
+      J: "RMS-GB-000015-005",    // ← This model uses column J for RMS data!
     },
   ]
 }
 
-// AFTER  
-validModel: {
+// AFTER - multipleRms gets column K (next after its highest column J)
+multipleRms: {
   Page1_1: [
     {
       B: "Description Of All Retail Goods",
       C: "Nature of Product",
-      // ... existing columns
+      // ... existing columns (ALL UNCHANGED)
       I: "kilograms/grams", 
-      J: "NIRMs/Non-NIRMs",    // ← Only add this column, using exact header from spec
+      K: "NIRMs/Non-NIRMs",      // ← NIRMs header in column K (next after J)
     },
     {
       B: "100000261 DAILY CROISSANT CHOCO 1PK",
       C: "Bakery Bought In", 
-      // ... existing data
+      // ... existing data (ALL UNCHANGED)
       I: "kgs",
-      J: "Non-NIRMS",          // ← Only add this value
+      J: "RMS-GB-000015-005",    // ← Existing RMS data preserved exactly
+      K: "Non-NIRMS",            // ← NIRMs value in column K
     },
   ]
 }
 ```
 
 This ensures that when CoO validation is implemented for the specific model, existing test data won't fail validation due to missing NIRMS values, following the Universal Implementation Principle that "test data for existing unit tests should have non-NIRMS values."
+
+**🔑 KEY PRINCIPLE: Per-Model Column Assignment**
+
+The critical lesson from this implementation is that column detection must be done **per-model**, not globally:
+
+- **✅ CORRECT**: Each model analyzes its own column usage and gets its own next available column
+- **❌ WRONG**: Analyzing all models globally and applying the same column to all models
+
+This approach ensures optimal column usage where each model uses exactly the column it needs, rather than over-assigning columns based on other models' requirements.
