@@ -4,12 +4,6 @@
       "id": "ado_org",
       "type": "promptString",
       "description": "Azure DevOps organization name  (e.g. 'contoso')"
-    },
-    {
-      "type": "promptString",
-      "id": "github_mcp_pat",
-      "description": "GitHub Personal Access Token",
-      "password": true
     }
   ],
   "servers": {
@@ -24,10 +18,7 @@
     },
     "github": {
       "type": "http",
-      "url": "https://api.githubcopilot.com/mcp/",
-      "headers": {
-        "Authorization": "Bearer ${input:github_mcp_pat}"
-      }
+      "url": "https://api.githubcopilot.com/mcp/"
     },
     "ado": {
       "type": "stdio",
