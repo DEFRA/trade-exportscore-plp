@@ -32,16 +32,25 @@ const processExcelFile = async (filename, dispatchLocation = null) => {
   return packingList;
 };
 
-module.exports = {
+const handler = async (request, h) => {
+  const filename = config.plDir + request.query.filename;
+  const packingList = await processExcelFile(
+    filename,
+    request.query.dispatchlocation,
+  );
+  return h.response(packingList).code(StatusCodes.OK);
+};
+
+const route = {
   method: "GET",
   path: "/non-ai",
-  handler: async (request, h) => {
-    const filename = config.plDir + request.query.filename;
-    const packingList = await processExcelFile(
-      filename,
-      request.query.dispatchlocation,
-    );
-    return h.response(packingList).code(StatusCodes.OK);
-  },
-  processExcelFile, // Export for testing
+  handler,
+};
+
+// Export an object with `route` so router can normalise it. Also export
+// `handler` and `processExcelFile` for unit tests that import this module.
+module.exports = {
+  route,
+  handler,
+  processExcelFile,
 };
