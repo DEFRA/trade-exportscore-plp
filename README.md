@@ -76,7 +76,7 @@ export TEST_FOLDER_PATH=/path/to/your/plp/repo/app/packing-lists
 - To run the QA suite:
 
 ```bash
-RUN_QA_REGRESSION=1 npx jest --runTestsByPath test/unit/routes/excelprocess-non-ai.test.js --runInBand
+make qa-test
 ```
 
 Notes:

@@ -13,3 +13,5 @@ prettier:
 	npm run prettier:fix
 tests:
 	scripts/test
+qa-test:
+	RUN_QA_REGRESSION=1 npx jest --runTestsByPath test/unit/routes/excelprocess-non-ai.test.js --runInBand
