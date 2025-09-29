@@ -28,7 +28,7 @@ jest.mock("../../../app/utilities/logger", () => ({
 }));
 
 const config = require("../../../app/config");
-const { processExcelFile } = require("../../../app/routes/non-ai");
+const { processExcelFile } = require("../../../app/utilities/file-processor");
 
 // Only run this long-running QA test when RUN_QA_REGRESSION is explicitly set ("1" or "true").
 // By default the suite will be skipped to keep normal test runs fast.
