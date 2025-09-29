@@ -61,6 +61,24 @@ To run the app not using Docker, e.g. for pdf parsing
 The tests have been structured into subfolders of `./test` as per the
 [Microservice test approach and repository structure](https://eaflood.atlassian.net/wiki/spaces/FPS/pages/1845396477/Microservice+test+approach+and+repository+structure)
 
+### Running Unit Tests
+
+A convenience script is provided to run automated tests in a containerised
+environment. This will rebuild images before running tests via docker-compose,
+using a combination of `docker-compose.yaml` and `docker-compose.test.yaml`.
+The command given to `docker-compose run` may be customised by passing
+arguments to the test script.
+
+Examples:
+
+```text
+# Run all tests
+scripts/test
+
+# Run tests with file watch
+scripts/test -w
+```
+
 ### Running QA Regression Tests
 
 This QA regression test scans a folder of packing-list Excel files and writes a CSV report to `test-output/`. The suite is long-running and skipped by default; only run it when you need a full QA scan.
