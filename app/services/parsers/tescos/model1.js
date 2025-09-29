@@ -22,12 +22,12 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
-    for (const sheet of sheets) {
-      const headerTitles = Object.values(headers.TESCO1.regex);
-      const headerCallback = function (x) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      };
+    const headerTitles = Object.values(headers.TESCO1.regex);
+    const headerCallback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
 
+    for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
         packingListJson[sheet],
@@ -52,9 +52,8 @@ function parse(packingListJson) {
           row.description === null &&
           row.commodity_code === null &&
           row.number_of_packages === null &&
-          (row.total_net_weight_kg === 0 || row.total_net_weight_kg === null) &&
-          (row.type_of_treatment === "Ambient" ||
-            row.type_of_treatment === "Frozen")
+          (row.total_net_weight_kg || 0) === 0 &&
+          ["Ambient", "Frozen"].includes(row.type_of_treatment)
         ),
     );
 

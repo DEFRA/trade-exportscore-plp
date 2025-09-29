@@ -66,19 +66,35 @@ if [[ "$current" < "$develop_version" ]]; then
   echo "🔄 REBASE REQUIRED: Current branch behind develop ($develop_version)"
   echo "Run: git rebase origin/develop  # Inherits latest version"
   exit 1
-elif [[ "$develop_version" <= "$main_version" ]]; then
-  echo "❌ VERSION BLOCKED: Develop ($develop_version) not > Main ($main_version)"
-  echo "Someone needs to increment develop branch first"
+elif [[ "$develop_version" < "$main_version" ]]; then
+  echo "❌ VERSION ERROR: Develop ($develop_version) < Main ($main_version)"
+  echo "🚨 This indicates a serious issue with branch management!"
   exit 1
+elif [[ "$develop_version" = "$main_version" ]]; then
+  if [[ "$current" <= "$develop_version" ]]; then
+    echo "🔄 VERSION INCREMENT NEEDED: Current ($current) must be > develop ($develop_version)"
+    echo "📋 Required Actions for feature branch:"
+    echo "   1. Increment feature branch version (e.g., from $current to ${current%.*}.$((${current##*.}+1)))"
+    echo "   2. This ensures develop > main after PR merge"
+    echo "   3. Feature branch changes will propagate to develop when merged"
+    exit 1
+  else
+    echo "✅ Version strategy valid: Feature branch ($current) > develop ($develop_version) = main ($main_version)"
+    echo "📈 After PR merge: develop will become ($current) > main ($main_version)"
+  fi
 else
   echo "✅ Version strategy valid: Develop ($develop_version) > Main ($main_version)"
+  if [[ "$current" <= "$develop_version" ]]; then
+    echo "🔄 FEATURE BRANCH INCREMENT: Consider incrementing to > $develop_version"
+  fi
 fi
 ```
 
 **🎯 EXECUTION RULES**:
-- **Rebase to develop** if current branch is behind
-- **Version requirement**: develop > main (not individual increment)
-- **Inherit versions** through rebasing, only increment when truly needed
+- **Rebase to develop** if current branch is behind (inherits version automatically)
+- **Feature branch increment**: When develop = main, feature branch must be > develop
+- **PR merge propagation**: Feature branch version propagates to develop when merged
+- **Never increment develop directly**: Develop gets updated through PR merges only
 
 ---
 
@@ -206,15 +222,20 @@ fi
 main_version=$(git show origin/main:package.json | grep '"version"' | cut -d'"' -f4)
 if [[ "$develop_version" > "$main_version" ]]; then
   echo "✅ Version strategy valid: develop ($develop_version) > main ($main_version)"
+elif [[ "$develop_version" = "$main_version" ]]; then
+  echo "📋 Version status: develop ($develop_version) = main ($main_version)"
+  echo "� Feature branches should increment above develop for proper PR merge workflow"
 else
-  echo "❌ VERSION ISSUE: develop should be > main for proper workflow"
+  echo "❌ CRITICAL ERROR: develop ($develop_version) < main ($main_version)"
+  echo "🚨 This indicates serious branch management issues!"
 fi
 ```
 
 **🎯 KEY PRINCIPLES**:
 - **Rebase to develop** when branch is behind (inherits version automatically)
-- **Version requirement**: develop > main (not every commit increment)
-- **Minimal versioning**: Only increment when adding significant changes to develop
+- **Feature branch workflow**: When develop = main, feature branch must be incremented > develop
+- **PR merge propagation**: Develop becomes > main after feature branch merge
+- **No direct develop increment**: Develop version only changes through PR merges
 
 #### 5. Git Operations (Required Sequence)
 
@@ -350,11 +371,25 @@ safe-commit() {
     echo
   fi
   
-  # Verify develop > main requirement
+  # Verify proper version workflow (BLOCKING)
   if [[ "$develop_version" > "$main_version" ]]; then
     echo "✅ Version strategy valid: develop ($develop_version) > main ($main_version)"
+  elif [[ "$develop_version" = "$main_version" ]]; then
+    if [[ "$current" > "$develop_version" ]]; then
+      echo "✅ Version strategy valid: Feature branch ($current) > develop ($develop_version) = main ($main_version)"
+      echo "📈 After PR merge: develop will become ($current) > main ($main_version)"
+    else
+      echo "❌ CRITICAL ERROR: Feature branch ($current) must be > develop ($develop_version)"
+      echo "🚨 Feature branch increment required for proper deployment pipeline!"
+      echo "   - Current feature branch version must exceed develop version"
+      echo "   - This ensures develop > main after PR merge"
+      echo "   - Increment feature branch version to ${current%.*}.$((${current##*.}+1))"
+      return 1
+    fi
   else
-    echo "⚠️ WARNING: develop ($develop_version) should be > main ($main_version)"
+    echo "❌ CRITICAL ERROR: develop ($develop_version) < main ($main_version)"
+    echo "🚨 This indicates serious branch management issues!"
+    return 1
   fi
   
   # Gate 4: SonarQube check (CONDITIONAL)
@@ -587,7 +622,7 @@ export SONARQUBE_PROJECT="trade-exportscore-plp"
 2. **ALWAYS check the COMMIT VERIFICATION PROTOCOL** before any git operations
 3. **ALWAYS check the VERSION VERIFICATION PROTOCOL** before any commit
 4. **ALWAYS verify PR base branch: feature/bug → develop, hotfix → main**
-5. **SMART VERSION MANAGEMENT** - Rebase to develop when behind, ensure develop > main workflow
+5. **SMART VERSION MANAGEMENT** - Feature branch increment when develop = main, PR merge propagation workflow
 6. **USE Sequential Thinking** for complex workflows to ensure step-by-step compliance
 7. **FORCE VERIFICATION**: If attempting commit, first state "Checking mandatory pre-commit gates..." then execute them
 8. **REBASE FIRST APPROACH** - When branch is behind develop, recommend rebase to inherit latest version

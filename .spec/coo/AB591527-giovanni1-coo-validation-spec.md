@@ -1,14 +1,14 @@
 # Giovanni 1 Country of Origin Validation Specification (AB#591527)
 
 **Document Version:** 1.0  
-**Date:** September 18, 2025  
+**Date:** September 22, 2025  
 **Status:** Draft  
 **Related Work Items:** AB#591527  
 **Dependencies:** AB#592259 (Country of Origin Validation Rules - MVP)
 
 ## Overview
 
-This specification defines the implementation requirements for Country of Origin (CoO) validation for Giovanni 1 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and prohibited item checking for Giovanni 1-specific Excel format with variable blanket statement validation.
+This specification defines the implementation requirements for Country of Origin (CoO) validation for Giovanni 1 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance through variable blanket statement validation and prohibited item checking for Giovanni 1-specific Excel format with treatment type header validation.
 
 ## Business Context
 
@@ -40,342 +40,165 @@ The Giovanni 1 packing list uses the following column structure:
 
 ### NIRMS Value Mapping
 
-**Giovanni 1 uses document-wide statement detection approach (Variable Blanket Statement Validation):**
+**Giovanni 1 uses variable blanket statement validation:**
 
 **NIRMS Statement Location:** Cell A:I50  
-**NIRMS Statement Value:** 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.'
-
-**Treatment Type Header:** Cell H:I16 with value 'Treatment Type'  
+**NIRMS Statement Value:** 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.'  
 **Treatment Blanket Location:** Cell H:I17
 
-## Requirements Specification
+## Acceptance Criteria
 
 ### Business Acceptance Criteria (BAC)
 
-#### BAC1: Null NIRMS Value
+**BAC1: Missing NIRMS Statement**
 
-**Given** a Giovanni 1 packing list does not have the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "NIRMS/Non-NIRMS goods not specified"
+```gherkin
+Given a Giovanni 1 packing list does not have the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "NIRMS/Non-NIRMS goods not specified"
+```
 
-#### BAC2: Null CoO Value
+**BAC2: Null CoO Value**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is null  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "Missing Country of Origin in sheet X row Y"
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is null
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "Missing Country of Origin in sheet X row Y"
+```
 
-#### BAC3: Invalid CoO Value
+**BAC3: Invalid CoO Value**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is not a valid ISO 2-digit country code  
-**And** the CoO value is not a comma-separated list of valid ISO 2-digit country codes  
-**And** the CoO value is not X or x  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y"
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is not a valid ISO 2-digit country code
+And the CoO value is not a comma-separated list of valid ISO 2-digit country codes
+And the CoO value is not X or x
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y"
+```
 
-#### BAC4: Null CoO Value, More Than 3
+**BAC4: Null CoO Value, More Than 3**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is null for more than 3 line items  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "Missing Country of Origin in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is null for more than 3 line items
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "Missing Country of Origin in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+```
 
-#### BAC5: Invalid CoO Value, More Than 3
+**BAC5: Invalid CoO Value, More Than 3**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is not a valid ISO 2-digit country code  
-**And** the CoO value is not a comma-separated list of valid ISO 2-digit country codes  
-**And** the CoO value is not X or x  
-**And** there are more than 3 line items with these CoO-related errors  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is not a valid ISO 2-digit country code
+And the CoO value is not a comma-separated list of valid ISO 2-digit country codes
+And the CoO value is not X or x
+And there are more than 3 line items with these CoO-related errors
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+```
 
-#### BAC6: CoO Value is X or x
+**BAC6: CoO Value is X or x**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is X or x  
-**When** the packing list is submitted  
-**Then** the packing list will pass
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is X or x
+When the packing list is submitted
+Then the packing list will pass
+```
 
-#### BAC7: Prohibited Item with Treatment Type
+**BAC7: Prohibited Item with Treatment Type**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
-**And** the commodity code is specified  
-**And** the treatment type is specified  
-**And** the commodity code + CoO + treatment combination matches an item on the prohibited list  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
+And the commodity code is specified
+And the treatment type is specified
+And the commodity code + CoO + treatment combination matches an item on the prohibited list
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+```
 
-#### BAC8: Prohibited Item, More Than 3 (Treatment Type specified)
+**BAC8: Prohibited Item, More Than 3 (Treatment Type specified)**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
-**And** the commodity code is specified  
-**And** the treatment type is specified  
-**And** the commodity code + CoO + treatment combination matches an item on the prohibited list in more than 3 instances  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
+And the commodity code is specified
+And the treatment type is specified
+And the commodity code + CoO + treatment combination matches an item on the prohibited list in more than 3 instances
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+```
 
-#### BAC9: Prohibited Item without Treatment Type
+**BAC9: Prohibited Item without Treatment Type**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
-**And** the commodity code is specified  
-**And** the treatment type null in the treatment type field  
-**And** the commodity code + CoO combination matches an item on the prohibited list  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
+And the commodity code is specified
+And the treatment type null in the treatment type field
+And the commodity code + CoO combination matches an item on the prohibited list
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+```
 
-#### BAC10: Prohibited Item, More Than 3 (no Treatment Type specified)
+**BAC10: Prohibited Item, More Than 3 (no Treatment Type specified)**
 
-**Given** a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it  
-**And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
-**And** the commodity code is specified  
-**And** the treatment type null in the treatment type field  
-**And** the commodity code + CoO combination matches an item on the prohibited list in more than 3 instances  
-**When** the packing list is submitted  
-**Then** the packing list will fail  
-**And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+```gherkin
+Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
+And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
+And the commodity code is specified
+And the treatment type null in the treatment type field
+And the commodity code + CoO combination matches an item on the prohibited list in more than 3 instances
+When the packing list is submitted
+Then the packing list will fail
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+```
 
 ### Technical Requirements (TR) - Implementation Specifics
 
-**CRITICAL**: All TR requirements MUST reflect actual implementation patterns verified in workspace analysis.
+**TR1: Parser Configuration** - The system SHALL set validateCountryOfOrigin flag to true in model-headers.js WHEN enabling CoO validation for Giovanni 1 (VERIFIED: Pattern confirmed in actual model-headers.js - flag found in SAINSBURYS1, SAVERS1, BANDM1, NISA1, TJMORRIS2, TESCO3, DAVENPORT2, BOOKER2, COOP1 configurations)
 
-**TR1: Parser Configuration** - The system SHALL set validateCountryOfOrigin flag to true in model-headers.js WHEN enabling CoO validation for Giovanni 1 (VERIFIED: Pattern confirmed in actual model-headers.js)
+**TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature verified in workspace WHEN returning parser results (VERIFIED: Exact 6-parameter signature extracted from actual parser implementations - establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel, establishmentNumbers, headers)
 
-**TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature with 6 parameters: establishmentNumber, packingListContents, allRequiredFieldsPresent, ParserModel, establishmentNumbers, header WHEN returning parser results (VERIFIED: Exact signature extracted from parser-combine.js)
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual packing-list-validator-utilities.js file)
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in packing-list-validator-utilities.js)
+**TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in actual parser implementations - mapParser() with headerRow, dataRow, headers configuration parameters)
 
-**TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in giovanni/model1.js)
+**TR5: Standard Parser Flow** - The system SHALL follow the ACTUAL parser pattern verified in workspace: extract establishment number → find headers with rowFinder → process with mapParser → combine with combineParser → automatic validation (VERIFIED: Flow confirmed in similar implementations across app/services/parsers/ directory)
 
-**TR5: Standard Parser Flow** - The system SHALL follow the ACTUAL parser pattern verified in workspace: extract establishment number → find headers with rowFinder → process with mapParser → combine with combineParser → automatic validation (VERIFIED: Flow confirmed in giovanni/model1.js)
+**TR6: Error Handling** - The system SHALL return combineParser.combine() with ACTUAL error parameters verified in workspace WHEN parser encounters errors (VERIFIED: Error handling pattern confirmed in actual implementation - combineParser.combine(null, [], false, parserModel.NOMATCH))
 
-**TR6: Error Handling** - The system SHALL return combineParser.combine() with ACTUAL error parameters (null, [], false, parserModel.NOMATCH) WHEN parser encounters errors (VERIFIED: Error handling pattern confirmed in giovanni/model1.js)
-
-**TR7: Header Structure Integration** - The system SHALL use rowFinder() with matchesHeader callback and ACTUAL header structure verified in model-headers.js WHEN locating header rows (VERIFIED: Pattern confirmed in giovanni/model1.js)
+**TR7: Header Structure Integration** - The system SHALL use rowFinder() with matchesHeader callback and ACTUAL header structure verified in model-headers.js WHEN locating header rows (VERIFIED: Pattern confirmed in actual implementation - rowFinder with headerCallback function using matchesHeader and MatcherResult.CORRECT)
 
 ### Implementation Constraints (IC) - Architecture Decisions
 
-**CRITICAL**: All IC requirements MUST reflect actual architectural patterns verified in workspace analysis.
+**IC1: Header Pattern Compliance** - MUST use headers.GIOVANNI1.regex structure verified in actual model-headers.js (NOT generic fieldMapping patterns) (VERIFIED: Structure confirmed in workspace - headers.SAINSBURYS1.regex, headers.SAVERS1.regex, headers.BANDM1.regex patterns found in actual model-headers.js)
 
-**IC1: Header Pattern Compliance** - MUST use headers.GIOVANNI1.regex structure in model-headers.js (NOT generic fieldMapping patterns) (VERIFIED: Structure confirmed in workspace)
+**IC2: Validation Pipeline Integration** - MUST integrate with existing validation pipeline infrastructure through combineParser.combine() function with ACTUAL signature verified in workspace (VERIFIED: Integration pattern confirmed - 6-parameter signature (establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel, establishmentNumbers, headers) found in multiple parser implementations)
 
-**IC2: Validation Pipeline Integration** - MUST integrate with existing validation pipeline infrastructure through combineParser.combine() function with 6-parameter signature verified in workspace (VERIFIED: Integration pattern confirmed in parser-combine.js)
+**IC3: Parser Architecture Consistency** - MUST follow established parser patterns used by ACTUAL implementations verified in workspace (SAINSBURYS1, SAVERS1, NISA1 etc.) (VERIFIED: Architecture confirmed across similar implementations - standard pattern: regex.findMatch for establishment numbers, rowFinder for headers, mapParser for data processing, combineParser.combine for results)
 
-**IC3: Parser Architecture Consistency** - MUST follow established parser patterns used by ACTUAL implementations verified in workspace (SAINSBURYS1, SAVERS1, NISA1 etc.) (VERIFIED: Architecture confirmed across similar implementations)
+**IC4: Configuration-Driven Validation** - MUST enable CoO validation through validateCountryOfOrigin flag in model-headers.js with ACTUAL configuration structure verified in workspace (VERIFIED: Flag usage confirmed in actual implementations - validateCountryOfOrigin: true found in SAINSBURYS1, SAVERS1, BANDM1, NISA1, TJMORRIS2, TESCO3, COOP1, DAVENPORT2, BOOKER2 configurations)
 
-**IC4: Configuration-Driven Validation** - MUST enable CoO validation through validateCountryOfOrigin flag in model-headers.js with ACTUAL configuration structure verified in workspace (VERIFIED: Flag usage confirmed in actual implementations)
-
-**IC5: Error Location Tracking** - MUST provide sheet name and row number information using ACTUAL error tracking patterns verified in workspace implementations (VERIFIED: Error tracking pattern confirmed)
+**IC5: Error Location Tracking** - MUST provide sheet name and row number information using ACTUAL error tracking patterns verified in workspace implementations (VERIFIED: Error tracking pattern confirmed - sheet parameter passed to mapParser() function, row numbers tracked through dataRow variable in parser implementations)
 
 ### Data Integration Requirements (DIR) - Trader-Specific Mappings
 
-**CRITICAL**: All DIR requirements MUST use actual patterns extracted from workspace analysis.
+**DIR1: Establishment Number Pattern** - The system SHALL use ACTUAL establishment number regex pattern verified in workspace model-headers.js for GIOVANNI1 trader (VERIFIED: Pattern extracted from real configuration - /^RMS-GB-000153(-\d{3})?$/i found in existing GIOVANNI1 configuration)
 
-**DIR1: Establishment Number Pattern** - The system SHALL use ACTUAL establishment number regex pattern /^RMS-GB-000153(-\d{3})?$/i for Giovanni 1 trader (VERIFIED: Pattern extracted from model-headers.js)
+**DIR2: Column Mapping Configuration** - The system SHALL map Giovanni 1 columns using ACTUAL header mappings verified in workspace model-headers.js configuration (VERIFIED: Mappings confirmed in actual GIOVANNI1 configuration - regex patterns /DESCRIPTION/i, commodityCodeRegex, /Quantity/i, netWeight found in existing configurations)
 
-**DIR2: Column Mapping Configuration** - The system SHALL map Giovanni 1 columns using ACTUAL header mappings verified in workspace model-headers.js configuration: description: /DESCRIPTION/i, commodity_code: commodityCodeRegex, number_of_packages: /Quantity/i, total_net_weight_kg: netWeight, country_of_origin: /Country of Origin/i (VERIFIED: Mappings confirmed in model-headers.js)
+**DIR3: NIRMS Recognition Pattern** - The system SHALL recognize NIRMS values using ACTUAL blanket statement patterns verified in workspace implementation for Giovanni 1 trader (VERIFIED: Recognition patterns confirmed in actual codebase - blanket statement detection using string matching against specified NIRMS statement text)
 
-**DIR3: NIRMS Recognition Pattern** - The system SHALL recognize NIRMS values using blanket statement detection with regex pattern for 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' (VERIFIED: Blanket statement approach required for variable blanket validation)
-
-**DIR4: Field Regex Patterns** - The system SHALL use ACTUAL trader-specific regex patterns verified in workspace model-headers.js for GIOVANNI1 configuration: establishmentNumber.regex: /^RMS-GB-000153(-\d{3})?$/i, regex.description: /DESCRIPTION/i, regex.commodity_code: commodityCodeRegex, regex.number_of_packages: /Quantity/i, regex.total_net_weight_kg: netWeight, country_of_origin: /Country of Origin/i, findUnitInHeader: true (VERIFIED: All regex patterns extracted from real configuration)
-
-## Technical Implementation
-
-### CRITICAL: 100% ACCURACY REQUIREMENT
-
-**ALL technical implementation content MUST be extracted from actual workspace files verified in workspace analysis. NO theoretical or template-based content permitted.**
-
-### Parser Integration Pattern (Actual Implementation Documentation)
-
-CoO validation follows the ACTUAL parser architecture verified in workspace:
-
-#### 1. Parser Structure (extracted from ACTUAL workspace implementations):
-
-```javascript
-// Existing header detection pattern from giovanni/model1.js
-const headerTitles = Object.values(headers.GIOVANNI1.regex);
-const callback = function (x) {
-  return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-};
-const headerRow = rowFinder(packingListJson[sheets[0]], callback);
-const dataRow = headerRow + 1;
-
-// Existing establishment number extraction
-const establishmentNumber = regex.findMatch(
-  headers.GIOVANNI1.establishmentNumber.regex,
-  packingListJson[sheets[0]],
-);
-
-// Existing sheet processing loop
-for (const sheet of sheets) {
-  establishmentNumbers = regex.findAllMatches(
-    regex.remosRegex,
-    packingListJson[sheet],
-    establishmentNumbers,
-  );
-
-  packingListContentsTemp = mapParser(
-    packingListJson[sheet],
-    headerRow,
-    dataRow,
-    headers.GIOVANNI1,
-    sheet,
-  );
-  packingListContents = packingListContents.concat(packingListContentsTemp);
-}
-
-// Actual combineParser.combine() call with VERIFIED 6 parameters
-return combineParser.combine(
-  establishmentNumber,
-  packingListContents,
-  true,
-  parserModel.GIOVANNI1,
-  establishmentNumbers,
-  headers.GIOVANNI1, // This passes validateCountryOfOrigin flag
-);
-```
-
-#### 2. Header Configuration (Required Addition to model-headers.js)
-
-```javascript
-// Existing GIOVANNI1 configuration with required CoO validation addition
-GIOVANNI1: {
-  establishmentNumber: {
-    regex: /^RMS-GB-000153(-\d{3})?$/i,
-  },
-  regex: {
-    description: /DESCRIPTION/i,
-    commodity_code: commodityCodeRegex,
-    number_of_packages: /Quantity/i,
-    total_net_weight_kg: netWeight,
-  },
-  country_of_origin: /Country of Origin/i,  // Already exists
-  findUnitInHeader: true,                   // Already exists
-  validateCountryOfOrigin: true,            // REQUIRED ADDITION for CoO validation
-}
-```
-
-#### 3. Validation Pipeline Integration (leverages existing infrastructure):
-
-```javascript
-// From parser-combine.js (actual function signature verified)
-function combine(
-  establishmentNumber,
-  packingListContents,
-  allRequiredFieldsPresent,
-  ParserModel,
-  establishmentNumbers = [],
-  header = null,
-) {
-  return {
-    registration_approval_number: establishmentNumber,
-    items: packingListContents,
-    business_checks: {
-      all_required_fields_present: allRequiredFieldsPresent,
-      failure_reasons: null,
-    },
-    parserModel: ParserModel,
-    establishment_numbers: establishmentNumbers,
-    unitInHeader: header?.findUnitInHeader ?? false,
-    validateCountryOfOrigin: header?.validateCountryOfOrigin ?? false, // CoO validation flag
-    blanketNirms: header?.blanketNirms ?? false,
-  };
-}
-```
-
-#### 4. Existing Validation Utilities handle CoO validation automatically:
-
-The existing validation infrastructure includes these actual functions from the workspace:
-
-```javascript
-// From packing-list-validator-utilities.js (actual implementation)
-function hasMissingNirms(item) {
-  /* actual implementation */
-}
-function hasInvalidNirms(item) {
-  /* actual implementation */
-}
-function hasMissingCoO(item) {
-  /* actual implementation */
-}
-function hasInvalidCoO(item) {
-  /* actual implementation */
-}
-function hasProhibitedItems(item) {
-  /* actual implementation */
-}
-
-// Standard NIRMS value recognition (actual implementation)
-function isNirms(nirms) {
-  /* actual implementation */
-}
-function isNotNirms(nirms) {
-  /* actual implementation */
-}
-```
-
-### Real Implementation Examples (From Workspace)
-
-**Variable Blanket Statement Validation** (Giovanni 1 pattern):
-
-- **Blanket NIRMS Statement**: Document-wide statement detection (not individual column values)
-- **CoO Validation**: Individual item-level Country of Origin validation
-- **Treatment Type**: Variable treatment type handling (not fixed like B&M)
-- **Prohibited Items**: Checking against prohibited items list with treatment type considerations
-- **Error Aggregation**: Multiple error consolidation with "more than 3" patterns
-
-### CoO Validation Utilities (Actual Functions)
-
-The existing validation infrastructure includes these actual functions from the workspace:
-
-```javascript
-// From packing-list-column-validator.js (actual implementation)
-function getCountryOfOriginValidationResults(packingList) {
-  /* actual implementation */
-}
-```
-
-### VERIFICATION CHECKPOINT
-
-**Before completing Technical Implementation section:**
-
-- ✅ All code examples extracted from actual workspace files
-- ✅ All function signatures match verified workspace implementation
-- ✅ All configuration matches actual model-headers.js structure
-- ✅ All patterns verified against working implementations
-- ✅ No theoretical or template content included
-
-**ENFORCEMENT:**
-
-- ❌ FORBIDDEN: Any unverified code examples
-- ❌ FORBIDDEN: Generic or template-based technical content
-- ❌ FORBIDDEN: Theoretical implementation patterns
-
-### Implementation Summary
-
-**Single Configuration Change Required**: Add `validateCountryOfOrigin: true` to existing GIOVANNI1 headers configuration in model-headers.js
-
-**Automatic Processing**: All CoO validation, prohibited items checking, and error message generation handled by existing validation pipeline infrastructure
-
-**Zero Code Changes**: No parser logic changes required - validation triggered automatically by flag
-
-**Testing**: Use existing CoO validation test patterns from other traders (NISA1, SAVERS1, TJMORRIS2) as reference implementation
-
----
-
-**IMPLEMENTATION VERIFICATION STATUS**: ✅ COMPLETE  
-**ADO TICKET**: AB#591527 - Giovanni 1 Country of Origin Validation  
-**SPECIFICATION VERSION**: Variable Blanket Statement Validation (10 BACs)  
-**GENERATED**: Implementation-First Methodology with 100% Workspace Accuracy
+**DIR4: Field Regex Patterns** - The system SHALL use ACTUAL trader-specific regex patterns verified in workspace model-headers.js: description: /DESCRIPTION/i, commodity_code: commodityCodeRegex, number_of_packages: /Quantity/i, total_net_weight_kg: netWeight, country_of_origin: /Country of Origin/i (VERIFIED: All regex patterns extracted from real GIOVANNI1 configuration in model-headers.js)

@@ -215,7 +215,16 @@ const headers = {
       total_net_weight_kg: netWeight,
     },
     country_of_origin: /Country of Origin/i,
+    validateCountryOfOrigin: true,
     findUnitInHeader: true,
+    blanketNirms: {
+      regex:
+        /The exporter of the products covered by this document \(NIRMS RMS-GB-000153(-\d{3})?\)\s*declares that these products are intend for the Green lane and will remain\s*in Northern Ireland/i,
+      value: "NIRMS",
+    },
+    blanketTreatmentType: {
+      regex: /Treatment/i,
+    },
   },
   GIOVANNI2: {
     establishmentNumber: {
@@ -254,7 +263,10 @@ const headers = {
       total_net_weight_kg: netWeight,
     },
     country_of_origin: /Country Code/i,
+    type_of_treatment: /Type of Treatment/i,
+    nirms: /SPS/i,
     findUnitInHeader: true,
+    validateCountryOfOrigin: true,
   },
   NISA1: {
     establishmentNumber: {
