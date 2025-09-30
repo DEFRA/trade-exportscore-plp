@@ -9,33 +9,23 @@ const matcherResult = require("../matcher-result");
 const headers = require("../model-headers-pdf");
 
 function getExcelParser(sanitisedPackingList, filename) {
-  let parser = null;
-  if (noMatchParsers.NOREMOS.matches(sanitisedPackingList, filename)) {
-    Object.keys(parsersExcel).forEach((key) => {
-      if (
-        parsersExcel[key].matches(sanitisedPackingList, filename) ===
-        matcherResult.CORRECT
-      ) {
-        parser = parsersExcel[key];
-      }
-    });
-  } else {
-    parser = noMatchParsers.NOREMOS;
-  }
-  return parser;
+  return getParser(sanitisedPackingList, filename, parsersExcel, noMatchParsers.NOREMOS);
 }
 
-// refactor as used in 3 places with different parserxxx[key]
 function getCsvParser(sanitisedPackingList, filename) {
+  return getParser(sanitisedPackingList, filename, parsersCsv, noMatchParsers.NOREMOSCSV);
+}
+
+function getParser(sanitisedPackingList, filename, parsers, nomatch) {
   let parser = null;
 
-  if (noMatchParsers.NOREMOSCSV.matches(sanitisedPackingList, filename)) {
-    for (const key in parsersCsv) {
+  if (nomatch.matches(sanitisedPackingList, filename)) {
+    for (const key in parsers) {
       if (
-        parsersCsv[key].matches(sanitisedPackingList, filename) ===
+        parsers[key].matches(sanitisedPackingList, filename) ===
         matcherResult.CORRECT
       ) {
-        parser = parsersCsv[key];
+        parser = parsers[key];
       }
     }
   } else {
