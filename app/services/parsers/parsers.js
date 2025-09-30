@@ -9,6 +9,7 @@ const matcherResult = require("../matcher-result");
 const headers = require("../model-headers-pdf");
 
 function getExcelParser(sanitisedPackingList, filename) {
+<<<<<<< HEAD
   return getParser(
     sanitisedPackingList,
     filename,
@@ -24,6 +25,13 @@ function getCsvParser(sanitisedPackingList, filename) {
     parsersCsv,
     noMatchParsers.NOREMOSCSV,
   );
+=======
+  return getParser(sanitisedPackingList, filename, parsersExcel, noMatchParsers.NOREMOS);
+}
+
+function getCsvParser(sanitisedPackingList, filename) {
+  return getParser(sanitisedPackingList, filename, parsersCsv, noMatchParsers.NOREMOSCSV);
+>>>>>>> 67334c1f (Added tests to parsers.js)
 }
 
 function getParser(sanitisedPackingList, filename, parsers, nomatch) {
