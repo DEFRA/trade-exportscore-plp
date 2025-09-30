@@ -257,6 +257,11 @@ const noMatchParsers = {
       noMatchParser.noRemosParse(_packingList, _filename),
     name: "missing remos parser",
   },
+  NOREMOSCSV: {
+    matches: (packingList) => noMatchMatcher.noRemosMatchCsv(packingList),
+    parse: () => noMatchParser.noRemosParse(),
+    name: "missing remos parser",
+  },
   NOREMOSPDF: {
     matches: (packingList) => noMatchMatcher.noRemosMatchPdf(packingList),
     parse: () => noMatchParser.noRemosParse(),
@@ -278,4 +283,12 @@ const parsersPdfNonAi = {
   },
 };
 
-module.exports = { parsersExcel, parsersPdf, noMatchParsers, parsersPdfNonAi };
+const parsersCsv = {};
+
+module.exports = {
+  parsersExcel,
+  parsersCsv,
+  parsersPdf,
+  noMatchParsers,
+  parsersPdfNonAi,
+};

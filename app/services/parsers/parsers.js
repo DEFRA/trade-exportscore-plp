@@ -1,5 +1,6 @@
 const {
   parsersExcel,
+  parsersCsv,
   parsersPdf,
   parsersPdfNonAi,
   noMatchParsers,
@@ -18,6 +19,25 @@ function getExcelParser(sanitisedPackingList, filename) {
         parser = parsersExcel[key];
       }
     });
+  } else {
+    parser = noMatchParsers.NOREMOS;
+  }
+  return parser;
+}
+
+// refactor as used in 3 places with different parserxxx[key]
+function getCsvParser(sanitisedPackingList, filename) {
+  let parser = null;
+
+  if (noMatchParsers.NOREMOSCSV.matches(sanitisedPackingList, filename)) {
+    for (const key in parsersCsv) {
+      if (
+        parsersCsv[key].matches(sanitisedPackingList, filename) ===
+        matcherResult.CORRECT
+      ) {
+        parser = parsersCsv[key];
+      }
+    }
   } else {
     parser = noMatchParsers.NOREMOS;
   }
@@ -72,6 +92,7 @@ async function getPdfNonAiParser(sanitisedPackingList, filename) {
 
 module.exports = {
   getExcelParser,
+  getCsvParser,
   getPdfParser,
   getPdfNonAiParser,
 };

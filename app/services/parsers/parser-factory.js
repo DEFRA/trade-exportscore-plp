@@ -1,6 +1,7 @@
 const fileExtension = require("../../utilities/file-extension");
 const config = require("../../config");
 const {
+  getCsvParser,
   getExcelParser,
   getPdfParser,
   getPdfNonAiParser,
@@ -20,6 +21,8 @@ async function findParser(sanitizedPackingList, fileName) {
 
   if (fileExtension.isExcel(fileName)) {
     parser = getExcelParser(sanitizedPackingList, fileName);
+  } else if (fileExtension.isCsv(fileName)) {
+    parser = getCsvParser(sanitizedPackingList, fileName);
   } else if (fileExtension.isPdf(fileName)) {
     parser = await getPdfNonAiParser(sanitizedPackingList, fileName);
 

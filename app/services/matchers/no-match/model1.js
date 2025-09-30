@@ -36,6 +36,16 @@ function rmsExceptions(y) {
   );
 }
 
+function noRemosMatchCsv(sanitisedPackingList, _filename) {
+  const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
+  const isRemosPresent = sanitisedPackingList.some((x) => {
+    return Object.values(x).some((y) => {
+      return remosRegex.test(y) || rmsExceptions(y);
+    });
+  });
+  return isRemosPresent;
+}
+
 async function noRemosMatchPdf(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);
@@ -66,4 +76,4 @@ async function noRemosMatchPdf(packingList) {
   }
 }
 
-module.exports = { noRemosMatch, noRemosMatchPdf };
+module.exports = { noRemosMatch, noRemosMatchCsv, noRemosMatchPdf };
