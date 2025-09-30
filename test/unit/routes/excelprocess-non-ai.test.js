@@ -136,7 +136,7 @@ maybeDescribe("Excel Process Non-AI", () => {
 
     const responses = [];
     const csvRows = [
-      "ID,Folder,SubFolder,FileName,Expected,Actual,TestPassed,Message",
+      "ID,Folder,SubFolder,FileName,Expected,Actual,Matching,Message",
     ];
     let idCounter = 1;
 
@@ -147,22 +147,25 @@ maybeDescribe("Excel Process Non-AI", () => {
 
         // Extract expected result from filename
         const fileName = fileInfo.fileName.toLowerCase();
-        let expected = false;
+        let expected = "Fail";
         if (fileName.includes("_pass")) {
-          expected = true;
-        } else if (
-          fileName.includes("_fail") ||
-          fileName.includes("_unparse")
-        ) {
-          expected = false;
+          expected = "Pass";
+        } else if (fileName.includes("_fail")) {
+          expected = "Fail";
+        } else if (fileName.includes("_unparse")) {
+          expected = "Unparse";
         }
 
         // Extract actual result
         const actual =
-          response.business_checks?.all_required_fields_present || false;
+          response.parserModel === "no-match"
+            ? "Unparse"
+            : response.business_checks?.all_required_fields_present
+              ? "Pass"
+              : "Fail";
 
         // Calculate test passed (Expected = Actual)
-        const testPassed = expected === actual;
+        const testPassed = expected === actual ? "Pass" : "Fail";
 
         const message = (response.business_checks?.failure_reasons || "")
           .replace(/\n/g, " ") // Remove newlines
@@ -179,8 +182,8 @@ maybeDescribe("Excel Process Non-AI", () => {
           `Failed to process ${fileInfo.relativePath}: ${error.message}`,
         );
         const fileName = fileInfo.fileName.toLowerCase();
-        const expected = fileName.includes("_pass") ? true : false;
-        const testPassed = expected === false; // Error = false result
+        const expected = fileName.includes("_pass") ? "Pass" : "Fail";
+        const testPassed = expected === "Fail" ? "Yes" : "No"; // Error = Fail result
         csvRows.push(
           `${idCounter},"${fileInfo.folder}","${fileInfo.subFolder}","${fileInfo.fileName}","${expected}","ERROR","${testPassed}","${error.message.replace(/\n/g, " ").replace(/"/g, '""').trim()}"`,
         );

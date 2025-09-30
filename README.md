@@ -88,7 +88,7 @@ Usage (minimal):
 - (Optional) To specify a test folder (By default, tests point to `./app/packing-lists`):
 
 ```bash
-export TEST_FOLDER_PATH=/path/to/your/plp/repo/app/packing-lists
+export TEST_FOLDER_PATH=./app/packing-lists/ASDA1
 ```
 
 - To run the QA suite:
@@ -102,6 +102,17 @@ Notes:
 - `RUN_QA_REGRESSION` must be `1` or `true` (case-insensitive) for the suite to run; otherwise it is skipped.
 - CSV output is saved as `test-output/<timestamp>-excel-test.csv`.
 - If the target folder does not exist or contains no Excel files the test exits early and reports success.
+- **Expected value calculation**: The test automatically determines the expected result based on the Excel filename:
+  - Files containing `_pass` in the filename → Expected = "Pass"
+  - Files containing `_fail` in the filename → Expected = "Fail"
+  - Files containing `_unparse` in the filename → Expected = "Unparse"
+  - Files without these keywords → Expected = "Fail" (default)
+- **Actual value calculation**: The test determines the actual result based on the parsing response:
+  - If `response.parserModel` equals "no-match" → Actual = "Unparse"
+  - If `response.business_checks?.all_required_fields_present` is true → Actual = "Pass"
+  - Otherwise → Actual = "Fail"
+- The CSV report compares the Expected value against the Actual parsing result to determine if tests are matching (Pass/Fail).
+- **Tip**: For better visualization of CSV results, install the 'Excel Viewer' VS Code extension to view the generated CSV files in a formatted table within the editor.
 
 ### Passing files to the local app
 
