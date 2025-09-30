@@ -288,12 +288,19 @@ describe("findParser", () => {
   });
 
   test("Unrecognised csv", async () => {
+<<<<<<< HEAD
     const packingListJson = [
       {
         A: "Consignor / Place of Despatch",
         B: "CONSIGNEE",
       },
     ];
+=======
+    const packingListJson = [{
+      A: "Consignor / Place of Despatch",
+      B: "CONSIGNEE",
+    }];
+>>>>>>> ea4fbce8 (Improved test coverage)
     const fileName = "packingList.csv";
 
     const result = await parserFactory.findParser(packingListJson, fileName);
