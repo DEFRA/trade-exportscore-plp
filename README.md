@@ -61,7 +61,7 @@ To run the app not using Docker, e.g. for pdf parsing
 The tests have been structured into subfolders of `./test` as per the
 [Microservice test approach and repository structure](https://eaflood.atlassian.net/wiki/spaces/FPS/pages/1845396477/Microservice+test+approach+and+repository+structure)
 
-### Running tests
+### Running Unit Tests
 
 A convenience script is provided to run automated tests in a containerised
 environment. This will rebuild images before running tests via docker-compose,
@@ -78,6 +78,41 @@ scripts/test
 # Run tests with file watch
 scripts/test -w
 ```
+
+### Running QA Regression Tests
+
+This QA regression test scans a folder of packing-list Excel files and writes a CSV report to `test-output/`. The suite is long-running and skipped by default; only run it when you need a full QA scan.
+
+Usage (minimal):
+
+- (Optional) To specify a test folder (By default, tests point to `./app/packing-lists`):
+
+```bash
+export TEST_FOLDER_PATH=./app/packing-lists/ASDA1
+```
+
+- To run the QA suite:
+
+```bash
+make qa-test
+```
+
+Notes:
+
+- `RUN_QA_REGRESSION` must be `1` or `true` (case-insensitive) for the suite to run; otherwise it is skipped.
+- CSV output is saved as `test-output/<timestamp>-excel-test.csv`.
+- If the target folder does not exist or contains no Excel files the test exits early and reports success.
+- **Expected value calculation**: The test automatically determines the expected result based on the Excel filename:
+  - Files containing `_pass` in the filename → Expected = "Pass"
+  - Files containing `_fail` in the filename → Expected = "Fail"
+  - Files containing `_unparse` in the filename → Expected = "Unparse"
+  - Files without these keywords → Expected = "Fail" (default)
+- **Actual value calculation**: The test determines the actual result based on the parsing response:
+  - If `response.parserModel` equals "no-match" → Actual = "Unparse"
+  - If `response.business_checks?.all_required_fields_present` is true → Actual = "Pass"
+  - Otherwise → Actual = "Fail"
+- The CSV report compares the Expected value against the Actual parsing result to determine if tests are matching (Pass/Fail).
+- **Tip**: For better visualization of CSV results, install the 'Excel Viewer' VS Code extension to view the generated CSV files in a formatted table within the editor.
 
 ### Passing files to the local app
 
