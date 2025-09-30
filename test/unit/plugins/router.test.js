@@ -1,4 +1,5 @@
 const nonaiRoutes = require("../../../app/routes/non-ai");
+const csvNonaiRoutes = require("../../../app/routes/csv-non-ai");
 const healthyRoutes = require("../../../app/routes/healthy");
 const healthzRoutes = require("../../../app/routes/healthz");
 const aiRoutes = require("../../../app/routes/ai");
@@ -10,6 +11,7 @@ const dispatchLocation = require("../../../app/routes/get-dispatch-location");
 const router = require("../../../app/plugins/router");
 
 jest.mock("../../../app/routes/non-ai", () => [{ path: "/non-ai" }]);
+jest.mock("../../../app/routes/csv-non-ai", () => [{ path: "/csv-non-ai" }]);
 jest.mock("../../../app/routes/healthy", () => [{ path: "/healthy" }]);
 jest.mock("../../../app/routes/healthz", () => [{ path: "/healthz" }]);
 jest.mock("../../../app/routes/ai", () => [{ path: "/ai" }]);
@@ -46,6 +48,7 @@ describe("router plugin", () => {
         createPackingList,
         pdfNonAiRoutes,
         dispatchLocation,
+        csvNonaiRoutes,
       ),
     );
   });

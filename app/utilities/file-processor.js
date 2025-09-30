@@ -1,4 +1,5 @@
 const { convertExcelToJson } = require("../utilities/excel-utility");
+const { convertCsvToJson } = require("../utilities/csv-utility");
 const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const parserModel = require("../services/parser-model");
@@ -19,7 +20,26 @@ async function processExcelFile(filename, dispatchLocation = null) {
     );
   }
 
-  const packingList = await findParser(result, filename, dispatchLocation);
+  return await processData(result, filename, dispatchLocation);
+}
+
+async function processCsvFile(filename, dispatchLocation = null) {
+  let data = {};
+  try {
+    data = convertCsvToJson({ sourceFile: filename });
+  } catch (err) {
+    logger.logError(
+      filenameForLogging,
+      "processCsvFile() > convertCsvToJson",
+      err,
+    );
+  }
+
+  return await processData(data, filename, dispatchLocation);
+}
+
+async function processData(data, filename, dispatchLocation) {
+  const packingList = await findParser(data, filename, dispatchLocation);
 
   if (packingList.parserModel !== parserModel.NOMATCH) {
     const randomInt = getRandomInt();
@@ -29,4 +49,4 @@ async function processExcelFile(filename, dispatchLocation = null) {
   return packingList;
 }
 
-module.exports = { processExcelFile };
+module.exports = { processExcelFile, processCsvFile };
