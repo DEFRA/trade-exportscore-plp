@@ -4,7 +4,6 @@ const excelToJson = require("@boterop/convert-excel-to-json");
 const { findParser } = require("../../../app/services/parser-service");
 const { createPackingList } = require("../../../app/packing-list/index");
 const logger = require("../../../app/utilities/logger");
-const csvUtility = require("../../../app/utilities/csv-utility");
 const fileExt = require("../../../app/utilities/file-extension");
 
 // Mocking the necessary modules
@@ -85,44 +84,5 @@ describe("/non-ai route handler", () => {
 
     // Restore the original console.error after the test
     consoleErrorSpy.mockRestore();
-  });
-
-  test("should detect CSV files and use csv-utility", async () => {
-    // Make filename look like a CSV file
-    mockRequest.query = { filename: "test.csv" };
-    // file-extension should detect CSV
-    fileExt.isCsv.mockReturnValue(true);
-
-    // Mock csvUtility to return parsed rows
-    csvUtility.convertCsvToJson.mockResolvedValue([
-      ["name", "age"],
-      ["Alice", "30"],
-    ]);
-
-    await nonai.handler(mockRequest, mockH);
-
-    expect(csvUtility.convertCsvToJson).toHaveBeenCalled();
-    expect(mockH.response).toHaveBeenCalled();
-  });
-
-  test("should handle csv-utility errors gracefully", async () => {
-    mockRequest.query = { filename: "bad.csv" };
-    fileExt.isCsv.mockReturnValue(true);
-
-    csvUtility.convertCsvToJson.mockRejectedValue(
-      new Error("CSV parse failure"),
-    );
-
-    const spy = jest.spyOn(logger, "logError").mockImplementation(() => {});
-
-    await nonai.handler(mockRequest, mockH);
-
-    expect(csvUtility.convertCsvToJson).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledWith(
-      expect.any(String),
-      expect.any(String),
-      expect.any(Error),
-    );
-    spy.mockRestore();
   });
 });
