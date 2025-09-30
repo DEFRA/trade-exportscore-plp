@@ -1,5 +1,5 @@
 const { parse } = require("csv-parse");
-const fs = require("fs");
+const fs = require("node:fs");
 
 async function convertCsvToJson(buffer) {
   const parser = fs.createReadStream(buffer).pipe(
