@@ -37,8 +37,10 @@ describe("/csv-non-ai route handler", () => {
   test("should return success and call processCsvFile with filename and dispatchlocation", async () => {
     await csvNonAi.handler(mockRequest, mockH);
 
-        // processCsvFile uses convertCsvToJson internally; ensure convertCsvToJson was invoked by the file-processor
-        expect(convertCsvToJson).toHaveBeenCalledWith({ sourceFile: config.plDir + mockRequest.query.filename });
+    // processCsvFile uses convertCsvToJson internally; ensure convertCsvToJson was invoked by the file-processor
+    expect(convertCsvToJson).toHaveBeenCalledWith({
+      sourceFile: config.plDir + mockRequest.query.filename,
+    });
 
     // processCsvFile returns the value returned by findParser (mocked above)
     expect(mockH.response).toHaveBeenCalledWith({ parserModel: null });
