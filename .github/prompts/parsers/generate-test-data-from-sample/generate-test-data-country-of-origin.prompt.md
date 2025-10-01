@@ -14,20 +14,28 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **ac2_NullNirms_Fail**: Set NIRMS column to blank/empty for 2-3 data rows.
 - **ac3_InvalidNirms_Fail**: Set NIRMS column to invalid values (e.g. "INVALID", "123", "Maybe") for 2-3 data rows.
 - **ac4_NullNirmsMultiple_Fail**: Set NIRMS column to blank/empty for multiple data rows (at least 3).
-- **ac5_InvalidNirmsMultiple_Fail**: Set NIRMS column to different invalid values for multiple data rows.
+- **ac5_InvalidNirmsMultiple_Fail**: Set NIRMS column to different invalid values for multiple data rows (3 rows).
 - **ac6_NullCoO_Fail**: Set country_of_origin column to blank/empty for 2-3 data rows.
 - **ac7_InvalidCoO_Fail**: Set country_of_origin column to invalid values (e.g. "123", "GBR", "INVALID") for 2-3 data rows.
 - **ac8_NullCoOMultiple_Fail**: Set country_of_origin column to blank/empty for multiple data rows (at least 3).
-- **ac9_InvalidCoOMultiple_Fail**: Set country_of_origin column to different invalid values for multiple data rows.
+- **ac9_InvalidCoOMultiple_Fail**: Set country_of_origin column to different invalid values for multiple data rows (3 rows).
 - **ac10_xCoO_Pass**: Set country_of_origin column to "X" for 2-3 data rows.
-- **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: Set country_of_origin to a high-risk value and type_of_treatment to a specified value that should fail validation.
-- **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Set multiple rows with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
+- **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: Set country_of_origin to a high-risk value and type_of_treatment to a specified value that should fail validation for 2-3 data rows.
+- **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Set multiple rows (3 rows) with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
 - **ac13_HighRiskCoOTreatmentTypeNotSpecified_Fail**: Set country_of_origin to a high-risk value and leave type_of_treatment blank or not specified for 2-3 data rows.
-- **ac14_HighRiskCoOTreatmentTypeNotSpecified_COO_InvalidMultiple_Fail**: Set multiple rows with high-risk country_of_origin, missing type_of_treatment, and invalid country_of_origin values.
-- **ac14_HighRiskCoOTreatmentTypeNotSpecifiedMultiple_Fail**: Set multiple rows with high-risk country_of_origin and missing type_of_treatment.
+- **ac14_HighRiskCoOTreatmentTypeNotSpecified_COO_InvalidMultiple_Fail**: Set multiple rows (3 rows) with high-risk country_of_origin, missing type_of_treatment, and invalid country_of_origin values.
+- **ac14_HighRiskCoOTreatmentTypeNotSpecifiedMultiple_Fail**: Set multiple rows (3 rows) with high-risk country_of_origin and missing type_of_treatment.
 - **Happypath**: No mutation; copy the original happy path file.
 
 **You must generate and mutate all scenarios above.**
+
+## Mutation Scope Guidelines
+
+- **Standard scenarios**: Modify exactly **2-3 data rows** as specified per scenario
+- **"Multiple" scenarios**: Modify exactly **3 data rows** (minimum for "multiple")
+- **Preserve remaining rows**: All other data rows should remain unchanged from the template
+- **Do not modify all rows**: Only change the specified number of rows per scenario, not entire columns
+- **Baseline scenario**: `Happypath` should remain completely unmodified
 
 
 ## Documentation: Country of Origin, NIRMS, and High-Risk/Prohibited Items Scenario Types
@@ -36,17 +44,17 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **ac2_NullNirms_Fail**: NIRMS column set to blank/empty. Should fail validation.
 - **ac3_InvalidNirms_Fail**: NIRMS column set to invalid values (e.g. "INVALID", "123", "Maybe"). Should fail validation.
 - **ac4_NullNirmsMultiple_Fail**: NIRMS column set to blank/empty for multiple rows. Should fail validation for all.
-- **ac5_InvalidNirmsMultiple_Fail**: NIRMS column set to different invalid values for multiple rows. Should fail validation for all.
+- **ac5_InvalidNirmsMultiple_Fail**: NIRMS column set to different invalid values for multiple rows (3 rows). Should fail validation for all.
 - **ac6_NullCoO_Fail**: country_of_origin column set to blank/empty. Should fail validation.
 - **ac7_InvalidCoO_Fail**: country_of_origin column set to invalid values (e.g. "123", "GBR", "INVALID"). Should fail validation.
 - **ac8_NullCoOMultiple_Fail**: country_of_origin column set to blank/empty for multiple rows. Should fail validation for all.
-- **ac9_InvalidCoOMultiple_Fail**: country_of_origin column set to different invalid values for multiple rows. Should fail validation for all.
+- **ac9_InvalidCoOMultiple_Fail**: country_of_origin column set to different invalid values for multiple rows (3 rows). Should fail validation for all.
 - **ac10_xCoO_Pass**: country_of_origin column set to "X". Should pass validation.
-- **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: country_of_origin set to a high-risk value and type_of_treatment to a specified value that should fail validation (e.g. prohibited combination).
-- **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Multiple rows with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
+- **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: country_of_origin set to a high-risk value and type_of_treatment to a specified value that should fail validation (e.g. prohibited combination) for 2-3 data rows.
+- **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Multiple rows (3 rows) with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
 - **ac13_HighRiskCoOTreatmentTypeNotSpecified_Fail**: country_of_origin set to a high-risk value and type_of_treatment left blank or not specified. Should fail validation.
-- **ac14_HighRiskCoOTreatmentTypeNotSpecified_COO_InvalidMultiple_Fail**: Multiple rows with high-risk country_of_origin, missing type_of_treatment, and invalid country_of_origin values. Should fail validation for all.
-- **ac14_HighRiskCoOTreatmentTypeNotSpecifiedMultiple_Fail**: Multiple rows with high-risk country_of_origin and missing type_of_treatment. Should fail validation for all.
+- **ac14_HighRiskCoOTreatmentTypeNotSpecified_COO_InvalidMultiple_Fail**: Multiple rows (3 rows) with high-risk country_of_origin, missing type_of_treatment, and invalid country_of_origin values. Should fail validation for all.
+- **ac14_HighRiskCoOTreatmentTypeNotSpecifiedMultiple_Fail**: Multiple rows (3 rows) with high-risk country_of_origin and missing type_of_treatment. Should fail validation for all.
 - **Happypath**: No mutation; copy the original happy path file. Should pass validation.
 
 ## NIRMS and Country of Origin Validation Patterns

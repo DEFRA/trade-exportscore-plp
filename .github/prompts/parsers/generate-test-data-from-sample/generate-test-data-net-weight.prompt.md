@@ -24,8 +24,8 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **Incorrect_NetweightData_All_Fail**: Set all net weight data to invalid values (e.g. 'abc', '-1', '9999999999').
 - **Invalid_Unit_Type_Fail**: Set unit of measure to an invalid type (e.g. 'LBS' if only 'KG' is valid).
 - **Malformed_Header_Unit_Pass**: Malform the unit in the header (e.g. 'Total Net Weight (K-G)').
-- **Missing_Header_Netweight_Unparse**: Remove the net weight header column.
-- **Missing_Header_NetweightUOM**: Remove the unit of measure header column.
+- **Missing_Header_Netweight_Unparse**: **Remove (clear/empty)** the net weight header column completely.
+- **Missing_Header_NetweightUOM**: **Remove (clear/empty)** the unit of measure header column completely.
 - **Missing_Paranthesis_in_Uom_Pass**: Remove parentheses from the unit in the header (e.g. 'Total Net Weight KG').
 - **Missing_UOM_Weight_Fail**: Remove all unit of measure data.
 - **MissingNetweightUOM_excludeKG**: Remove the unit of measure column if it only contains 'KG'.
@@ -41,6 +41,19 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **Zero_Data_UOM**: Set unit of measure data to zero.
 
 **You must generate and mutate all 29 scenarios above.**
+
+## Mutation Scope Guidelines
+
+- **Missing vs Modification Scenarios**:
+  - **"Missing_Header"**: **Remove/clear** headers completely (empty cells)
+  - **Other header scenarios**: **Modify** headers with typos, extra characters, etc.
+- **Standard scenarios**: Modify exactly **2-3 data rows** unless scenario specifies otherwise
+- **Header scenarios**: Modify header row only, leave data rows unchanged
+- **Data scenarios**: Modify exactly **2-3 data rows**, preserve header and remaining rows
+- **"All" scenarios**: Modify **all data rows** when explicitly stated (e.g., "All_Fail")
+- **Preserve remaining rows**: All other data rows should remain unchanged from the template
+- **Do not modify all rows**: Only change the specified number of rows per scenario, not entire columns
+- **Baseline scenario**: `Happypath` should remain completely unmodified
 
 ## Output
 - Place all generated files in `app/packing-lists/{exporter}/test-scenarios/net-weight/`.

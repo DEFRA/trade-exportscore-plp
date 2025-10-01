@@ -36,3 +36,14 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **RMSWithExtraDashEstablishmentNumberAtStartandEnd_Fail**: Add extra dash at start and end (e.g. -RMS-GB-000015-010-)
 
 **You must generate and mutate all scenarios above.**
+
+## Mutation Scope Guidelines
+
+- **Standard scenarios**: Modify exactly **2-3 data rows** unless scenario specifies otherwise
+- **Establishment number patterns**: 
+  - **Single per sheet**: Modify the single establishment number location (e.g., header/company area)
+  - **Per row**: Modify exactly **2-3 data rows** with establishment number columns
+- **"Multiple" scenarios**: Modify exactly **3 data rows** (minimum for "multiple")
+- **Preserve remaining rows**: All other data rows should remain unchanged from the template
+- **Do not modify all rows**: Only change the specified number of rows per scenario, not entire columns
+- **Baseline scenario**: `Happypath` should remain completely unmodified

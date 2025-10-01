@@ -9,11 +9,21 @@ const matcherResult = require("../matcher-result");
 const headers = require("../model-headers-pdf");
 
 function getExcelParser(sanitisedPackingList, filename) {
-  return getParser(sanitisedPackingList, filename, parsersExcel, noMatchParsers.NOREMOS);
+  return getParser(
+    sanitisedPackingList,
+    filename,
+    parsersExcel,
+    noMatchParsers.NOREMOS,
+  );
 }
 
 function getCsvParser(sanitisedPackingList, filename) {
-  return getParser(sanitisedPackingList, filename, parsersCsv, noMatchParsers.NOREMOSCSV);
+  return getParser(
+    sanitisedPackingList,
+    filename,
+    parsersCsv,
+    noMatchParsers.NOREMOSCSV,
+  );
 }
 
 function getParser(sanitisedPackingList, filename, parsers, nomatch) {

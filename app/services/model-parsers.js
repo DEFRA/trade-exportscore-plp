@@ -6,6 +6,8 @@ const asdaMatcher2 = require("./matchers/asda/model2");
 const asdaParser2 = require("./parsers/asda/model2");
 const asdaMatcher3 = require("./matchers/asda/model3");
 const asdaParser3 = require("./parsers/asda/model3");
+const asdaMatcher4 = require("./matchers/asda/model4");
+const asdaParser4 = require("./parsers/asda/model4");
 const bandMMatcher = require("./matchers/bandm/model1");
 const bandMParser = require("./parsers/bandm/model1");
 const bootsMatcher = require("./matchers/boots/model1");
@@ -285,7 +287,13 @@ const parsersPdfNonAi = {
   },
 };
 
-const parsersCsv = {};
+const parsersCsv = {
+  ASDA4: {
+    matches: (packingList, filename) =>
+      asdaMatcher4.matches(packingList, filename),
+    parse: (packingList, filename) => asdaParser4.parse(packingList, filename),
+  },
+};
 
 module.exports = {
   parsersExcel,

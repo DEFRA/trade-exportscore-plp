@@ -282,7 +282,18 @@ These steps apply to all scenario-based test data generation:
    ```
 3. **For each scenario,** use MCP Excel tools to apply the described mutations to the copied file. Never modify the original template file.
 4. **Unless otherwise stated,** modify only the relevant rows/fields as specified by the scenario.
-5. **After mutation,** verify that the file is no longer identical to the template.
+- **Mutation Scope Rules**: Follow these guidelines for all scenarios:
+   - **Missing vs Incorrect Scenarios**:
+     - **"Missing"**: **Remove/clear** headers or data completely (empty cells)
+     - **"Incorrect"**: **Modify** headers or data to wrong text that doesn't match expected patterns
+   - **Standard scenarios**: Modify exactly **2-3 data rows** unless scenario specifies otherwise
+   - **"Multiple" scenarios**: Modify exactly **3 data rows** (minimum for "multiple")
+   - **"All" scenarios**: Modify **all data rows** when explicitly stated (e.g., "All_Fail")
+   - **Header scenarios**: Modify header row only, leave data rows unchanged
+   - **Preserve remaining rows**: All other data rows should remain unchanged from the template
+   - **Do not modify all rows**: Only change the specified number of rows per scenario, not entire columns
+   - **Baseline scenario**: `Happypath` should remain completely unmodified
+6. **After mutation,** verify that the file is no longer identical to the template.
 6. **Track mutation progress** using PowerShell or CLI commands to ensure all files have been modified.
 
 Refer to the field-specific prompt for the scenario list and mutation details.
