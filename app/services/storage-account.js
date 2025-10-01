@@ -1,10 +1,11 @@
 const { convertExcelToJson } = require("../utilities/excel-utility");
+const { convertCsvToJson } = require("../utilities/csv-utility");
 const { BlobClient } = require("@azure/storage-blob");
 const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-const { isExcel } = require("../utilities/file-extension");
+const { isExcel, isCsv } = require("../utilities/file-extension");
 
 function createStorageAccountClient(blobUri) {
   return new BlobClient(blobUri, new DefaultAzureCredential());
@@ -20,6 +21,8 @@ async function getPackingListFromBlob(blobClient, blobUri) {
     let result;
     if (isExcel(blobUri)) {
       result = convertExcelToJson({ source: downloaded });
+    } else if (isCsv(blobUri)) {
+      result = await convertCsvToJson(downloaded);
     } else {
       result = downloaded;
     }

@@ -244,6 +244,8 @@ const parsersPdf = {
   },
 };
 
+const missingRemosParserMessage = "missing remos parser";
+
 const noMatchParsers = {
   UNRECOGNISED: {
     parse: (_packingList, _filename) =>
@@ -255,12 +257,17 @@ const noMatchParsers = {
       noMatchMatcher.noRemosMatch(packingList, _filename),
     parse: (_packingList, _filename) =>
       noMatchParser.noRemosParse(_packingList, _filename),
-    name: "missing remos parser",
+    name: missingRemosParserMessage,
+  },
+  NOREMOSCSV: {
+    matches: (packingList) => noMatchMatcher.noRemosMatchCsv(packingList),
+    parse: () => noMatchParser.noRemosParse(),
+    name: missingRemosParserMessage,
   },
   NOREMOSPDF: {
     matches: (packingList) => noMatchMatcher.noRemosMatchPdf(packingList),
     parse: () => noMatchParser.noRemosParse(),
-    name: "missing remos parser",
+    name: missingRemosParserMessage,
   },
 };
 
@@ -278,4 +285,12 @@ const parsersPdfNonAi = {
   },
 };
 
-module.exports = { parsersExcel, parsersPdf, noMatchParsers, parsersPdfNonAi };
+const parsersCsv = {};
+
+module.exports = {
+  parsersExcel,
+  parsersCsv,
+  parsersPdf,
+  noMatchParsers,
+  parsersPdfNonAi,
+};

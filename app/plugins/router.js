@@ -8,6 +8,7 @@ const routes = [].concat(
   require("../routes/create-packinglist-message"),
   require("../routes/pdf-non-ai"),
   require("../routes/get-dispatch-location"),
+  require("../routes/csv-non-ai"),
 );
 
 module.exports = {

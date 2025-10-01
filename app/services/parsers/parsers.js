@@ -1,5 +1,6 @@
 const {
   parsersExcel,
+  parsersCsv,
   parsersPdf,
   parsersPdfNonAi,
   noMatchParsers,
@@ -8,18 +9,37 @@ const matcherResult = require("../matcher-result");
 const headers = require("../model-headers-pdf");
 
 function getExcelParser(sanitisedPackingList, filename) {
+  return getParser(
+    sanitisedPackingList,
+    filename,
+    parsersExcel,
+    noMatchParsers.NOREMOS,
+  );
+}
+
+function getCsvParser(sanitisedPackingList, filename) {
+  return getParser(
+    sanitisedPackingList,
+    filename,
+    parsersCsv,
+    noMatchParsers.NOREMOSCSV,
+  );
+}
+
+function getParser(sanitisedPackingList, filename, parsers, nomatch) {
   let parser = null;
-  if (noMatchParsers.NOREMOS.matches(sanitisedPackingList, filename)) {
-    Object.keys(parsersExcel).forEach((key) => {
+
+  if (nomatch.matches(sanitisedPackingList, filename)) {
+    for (const key in parsers) {
       if (
-        parsersExcel[key].matches(sanitisedPackingList, filename) ===
+        parsers[key].matches(sanitisedPackingList, filename) ===
         matcherResult.CORRECT
       ) {
-        parser = parsersExcel[key];
+        parser = parsers[key];
       }
-    });
+    }
   } else {
-    parser = noMatchParsers.NOREMOS;
+    parser = nomatch;
   }
   return parser;
 }
@@ -72,6 +92,7 @@ async function getPdfNonAiParser(sanitisedPackingList, filename) {
 
 module.exports = {
   getExcelParser,
+  getCsvParser,
   getPdfParser,
   getPdfNonAiParser,
 };

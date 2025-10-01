@@ -1,14 +1,14 @@
 const config = require("../config");
 const { StatusCodes } = require("http-status-codes");
-const { processExcelFile } = require("../utilities/file-processor");
+const { processCsvFile } = require("../utilities/file-processor");
 
 module.exports = {
   method: "GET",
-  path: "/non-ai",
+  path: "/csv-non-ai",
   handler: async (request, h) => {
     const filename = config.plDir + request.query.filename;
 
-    const packingList = await processExcelFile(
+    const packingList = await processCsvFile(
       filename,
       request.query.dispatchlocation,
     );

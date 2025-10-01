@@ -21,8 +21,13 @@ function isPdf(filename) {
   return matches(filename, "pdf") === matcherResult.CORRECT;
 }
 
+function isCsv(filename) {
+  return matches(filename, "csv") === matcherResult.CORRECT;
+}
+
 module.exports = {
   matches,
   isExcel,
   isPdf,
+  isCsv,
 };

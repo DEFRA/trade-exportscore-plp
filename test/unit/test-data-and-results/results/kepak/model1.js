@@ -1,5 +1,4 @@
 const parserModel = require("../../../../../app/services/parser-model");
-const { emptyModelResult } = require("../davenport/model1");
 const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 module.exports = {
@@ -28,6 +27,39 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "GB",
         total_net_weight_unit: "KG",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  validTestResultWithNirms: {
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    items: [
+      {
+        commodity_code: "1602509590",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: null,
+        country_of_origin: "GB",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "1602493000",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: null,
+        country_of_origin: "GB",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
     ],
     establishment_numbers: ["RMS-GB-000149-005"],
@@ -81,6 +113,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "GB",
         total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
       {
         commodity_code: "1602493000",
@@ -91,6 +124,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "GB",
         total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
     ],
     establishment_numbers: ["RMS-GB-000149-005"],
@@ -133,6 +167,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "GB",
         total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
       {
         commodity_code: "1602493000",
@@ -143,6 +178,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "GB",
         total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
     ],
     establishment_numbers: ["RMS-GB-000149-005", "RMS-GB-000149-006"],
@@ -164,6 +200,7 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "GB",
         total_net_weight_unit: null,
+        nirms: "NIRMS",
       },
       {
         commodity_code: "1602493000",
@@ -174,6 +211,408 @@ module.exports = {
         type_of_treatment: null,
         country_of_origin: "GB",
         total_net_weight_unit: null,
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC1: Null NIRMS value
+  missingNirmsStatementTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: failureReasonsDescriptions.NIRMS_MISSING + ".\n",
+    },
+    items: [
+      {
+        commodity_code: "1602493000",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: "Processed",
+        country_of_origin: "GB",
+        total_net_weight_unit: "KG",
+        nirms: null,
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC2: Null CoO Value
+  nullCoOTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.COO_MISSING + ' in sheet "KEPAK" row 22.\n',
+    },
+    items: [
+      {
+        commodity_code: "1602509590",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: null,
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC2: Invalid CoO Value
+  invalidCoOTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.COO_INVALID + ' in sheet "KEPAK" row 22.\n',
+    },
+    items: [
+      {
+        commodity_code: "1602509590",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: "INVALID",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC4: Null CoO Value, more than 3
+  multipleNullCoOTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.COO_MISSING +
+        ' in sheet "KEPAK" row 22, sheet "KEPAK" row 23, sheet "KEPAK" row 24 in addition to 1 other locations.\n',
+    },
+    items: [
+      {
+        commodity_code: "1602509590",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: null,
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "1602493000",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: "Processed",
+        country_of_origin: null,
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "1602509590",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: null,
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "1602493000",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: "Processed",
+        country_of_origin: null,
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC5: Invalid CoO Value, more than 3
+  multipleInvalidCoOTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.COO_INVALID +
+        ' in sheet "KEPAK" row 22, sheet "KEPAK" row 23, sheet "KEPAK" row 24 in addition to 1 other locations.\n',
+    },
+    items: [
+      {
+        commodity_code: "1602509590",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: "INVALID",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "1602493000",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: "Processed",
+        country_of_origin: "INVALID",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "1602509590",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: "INVALID",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "1602493000",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: "Processed",
+        country_of_origin: "INVALID",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC6: CoO Value is X or x
+  xCoOTestResult: {
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    items: [
+      {
+        commodity_code: "1602509590",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: "x",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC7: Item Present on Prohibited Item List (Treatment Type specified)
+  prohibitedItemWithTreatmentTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.PROHIBITED_ITEM +
+        ' in sheet "KEPAK" row 22.\n',
+    },
+    items: [
+      {
+        commodity_code: "012",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
+  multipleProhibitedItemsWithTreatmentTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.PROHIBITED_ITEM +
+        ' in sheet "KEPAK" row 22, sheet "KEPAK" row 23, sheet "KEPAK" row 24 in addition to 1 other locations.\n',
+    },
+    items: [
+      {
+        commodity_code: "012",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "012",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: "Processed",
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "012",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: "Processed",
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "012",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: "Processed",
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC9: Item Present on Prohibited Item List (no Treatment Type specified)
+  prohibitedItemNoTreatmentTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.PROHIBITED_ITEM +
+        ' in sheet "KEPAK" row 22.\n',
+    },
+    items: [
+      {
+        commodity_code: "012",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: null,
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
+  multipleProhibitedItemsNoTreatmentTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.PROHIBITED_ITEM +
+        ' in sheet "KEPAK" row 22, sheet "KEPAK" row 23, sheet "KEPAK" row 24 in addition to 1 other locations.\n',
+    },
+    items: [
+      {
+        commodity_code: "012",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: null,
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "012",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: null,
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "012",
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: null,
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+      {
+        commodity_code: "012",
+        description: "RS BBQ RIB STD 8X157G",
+        nature_of_products: null,
+        number_of_packages: 22,
+        total_net_weight_kg: 27.632,
+        type_of_treatment: null,
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000149-005"],
+    registration_approval_number: "RMS-GB-000280",
+    parserModel: parserModel.KEPAK1,
+  },
+  // AC11: Null Treatment type value
+  nullTreatmentTypeWithNullIdentifierTestResult: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons:
+        failureReasonsDescriptions.IDENTIFIER_MISSING +
+        ' in sheet "KEPAK" row 22.\n',
+    },
+    items: [
+      {
+        commodity_code: null,
+        description: "RS DOUBLE DECKER STD",
+        nature_of_products: null,
+        number_of_packages: 32,
+        total_net_weight_kg: 30.336,
+        type_of_treatment: null,
+        country_of_origin: "GB",
+        total_net_weight_unit: "KG",
+        nirms: "NIRMS",
       },
     ],
     establishment_numbers: ["RMS-GB-000149-005"],
