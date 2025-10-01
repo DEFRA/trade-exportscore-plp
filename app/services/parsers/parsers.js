@@ -39,7 +39,7 @@ function getParser(sanitisedPackingList, filename, parsers, nomatch) {
       }
     }
   } else {
-    parser = noMatchParsers.NOREMOS;
+    parser = nomatch;
   }
   return parser;
 }

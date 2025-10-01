@@ -31,7 +31,11 @@ Scenario folder creation and seeding should always reference this manifest for c
 
 ### Three-Category Field Classification
 
-When analyzing the exporter configuration in `model-headers.js`, columns are classified into three categories:
+When analyzing the exporter configuration, the location depends on the file format:
+- **Excel files (.xls, .xlsx)**: Configuration is in `model-headers.js`
+- **CSV files (.csv)**: Configuration is in `model-headers-csv.js`
+
+Columns are classified into three categories:
 
 - **Mandatory Columns**: ALL fields defined within the `regex` property of the exporter configuration
 - **Optional Columns**: Fields defined as separate root-level properties (excluding configuration flags)
@@ -89,11 +93,12 @@ Header columns in the template are classified into three states based on the exp
 
 - Generate a suite of test data and Excel/CSV files for various test scenarios based on a user-provided “happy path” sample file.
 - Scenarios must include both valid (happy path) and failure cases, such as missing or incorrect data in columns and column names.
-- Use the `model-headers.js` file and the specified exporter property (`${exporterProperty}`) to:
-  - Access the exporter configuration at `model-headers.js[${exporterProperty}]`.
+- Use the appropriate configuration file based on the input file format:
+  - **For Excel files (.xls, .xlsx)**: Use `model-headers.js` and access the exporter configuration at `model-headers.js[${exporterProperty}]`
+  - **For CSV files (.csv)**: Use `model-headers-csv.js` and access the exporter configuration at `model-headers-csv.js[${exporterProperty}]`
   - Determine mandatory columns from the `regex` property for that exporter (ALL fields in the regex object are mandatory).
   - Identify optional columns from other root-level properties like `country_of_origin`, `nirms`, `type_of_treatment` (excluding `validateCountryOfOrigin`, `findUnitInHeader`, and `invalidSheets`).
-  - Ignore any sheets listed in the `invalidSheets` property for that exporter.
+  - For Excel files: Ignore any sheets listed in the `invalidSheets` property for that exporter.
 - Output files must be in `.xls`, `.xlsx`, or `.csv` format, matching the format of the input file.
 - All generated files should be written to `app/packing-lists/{exporter}/test-scenarios/` (where `{exporter}` is determined from the `${exporterProperty}` value).
 - The original template file should remain in `app/packing-lists/{exporter}/` as the authoritative source.
@@ -102,7 +107,7 @@ Header columns in the template are classified into three states based on the exp
 
 ## Field Mapping Confirmation (MANDATORY)
 
-**Before any test data is created or mutated, you MUST display the detected field/column mappings (from both `model-headers.js` and the sample file) to the user and require explicit confirmation.**
+**Before any test data is created or mutated, you MUST display the detected field/column mappings (from both the appropriate configuration file - `model-headers.js` for Excel files or `model-headers-csv.js` for CSV files - and the sample file) to the user and require explicit confirmation.**
 
 - Present a summary of the detected mappings, including which columns in the sample file correspond to which fields in the exporter configuration.
 - Allow the user to confirm, adjust, or reject the mappings interactively (e.g., via CLI prompt, UI, or other means).
@@ -168,7 +173,7 @@ This confirmation step is required to prevent accidental data corruption and ens
 ## Implementation Steps
 
 1. **Analyze Template**: Read the happy path file to identify establishment number, headers, and data structure
-2. **Match Exporter**: Use model-headers.js to determine the correct exporter configuration
+2. **Match Exporter**: Use the appropriate configuration file (`model-headers.js` for Excel, `model-headers-csv.js` for CSV) to determine the correct exporter configuration
 4. **Create Directory**: Each scenario's instructions file is responsible for creating its own subdirectory (e.g., `basic-tests/`, `single-rms/`, `net-weight/`, `country-of-origin/`) only if its scenarios are being generated. The main instructions do not create subdirectories globally.
 5. **Copy Files**: Use PowerShell to copy the entire template file to all scenario filenames in their appropriate subdirectories. Do not update the template in-place; always copy the whole file for each scenario.
 7. **Generate Documentation**: Create manifest.json and README.md with comprehensive scenario descriptions, including conditional scenario explanations

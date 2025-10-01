@@ -1,8 +1,8 @@
 const { parse } = require("csv-parse");
 const fs = require("node:fs");
 
-async function convertCsvToJson(buffer) {
-  const parser = fs.createReadStream(buffer).pipe(
+async function convertCsvToJson(bufferOrFilename) {
+  const parser = fs.createReadStream(bufferOrFilename).pipe(
     parse({
       columns: false,
       skip_empty_lines: true,

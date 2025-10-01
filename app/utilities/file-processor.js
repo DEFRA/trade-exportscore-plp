@@ -26,7 +26,7 @@ async function processExcelFile(filename, dispatchLocation = null) {
 async function processCsvFile(filename, dispatchLocation = null) {
   let data = {};
   try {
-    data = convertCsvToJson({ sourceFile: filename });
+    data = await convertCsvToJson(filename);
   } catch (err) {
     logger.logError(
       filenameForLogging,
