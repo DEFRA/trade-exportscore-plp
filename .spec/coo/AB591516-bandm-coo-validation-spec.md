@@ -289,13 +289,11 @@ No database schema changes required - existing Item and PackingList models suppo
 ### Test Data Requirements
 
 1. **Happy Path Test Cases**
-
    - Valid ISO country codes (single and comma-separated)
    - Acceptable "X" placeholder values
    - Valid NIRMS and treatment statements
 
 2. **Negative Test Cases**
-
    - Missing NIRMS statement
    - Missing CoO values
    - Invalid CoO formats

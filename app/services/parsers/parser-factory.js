@@ -1,6 +1,7 @@
 const fileExtension = require("../../utilities/file-extension");
 const config = require("../../config");
 const {
+  getCsvParser,
   getExcelParser,
   getPdfParser,
   getPdfNonAiParser,
@@ -12,7 +13,7 @@ const {
 } = require("../validators/packing-list-validator-utilities");
 const { noMatchParsers } = require("../model-parsers");
 const logger = require("../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function findParser(sanitizedPackingList, fileName) {
@@ -20,6 +21,8 @@ async function findParser(sanitizedPackingList, fileName) {
 
   if (fileExtension.isExcel(fileName)) {
     parser = getExcelParser(sanitizedPackingList, fileName);
+  } else if (fileExtension.isCsv(fileName)) {
+    parser = getCsvParser(sanitizedPackingList, fileName);
   } else if (fileExtension.isPdf(fileName)) {
     parser = await getPdfNonAiParser(sanitizedPackingList, fileName);
 

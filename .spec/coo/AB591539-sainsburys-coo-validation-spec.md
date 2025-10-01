@@ -17,7 +17,6 @@ This specification documents the Country of Origin (CoO) validation for Sainsbur
 #### Header Detection
 
 - **NIRMS Header**: `"NIRMS or non-NIRMS"` (Column P)
-
   - **Detection**: Uses `/NIRMS or non-NIRMS/i` regex pattern
   - **Purpose**: Identifies NIRMS classification column in header row
   - **Mapping**: Maps to `nirms` field in standardized output schema
