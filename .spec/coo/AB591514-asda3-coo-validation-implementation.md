@@ -600,7 +600,6 @@ invalidTestResult_MissingCells: {
 **⚠️ CRITICAL VERIFICATION STEPS:**
 
 1. **Column mappings complete and correctly placed:**
-
    - **Commodity code**: `commodity_code: /Commodity Code/i,` (outside regex section - NOT in regex as it's not currently there)
    - **NIRMS column**: `nirms: /NIRMs\/Non-NIRMs/i,` (outside regex section for CoO validation)
    - **CoO column**: `country_of_origin: /Country of Origin/i,` (outside regex section for CoO validation)
@@ -664,7 +663,6 @@ invalidTestResult_MissingCells: {
 **⚠️ CRITICAL: Implementation is NOT complete until ALL items checked:**
 
 - [ ] **Configuration Update**: model-headers.js updated with correct patterns and validation flags
-
   - [ ] **commodity_code added OUTSIDE regex section** (not currently in regex - adding there breaks tests)
   - [ ] **country_of_origin added outside regex section** for CoO validation
   - [ ] **nirms field added outside regex section** for NIRMS validation
@@ -672,29 +670,24 @@ invalidTestResult_MissingCells: {
   - [ ] Only ASDA3-specific configuration elements added (no cross-retailer copying)
 
 - [ ] **Parser Integration Fix**: Parser uses correct 6-parameter combineParser.combine() signature
-
   - [ ] **6th parameter added**: headers.ASDA3 parameter included in combineParser.combine() call
   - [ ] Standard parser architecture maintained
 
 - [ ] **Test Data Models Created**: ALL test data models exist for every test case reference
-
   - [ ] Every `model.[testDataName]` has corresponding export in test data file
   - [ ] CoO validation columns (C, M, N) included in all test headers
   - [ ] Prohibited items use actual prohibited commodity codes from data-prohibited-items.json
 
 - [ ] **Legacy Test Results Updated**: Existing test expectations updated for CoO validation changes
-
   - [ ] Updated expectations if existing behavior changes due to CoO validation
 
 - [ ] **Complete Test Coverage**: All acceptance criteria covered in unit tests
-
   - [ ] ALL 14 BAC scenarios covered with appropriate test cases
   - [ ] Tests ordered by BAC sequence (BAC1, BAC2, BAC3, etc.)
   - [ ] ALL existing regression tests still passing
   - [ ] 100% test pass rate: `npm test -- --testPathPattern="asda/model3.test.js"`
 
 - [ ] **Regex Pattern Verification**: All regex patterns tested against actual data
-
   - [ ] `/NIRMs\/Non-NIRMs/i` matches actual NIRMS column headers
   - [ ] `/Commodity Code/i` matches actual commodity code column headers
   - [ ] `/Country of Origin/i` matches actual CoO column headers

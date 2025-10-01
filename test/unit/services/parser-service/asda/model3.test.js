@@ -1,3 +1,19 @@
+// Jest mocks for CoO validation testing
+jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
+  "VALID_ISO",
+  "PROHIBITED_ITEM_ISO",
+  "GB",
+  "X",
+]);
+
+jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+  {
+    country_of_origin: "PROHIBITED_ITEM_ISO",
+    commodity_code: "1234",
+    type_of_treatment: "Processed",
+  },
+]);
+
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/asda/model3");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -49,5 +65,141 @@ describe("matchesAsdaModel3", () => {
     );
 
     expect(result).toMatchObject(test_results.missingKgunit);
+  });
+});
+
+describe("ASDA3 CoO Validation Tests - Type 1", () => {
+  // Order tests by BAC sequence for maintainability
+
+  test("BAC1: NOT within NIRMS Scheme - passes validation", async () => {
+    const result = await parserService.findParser(
+      model.nonNirmsModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toBeNull();
+  });
+
+  test("BAC2: Null NIRMS value - validation errors", async () => {
+    const result = await parserService.findParser(
+      model.nullNirmsModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain(
+      "NIRMS/Non-NIRMS goods not specified",
+    );
+  });
+
+  test("BAC3: Invalid NIRMS value - validation errors", async () => {
+    const result = await parserService.findParser(
+      model.invalidNirmsModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain(
+      "Invalid entry for NIRMS/Non-NIRMS goods",
+    );
+  });
+
+  test("BAC4: Null NIRMS value, more than 3 - validation errors with summary", async () => {
+    const result = await parserService.findParser(
+      model.nullNirmsMultipleModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain("in addition to");
+  });
+
+  test("BAC5: Invalid NIRMS value, more than 3 - validation errors with summary", async () => {
+    const result = await parserService.findParser(
+      model.invalidNirmsMultipleModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain("in addition to");
+  });
+
+  test("BAC6: Null CoO Value - validation errors", async () => {
+    const result = await parserService.findParser(model.nullCooModel, filename);
+    expect(result.business_checks.failure_reasons).toContain(
+      "Missing Country of Origin",
+    );
+  });
+
+  test("BAC7: Invalid CoO Value - validation errors", async () => {
+    const result = await parserService.findParser(
+      model.invalidCooModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain(
+      "Invalid Country of Origin ISO Code",
+    );
+  });
+
+  test("BAC8: Null CoO Value, more than 3 - validation errors with summary", async () => {
+    const result = await parserService.findParser(
+      model.nullCooMultipleModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain("in addition to");
+  });
+
+  test("BAC9: Invalid CoO Value, more than 3 - validation errors with summary", async () => {
+    const result = await parserService.findParser(
+      model.invalidCooMultipleModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain("in addition to");
+  });
+
+  test("BAC10: CoO Value is X or x - passes validation", async () => {
+    const result = await parserService.findParser(
+      model.cooPlaceholderXModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toBeNull();
+  });
+
+  test("BAC11: Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
+    const result = await parserService.findParser(
+      model.prohibitedItemsWithTreatmentModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain(
+      "Prohibited item identified on the packing list",
+    );
+  });
+
+  test("BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
+    const result = await parserService.findParser(
+      model.prohibitedItemsMultipleWithTreatmentModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain("in addition to");
+  });
+
+  test("BAC13: Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
+    const result = await parserService.findParser(
+      model.prohibitedItemsNoTreatmentModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain(
+      "Prohibited item identified on the packing list",
+    );
+  });
+
+  test("BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
+    const result = await parserService.findParser(
+      model.prohibitedItemsMultipleNoTreatmentModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toContain("in addition to");
+  });
+
+  test("Valid CoO Validation: Complete packing list with all fields valid", async () => {
+    const result = await parserService.findParser(
+      model.validCooModel,
+      filename,
+    );
+    expect(result.business_checks.failure_reasons).toBeNull();
+    expect(result.items.every((item) => item.country_of_origin)).toBe(true);
+    expect(result.items.every((item) => item.commodity_code)).toBe(true);
+    expect(result.items.every((item) => item.nirms)).toBe(true);
   });
 });
