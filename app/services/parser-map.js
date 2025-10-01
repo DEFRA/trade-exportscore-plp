@@ -52,7 +52,12 @@ function mapParser(
   const headerCols = findHeaderCols(header, packingListJson[headerRow]);
 
   // extract blanket values
-  const blanketValues = extractBlanketValues(header, packingListJson, headerCols, headerRow);
+  const blanketValues = extractBlanketValues(
+    header,
+    packingListJson,
+    headerCols,
+    headerRow,
+  );
 
   // parse the packing list contents based on columns identified
   const packingListContents = packingListJson
