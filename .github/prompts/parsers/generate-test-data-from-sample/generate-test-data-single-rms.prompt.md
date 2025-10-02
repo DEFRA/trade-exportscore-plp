@@ -1,5 +1,5 @@
 ---
-description: "Generate test data scenarios for establishment number validation in the single-rms folder. Strictly follow the scenario list and mutation instructions below."
+description: "Generate test-- **TC_InvalidFormat_WithSpacesAndHyphens_Fail**: Add spaces, special characters, and alphanumeric corruption: `RMS - G B - 00 @014-010`, `R#S - G1 - 00 B014-0A0`, `RMS ! GB @ 00 #014-01$`.**NonNumericAttheEndOfRMS_Fail**: Use non-numeric characters at the end including special characters and alphanumeric patterns: `RMS-GB-000015-@@@`, `RMS-GB-000015-ABC`, `RMS-GB-000015-A1B`, `RMS-GB-000015-#!@`, `RMS-GB-000015-1A2`.data scenarios for establishment number validation in the single-rms folder. Strictly follow the scenario list and mutation instructions below."
 mode: "agent"
 ---
 
@@ -7,6 +7,8 @@ mode: "agent"
 # Single RMS Test Scenarios
 
 _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` for folder creation, copying, and mutation steps._
+
+**Important**: When corrupting RMS establishment numbers in these scenarios, use specific patterns to test validation. The scenarios below include examples with special characters, alphanumeric values, and invalid numeric patterns.
 
 ## Scenarios
 

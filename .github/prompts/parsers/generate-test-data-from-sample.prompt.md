@@ -27,6 +27,53 @@ This manifest must be confirmed and can be reused for all scenario generation an
 
 Scenario folder creation and seeding should always reference this manifest for column structure and mapping details. The manifest in the test-scenarios folder is the single source of truth for all scenario generation.
 
+## Numeric Field Corruption Guidelines
+
+### Making Numeric Columns Invalid
+
+When corrupting numeric fields (commodity_code, number_of_packages, total_net_weight_kg, etc.), use these specific patterns to create invalid data:
+
+#### Special Characters in Numeric Fields
+- **Commodity codes**: `@123456`, `123!56`, `12#456`, `123$56`, `12%456`, `123&56`
+- **Number of packages**: `@5`, `5!`, `#10`, `$15`, `%20`, `&25`
+- **Net weight**: `@12.5`, `15!.2`, `#20.8`, `$25.0`, `%30.5`, `&35.7`
+
+#### Alphanumeric Values in Numeric Fields
+- **Commodity codes**: `ABC123`, `12DEF6`, `123A56`, `12B456`, `C12345`, `1D2E3F`
+- **Number of packages**: `A5`, `5B`, `C10`, `15D`, `E20`, `2F5`
+- **Net weight**: `A12.5`, `15B.2`, `C20.8`, `25D.0`, `E30.5`, `3F5.7`
+
+#### Negative Numbers in Numeric Fields
+- **Commodity codes**: `-123456`, `-000123`, `-999999`
+- **Number of packages**: `-5`, `-10`, `-15`, `-20`, `-25`
+- **Net weight**: `-12.5`, `-15.2`, `-20.8`, `-25.0`, `-30.5`
+
+#### Mixed Invalid Patterns
+- **Commodity codes**: `-A123!`, `@BC456`, `-12#D56`, `$-789AB`
+- **Number of packages**: `-A5!`, `@-10`, `#-C15`, `$D-20`
+- **Net weight**: `-A12.5!`, `@-15.B`, `#-C20.8`, `$D-25.E`
+
+#### Text Replacements for Numeric Fields
+- **Commodity codes**: `"Invalid"`, `"Not Available"`, `"TBD"`, `"N/A"`, `"Unknown"`
+- **Number of packages**: `"Many"`, `"Several"`, `"Unknown"`, `"TBD"`, `"N/A"`
+- **Net weight**: `"Heavy"`, `"Light"`, `"Unknown"`, `"TBD"`, `"Variable"`
+
+#### Edge Case Patterns for Thorough Testing
+- **Empty strings with spaces**: `" "`, `"  "`, `"   "`
+- **Zero variations**: `0`, `00`, `000`, `0.0`, `0.00`
+- **Boundary values**: `999999999`, `-999999999`, `0.000001`, `-0.000001`
+- **Unicode/Special formatting**: `１２３` (full-width numbers), `①②③` (circled numbers)
+- **Scientific notation**: `1E5`, `1.2e-3`, `-2.5E+4`
+
+**Usage Instructions:**
+- When scenarios specify "invalid" numeric data, use a mix of these patterns across different rows
+- For "alphanumeric" scenarios, use the alphanumeric examples above
+- For "special characters" scenarios, use the special character examples above
+- For "negative numbers" scenarios, use the negative number examples above
+- Vary the corruption patterns across rows to test different edge cases
+- **Critical**: Don't use the same corruption pattern for all scenarios - rotate through different types (special chars, alphanumeric, negative, mixed) to ensure comprehensive testing
+- **Multi-row scenarios**: When corrupting multiple rows, use different corruption patterns per row (e.g., Row 1: special chars, Row 2: alphanumeric, Row 3: negative numbers)
+
 ## Column Classification Rules
 
 ### Three-Category Field Classification

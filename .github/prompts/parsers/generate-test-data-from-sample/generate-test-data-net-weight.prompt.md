@@ -8,10 +8,12 @@ mode: "agent"
 
 _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` for folder creation, copying, and mutation steps._
 
+**Important**: When corrupting numeric data in these scenarios, refer to the **Numeric Field Corruption Guidelines** section in the main `generate-test-data-from-sample.prompt.md` for specific examples of special characters, alphanumeric values, negative numbers, and mixed patterns to use.
+
 ## Scenarios
 
-- **Alpha_Numeric_TotalNetWeight_Unparse**: Set total net weight to an alphanumeric value (e.g. 'Net We1ght').
-- **Alpha_Numeric_UOM_Weight**: Set the unit of measure to an alphanumeric value (e.g. 'K9G').
+- **Alpha_Numeric_TotalNetWeight_Unparse**: Set total net weight to alphanumeric values using the **Numeric Field Corruption Guidelines**: `A12.5`, `15B.2`, `C20.8`, `25D.0`, `E30.5`, `3F5.7`.
+- **Alpha_Numeric_UOM_Weight**: Set the unit of measure to alphanumeric values: `K9G`, `L2B`, `G3M`, `K5G`, `M7L`.
 - **Ambiguous_Units_in_Header_Pass**: Use ambiguous units in the header (e.g. 'Total Net Weight (Lbs/KGLbs)').
 - **Data_empty_Netweight_Fail**: Leave total net weight cells empty.
 - **Data_empty_NetweightUOM**: Leave unit of measure cells empty.
@@ -21,7 +23,12 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **Header_With_Extra_Parentheses_Pass**: Add extra parentheses in the net weight header (e.g. 'Total Net Weight (KG) ()').
 - **Header_With_Multiple_Units**: Add multiple units in the header (e.g. 'Total Net Weight (KG/LB)').
 - **Header_With_Unit_And_Symbols_Pass**: Add symbols to the unit in the header (e.g. 'Total Net Weight (KG*)').
-- **Incorrect_NetweightData_All_Fail**: Set all net weight data to invalid values (e.g. 'abc', '-1', '9999999999').
+- **Incorrect_NetweightData_All_Fail**: Set all net weight data to invalid values using the **Numeric Field Corruption Guidelines** with a mix of patterns:
+  - **Special characters**: `@12.5`, `15!.2`, `#20.8`, `$25.0`, `%30.5`, `&35.7`
+  - **Alphanumeric values**: `A12.5`, `15B.2`, `C20.8`, `25D.0`, `E30.5`, `3F5.7`
+  - **Negative numbers**: `-12.5`, `-15.2`, `-20.8`, `-25.0`, `-30.5`
+  - **Mixed patterns**: `-A12.5!`, `@-15.B`, `#-C20.8`, `$D-25.E`
+  - **Text values**: `"Heavy"`, `"Light"`, `"Unknown"`, `"TBD"`, `"Variable"`
 - **Invalid_Unit_Type_Fail**: Set unit of measure to an invalid type (e.g. 'LBS' if only 'KG' is valid).
 - **Malformed_Header_Unit_Pass**: Malform the unit in the header (e.g. 'Total Net Weight (K-G)').
 - **Missing_Header_Netweight_Unparse**: **Remove (clear/empty)** the net weight header column completely.
@@ -38,7 +45,7 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **UOMWeight_Without_TotalNetWeight_Unparse**: Remove the net weight column but keep the unit of measure column.
 - **Valid_Unit_KG_Parentheses**: Use 'KG' in parentheses in the header (e.g. 'Total Net Weight (KG)').
 - **Zero_Data_TotalNetWeight_Pass**: Set total net weight data to zero.
-- **Zero_Data_UOM**: Set unit of measure data to zero.
+- **Zero_Data_UOM**: Set unit of measure data to zero or special characters/alphanumeric values: `0`, `@`, `#`, `A`, `B1`, `C@`.
 
 **You must generate and mutate all 29 scenarios above.**
 

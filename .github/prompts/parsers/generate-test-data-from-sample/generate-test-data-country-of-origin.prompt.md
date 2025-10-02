@@ -8,6 +8,8 @@ mode: "agent"
 
 _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` for folder creation, copying, and mutation steps._
 
+**Important**: When corrupting numeric data (like commodity_code values) in these scenarios, refer to the **Numeric Field Corruption Guidelines** section in the main `generate-test-data-from-sample.prompt.md` for specific examples of special characters, alphanumeric values, negative numbers, and mixed patterns to use.
+
 ## Scenarios
 
 - **ac1_NotNirms_Pass**: Set NIRMS column to a valid non-NIRMS value (e.g. "NON-NIRMS" or "No") for 2-3 data rows.
@@ -16,9 +18,9 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **ac4_NullNirmsMultiple_Fail**: Set NIRMS column to blank/empty for multiple data rows (at least 3).
 - **ac5_InvalidNirmsMultiple_Fail**: Set NIRMS column to different invalid values for multiple data rows (3 rows).
 - **ac6_NullCoO_Fail**: Set country_of_origin column to blank/empty for 2-3 data rows.
-- **ac7_InvalidCoO_Fail**: Set country_of_origin column to invalid values (e.g. "123", "GBR", "INVALID") for 2-3 data rows.
+- **ac7_InvalidCoO_Fail**: Set country_of_origin column to invalid values including numeric codes and special characters: `"123"`, `"@GB"`, `"G#B"`, `"GBR"`, `"INVALID"`, `"-GB"`, `"G1B"` for 2-3 data rows.
 - **ac8_NullCoOMultiple_Fail**: Set country_of_origin column to blank/empty for multiple data rows (at least 3).
-- **ac9_InvalidCoOMultiple_Fail**: Set country_of_origin column to different invalid values for multiple data rows (3 rows).
+- **ac9_InvalidCoOMultiple_Fail**: Set country_of_origin column to different invalid values including special characters, alphanumeric, and numeric patterns for multiple data rows (3 rows): `"@GB"`, `"G1B"`, `"123"`, `"#FR"`, `"F2R"`, `"456"`, `"-DE"`, `"D3E"`, `"789"`.
 - **ac10_xCoO_Pass**: Set country_of_origin column to "X" for 2-3 data rows.
 - **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: Set country_of_origin to a high-risk value and type_of_treatment to a specified value that should fail validation for 2-3 data rows.
 - **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Set multiple rows (3 rows) with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
