@@ -17,3 +17,5 @@ const headers = {
     country_of_origin: /country_of_origin/i,
   },
 };
+
+module.exports = { headers };

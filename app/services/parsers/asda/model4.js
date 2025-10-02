@@ -1,6 +1,6 @@
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
-const headers = require("../../model-headers");
+const { headers } = require("../../model-headers-csv");
 const { rowFinder } = require("../../../utilities/row-finder");
 const { mapParser } = require("../../parser-map");
 const { matchesHeader } = require("../../matches-header");
@@ -47,8 +47,7 @@ function parse(packingListCsv) {
       packingListCsv,
       headerRow,
       dataRow,
-      headers.ASDA4,
-      "CSV", // sheet name for CSV
+      headers.ASDA4
     );
 
     return combineParser.combine(

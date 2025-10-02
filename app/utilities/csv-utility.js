@@ -11,9 +11,11 @@ async function convertCsvToJson(bufferOrFilename) {
     }),
   );
 
+  const replaceEmptyStringWithNull = (field) => (field === "" ? null : field);
+
   const results = [];
   for await (const record of parser) {
-    results.push(record);
+    results.push(record.map(replaceEmptyStringWithNull));
   }
 
   return results;
