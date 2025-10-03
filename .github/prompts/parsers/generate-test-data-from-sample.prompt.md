@@ -74,6 +74,19 @@ When corrupting numeric fields (commodity_code, number_of_packages, total_net_we
 - **Critical**: Don't use the same corruption pattern for all scenarios - rotate through different types (special chars, alphanumeric, negative, mixed) to ensure comprehensive testing
 - **Multi-row scenarios**: When corrupting multiple rows, use different corruption patterns per row (e.g., Row 1: special chars, Row 2: alphanumeric, Row 3: negative numbers)
 
+### Allowed KG unit forms
+
+The project recognises these unit tokens as valid 'kilogram' forms (per the code's unit-detection regex `/(KGS?|KILOGRAMS?|KILOS?)/i`):
+
+- KG
+- KGS
+- KILOGRAM
+- KILOGRAMS
+- KILO
+- KILOS
+
+When creating scenarios that are meant to produce an invalid unit-of-measure, do NOT use any of the forms above. Instead use clearly invalid units such as `LB`, `LBS`, `GRAM`, `G`, or made-up tokens (e.g. `K-G`, `K9G`). This ensures the mutated header/value will not be matched by the allowed-kg regex.
+
 ## Column Classification Rules
 
 ### Three-Category Field Classification

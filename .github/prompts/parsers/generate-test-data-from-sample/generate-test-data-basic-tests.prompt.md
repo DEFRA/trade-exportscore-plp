@@ -49,7 +49,7 @@ Document in the scenario folder's README which scenarios were skipped due to mis
 - Incorrect_MandatoryHeader_NoofPakgs_Unparse.xlsx: Only generate if number_of_packages field is present. **Remove (clear/empty)** the header name for the number_of_packages column.
 - Incorrect_MandatoryHeader_TreatmentType_Unparse.xlsx: Only generate if type_of_treatment field is present. **Remove (clear/empty)** the header name for the type_of_treatment column.
 - Incorrect_MandatoryHeader_CommodityCode_Unparse.xlsx: Only generate if commodity_code field is present. Alternative test for commodity code header removal.
-- Incorrect_MandatoryHeader_TotNetweightKGS_Fail.xlsx: Only generate if total_net_weight_kg field is present. **Modify** the net weight header to use different unit terminology that doesn't match the regex (e.g., change "Total Net Weight (KG)" to "Total Net Weight (KGS)").
+- Incorrect_MandatoryHeader_TotNetweightKGS_Fail.xlsx: Only generate if total_net_weight_kg field is present. **Modify** the net weight header to use different unit terminology that does NOT match the allowed-kg regex (e.g., change "Total Net Weight (KG)" to "Total Net Weight (LBS)" or "Total Net Weight (LB)"). Do NOT use `KGS` or other allowed kg variants, as those will be treated as valid.
 - Empty_MultipleRowsColumns_Pass.xlsx: Include empty rows in the data section while maintaining valid structure.
 - Missing_MandatoryHeader_All_Unparse.xlsx: **Remove (clear/empty)** ALL mandatory header names completely.
 - Missing_MandatoryHeader_Description_unparse.xlsx: Only generate if description field is present. **Remove (clear/empty)** only the description header.
@@ -62,7 +62,7 @@ Document in the scenario folder's README which scenarios were skipped due to mis
   - **Row 3**: Negative numbers (`-123456`, `-5`, `-12.5`)
   - **Additional rows**: Mixed patterns (`-A123!`, `-A5!`, `-A12.5!`)
 - Missing_MandatoryData_MultipleRowsWithMultipleLocations_All_Fail.xlsx: Clear mandatory data across multiple rows and locations.
-- Missing_MandatoryData_CommodityCode_Fail.xlsx: Only generate if commodity_code field is present. Clear commodity code data in multiple rows.
+ - Missing_MandatoryData_CommodityCode_Fail.xlsx: Only generate if commodity_code field is present. Clear commodity code data in multiple rows. If the template also contains both `nature_of_products` and `type_of_treatment`, you MUST also clear one of those two fields in the same rows (clear either `nature_of_products` OR `type_of_treatment` for each affected row). Alternate which related field is cleared across rows when mutating multiple rows so tests exercise both combinations (commodity code + nature missing, commodity code + treatment missing).
 - Missing_MandatoryData_CommodityCode_Nature_Fail.xlsx: Only generate if commodity_code and nature_of_products fields are present. Clear both commodity code and nature of products data.
 - Missing_MandatoryData_Desc_Fail.xlsx: Only generate if description field is present. Clear description data in multiple rows.
 - Missing_MandatoryData_Noofpkgs_Fail.xlsx: Only generate if number_of_packages field is present. Clear number of packages data in multiple rows.
