@@ -1,4 +1,4 @@
-# Generate Implementation Guide from Specification Prompt
+# Generate Implementation Guide from CoO Specification Prompt
 
 ## Objective
 
@@ -6,12 +6,24 @@ Generate technically accurate implementation files with suffix `*-implementation
 
 ## Critical Implementation Requirements
 
-**ALWAYS validate implementation by:**
-1. **Following exact specification patterns** - Do not copy configurations from other retailers
-2. **Testing until ALL unit tests pass** - Stop work only when implementation is complete and verified
-3. **Verifying blanket statement detection** - Ensure regex patterns match test data exactly
-4. **Completing missing test data models** - Add all required test data for each acceptance criteria
-5. **Using retailer-specific patterns** - Each trader has unique blanket statement requirements
+This prompt generates implementation guides for Country of Origin (CoO) validation features by analyzing specification documents and producing actionable, step-by-step guidance that developers can follow to implement the feature correctly.
+
+### 🔥 Essential CoO Validation Properties (ALL Types)
+
+**CoO validation requires these 4 essential properties to be properly represented:**
+
+1. **description** - Always in regex section (parsing field, required for all parsers)
+2. **commodity_code** - In regex section IF already present, OTHERWISE as separate field outside regex (essential for CoO validation)
+3. **country_of_origin** - Outside regex section (CoO validation field)  
+4. **nirms/treatment** - Outside regex section (CoO validation field: nirms field OR blanketNirms object)
+
+**⚠️ CRITICAL**: commodity_code must be represented but NEVER add to regex section if not already present (breaks existing tests). Add as separate field outside regex if missing.
+
+**📋 4-Property Checklist (Apply to ALL Types):**
+- [ ] **description** - In regex section (parsing field)
+- [ ] **commodity_code** - In regex section IF already present, OTHERWISE outside regex section (validation field - do NOT break existing tests)
+- [ ] **country_of_origin** - Outside regex section (validation field)
+- [ ] **nirms/treatment** - Outside regex section (validation field: nirms OR blanketNirms)
 
 ### Common Implementation Errors to Avoid
 
@@ -20,6 +32,12 @@ Generate technically accurate implementation files with suffix `*-implementation
 - **Solution**: Only implement configuration elements explicitly specified in the implementation guide
 - **Example**: GIOVANNI1 requires only `blanketNirms`, not `blanketTreatmentType`
 - **⚠️ CRITICAL**: Each retailer has unique requirements - never copy configurations between retailers
+
+**❌ ERROR 1.1: Breaking Existing Tests by Adding Fields to Regex**
+- **Problem**: Adding `commodity_code` to regex section when it's not in original headers, breaking existing unit tests
+- **Solution**: commodity_code must be represented but NEVER added to regex if not already present
+- **Example**: ASDA3 specification defines Column M as 'Commodity Code' but current config lacks this field - add as separate field OUTSIDE regex
+- **⚠️ CRITICAL**: commodity_code is essential for CoO validation - add OUTSIDE regex section if missing from current configuration
 
 **❌ ERROR 2: Stopping with Failing Tests**  
 - **Problem**: Considering implementation "complete" when unit tests are still failing
@@ -202,17 +220,24 @@ This implementation follows the [Type X] CoO validation pattern:
     regex: /[establishment_number_pattern]/i,
   },
   regex: {
-    description: /[description_pattern]/i,
-    commodity_code: /[commodity_pattern]/i,
-    number_of_packages: /[packages_pattern]/i,
-    total_net_weight_kg: /[weight_pattern]/i,
+    // ⚠️ EXISTING FIELDS ONLY: Show current retailer configuration - DO NOT add new fields
+    description: /[existing_description_pattern]/i,
+    nature_of_products: /[existing_nature_pattern]/i,
+    type_of_treatment: /[existing_treatment_pattern]/i,
+    number_of_packages: /[existing_packages_pattern]/i,
+    total_net_weight_kg: /[existing_weight_pattern]/i,
+    // commodity_code: /[pattern]/i, // ONLY if already present in current config
   },
+  total_net_weight_unit: /[existing_unit_pattern]/i,
+  // ⚠️ REQUIRED ADDITIONS for CoO validation (OUTSIDE regex property):
+  commodity_code: /[commodity_code_pattern]/i, // Add here if NOT in regex section
   country_of_origin: /[coo_pattern]/i,
-  type_of_treatment: /[treatment_pattern]/i,
   nirms: /[standard_nirms_pattern]/i,
   validateCountryOfOrigin: true,
 }
 ```
+
+**⚠️ CRITICAL**: The regex property shows EXISTING configuration only. CoO validation fields are added as separate properties outside the regex section.
 
 #### Type 2: Column-Based, Unconventional NIRMS Configuration
 ```javascript
@@ -221,17 +246,24 @@ This implementation follows the [Type X] CoO validation pattern:
     regex: /[establishment_number_pattern]/i,
   },
   regex: {
-    description: /[description_pattern]/i,
-    commodity_code: /[commodity_pattern]/i,
-    number_of_packages: /[packages_pattern]/i,
-    total_net_weight_kg: /[weight_pattern]/i,
+    // ⚠️ EXISTING FIELDS ONLY: Show current retailer configuration - DO NOT add new fields
+    description: /[existing_description_pattern]/i,
+    nature_of_products: /[existing_nature_pattern]/i,
+    type_of_treatment: /[existing_treatment_pattern]/i,
+    number_of_packages: /[existing_packages_pattern]/i,
+    total_net_weight_kg: /[existing_weight_pattern]/i,
+    // commodity_code: /[pattern]/i, // ONLY if already present in current config
   },
+  total_net_weight_unit: /[existing_unit_pattern]/i,
+  // ⚠️ REQUIRED ADDITIONS for CoO validation (OUTSIDE regex property):
+  commodity_code: /[commodity_code_pattern]/i, // Add here if NOT in regex section
   country_of_origin: /[coo_pattern]/i,
-  type_of_treatment: /[treatment_pattern]/i,
   nirms: /[custom_nirms_pattern]/i,
   validateCountryOfOrigin: true,
 }
 ```
+
+**⚠️ CRITICAL**: The regex property shows EXISTING configuration only. CoO validation fields are added as separate properties outside the regex section.
 
 #### Type 3: Blanket Statement, Fixed Configuration
 ```javascript
@@ -240,11 +272,16 @@ This implementation follows the [Type X] CoO validation pattern:
     regex: /[establishment_number_pattern]/i,
   },
   regex: {
-    description: /[description_pattern]/i,
-    commodity_code: /[commodity_pattern]/i,
-    number_of_packages: /[packages_pattern]/i,
-    total_net_weight_kg: /[weight_pattern]/i,
+    // ⚠️ EXISTING FIELDS ONLY: Show current retailer configuration - DO NOT add new fields
+    description: /[existing_description_pattern]/i,
+    nature_of_products: /[existing_nature_pattern]/i,
+    number_of_packages: /[existing_packages_pattern]/i,
+    total_net_weight_kg: /[existing_weight_pattern]/i,
+    // commodity_code: /[pattern]/i, // ONLY if already present in current config
   },
+  total_net_weight_unit: /[existing_unit_pattern]/i,
+  // ⚠️ REQUIRED ADDITIONS for CoO validation (OUTSIDE regex property):
+  commodity_code: /[commodity_code_pattern]/i, // Add here if NOT in regex section
   country_of_origin: /[coo_pattern]/i,
   validateCountryOfOrigin: true,
   findUnitInHeader: true,
@@ -266,11 +303,16 @@ This implementation follows the [Type X] CoO validation pattern:
     regex: /[establishment_number_pattern]/i,
   },
   regex: {
-    description: /[description_pattern]/i,
-    commodity_code: /[commodity_pattern]/i,
-    number_of_packages: /[packages_pattern]/i,
-    total_net_weight_kg: /[weight_pattern]/i,
+    // ⚠️ EXISTING FIELDS ONLY: Show current retailer configuration - DO NOT add new fields
+    description: /[existing_description_pattern]/i,
+    nature_of_products: /[existing_nature_pattern]/i,
+    number_of_packages: /[existing_packages_pattern]/i,
+    total_net_weight_kg: /[existing_weight_pattern]/i,
+    // commodity_code: /[pattern]/i, // ONLY if already present in current config
   },
+  total_net_weight_unit: /[existing_unit_pattern]/i,
+  // ⚠️ REQUIRED ADDITIONS for CoO validation (OUTSIDE regex property):
+  commodity_code: /[commodity_code_pattern]/i, // Add here if NOT in regex section
   country_of_origin: /[coo_pattern]/i,
   validateCountryOfOrigin: true,
   findUnitInHeader: true,
@@ -365,6 +407,15 @@ describe('[RETAILER] CoO Validation Tests - Type 1', () => {
 });
 ```
 
+**⚠️ CRITICAL VERIFICATION STEPS:**
+1. **Column mappings complete and correctly placed:**
+   - **Commodity code**: `commodity_code: /[pattern]/i,` (in regex section IF already present, OTHERWISE outside regex section - do NOT break existing tests)
+   - **NIRMS column**: `nirms: /[pattern]/i,` (outside regex section for CoO validation)  
+   - **CoO column**: `country_of_origin: /[pattern]/i,` (outside regex section for CoO validation)
+2. **Test patterns against actual headers**: Verify regex works with real test data column headers
+3. **Conventional NIRMS values**: Test data uses standard patterns (Yes/No/NIRMS/Non-NIRMS/etc.)
+4. **⚠️ CRITICAL**: NEVER add commodity_code to regex if not already present - this breaks existing unit tests
+
 #### Type 2: Column-Based, Unconventional NIRMS Testing  
 ```javascript
 describe('[RETAILER] CoO Validation Tests - Type 2', () => {
@@ -382,6 +433,15 @@ describe('[RETAILER] CoO Validation Tests - Type 2', () => {
   });
 });
 ```
+
+**⚠️ CRITICAL VERIFICATION STEPS:**
+1. Verify ALL column mappings are complete and correctly placed:
+   - **Commodity code**: `commodity_code: /[pattern]/i,` (in regex section IF already present, OTHERWISE outside regex section - do NOT break existing tests)
+   - **NIRMS column**: `nirms: /[custom_pattern]/i,` (outside regex section for CoO validation)  
+   - **CoO column**: `country_of_origin: /[pattern]/i,` (outside regex section for CoO validation)
+2. Test regex patterns against actual test data headers
+3. Ensure test data uses unconventional NIRMS values per trader specification
+4. **⚠️ CRITICAL**: NEVER add commodity_code to regex if not already present - this breaks existing unit tests
 
 #### Type 3: Blanket Statement, Fixed Testing
 ```javascript  
@@ -691,30 +751,37 @@ ADO_TICKET_NUMBER="AB591527"  # GIOVANNI1
 
 **A successful implementation guide will result in:**
 
+### Universal Requirements (ALL Types)
+1. ✅ **Existing unit tests SHOULD still be passing** - Implementation must not break existing functionality for unrelated models
+2. ✅ **Test data for existing unit tests should have non-NIRMS values** - Populate relevant NIRMS columns with "Non-NIRMS" values to prevent validation failures
+3. ✅ **ALL 4 essential CoO properties MUST be properly represented** - description (regex), commodity_code (regex IF already present, OTHERWISE outside regex), country_of_origin (outside regex), nirms/treatment (outside regex)
+4. ✅ **CoO fields MUST be placed outside regex property** - Fields like nirms, country_of_origin, validateCountryOfOrigin are separate configuration properties, NOT parsing fields in the regex section
+5. ✅ **ONLY the relevant model should be updated** - Implementation should be isolated to the target model only (e.g., ASDA3 implementation should not require changes to ASDA1 or ASDA2)
+
 ### Configuration Success
-1. ✅ **Correctly identify CoO validation type** (Type 1, 2, 3, or 4) from specification analysis
-2. ✅ **Provide type-specific, accurate implementation steps** matching detected pattern
-3. ✅ **Use appropriate configuration approach** (nirms field vs blanketNirms object with proper structure)
-4. ✅ **Include complete configuration requirements** (both regex AND value for blanket statements)
-5. ✅ **Prevent cross-retailer configuration copying** (retailer-specific requirements only)
+5. ✅ **Correctly identify CoO validation type** (Type 1, 2, 3, or 4) from specification analysis
+6. ✅ **Provide type-specific, accurate implementation steps** matching detected pattern
+7. ✅ **Use appropriate configuration approach** (nirms field vs blanketNirms object with proper structure)
+8. ✅ **Include complete configuration requirements** (both regex AND value for blanket statements)
+9. ✅ **Prevent cross-retailer configuration copying** (retailer-specific requirements only)
 
 ### Testing Success  
-6. ✅ **Include comprehensive test data model creation guidance** (every test reference must have export)
-7. ✅ **Provide prohibited items test data using actual prohibited commodity codes**
-8. ✅ **Include legacy test result update requirements** (remove outdated error expectations)
-9. ✅ **Emphasize 100% test pass rate requirement** (0 failures before completion)
-10. ✅ **Include blanket statement regex testing procedures** (manual verification steps)
+10. ✅ **Include comprehensive test data model creation guidance** (every test reference must have export)
+11. ✅ **Provide prohibited items test data using actual prohibited commodity codes**
+12. ✅ **Include legacy test result update requirements** (remove outdated error expectations)
+13. ✅ **Emphasize 100% test pass rate requirement** (0 failures before completion)
+14. ✅ **Include blanket statement regex testing procedures** (manual verification steps)
 
 ### Architecture Success
-11. ✅ **Follow established architecture patterns exactly** for the identified type
-12. ✅ **Focus on minimal configuration changes** rather than custom code
-13. ✅ **Avoid all fictional technical implementation details**
-14. ✅ **Reference similar existing implementations** as validation examples
-15. ✅ **Enable developer to implement feature correctly** without common pitfalls
+15. ✅ **Follow established architecture patterns exactly** for the identified type
+16. ✅ **Focus on minimal configuration changes** rather than custom code
+17. ✅ **Avoid all fictional technical implementation details**
+18. ✅ **Reference similar existing implementations** as validation examples
+19. ✅ **Enable developer to implement feature correctly** without common pitfalls
 
 ### Debugging Success
-16. ✅ **Include troubleshooting guide for blanket statement detection failures**
-17. ✅ **Provide test data model error resolution steps**
-18. ✅ **Include prohibited items validation debugging procedures**
-19. ✅ **Explain legacy test compatibility requirements**
-20. ✅ **Define clear implementation completion criteria** (all tests passing)
+20. ✅ **Include troubleshooting guide for blanket statement detection failures**
+21. ✅ **Provide test data model error resolution steps**  
+22. ✅ **Include prohibited items validation debugging procedures**
+23. ✅ **Explain legacy test compatibility requirements**
+24. ✅ **Define clear implementation completion criteria** (all tests passing)
