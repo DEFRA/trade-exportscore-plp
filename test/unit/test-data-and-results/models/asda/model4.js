@@ -1,7 +1,9 @@
+const attestationText =
+  "I, the responsible person, confirm that all ROW origin goods in this consignment are eligible to move under NIRMS because they have either: successfully passed checks at an EU BCP; been processed in GB; are products where the UK is taking the same approach as the EU to protect against similar pests and diseases; meet EU IUU regulations or have no SPS, certification or control requirements";
+
 const validModel = [
-  ["RMS-GB-000015-001", "", "", "", "", "", "", ""],
-  ["", "", "", "", "", "", "", ""],
   [
+    "",
     "classification_code",
     "article_description",
     "article_nature",
@@ -10,8 +12,10 @@ const validModel = [
     "net_weight_kg",
     "country_of_origin",
     "nirms",
+    "establishment_number",
   ],
   [
+    attestationText,
     "1234567890",
     "Test Product 1",
     "Fresh",
@@ -20,8 +24,10 @@ const validModel = [
     "5.5",
     "GB",
     "NIRMS",
+    "RMS-GB-000015-001",
   ],
   [
+    "",
     "9876543210",
     "Test Product 2",
     "Processed",
@@ -30,15 +36,13 @@ const validModel = [
     "12.3",
     "FR",
     "NON-NIRMS",
+    "RMS-GB-000015-001",
   ],
 ];
 
-const emptyModel = [];
-
-const wrongEstablishmentNumber = [
-  ["RMS-GB-999999-001", "", "", "", "", "", "", ""],
-  ["", "", "", "", "", "", "", ""],
+const validModelAttestationAtFooter = [
   [
+    "unused _columnpo_number",
     "classification_code",
     "article_description",
     "article_nature",
@@ -47,8 +51,10 @@ const wrongEstablishmentNumber = [
     "net_weight_kg",
     "country_of_origin",
     "nirms",
+    "establishment_number",
   ],
   [
+    null,
     "1234567890",
     "Test Product 1",
     "Fresh",
@@ -57,13 +63,55 @@ const wrongEstablishmentNumber = [
     "5.5",
     "GB",
     "NIRMS",
+    "RMS-GB-000015-001",
+  ],
+  [
+    null,
+    "9876543210",
+    "Test Product 2",
+    "Processed",
+    "Ambient",
+    "20",
+    "12.3",
+    "FR",
+    "NON-NIRMS",
+    "RMS-GB-000015-001",
+  ],
+  [attestationText, null, null, null, null, null, null, null, null, null],
+];
+
+const emptyModel = [];
+
+const wrongEstablishmentNumber = [
+  [
+    "",
+    "classification_code",
+    "article_description",
+    "article_nature",
+    "treatment_type",
+    "quantity_ordered",
+    "net_weight_kg",
+    "country_of_origin",
+    "nirms",
+    "establishment_number",
+  ],
+  [
+    attestationText,
+    "1234567890",
+    "Test Product 1",
+    "Fresh",
+    "Chilled",
+    "10",
+    "5.5",
+    "GB",
+    "NIRMS",
+    "RMS-GB-999999-001",
   ],
 ];
 
 const wrongHeaders = [
-  ["RMS-GB-000015-001", "", "", "", "", "", "", ""],
-  ["", "", "", "", "", "", "", ""],
   [
+    "",
     "wrong_code",
     "wrong_description",
     "wrong_nature",
@@ -72,8 +120,10 @@ const wrongHeaders = [
     "wrong_weight",
     "wrong_country",
     "wrong_nirms",
+    "wrong_establishment_number",
   ],
   [
+    attestationText,
     "1234567890",
     "Test Product 1",
     "Fresh",
@@ -82,13 +132,13 @@ const wrongHeaders = [
     "5.5",
     "GB",
     "NIRMS",
+    "RMS-GB-000015-001",
   ],
 ];
 
 const invalidModel_MissingColumnCells = [
-  ["RMS-GB-000015-001", "", "", "", "", "", "", ""],
-  ["", "", "", "", "", "", "", ""],
   [
+    "",
     "classification_code",
     "article_description",
     "article_nature",
@@ -97,16 +147,38 @@ const invalidModel_MissingColumnCells = [
     "net_weight_kg",
     "country_of_origin",
     "nirms",
+    "establishment_number",
   ],
-  ["", "Test Product 1", "Fresh", "Chilled", "10", "5.5", "GB", "NIRMS"],
-  ["9876543210", "", "Processed", "Ambient", "20", "12.3", "FR", "NON-NIRMS"],
+  [
+    attestationText,
+    null,
+    null,
+    "Test Product 1",
+    "Fresh",
+    "Chilled",
+    "10",
+    "5.5",
+    "GB",
+    "NIRMS",
+    "RMS-GB-000015-001",
+  ],
+  [
+    null,
+    "9876543210",
+    null,
+    "Processed",
+    "Ambient",
+    "20",
+    "12.3",
+    "FR",
+    "NON-NIRMS",
+    "RMS-GB-000015-001",
+  ],
 ];
 
 const invalidModel_MultipleRms = [
-  ["RMS-GB-000015-001", "", "", "", "", "", "", ""],
-  ["RMS-GB-000015-002", "", "", "", "", "", "", ""],
-  ["", "", "", "", "", "", "", ""],
   [
+    null,
     "classification_code",
     "article_description",
     "article_nature",
@@ -115,8 +187,10 @@ const invalidModel_MultipleRms = [
     "net_weight_kg",
     "country_of_origin",
     "nirms",
+    "establishment_number",
   ],
   [
+    attestationText,
     "1234567890",
     "Test Product 1",
     "Fresh",
@@ -125,13 +199,25 @@ const invalidModel_MultipleRms = [
     "5.5",
     "GB",
     "NIRMS",
+    "RMS-GB-000015-001",
+  ],
+  [
+    null,
+    "1234567890",
+    "Test Product 1",
+    "Fresh",
+    "Chilled",
+    "10",
+    "5.5",
+    "GB",
+    "NIRMS",
+    "RMS-GB-000015-002",
   ],
 ];
 
 const invalidModel = [
-  ["", "", "", "", "", "", "", ""],
-  ["", "", "", "", "", "", "", ""],
   [
+    null,
     "classification_code",
     "article_description",
     "article_nature",
@@ -142,6 +228,7 @@ const invalidModel = [
     "nirms",
   ],
   [
+    attestationText,
     "1234567890",
     "Test Product 1",
     "Fresh",
@@ -155,6 +242,7 @@ const invalidModel = [
 
 module.exports = {
   validModel,
+  validModelAttestationAtFooter,
   emptyModel,
   wrongEstablishmentNumber,
   wrongHeaders,

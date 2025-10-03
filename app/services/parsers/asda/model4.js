@@ -47,7 +47,7 @@ function parse(packingListCsv) {
       packingListCsv,
       headerRow,
       dataRow,
-      headers.ASDA4
+      headers.ASDA4,
     );
 
     return combineParser.combine(

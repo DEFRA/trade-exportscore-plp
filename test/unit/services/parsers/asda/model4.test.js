@@ -16,6 +16,13 @@ describe("parseAsdaModel4", () => {
     expect(result).toMatchObject(testResults.validTestResult);
   });
 
+  test("should parse valid ASDA Model 4 CSV correctly with attestation at the bottom", () => {
+    const result = parser.parse(testModel.validModelAttestationAtFooter);
+    expect(result).toMatchObject(
+      testResults.validTestResultAttestationAtFooter,
+    );
+  });
+
   test("should return NOMATCH for empty CSV", () => {
     const result = parser.parse(testModel.emptyModel);
     expect(result.parserModel).toBe(parserModel.NOMATCH);
