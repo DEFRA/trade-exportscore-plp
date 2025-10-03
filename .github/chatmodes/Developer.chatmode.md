@@ -1,6 +1,6 @@
 ---
 description: "Developer mode for trade-exportscore-plp: Core architecture, parser development, testing patterns, and technical implementation guidance."
-tools: ["extensions", "runTests", "codebase", "usages", "vscodeAPI", "think", "problems", "changes", "testFailure", "terminalSelection", "terminalLastCommand", "openSimpleBrowser", "fetch", "findTestFiles", "searchResults", "githubRepo", "runCommands", "runTasks", "editFiles", "runNotebooks", "search", "new", "sequential-thinking", "context7", "github", "sonarqube"]
+tools: ['runCommands', 'runTasks', 'edit', 'runNotebooks', 'search', 'new', 'extensions', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'runTests', 'sequential-thinking', 'context7', 'ado']
 ---
 
 # Developer ChatMode for trade-exportscore-plp

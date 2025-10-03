@@ -6,6 +6,7 @@ const netWeight = /Net Weight/i;
 
 const headers = {
   ASDA1: {
+    deprecated: true,
     establishmentNumber: {
       regex: /^RMS-GB-000015-\d{3}$/i,
     },
@@ -43,6 +44,10 @@ const headers = {
       total_net_weight_kg: /Net Weight/i,
     },
     total_net_weight_unit: /kilograms\/grams/i,
+    commodity_code: /Commodity Code/i,
+    country_of_origin: /Country of Origin/i,
+    nirms: /NIRMs\/Non-NIRMs/i,
+    validateCountryOfOrigin: true,
   },
   BANDM1: {
     establishmentNumber: {

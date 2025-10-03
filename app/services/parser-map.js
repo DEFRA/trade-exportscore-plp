@@ -38,6 +38,11 @@ function findHeaderCols(header, packingListHeader) {
       return header.nirms.test(packingListHeader[key]);
     });
   }
+  if (header.commodity_code) {
+    headerCols.commodity_code = Object.keys(packingListHeader).find((key) => {
+      return header.commodity_code.test(packingListHeader[key]);
+    });
+  }
   return headerCols;
 }
 
