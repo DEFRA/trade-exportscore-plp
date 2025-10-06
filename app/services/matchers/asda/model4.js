@@ -8,8 +8,6 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matches(packingList, filename) {
   try {
-    let result;
-
     if (!packingList || packingList.length === 0) {
       return matcherResult.EMPTY_FILE;
     }
@@ -20,7 +18,7 @@ function matches(packingList, filename) {
     }
 
     // check for header values
-    result = matchesHeader(Object.values(headers.ASDA4.regex), packingList);
+    const result = matchesHeader(Object.values(headers.ASDA4.regex), packingList);
 
     if (result === matcherResult.WRONG_HEADER) {
       return result;
