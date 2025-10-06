@@ -158,7 +158,7 @@ module.exports = {
         total_net_weight_unit: "kgs",
       },
     ],
-    establishment_numbers: ["RMS-GB-000015-006", "RMS-GB-000015-005"],
+    establishment_numbers: ["RMS-GB-000015-006", "RMS-GB-000015-007"],
     registration_approval_number: "RMS-GB-000015-006",
     parserModel: parserModel.ASDA3,
   },
