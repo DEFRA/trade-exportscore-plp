@@ -1,7 +1,25 @@
 const {
+  noRemosMatchCsv,
   noRemosMatch,
 } = require("../../../../../app/services/matchers/no-match/model1");
 
+describe("no-match model1 - noRemosMatchCsv", () => {
+  test.each([
+    [
+      true,
+      "standard RMS value present",
+      [{ col1: "RMS-GB-123456-789" }, { col2: "something" }],
+    ],
+    [true, "lower-case rms (case-insensitive)", [{ c: "rms-gb-000001-001" }]],
+    [true, "Giovanni2 exception pattern", [{ a: "(NIRMS RMS-GB-000123-001)" }]],
+    [true, "CDS exception with slashes", [{ x: " / RMS-GB-000252-005 / " }]],
+    [true, "Sainsburys exact match", [{ f: "RMS-GB-000094-001" }]],
+    [false, "no RMS values present", [{ a: "hello" }, { b: "world" }]],
+    [false, "empty array", []],
+  ])("returns %s when %s", (expected, _desc, csv) => {
+    expect(noRemosMatchCsv(csv)).toBe(expected);
+  });
+});
 describe("matchesNoMatch", () => {
   test.each([
     [true, "RMS-GB-000000-000"],

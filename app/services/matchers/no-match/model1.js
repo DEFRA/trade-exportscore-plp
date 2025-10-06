@@ -26,18 +26,24 @@ function rmsExceptions(y) {
   const giovanni2Regex = /\(NIRMS RMS-GB-\d{6}-\d{3}\)/i;
   const cdsRegex = /\/ RMS-GB-000252-\d{3} \//i;
   const sainsburysRegex = /^RMS-GB-000094-\d{3}​$/i;
-  const giovanni1Regex = /^RMS-GB-000153$/i;
-  const kepakRegex = /^RMS-GB-000280$/i;
   const booker2 = /RMS-GB-000077-\d{3}/i;
 
   return (
     giovanni2Regex.test(y) ||
     cdsRegex.test(y) ||
     sainsburysRegex.test(y) ||
-    giovanni1Regex.test(y) ||
-    kepakRegex.test(y) ||
     booker2.test(y)
   );
+}
+
+function noRemosMatchCsv(sanitisedPackingList, _filename) {
+  const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
+  const isRemosPresent = sanitisedPackingList.some((x) => {
+    return Object.values(x).some((y) => {
+      return remosRegex.test(y) || rmsExceptions(y);
+    });
+  });
+  return isRemosPresent;
 }
 
 async function noRemosMatchPdf(packingList) {
@@ -70,4 +76,4 @@ async function noRemosMatchPdf(packingList) {
   }
 }
 
-module.exports = { noRemosMatch, noRemosMatchPdf };
+module.exports = { noRemosMatch, noRemosMatchCsv, noRemosMatchPdf };

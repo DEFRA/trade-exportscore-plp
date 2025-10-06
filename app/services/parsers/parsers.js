@@ -1,25 +1,48 @@
 const {
   parsersExcel,
+  parsersCsv,
   parsersPdf,
   parsersPdfNonAi,
   noMatchParsers,
 } = require("../model-parsers");
 const matcherResult = require("../matcher-result");
-const headers = require("../model-headers-pdf");
+const headers = require("../model-headers");
+const headersPdf = require("../model-headers-pdf");
 
 function getExcelParser(sanitisedPackingList, filename) {
+  return getParser(
+    sanitisedPackingList,
+    filename,
+    parsersExcel,
+    noMatchParsers.NOREMOS,
+  );
+}
+
+function getCsvParser(sanitisedPackingList, filename) {
+  return getParser(
+    sanitisedPackingList,
+    filename,
+    parsersCsv,
+    noMatchParsers.NOREMOSCSV,
+  );
+}
+
+function getParser(sanitisedPackingList, filename, parsers, nomatch) {
   let parser = null;
-  if (noMatchParsers.NOREMOS.matches(sanitisedPackingList, filename)) {
-    Object.keys(parsersExcel).forEach((key) => {
+
+  if (nomatch.matches(sanitisedPackingList, filename)) {
+    for (const key in parsers) {
       if (
+        parser === null && // check if parser has already been matched
+        headers[key].deprecated !== true && // check if model is deprecated
         parsersExcel[key].matches(sanitisedPackingList, filename) ===
-        matcherResult.CORRECT
+          matcherResult.CORRECT
       ) {
-        parser = parsersExcel[key];
+        parser = parsers[key];
       }
-    });
+    }
   } else {
-    parser = noMatchParsers.NOREMOS;
+    parser = nomatch;
   }
   return parser;
 }
@@ -32,7 +55,7 @@ async function getPdfParser(sanitisedPackingList, filename) {
     let result = {};
 
     for (const pdfModel in parsersPdf) {
-      if (headers[pdfModel].establishmentNumber.regex.test(remos)) {
+      if (headersPdf[pdfModel].establishmentNumber.regex.test(remos)) {
         result = await parsersPdf[pdfModel].matches(
           sanitisedPackingList,
           filename,
@@ -72,6 +95,7 @@ async function getPdfNonAiParser(sanitisedPackingList, filename) {
 
 module.exports = {
   getExcelParser,
+  getCsvParser,
   getPdfParser,
   getPdfNonAiParser,
 };

@@ -4,11 +4,22 @@ module.exports = {
   validModel: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
         A: "RMS-GB-000153",
       },
+      // NIRMS blanket statement for CoO validation
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
       {
         C: "DESCRIPTION",
         F: "Country of Origin",
@@ -35,6 +46,12 @@ module.exports = {
   validHeadersNoData: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
@@ -51,11 +68,22 @@ module.exports = {
   validModelMultipleSheets: {
     Sheet1: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
         A: "RMS-GB-000153",
       },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
       {
         C: "DESCRIPTION",
         F: "Country of Origin",
@@ -72,6 +100,12 @@ module.exports = {
       },
     ],
     Sheet2: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "NIRMS NUMBER",
       },
@@ -96,6 +130,12 @@ module.exports = {
   },
   invalidModel_MissingColumnCells: {
     RANA: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "RMS-GB-000153",
       },
@@ -125,6 +165,12 @@ module.exports = {
   incorrectEstablishmentNumber: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
@@ -152,6 +198,12 @@ module.exports = {
   },
   incorrectHeader: {
     RANA: [
+      {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
       {
         A: "INVALID",
       },
@@ -349,6 +401,12 @@ module.exports = {
   missingKgunit: {
     RANA: [
       {
+        I: "NIRMS NUMBER",
+      },
+      {
+        I: "RMS-GB-000149-005",
+      },
+      {
         A: "NIRMS NUMBER",
       },
       {
@@ -374,6 +432,341 @@ module.exports = {
         G: 10,
         H: 24,
         E: "1902209990",
+      },
+    ],
+  },
+  // CoO Validation Test Data Models - AB#591527
+  validCooModel: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
+      // Headers row
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      // Data rows
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        E: "1902209990",
+        F: "IT",
+        G: 17,
+        H: 40.8,
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        E: "1902209990",
+        F: "DE",
+        G: 10,
+        H: 24,
+      },
+    ],
+  },
+  missingBlanketStatement: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // Headers row
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      // Data rows
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        E: "1902209990",
+        F: "IT",
+        G: 17,
+        H: 40.8,
+      },
+      // No blanket statement
+    ],
+  },
+  missingCooValues: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
+      // Headers row
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      // Data rows with missing CoO
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        E: "1902209990",
+        F: null, // Missing CoO
+        G: 17,
+        H: 40.8,
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        E: "1902209990",
+        F: "", // Empty CoO
+        G: 10,
+        H: 24,
+      },
+    ],
+  },
+  invalidCooFormat: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
+      // Headers row
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      // Data rows with invalid CoO
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        E: "1902209990",
+        F: "INVALID", // Invalid CoO
+        G: 17,
+        H: 40.8,
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        E: "1902209990",
+        F: "123", // Invalid CoO
+        G: 10,
+        H: 24,
+      },
+    ],
+  },
+  cooPlaceholderX: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
+      // Headers row
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      // Data rows with X/x placeholders
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        E: "1902209990",
+        F: "X", // Valid placeholder
+        G: 17,
+        H: 40.8,
+      },
+      {
+        C: "FOUR CHEESE TORT",
+        E: "1902209990",
+        F: "x", // Valid placeholder
+        G: 10,
+        H: 24,
+      },
+    ],
+  },
+  multipleCooErrors: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
+      // Headers row
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      // Data rows - more than 3 CoO errors
+      {
+        C: "ITEM 1",
+        E: "1902209990",
+        F: null, // Missing CoO Error 1
+        G: 17,
+        H: 40.8,
+      },
+      {
+        C: "ITEM 2",
+        E: "1902209990",
+        F: "", // Missing CoO Error 2
+        G: 10,
+        H: 24,
+      },
+      {
+        C: "ITEM 3",
+        E: "1902209990",
+        F: "INVALID", // Invalid CoO Error 1
+        G: 15,
+        H: 30,
+      },
+      {
+        C: "ITEM 4",
+        E: "1902209990",
+        F: null, // Missing CoO Error 3
+        G: 5,
+        H: 12,
+      },
+      {
+        C: "ITEM 5",
+        E: "1902209990",
+        F: "", // Missing CoO Error 4 - this will trigger "in addition to"
+        G: 8,
+        H: 18,
+      },
+      {
+        C: "ITEM 6",
+        E: "1902209990",
+        F: null, // Missing CoO Error 5 - this will be in "in addition to"
+        G: 12,
+        H: 25,
+      },
+    ],
+  },
+  prohibitedItems: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
+      // Headers row
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      // Data rows with prohibited items
+      {
+        C: "PROHIBITED ITEM",
+        E: "07061000", // Prohibited commodity code from CN
+        F: "CN", // China - prohibited country
+        G: 17,
+        H: 40.8,
+      },
+    ],
+  },
+  prohibitedItemsWithTreatment: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
+      // Headers row with treatment
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+        I: "Treatment",
+      },
+      // Data rows with prohibited items and treatment
+      {
+        C: "PROHIBITED ITEM WITH TREATMENT",
+        E: "07061000", // Prohibited commodity code
+        F: "CN", // China - prohibited country
+        G: 17,
+        H: 40.8,
+        I: "Chilled", // Treatment type
+      },
+    ],
+  },
+  prohibitedItemsMultiple: {
+    RANA: [
+      // NIRMS NUMBER
+      { A: "NIRMS NUMBER" },
+      { A: "RMS-GB-000153-001" },
+      // NIRMS blanket statement
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
+      },
+      {},
+      // Headers row
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      // Multiple prohibited items (>3)
+      {
+        C: "PROHIBITED ITEM 1",
+        E: "07061000",
+        F: "CN",
+        G: 17,
+        H: 40.8,
+      },
+      {
+        C: "PROHIBITED ITEM 2",
+        E: "07061000",
+        F: "CN",
+        G: 10,
+        H: 24,
+      },
+      {
+        C: "PROHIBITED ITEM 3",
+        E: "07061000",
+        F: "CN",
+        G: 15,
+        H: 30,
+      },
+      {
+        C: "PROHIBITED ITEM 4",
+        E: "07061000",
+        F: "CN",
+        G: 5,
+        H: 12,
       },
     ],
   },

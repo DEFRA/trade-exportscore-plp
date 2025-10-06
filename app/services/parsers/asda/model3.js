@@ -53,6 +53,7 @@ function parse(packingListJson) {
       true,
       parserModel.ASDA3,
       establishmentNumbers,
+      headers.ASDA3,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);

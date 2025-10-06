@@ -286,4 +286,18 @@ describe("findParser", () => {
 
     expect(result).toBe(parsersExcel.TJMORRIS1);
   });
+
+  test("Unrecognised csv", async () => {
+    const packingListJson = [
+      {
+        A: "Consignor / Place of Despatch",
+        B: "CONSIGNEE",
+      },
+    ];
+    const fileName = "packingList.csv";
+
+    const result = await parserFactory.findParser(packingListJson, fileName);
+
+    expect(result.name).toBeTruthy();
+  });
 });
