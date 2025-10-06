@@ -1,7 +1,7 @@
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
-const headers = require("../../model-headers-csv").headers;
+const headers = require("../../model-headers-csv");
 const logger = require("../../../utilities/logger");
 const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);

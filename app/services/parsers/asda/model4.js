@@ -1,6 +1,6 @@
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
-const { headers } = require("../../model-headers-csv");
+const headers = require("../../model-headers-csv");
 const { rowFinder } = require("../../../utilities/row-finder");
 const { mapParser } = require("../../parser-map");
 const { matchesHeader } = require("../../matches-header");

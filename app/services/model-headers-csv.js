@@ -18,4 +18,4 @@ const headers = {
   },
 };
 
-module.exports = { headers };
+module.exports = headers;
