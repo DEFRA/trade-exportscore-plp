@@ -21,12 +21,12 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
-    for (const sheet of sheets) {
-      const headerTitles = Object.values(headers.TJMORRIS2.regex);
-      const headerCallback = function (x) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      };
+    const headerTitles = Object.values(headers.TJMORRIS2.regex);
+    const headerCallback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
 
+    for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
         packingListJson[sheet],

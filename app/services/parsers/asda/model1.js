@@ -22,17 +22,17 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
+    const headerTitles = Object.values(headers.ASDA1.regex);
+    const headerCallback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
+
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
         packingListJson[sheet],
         establishmentNumbers,
       );
-
-      const headerTitles = Object.values(headers.ASDA1.regex);
-      const headerCallback = function (x) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      };
 
       const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
       const dataRow = headerRow + 1;

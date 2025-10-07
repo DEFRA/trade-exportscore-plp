@@ -24,16 +24,16 @@ function parse(packingListJson) {
         )
         ?.replace(/\u200B/g, "") ?? null;
 
+    const headerTitles = Object.values(headers.SAINSBURYS1.regex);
+    const headerCallback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
+
     for (const sheet of sheets) {
       establishmentNumbers = appendDistinctEstablishmentNumbers(
         establishmentNumbers,
         packingListJson[sheet],
       );
-
-      const headerTitles = Object.values(headers.SAINSBURYS1.regex);
-      const headerCallback = function (x) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      };
 
       const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
       const dataRow = headerRow + 1;
