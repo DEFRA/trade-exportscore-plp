@@ -44,9 +44,7 @@ function parse(packingListJson) {
         sheet,
       );
 
-      if (
-        isTotalRow(packingListContentsTemp.at(-1))
-      ) {
+      if (isTotalRow(packingListContentsTemp.at(-1))) {
         packingListContentsTemp = packingListContentsTemp.slice(0, -1);
       }
       packingListContents = packingListContents.concat(packingListContentsTemp);

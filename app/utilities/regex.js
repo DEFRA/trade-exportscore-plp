@@ -100,7 +100,7 @@ function findAllMatches(searchPattern, array, matches) {
 
 function addMatch(match, matches) {
   if (
-    !matches.find((v) => v.toLocaleUpperCase() === match.toLocaleUpperCase())
+    !matches.some((v) => v.toLocaleUpperCase() === match.toLocaleUpperCase())
   ) {
     matches.push(match);
   }

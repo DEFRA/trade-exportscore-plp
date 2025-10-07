@@ -65,10 +65,10 @@ async function parse(packingList) {
 function getYsForRows(pageContent, model) {
   try {
     const headerY = headers[model].maxHeadersY;
-    const firstY = pageContent.filter((item) => item.y > headerY)[0].y;
-    const pageNumberY = pageContent.filter((item) =>
+    const firstY = pageContent.find((item) => item.y > headerY).y;
+    const pageNumberY = pageContent.find((item) =>
       /Page \d of \d*/.test(item.str),
-    )[0]?.y; // find the position of the 'Page X of Y'
+    )?.y; // find the position of the 'Page X of Y'
     const totals = pageContent.filter((item) =>
       headers[model].totals.test(item.str),
     ); // find the position of the totals row
