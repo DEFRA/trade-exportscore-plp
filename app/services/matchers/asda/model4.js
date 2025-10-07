@@ -3,7 +3,7 @@ const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers-csv");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matches(packingList, filename) {
@@ -18,7 +18,10 @@ function matches(packingList, filename) {
     }
 
     // check for header values
-    const result = matchesHeader(Object.values(headers.ASDA4.regex), packingList);
+    const result = matchesHeader(
+      Object.values(headers.ASDA4.regex),
+      packingList,
+    );
 
     if (result === matcherResult.WRONG_HEADER) {
       return result;

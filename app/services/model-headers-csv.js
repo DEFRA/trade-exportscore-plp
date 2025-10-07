@@ -9,7 +9,7 @@ const headers = {
       nature_of_products: /article_nature/i,
       type_of_treatment: /treatment_type/i,
       number_of_packages: /quantity_ordered/i,
-      total_net_weight_kg: /net_weight_/i,
+      total_net_weight_kg: /net_weight/i,
     },
     findUnitInHeader: true,
     validateCountryOfOrigin: true,
