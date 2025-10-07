@@ -46,7 +46,7 @@ function parse(packingListJson) {
 
       if (
         packingListContentsTemp.length > 0 &&
-        isTotalRow(packingListContentsTemp[packingListContentsTemp.length - 1])
+        isTotalRow(packingListContentsTemp.at(-1))
       ) {
         packingListContentsTemp = packingListContentsTemp.slice(0, -1);
       }

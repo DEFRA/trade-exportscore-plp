@@ -59,14 +59,14 @@ async function getLatestModelByName(client, namePrefix) {
     // If no epoch exists, set the epoch to null.
     const currentEpoch =
       currentParts.length > 2
-        ? Number.parseInt(currentParts[currentParts.length - 1], 10)
+        ? Number.parseInt(currentParts.at(-1), 10)
         : null;
 
     // Extract the Unix epoch from the latest modelId if it has more than 2 parts.
     // If no epoch exists, set the epoch to null.
     const latestEpoch =
       latestParts.length > 2
-        ? Number.parseInt(latestParts[latestParts.length - 1], 10)
+        ? Number.parseInt(latestParts.at(-1), 10)
         : null;
 
     // Step 5: Compare the current and latest models:
