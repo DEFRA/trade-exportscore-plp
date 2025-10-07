@@ -2,7 +2,7 @@ const headers = require("../services/model-headers-pdf");
 const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
 const logger = require("./logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const regex = require("./regex");
 

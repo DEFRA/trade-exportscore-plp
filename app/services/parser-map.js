@@ -205,7 +205,7 @@ function createPackingListRow(
     number_of_packages:
       row[headers[key].headers.number_of_packages]?.value ?? null,
     total_net_weight_kg:
-      parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
+      Number.parseFloat(row[headers[key].headers.total_net_weight_kg]?.content) ??
       null,
     total_net_weight_unit: netWeightUnit ?? null,
     row_location: {

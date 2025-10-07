@@ -69,8 +69,8 @@ jest.mock("../../../app/config", () => {
   };
 });
 
-const fs = require("fs");
-require("path");
+const fs = require("node:fs");
+require("node:path");
 jest.mock("fs");
 jest.mock("sequelize");
 const { Sequelize } = require("sequelize");

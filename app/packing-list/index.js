@@ -5,7 +5,7 @@ const {
   isNirms,
   isNotNirms,
 } = require("../services/validators/packing-list-validator-utilities");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function createPackingList(packingListJson, applicationId) {

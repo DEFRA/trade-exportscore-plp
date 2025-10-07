@@ -8,7 +8,7 @@ const {
 const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function matches(packingList, filename) {

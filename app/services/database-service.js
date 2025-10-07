@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../config");
