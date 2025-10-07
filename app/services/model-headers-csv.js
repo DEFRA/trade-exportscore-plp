@@ -4,11 +4,12 @@ const headers = {
       regex: /^RMS-GB-000015-\d{3}$/i,
     },
     regex: {
+      commodity_code: /classification_code/i,
       description: /article_description/i,
       nature_of_products: /article_nature/i,
       type_of_treatment: /treatment_type/i,
       number_of_packages: /quantity_ordered/i,
-      total_net_weight_kg: /net_weight_kg/i,
+      total_net_weight_kg: /net_weight/i,
     },
     findUnitInHeader: true,
     validateCountryOfOrigin: true,
@@ -16,3 +17,5 @@ const headers = {
     country_of_origin: /country_of_origin/i,
   },
 };
+
+module.exports = headers;

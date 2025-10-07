@@ -7,6 +7,7 @@ const {
 } = require("../model-parsers");
 const matcherResult = require("../matcher-result");
 const headers = require("../model-headers");
+const headersCsv = require("../model-headers-csv");
 const headersPdf = require("../model-headers-pdf");
 
 function getExcelParser(sanitisedPackingList, filename) {
@@ -14,6 +15,7 @@ function getExcelParser(sanitisedPackingList, filename) {
     sanitisedPackingList,
     filename,
     parsersExcel,
+    headers,
     noMatchParsers.NOREMOS,
   );
 }
@@ -23,19 +25,26 @@ function getCsvParser(sanitisedPackingList, filename) {
     sanitisedPackingList,
     filename,
     parsersCsv,
+    headersCsv,
     noMatchParsers.NOREMOSCSV,
   );
 }
 
-function getParser(sanitisedPackingList, filename, parsers, nomatch) {
+function getParser(
+  sanitisedPackingList,
+  filename,
+  parsers,
+  parserHeaders,
+  nomatch,
+) {
   let parser = null;
 
   if (nomatch.matches(sanitisedPackingList, filename)) {
     for (const key in parsers) {
       if (
         parser === null && // check if parser has already been matched
-        headers[key].deprecated !== true && // check if model is deprecated
-        parsersExcel[key].matches(sanitisedPackingList, filename) ===
+        parserHeaders[key].deprecated !== true && // check if model is deprecated
+        parsers[key].matches(sanitisedPackingList, filename) ===
           matcherResult.CORRECT
       ) {
         parser = parsers[key];

@@ -4,6 +4,7 @@ const path = require("path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 const dsConfig = config.dynamicsConfig;
+const GET_DISPATCH_LOCATION_METHOD = "getDispatchLocation()";
 
 async function bearerTokenRequest() {
   try {
@@ -21,44 +22,131 @@ async function bearerTokenRequest() {
     });
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(
+        `Bearer token request failed - Status: ${response.status}, Response: ${errorText}`,
+      );
     }
 
     const json = await response.json();
 
+    if (!json.access_token) {
+      throw new Error("No access token in response");
+    }
+
     return json.access_token;
   } catch (err) {
     logger.logError(filenameForLogging, "bearerTokenRequest()", err);
-    return err.message;
+    throw err; // Re-throw instead of returning error message
   }
 }
 
-async function getDispatchLocation(applicationId) {
-  const token = "Bearer " + (await bearerTokenRequest());
+// Helper function to validate bearer token
+function validateBearerToken(bearerToken) {
+  return (
+    bearerToken &&
+    typeof bearerToken === "string" &&
+    !bearerToken.includes("Error")
+  );
+}
+
+// Helper function to make HTTP request to Dynamics
+async function makeDynamicsRequest(bearerToken, applicationId) {
+  const token = "Bearer " + bearerToken;
   const url = `${dsConfig.dynamicsUrl}/api/data/v9.2/trd_inspectionlocations(${applicationId})?$select=rms_remosid`;
 
-  try {
-    const response = fetch(encodeURI(url), {
-      method: "Get",
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-    });
-    const resp = await response;
-    const status = resp.status;
+  const response = await fetch(encodeURI(url), {
+    method: "GET",
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+    },
+  });
+
+  return { response, status: response.status };
+}
+
+// Helper function for retry delays
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Helper function to handle successful response
+async function handleSuccessResponse(response, attempt, applicationId) {
+  const result = await response.json();
+  if (attempt > 1) {
     logger.logInfo(
       filenameForLogging,
-      "patchPackingListCheck()",
-      `Select ${applicationId}, status ${status}`,
+      GET_DISPATCH_LOCATION_METHOD,
+      `Successfully retrieved record for ${applicationId} after ${attempt} attempts`,
     );
-
-    const result = await resp.json();
-    return result.rms_remosid;
-  } catch (err) {
-    logger.logError(filenameForLogging, "getDispatchLocation()", err);
-    throw err;
   }
+  return result.rms_remosid;
+}
+
+// Helper function to log HTTP errors (no retries)
+function logHttpError(status, errorText) {
+  const message = `Request failed - HTTP ${status}: ${errorText}`;
+  logger.logError(filenameForLogging, GET_DISPATCH_LOCATION_METHOD, message);
+}
+
+// Helper function to log catch errors
+function logCatchError(attempt, maxRetries, errorMessage, retryDelayMs) {
+  const isLastAttempt = attempt === maxRetries;
+  const message = isLastAttempt
+    ? `Final attempt failed with error: ${errorMessage}`
+    : `Attempt ${attempt} failed with error: ${errorMessage}, retrying in ${retryDelayMs}ms`;
+
+  logger.logError(filenameForLogging, GET_DISPATCH_LOCATION_METHOD, message);
+}
+
+async function getDispatchLocation(
+  applicationId,
+  maxRetries = 3,
+  retryDelayMs = 2000,
+) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const bearerToken = await bearerTokenRequest();
+
+      if (!validateBearerToken(bearerToken)) {
+        const error = new Error(
+          `Failed to obtain bearer token: ${bearerToken}`,
+        );
+        logger.logError(
+          filenameForLogging,
+          GET_DISPATCH_LOCATION_METHOD,
+          error,
+        );
+        return null;
+      }
+
+      const { response, status } = await makeDynamicsRequest(
+        bearerToken,
+        applicationId,
+      );
+
+      if (response.ok) {
+        return await handleSuccessResponse(response, attempt, applicationId);
+      }
+
+      // Any HTTP error response - don't retry, return immediately
+      const errorText = await response.text();
+      logHttpError(status, errorText);
+      return null;
+    } catch (err) {
+      // Only retry on fetch failures (network errors)
+      logCatchError(attempt, maxRetries, err.message, retryDelayMs);
+
+      if (attempt === maxRetries) {
+        return null;
+      }
+
+      await sleep(retryDelayMs);
+    }
+  }
+
+  return null;
 }
 
 module.exports = { getDispatchLocation, bearerTokenRequest };
