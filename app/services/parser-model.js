@@ -6,6 +6,7 @@ const ParserModel = {
   ASDA1: "asda-1",
   ASDA2: "asda-2",
   ASDA3: "asda-3",
+  ASDA4: "asda-4",
   SAINSBURYS1: "sainsburys-1",
   BANDM1: "bandm-1",
   TESCO1: "tesco-1",

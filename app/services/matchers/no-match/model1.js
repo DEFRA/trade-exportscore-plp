@@ -40,7 +40,7 @@ function noRemosMatchCsv(sanitisedPackingList, _filename) {
   const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
   const isRemosPresent = sanitisedPackingList.some((x) => {
     return Object.values(x).some((y) => {
-      return remosRegex.test(y) || rmsExceptions(y);
+      return remosRegex.test(y);
     });
   });
   return isRemosPresent;

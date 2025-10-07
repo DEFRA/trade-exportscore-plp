@@ -42,7 +42,7 @@ async function parsePackingList(packingList, fileName, dispatchLocation) {
 }
 
 function sanitizeInput(packingList, fileName) {
-  if (fileExtension.isExcel(fileName)) {
+  if (fileExtension.isExcel(fileName) || fileExtension.isCsv(fileName)) {
     // Sanitise packing list (i.e. emove trailing spaces and empty cells)
     const packingListJson = JSON.stringify(packingList);
     const sanitisedPackingListJson = jsonFile.sanitise(packingListJson);
