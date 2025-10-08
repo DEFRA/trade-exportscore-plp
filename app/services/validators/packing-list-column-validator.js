@@ -178,14 +178,15 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
       });
     }
 
-    checks.forEach((check) => {
+    for (const check of checks) {
       if (check.collection.length > 0) {
         failureReasons += generateFailureReasonFromRows(
           check.description,
           check.collection,
         );
       }
-    });
+    }
+    
   }
   return {
     hasAllFields: false,
