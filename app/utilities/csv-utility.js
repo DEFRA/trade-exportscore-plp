@@ -25,7 +25,8 @@ function createInputStream(bufferOrFilename) {
   if (Buffer.isBuffer(bufferOrFilename)) {
     return Readable.from([bufferOrFilename]);
   } else if (
-    bufferOrFilename && typeof bufferOrFilename === "object" &&
+    bufferOrFilename &&
+    typeof bufferOrFilename === "object" &&
     typeof bufferOrFilename.pipe === "function"
   ) {
     // Already a stream
