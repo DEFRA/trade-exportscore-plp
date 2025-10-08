@@ -50,9 +50,9 @@ TRADER_NAME: {
 | AB#591514 | ASDA 3 - Country of Origin Validation               | 📋 **New**          | NIRMS Sprint 30   | Hanna S-A.   | [AB591514-asda3-coo-validation-spec.md](AB591514-asda3-coo-validation-spec.md)           |
 | AB#591527 | Giovanni 1 - Country of Origin Validation           | ✅ **Complete**     | NIRMS Sprint 30   | David P.     | [AB591527-giovanni1-coo-validation-spec.md](AB591527-giovanni1-coo-validation-spec.md)   |
 | AB#591532 | Kepak - Country of Origin Validation                | ⚡ **Active**       | NIRMS Sprint 30   | Hanna S-A.   | [AB591532-kepak-coo-validation-spec.md](AB591532-kepak-coo-validation-spec.md)           |
-| AB#599300 | Mars - Country of Origin Validation | 📋 **New** | NIRMS Sprint 30 | John F. | [AB599300-mars-coo-validation-spec.md](AB599300-mars-coo-validation-spec.md) |
-| AB#591536 | Nisa 2 - Country of Origin Validation | Specification Ready | NIRMS Sprint 31 | Not Assigned | [AB591536-nisa2-coo-validation-spec.md](AB591536-nisa2-coo-validation-spec.md) |
-| AB#603666 | ASDA 4 - Create new parser model for ASDA .csv file | Specification Ready | NIRMS Sprint 31 | Not Assigned | [AB603666-asda4-coo-validation-spec.md](AB603666-asda4-coo-validation-spec.md) |
+| AB#599300 | Mars - Country of Origin Validation                 | 📋 **New**          | NIRMS Sprint 30   | John F.      | [AB599300-mars-coo-validation-spec.md](AB599300-mars-coo-validation-spec.md)             |
+| AB#591536 | Nisa 2 - Country of Origin Validation               | Specification Ready | NIRMS Sprint 31   | Not Assigned | [AB591536-nisa2-coo-validation-spec.md](AB591536-nisa2-coo-validation-spec.md)           |
+| AB#603666 | ASDA 4 - Create new parser model for ASDA .csv file | Specification Ready | NIRMS Sprint 31   | Not Assigned | [AB603666-asda4-coo-validation-spec.md](AB603666-asda4-coo-validation-spec.md)           |
 
 ## Foundation Work Item
 
