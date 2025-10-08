@@ -83,7 +83,7 @@ function findUnit(header) {
 }
 
 function findAllMatches(searchPattern, array, matches) {
- for(const obj of array){
+  for (const obj of array) {
     const stringProperties = getStringProperties(obj);
 
     for (const key of stringProperties) {

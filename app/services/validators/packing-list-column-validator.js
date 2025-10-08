@@ -133,65 +133,89 @@ function findItems(items, fn) {
 }
 
 function generateFailuresByIndexAndTypes(validationResult, packingList) {
-  let failureReasons = "";
   if (validationResult.hasAllFields && validationResult.hasSingleRms) {
     return {
       hasAllFields: true,
     };
   } else {
     // build failure reason
-    failureReasons = getFailureReasons(validationResult);
-    const checks = createValidationChecks(validationResult);
+    const failuresAndChecks = {
+      failureReasons: getFailureReasons(validationResult),
+      checks: createValidationChecks(validationResult),
+    };
 
     // Handle multiple RMS as a special case
-    if (!validationResult.hasSingleRms) {
-      failureReasons += failureReasonsDescriptions.MULTIPLE_RMS;
-    }
+    addSingleRmsFailureReason(validationResult, failuresAndChecks);
 
-    //if the net weight unit is in the header, just the description below is assigned to the failure reason
-    if (
-      validationResult.missingNetWeightUnit.length !== 0 &&
-      packingList.unitInHeader
-    ) {
-      failureReasons += `${failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING}.\n`;
-    }
-    // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array
-    else {
-      checks.push({
-        collection: validationResult.missingNetWeightUnit,
-        description: failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
-      });
-    }
+    // Handle net weight unit as a special case
+    addNetWeightFailuireReasonOrCheck(
+      validationResult,
+      packingList.unitInHeader,
+      failuresAndChecks,
+    );
 
     // if there is a nirms blanket statement, just the description below is assigned to the failure reason
-    if (
-      validationResult.missingNirms.length !== 0 &&
-      packingList.blanketNirms
-    ) {
-      failureReasons += `${failureReasonsDescriptions.NIRMS_MISSING}.\n`;
-    }
-    // if there is no nirms blanket statement, the collection of the row/sheet location and description should be added into the checks array
-    else {
-      checks.push({
-        collection: validationResult.missingNirms,
-        description: failureReasonsDescriptions.NIRMS_MISSING,
-      });
+    addNirmsFailureReasonOrCheck(
+      validationResult,
+      packingList.blanketNirms,
+      failuresAndChecks,
+    );
+
+    const failingChecks = failuresAndChecks.checks.filter(
+      (check) => check.collection.length > 0,
+    );
+    for (const check of failingChecks) {
+      failuresAndChecks.failureReasons += generateFailureReasonFromRows(
+        check.description,
+        check.collection,
+      );
     }
 
-    for (const check of checks) {
-      if (check.collection.length > 0) {
-        failureReasons += generateFailureReasonFromRows(
-          check.description,
-          check.collection,
-        );
-      }
-    }
-    
+    return {
+      hasAllFields: false,
+      failureReasons: failuresAndChecks.failureReasons,
+    };
   }
-  return {
-    hasAllFields: false,
-    failureReasons,
-  };
+}
+
+function addSingleRmsFailureReason(validationResult, reasonsAndChecks) {
+  if (!validationResult.hasSingleRms) {
+    reasonsAndChecks.failureReasons += failureReasonsDescriptions.MULTIPLE_RMS;
+  }
+}
+
+function addNetWeightFailuireReasonOrCheck(
+  validationResult,
+  unitInHeader,
+  reasonsAndChecks,
+) {
+  if (validationResult.missingNetWeightUnit.length !== 0 && unitInHeader) {
+    reasonsAndChecks.failureReasons += `${failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING}.\n`;
+  }
+  // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array
+  else {
+    reasonsAndChecks.checks.push({
+      collection: validationResult.missingNetWeightUnit,
+      description: failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
+    });
+  }
+}
+
+function addNirmsFailureReasonOrCheck(
+  validationResult,
+  blanketNirms,
+  reasonsAndChecks,
+) {
+  if (validationResult.missingNirms.length !== 0 && blanketNirms) {
+    reasonsAndChecks.failureReasons += `${failureReasonsDescriptions.NIRMS_MISSING}.\n`;
+  }
+  // if there is no nirms blanket statement, the collection of the row/sheet location and description should be added into the checks array
+  else {
+    reasonsAndChecks.checks.push({
+      collection: validationResult.missingNirms,
+      description: failureReasonsDescriptions.NIRMS_MISSING,
+    });
+  }
 }
 
 function createValidationChecks(validationResult) {
