@@ -311,6 +311,10 @@ const headers = {
       header_net_weight_unit: /NET WEIGHT PACKAGE/i,
     },
     findUnitInHeader: true,
+    country_of_origin: /COUNTRY OF ORIGIN/i,
+    type_of_treatment: /TYPE OF TREATMENT/i,
+    nirms: /NIRMS/i,
+    validateCountryOfOrigin: true,
   },
   NUTRICIA1: {
     establishmentNumber: {
