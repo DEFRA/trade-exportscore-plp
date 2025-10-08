@@ -83,18 +83,18 @@ function findUnit(header) {
 }
 
 function findAllMatches(searchPattern, array, matches) {
-  array.forEach((obj) => {
+ for(const obj of array){
     const stringProperties = getStringProperties(obj);
 
-    stringProperties.forEach((key) => {
+    for (const key of stringProperties) {
       const value = obj[key];
       const match = value.match(searchPattern);
 
       if (match) {
         matches = addMatch(match[1] ?? match[0], matches);
       }
-    });
-  });
+    }
+  }
   return matches;
 }
 

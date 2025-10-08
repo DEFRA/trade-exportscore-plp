@@ -93,13 +93,13 @@ function extractEstablishmentNumbers(pdfJson, remosRegex = regex.remosRegex) {
 function extractEstablishmentNumbersFromString(pdfJson, remosRegex) {
   let establishmentNumbers = [];
 
-  pdfJson.pages.forEach((page) => {
+  for (const page of pdfJson.pages) {
     const pageText = page.content.map((item) => item.str).join("");
     const matches = pageText.match(remosRegex);
-    matches.forEach((match) => {
+    for (const match of matches) {
       establishmentNumbers = regex.addMatch(match, establishmentNumbers);
-    });
-  });
+    }
+  }
 
   return establishmentNumbers;
 }
