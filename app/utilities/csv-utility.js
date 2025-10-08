@@ -1,8 +1,10 @@
 const { parse } = require("csv-parse");
 const fs = require("node:fs");
+const { Readable } = require("stream");
 
 async function convertCsvToJson(bufferOrFilename) {
-  const parser = fs.createReadStream(bufferOrFilename).pipe(
+  // Accept a Buffer, a Readable stream, or a filename string
+  const parser = createInputStream(bufferOrFilename).pipe(
     parse({
       columns: false,
       skip_empty_lines: true,
@@ -17,6 +19,21 @@ async function convertCsvToJson(bufferOrFilename) {
   }
 
   return results;
+}
+
+function createInputStream(bufferOrFilename) {
+  if (Buffer.isBuffer(bufferOrFilename)) {
+    return Readable.from([bufferOrFilename]);
+  } else if (
+    bufferOrFilename && typeof bufferOrFilename === "object" &&
+    typeof bufferOrFilename.pipe === "function"
+  ) {
+    // Already a stream
+    return bufferOrFilename;
+  } else {
+    // Assume a filename/path
+    return fs.createReadStream(bufferOrFilename);
+  }
 }
 
 module.exports = {
