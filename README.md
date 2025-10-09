@@ -83,6 +83,8 @@ scripts/test -w
 
 This QA regression test scans a folder of packing-list Excel files and writes a CSV report to `test-output/`. The suite is long-running and skipped by default; only run it when you need a full QA scan.
 
+#### Ubuntu/Linux Development Environment
+
 Usage (minimal):
 
 - (Optional) To specify a test folder (By default, tests point to `./app/packing-lists`):
@@ -95,6 +97,55 @@ export TEST_FOLDER_PATH=./app/packing-lists/ASDA1
 
 ```bash
 make qa-test
+```
+
+Or run directly with npx:
+
+```bash
+RUN_QA_REGRESSION=1 npx jest --runTestsByPath test/unit/routes/excelprocess-non-ai.test.js --runInBand
+```
+
+#### Windows Development Environment
+
+Prerequisites:
+
+- Node.js and npm installed
+- Project dependencies installed (`npm install`)
+
+Usage:
+
+- (Optional) To specify a test folder (By default, tests point to `./app/packing-lists`):
+
+**Command Prompt:**
+
+```cmd
+set TEST_FOLDER_PATH=./app/packing-lists/ASDA1
+```
+
+**PowerShell:**
+
+```powershell
+$env:TEST_FOLDER_PATH = "./app/packing-lists/ASDA1"
+```
+
+- To run the QA suite:
+
+**Command Prompt:**
+
+```cmd
+set RUN_QA_REGRESSION=1 && npx jest --runTestsByPath test/unit/routes/excelprocess-non-ai.test.js --runInBand
+```
+
+**PowerShell:**
+
+```powershell
+$env:RUN_QA_REGRESSION = "1"; npx jest --runTestsByPath test/unit/routes/excelprocess-non-ai.test.js --runInBand
+```
+
+**Git Bash (if Git for Windows is installed):**
+
+```bash
+RUN_QA_REGRESSION=1 npx jest --runTestsByPath test/unit/routes/excelprocess-non-ai.test.js --runInBand
 ```
 
 Notes:
