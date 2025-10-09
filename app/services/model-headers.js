@@ -227,8 +227,12 @@ const headers = {
         /The exporter of the products covered by this document \(NIRMS RMS-GB-000153(-\d{3})?\)\s*declares that these products are intend for the Green lane and will remain\s*in Northern Ireland/i,
       value: "NIRMS",
     },
-    blanketTreatmentType: {
-      regex: /Treatment/i,
+    blanketTreatmentTypeValue: {
+      regex: /Type of Treatment/i,
+      valueCellOffset: {
+        col: 0,
+        row: 1,
+      },
     },
   },
   GIOVANNI2: {
@@ -262,7 +266,13 @@ const headers = {
         /The exporter of the products covered by this document \(NIRMS RMS-GB-000280\)\s*declares that these products are intend for the Green lane and will remain\s+in Northern Ireland./i,
       value: "NIRMS",
     },
-    singleValueTypeOfTreatment: { col: "H", row: 16 },
+    blanketTreatmentTypeValue: {
+      regex: /Type of Treatment/i,
+      valueCellOffset: {
+        col: 0,
+        row: 1,
+      },
+    },
   },
   MARS1: {
     establishmentNumber: {

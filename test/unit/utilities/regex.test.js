@@ -311,3 +311,75 @@ describe("findAllMatches function", () => {
     ).toStrictEqual(["RMS-GB-000252-002"]);
   });
 });
+
+describe("positionFinder function", () => {
+  it("should return the row and column position of the first match", () => {
+    const json = [
+      { name: "Alice", age: 30, city: "London" },
+      { name: "Bob", age: 25, city: "Paris" },
+      { name: "John Doe", age: 35, city: "Berlin" },
+    ];
+
+    const result = regex.positionFinder(json, /John/);
+    expect(result).toEqual([2, "name"]); // Row 2, column 'name'
+  });
+
+  it("should return the first match when multiple matches exist", () => {
+    const json = [
+      { name: "John Smith", age: 30, city: "London" },
+      { name: "Jane Doe", age: 25, city: "Paris" },
+      { name: "John Williams", age: 35, city: "Berlin" },
+    ];
+
+    const result = regex.positionFinder(json, /John/);
+    expect(result).toEqual([0, "name"]); // First match at row 0, column 'name'
+  });
+
+  it("should return null values when no match is found", () => {
+    const json = [
+      { name: "Alice", age: 30, city: "London" },
+      { name: "Bob", age: 25, city: "Paris" },
+      { name: "Charlie", age: 35, city: "Berlin" },
+    ];
+
+    const result = regex.positionFinder(json, /Michael/);
+    expect(result).toEqual([null, null]); // No match found
+  });
+
+  it("should find matches in different columns", () => {
+    const json = [
+      { name: "Alice", age: 30, city: "London" },
+      { name: "Bob", age: 25, city: "NewYork" },
+      { name: "Charlie", age: 35, city: "Berlin" },
+    ];
+
+    const result = regex.positionFinder(json, /NewYork/);
+    expect(result).toEqual([1, "city"]); // Row 1, column 'city'
+  });
+
+  it("should handle empty array", () => {
+    const json = [];
+    const result = regex.positionFinder(json, /John/);
+    expect(result).toEqual([null, null]); // Empty array
+  });
+
+  it("should handle objects with no string properties", () => {
+    const json = [
+      { age: 30, active: true, salary: 50000 },
+      { age: 25, active: false, salary: 45000 },
+    ];
+
+    const result = regex.positionFinder(json, /John/);
+    expect(result).toEqual([null, null]); // No string properties to match
+  });
+
+  it("should handle case-insensitive matching", () => {
+    const json = [
+      { name: "alice", age: 30, city: "london" },
+      { name: "BOB", age: 25, city: "PARIS" },
+    ];
+
+    const result = regex.positionFinder(json, /ALICE/i);
+    expect(result).toEqual([0, "name"]); // Case-insensitive match
+  });
+});

@@ -1,6 +1,8 @@
+const regex = require("../../../app/utilities/regex");
 const {
   mapPdfParser,
   extractNetWeightUnit,
+  getBlanketValueFromOffset,
 } = require("../../../app/services/parser-map");
 
 jest.mock("../../../app/services/model-headers-pdf", () => ({
@@ -96,5 +98,103 @@ describe("mapPdfParser", () => {
     expect(result[1].row_location).toEqual({ rowNumber: 2, pageNumber: 1 });
     expect(result[2].row_location).toEqual({ rowNumber: 1, pageNumber: 2 }); // Should reset to 1
     expect(result[3].row_location).toEqual({ rowNumber: 2, pageNumber: 2 });
+  });
+});
+
+describe("getBlanketValueFromOffset", () => {
+  const mockPackingListJson = [
+    { A: "Header1", B: "Header2", C: "Header3" },
+    { A: "Data1", B: "Data2", C: "Data3" },
+    { A: "Data4", B: "Target Value", C: "Data6" },
+    { A: "Data7", B: "Data8", C: "Data9" },
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should return value at correct offset position", () => {
+    const mockHeader = {
+      regex: /Header2/,
+      valueCellOffset: {
+        row: 2,
+        col: 0,
+      },
+    };
+
+    // Mock regex.positionFinder to return row 0, column B
+    regex.positionFinder = jest.fn().mockReturnValue([0, "B"]);
+
+    const result = getBlanketValueFromOffset(mockPackingListJson, mockHeader);
+
+    expect(regex.positionFinder).toHaveBeenCalledWith(
+      mockPackingListJson,
+      mockHeader.regex,
+    );
+    expect(result).toBe("Target Value");
+  });
+
+  test("should handle negative column offset", () => {
+    const mockHeader = {
+      regex: /Header2/,
+      valueCellOffset: {
+        row: 1,
+        col: -1,
+      },
+    };
+
+    regex.positionFinder = jest.fn().mockReturnValue([0, "B"]);
+
+    const result = getBlanketValueFromOffset(mockPackingListJson, mockHeader);
+
+    expect(result).toBe("Data1");
+  });
+
+  test("should handle positive column offset", () => {
+    const mockHeader = {
+      regex: /Header1/,
+      valueCellOffset: {
+        row: 1,
+        col: 1,
+      },
+    };
+
+    regex.positionFinder = jest.fn().mockReturnValue([0, "A"]);
+
+    const result = getBlanketValueFromOffset(mockPackingListJson, mockHeader);
+
+    expect(result).toBe("Data2");
+  });
+
+  test("should handle zero offsets", () => {
+    const mockHeader = {
+      regex: /Header1/,
+      valueCellOffset: {
+        row: 0,
+        col: 0,
+      },
+    };
+
+    regex.positionFinder = jest.fn().mockReturnValue([0, "A"]);
+
+    const result = getBlanketValueFromOffset(mockPackingListJson, mockHeader);
+
+    expect(result).toBe("Header1");
+  });
+
+  test("should handle column offset that results in different letter", () => {
+    const mockHeader = {
+      regex: /Header1/,
+      valueCellOffset: {
+        row: 2,
+        col: 2,
+      },
+    };
+
+    regex.positionFinder = jest.fn().mockReturnValue([0, "A"]);
+
+    const result = getBlanketValueFromOffset(mockPackingListJson, mockHeader);
+
+    expect(result).toBe("Data6");
   });
 });
