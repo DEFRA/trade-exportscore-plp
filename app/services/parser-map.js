@@ -2,7 +2,7 @@ const headers = require("./model-headers-pdf");
 const pdfHelper = require("../utilities/pdf-helper");
 const regex = require("../utilities/regex");
 const logger = require("../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function findHeaderCols(header, packingListHeader) {
@@ -121,10 +121,12 @@ function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
     regex.test(header.blanketTreatmentType?.regex, packingListJson)
   ) {
     blanketTreatmentType = header.blanketTreatmentType.value;
-  } else if (header.blanketTreatmentTypeValue) {
+  }
+  if (
+    blanketTreatmentType === null &&
+    header.blanketTreatmentTypeValue
+  ) {
     blanketTreatmentType = getBlanketValueFromOffset(packingListJson, header);
-  } else {
-    blanketTreatmentType = null;
   }
 
   return {
@@ -149,8 +151,8 @@ function getBlanketValueFromOffset(packingListJson, header) {
     // add offsets
     const row =
       headerRow + header.blanketTreatmentTypeValue.valueCellOffset.row;
-    const col = String.fromCharCode(
-      headerCol.charCodeAt(0) +
+    const col = String.fromCodePoint(
+      headerCol.codePointAt(0) +
         header.blanketTreatmentTypeValue.valueCellOffset.col,
     );
 
