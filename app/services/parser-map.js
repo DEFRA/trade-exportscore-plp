@@ -1,6 +1,9 @@
 const headers = require("./model-headers-pdf");
 const pdfHelper = require("../utilities/pdf-helper");
 const regex = require("../utilities/regex");
+const logger = require("../utilities/logger");
+const path = require("path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function findHeaderCols(header, packingListHeader) {
   const headerCols = {};
@@ -111,33 +114,56 @@ function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
   const blanketNirms = regex.test(header.blanketNirms?.regex, packingListJson)
     ? header.blanketNirms?.value
     : null;
-  const blanketTreatmentType = regex.test(
-    header.blanketTreatmentType?.regex,
-    packingListJson,
-  )
-    ? header.blanketTreatmentType?.value
-    : null;
 
-  // assign treatment type value if singleValueTypeOfTreatment present
-  const singleTreatmentTypeValue = header.singleValueTypeOfTreatment
-    ? packingListJson[header.singleValueTypeOfTreatment.row][
-        header.singleValueTypeOfTreatment.col
-      ]
-    : null;
+  let blanketTreatmentType = null;
+  if (
+    header.blanketTreatmentType &&
+    regex.test(header.blanketTreatmentType?.regex, packingListJson)
+  ) {
+    blanketTreatmentType = header.blanketTreatmentType.value;
+  } else if (header.blanketTreatmentTypeValue) {
+    blanketTreatmentType = getBlanketValueFromOffset(packingListJson, header);
+  } else {
+    blanketTreatmentType = null;
+  }
 
   return {
     netWeightUnit,
     blanketNirms,
     blanketTreatmentType,
-    singleTreatmentTypeValue,
   };
+}
+
+function getBlanketValueFromOffset(packingListJson, header) {
+  try {
+    // find position of blanket header value
+    const [headerRow, headerCol] = regex.positionFinder(
+      packingListJson,
+      header.blanketTreatmentTypeValue.regex,
+    );
+
+    if (headerRow === null || headerCol === null) {
+      throw new Error("Position not found.");
+    }
+
+    // add offsets
+    const row = headerRow + header.blanketTreatmentTypeValue.valueCellOffset.row;
+    const col = String.fromCharCode(
+      headerCol.charCodeAt(0) + header.blanketTreatmentTypeValue.valueCellOffset.col,
+    );
+
+    // return the value
+    return packingListJson[row][col] ?? null;
+  } catch (error) {
+    logger.logError(filenameForLogging, "getBlanketValueFromOffset()", error);
+    return null;
+  }
 }
 
 function getTypeOfTreatment(col, headerCols, blanketValues, hasData) {
   return (
     columnValue(col[headerCols.type_of_treatment]) ??
     (hasData && blanketValues.blanketTreatmentType) ??
-    (hasData && blanketValues.singleTreatmentTypeValue) ??
     null
   );
 }
@@ -324,4 +350,5 @@ module.exports = {
   mapPdfNonAiParser,
   findHeaderCols,
   extractNetWeightUnit,
+  getBlanketValueFromOffset,
 };
