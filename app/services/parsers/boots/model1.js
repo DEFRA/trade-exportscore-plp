@@ -45,14 +45,14 @@ function parse(packingListJson) {
         sheet,
       );
 
-      const footerValues = [
+      const footerValues = new Set([
         "Total Quantity of items:",
         "Gross Mass in Kgs:",
         "Total Value in GBP:",
-      ];
+      ]);
       packingListContents = packingListContents.concat(
         packingListContentsTemp.filter(
-          (row) => !footerValues.includes(row.description),
+          (row) => !footerValues.has(row.description),
         ),
       );
     }

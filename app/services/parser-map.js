@@ -263,7 +263,8 @@ function mapPdfNonAiParser(packingListJson, model, ys) {
 
   const packingListContents = [];
 
-  ys.forEach((y, row) => {
+  for (let row = 0; row < ys.length; row++) {
+    const y = ys[row];
     const plRow = {
       description: null,
       nature_of_products: null,
@@ -273,20 +274,21 @@ function mapPdfNonAiParser(packingListJson, model, ys) {
       total_net_weight_kg: null,
       total_net_weight_unit: netWeightUnit ?? null,
     };
-    Object.keys(headers[model].headers).forEach((key) => {
+
+    for (const key of Object.keys(headers[model].headers)) {
       plRow[key] = findItemContent(
         packingListJson,
         headers[model].headers[key],
         y,
       );
-    });
+    }
     plRow.row_location = {
       rowNumber: row + 1,
       pageNumber: packingListJson.pageInfo.num,
     };
     plRow.commodity_code = extractCommodityCodeDigits(plRow.commodity_code);
     packingListContents.push(plRow);
-  });
+  }
 
   return packingListContents;
 }

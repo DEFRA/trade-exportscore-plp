@@ -24,15 +24,15 @@ module.exports = (() => {
       dbConfig,
     );
 
-    fs.readdirSync(modelPath)
-      .filter((file) => {
-        return (
-          !file.startsWith(".") && file !== "index.js" && file.endsWith(".js")
-        );
-      })
-      .forEach((file) =>
-        require(path.join(modelPath, file))(sequelize, DataTypes),
+    const modelFiles = fs.readdirSync(modelPath).filter((file) => {
+      return (
+        !file.startsWith(".") && file !== "index.js" && file.endsWith(".js")
       );
+    });
+
+    for (const file of modelFiles) {
+      require(path.join(modelPath, file))(sequelize, DataTypes);
+    }
 
     if (sequelize.models) {
       associateModels(sequelize);
