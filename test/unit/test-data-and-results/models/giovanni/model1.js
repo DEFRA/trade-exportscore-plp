@@ -700,24 +700,25 @@ module.exports = {
       {
         A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
       },
-      {},
-      // Headers row with treatment
+      {
+        A: "Type of Treatment",
+      },
+      {
+        A: "Chilled",
+      },
       {
         C: "DESCRIPTION",
         E: "Commodity Code",
         F: "Country of Origin",
         G: "Quantity",
         H: "Net Weight (KG)",
-        I: "Treatment",
       },
-      // Data rows with prohibited items and treatment
       {
         C: "PROHIBITED ITEM WITH TREATMENT",
         E: "07061000", // Prohibited commodity code
         F: "CN", // China - prohibited country
         G: 17,
         H: 40.8,
-        I: "Chilled", // Treatment type
       },
     ],
   },
