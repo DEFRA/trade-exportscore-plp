@@ -700,11 +700,11 @@ module.exports = {
       {
         A: "The exporter of the products covered by this document (NIRMS RMS-GB-000153-001) declares that these products are intend for the Green lane and will remain in Northern Ireland.",
       },
-      { 
+      {
         A: "Type of Treatment",
       },
       {
-        A: "Chilled"
+        A: "Chilled",
       },
       {
         C: "DESCRIPTION",

@@ -147,9 +147,11 @@ function getBlanketValueFromOffset(packingListJson, header) {
     }
 
     // add offsets
-    const row = headerRow + header.blanketTreatmentTypeValue.valueCellOffset.row;
+    const row =
+      headerRow + header.blanketTreatmentTypeValue.valueCellOffset.row;
     const col = String.fromCharCode(
-      headerCol.charCodeAt(0) + header.blanketTreatmentTypeValue.valueCellOffset.col,
+      headerCol.charCodeAt(0) +
+        header.blanketTreatmentTypeValue.valueCellOffset.col,
     );
 
     // return the value

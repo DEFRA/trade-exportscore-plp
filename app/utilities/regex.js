@@ -107,6 +107,23 @@ function addMatch(match, matches) {
   return matches;
 }
 
+// function to return row and column position of first match, input is json
+function positionFinder(json, regex) {
+  let colIndex = null;
+  let rowIndex = null;
+  for (let row = 0; row < json.length; row++) {
+    const match = findMatch(regex, [json[row]]);
+    if (match) {
+      rowIndex = row;
+      colIndex = Object.keys(json[row]).find((key) => {
+        return regex.test(json[row][key]);
+      });
+      break;
+    }
+  }
+  return [rowIndex, colIndex];
+}
+
 module.exports = {
   test,
   findMatch,
@@ -115,4 +132,5 @@ module.exports = {
   findAllMatches,
   remosRegex,
   addMatch,
+  positionFinder,
 };
