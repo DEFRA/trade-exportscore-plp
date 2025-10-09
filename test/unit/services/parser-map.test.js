@@ -115,12 +115,10 @@ describe("getBlanketValueFromOffset", () => {
 
   test("should return value at correct offset position", () => {
     const mockHeader = {
-      blanketTreatmentTypeValue: {
-        regex: /Header2/,
-        valueCellOffset: {
-          row: 2,
-          col: 0,
-        },
+      regex: /Header2/,
+      valueCellOffset: {
+        row: 2,
+        col: 0,
       },
     };
 
@@ -131,19 +129,17 @@ describe("getBlanketValueFromOffset", () => {
 
     expect(regex.positionFinder).toHaveBeenCalledWith(
       mockPackingListJson,
-      mockHeader.blanketTreatmentTypeValue.regex,
+      mockHeader.regex,
     );
     expect(result).toBe("Target Value");
   });
 
   test("should handle negative column offset", () => {
     const mockHeader = {
-      blanketTreatmentTypeValue: {
-        regex: /Header2/,
-        valueCellOffset: {
-          row: 1,
-          col: -1,
-        },
+      regex: /Header2/,
+      valueCellOffset: {
+        row: 1,
+        col: -1,
       },
     };
 
@@ -156,12 +152,10 @@ describe("getBlanketValueFromOffset", () => {
 
   test("should handle positive column offset", () => {
     const mockHeader = {
-      blanketTreatmentTypeValue: {
-        regex: /Header1/,
-        valueCellOffset: {
-          row: 1,
-          col: 1,
-        },
+      regex: /Header1/,
+      valueCellOffset: {
+        row: 1,
+        col: 1,
       },
     };
 
@@ -174,12 +168,10 @@ describe("getBlanketValueFromOffset", () => {
 
   test("should handle zero offsets", () => {
     const mockHeader = {
-      blanketTreatmentTypeValue: {
-        regex: /Header1/,
-        valueCellOffset: {
-          row: 0,
-          col: 0,
-        },
+      regex: /Header1/,
+      valueCellOffset: {
+        row: 0,
+        col: 0,
       },
     };
 
@@ -192,12 +184,10 @@ describe("getBlanketValueFromOffset", () => {
 
   test("should handle column offset that results in different letter", () => {
     const mockHeader = {
-      blanketTreatmentTypeValue: {
-        regex: /Header1/,
-        valueCellOffset: {
-          row: 2,
-          col: 2,
-        },
+      regex: /Header1/,
+      valueCellOffset: {
+        row: 2,
+        col: 2,
       },
     };
 

@@ -122,11 +122,11 @@ function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
   ) {
     blanketTreatmentType = header.blanketTreatmentType.value;
   }
-  if (
-    blanketTreatmentType === null &&
-    header.blanketTreatmentTypeValue
-  ) {
-    blanketTreatmentType = getBlanketValueFromOffset(packingListJson, header);
+  if (blanketTreatmentType === null && header.blanketTreatmentTypeValue) {
+    blanketTreatmentType = getBlanketValueFromOffset(
+      packingListJson,
+      header.blanketTreatmentTypeValue,
+    );
   }
 
   return {
@@ -136,12 +136,12 @@ function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
   };
 }
 
-function getBlanketValueFromOffset(packingListJson, header) {
+function getBlanketValueFromOffset(packingListJson, blanketValue) {
   try {
     // find position of blanket header value
     const [headerRow, headerCol] = regex.positionFinder(
       packingListJson,
-      header.blanketTreatmentTypeValue.regex,
+      blanketValue.regex,
     );
 
     if (headerRow === null || headerCol === null) {
@@ -149,11 +149,9 @@ function getBlanketValueFromOffset(packingListJson, header) {
     }
 
     // add offsets
-    const row =
-      headerRow + header.blanketTreatmentTypeValue.valueCellOffset.row;
+    const row = headerRow + blanketValue.valueCellOffset.row;
     const col = String.fromCodePoint(
-      headerCol.codePointAt(0) +
-        header.blanketTreatmentTypeValue.valueCellOffset.col,
+      headerCol.codePointAt(0) + blanketValue.valueCellOffset.col,
     );
 
     // return the value
