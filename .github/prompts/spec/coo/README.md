@@ -62,7 +62,6 @@ graph TD
     TITLE_ADO["🏢 AZURE DEVOPS ENVIRONMENT"]
     TITLE_LOCAL["💻 LOCAL DEVELOPMENT ENVIRONMENT"]
     TITLE_GITHUB["🔧 GITHUB ENVIRONMENT"]
-    TITLE_AI["🤖 GITHUB COPILOT AI"]
     
     %% Step Numbers in Circles
     N1(("1"))
@@ -76,6 +75,8 @@ graph TD
     N9(("9"))
     N10(("10"))
     N11(("11"))
+    N12(("12"))
+    N13(("13"))
     
     subgraph ADO [" "]
         A["Minimal ADO Ticket"]
@@ -93,27 +94,27 @@ graph TD
         I["Code Generation"]
         L["Local Spec Files"]
         M["Generated Code"]
+        DEV_REVIEW{"Developer Review"}
         N["Unit Tests"]
     end
     
     subgraph GITHUB [" "]
         J["PR Creation"]
+        PR_REVIEW{"Developer Review"}
         O["Repository"]
-        P["GitHub Copilot"]
         Q["Prompt Files"]
     end
     
-    subgraph AI [" "]
-        R["AI Processing"]
-        S["Code Generation AI"]
-        T["Spec Generation AI"]
+    subgraph LEGEND ["🎯 ACTOR LEGEND"]
+        BA_KEY["👤 Business Analyst"]
+        DEV_KEY["👤 Developer"]
+        COPILOT_KEY["🤖 GitHub Copilot AI"]
     end
     
     %% Position Titles Above Subgraphs
     TITLE_ADO -.-> ADO
     TITLE_LOCAL -.-> LOCAL
     TITLE_GITHUB -.-> GITHUB
-    TITLE_AI -.-> AI
     
     %% Position Numbers with Offset to Avoid Overlap
     N1 -.-> A
@@ -126,12 +127,14 @@ graph TD
     N8 -.-> G
     N9 -.-> H
     N10 -.-> I
-    N11 -.-> J
+    N11 -.-> DEV_REVIEW
+    N12 -.-> J
+    N13 -.-> PR_REVIEW
     
     %% Pre-Sprint Phase Flows (Steps 1-7)
     A -->|Read Ticket| B
-    B -->|AI Generation| T
-    T -->|Generated Spec| L
+    B -->|Execute Prompts| Q
+    Q -->|Process with AI| L
     L -->|Update ADO| C
     C --> D
     D -->|Manual Edits| A
@@ -141,39 +144,46 @@ graph TD
     E -->|Regenerate if needed| B
     F -->|Attach Files| K
     
-    %% Sprint Execution Phase Flows (Steps 8-11)
+    %% Sprint Execution Phase Flows (Steps 8-13)
     K -->|Download Spec| G
-    G -->|AI Processing| S
-    S -->|Implementation Details| L
+    G -->|Execute Prompts| Q
+    Q -->|Process with AI| L
     L -->|Upload Spec| K
     G --> H
     H -->|Update Test Data| N
     H --> I
     I -->|Generate Code| M
-    M -->|Commit & Push| O
+    M -->|Review Code| DEV_REVIEW
+    DEV_REVIEW -->|Approved| O
+    DEV_REVIEW -->|Needs Changes| I
     O -->|Create PR| J
+    J -->|Review PR| PR_REVIEW
     J -->|Link Work Item| A
     
-    %% GitHub Copilot Integration
-    P -->|Execute Prompts| Q
-    Q -->|Prompt Processing| R
-    R -->|Spec Generation| T
-    R -->|Code Generation| S
-    
-    %% Styling
-    classDef adoStyle fill:#0078d4,stroke:#005a9e,stroke-width:2px,color:#fff
-    classDef localStyle fill:#28a745,stroke:#1e7e34,stroke-width:2px,color:#fff
-    classDef githubStyle fill:#6f42c1,stroke:#563d7c,stroke-width:2px,color:#fff
-    classDef aiStyle fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff
+    %% Styling by Actor
+    classDef baStyle fill:#0078d4,stroke:#005a9e,stroke-width:2px,color:#fff
+    classDef devStyle fill:#28a745,stroke:#1e7e34,stroke-width:2px,color:#fff
+    classDef copilotStyle fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff
     classDef numberStyle fill:#ffd700,stroke:#ff8c00,stroke-width:2px,color:#000
     classDef titleStyle fill:#f8f9fa,stroke:#6c757d,stroke-width:3px,color:#212529,font-weight:bold,font-size:14px
+    classDef legendStyle fill:#f8f9fa,stroke:#6c757d,stroke-width:1px,color:#212529
     
-    class A,C,F,K adoStyle
-    class B,D,E,G,H,I,L,M,N localStyle
-    class J,O,P,Q githubStyle
-    class R,S,T aiStyle
+    %% BA-related components (blue)
+    class BA_KEY,A,D,F baStyle
+    
+    %% Developer-related components (green)
+    class DEV_KEY,DEV_REVIEW,PR_REVIEW devStyle
+    
+    %% Copilot AI-related components (orange) - now includes all technical components
+    class COPILOT_KEY,B,C,E,G,H,I,J,K,L,M,N,O,Q copilotStyle
+    
+    class N1,N2,N3,N4,N5,N6,N7,N8,N9,N10,N11,N12,N13 numberStyle
+    class TITLE_ADO,TITLE_LOCAL,TITLE_GITHUB titleStyle
+    class LEGEND legendStyle
+    
     class N1,N2,N3,N4,N5,N6,N7,N8,N9,N10,N11 numberStyle
-    class TITLE_ADO,TITLE_LOCAL,TITLE_GITHUB,TITLE_AI titleStyle
+    class TITLE_ADO,TITLE_LOCAL,TITLE_GITHUB titleStyle
+    class LEGEND legendStyle
 ```
 
 #### Process Flow Steps
@@ -187,11 +197,13 @@ graph TD
 6. **Ready Status**: Mark ticket as Ready for development after approval
 7. **Spec Attachments**: Attach finalized specification files to ADO ticket
 
-**Sprint Execution Phase (Steps 8-11):**
+**Sprint Execution Phase (Steps 8-13):**
 8. **Implementation Spec**: Generate detailed technical specification for developers
 9. **Test Data Updates**: Reconcile existing unit tests with specification changes
 10. **Code Generation**: Generate implementation code aligned with specifications
-11. **PR Creation**: Create pull request with ADO work item linking for review
+11. **Developer Review**: Developer validates and approves the generated code
+12. **PR Creation**: Create pull request with ADO work item linking for review
+13. **Developer Review**: Developer reviews the pull request and approves for merge
 
 ### Integration Points
 - **Azure DevOps**: Primary work item management, specification storage, and attachment repository
