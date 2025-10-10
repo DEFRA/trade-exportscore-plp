@@ -21,14 +21,17 @@ const mockDatabaseService = {
   },
 };
 
-jest.mock("../../../app/services/database-service", () => mockDatabaseService);
-jest.mock("../../../app/utilities/logger", () => ({
+jest.mock("../../app/services/database-service", () => mockDatabaseService);
+jest.mock("../../app/utilities/logger", () => ({
   logError: jest.fn(),
   logInfo: jest.fn(),
 }));
 
-const config = require("../../../app/config");
-const { processExcelFile } = require("../../../app/utilities/file-processor");
+const config = require("../../app/config");
+const {
+  processExcelFile,
+  processCsvFile,
+} = require("../../app/utilities/file-processor");
 
 // Only run this long-running QA test when RUN_QA_REGRESSION is explicitly set ("1" or "true").
 // By default the suite will be skipped to keep normal test runs fast.
@@ -37,8 +40,31 @@ const RUN_QA =
   String(process.env.RUN_QA_REGRESSION).toLowerCase() === "true";
 const maybeDescribe = RUN_QA ? describe : describe.skip;
 
+const isExcelFile = (fileName) => {
+  const lower = fileName.toLowerCase();
+  return lower.endsWith(".xlsx") || lower.endsWith(".xls");
+};
+
+const isCsvFile = (fileName) => {
+  return fileName.toLowerCase().endsWith(".csv");
+};
+
+const isFileToInclude = (fileName) => {
+  return isExcelFile(fileName) || isCsvFile(fileName);
+};
+
+const processFile = async (filePath) => {
+  if (isExcelFile(filePath)) {
+    return processExcelFile(filePath);
+  } else if (isCsvFile(filePath)) {
+    return processCsvFile(filePath);
+  } else {
+    return {};
+  }
+};
+
 // Recursive function to find all Excel files
-const findExcelFiles = (dir, baseDir = dir, rootFolderName = "") => {
+const findFiles = (dir, baseDir = dir, rootFolderName = "") => {
   const files = [];
   const items = fs.readdirSync(dir);
 
@@ -48,8 +74,8 @@ const findExcelFiles = (dir, baseDir = dir, rootFolderName = "") => {
 
     if (stat.isDirectory()) {
       // Recursively scan subdirectories
-      files.push(...findExcelFiles(fullPath, baseDir, rootFolderName));
-    } else if (item.endsWith(".xlsx")) {
+      files.push(...findFiles(fullPath, baseDir, rootFolderName));
+    } else if (isFileToInclude(item)) {
       // Extract folder structure relative to base directory
       const relativePath = path.relative(baseDir, fullPath);
       const pathParts = relativePath.split(path.sep);
@@ -88,7 +114,7 @@ const findExcelFiles = (dir, baseDir = dir, rootFolderName = "") => {
   return files;
 };
 
-maybeDescribe("Excel Process Non-AI", () => {
+describe("Excel Process Non-AI", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockDatabaseService.models.packingList.create.mockResolvedValue({ id: 1 });
@@ -120,15 +146,15 @@ maybeDescribe("Excel Process Non-AI", () => {
     }
 
     // Find all Excel files recursively
-    const excelFiles = findExcelFiles(
+    const filesToProcess = findFiles(
       packingListDir,
       packingListDir,
       rootFolderName,
     );
 
-    // Check if no Excel files found
-    if (excelFiles.length === 0) {
-      console.log(`📂 No Excel files found in: ${packingListDir}`);
+    // Check if no  files found
+    if (filesToProcess.length === 0) {
+      console.log(`📂 No files found in: ${packingListDir}`);
       console.log(`✅ Test passed (no files to process)`);
       expect(true).toBe(true);
       return;
@@ -140,9 +166,10 @@ maybeDescribe("Excel Process Non-AI", () => {
     ];
     let idCounter = 1;
 
-    for (const fileInfo of excelFiles) {
+    for (const fileInfo of filesToProcess) {
       try {
-        const response = await processExcelFile(fileInfo.fullPath);
+        const response = await processFile(fileInfo.fullPath);
+
         responses.push(response);
 
         // Extract expected result from filename
@@ -197,7 +224,7 @@ maybeDescribe("Excel Process Non-AI", () => {
       .replace(/[-:.]/g, "")
       .replace("T", "")
       .substring(0, 14);
-    const csvFilename = `${timestamp}-excel-test.csv`;
+    const csvFilename = `${timestamp}-test-results.csv`;
     const testOutputDir = path.join(process.cwd(), "test-output");
 
     // Ensure test-output directory exists
