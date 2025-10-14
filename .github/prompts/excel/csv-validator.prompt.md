@@ -30,6 +30,7 @@ Analyze a CSV file to identify and validate specific error conditions mentioned 
 - `${input:csvFilePath:Enter CSV file path}` - Path to the CSV file to validate
 - `${input:failureReason:Enter reason for validation failure}` - **SPECIFIC error conditions to validate and report on**. Only errors mentioned in this parameter should be included in the final report.
 - `${input:parserModel:Enter parser model (e.g., coop-1, tesco-1, asda-1)}` - The specific parser model string to use for header detection and validation rules
+- `${input:rowOffset:Enter row offset (optional, default: 0)}` - **Row number offset** to map failure reason row numbers to actual CSV file row numbers. Positive values (e.g., +2) mean CSV rows are higher than reported rows. Negative values (e.g., -2) mean CSV rows are lower than reported rows. Example: offset +2 maps reported row 58 to CSV row 60.
 
 ## Validation Rules Framework
 
@@ -137,7 +138,11 @@ For each data row mentioned in the failure reason:
 - Parse the failure reason to identify specific rows and error types mentioned
 - Handle both explicit row references and "in addition to X other locations" format
 - For "in addition to X other locations (rows A, B, C)" format: extract and validate all listed row numbers
-- Check only the cells and conditions specified in the failure reason parameter
+- Apply row offset calculation to map failure reason row numbers to actual CSV file row numbers:
+  * If offset is positive (e.g., +2): CSV row = failure reason row + offset
+  * If offset is negative (e.g., -2): CSV row = failure reason row + offset  
+  * If no offset provided: CSV row = failure reason row (default behavior)
+- Check only the cells and conditions specified in the failure reason parameter at the calculated CSV row positions
 - Confirm the exact error conditions described in the failure reason
 - For "prohibited item" errors: Cross-reference country_of_origin, commodity_code, and type_of_treatment against data-prohibited-items.json
 - Verify exact matches in the prohibited items database before confirming prohibited status
@@ -184,7 +189,7 @@ For each data row mentioned in the failure reason:
 
 Execute this systematic approach:
 
-1. **Initialize**: Validate input file path, parser model string, and accessibility
+1. **Initialize**: Validate input file path, parser model string, row offset, and accessibility
 2. **Map Model**: Use parser-model.js to convert parser model string to constant key
 3. **Load Model**: Read model-headers.js and extract the specific parser model configuration
 4. **Validate Model**: Ensure the mapped parser model exists and has valid regex patterns
@@ -195,7 +200,8 @@ Execute this systematic approach:
 9. **Parse Failure Reason**: Extract specific rows, columns, and error types mentioned in the failure reason parameter
    - Handle explicit row numbers (e.g., "row 54", "row 408")
    - Parse "in addition to X other locations (rows A, B, C)" format to extract all additional row numbers
-   - Create comprehensive list of all rows that need validation
+   - Apply row offset calculation to determine actual CSV file row positions
+   - Create comprehensive list of all rows that need validation with correct CSV row numbers
 10. **Target Validation**: Focus validation only on the specific error conditions mentioned in the failure reason
 11. **Collect Specified Errors**: Gather only the errors explicitly mentioned in the failure reason with specific row/column references
 12. **Generate Report**: Create concise validation report focusing only on the specified error details from failure reason
@@ -220,7 +226,8 @@ Row [Y] Issues:
 ```
 
 **Format Requirements:**
-- Start each row section with "Row [number] Issues:"
+- Start each row section with "Row [number] Issues:" 
+- Use the reported row numbers from the failure reason (before offset calculation)
 - List each error as a bullet point with clear, specific description
 - Include column index/name and human-readable field type in parentheses
 - ALWAYS show the actual cell value in single quotes (e.g., 'empty/blank', '12345')
@@ -274,6 +281,11 @@ Use these patterns for consistent error reporting:
 - "Product code is invalid in row 54 and row 408"
 - "Prohibited item identified on the packing list in row 161, row 168, row 169 in addition to 2 other locations"
 - "Invalid Country of Origin ISO Code in row 85, row 89, row 92 in addition to 8 other locations (rows 95, 98, 101, 104, 107, 110, 113, 116)"
+
+✅ Row Offset Examples:
+- With offset +2: reported row 58 maps to CSV row 60
+- With offset -2: reported row 58 maps to CSV row 56  
+- With offset 0 (default): reported row 58 maps to CSV row 58
 
 ❌ Avoid Vague Descriptions:
 - "Error in column 15"
@@ -356,7 +368,7 @@ CSV uses numeric indices (0-based or 1-based) and/or header names:
 - Prefer using 1-based indexing for user-friendly reporting
 ```
 
-Begin by requesting the CSV file path, parser model, and validation context, then execute the model-based validation analysis and generate a concise, row-focused error report using PLP's existing parser model definitions.
+Begin by requesting the CSV file path, parser model, row offset (optional), and validation context, then execute the model-based validation analysis and generate a concise, row-focused error report using PLP's existing parser model definitions.
 
 ## CRITICAL REMINDER
 
@@ -366,10 +378,11 @@ This prompt MUST ensure that:
 
 - **ONLY report errors explicitly mentioned in the failure reason parameter**
 - Parser model parameter is used to load exact header patterns from model-headers.js
+- Row offset parameter is applied correctly to map failure reason row numbers to actual CSV file row numbers
 - Column detection uses the model's specific regex patterns for 100% accuracy
 - Output is minimal and focused only on specified error details from failure reason
 - Each row's errors are listed clearly with column references and descriptions, but ONLY for specified errors
 - No additional comprehensive validation or extra errors beyond those mentioned in failure reason
-- Report format matches exactly: "Row [X] Issues:" followed by bullet-pointed errors from failure reason only
+- Report format matches exactly: "Row [X] Issues (CSV Row [X+offset]):" followed by bullet-pointed errors from failure reason only
 - Error messages reference the actual model configuration and expected patterns for specified errors only
 - **DO NOT perform full validation audit - only validate the specific conditions mentioned in failure reason**
