@@ -2,6 +2,21 @@ const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/asda/model4");
 const parserModel = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/asda/model4");
+// mock deprecated to false
+jest.mock("../../../../../app/services/model-headers-csv", () => {
+  const originalModule = jest.requireActual(
+    "../../../../../app/services/model-headers-csv",
+  );
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    ASDA4: {
+      ...originalModule.ASDA4,
+      deprecated: false,
+    },
+  };
+});
 
 const filename = "packinglist.csv";
 
