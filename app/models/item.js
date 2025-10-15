@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = function defineItemModel(sequelize, DataTypes) {
   const item = sequelize.define(
     "item",
     {
