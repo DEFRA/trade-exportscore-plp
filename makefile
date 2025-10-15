@@ -14,4 +14,4 @@ prettier:
 tests:
 	scripts/test
 qa-test:
-	RUN_QA_REGRESSION=1 npx jest --runTestsByPath test/unit/routes/excelprocess-non-ai.test.js --runInBand
+	RUN_QA_REGRESSION=1 npx jest --runTestsByPath test/regression/process-non-ai.test.js --runInBand

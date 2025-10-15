@@ -1,5 +1,6 @@
 const headers = {
   ASDA4: {
+    deprecated: true,
     establishmentNumber: {
       regex: /^RMS-GB-000015-\d{3}$/i,
     },
