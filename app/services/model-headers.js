@@ -456,6 +456,21 @@ const headers = {
       regex: /^RMS-GB-000174-\d{3}$/i,
     },
   },
+  WARRENS2: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000174-\d{3}$/i,
+    },
+    regex: {
+      description: descriptionOfGoodsRegex,
+      commodity_code: commodityCodeRegex,
+      number_of_packages: noOfPackagesRegex,
+      total_net_weight_kg: /Total Net Weight/i,
+      nature_of_products: /\[Nature Of Product\]/i,
+      type_of_treatment: /Type of Treatment/i,
+    },
+    country_of_origin: /Country of Origin/i,
+    nirms: /NIRMS \/ NON NIRMS/i,
+  },
 };
 
 module.exports = headers;

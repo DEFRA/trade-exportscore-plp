@@ -27,6 +27,7 @@ const ParserModel = {
   NUTRICIA1: "nutricia-1",
   NUTRICIA2: "nutricia-2",
   WARRENS1: "warrens-1",
+  WARRENS2: "warrens-2",
   ICELAND1: "iceland-1",
   MANDS1: "mands-1",
   BOOKER1: "booker-1",
