@@ -73,7 +73,7 @@ function getYsForRows(pageContent, model) {
       headers[model].totals.test(item.str),
     ); // find the position of the totals row
     const totalsY = totals.reduce(
-      (max, obj) => (obj.y > max ? obj.y : max),
+      (max, obj) => Math.max(obj.y, max),
       totals[0]?.y,
     ); // take the largest y
     const y = findSmaller(pageNumberY, totalsY);
