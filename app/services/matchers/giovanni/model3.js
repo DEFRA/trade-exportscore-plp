@@ -2,7 +2,7 @@ const logger = require("../../../utilities/logger");
 const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const pdfHelper = require("../../../utilities/pdf-helper");
 

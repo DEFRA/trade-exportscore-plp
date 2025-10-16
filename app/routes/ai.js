@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("node:fs");
 const { StatusCodes } = require("http-status-codes");
 const config = require("../config");
 const { findParser } = require("../services/parser-service");

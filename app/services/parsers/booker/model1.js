@@ -3,7 +3,7 @@ const parserModel = require("../../parser-model");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapPdfNonAiParser } = require("../../../services/parser-map");
 const {
@@ -65,15 +65,15 @@ async function parse(packingList) {
 function getYsForRows(pageContent, model) {
   try {
     const headerY = headers[model].maxHeadersY;
-    const firstY = pageContent.filter((item) => item.y > headerY)[0].y;
-    const pageNumberY = pageContent.filter((item) =>
+    const firstY = pageContent.find((item) => item.y > headerY).y;
+    const pageNumberY = pageContent.find((item) =>
       /Page \d of \d*/.test(item.str),
-    )[0]?.y; // find the position of the 'Page X of Y'
+    )?.y; // find the position of the 'Page X of Y'
     const totals = pageContent.filter((item) =>
       headers[model].totals.test(item.str),
     ); // find the position of the totals row
     const totalsY = totals.reduce(
-      (max, obj) => (obj.y > max ? obj.y : max),
+      (max, obj) => Math.max(obj.y, max),
       totals[0]?.y,
     ); // take the largest y
     const y = findSmaller(pageNumberY, totalsY);

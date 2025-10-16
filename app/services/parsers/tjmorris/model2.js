@@ -3,7 +3,7 @@ const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const { rowFinder } = require("../../../utilities/row-finder");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { matchesHeader } = require("../../matches-header");
@@ -21,12 +21,12 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
-    for (const sheet of sheets) {
-      const headerTitles = Object.values(headers.TJMORRIS2.regex);
-      const headerCallback = function (x) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      };
+    const headerTitles = Object.values(headers.TJMORRIS2.regex);
+    const headerCallback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
 
+    for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
         packingListJson[sheet],

@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const getDispatch = require("../../../app/routes/get-dispatch-location");
 const mockResponse = { response: 200, code: 200 };
 

@@ -4,7 +4,7 @@ const { mapPdfParser } = require("../../parser-map");
 const logger = require("../../../utilities/logger");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const {
   extractPdf,
