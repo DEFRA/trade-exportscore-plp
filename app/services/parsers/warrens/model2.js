@@ -46,7 +46,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
         );
       }
     }
-    
+
     return combineParser.combine(
       establishmentNumber,
       packingListContents,

@@ -27,7 +27,7 @@ function matchesModel(packingList, filename, regexExpression) {
 
       // Check for header values
       result = matchesHeader(
-        Object.values(headers.FOWLERWELCH1.regex),
+        Object.values(headers.WARRENS2.regex),
         packingList[sheet],
       );
       if (result === matcherResult.WRONG_HEADER) {
@@ -38,7 +38,7 @@ function matchesModel(packingList, filename, regexExpression) {
     logger.logInfo(
       filenameForLogging,
       "matches()",
-      `Packing list matches fowlerwelch Model 1 with filename: ${filename}`,
+      `Packing list matches Warrens 2 with filename: ${filename}`,
     );
 
     return result; // Return the last checked result if no issues were found
