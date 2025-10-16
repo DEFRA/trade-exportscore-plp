@@ -7,7 +7,7 @@ const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function parse(packingListJson) {
@@ -45,14 +45,14 @@ function parse(packingListJson) {
         sheet,
       );
 
-      const footerValues = [
+      const footerValues = new Set([
         "Total Quantity of items:",
         "Gross Mass in Kgs:",
         "Total Value in GBP:",
-      ];
+      ]);
       packingListContents = packingListContents.concat(
         packingListContentsTemp.filter(
-          (row) => !footerValues.includes(row.description),
+          (row) => !footerValues.has(row.description),
         ),
       );
     }

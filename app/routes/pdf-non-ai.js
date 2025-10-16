@@ -1,6 +1,6 @@
 const config = require("../config");
 const { findParser } = require("../services/parser-service");
-const fs = require("fs");
+const fs = require("node:fs");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("../utilities/logger");
 // Uncomment to see pdf elements positions

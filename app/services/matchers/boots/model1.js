@@ -3,7 +3,7 @@ const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function matches(packingList, filename) {

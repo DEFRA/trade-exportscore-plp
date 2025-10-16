@@ -3,7 +3,7 @@ const { convertCsvToJson } = require("../utilities/csv-utility");
 const { BlobClient } = require("@azure/storage-blob");
 const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { isExcel, isCsv } = require("../utilities/file-extension");
 

@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const upsertIdcoms = require("../../../app/routes/upsert-idcoms");
 const mockResponse = { response: 200, code: 200 };
 

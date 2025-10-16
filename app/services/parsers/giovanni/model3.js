@@ -3,7 +3,7 @@ const parserModel = require("../../parser-model");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapPdfNonAiParser } = require("../../../services/parser-map");
 const {

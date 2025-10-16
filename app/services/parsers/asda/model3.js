@@ -7,7 +7,7 @@ const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function parse(packingListJson) {
@@ -22,17 +22,17 @@ function parse(packingListJson) {
       packingListJson[sheets[0]],
     );
 
+    const headerTitles = Object.values(headers.ASDA3.regex);
+    const headerCallback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
+
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
         packingListJson[sheet],
         establishmentNumbers,
       );
-
-      const headerTitles = Object.values(headers.ASDA3.regex);
-      const headerCallback = function (x) {
-        return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
-      };
 
       const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
       const dataRow = headerRow + 1;

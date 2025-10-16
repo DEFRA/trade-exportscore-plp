@@ -8,7 +8,7 @@ const MatcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const { isTotalRow } = require("./utilities");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 function parse(packingListJson) {
@@ -46,7 +46,7 @@ function parse(packingListJson) {
 
       if (
         packingListContentsTemp.length > 0 &&
-        isTotalRow(packingListContentsTemp[packingListContentsTemp.length - 1])
+        isTotalRow(packingListContentsTemp.at(-1))
       ) {
         packingListContentsTemp = packingListContentsTemp.slice(0, -1);
       }

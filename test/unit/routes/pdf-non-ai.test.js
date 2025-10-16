@@ -2,7 +2,7 @@ const ParserModel = require("../../../app/services/parser-model");
 const pdfNonAi = require("../../../app/routes/pdf-non-ai");
 const { findParser } = require("../../../app/services/parser-service");
 const logger = require("../../../app/utilities/logger");
-const fs = require("fs");
+const fs = require("node:fs");
 
 // Mocking the necessary modules
 jest.mock("../../../app/services/parser-service"); // Mock the entire parser-service module

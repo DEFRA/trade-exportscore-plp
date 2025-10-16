@@ -1,7 +1,7 @@
 const regex = require("../../../utilities/regex");
 const { extractPdf } = require("../../../utilities/pdf-helper");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const headersPdf = require("../../model-headers-pdf");
 
