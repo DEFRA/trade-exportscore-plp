@@ -461,15 +461,15 @@ const headers = {
       regex: /^RMS-GB-000174-\d{3}$/i,
     },
   regex: {
-    description: /Description of goods/i,
+    description: descriptionOfGoodsRegex,
     commodity_code: /Commodity code/i,
-    number_of_packages: /No\.? of pkgs/i, // Matches "No. of pkgs"
-    total_net_weight_kg: /Item Net Weight/i, // Matches "Item Net Weight (kgs)"
+    number_of_packages: /No\.? of pkgs/i,
+    total_net_weight_kg: /Item Net Weight/i,
     nature_of_products: /Nature of Product/i,
     type_of_treatment: /Type of Treatment/i,
     nirms: /NIRMS \/ Non NIRMS/i,
   },
-    invalidSheets: ["GC REFERENCE"],
+    invalidSheets: ["GC REFERENCE", "GC REF"],
     country_of_origin: /Country of Origin/i,
     nirms: /NIRMS \/ NON NIRMS/i,
   },
