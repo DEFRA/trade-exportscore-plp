@@ -36,11 +36,17 @@ function rmsExceptions(y) {
   );
 }
 
+function rmsCsvExceptions(y) {
+  const icelandRegex = /RMS-GB-000040-\d{3}$/i;
+
+  return icelandRegex.test(y);
+}
+
 function noRemosMatchCsv(sanitisedPackingList, _filename) {
   const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
   const isRemosPresent = sanitisedPackingList.some((x) => {
     return Object.values(x).some((y) => {
-      return remosRegex.test(y);
+      return remosRegex.test(y) || rmsCsvExceptions(y);
     });
   });
   return isRemosPresent;
