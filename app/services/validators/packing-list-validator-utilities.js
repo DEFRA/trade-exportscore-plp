@@ -19,7 +19,8 @@ function hasInvalidProductCode(item) {
     return false;
   }
   return (
-    item.commodity_code.toString().replace(/\s+/g, "").match(/^\d*$/) === null
+    item.commodity_code.toString().replaceAll(/\s+/g, "").match(/^\d*$/) ===
+    null
   );
 }
 

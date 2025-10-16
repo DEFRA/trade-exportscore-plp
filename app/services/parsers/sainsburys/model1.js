@@ -22,7 +22,7 @@ function parse(packingListJson) {
           headers.SAINSBURYS1.establishmentNumber.regex,
           packingListJson[sheets[0]],
         )
-        ?.replace(/\u200B/g, "") ?? null;
+        ?.replaceAll(/\u200B/g, "") ?? null;
 
     const headerTitles = Object.values(headers.SAINSBURYS1.regex);
     const headerCallback = function (x) {
@@ -69,7 +69,7 @@ function appendDistinctEstablishmentNumbers(establishmentNumbers, page) {
   );
 
   establishmentNumbers = establishmentNumbers.map((rms) =>
-    rms.replace(/\u200B/g, ""),
+    rms.replaceAll(/\u200B/g, ""),
   );
   return [...new Set(establishmentNumbers)];
 }
