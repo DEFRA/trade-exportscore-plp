@@ -20,7 +20,7 @@ async function processExcelFile(filename, dispatchLocation = null) {
     );
   }
 
-  return await processData(result, filename, dispatchLocation);
+  return processData(result, filename, dispatchLocation);
 }
 
 async function processCsvFile(filename, dispatchLocation = null) {
@@ -35,7 +35,7 @@ async function processCsvFile(filename, dispatchLocation = null) {
     );
   }
 
-  return await processData(data, filename, dispatchLocation);
+  return processData(data, filename, dispatchLocation);
 }
 
 async function processData(data, filename, dispatchLocation) {

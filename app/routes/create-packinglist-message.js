@@ -4,7 +4,7 @@ const config = require("../config");
 const { convertExcelToJson } = require("../utilities/excel-utility");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("./../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 module.exports = {

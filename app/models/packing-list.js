@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = function definePackingListModel(sequelize, DataTypes) {
   const PackingList = sequelize.define(
     "packingList",
     {

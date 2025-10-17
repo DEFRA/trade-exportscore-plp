@@ -2,7 +2,7 @@ const config = require("../config");
 const processPlpMessage = require("./process-plp-message");
 const { MessageReceiver } = require("adp-messaging");
 const logger = require("./../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 let plpReceiver;

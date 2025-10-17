@@ -1,4 +1,4 @@
-const crypto = require("crypto");
+const crypto = require("node:crypto");
 
 function getRandomInt(min = 1, max = 10000000) {
   const range = max - min + 1;

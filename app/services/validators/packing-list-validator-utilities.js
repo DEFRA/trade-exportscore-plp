@@ -19,7 +19,8 @@ function hasInvalidProductCode(item) {
     return false;
   }
   return (
-    item.commodity_code.toString().replace(/\s+/g, "").match(/^\d*$/) === null
+    item.commodity_code.toString().replaceAll(/\s+/g, "").match(/^\d*$/) ===
+    null
   );
 }
 
@@ -38,7 +39,7 @@ function wrongTypeForPackages(item) {
   }
 
   const numberOfPackages = Number(item.number_of_packages);
-  return isNaN(numberOfPackages) || numberOfPackages < 0;
+  return Number.isNaN(numberOfPackages) || numberOfPackages < 0;
 }
 
 function hasMissingNetWeight(item) {
@@ -52,7 +53,7 @@ function wrongTypeNetWeight(item) {
   }
 
   const totalNetWeightKg = Number(item.total_net_weight_kg);
-  return isNaN(totalNetWeightKg) || totalNetWeightKg < 0;
+  return Number.isNaN(totalNetWeightKg) || totalNetWeightKg < 0;
 }
 
 function removeEmptyItems(packingListItems) {

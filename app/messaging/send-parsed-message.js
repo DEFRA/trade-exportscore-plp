@@ -4,7 +4,7 @@ const createMessage = require("./create-message");
 const { ServiceBusClient } = require("@azure/service-bus");
 const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("./../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function sendParsedAdp(parsedResult, applicationId) {
