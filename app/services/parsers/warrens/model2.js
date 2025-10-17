@@ -27,9 +27,13 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       (s) => !headers.WARRENS2.invalidSheets.includes(s),
     );
 
-    const establishmentNumber = firstValidSheet
-      ? regex.findMatch(establishmentNumberRegex, packingListJson[firstValidSheet])
-      : regex.findMatch(establishmentNumberRegex, packingListJson[sheets[0]]);
+    let establishmentNumber = null;
+    if (firstValidSheet) {
+      establishmentNumber = regex.findMatch(
+        establishmentNumberRegex,
+        packingListJson[firstValidSheet],
+      );
+    }
       
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
