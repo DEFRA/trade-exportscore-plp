@@ -2,7 +2,7 @@ const jsonFile = require("../utilities/json-file");
 const fileExtension = require("../utilities/file-extension");
 const parserFactory = require("./parsers/parser-factory");
 const logger = require("../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const matcherResult = require("./matcher-result");
 

@@ -60,6 +60,8 @@ const warrensMatcher2 = require("./matchers/warrens/model2");
 const warrensParser2 = require("./parsers/warrens/model2");
 const icelandMatcher = require("./matchers/iceland/model1");
 const icelandParser = require("./parsers/iceland/model1");
+const icelandMatcher2 = require("./matchers/iceland/model2");
+const icelandParser2 = require("./parsers/iceland/model2");
 const mandsMatcher = require("./matchers/mands/model1");
 const mandsParser = require("./parsers/mands/model1");
 const bookerMatcher = require("./matchers/booker/model1");
@@ -300,6 +302,12 @@ const parsersCsv = {
     matches: (packingList, filename) =>
       asdaMatcher4.matches(packingList, filename),
     parse: (packingList, filename) => asdaParser4.parse(packingList, filename),
+  },
+  ICELAND2: {
+    matches: (packingList, filename) =>
+      icelandMatcher2.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      icelandParser2.parse(packingList, filename),
   },
 };
 
