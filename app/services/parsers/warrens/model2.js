@@ -22,11 +22,15 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
     const callback = function (x) {
       return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
     };
-    const establishmentNumber = regex.findMatch(
-      establishmentNumberRegex,
-      packingListJson[sheets[0]],
+
+    const firstValidSheet = sheets.find(
+      (s) => !headers.WARRENS2.invalidSheets.includes(s),
     );
 
+    const establishmentNumber = firstValidSheet
+      ? regex.findMatch(establishmentNumberRegex, packingListJson[firstValidSheet])
+      : regex.findMatch(establishmentNumberRegex, packingListJson[sheets[0]]);
+      
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
