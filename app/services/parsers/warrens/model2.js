@@ -55,6 +55,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       establishmentNumbers,
       headers.WARRENS2,
     );
+    
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
