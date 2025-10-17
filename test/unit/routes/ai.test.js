@@ -3,7 +3,7 @@ const ai = require("../../../app/routes/ai");
 const { findParser } = require("../../../app/services/parser-service");
 const { createPackingList } = require("../../../app/packing-list/index");
 const logger = require("../../../app/utilities/logger");
-const fs = require("fs");
+const fs = require("node:fs");
 
 // Mocking the necessary modules
 jest.mock("../../../app/services/parser-service"); // Mock the entire parser-service module

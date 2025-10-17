@@ -2,10 +2,10 @@ const matcherResult = require("../services/matcher-result");
 
 function matches(filename, extension) {
   const fileExtension = filename.split(".").pop();
-  if (fileExtension.toLowerCase() !== extension.toLowerCase()) {
-    return matcherResult.WRONG_EXTENSION;
-  } else {
+  if (fileExtension.toLowerCase() === extension.toLowerCase()) {
     return matcherResult.CORRECT;
+  } else {
+    return matcherResult.WRONG_EXTENSION;
   }
 }
 

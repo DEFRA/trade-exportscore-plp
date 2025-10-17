@@ -3,7 +3,7 @@ const config = require("./config");
 const { sequelize } = require("./services/database-service");
 const messageService = require("./messaging");
 const logger = require("./utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 async function createServer() {

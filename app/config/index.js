@@ -1,5 +1,5 @@
 const joi = require("joi");
-const path = require("path");
+const path = require("node:path");
 const messageQueueConfig = require("./mq-config");
 const dbConfig = require("./database-config");
 const dynamicsConfig = require("./dynamics-config");
