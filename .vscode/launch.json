@@ -25,6 +25,18 @@
       },
       "outputCapture": "std",
       "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "name": "Debug App",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/app/index.js",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "runtimeArgs": ["--nolazy"],
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }
