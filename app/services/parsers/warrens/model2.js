@@ -34,7 +34,7 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
         packingListJson[firstValidSheet],
       );
     }
-      
+
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
