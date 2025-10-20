@@ -472,6 +472,7 @@ const headers = {
     invalidSheets: ["GC REFERENCE", "GC REF"],
     country_of_origin: /Country of Origin/i,
     nirms: /NIRMS \/ NON NIRMS/i,
+    validateCountryOfOrigin: true,
     findUnitInHeader: true,
   },
 };

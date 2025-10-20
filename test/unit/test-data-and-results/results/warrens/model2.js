@@ -16,6 +16,7 @@ module.exports = {
         total_net_weight_kg: "336",
         type_of_treatment: "Processed",
         total_net_weight_unit: "kgs",
+        country_of_origin: "GB",
       },
       {
         commodity_code: "0702000007",
@@ -25,6 +26,7 @@ module.exports = {
         total_net_weight_kg: "352",
         type_of_treatment: "Processed",
         total_net_weight_unit: "kgs",
+        country_of_origin: "GB",
       },
     ],
     registration_approval_number: "RMS-GB-000174-002",
@@ -38,7 +40,7 @@ module.exports = {
     items: [
       {
         commodity_code: "2005800099",
-        country_of_origin: "France",
+        country_of_origin: "GB",
         description: "Sweetcorn Express 8x2",
         nature_of_products: "Chilled",
         nirms: "NIRMS",
@@ -50,7 +52,7 @@ module.exports = {
       },
       {
         commodity_code: "2005800099",
-        country_of_origin: "France",
+        country_of_origin: "GB",
         description: "Sweetcorn Cobettes 24x4",
         nature_of_products: "Chilled",
         nirms: "NIRMS",
