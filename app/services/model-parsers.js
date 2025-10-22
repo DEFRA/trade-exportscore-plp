@@ -56,6 +56,8 @@ const tjMorrisMatcher2 = require("./matchers/tjmorris/model2");
 const tjMorrisParser2 = require("./parsers/tjmorris/model2");
 const warrensMatcher = require("./matchers/warrens/model1");
 const warrensParser = require("./parsers/warrens/model1");
+const warrensMatcher2 = require("./matchers/warrens/model2");
+const warrensParser2 = require("./parsers/warrens/model2");
 const icelandMatcher = require("./matchers/iceland/model1");
 const icelandParser = require("./parsers/iceland/model1");
 const icelandMatcher2 = require("./matchers/iceland/model2");
@@ -226,6 +228,12 @@ const parsersExcel = {
       warrensMatcher.matches(packingList, filename),
     parse: (packingList, filename) =>
       warrensParser.parse(packingList, filename),
+  },
+  WARRENS2: {
+    matches: (packingList, filename) =>
+      warrensMatcher2.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      warrensParser2.parse(packingList, filename),
   },
 };
 
