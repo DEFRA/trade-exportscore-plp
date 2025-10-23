@@ -467,7 +467,6 @@ const headers = {
       total_net_weight_kg: /Item Net Weight/i,
       nature_of_products: /Nature of Product/i,
       type_of_treatment: /Type of Treatment/i,
-      nirms: /NIRMS \/ Non NIRMS/i,
     },
     invalidSheets: ["GC REFERENCE", "GC REF"],
     country_of_origin: /Country of Origin/i,
