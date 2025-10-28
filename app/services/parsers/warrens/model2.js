@@ -45,13 +45,14 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       const headerRow = rowFinder(packingListJson[sheet], callback);
       const dataRow = headerRow + 1;
       if (!headers.WARRENS2.invalidSheets.includes(sheet)) {
-        packingListContents = mapParser(
+        const mappedRows = mapParser(
           packingListJson[sheet],
           headerRow,
           dataRow,
           headers.WARRENS2,
           sheet,
         );
+        packingListContents = packingListContents.concat(mappedRows);
       }
     }
 
