@@ -107,12 +107,15 @@ const headers = {
     },
     regex: {
       description: descriptionOfGoodsRegex,
-      type_of_treatment: /Treatment Type \(Chilled \/Ambient\)/i,
+      type_of_treatment: /Type of Treatment/i,
       number_of_packages: noOfPackagesRegex,
-      total_net_weight_kg: /Item Net Weight/i,
+      total_net_weight_kg: /Total Net Weight/i,
       commodity_code: commodityCodeRegex,
+      nature_of_products: /Nature of Product/i,
     },
-    country_of_origin: /Country of Origin/i,
+    country_of_origin: /ISO/i,
+    nirms: /NIRMS\/ NON NIRMS/i,
+    validateCountryOfOrigin: true,
     findUnitInHeader: true,
   },
   CDS1: {
