@@ -409,11 +409,16 @@ const headers = {
     },
     regex: {
       description: descriptionOfGoodsRegex,
-      commodity_code: commodityCodeRegex,
+      commodity_code: /Commodity code/i,
       number_of_packages: noOfPackagesRegex,
       total_net_weight_kg: /Total Net Weight/i,
+      nature_of_products: /Nature of Product \(Chilled \/Ambient\/ Frozen\)/i,
+      type_of_treatment: /Type of Treatment \(Processed\/ Unprocessed\/ Raw\)/i,
     },
     findUnitInHeader: true,
+    country_of_origin: /Country of Origin/i,
+    nirms: /NIRMS \/ Non NIRMS/i,
+    validateCountryOfOrigin: true,
   },
   TESCO3: {
     establishmentNumber: {
