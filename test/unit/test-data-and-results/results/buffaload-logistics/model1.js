@@ -14,6 +14,7 @@ module.exports = {
         number_of_packages: 6,
         total_net_weight_kg: 3.552,
         total_net_weight_unit: "kgs",
+        nirms: "NON-NIRMS",
       },
       {
         description:
@@ -24,6 +25,7 @@ module.exports = {
         number_of_packages: 5,
         total_net_weight_kg: 3.558,
         total_net_weight_unit: "kgs",
+        nirms: "NON-NIRMS",
       },
     ],
     business_checks: {
@@ -44,6 +46,7 @@ module.exports = {
         number_of_packages: 6,
         total_net_weight_kg: 3.552,
         total_net_weight_unit: "kgs",
+        nirms: "NON-NIRMS",
       },
       {
         description: "51283907 - PizzaExpress 9 Classic American *4",
@@ -53,6 +56,7 @@ module.exports = {
         number_of_packages: 1,
         total_net_weight_kg: 3.08,
         total_net_weight_unit: "kgs",
+        nirms: "NON-NIRMS",
       },
     ],
     business_checks: {
@@ -96,6 +100,7 @@ module.exports = {
         number_of_packages: 6,
         total_net_weight_kg: 3.552,
         total_net_weight_unit: "kgs",
+        nirms: "NON-NIRMS",
       },
       {
         description:
@@ -106,6 +111,7 @@ module.exports = {
         number_of_packages: 5,
         total_net_weight_kg: null,
         total_net_weight_unit: "kgs",
+        nirms: "NON-NIRMS",
       },
     ],
     registration_approval_number: "RMS-GB-000098-001",
@@ -123,6 +129,7 @@ module.exports = {
         number_of_packages: 6,
         total_net_weight_kg: 3.552,
         total_net_weight_unit: "kgs",
+        nirms: "NON-NIRMS",
       },
       {
         description:
@@ -133,6 +140,7 @@ module.exports = {
         number_of_packages: 5,
         total_net_weight_kg: 3.558,
         total_net_weight_unit: "kgs",
+        nirms: "NON-NIRMS",
       },
     ],
     business_checks: {
