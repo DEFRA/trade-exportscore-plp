@@ -15,7 +15,7 @@ function parse(packingListJson) {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
     let tempPackingListContents = [];
-    let estNumbers = [];
+    let establishmentNumbers = [];
 
     const establishmentNumber = regex.findMatch(
       headers.CDS2.establishmentNumber.regex,
@@ -28,10 +28,10 @@ function parse(packingListJson) {
     };
 
     for (const sheet of sheets) {
-      estNumbers = regex.findAllMatches(
+      establishmentNumbers = regex.findAllMatches(
         /\/ (RMS-GB-\d{6}-\d{3}) \//i,
         packingListJson[sheet],
-        estNumbers,
+        establishmentNumbers,
       );
 
       const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
@@ -51,7 +51,7 @@ function parse(packingListJson) {
       packingListContents,
       true,
       parserModel.CDS2,
-      estNumbers,
+      establishmentNumbers,
       headers.CDS2,
     );
   } catch (err) {
