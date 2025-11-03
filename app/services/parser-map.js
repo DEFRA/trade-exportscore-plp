@@ -47,9 +47,11 @@ function findHeaderCols(header, packingListHeader) {
     });
   }
   if (header.nature_of_products) {
-    headerCols.nature_of_products = Object.keys(packingListHeader).find((key) => {
-      return header.nature_of_products.test(packingListHeader[key]);
-    });
+    headerCols.nature_of_products = Object.keys(packingListHeader).find(
+      (key) => {
+        return header.nature_of_products.test(packingListHeader[key]);
+      },
+    );
   }
   return headerCols;
 }

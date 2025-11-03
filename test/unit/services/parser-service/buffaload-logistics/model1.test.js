@@ -123,7 +123,8 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.NIRMS_INVALID + ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
+      failureReasons.NIRMS_INVALID +
+        ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
     );
   });
 
@@ -137,11 +138,15 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
   });
 
   test("Null CoO Value multiple - validation errors", async () => {
-    const result = await parserService.findParser(model.nullCooMultipleModel, filename);
+    const result = await parserService.findParser(
+      model.nullCooMultipleModel,
+      filename,
+    );
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.COO_MISSING + ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
+      failureReasons.COO_MISSING +
+        ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
     );
   });
 
@@ -157,7 +162,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
     );
   });
 
-    test("Invalid CoO Value multiple - validation errors", async () => {
+  test("Invalid CoO Value multiple - validation errors", async () => {
     const result = await parserService.findParser(
       model.invalidCooMultipleModel,
       filename,
@@ -165,7 +170,8 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.COO_INVALID + ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
+      failureReasons.COO_INVALID +
+        ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
     );
   });
 
@@ -199,7 +205,8 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.PROHIBITED_ITEM + ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
+      failureReasons.PROHIBITED_ITEM +
+        ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
     );
   });
 
@@ -223,7 +230,8 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.PROHIBITED_ITEM + ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
+      failureReasons.PROHIBITED_ITEM +
+        ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
     );
   });
 
@@ -236,5 +244,4 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
     expect(result.business_checks.all_required_fields_present).toBe(true);
     expect(result.business_checks.failure_reasons).toBeNull();
   });
-
 });
