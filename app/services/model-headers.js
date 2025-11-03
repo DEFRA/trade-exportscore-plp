@@ -209,6 +209,11 @@ const headers = {
       regex: /^RMS-GB-000216-\d{3}$/i,
     },
   },
+  FOWLERWELCH2: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000216-\d{3}$/i,
+    },
+  },
   GIOVANNI1: {
     establishmentNumber: {
       regex: /^RMS-GB-000153(-\d{3})?$/i,
