@@ -112,7 +112,7 @@ describe("matchesCdsModel2_CoOValidation", () => {
     );
   });
 
-  test("matches CDS Model 2 file with invalid NIRMS values (more than 3 characters) and returns validation errors", async () => {
+  test("matches CDS Model 2 file with invalid NIRMS values (more than 3 issues) and returns validation errors", async () => {
     const result = await parserService.findParser(
       model.CoO_InvalidNirms_MoreThan3,
       filename,
@@ -122,7 +122,7 @@ describe("matchesCdsModel2_CoOValidation", () => {
     );
   });
 
-  test("matches CDS Model 2 file with invalid NIRMS values (less than 3 characters) and returns validation errors", async () => {
+  test("matches CDS Model 2 file with invalid NIRMS values (less than 3 issues) and returns validation errors", async () => {
     const result = await parserService.findParser(
       model.CoO_InvalidNirms_LessThan3,
       filename,
@@ -149,6 +149,26 @@ describe("matchesCdsModel2_CoOValidation", () => {
     );
     expect(result).toMatchObject(
       test_results.validTestResultOnProhibitedItemsList,
+    );
+  });
+
+  test("matches CDS Model 2 file with multiple prohibited items (more than 3) with no treatment type and returns validation errors", async () => {
+    const result = await parserService.findParser(
+      model.validModel_CoO__MultipleProhibitedItemsList_NoTreatmentType,
+      filename,
+    );
+    expect(result).toMatchObject(
+      test_results.validTestResultMultipleProhibitedItemsList_NoTreatmentType,
+    );
+  });
+
+  test("matches CDS Model 2 file with multiple prohibited items (more than 3) with treatment type and returns validation errors", async () => {
+    const result = await parserService.findParser(
+      model.validModel_CoO__MultipleProhibitedItemsListMoreThan3_TreatmentType,
+      filename,
+    );
+    expect(result).toMatchObject(
+      test_results.validTestResultMultipleProhibitedItemsListMoreThan3_TreatmentType,
     );
   });
 });
