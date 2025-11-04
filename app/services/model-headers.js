@@ -120,7 +120,7 @@ const headers = {
   },
   CDS2: {
     establishmentNumber: {
-      regex: /RMS-GB-000252(-\d{3})$/i,
+      regex: /RMS-GB-000252-\d{3}/i,
     },
     regex: {
       description: /^Product$/i,
