@@ -326,30 +326,7 @@ module.exports = {
     ],
   },
   emptyModel: {
-    Sheet2: [
-      {
-        A: "Item",
-        B: "Product code",
-        C: "Commodity code",
-        D: "Online Check",
-        E: "Meursing code",
-        F: "Description of goods",
-        G: "Country of Origin",
-        H: "No. of pkgs",
-        I: "Type of pkgs",
-        J: "Total Gross Weight",
-        K: "Total Net Weight",
-        L: "Total Line Value",
-        M: "Nature of Product",
-        N: "Type of Treatment",
-        O: "NIRMS",
-        P: "GB Establishment RMS Number",
-      },
-      {},
-      {
-        P: null,
-      },
-    ],
+    Sheet1: [],
   },
   multipleRms: {
     Sheet2: [
