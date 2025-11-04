@@ -67,7 +67,9 @@ describe("matchesCdsModel2", () => {
 
     expect(result).toMatchObject(test_results.emptyTestResultNoRemos);
   });
+});
 
+describe("matchesCdsModel2_CoOValidation", () => {
   test("handles Non-NIRMS items with null country of origin correctly", async () => {
     const result = await parserService.findParser(
       model.validNonNirmsWithNullCountryOfOrigin,
@@ -87,6 +89,66 @@ describe("matchesCdsModel2", () => {
 
     expect(result).toMatchObject(
       test_results.invalidTestResultNirmsMissingCountryOfOrigin,
+    );
+  });
+
+  test("matches valid CDS Model 2 file with Non-NIRMS multiple formats", async () => {
+    const result = await parserService.findParser(
+      model.validModel_CoO__NonNirmsMultipleFormats,
+      filename,
+    );
+    expect(result).toMatchObject(
+      test_results.validTestResultNonNirmsMultipleFormats,
+    );
+  });
+
+  test("matches valid CDS Model 2 file with NIRMS multiple formats", async () => {
+    const result = await parserService.findParser(
+      model.validModel_CoO__NirmsMultipleFormats,
+      filename,
+    );
+    expect(result).toMatchObject(
+      test_results.validTestResultNirmsMultipleFormats,
+    );
+  });
+
+  test("matches CDS Model 2 file with invalid NIRMS values (more than 3 characters) and returns validation errors", async () => {
+    const result = await parserService.findParser(
+      model.CoO_InvalidNirms_MoreThan3,
+      filename,
+    );
+    expect(result).toMatchObject(
+      test_results.invalidTestResultInvalidNirmsMoreThan3,
+    );
+  });
+
+  test("matches CDS Model 2 file with invalid NIRMS values (less than 3 characters) and returns validation errors", async () => {
+    const result = await parserService.findParser(
+      model.CoO_InvalidNirms_LessThan3,
+      filename,
+    );
+    expect(result).toMatchObject(
+      test_results.invalidTestResultInvalidNirmsLessThan3,
+    );
+  });
+
+  test("matches valid CDS Model 2 file with items not on prohibited list", async () => {
+    const result = await parserService.findParser(
+      model.validModel_CoO__NotOnProhibitedItemsList,
+      filename,
+    );
+    expect(result).toMatchObject(
+      test_results.validTestResultNotOnProhibitedItemsList,
+    );
+  });
+
+  test("matches CDS Model 2 file with items on prohibited list and returns validation errors", async () => {
+    const result = await parserService.findParser(
+      model.validModel_CoO__OnProhibitedItemsList,
+      filename,
+    );
+    expect(result).toMatchObject(
+      test_results.validTestResultOnProhibitedItemsList,
     );
   });
 });
