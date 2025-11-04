@@ -414,6 +414,11 @@ const headers = {
       total_net_weight_kg: /Total Net Weight/i,
     },
     findUnitInHeader: true,
+    nature_of_products: /Nature of Product \(Chilled \/Ambient\/ Frozen\)/i,
+    type_of_treatment: /Type of Treatment \(Processed\/ Unprocessed\/ Raw\)/i,
+    country_of_origin: /Country of Origin/i,
+    nirms: /NIRMS \/ Non NIRMS/i,
+    validateCountryOfOrigin: true,
   },
   TESCO3: {
     establishmentNumber: {
