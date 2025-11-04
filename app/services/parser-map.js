@@ -112,8 +112,8 @@ function mapParser(
 function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
   const netWeightUnit = header.findUnitInHeader
     ? (regex.findUnit(
-        packingListJson[headerRow][headerCols.total_net_weight_kg],
-      ) ??
+      packingListJson[headerRow][headerCols.total_net_weight_kg],
+    ) ??
       regex.findUnit(
         packingListJson[headerRow][headerCols.header_net_weight_unit],
       ))
@@ -198,13 +198,9 @@ function columnValue(value) {
 }
 
 function isNotEmpty(col, headerCols) {
-  return (
-    col[headerCols.description] ||
-    col[headerCols.nature_of_products] ||
-    col[headerCols.commodity_code] ||
-    col[headerCols.number_of_packages] ||
-    col[headerCols.total_net_weight_kg]
-  );
+  const firstCol = Object.values(headerCols)
+    .find((name) => col[name]);
+  return firstCol ? col[firstCol] : undefined;
 }
 
 function extractNetWeightUnit(packingListDocument, key) {
@@ -363,4 +359,5 @@ module.exports = {
   findHeaderCols,
   extractNetWeightUnit,
   getBlanketValueFromOffset,
+  isNotEmpty,
 };
