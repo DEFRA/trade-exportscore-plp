@@ -229,6 +229,11 @@ const headers = {
       regex: /^RMS-GB-000216-\d{3}$/i,
     },
   },
+  FOWLERWELCH2: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000216-\d{3}$/i,
+    },
+  },
   GIOVANNI1: {
     establishmentNumber: {
       regex: /^RMS-GB-000153(-\d{3})?$/i,
@@ -426,11 +431,16 @@ const headers = {
     },
     regex: {
       description: descriptionOfGoodsRegex,
-      commodity_code: commodityCodeRegex,
+      commodity_code: /Commodity code/i,
       number_of_packages: noOfPackagesRegex,
       total_net_weight_kg: /Total Net Weight/i,
     },
     findUnitInHeader: true,
+    nature_of_products: /Nature of Product/i,
+    type_of_treatment: /Type of Treatment/i,
+    country_of_origin: /Country of Origin/i,
+    nirms: /NIRMS \/ Non NIRMS/i,
+    validateCountryOfOrigin: true,
   },
   TESCO3: {
     establishmentNumber: {
