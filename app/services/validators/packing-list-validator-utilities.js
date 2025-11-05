@@ -144,6 +144,10 @@ function isInvalidCoO(countryOfOrigin) {
     return false;
   }
 
+  if(typeof countryOfOrigin !== "string") {
+    return true;
+  }
+
   const normalizedValue = countryOfOrigin.trim().toLowerCase();
 
   // Special case for "x"

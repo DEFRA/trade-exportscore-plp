@@ -148,6 +148,7 @@ describe("validator function tests", () => {
 
   test.each([
     ["NIRMS", "INVALID_ISO", true], // Nirms, invalid value
+    ["NIRMS", 0, true], // Nirms, invalid value
     ["NIRMS", "VALID_ISO PROHIBITED_ITEM_ISO", true], // Nirms, Multiple ISO codes not comma separated
     ["NIRMS", "VALID_ISO, INVALID_ISO", true], // Nirms, Multiple ISO codes comma separated, one invalid
     ["NON-NIRMS", null, false], // Non-NIRMS, missing value, should be handled by hasMissingCoO
