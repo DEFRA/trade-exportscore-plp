@@ -202,16 +202,38 @@ describe("getBlanketValueFromOffset", () => {
 
 describe("isNotEmpty", () => {
   test.each([
-    [{ "A": "Some value", "B": "Another value", "C": "Third value" }, { "Prop1": "A", "Prop2": "B" }, "Some value"],
-    [{ "A": "Some value", "C": "Third value" }, { "Prop1": "A", "Prop2": "B" }, "Some value"],
-    [{ "A": "Some value", "B": "Another value" }, { "Prop1": "A", "Prop2": "B" }, "Some value"],
-    [{ "B": "Another value", "C": "Third value" }, { "Prop1": "A", "Prop2": "B" }, "Another value"],
-    [{ "C": "Third value" }, { "Prop1": "A", "Prop2": "B" }, undefined],
-    [{ }, { "Prop1": "A", "Prop2": "B" }, undefined],
-    [{ "C": "Third value" }, { "Prop1": "A", "Prop2": "B", "Prop3": "C" }, "Third value"],
-  ])("Scenario 0: isNotEmpty(%p) should return %p", (inputRow, inputHeader, expected) => {
-    const result = isNotEmpty(inputRow, inputHeader);
-    expect(result).toBe(expected);
-  });
-
+    [
+      { A: "Some value", B: "Another value", C: "Third value" },
+      { Prop1: "A", Prop2: "B" },
+      "Some value",
+    ],
+    [
+      { A: "Some value", C: "Third value" },
+      { Prop1: "A", Prop2: "B" },
+      "Some value",
+    ],
+    [
+      { A: "Some value", B: "Another value" },
+      { Prop1: "A", Prop2: "B" },
+      "Some value",
+    ],
+    [
+      { B: "Another value", C: "Third value" },
+      { Prop1: "A", Prop2: "B" },
+      "Another value",
+    ],
+    [{ C: "Third value" }, { Prop1: "A", Prop2: "B" }, undefined],
+    [{}, { Prop1: "A", Prop2: "B" }, undefined],
+    [
+      { C: "Third value" },
+      { Prop1: "A", Prop2: "B", Prop3: "C" },
+      "Third value",
+    ],
+  ])(
+    "Scenario 0: isNotEmpty(%p) should return %p",
+    (inputRow, inputHeader, expected) => {
+      const result = isNotEmpty(inputRow, inputHeader);
+      expect(result).toBe(expected);
+    },
+  );
 });

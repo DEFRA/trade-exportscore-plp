@@ -112,8 +112,8 @@ function mapParser(
 function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
   const netWeightUnit = header.findUnitInHeader
     ? (regex.findUnit(
-      packingListJson[headerRow][headerCols.total_net_weight_kg],
-    ) ??
+        packingListJson[headerRow][headerCols.total_net_weight_kg],
+      ) ??
       regex.findUnit(
         packingListJson[headerRow][headerCols.header_net_weight_unit],
       ))
@@ -198,8 +198,7 @@ function columnValue(value) {
 }
 
 function isNotEmpty(col, headerCols) {
-  const firstCol = Object.values(headerCols)
-    .find((name) => col[name]);
+  const firstCol = Object.values(headerCols).find((name) => col[name]);
   return firstCol ? col[firstCol] : undefined;
 }
 
