@@ -1,26 +1,30 @@
 ---
 description: "Generate a suite of test data and Excel/CSV files for various test scenarios based on a user-provided happy path sample file."
 mode: "agent"
-tools: ['codebase', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'extensions', 'editFiles', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'excel']
+tools: ['codebase', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'extensions', 'editFiles', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks']
 ---
 
 # Generate Test Data from Sample File
 
 > **Required Inputs:**
 > - `happyPathFile`: Path to the user-provided happy path sample file (Excel/CSV)
-> - `exporterProperty`: The exporter property name from model-headers.js (e.g., 'BOOKER2', 'ASDA1')
+> - `exporterProperty`: The exporter property name from model-headers.js or model-headers-csv.js (e.g., 'BOOKER2', 'ASDA1', 'ASDA3')
+> - `modelConfigSource`: (Optional) Explicitly specify configuration source: 'excel' (uses model-headers.js) or 'csv' (uses model-headers-csv.js). If not specified, auto-detects based on file extension.
 > - `scenarioFolders`: List of scenario folders to generate (e.g., ['basic-tests', 'single-rms'])
 
 > **Note:** The list of tools available for this prompt is fixed in the header section above and does not need to be specified as an input.
 
-You are a senior QA automation engineer with 8+ years of experience in test data design and Excel automation for Node.js/TypeScript projects. You are proficient in using tools such as `mcp_excel_excel_read_sheet`, `mcp_excel_excel_write_to_sheet`, `mcp_excel_excel_describe_sheets`, `list_dir`, and `file_search` to efficiently generate and manipulate test data.
+You are a senior QA automation engineer with 8+ years of experience in test data design and Excel/CSV automation for Node.js/TypeScript projects. You are proficient in using tools for both Excel and CSV file manipulation to efficiently generate and manipulate test data.
 
 ## Column Mapping Manifest (Pre-Scenario Step)
 
 Before creating any test scenario folders or files, generate a single `manifest.json` file in the test-scenarios folder (e.g., `app/packing-lists/{exporter}/test-scenarios/manifest.json`) containing:
+- **Configuration source**: Which configuration file was used (model-headers.js or model-headers-csv.js) and the exporter property
+- **File format**: The input/output file format (CSV or Excel) - **all output files MUST match the input format**
+- **Column references**: CSV files use 1-based column indices (1, 2, 3...), Excel files use column letters (A, B, C...)
 - The detected column mappings (mandatory, optional, other) for the exporter and sample file
 - Header row and data row locations
-- Merged cell/column details
+- Merged cell/column details (Excel only)
 - Establishment number pattern (per sheet or per row)
 
 This manifest must be confirmed and can be reused for all scenario generation and seeding. Do not regenerate the manifest for each scenario folder.
@@ -91,9 +95,19 @@ When creating scenarios that are meant to produce an invalid unit-of-measure, do
 
 ### Three-Category Field Classification
 
-When analyzing the exporter configuration, the location depends on the file format:
-- **Excel files (.xls, .xlsx)**: Configuration is in `model-headers.js`
-- **CSV files (.csv)**: Configuration is in `model-headers-csv.js`
+When analyzing the exporter configuration, determine which configuration file to use:
+
+1. **If `modelConfigSource` parameter is explicitly provided:**
+   - `'excel'` → Use `model-headers.js` regardless of input file format
+   - `'csv'` → Use `model-headers-csv.js` regardless of input file format
+
+2. **If `modelConfigSource` is NOT provided (auto-detection):**
+   - Input file is `.csv` → Use `model-headers-csv.js` (if exporter exists there, else fallback to `model-headers.js`)
+   - Input file is `.xls` or `.xlsx` → Use `model-headers.js` (if exporter exists there, else fallback to `model-headers-csv.js`)
+
+**CRITICAL**: The input file format determines the output file format. All generated scenario files MUST match the input format:
+- **CSV input → CSV output** (all .csv files)
+- **Excel input → Excel output** (all .xlsx/.xls files)
 
 Columns are classified into three categories:
 
@@ -179,11 +193,17 @@ This confirmation step is required to prevent accidental data corruption and ens
 
 ## Instructions
 
-1. **File Organization**: The user must provide a valid sample file (happy path) in Excel format. This file will be used as the template for all scenario files and should remain in the main exporter directory as the source.
-2. **Template Preservation**: All scenario files must be created by copying the entire original happy path file to each scenario file, preserving formatting, merged cells, and styles. Never create blank files from scratch, and never update the template in-place.
-3. **MCP Excel Tool Limitations**: MCP Excel tools cannot create new Excel files from scratch. Always use PowerShell/CLI to copy the template file to each scenario filename before applying mutations with MCP Excel tools.
+1. **File Organization**: The user must provide a valid sample file (happy path) in Excel or CSV format. This file will be used as the template for all scenario files and should remain in the main exporter directory as the source. **All output files MUST match the input file format.**
+2. **Template Preservation**: All scenario files must be created by copying the entire original happy path file to each scenario file, preserving formatting (Excel) or structure (CSV). Never create blank files from scratch, and never update the template in-place.
+3. **File Manipulation Tools**:
+   - **Excel files**: MCP Excel tools cannot create new Excel files from scratch. Always use PowerShell/CLI to copy the template file to each scenario filename before applying mutations with MCP Excel tools.
+   - **CSV files**: Use PowerShell for copying files. Use PowerShell Import-Csv/Export-Csv or text manipulation for applying mutations.
 4. **Directory Structure**: Each scenario's instructions file is responsible for creating its own subdirectory (e.g., `test-scenarios/basic-tests/`, `test-scenarios/single-rms/`, etc.) only if its scenarios are being generated. The main instructions do not create subdirectories globally. All generated test files go in their respective subdirectories, while the original template remains in the parent directory.
-5. **Column Analysis for Merged Cells**: Excel templates often use merged cells and visual formatting that can create confusion about actual data column locations. To identify correct columns:
+5. **Column References**:
+   - **CSV files**: Use 1-based column indices (1, 2, 3, 4...) when documenting columns in manifest.json
+   - **Excel files**: Use Excel column letters (A, B, C, D...) when documenting columns in manifest.json
+6. **Column Analysis**:
+   - **For Excel files**: Excel templates often use merged cells and visual formatting that can create confusion about actual data column locations. To identify correct columns:
    - **MANDATORY**: Use `mcp_excel_excel_read_sheet` with `showStyle: true` to analyze the template structure before any mutations
    - **MANDATORY**: Read the header row AND multiple data rows to see where actual data resides (header row position varies by exporter)
    - **MANDATORY**: Identify merged cells by looking for duplicate/identical values in adjacent columns
@@ -232,11 +252,35 @@ This confirmation step is required to prevent accidental data corruption and ens
 
 ## Implementation Steps
 
-1. **Analyze Template**: Read the happy path file to identify establishment number, headers, and data structure
-2. **Match Exporter**: Use the appropriate configuration file (`model-headers.js` for Excel, `model-headers-csv.js` for CSV) to determine the correct exporter configuration
-4. **Create Directory**: Each scenario's instructions file is responsible for creating its own subdirectory (e.g., `basic-tests/`, `single-rms/`, `net-weight/`, `country-of-origin/`) only if its scenarios are being generated. The main instructions do not create subdirectories globally.
-5. **Copy Files**: Use PowerShell to copy the entire template file to all scenario filenames in their appropriate subdirectories. Do not update the template in-place; always copy the whole file for each scenario.
-7. **Generate Documentation**: Create manifest.json and README.md with comprehensive scenario descriptions, including conditional scenario explanations
+1. **Determine Configuration Source**: 
+   - Check `modelConfigSource` parameter
+   - If not provided, auto-detect from file extension
+   - Validate exporter exists in selected configuration
+
+2. **Analyze Template**: 
+   - Read the happy path file using appropriate tools (Excel tools for .xlsx/.xls, CSV reading for .csv)
+   - Identify establishment number, headers, and data structure
+   - Determine column reference format (1-based indices for CSV, letters for Excel)
+
+3. **Match Exporter**: 
+   - Use the determined configuration source to load exporter configuration
+   - Document which configuration file is being used in manifest.json
+
+4. **Create Directory**: Each scenario's instructions file is responsible for creating its own subdirectory only if its scenarios are being generated.
+
+5. **Copy Files**: 
+   - Use PowerShell to copy the entire template file to all scenario filenames
+   - **CRITICAL**: Preserve file extension - CSV to CSV, Excel to Excel
+
+6. **Apply Mutations**:
+   - **For CSV files**: Use PowerShell Import-Csv/Export-Csv or text manipulation for mutations
+   - **For Excel files**: Use MCP Excel tools as documented
+   - Reference columns using the appropriate format (indices for CSV, letters for Excel)
+
+7. **Generate Documentation**: Create manifest.json and README.md with:
+   - Configuration source used
+   - File format and column reference format
+   - Comprehensive scenario descriptions
 
 ## MANDATORY - Systematic Mutation Completion Tracking
 
@@ -336,11 +380,18 @@ These steps apply to all scenario-based test data generation:
    ```powershell
    New-Item -ItemType Directory -Path "app/packing-lists/{exporter}/test-scenarios/{scenario-folder}" -Force
    ```
-2. **Copy the happy path sample file** to each scenario filename in the relevant test-scenarios folder using PowerShell or CLI. Do not create blank files from scratch. Example:
+2. **Copy the happy path sample file** to each scenario filename in the relevant test-scenarios folder using PowerShell or CLI. Do not create blank files from scratch. **Preserve the file extension (.csv or .xlsx)**. Example:
    ```powershell
+   # For CSV files
+   Copy-Item "app/packing-lists/{exporter}/HappyPath.csv" "app/packing-lists/{exporter}/test-scenarios/{scenario-folder}/<scenario-file>.csv"
+   
+   # For Excel files
    Copy-Item "app/packing-lists/{exporter}/HappyPath.xlsx" "app/packing-lists/{exporter}/test-scenarios/{scenario-folder}/<scenario-file>.xlsx"
    ```
-3. **For each scenario,** use MCP Excel tools to apply the described mutations to the copied file. Never modify the original template file.
+3. **For each scenario,** apply the described mutations to the copied file:
+   - **CSV files**: Use PowerShell Import-Csv/Export-Csv for data mutations, text manipulation for header mutations
+   - **Excel files**: Use MCP Excel tools for mutations
+   - Never modify the original template file.
 4. **Unless otherwise stated,** modify only the relevant rows/fields as specified by the scenario.
 - **Mutation Scope Rules**: Follow these guidelines for all scenarios:
    - **Missing vs Incorrect Scenarios**:

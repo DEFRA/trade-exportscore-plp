@@ -156,4 +156,33 @@ module.exports = {
     registration_approval_number: "RMS-GB-000025-003",
     parserModel: parserModel.NISA2,
   },
+  missingMandatoryData: {
+    business_checks: {
+      all_required_fields_present: false,
+      failure_reasons: "Identifier is missing in sheet \"sheet\" row 5.\nProduct description is missing in sheet \"sheet\" row 5.\nNo of packages is missing in sheet \"sheet\" row 5.\nTotal net weight is missing in sheet \"sheet\" row 5.\n",
+    },
+    items: [
+      {
+        commodity_code: "2005995090",
+        description: "DAIRYLEA DUNKERS JUMBO PM80P",
+        nature_of_products: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+        number_of_packages: 2,
+        total_net_weight_kg: 2.5,
+        total_net_weight_unit: "KG",
+        type_of_treatment: null,
+      },
+      {
+        commodity_code: null,
+        description: null,
+        nature_of_products: null,
+        number_of_packages: null,
+        total_net_weight_kg: null,
+        total_net_weight_unit: "KG",
+        type_of_treatment: null,
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000025-003"],
+    registration_approval_number: "RMS-GB-000025-003",
+    parserModel: parserModel.NISA2,
+  }
 };
