@@ -304,7 +304,7 @@ function generateByRow(description, rows) {
       .map((row) => row.rowNumber)
       .join(
         ", ",
-      )} in addition to ${rows.length - maxItemsToShow} other rows.\n`;
+      )} in addition to ${rows.length - maxItemsToShow} other locations.\n`;
   }
 }
 

@@ -1067,7 +1067,7 @@ describe("generateFailureReasonFromRows", () => {
     [
       "description",
       [{ rowNumber: 1 }, { rowNumber: 2 }, { rowNumber: 3 }, { rowNumber: 4 }],
-      "description in rows 1, 2, 3 in addition to 1 other rows.\n",
+      "description in rows 1, 2, 3 in addition to 1 other locations.\n",
     ],
     [
       "description",
