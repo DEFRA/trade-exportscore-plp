@@ -71,6 +71,15 @@ describe("matchesNisaModel2", () => {
 
     expect(result).toMatchObject(test_results.missingKgunit);
   });
+
+  test("matches valid Nisa Model 2 file, calls parser and returns all_required_fields_present as false for missing mandatory data", async () => {
+    const result = await parserService.findParser(
+      model.missingMandatoryData,
+      filename,
+    );
+
+    expect(result).toMatchObject(test_results.missingMandatoryData);
+  });
 });
 
 describe("Nisa 2 CoO Validation Tests - Type 1", () => {

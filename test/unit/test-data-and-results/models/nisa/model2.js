@@ -1030,4 +1030,34 @@ module.exports = {
       },
     ],
   },
+  missingMandatoryData: {
+    sheet: [
+      {
+        A: "RMS_ESTABLISHMENT_NO",
+      },
+      {
+        A: "RMS-GB-000025-003",
+      },
+      {
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE",
+        I: "NET WEIGHT TOTAL KG",
+        J: "NIRMS",
+      },
+      {
+        C: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
+        E: "DAIRYLEA DUNKERS JUMBO PM80P",
+        F: "2005995090",
+        G: 2,
+        I: 2.5,
+        J: "Non-NIRMS",
+      },
+      {
+        J: "Non-NIRMS",
+      },
+    ],
+  }
 };
