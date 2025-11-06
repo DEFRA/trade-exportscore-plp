@@ -3,19 +3,17 @@ const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
-const path = require("path");
+const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapParser } = require("../../parser-map");
 const { rowFinder } = require("../../../utilities/row-finder");
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
-const validatorUtilities = require("../../validators/packing-list-validator-utilities");
 
 function parseModel(packingListJson, model, establishmentNumberRegex) {
   try {
     const sheets = Object.keys(packingListJson);
     let packingListContents = [];
-    let packingListContentsTemp = [];
     let establishmentNumbers = [];
 
     const headerTitles = Object.values(headers.WARRENS2.regex);
