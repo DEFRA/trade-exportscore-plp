@@ -172,6 +172,26 @@ module.exports = {
     registration_approval_number: "RMS-GB-000015-009",
     parserModel: parserModel.TESCO2,
   },
+  missingRow: {
+    business_checks: {
+      all_required_fields_present: true,
+      failure_reasons: null,
+    },
+    items: [
+      {
+        commodity_code: "0804500000",
+        description: "Tesco Mango ME BOS (120g x 8)7-8-20-36-39-77",
+        nature_of_products: "Chilled",
+        number_of_packages: "4",
+        total_net_weight_kg: "3.84",
+        type_of_treatment: "Processed",
+        total_net_weight_unit: "KG",
+      },
+    ],
+    establishment_numbers: ["RMS-GB-000015-009"],
+    registration_approval_number: "RMS-GB-000015-009",
+    parserModel: parserModel.TESCO2,
+  },
 
   // === Country of Origin (CoO) Validation Test Results ===
 

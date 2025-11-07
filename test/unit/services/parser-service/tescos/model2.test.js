@@ -52,6 +52,12 @@ describe("matchesTescosModel2", () => {
 
     expect(result).toMatchObject(test_results.missingKgunit);
   });
+
+  test("matches valid Tesco Model 2 file, calls parser and returns all_required_fields_present as true for missing row", async () => {
+    const result = await parserService.findParser(model.missingRow, filename);
+
+    expect(result).toMatchObject(test_results.missingRow);
+  });
 });
 
 // Jest mocks for CoO validation testing

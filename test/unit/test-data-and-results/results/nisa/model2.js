@@ -159,7 +159,8 @@ module.exports = {
   missingMandatoryData: {
     business_checks: {
       all_required_fields_present: false,
-      failure_reasons: "Identifier is missing in sheet \"sheet\" row 5.\nProduct description is missing in sheet \"sheet\" row 5.\nNo of packages is missing in sheet \"sheet\" row 5.\nTotal net weight is missing in sheet \"sheet\" row 5.\n",
+      failure_reasons:
+        'Identifier is missing in sheet "sheet" row 5.\nProduct description is missing in sheet "sheet" row 5.\nNo of packages is missing in sheet "sheet" row 5.\nTotal net weight is missing in sheet "sheet" row 5.\n',
     },
     items: [
       {
@@ -184,5 +185,5 @@ module.exports = {
     establishment_numbers: ["RMS-GB-000025-003"],
     registration_approval_number: "RMS-GB-000025-003",
     parserModel: parserModel.NISA2,
-  }
+  },
 };
