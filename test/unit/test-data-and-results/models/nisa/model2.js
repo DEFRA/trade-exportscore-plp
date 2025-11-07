@@ -1059,5 +1059,5 @@ module.exports = {
         J: "Non-NIRMS",
       },
     ],
-  }
+  },
 };
