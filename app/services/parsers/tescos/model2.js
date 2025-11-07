@@ -59,16 +59,23 @@ function parse(packingListJson) {
       const unit = regex.findUnit(
         packingListJson[sheet][headerRow + 1][key]?.toString(),
       );
-      const packingListContentsTempUnit = packingListContentsTemp.map(
-        (item) => ({
+      const packingListContentsTempUnit = packingListContentsTemp
+        .filter(isNotEmptyRow)
+        .map((item) => ({
           ...item,
           total_net_weight_unit: unit,
-        }),
-      );
+        }));
 
       packingListContents = packingListContents.concat(
         packingListContentsTempUnit,
       );
+    }
+
+    function isNotEmptyRow(row) {
+      const ignoreColumns = ["total_net_weight_unit", "row_location"];
+      return Object.keys(row)
+        .filter((k) => !ignoreColumns.includes(k))
+        .some((k) => row[k]);
     }
 
     return combineParser.combine(
