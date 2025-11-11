@@ -14,8 +14,10 @@ const bootsMatcher = require("./matchers/boots/model1");
 const bootsParser = require("./parsers/boots/model1");
 const buffaloadMatcher = require("./matchers/buffaload-logistics/model1");
 const buffaloadParser = require("./parsers/buffaload-logistics/model1");
-const cdsMatcher = require("./matchers/cds/model1");
-const cdsParser = require("./parsers/cds/model1");
+const cds1Matcher = require("./matchers/cds/model1");
+const cds1Parser = require("./parsers/cds/model1");
+const cds2Matcher = require("./matchers/cds/model2");
+const cds2Parser = require("./parsers/cds/model2");
 const coopMatcher = require("./matchers/co-op/model1");
 const coopParser = require("./parsers/co-op/model1");
 const davenportMatcher = require("./matchers/davenport/model1");
@@ -113,10 +115,15 @@ const parsersExcel = {
     parse: (packingList, filename) =>
       buffaloadParser.parse(packingList, filename),
   },
+  CDS2: {
+    matches: (packingList, filename) =>
+      cds2Matcher.matches(packingList, filename),
+    parse: (packingList, filename) => cds2Parser.parse(packingList, filename),
+  },
   CDS1: {
     matches: (packingList, filename) =>
-      cdsMatcher.matches(packingList, filename),
-    parse: (packingList, filename) => cdsParser.parse(packingList, filename),
+      cds1Matcher.matches(packingList, filename),
+    parse: (packingList, filename) => cds1Parser.parse(packingList, filename),
   },
   COOP1: {
     matches: (packingList, filename) =>
