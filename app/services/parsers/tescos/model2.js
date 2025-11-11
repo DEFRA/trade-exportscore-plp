@@ -10,6 +10,13 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+function isNotEmptyRow(row) {
+  const ignoreColumns = new Set(["total_net_weight_unit", "row_location"]);
+  return Object.keys(row)
+    .filter((k) => !ignoreColumns.has(k))
+    .some((k) => row[k]);
+}
+
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
@@ -59,12 +66,12 @@ function parse(packingListJson) {
       const unit = regex.findUnit(
         packingListJson[sheet][headerRow + 1][key]?.toString(),
       );
-      const packingListContentsTempUnit = packingListContentsTemp.map(
-        (item) => ({
+      const packingListContentsTempUnit = packingListContentsTemp
+        .filter(isNotEmptyRow)
+        .map((item) => ({
           ...item,
           total_net_weight_unit: unit,
-        }),
-      );
+        }));
 
       packingListContents = packingListContents.concat(
         packingListContentsTempUnit,

@@ -144,7 +144,7 @@ function isInvalidCoO(countryOfOrigin) {
     return false;
   }
 
-  if(typeof countryOfOrigin !== "string") {
+  if (typeof countryOfOrigin !== "string") {
     return true;
   }
 
