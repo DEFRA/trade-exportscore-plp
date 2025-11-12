@@ -12,8 +12,8 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 // Helper function to determine if an item is a header row (mandatory headers only)
 function isHeaderRow(item) {
-  return Object.entries(headers.TURNERS1.regex).every(([key, regex]) =>
-    regex.test(item[key]),
+  return Object.entries(headers.TURNERS1.regex).every(([key, pattern]) =>
+    pattern.test(item[key]),
   );
 }
 
@@ -76,4 +76,5 @@ function parse(packingListJson) {
 
 module.exports = {
   parse,
+  isHeaderRow,
 };
