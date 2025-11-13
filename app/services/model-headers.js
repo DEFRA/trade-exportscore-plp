@@ -118,6 +118,23 @@ const headers = {
     validateCountryOfOrigin: true,
     findUnitInHeader: true,
   },
+  CDS2: {
+    establishmentNumber: {
+      regex: /RMS-GB-000252-\d{3}/i,
+    },
+    regex: {
+      description: /^Product$/i,
+      number_of_packages: /# Packages/i,
+      total_net_weight_kg: /NetWeight/i,
+      nature_of_products: /NatureOfProduct/i,
+      type_of_treatment: /Treatment/i,
+      commodity_code: /Commodity Code/i,
+    },
+    country_of_origin: /COO/i,
+    nirms: /NIRMS/i,
+    findUnitInHeader: true,
+    validateCountryOfOrigin: true,
+  },
   CDS1: {
     establishmentNumber: {
       regex: /RMS-GB-000252(-\d{3})?/i,
@@ -463,6 +480,23 @@ const headers = {
     country_of_origin: /Country of Origin/i,
     nirms: /^NIRMS Eligible$/i,
     validateCountryOfOrigin: true,
+  },
+  TURNERS1: {
+    establishmentNumber: {
+      regex: /^RMS-GB-000156-\d{3}$/i,
+    },
+    regex: {
+      description: descriptionOfGoodsRegex,
+      commodity_code: /Commodity code/i,
+      number_of_packages: /No\. of pkgs/i,
+      total_net_weight_kg: /Item Net Weight/i,
+      nature_of_products: /Nature of Product/i,
+      type_of_treatment: /Type of Treatment/i,
+    },
+    nirms: /NIRMS \/ NON NIRMS/i,
+    country_of_origin: /Country of Origin/i,
+    validateCountryOfOrigin: true,
+    findUnitInHeader: true,
   },
   WARRENS1: {
     establishmentNumber: {
