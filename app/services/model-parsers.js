@@ -76,6 +76,8 @@ const greggsMatcher = require("./matchers/greggs/model1");
 const greggsParser = require("./parsers/greggs/model1");
 const giovanniMatcher3 = require("./matchers/giovanni/model3");
 const giovanniParser3 = require("./parsers/giovanni/model3");
+const turnersMatcher = require("./matchers/turners/model1");
+const turnersParser = require("./parsers/turners/model1");
 
 const parsersExcel = {
   ASDA1: {
@@ -249,6 +251,12 @@ const parsersExcel = {
       warrensMatcher2.matches(packingList, filename),
     parse: (packingList, filename) =>
       warrensParser2.parse(packingList, filename),
+  },
+  TURNERS1: {
+    matches: (packingList, filename) =>
+      turnersMatcher.matches(packingList, filename),
+    parse: (packingList, filename) =>
+      turnersParser.parse(packingList, filename),
   },
 };
 

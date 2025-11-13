@@ -1,0 +1,80 @@
+const combineParser = require("../../parser-combine");
+const parserModel = require("../../parser-model");
+const headers = require("../../model-headers");
+const { rowFinder } = require("../../../utilities/row-finder");
+const { mapParser } = require("../../parser-map");
+const { matchesHeader } = require("../../matches-header");
+const MatcherResult = require("../../matcher-result");
+const regex = require("../../../utilities/regex");
+const logger = require("../../../utilities/logger");
+const path = require("node:path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
+
+// Helper function to determine if an item is a header row (mandatory headers only)
+function isHeaderRow(item) {
+  return Object.entries(headers.TURNERS1.regex).every(([key, pattern]) =>
+    pattern.test(item[key]),
+  );
+}
+
+function parse(packingListJson) {
+  try {
+    const sheets = Object.keys(packingListJson);
+    let packingListContents = [];
+    let packingListContentsTemp = [];
+    let establishmentNumbers = [];
+
+    const establishmentNumber = regex.findMatch(
+      headers.TURNERS1.establishmentNumber.regex,
+      packingListJson[sheets[0]],
+    );
+
+    const headerTitles = Object.values(headers.TURNERS1.regex);
+    const headerCallback = function (x) {
+      return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
+    };
+
+    for (const sheet of sheets) {
+      establishmentNumbers = regex.findAllMatches(
+        regex.remosRegex,
+        packingListJson[sheet],
+        establishmentNumbers,
+      );
+
+      const headerRow = rowFinder(packingListJson[sheet], headerCallback);
+      const dataRow = headerRow + 1;
+
+      packingListContentsTemp = mapParser(
+        packingListJson[sheet],
+        headerRow,
+        dataRow,
+        headers.TURNERS1,
+        sheet,
+      );
+
+      packingListContents = packingListContents.concat(packingListContentsTemp);
+    }
+
+    // filter the packing list to remove headers
+    packingListContents = packingListContents.filter(
+      (item) => !isHeaderRow(item),
+    );
+
+    return combineParser.combine(
+      establishmentNumber,
+      packingListContents,
+      true,
+      parserModel.TURNERS1,
+      establishmentNumbers,
+      headers.TURNERS1,
+    );
+  } catch (err) {
+    logger.logError(filenameForLogging, "parse()", err);
+    return combineParser.combine(null, [], false, parserModel.NOMATCH);
+  }
+}
+
+module.exports = {
+  parse,
+  isHeaderRow,
+};
