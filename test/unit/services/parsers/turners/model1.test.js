@@ -18,7 +18,9 @@ describe("parse a packing list using the TURNERS1 parser", () => {
 });
 
 describe("turners model1 - isHeaderRow function", () => {
-  const { isHeaderRow } = require("../../../../../app/services/parsers/turners/model1");
+  const {
+    isHeaderRow,
+  } = require("../../../../../app/services/parsers/turners/model1");
 
   test.each([
     [
@@ -30,20 +32,20 @@ describe("turners model1 - isHeaderRow function", () => {
         number_of_packages: "No. of pkgs",
         total_net_weight_kg: "Item Net Weight",
         nature_of_products: "Nature of Product",
-        type_of_treatment: "Type of Treatment"
-      }
+        type_of_treatment: "Type of Treatment",
+      },
     ],
     [
       true,
-      "headers match with case variations", 
+      "headers match with case variations",
       {
         description: "DESCRIPTION OF GOODS",
         commodity_code: "commodity code",
         number_of_packages: "no. of pkgs",
         total_net_weight_kg: "item net weight",
         nature_of_products: "nature of product",
-        type_of_treatment: "type of treatment"
-      }
+        type_of_treatment: "type of treatment",
+      },
     ],
     [
       false,
@@ -51,11 +53,11 @@ describe("turners model1 - isHeaderRow function", () => {
       {
         description: "Description of Goods",
         commodity_code: "Invalid Header",
-        number_of_packages: "No. of pkgs", 
+        number_of_packages: "No. of pkgs",
         total_net_weight_kg: "Item Net Weight",
         nature_of_products: "Nature of Product",
-        type_of_treatment: "Type of Treatment"
-      }
+        type_of_treatment: "Type of Treatment",
+      },
     ],
     [
       false,
@@ -65,24 +67,20 @@ describe("turners model1 - isHeaderRow function", () => {
         commodity_code: "Wrong Code",
         number_of_packages: "No. of pkgs",
         total_net_weight_kg: "Item Net Weight",
-        nature_of_products: "Nature of Product", 
-        type_of_treatment: "Type of Treatment"
-      }
+        nature_of_products: "Nature of Product",
+        type_of_treatment: "Type of Treatment",
+      },
     ],
     [
       false,
       "missing required properties",
       {
         description: "Description of Goods",
-        commodity_code: "Commodity code"
+        commodity_code: "Commodity code",
         // missing other required fields
-      }
+      },
     ],
-    [
-      false,
-      "empty item object",
-      {}
-    ],
+    [false, "empty item object", {}],
     [
       false,
       "item with null values",
@@ -92,8 +90,8 @@ describe("turners model1 - isHeaderRow function", () => {
         number_of_packages: null,
         total_net_weight_kg: null,
         nature_of_products: null,
-        type_of_treatment: null
-      }
+        type_of_treatment: null,
+      },
     ],
     [
       false,
@@ -104,9 +102,9 @@ describe("turners model1 - isHeaderRow function", () => {
         number_of_packages: undefined,
         total_net_weight_kg: undefined,
         nature_of_products: undefined,
-        type_of_treatment: undefined
-      }
-    ]
+        type_of_treatment: undefined,
+      },
+    ],
   ])("returns %s when %s", (expected, _desc, item) => {
     const result = isHeaderRow(item);
     expect(result).toBe(expected);
@@ -119,29 +117,29 @@ describe("turners model1 - isHeaderRow function", () => {
       number_of_packages: "No. of pkgs",
       total_net_weight_kg: "Item Net Weight",
       nature_of_products: "Nature of Product",
-      type_of_treatment: "Type of Treatment"
+      type_of_treatment: "Type of Treatment",
     };
 
     // Test that it doesn't throw an error when regex.test() is called on non-string values
     expect(() => {
       isHeaderRow(itemWithNumbers);
     }).not.toThrow();
-    
+
     // Non-string description should not match the regex pattern
     expect(isHeaderRow(itemWithNumbers)).toBe(false);
   });
 
   test("validates with actual TURNERS1 header patterns", () => {
     const headers = require("../../../../../app/services/model-headers");
-    
+
     // Test with the actual regex patterns from TURNERS1 headers
     const actualHeaderItem = {
-      description: "Description of Goods", 
+      description: "Description of Goods",
       commodity_code: "Commodity code",
       number_of_packages: "No. of pkgs",
       total_net_weight_kg: "Item Net Weight",
       nature_of_products: "Nature of Product",
-      type_of_treatment: "Type of Treatment"
+      type_of_treatment: "Type of Treatment",
     };
 
     // Verify the function returns true for valid headers
