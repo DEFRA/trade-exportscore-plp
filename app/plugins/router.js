@@ -7,6 +7,7 @@ const routes = [].concat(
   require("../routes/test-di-conn"),
   require("../routes/create-packinglist-message"),
   require("../routes/pdf-non-ai"),
+  require("../routes/pdf-non-ai-spike"),
   require("../routes/get-dispatch-location"),
   require("../routes/csv-non-ai"),
 );
