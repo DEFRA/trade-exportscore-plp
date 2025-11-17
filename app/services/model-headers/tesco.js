@@ -4,6 +4,12 @@ const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 const netWeight = /Net Weight/i;
 
+/**
+ * Tesco model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Tesco packing list variants used by matchers.
+ */
 const tescoHeaders = {
   TESCO1: {
     establishmentNumber: {

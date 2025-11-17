@@ -1,3 +1,9 @@
+/**
+ * Boots model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Boots packing list variants used by matchers.
+ */
 const bootsHeaders = {
   BOOTS1: {
     establishmentNumber: {

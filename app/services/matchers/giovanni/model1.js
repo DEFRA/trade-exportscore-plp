@@ -1,3 +1,9 @@
+/**
+ * Giovanni matcher (model 1)
+ *
+ * Detects Giovanni-style PDF packing lists by analysing headers and
+ * checking establishment number patterns.
+ */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
@@ -6,6 +12,13 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Giovanni matcher helper for model 1.
+ * @param {Object} packingList - Excel->JSON representation keyed by sheet
+ * @param {string} filename - Source filename for logging
+ * @param {RegExp} regexExpression - Establishment number regex for the model
+ * @returns {string} matcherResult - One of the matcher result codes
+ */
 function matchesModel(packingList, filename, regexExpression) {
   try {
     let result;
@@ -45,6 +58,12 @@ function matchesModel(packingList, filename, regexExpression) {
   }
 }
 
+/**
+ * Check whether the provided packing list matches Giovanni Model 1.
+ * @param {Object} packingList - PDF buffer or JSON representation
+ * @param {string} filename - Source filename for logging
+ * @returns {Promise<string>} - One of matcherResult codes
+ */
 function matches(packingList, filename) {
   return matchesModel(
     packingList,

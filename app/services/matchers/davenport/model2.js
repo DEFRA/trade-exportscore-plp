@@ -1,3 +1,9 @@
+/**
+ * Davenport matcher (model 2)
+ *
+ * Matches the Davenport packing list layout by checking establishment
+ * number patterns and expected header fields.
+ */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
@@ -6,6 +12,12 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Check whether the provided packing list matches Davenport Model 2.
+ * @param {Object} packingList - Excel->JSON representation keyed by sheet
+ * @param {string} filename - Source filename for logging
+ * @returns {string} - One of matcherResult codes
+ */
 function matches(packingList, filename) {
   try {
     let result = matcherResult.EMPTY_FILE; // Initialise to EMPTY_FILE as spreadsheet with only invalid sheets is equivalent to an empty file.

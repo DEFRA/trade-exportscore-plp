@@ -6,6 +6,17 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+
+/**
+ * KEPAK Excel parser - Model 1
+ * @module parsers/kepak/model1
+ */
+
+/**
+ * Parse the provided packing list JSON for KEPAK model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 const { rowFinder } = require("../../../utilities/row-finder");
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");

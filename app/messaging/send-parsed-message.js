@@ -1,3 +1,13 @@
+/**
+ * Send parsed/approval messages to the TP queue
+ *
+ * Two sending paths are supported:
+ *  - `sendParsedAdp()` uses the in-house `adp-messaging` helper which
+ *    encapsulates connection management.
+ *  - `sendParsed()` uses `@azure/service-bus` directly and supports
+ *    managed identity authentication (DefaultAzureCredential).
+ */
+
 const config = require("../config");
 const { MessageSender } = require("adp-messaging");
 const createMessage = require("./create-message");
@@ -7,6 +17,12 @@ const logger = require("./../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Send parsed message using adp-messaging helper.
+ * @param {boolean} parsedResult - Whether parsing succeeded
+ * @param {string} applicationId - Application identifier
+ * @returns {Promise<void>}
+ */
 async function sendParsedAdp(parsedResult, applicationId) {
   try {
     const message = createMessage(parsedResult, applicationId);
@@ -23,6 +39,13 @@ async function sendParsedAdp(parsedResult, applicationId) {
   }
 }
 
+/**
+ * Send parsed message using Azure Service Bus SDK with managed identity.
+ * @param {string} applicationId - Application identifier
+ * @param {boolean} parsedResult - Whether parsing succeeded
+ * @param {Array|null} failureReason - Failure reasons when parsing failed
+ * @returns {Promise<void>}
+ */
 async function sendParsed(applicationId, parsedResult, failureReason) {
   try {
     if (config.tpQueue.managedIdentityClientId) {

@@ -6,10 +6,20 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const { rowFinder } = require("../../../utilities/row-finder");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+
+/**
+ * TJMORRIS Excel parser - Model 2
+ * @module parsers/tjmorris/model2
+ */
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 const { mapParser } = require("../../parser-map");
 
+/**
+ * Parse the provided packing list JSON for TJMORRIS model 2.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);

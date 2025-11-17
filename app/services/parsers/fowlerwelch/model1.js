@@ -5,12 +5,24 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+
+/**
+ * FOWLERWELCH Excel parser - Model 1
+ * @module parsers/fowlerwelch/model1
+ */
 const { mapParser } = require("../../parser-map");
 const { rowFinder } = require("../../../utilities/row-finder");
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 const validatorUtilities = require("../../validators/packing-list-validator-utilities");
 
+/**
+ * Core parse routine used by FowlerWelch wrappers.
+ * @param {Object} packingListJson - Workbook JSON object keyed by sheet.
+ * @param {Object} model - Parser model constant to include in the result.
+ * @param {RegExp} establishmentNumberRegex - Regex used to find est number.
+ * @returns {Object} Combined parser result.
+ */
 function parseModel(packingListJson, model, establishmentNumberRegex) {
   try {
     const sheets = Object.keys(packingListJson);
@@ -76,6 +88,11 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
   }
 }
 
+/**
+ * Parse wrapper for FowlerWelch model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   return parseModel(
     packingListJson,

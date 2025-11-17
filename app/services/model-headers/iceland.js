@@ -1,3 +1,9 @@
+/**
+ * Iceland model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Iceland packing list variants used by matchers.
+ */
 const csvIcelandHeaders = {
   ICELAND2: {
     establishmentNumber: {

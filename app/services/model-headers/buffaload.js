@@ -2,6 +2,12 @@ const descriptionOfGoodsRegex = /Description of goods/i;
 const commodityCodeRegex = /Commodity Code/i;
 const noOfPackagesRegex = /No. of pkgs/i;
 
+/**
+ * Buffaload Logistics model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Buffaload Logistics packing list variants used by matchers.
+ */
 const buffaloadHeaders = {
   BUFFALOAD1: {
     establishmentNumber: {

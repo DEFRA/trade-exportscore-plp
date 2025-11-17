@@ -1,6 +1,12 @@
 const commodityCodeRegex = /Commodity Code/i;
 const netWeight = /Net Weight/i;
 
+/**
+ * Nutricia model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Nutricia packing list variants used by matchers.
+ */
 const nutriciaHeaders = {
   NUTRICIA1: {
     establishmentNumber: {

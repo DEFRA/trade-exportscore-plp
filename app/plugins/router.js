@@ -1,3 +1,9 @@
+/**
+ * Router plugin
+ *
+ * Collects all route definitions from `app/routes` and registers them
+ * with the Hapi server as a single plugin.
+ */
 const routes = [].concat(
   require("../routes/non-ai"),
   require("../routes/healthy"),

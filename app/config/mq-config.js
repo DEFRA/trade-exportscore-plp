@@ -1,3 +1,12 @@
+/**
+ * Message queue (Service Bus) configuration
+ *
+ * Exposes the configuration used to connect to Azure Service Bus (or other
+ * message queue providers). Values are intentionally read from environment
+ * variables so sensitive values and environment-specific endpoints are not
+ * stored in source control.
+ */
+
 const messageQueueConfig = {
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
@@ -17,11 +26,13 @@ const messageQueueConfig = {
   },
 };
 
+// Combined PLP subscription object (message queue defaults + subscription props)
 const plpSubscription = {
   ...messageQueueConfig.messageQueue,
   ...messageQueueConfig.plpSubscription,
 };
 
+// Telemetry/TP queue configuration used for outbound messages
 const tpQueue = {
   useCredentialChain: process.env.NODE_ENV === "production",
   host: process.env.TP_QUEUE_HOST,

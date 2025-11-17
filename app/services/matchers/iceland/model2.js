@@ -1,3 +1,9 @@
+/**
+ * Iceland matcher (model 2)
+ *
+ * Alternate Iceland matcher variant which validates headers and
+ * establishment numbers.
+ */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
@@ -6,6 +12,12 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Check whether the provided packing list matches Iceland Model 2.
+ * @param {Object} packingList - PDF buffer or JSON representation
+ * @param {string} filename - Source filename for logging
+ * @returns {string} - One of matcherResult codes
+ */
 function matches(packingList, filename) {
   try {
     if (!packingList || packingList.length === 0) {

@@ -6,6 +6,17 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+
+/**
+ * B&M Excel parser - Model 1
+ * @module parsers/bandm/model1
+ */
+
+/**
+ * Parse the provided packing list JSON for BANDM model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 const { mapParser } = require("../../parser-map");
 
 function parse(packingListJson) {

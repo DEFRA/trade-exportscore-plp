@@ -10,6 +10,16 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * ICELAND CSV parser - Model 2
+ * @module parsers/iceland/model2
+ */
+
+/**
+ * Parse the provided CSV-style packing list for ICELAND model 2.
+ * @param {Array|Object} packingListCsv - Sanitised CSV data structure.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListCsv) {
   try {
     let packingListContents = [];

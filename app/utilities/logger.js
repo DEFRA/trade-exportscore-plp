@@ -1,8 +1,16 @@
 /**
+ * Logger utility
+ *
+ * Provides standardized logging functions for error and informational messages.
+ * All logs include filename and method context for debugging.
+ */
+
+/**
  * Log an error using the standard formatting.
- * @param {string} fileName - The file name (and path - i.e. 'Copy relative path' option in VS Code Explorer window) which is logging the error message.
- * @param {string} method - The method name (and optional method call within the overall method) logging the error message.
- * @param {string} error - The actual error to log.
+ * @param {string} fileName - File name and path logging the error
+ * @param {string} method - Method name logging the error
+ * @param {string} error - Error to log
+ * @returns {void}
  */
 function logError(fileName, method, error) {
   console.error(
@@ -11,10 +19,11 @@ function logError(fileName, method, error) {
 }
 
 /**
- * Log an informationally message using the standard formatting.
- * @param {string} fileName - The file name (and path - i.e. 'Copy relative path' option in VS Code Explorer window) which is logging the informationally message.
- * @param {string} method - The method name (and optional method call within the overall method) logging the informationally message.
- * @param {string} infoMessage - The actual informational message to log.
+ * Log an informational message using the standard formatting.
+ * @param {string} fileName - File name and path logging the message
+ * @param {string} method - Method name logging the message
+ * @param {string} infoMessage - Informational message to log
+ * @returns {void}
  */
 function logInfo(fileName, method, infoMessage) {
   console.info(

@@ -10,6 +10,16 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * SAINSBURYS Excel parser - Model 1
+ * @module parsers/sainsburys/model1
+ */
+
+/**
+ * Parse the provided packing list JSON for SAINSBURYS model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
@@ -61,6 +71,12 @@ function parse(packingListJson) {
   }
 }
 
+/**
+ * Find and normalise distinct establishment numbers from a page.
+ * @param {Array<string>} establishmentNumbers - Existing array of RMS values.
+ * @param {Array|string} page - Page content to search for RMS values.
+ * @returns {Array<string>} Normalised unique RMS values.
+ */
 function appendDistinctEstablishmentNumbers(establishmentNumbers, page) {
   establishmentNumbers = regex.findAllMatches(
     new RegExp(/^(RMS-GB-\d{6}-\d{3})(?:\u200B)?$/),

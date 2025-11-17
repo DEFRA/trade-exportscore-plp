@@ -1,3 +1,9 @@
+/**
+ * Giovanni matcher (model 2)
+ *
+ * Alternate Giovanni PDF matcher; verifies header content and
+ * establishment number patterns.
+ */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
@@ -6,6 +12,13 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Giovanni matcher helper for model 2.
+ * @param {Object} packingList - Excel->JSON representation keyed by sheet
+ * @param {string} filename - Source filename for logging
+ * @param {RegExp} regexExpression - Establishment number regex for this model
+ * @returns {string} matcherResult - One of the matcher result codes
+ */
 function matchesModel(packingList, filename, regexExpression) {
   try {
     let result;
@@ -45,6 +58,12 @@ function matchesModel(packingList, filename, regexExpression) {
   }
 }
 
+/**
+ * Giovanni matcher (model 2) wrapper
+ * @param {Object} packingList - Parsed packing list input
+ * @param {string} filename - Source filename for logging
+ * @returns {string} matcherResult - Delegated result from matchesModel
+ */
 function matches(packingList, filename) {
   return matchesModel(
     packingList,

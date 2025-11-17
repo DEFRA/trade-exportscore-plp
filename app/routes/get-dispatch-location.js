@@ -1,3 +1,10 @@
+/**
+ * Dispatch location lookup route
+ *
+ * Exposes an endpoint that queries Dynamics for a dispatch location
+ * based on an `applicationId`. Returns an empty string when the id
+ * is not provided.
+ */
 const { getDispatchLocation } = require("../services/dynamics-service");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("../utilities/logger");

@@ -5,11 +5,26 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+
+/**
+ * WARRENS2 parser implementation
+ *
+ * Parses WARRENS2 Excel packing lists using header matching and
+ * `mapParser` then returns the combined result.
+ * @module parsers/warrens/model2
+ */
 const { mapParser } = require("../../parser-map");
 const { rowFinder } = require("../../../utilities/row-finder");
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 
+/**
+ * Core parse routine used by WARRENS2 and other wrappers.
+ * @param {Object} packingListJson - Workbook JSON object keyed by sheet.
+ * @param {Object} model - Parser model constant to include in result.
+ * @param {RegExp} establishmentNumberRegex - Regex to extract establishment.
+ * @returns {Object} Combined parser result.
+ */
 function parseModel(packingListJson, model, establishmentNumberRegex) {
   try {
     const sheets = Object.keys(packingListJson);
@@ -68,6 +83,11 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
   }
 }
 
+/**
+ * Wrapper parse function for WARRENS2.
+ * @param {Object} packingListJson - Workbook JSON.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   return parseModel(
     packingListJson,

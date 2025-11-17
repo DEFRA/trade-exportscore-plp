@@ -10,6 +10,20 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * ASDA Excel parser - Model 1
+ *
+ * Parses packing lists exported from ASDA Excel sheets matching the ASDA1
+ * header model and returns a combined parser result.
+ * @module parsers/asda/model1
+ */
+
+/**
+ * Parse the provided packing list JSON for ASDA model 1.
+ * @param {Object} packingListJson - The converted Excel workbook as a JSON
+ * object where keys are sheet names and values are arrays of rows.
+ * @returns {Object} Combined parser result object (see `parser-combine`).
+ */
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);

@@ -1,5 +1,11 @@
 const descriptionOfGoodsRegex = /Description of goods/i;
 
+/**
+ * Turners model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Turners packing list variants used by matchers.
+ */
 const turnersHeaders = {
   TURNERS1: {
     establishmentNumber: {

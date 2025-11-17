@@ -1,4 +1,9 @@
-// Import all retailer header configurations
+/**
+ * Excel model headers registry
+ *
+ * Central registry combining all retailer-specific header configurations for Excel parsers.
+ * Each retailer provides establishment number patterns and field mapping regex.
+ */
 const { asdaHeaders } = require("./model-headers/asda");
 const bandmHeaders = require("./model-headers/bandm");
 const { bookerHeaders } = require("./model-headers/booker");
@@ -20,7 +25,6 @@ const tjmorrisHeaders = require("./model-headers/tjmorris");
 const turnersHeaders = require("./model-headers/turners");
 const warrensHeaders = require("./model-headers/warrens");
 
-// Combine all headers into a single object
 const headers = {
   ...asdaHeaders,
   ...bandmHeaders,
