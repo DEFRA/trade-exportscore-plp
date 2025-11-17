@@ -1,3 +1,7 @@
+/**
+ * GIOVANNI Excel parser - Model 1
+ * @module parsers/giovanni/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -10,6 +14,11 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 
+/**
+ * Parse the provided packing list JSON for GIOVANNI model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);

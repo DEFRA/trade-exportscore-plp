@@ -1,3 +1,9 @@
+/**
+ * Co-op model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Co-op packing list variants used by matchers.
+ */
 const descriptionRegex = /Product\/ Part Number description/i;
 
 const coopHeaders = {

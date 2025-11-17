@@ -1,3 +1,8 @@
+/**
+ * Liveness probe route
+ *
+ * Simple endpoint used for container/infra liveness checks.
+ */
 const { StatusCodes } = require("http-status-codes");
 const logger = require("./../utilities/logger");
 const path = require("node:path");

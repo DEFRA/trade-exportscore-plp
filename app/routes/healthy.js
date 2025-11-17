@@ -1,3 +1,8 @@
+/**
+ * Database healthy endpoint
+ *
+ * Quickly verifies the DB connection using Sequelize's `authenticate`.
+ */
 const { sequelize } = require("../services/database-service");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("./../utilities/logger");

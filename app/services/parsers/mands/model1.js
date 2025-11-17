@@ -1,3 +1,7 @@
+/**
+ * M&S PDF AI parser - Model 1
+ * @module parsers/mands/model1
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const { mapPdfParser } = require("../../parser-map");

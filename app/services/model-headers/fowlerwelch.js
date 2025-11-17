@@ -1,3 +1,9 @@
+/**
+ * Fowler-Welch model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Fowler-Welch packing list variants used by matchers.
+ */
 const fowlerWelchHeaders = {
   FOWLERWELCH1: {
     invalidSheets: [

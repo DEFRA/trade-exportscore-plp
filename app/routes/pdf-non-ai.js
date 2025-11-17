@@ -1,3 +1,10 @@
+/**
+ * PDF non-AI parsing route
+ *
+ * Reads a PDF buffer from disk and forwards it to the parser-service
+ * for coordinate-based PDF parsing. Includes commented helpers to
+ * optionally dump PDF element positions for debugging.
+ */
 const config = require("../config");
 const { findParser } = require("../services/parser-service");
 const fs = require("node:fs");

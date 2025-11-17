@@ -1,3 +1,20 @@
+/**
+ * Parser result combiner
+ *
+ * Combines parsed packing list data with metadata and business validation flags
+ * into standardized output format.
+ */
+
+/**
+ * Combine parsed data into standardized result structure.
+ * @param {string} establishmentNumber - Primary establishment number
+ * @param {Array} packingListContents - Parsed item rows
+ * @param {boolean} allRequiredFieldsPresent - Validation flag
+ * @param {string} ParserModel - Parser model identifier
+ * @param {Array<string>} establishmentNumbers - All establishment numbers found
+ * @param {Object|null} header - Header metadata for special flags
+ * @returns {Object} Combined parser result
+ */
 function combine(
   establishmentNumber,
   packingListContents,

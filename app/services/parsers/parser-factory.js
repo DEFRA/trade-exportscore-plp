@@ -1,3 +1,12 @@
+/**
+ * Parser factory module
+ *
+ * Provides utilities to find the appropriate parser for a given packing
+ * list file and to generate a parsed packing list result including
+ * validation and cleanup.
+ * @module services/parsers/parser-factory
+ */
+
 const fileExtension = require("../../utilities/file-extension");
 const config = require("../../config");
 const {
@@ -16,6 +25,12 @@ const logger = require("../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Find a parser suitable for the supplied packing list and filename.
+ * @param {Object} sanitizedPackingList - Sanitised packing list content.
+ * @param {string} fileName - Original filename supplied by the caller.
+ * @returns {Object} Matching parser module or a no-match parser.
+ */
 async function findParser(sanitizedPackingList, fileName) {
   let parser;
 
@@ -45,6 +60,15 @@ async function findParser(sanitizedPackingList, fileName) {
   return parser;
 }
 
+/**
+ * Generate a parsed packing list using the provided parser and then run
+ * business validations and cleanup utilities.
+ * @param {Object} parser - Parser module implementing `parse`.
+ * @param {Object} sanitisedPackingList - Sanitised packing list content.
+ * @param {string} dispatchLocation - Dispatch location number.
+ * @param {Object|null} sanitizedFullPackingList - Optional full packing list.
+ * @returns {Object} Parsed and validated packing list result.
+ */
 async function generateParsedPackingList(
   parser,
   sanitisedPackingList,

@@ -1,3 +1,7 @@
+/**
+ * GIOVANNI Excel parser - Model 2
+ * @module parsers/giovanni/model2
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");

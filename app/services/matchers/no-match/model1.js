@@ -1,3 +1,9 @@
+/**
+ * No-REMOS matcher helpers
+ *
+ * Helpers to detect whether a document contains an RMS/REMOS number.
+ * Used to classify files that do not contain an RMS as NOMATCH.
+ */
 const regex = require("../../../utilities/regex");
 const { extractPdf } = require("../../../utilities/pdf-helper");
 const logger = require("../../../utilities/logger");
@@ -5,6 +11,12 @@ const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const headersPdf = require("../../model-headers-pdf");
 
+/**
+ * Check for presence of a REMOS/RMS number in a sheet-based packing list.
+ * @param {Object} sanitisedPackingList - Sheet-keyed representation of the packing list
+ * @param {string} _filename - Filename for logging (optional)
+ * @returns {boolean} true if a REMOS/RMS is present, otherwise false
+ */
 function noRemosMatch(sanitisedPackingList, _filename) {
   const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
 
@@ -22,6 +34,11 @@ function noRemosMatch(sanitisedPackingList, _filename) {
   return false;
 }
 
+/**
+ * Test for known RMS exceptions where a REMOS-like token is present but treated specially.
+ * @param {string} y - Text to test
+ * @returns {boolean}
+ */
 function rmsExceptions(y) {
   const giovanni2Regex = /\(NIRMS RMS-GB-\d{6}-\d{3}\)/i;
   const cdsRegex = /\/ RMS-GB-000252-\d{3} \//i;
@@ -36,12 +53,23 @@ function rmsExceptions(y) {
   );
 }
 
+/**
+ * CSV-specific exceptions for REMOS detection.
+ * @param {string} y - Text to test
+ * @returns {boolean}
+ */
 function rmsCsvExceptions(y) {
   const icelandRegex = /RMS-GB-000040-\d{3}$/i;
 
   return icelandRegex.test(y);
 }
 
+/**
+ * Check for presence of a REMOS/RMS number in CSV-style data.
+ * @param {Array|Object} sanitisedPackingList - CSV row array or equivalent structure
+ * @param {string} _filename - Filename for logging (optional)
+ * @returns {boolean} true if a REMOS/RMS is present, otherwise false
+ */
 function noRemosMatchCsv(sanitisedPackingList, _filename) {
   const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
   const isRemosPresent = sanitisedPackingList.some((x) => {
@@ -52,6 +80,11 @@ function noRemosMatchCsv(sanitisedPackingList, _filename) {
   return isRemosPresent;
 }
 
+/**
+ * Check for REMOS presence in a PDF by extracting text and scanning pages.
+ * @param {Buffer} packingList - PDF buffer
+ * @returns {Promise<boolean|Object>} truthy match or false
+ */
 async function noRemosMatchPdf(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);

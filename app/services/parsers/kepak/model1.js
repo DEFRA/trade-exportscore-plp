@@ -1,3 +1,7 @@
+/**
+ * KEPAK Excel parser - Model 1
+ * @module parsers/kepak/model1
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");

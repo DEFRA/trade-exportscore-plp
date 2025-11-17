@@ -1,3 +1,9 @@
+/**
+ * Azure Document Intelligence integration
+ *
+ * Provides wrapper functions for Azure Form Recognizer API to analyze PDF documents.
+ * Manages model selection, document analysis, and result extraction.
+ */
 const config = require("../config");
 const {
   DocumentModelAdministrationClient,
@@ -6,6 +12,10 @@ const {
 const logger = require("../utilities/logger");
 const { DefaultAzureCredential } = require("@azure/identity");
 
+/**
+ * Create Azure Document Intelligence admin client for model management.
+ * @returns {DocumentModelAdministrationClient} Admin client instance
+ */
 function createDocumentIntelligenceAdminClient() {
   const credential = new DefaultAzureCredential();
   return new DocumentModelAdministrationClient(
@@ -16,6 +26,11 @@ function createDocumentIntelligenceAdminClient() {
 
 const file = "app/services/document-intelligence.js";
 
+/**
+ * Fetch all available document models from the client.
+ * @param {DocumentModelAdministrationClient} client - Admin client instance
+ * @returns {Promise<Array>} Array of model objects
+ */
 async function listModels(client) {
   try {
     const models = [];
@@ -29,6 +44,12 @@ async function listModels(client) {
   }
 }
 
+/**
+ * Find the latest model by name prefix based on Unix epoch in model ID.
+ * @param {DocumentModelAdministrationClient} client - Admin client instance
+ * @param {string} namePrefix - Model name prefix to filter by
+ * @returns {Promise<string|null>} Latest model ID or null if not found
+ */
 async function getLatestModelByName(client, namePrefix) {
   // Step 1: Fetch all models from the client and store them in an array.
   const models = await listModels(client);
@@ -79,11 +100,22 @@ async function getLatestModelByName(client, namePrefix) {
   return latestModel ? latestModel.modelId : null;
 }
 
+/**
+ * Create Azure Document Intelligence client for document analysis.
+ * @returns {DocumentAnalysisClient} Analysis client instance
+ */
 function createDocumentIntelligenceClient() {
   const credential = new DefaultAzureCredential();
   return new DocumentAnalysisClient(config.formRecognizerEndpoint, credential);
 }
 
+/**
+ * Run document analysis using specified model and file buffer.
+ * @param {DocumentAnalysisClient} client - Analysis client instance
+ * @param {string} modelId - Model ID to use for analysis
+ * @param {Buffer} fileBuffer - File buffer to analyze
+ * @returns {Promise<Object>} Analyzed document object
+ */
 async function runAnalysis(client, modelId, fileBuffer) {
   try {
     const poller = await client.beginAnalyzeDocument(modelId, fileBuffer);

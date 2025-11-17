@@ -1,3 +1,9 @@
+/**
+ * Parser and matcher registry
+ *
+ * Central registry mapping all retailer matchers and parsers for Excel, CSV, PDF AI,
+ * and PDF non-AI formats. Exports grouped collections for parser factory selection.
+ */
 const noMatchMatcher = require("./matchers/no-match/model1");
 const noMatchParser = require("./parsers/no-match/model1");
 const asdaMatcher = require("./matchers/asda/model1");

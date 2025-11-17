@@ -1,3 +1,7 @@
+/**
+ * GREGGS PDF AI parser - Model 1
+ * @module parsers/greggs/model1
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const { mapPdfParser } = require("../../parser-map");
@@ -11,6 +15,12 @@ const {
   extractEstablishmentNumbers,
 } = require("../../../utilities/pdf-helper");
 
+/**
+ * Parse a GREGGS PDF document extracted by AI (Form Recognizer).
+ * @param {Object} packingListDocument - Extracted document fields.
+ * @param {Object} sanitizedFullPackingList - Optional full PDF for est numbers.
+ * @returns {Promise<Object>} Combined parser result.
+ */
 async function parse(packingListDocument, sanitizedFullPackingList) {
   try {
     let establishmentNumber;

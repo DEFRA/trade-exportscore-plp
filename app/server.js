@@ -1,3 +1,10 @@
+/**
+ * Hapi server creation and configuration
+ *
+ * Creates and configures the Hapi server with database connectivity,
+ * plugin registration, and message service initialization. SIGTERM/SIGINT
+ * handlers ensure graceful shutdown of messaging connections.
+ */
 const hapi = require("@hapi/hapi");
 const config = require("./config");
 const { sequelize } = require("./services/database-service");
@@ -6,6 +13,10 @@ const logger = require("./utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Create and configure Hapi server instance.
+ * @returns {Promise<Object>} Configured Hapi server
+ */
 async function createServer() {
   try {
     if (
@@ -66,6 +77,10 @@ async function createServer() {
   return server;
 }
 
+/**
+ * Initialize message service and register signal handlers.
+ * @returns {Promise<void>}
+ */
 async function serverMessage() {
   try {
     await messageService.start();

@@ -1,3 +1,9 @@
+/**
+ * Turners model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Turners packing list variants used by matchers.
+ */
 const descriptionOfGoodsRegex = /Description of goods/i;
 
 const turnersHeaders = {

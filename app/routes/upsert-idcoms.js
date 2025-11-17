@@ -1,9 +1,21 @@
+/**
+ * Upsert IdComs route
+ *
+ * Triggers sending a parsed message to the IdComs topic based on
+ * query parameters. Returns an HTTP status code value in the body
+ * to indicate the operation result.
+ */
 const { sendParsed } = require("../messaging/send-parsed-message");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("./../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Send parsed message to IdComs topic.
+ * @param {Object} request - Hapi request object
+ * @returns {Promise<number>} HTTP status code
+ */
 async function upsert(request) {
   let checkStatus = StatusCodes.NOT_FOUND;
   try {

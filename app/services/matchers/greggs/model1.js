@@ -5,12 +5,25 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../document-intelligence");
+/**
+ * Greggs matcher
+ *
+ * Matches Greggs packing list layout using establishment and header
+ * pattern rules.
+ */
 const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Check whether the provided packing list matches Greggs Model 1.
+ * Uses Document Intelligence to extract structured fields.
+ * @param {Buffer|Object} packingList - PDF buffer or document input
+ * @param {string} filename - Source filename for logging
+ * @returns {Promise<Object>} - Result object containing isMatched and document
+ */
 async function matches(packingList, filename) {
   const result = {
     isMatched: matcherResult.GENERIC_ERROR,

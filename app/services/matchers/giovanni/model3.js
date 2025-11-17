@@ -1,4 +1,10 @@
 const logger = require("../../../utilities/logger");
+/**
+ * Giovanni matcher (model 3)
+ *
+ * Additional Giovanni PDF matcher variant that checks page headers
+ * and establishment identifiers.
+ */
 const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
@@ -6,6 +12,12 @@ const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const pdfHelper = require("../../../utilities/pdf-helper");
 
+/**
+ * Giovanni matcher (model 3)
+ * @param {Buffer|Object} packingList - PDF buffer or parsed document JSON
+ * @param {string} filename - Source filename for logging
+ * @returns {Promise<string|Object>} matcherResult - One of the matcher result codes or a result object
+ */
 async function matches(packingList, filename) {
   try {
     const pdfJson = await pdfHelper.extractPdf(packingList);
@@ -46,6 +58,11 @@ async function matches(packingList, filename) {
   }
 }
 
+/**
+ * Check page content for Giovanni Model 3 headers.
+ * @param {string} pageContent - Extracted page content
+ * @returns {string} matcherResult - `CORRECT` or `WRONG_HEADER`
+ */
 function matchHeaders(pageContent) {
   const isHeader = findHeader("GIOVANNI3", pageContent);
   if (isHeader === matcherResult.CORRECT) {
@@ -55,6 +72,12 @@ function matchHeaders(pageContent) {
   }
 }
 
+/**
+ * Locate a header for a specific model within page content.
+ * @param {string} model - Header model key (e.g., 'GIOVANNI3')
+ * @param {string} pageContent - Extracted page content
+ * @returns {string} matcherResult - `CORRECT` or `WRONG_HEADER`
+ */
 function findHeader(model, pageContent) {
   const header = pdfHelper.getHeaders(pageContent, model);
   let isHeader = matcherResult.WRONG_HEADER;

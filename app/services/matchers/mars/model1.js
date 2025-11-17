@@ -1,3 +1,9 @@
+/**
+ * Mars matcher
+ *
+ * Matches Mars packing list layout using header and establishment
+ * patterns.
+ */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
@@ -6,6 +12,12 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Check whether the provided packing list matches Mars Model 1.
+ * @param {Object} packingList - Excel->JSON representation keyed by sheet
+ * @param {string} filename - Source filename for logging
+ * @returns {string} - One of matcherResult codes
+ */
 function matches(packingList, filename) {
   try {
     let result;
