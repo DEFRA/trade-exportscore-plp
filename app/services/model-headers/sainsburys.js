@@ -1,11 +1,11 @@
-const commodityCodeRegex = /Commodity Code/i;
-
 /**
  * Sainsburys model headers
  *
  * Provides establishment number regexes and header regex mappings
  * for Sainsburys packing list variants used by matchers.
  */
+const commodityCodeRegex = /Commodity Code/i;
+
 const sainsburysHeaders = {
   SAINSBURYS1: {
     establishmentNumber: {

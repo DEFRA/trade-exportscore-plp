@@ -1,3 +1,7 @@
+/**
+ * NISA Excel parser - Model 1
+ * @module parsers/nisa/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const { isTotalRow } = require("./utilities");
@@ -10,11 +14,6 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * NISA Excel parser - Model 1
- * @module parsers/nisa/model1
- */
 
 /**
  * Parse the provided packing list JSON for NISA model 1.

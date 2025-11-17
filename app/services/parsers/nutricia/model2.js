@@ -1,3 +1,7 @@
+/**
+ * NUTRICIA Excel parser - Model 2
+ * @module parsers/nutricia/model2
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
@@ -7,11 +11,6 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * NUTRICIA Excel parser - Model 2
- * @module parsers/nutricia/model2
- */
 
 /**
  * Parse the provided packing list JSON for NUTRICIA model 2.

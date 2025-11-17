@@ -1,3 +1,7 @@
+/**
+ * DAVENPORT Excel parser - Model 2
+ * @module parsers/davenport/model2
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const headers = require("../../model-headers");
@@ -9,11 +13,6 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * DAVENPORT Excel parser - Model 2
- * @module parsers/davenport/model2
- */
 
 /**
  * Parse the provided packing list JSON for DAVENPORT model 2.

@@ -1,11 +1,3 @@
-const combineParser = require("../../parser-combine");
-const parserModel = require("../../parser-model");
-const headers = require("../../model-headers");
-const regex = require("../../../utilities/regex");
-const logger = require("../../../utilities/logger");
-const path = require("node:path");
-const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
 /**
  * WARRENS2 parser implementation
  *
@@ -13,6 +5,13 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
  * `mapParser` then returns the combined result.
  * @module parsers/warrens/model2
  */
+const combineParser = require("../../parser-combine");
+const parserModel = require("../../parser-model");
+const headers = require("../../model-headers");
+const regex = require("../../../utilities/regex");
+const logger = require("../../../utilities/logger");
+const path = require("node:path");
+const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { mapParser } = require("../../parser-map");
 const { rowFinder } = require("../../../utilities/row-finder");
 const { matchesHeader } = require("../../matches-header");

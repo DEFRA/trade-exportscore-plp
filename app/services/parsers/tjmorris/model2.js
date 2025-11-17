@@ -1,3 +1,7 @@
+/**
+ * TJMORRIS Excel parser - Model 2
+ * @module parsers/tjmorris/model2
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -6,11 +10,6 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const { rowFinder } = require("../../../utilities/row-finder");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * TJMORRIS Excel parser - Model 2
- * @module parsers/tjmorris/model2
- */
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 const { mapParser } = require("../../parser-map");

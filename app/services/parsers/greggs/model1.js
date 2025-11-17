@@ -1,3 +1,7 @@
+/**
+ * GREGGS PDF AI parser - Model 1
+ * @module parsers/greggs/model1
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const { mapPdfParser } = require("../../parser-map");
@@ -6,11 +10,6 @@ const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * GREGGS PDF AI parser - Model 1
- * @module parsers/greggs/model1
- */
 const {
   extractPdf,
   extractEstablishmentNumbers,

@@ -1,3 +1,7 @@
+/**
+ * BOOKER non-AI PDF parser - Model 1
+ * @module parsers/booker/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers-pdf");
@@ -11,11 +15,6 @@ const {
   findSmaller,
   extractEstablishmentNumbers,
 } = require("../../../utilities/pdf-helper");
-
-/**
- * BOOKER non-AI PDF parser - Model 1
- * @module parsers/booker/model1
- */
 
 /**
  * Parse the supplied PDF packing list (non-AI) into structured items.

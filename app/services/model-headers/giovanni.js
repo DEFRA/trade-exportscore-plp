@@ -1,12 +1,12 @@
-const commodityCodeRegex = /Commodity Code/i;
-const netWeight = /Net Weight/i;
-
 /**
  * Giovanni model headers
  *
  * Provides establishment number regexes and header regex mappings
  * for Giovanni packing list variants used by matchers.
  */
+const commodityCodeRegex = /Commodity Code/i;
+const netWeight = /Net Weight/i;
+
 const giovanniHeaders = {
   GIOVANNI1: {
     establishmentNumber: {

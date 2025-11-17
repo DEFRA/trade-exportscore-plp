@@ -1,3 +1,10 @@
+/**
+ * ASDA Excel parser - Model 1
+ *
+ * Parses packing lists exported from ASDA Excel sheets matching the ASDA1
+ * header model and returns a combined parser result.
+ * @module parsers/asda/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -9,14 +16,6 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * ASDA Excel parser - Model 1
- *
- * Parses packing lists exported from ASDA Excel sheets matching the ASDA1
- * header model and returns a combined parser result.
- * @module parsers/asda/model1
- */
 
 /**
  * Parse the provided packing list JSON for ASDA model 1.

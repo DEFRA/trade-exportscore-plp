@@ -1,3 +1,7 @@
+/**
+ * ICELAND PDF AI parser - Model 1
+ * @module parsers/iceland/model1
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const { mapPdfParser } = require("../../parser-map");
@@ -6,11 +10,6 @@ const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * ICELAND PDF AI parser - Model 1
- * @module parsers/iceland/model1
- */
 
 /**
  * Parse an ICELAND PDF document extracted by AI (Form Recognizer).

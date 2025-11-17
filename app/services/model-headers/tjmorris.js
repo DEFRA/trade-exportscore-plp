@@ -1,11 +1,11 @@
-const netWeight = /Net Weight/i;
-
 /**
  * TJ Morris model headers
  *
  * Provides establishment number regexes and header regex mappings
  * for TJ Morris packing list variants used by matchers.
  */
+const netWeight = /Net Weight/i;
+
 const tjmorrisHeaders = {
   TJMORRIS1: {
     establishmentNumber: {

@@ -1,3 +1,7 @@
+/**
+ * TURNERS Excel parser - Model 1
+ * @module parsers/turners/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");

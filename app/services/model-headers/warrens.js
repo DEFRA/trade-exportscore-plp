@@ -1,11 +1,11 @@
-const descriptionOfGoodsRegex = /Description of goods/i;
-
 /**
  * Warrens model headers
  *
  * Provides establishment number regexes and header regex mappings
  * for Warrens packing list variants used by matchers.
  */
+const descriptionOfGoodsRegex = /Description of goods/i;
+
 const warrensHeaders = {
   WARRENS1: {
     establishmentNumber: {

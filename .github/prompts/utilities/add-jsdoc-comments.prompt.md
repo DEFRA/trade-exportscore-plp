@@ -10,7 +10,7 @@ You are tasked with adding consistent, high-quality documentation to all JavaScr
 
 For **every JavaScript file** in the folder structure:
 
-1. **Module Header** (before any `require`/`import` statements):
+1. **Module Header** (MUST be the very first line in the file, before any code):
    ```javascript
    /**
     * Module purpose - short summary.
@@ -32,7 +32,7 @@ For **every JavaScript file** in the folder structure:
 
 ### Style Guidelines
 
-- **Module headers**: Appear before any `require` or `import` statements
+- **Module headers**: MUST be the very first thing in the file (line 1), before any `require`, `import`, or other code
 - **Brevity**: Keep descriptions concise, clear, and focused on behavior
 - **Tone**: Use present tense, active voice, English
 - **Types**: Use simple types (e.g., `Array`, `Object`, `string`, `number`, `boolean`, `Promise`)

@@ -1,11 +1,11 @@
-const netWeight = /Net Weight/i;
-
 /**
  * Savers model headers
  *
  * Provides establishment number regexes and header regex mappings
  * for Savers packing list variants used by matchers.
  */
+const netWeight = /Net Weight/i;
+
 const saversHeaders = {
   SAVERS1: {
     invalidSheets: ["DC Sheet (with Calcs)", "SPS Codes"],

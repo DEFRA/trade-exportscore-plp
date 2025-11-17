@@ -1,3 +1,7 @@
+/**
+ * SAINSBURYS Excel parser - Model 1
+ * @module parsers/sainsburys/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -9,11 +13,6 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * SAINSBURYS Excel parser - Model 1
- * @module parsers/sainsburys/model1
- */
 
 /**
  * Parse the provided packing list JSON for SAINSBURYS model 1.

@@ -1,3 +1,7 @@
+/**
+ * ASDA CSV parser - Model 4
+ * @module parsers/asda/model4
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers-csv");
@@ -9,11 +13,6 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * ASDA CSV parser - Model 4
- * @module parsers/asda/model4
- */
 
 /**
  * Parse the provided CSV-style packing list for ASDA model 4.

@@ -1,3 +1,7 @@
+/**
+ * GIOVANNI Excel parser - Model 1
+ * @module parsers/giovanni/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -7,11 +11,6 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-
-/**
- * GIOVANNI Excel parser - Model 1
- * @module parsers/giovanni/model1
- */
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 

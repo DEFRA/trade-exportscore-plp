@@ -1,12 +1,12 @@
-const commodityCodeRegex = /Commodity Code/i;
-const netWeight = /Net Weight/i;
-
 /**
  * Mars model headers
  *
  * Provides establishment number regexes and header regex mappings
  * for Mars packing list variants used by matchers.
  */
+const commodityCodeRegex = /Commodity Code/i;
+const netWeight = /Net Weight/i;
+
 const marsHeaders = {
   MARS1: {
     establishmentNumber: {
