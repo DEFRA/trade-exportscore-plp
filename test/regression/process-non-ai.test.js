@@ -31,6 +31,7 @@ const config = require("../../app/config");
 const {
   processExcelFile,
   processCsvFile,
+  processPdfFile,
 } = require("../../app/utilities/file-processor");
 
 // Only run this long-running QA test when RUN_QA_REGRESSION is explicitly set ("1" or "true").
@@ -49,8 +50,12 @@ const isCsvFile = (fileName) => {
   return fileName.toLowerCase().endsWith(".csv");
 };
 
+const isPdfFile = (fileName) => {
+  return fileName.toLowerCase().endsWith(".pdf");
+};
+
 const isFileToInclude = (fileName) => {
-  return isExcelFile(fileName) || isCsvFile(fileName);
+  return isExcelFile(fileName) || isCsvFile(fileName) || isPdfFile(fileName);
 };
 
 const processFile = async (filePath) => {
@@ -58,6 +63,8 @@ const processFile = async (filePath) => {
     return processExcelFile(filePath);
   } else if (isCsvFile(filePath)) {
     return processCsvFile(filePath);
+  } else if (isPdfFile(filePath)) {
+    return processPdfFile(filePath);
   } else {
     return {};
   }
@@ -247,5 +254,5 @@ describe("Excel Process Non-AI", () => {
         }),
       ]),
     );
-  });
+  }, 300000); // 5 minute timeout for regression test
 });
