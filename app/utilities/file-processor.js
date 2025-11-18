@@ -95,13 +95,6 @@ async function processPdfFile(filename, dispatchLocation = null) {
  * @param {string|null} dispatchLocation - Dispatch location identifier
  * @returns {Promise<Object>} Parsed packing list object
  */
-/**
- * Process converted data through parser and persist if matched.
- * @param {Object} data - Converted packing list data
- * @param {string} filename - Original filename
- * @param {string|null} dispatchLocation - Dispatch location identifier
- * @returns {Promise<Object>} Parsed packing list object
- */
 async function processData(data, filename, dispatchLocation) {
   const packingList = await findParser(data, filename, dispatchLocation);
 

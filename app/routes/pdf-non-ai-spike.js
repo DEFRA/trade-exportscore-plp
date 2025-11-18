@@ -6,7 +6,7 @@ const logger = require("../utilities/logger");
 // Uncomment to see pdf elements positions
 const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
-const { groupByYCoordinate } = require("../utilities/text-grouping");
+const { groupByYCoordinate } = require("../utilities/pdf-helper");
 
 module.exports = {
   method: "GET",
