@@ -1,3 +1,10 @@
+/**
+ * Create packing list message route
+ *
+ * Converts an Excel file to parser JSON, runs the parser, and builds
+ * the outbound IdComs message structure so callers can preview the
+ * message payload that would be sent.
+ */
 const createMessage = require("../messaging/create-message");
 const { parsePackingList } = require("../services/parser-service");
 const config = require("../config");

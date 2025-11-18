@@ -5,12 +5,23 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../document-intelligence");
+/**
+ * Iceland matcher (model 1)
+ *
+ * Detects Iceland packing lists parsed via Document Intelligence.
+ */
 const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Iceland matcher (model 1) matches Document Intelligence parsed documents.
+ * @param {Buffer|Object} packingList - PDF buffer or parsed document object
+ * @param {string} filename - Source filename for logging
+ * @returns {Promise<Object>} result - Object with `isMatched` and optional `document` fields
+ */
 async function matches(packingList, filename) {
   const result = {
     isMatched: matcherResult.GENERIC_ERROR,

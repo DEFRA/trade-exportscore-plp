@@ -1,3 +1,7 @@
+/**
+ * TESCOS Excel parser - Model 3
+ * @module parsers/tescos/model3
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");

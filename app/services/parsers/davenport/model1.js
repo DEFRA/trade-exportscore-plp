@@ -1,3 +1,7 @@
+/**
+ * DAVENPORT Excel parser - Model 1
+ * @module parsers/davenport/model1
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const headers = require("../../model-headers");
@@ -10,6 +14,11 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Parse the provided packing list JSON for DAVENPORT model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);

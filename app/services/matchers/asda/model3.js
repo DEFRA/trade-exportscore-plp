@@ -1,3 +1,10 @@
+/**
+ * ASDA Model 3 matcher
+ *
+ * Detects whether a provided Excel-converted packing list matches
+ * the ASDA Model 3 format by checking the establishment number and
+ * header row patterns.
+ */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
 const regex = require("../../../utilities/regex");
@@ -6,6 +13,12 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Check whether the provided packing list matches ASDA Model 3.
+ * @param {Object} packingList - Excel->JSON representation keyed by sheet
+ * @param {string} filename - Source filename for logging
+ * @returns {string} - One of matcherResult codes
+ */
 function matches(packingList, filename) {
   try {
     let result;

@@ -1,3 +1,7 @@
+/**
+ * TURNERS Excel parser - Model 1
+ * @module parsers/turners/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -10,13 +14,22 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-// Helper function to determine if an item is a header row (mandatory headers only)
+/**
+ * Helper function to determine if an item is a header row (mandatory headers only).
+ * @param {Object} item - Row item returned by `mapParser`.
+ * @returns {boolean} True when the row matches header patterns.
+ */
 function isHeaderRow(item) {
   return Object.entries(headers.TURNERS1.regex).every(([key, pattern]) =>
     pattern.test(item[key]),
   );
 }
 
+/**
+ * Parse the provided packing list JSON for TURNERS model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);

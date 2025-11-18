@@ -1,3 +1,7 @@
+/**
+ * TJMORRIS Excel parser - Model 1
+ * @module parsers/tjmorris/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -7,6 +11,11 @@ const path = require("node:path");
 const { rowFinder } = require("../../../utilities/row-finder");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Parse the provided packing list JSON for TJMORRIS model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
@@ -65,6 +74,11 @@ function parse(packingListJson) {
   }
 }
 
+/**
+ * Return true when the column contains any of the expected fields.
+ * @param {Object} col - Column object from the sheet row.
+ * @returns {boolean}
+ */
 function isNotEmpty(col) {
   return (
     col.J || //"TREATMENTTYPE"
@@ -76,6 +90,11 @@ function isNotEmpty(col) {
   );
 }
 
+/**
+ * Header callback that checks for the net weight header in column R.
+ * @param {Object} x - Row object to check.
+ * @returns {boolean}
+ */
 function callback(x) {
   return x.R?.toLowerCase().includes("net weight");
 }

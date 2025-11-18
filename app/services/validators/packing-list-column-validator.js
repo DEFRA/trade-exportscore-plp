@@ -1,3 +1,11 @@
+/**
+ * Packing list column-level validators and failure reason generation.
+ *
+ * Provides composition of per-item validators and helpers that turn those
+ * validation results into user-facing failure reason strings used by the
+ * packing-list validation pipeline.
+ */
+
 const {
   hasMissingDescription,
   hasMissingIdentifier,
@@ -16,11 +24,21 @@ const {
 const parserModel = require("../parser-model");
 const failureReasonsDescriptions = require("./packing-list-failure-reasons");
 
+/**
+ * Validate a full packing list and produce final failure output.
+ * @param {Object} packingList - The parsed packing list object.
+ * @returns {Object} result - Validation result containing either `hasAllFields: true` or `hasAllFields: false` and `failureReasons`.
+ */
 function validatePackingList(packingList) {
   const validationResult = validatePackingListByIndexAndType(packingList);
   return generateFailuresByIndexAndTypes(validationResult, packingList);
 }
 
+/**
+ * Run the set of validation checks and return a structured map of failing row locations.
+ * @param {Object} packingList - The parsed packing list object.
+ * @returns {Object} validationSummary - Collections of failing locations grouped by failure type and a boolean `hasAllFields`.
+ */
 function validatePackingListByIndexAndType(packingList) {
   const basicValidationResults = getBasicValidationResults(packingList);
   const packingListStatusResults = getPackingListStatusResults(packingList);
@@ -38,6 +56,11 @@ function validatePackingListByIndexAndType(packingList) {
   };
 }
 
+/**
+ * Run basic column-level validators against each item row and collect failing row locations.
+ * @param {Object} packingList - The parsed packing list object.
+ * @returns {Object} basicResults - Arrays of `row_location` values for each basic failure category.
+ */
 function getBasicValidationResults(packingList) {
   return {
     missingIdentifier: findItems(packingList.items, hasMissingIdentifier),
@@ -51,6 +74,11 @@ function getBasicValidationResults(packingList) {
   };
 }
 
+/**
+ * Determine high-level status flags for the packing list (RMS presence, emptiness, parser match etc.).
+ * @param {Object} packingList - The parsed packing list object.
+ * @returns {Object} statusResults - Boolean flags describing packing list status.
+ */
 function getPackingListStatusResults(packingList) {
   const hasRemos = packingList.registration_approval_number !== null;
   const isEmpty = packingList.items.length === 0;
@@ -69,6 +97,11 @@ function getPackingListStatusResults(packingList) {
   };
 }
 
+/**
+ * Run country-of-origin related validators when enabled and collect failing locations.
+ * @param {Object} packingList - The parsed packing list object.
+ * @returns {Object} cooResults - Arrays of `row_location` values for country-of-origin related failures.
+ */
 function getCountryOfOriginValidationResults(packingList) {
   if (!packingList.validateCountryOfOrigin) {
     return {
@@ -89,6 +122,13 @@ function getCountryOfOriginValidationResults(packingList) {
   };
 }
 
+/**
+ * Determine whether all required fields are present and valid across the packing list.
+ * @param {Object} basicResults - Result of `getBasicValidationResults`.
+ * @param {Object} statusResults - Result of `getPackingListStatusResults`.
+ * @param {Object} countryOfOriginResults - Result of `getCountryOfOriginValidationResults`.
+ * @returns {boolean} hasAll - True when no missing/invalid fields and RMS & CO checks pass.
+ */
 function calculateHasAllFields(
   basicResults,
   statusResults,
@@ -126,12 +166,24 @@ function calculateHasAllFields(
   );
 }
 
+/**
+ * Helper to map item rows to their `row_location` when a predicate matches.
+ * @param {Array} items - Array of packing list item objects.
+ * @param {Function} fn - Predicate function that returns truthy for failing rows.
+ * @returns {Array} locations - Array of `row_location` objects for matching rows.
+ */
 function findItems(items, fn) {
   return items
     .map((val) => (fn(val) ? val.row_location : null))
     .filter((val) => val !== null);
 }
 
+/**
+ * Turn the validation summary into final failure text (or success flag).
+ * @param {Object} validationResult - Output of `validatePackingListByIndexAndType`.
+ * @param {Object} packingList - The parsed packing list object used for header flags.
+ * @returns {Object} result - If valid returns `{ hasAllFields: true }` else `{ hasAllFields: false, failureReasons: string }`.
+ */
 function generateFailuresByIndexAndTypes(validationResult, packingList) {
   if (validationResult.hasAllFields && validationResult.hasSingleRms) {
     return {
@@ -178,12 +230,23 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
   }
 }
 
+/**
+ * Append multiple-RMS failure reason to the accumulated reasons when present.
+ * @param {Object} validationResult - Validation summary object.
+ * @param {Object} reasonsAndChecks - Accumulator containing `failureReasons` and `checks`.
+ */
 function addSingleRmsFailureReason(validationResult, reasonsAndChecks) {
   if (!validationResult.hasSingleRms) {
     reasonsAndChecks.failureReasons += failureReasonsDescriptions.MULTIPLE_RMS;
   }
 }
 
+/**
+ * Either append a net-weight-unit blanket failure reason or add a check entry for rows needing attention.
+ * @param {Object} validationResult - Validation summary object.
+ * @param {boolean} unitInHeader - True when a unit-of-weight appears in the header.
+ * @param {Object} reasonsAndChecks - Accumulator containing `failureReasons` and `checks`.
+ */
 function addNetWeightFailuireReasonOrCheck(
   validationResult,
   unitInHeader,
@@ -201,6 +264,12 @@ function addNetWeightFailuireReasonOrCheck(
   }
 }
 
+/**
+ * Either append a blanket NIRMS failure reason or add a check entry for per-row missing NIRMS.
+ * @param {Object} validationResult - Validation summary object.
+ * @param {boolean} blanketNirms - True when a blanket NIRMS statement is present on the packing list.
+ * @param {Object} reasonsAndChecks - Accumulator containing `failureReasons` and `checks`.
+ */
 function addNirmsFailureReasonOrCheck(
   validationResult,
   blanketNirms,
@@ -218,6 +287,11 @@ function addNirmsFailureReasonOrCheck(
   }
 }
 
+/**
+ * Build the ordered list of validation checks used to generate per-row failure descriptions.
+ * @param {Object} validationResult - Validation summary object.
+ * @returns {Array} checks - Array of { collection, description } entries used by the failure text generator.
+ */
 function createValidationChecks(validationResult) {
   return [
     {
@@ -267,6 +341,13 @@ function createValidationChecks(validationResult) {
   ];
 }
 
+/**
+ * Convert a collection of row locations into a user-facing failure reason string.
+ * Chooses page/sheet-aware formatting when available.
+ * @param {string} description - Short failure description text.
+ * @param {Array} rows - Array of row location objects (may include sheetName or pageNumber).
+ * @returns {string} reasonText - Human readable failure sentence(s) ending in newline when applicable.
+ */
 function generateFailureReasonFromRows(description, rows) {
   if (rows.length === 0) {
     return "";
@@ -289,6 +370,12 @@ function generateFailureReasonFromRows(description, rows) {
 
 const maxItemsToShow = 3;
 
+/**
+ * Format a failure reason when only row numbers are available.
+ * @param {string} description - Short failure description text.
+ * @param {Array} rows - Array of row location objects containing `rowNumber`.
+ * @returns {string} formatted - Human readable sentence describing row numbers.
+ */
 function generateByRow(description, rows) {
   if (rows.length === 0) {
     return "";
@@ -308,6 +395,14 @@ function generateByRow(description, rows) {
   }
 }
 
+/**
+ * Generic formatter that uses a provided `generateDescription` to format named locations
+ * such as sheet+row or page+row descriptions.
+ * @param {Function} generateDescription - Function that returns a short description for a single row-location object.
+ * @param {string} description - Short failure description text.
+ * @param {Array} rows - Array of row location objects.
+ * @returns {string} formatted - Human readable sentence describing locations.
+ */
 function generateRowLocation(generateDescription, description, rows) {
   if (rows.length === 0) {
     return "";
@@ -327,14 +422,29 @@ function generateRowLocation(generateDescription, description, rows) {
   }
 }
 
+/**
+ * Create a sheet-aware location description.
+ * @param {Object} row - Row-location object with `sheetName` and `rowNumber`.
+ * @returns {string} text - Formatted location such as `sheet "Sheet 1" row 2`.
+ */
 function generateLocationSheetDescription(row) {
   return `sheet "${row.sheetName}" row ${row.rowNumber}`;
 }
 
+/**
+ * Create a page-aware location description.
+ * @param {Object} row - Row-location object with `pageNumber` and `rowNumber`.
+ * @returns {string} text - Formatted location such as `page 2 row 5`.
+ */
 function generateLocatioPageDescription(row) {
   return `page ${row.pageNumber} row ${row.rowNumber}`;
 }
 
+/**
+ * Determine any global failure reason text (no-match / missing REMOS / empty data).
+ * @param {Object} validationResult - Validation summary object.
+ * @returns {string|null} text - Either `null` for no-match, a global failure reason string, or empty string.
+ */
 function getFailureReasons(validationResult) {
   if (validationResult.noMatch) {
     return null;

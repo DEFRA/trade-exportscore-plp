@@ -1,3 +1,7 @@
+/**
+ * MARS Excel parser - Model 1
+ * @module parsers/mars/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -7,6 +11,12 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+
+/**
+ * Parse the provided packing list JSON for MARS model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 

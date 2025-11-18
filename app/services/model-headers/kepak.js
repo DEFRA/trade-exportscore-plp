@@ -1,3 +1,9 @@
+/**
+ * Kepak model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Kepak packing list variants used by matchers.
+ */
 const commodityCodeRegex = /Commodity Code/i;
 const netWeight = /Net Weight/i;
 

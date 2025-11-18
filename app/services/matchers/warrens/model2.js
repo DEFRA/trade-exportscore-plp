@@ -1,3 +1,8 @@
+/**
+ * Warrens matcher (model 2)
+ *
+ * Alternate Warrens matcher variant which validates header rows.
+ */
 const matcherResult = require("../../matcher-result");
 const regex = require("../../../utilities/regex");
 const headers = require("../../model-headers");
@@ -6,6 +11,13 @@ const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const { matchesHeader } = require("../../matches-header");
 
+/**
+ * Warrens matcher helper for model 2.
+ * @param {Object} packingList - Excel->JSON representation keyed by sheet
+ * @param {string} filename - Source filename for logging
+ * @param {RegExp} regexExpression - Establishment number regex for the model
+ * @returns {string} matcherResult - One of the matcher result codes
+ */
 function matchesModel(packingList, filename, regexExpression) {
   try {
     let result = matcherResult.EMPTY_FILE; // Initialise to EMPTY_FILE as spreadsheet with only invalid sheets is equivalent to an empty file.
@@ -48,6 +60,12 @@ function matchesModel(packingList, filename, regexExpression) {
   }
 }
 
+/**
+ * Check whether the provided packing list matches Warrens Model 2.
+ * @param {Object} packingList - Excel->JSON representation keyed by sheet
+ * @param {string} filename - Source filename for logging
+ * @returns {string} - One of matcherResult codes
+ */
 function matches(packingList, filename) {
   return matchesModel(
     packingList,

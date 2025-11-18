@@ -1,3 +1,11 @@
+/**
+ * Parser selector helpers
+ *
+ * Helpers to select the appropriate parser implementation for Excel, CSV
+ * and PDF packing lists based on header matching rules and REMOS values.
+ * @module services/parsers/parsers
+ */
+
 const {
   parsersExcel,
   parsersCsv,

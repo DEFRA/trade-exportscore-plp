@@ -1,3 +1,9 @@
+/**
+ * M&S model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for M&S packing list variants used by matchers.
+ */
 const pdfMandsHeaders = {
   MANDS1: {
     establishmentNumber: {

@@ -1,5 +1,10 @@
-// Object.freeze() has been used to both freeze the object (make it imutable which is preferable where possible to avoid future bugs)
-// and to improve performance slightly (not essential but a benefit from freezing)
+/**
+ * Matcher result enumeration
+ *
+ * Frozen enumeration of possible matcher outcomes used throughout the matcher-parser pipeline.
+ * Object is frozen for immutability and slight performance gain.
+ */
+
 const MatcherResult = Object.freeze({
   WRONG_EXTENSION: 0,
   WRONG_ESTABLISHMENT_NUMBER: 1,

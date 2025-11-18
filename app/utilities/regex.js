@@ -1,20 +1,48 @@
+/**
+ * Regex helper utilities
+ *
+ * A collection of helpers that simplify searching over the common data
+ * structures used in the project (arrays of row objects where each property
+ * is a string). Functions are intentionally defensive about input shapes and
+ * focus on returning small, usable results (booleans, first match, arrays).
+ */
+
 const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
 
-// Helper function to validate string properties and create a search pattern
+/**
+ * Create case-insensitive global regex pattern.
+ * @param {RegExp|string} regex - Regex to convert
+ * @returns {RegExp} Global case-insensitive regex
+ */
 function createSearchPattern(regex) {
   return new RegExp(regex, "gi"); // 'g' for global, 'i' for case-insensitive
 }
 
+/**
+ * Check if object property is a string.
+ * @param {Object} obj - Object to check
+ * @param {string} key - Property key
+ * @returns {boolean} True if property exists and is string
+ */
 function isValidStringProperty(obj, key) {
   return obj.hasOwnProperty(key) && typeof obj[key] === "string";
 }
 
-// Extracted function to get valid string properties
+/**
+ * Get all string property keys from object.
+ * @param {Object} obj - Object to extract from
+ * @returns {Array<string>} Array of property keys that are strings
+ */
 function getStringProperties(obj) {
   return Object.keys(obj).filter((key) => isValidStringProperty(obj, key));
 }
 
-// Test if any string in the array of objects matches the regex
+/**
+ * Test if any string property in array matches regex.
+ * @param {RegExp|string} regex - Pattern to test
+ * @param {Array<Object>} array - Array of objects to search
+ * @returns {boolean} True if any match found
+ */
 function test(regex, array) {
   const searchPattern = createSearchPattern(regex);
 
@@ -31,7 +59,12 @@ function test(regex, array) {
   return false;
 }
 
-// Find and return the matched substring in the array of objects
+/**
+ * Find and return first matched substring in array.
+ * @param {RegExp|string} regex - Pattern to match
+ * @param {Array<Object>} array - Array of objects to search
+ * @returns {string|null} Matched substring or null
+ */
 function findMatch(regex, array) {
   const searchPattern = createSearchPattern(regex);
 
@@ -50,7 +83,12 @@ function findMatch(regex, array) {
   return null;
 }
 
-// Check if ALL regex patterns from the array match any string property in the object
+/**
+ * Check if all regex patterns match any string property in object.
+ * @param {Array<RegExp>} regexArray - Array of patterns to test
+ * @param {Object} obj - Object to search
+ * @returns {boolean} True if all patterns match
+ */
 function testAllPatterns(regexArray, obj) {
   const searchPatterns = regexArray.map((regex) => createSearchPattern(regex));
 
@@ -73,6 +111,11 @@ function testAllPatterns(regexArray, obj) {
   return true; // All patterns have a match in the object
 }
 
+/**
+ * Extract weight unit from header string.
+ * @param {string} header - Header string to search
+ * @returns {string|null} Matched unit or null
+ */
 function findUnit(header) {
   const unitRegex = /(KGS?|KILOGRAMS?|KILOS?)/i; //regex of all possible units
   const match = header?.match(unitRegex);
@@ -82,6 +125,13 @@ function findUnit(header) {
   return null;
 }
 
+/**
+ * Find all unique matches across array of objects.
+ * @param {RegExp} searchPattern - Pattern to match
+ * @param {Array<Object>} array - Array of objects to search
+ * @param {Array<string>} matches - Existing matches array
+ * @returns {Array<string>} Updated matches array
+ */
 function findAllMatches(searchPattern, array, matches) {
   for (const obj of array) {
     const stringProperties = getStringProperties(obj);
@@ -98,6 +148,12 @@ function findAllMatches(searchPattern, array, matches) {
   return matches;
 }
 
+/**
+ * Add match to array if not already present (case-insensitive).
+ * @param {string} match - Match to add
+ * @param {Array<string>} matches - Existing matches
+ * @returns {Array<string>} Updated matches array
+ */
 function addMatch(match, matches) {
   if (
     !matches.some((v) => v.toLocaleUpperCase() === match.toLocaleUpperCase())
@@ -107,7 +163,12 @@ function addMatch(match, matches) {
   return matches;
 }
 
-// function to return row and column position of first match, input is json
+/**
+ * Find row and column position of first regex match in JSON array.
+ * @param {Array<Object>} json - Array of row objects
+ * @param {RegExp} regex - Pattern to find
+ * @returns {Array} [rowIndex, colKey] or [null, null]
+ */
 function positionFinder(json, regex) {
   let colIndex = null;
   let rowIndex = null;

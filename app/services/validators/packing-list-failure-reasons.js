@@ -1,4 +1,7 @@
-// Failure reason descriptions for packing list validation
+/**
+ * Human readable failure reason strings used by the packing list validators.
+ * Keys are intentionally short identifiers used throughout the validation pipeline.
+ */
 const failureReasons = {
   IDENTIFIER_MISSING: "Identifier is missing",
   PRODUCT_CODE_INVALID: "Product code is invalid",

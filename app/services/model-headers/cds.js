@@ -1,3 +1,9 @@
+/**
+ * CDS model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for CDS packing list variants used by matchers.
+ */
 const cdsHeaders = {
   CDS1: {
     establishmentNumber: {

@@ -1,3 +1,9 @@
+/**
+ * Tesco model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Tesco packing list variants used by matchers.
+ */
 const descriptionRegex = /Product\/ Part Number description/i;
 const descriptionOfGoodsRegex = /Description of goods/i;
 const commodityCodeRegex = /Commodity Code/i;

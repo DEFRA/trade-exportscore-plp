@@ -1,3 +1,7 @@
+/**
+ * BOOKER non-AI PDF parser - Model 1
+ * @module parsers/booker/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers-pdf");
@@ -12,6 +16,12 @@ const {
   extractEstablishmentNumbers,
 } = require("../../../utilities/pdf-helper");
 
+/**
+ * Parse the supplied PDF packing list (non-AI) into structured items.
+ * @param {Buffer|Object} packingList - Raw PDF buffer or helper object used
+ * by the PDF extraction utility.
+ * @returns {Promise<Object>} Combined parser result object.
+ */
 async function parse(packingList) {
   try {
     let packingListContents = [];
@@ -62,6 +72,13 @@ async function parse(packingList) {
   }
 }
 
+/**
+ * Determine the Y coordinates for rows between header and totals on a PDF
+ * page. This is a helper used by the BOOKER non-AI parser.
+ * @param {Array} pageContent - Array of PDF text items with positions.
+ * @param {string} model - Parser model key (e.g., 'BOOKER1').
+ * @returns {Array<number>} Unique Y coordinates for rows.
+ */
 function getYsForRows(pageContent, model) {
   try {
     const headerY = headers[model].maxHeadersY;
