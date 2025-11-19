@@ -10,6 +10,7 @@ const regex = require("../utilities/regex");
 const logger = require("../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+const { filterValidatableRows } = require("./validators/row-filter-utilities");
 
 /**
  * Find column keys matching header regex patterns.
@@ -95,10 +96,30 @@ function mapParser(
     headerRow,
   );
 
+  // Filter rows if configuration is present
+  let rowsToProcess;
+  if (header.skipTotalsRows || header.skipRepeatedHeaders) {
+    rowsToProcess = filterValidatableRows(
+      packingListJson,
+      headerRow,
+      dataRow,
+      headerCols,
+      header,
+      sheetName,
+    );
+  } else {
+    // Fallback to original behavior
+    rowsToProcess = packingListJson.slice(dataRow).map((row, index) => ({
+      row,
+      originalIndex: dataRow + index,
+      actualRowNumber: dataRow + index + 1,
+      sheetName,
+    }));
+  }
+
   // parse the packing list contents based on columns identified
-  const packingListContents = packingListJson
-    .slice(dataRow)
-    .map((col, rowPos) => {
+  const packingListContents = rowsToProcess.map(
+    ({ row: col, actualRowNumber }) => {
       const hasData = isNotEmpty(col, headerCols);
 
       return {
@@ -122,11 +143,12 @@ function mapParser(
         country_of_origin: columnValue(col[headerCols.country_of_origin]),
         nirms: getNirms(col, headerCols, blanketValues, hasData),
         row_location: {
-          rowNumber: dataRow + rowPos + 1,
+          rowNumber: actualRowNumber,
           sheetName,
         },
       };
-    });
+    },
+  );
   return packingListContents;
 }
 
