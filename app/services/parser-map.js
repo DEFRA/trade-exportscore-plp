@@ -461,7 +461,7 @@ function extractCommodityCodeDigits(input) {
   }
 
   // Match if input starts with 4 to 14 digits
-  const match = RegExp(/^(\d{4,14})/).exec(input);
+  const match = new RegExp(/^(\d{4,14})/).exec(input);
   if (match) {
     return match[1];
   }

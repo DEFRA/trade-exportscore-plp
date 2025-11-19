@@ -90,7 +90,9 @@ function matchesTotalsPattern(row, headerCols, pattern) {
  * @returns {boolean} - True if field has content
  */
 function hasNonEmptyField(row, colKey) {
-  if (!colKey) return false;
+  if (!colKey) {
+    return false;
+  }
   const value = row[colKey];
   return value && typeof value === "string" && value.trim().length > 0;
 }
