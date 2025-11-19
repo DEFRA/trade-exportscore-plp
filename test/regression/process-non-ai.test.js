@@ -216,7 +216,7 @@ describe("Excel Process Non-AI", () => {
     // Find all Excel files recursively
     const filesToProcess = findFiles(
       packingListDir,
-      packingListDir,
+      basePackingListDir,
       rootFolderName,
     );
 
@@ -243,11 +243,7 @@ describe("Excel Process Non-AI", () => {
 
         // Lookup expected result from JSON, fallback to filename pattern
         // Use full path if subFolder exists, otherwise just filename
-        const lookupKey = fileInfo.folder
-          ? fileInfo.subFolder
-            ? `${fileInfo.folder}/${fileInfo.subFolder}/${fileInfo.fileName}`
-            : `${fileInfo.folder}/${fileInfo.fileName}`
-          : fileInfo.fileName;
+        const lookupKey = fileInfo.relativePath;
 
         const expectedFromJson = expectedResultsMap
           ? expectedResultsMap.find((item) => item.filename === lookupKey)
@@ -336,49 +332,6 @@ describe("Excel Process Non-AI", () => {
         console.log(
           `Failed to process ${fileInfo.relativePath}: ${error.message}`,
         );
-
-        // Lookup expected result from JSON, fallback to filename pattern
-        const lookupKey = `${fileInfo.subFolder}/${fileInfo.fileName}`;
-        const expectedFromJson = expectedResultsMap
-          ? expectedResultsMap.find((item) => item.filename === lookupKey)
-          : null;
-
-        let expected = "Unknown";
-        let expectedMessage = "";
-
-        if (expectedFromJson) {
-          expected = expectedFromJson.expected_outcome;
-          expectedMessage = (expectedFromJson.failure_reason || "")
-            .replace(/\n/g, " ") // Remove newlines
-            .replace(/"/g, '""') // Escape quotes for CSV
-            .trim(); // Remove extra whitespace
-        } else {
-          // Fallback to filename pattern
-          const fileName = fileInfo.fileName.toLowerCase();
-          if (fileName.includes("_pass")) {
-            expected = "Pass";
-          } else if (fileName.includes("_fail")) {
-            expected = "Fail";
-          } else if (fileName.includes("_unparse")) {
-            expected = "Unparse";
-          }
-        }
-
-        const testPassed = expected.toLowerCase() === "fail" ? "Pass" : "Fail"; // Error = Fail result
-        const errorMessage = error.message
-          .replace(/\n/g, " ")
-          .replace(/"/g, '""')
-          .trim();
-
-        let csvErrorRow;
-        if (expectedResultsMap) {
-          csvErrorRow = `${idCounter},"${fileInfo.folder}","${fileInfo.subFolder}","${fileInfo.fileName}","${expected}","ERROR","${testPassed}","${expectedMessage}","${errorMessage}","N/A"`;
-        } else {
-          csvErrorRow = `${idCounter},"${fileInfo.folder}","${fileInfo.subFolder}","${fileInfo.fileName}","${expected}","ERROR","${testPassed}","${errorMessage}"`;
-        }
-
-        csvRows.push(csvErrorRow);
-        idCounter++;
       }
     }
 
