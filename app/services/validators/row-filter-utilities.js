@@ -119,7 +119,7 @@ function hasNumericData(row, headerCols) {
 function isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config) {
   if (!config.skipRepeatedHeaders) return false;
 
-  const mappedFields = Object.values(headerCols).filter((colKey) => colKey);
+  const mappedFields = Object.values(headerCols).filter(Boolean);
   if (mappedFields.length === 0) return false;
 
   const headerMatches = mappedFields.filter((colKey) =>
@@ -150,10 +150,11 @@ function isHeaderMatch(row, originalHeaderRow, colKey) {
     return true;
   }
 
+  const stringLength5 = 5;
   // Partial match for strings >= 5 characters
   if (
-    headerValue.length >= 5 &&
-    currentValue.includes(headerValue.substring(0, 5))
+    headerValue.length >= stringLength5 &&
+    currentValue.includes(headerValue.substring(0, stringLength5))
   ) {
     return true;
   }
@@ -163,7 +164,6 @@ function isHeaderMatch(row, originalHeaderRow, colKey) {
   ) {
     return true;
   }
-
   return false;
 }
 
