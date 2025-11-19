@@ -11,8 +11,9 @@
  * @returns {boolean} - True if row is a totals row
  */
 function isTotalsRow(row, headerCols, config) {
-  if (!config.skipTotalsRows) return false;
-
+  if (!config.skipTotalsRows) {
+    return false;
+  }
   // Check for totals keywords in description field
   if (hasTotalsKeyword(row, headerCols, config)) {
     return true;
@@ -44,7 +45,7 @@ function hasTotalsKeyword(row, headerCols, config) {
   }
 
   const keywordsPattern = new RegExp(
-    `\\b(${config.totalsRowKeywords.join("|")})\\b`,
+    String.raw`\b(${config.totalsRowKeywords.join("|")})\b`,
     "i",
   );
   return keywordsPattern.test(description);
@@ -117,16 +118,21 @@ function hasNumericData(row, headerCols) {
  * @returns {boolean} - True if row is a repeated header
  */
 function isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config) {
-  if (!config.skipRepeatedHeaders) return false;
+  if (!config.skipRepeatedHeaders) {
+    return false;
+  }
 
   const mappedFields = Object.values(headerCols).filter(Boolean);
-  if (mappedFields.length === 0) return false;
+  if (mappedFields.length === 0) {
+    return false;
+  }
 
   const headerMatches = mappedFields.filter((colKey) =>
     isHeaderMatch(row, originalHeaderRow, colKey),
   ).length;
 
-  const threshold = config.headerMatchThreshold || 0.6;
+  const defaultHeaderMatchThreshold = 0.6;
+  const threshold = config.headerMatchThreshold || defaultHeaderMatchThreshold;
   return headerMatches >= Math.floor(mappedFields.length * threshold);
 }
 
@@ -159,8 +165,8 @@ function isHeaderMatch(row, originalHeaderRow, colKey) {
     return true;
   }
   if (
-    currentValue.length >= 5 &&
-    headerValue.includes(currentValue.substring(0, 5))
+    currentValue.length >= stringLength5 &&
+    headerValue.includes(currentValue.substring(0, stringLength5))
   ) {
     return true;
   }
