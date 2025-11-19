@@ -119,38 +119,52 @@ function hasNumericData(row, headerCols) {
 function isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config) {
   if (!config.skipRepeatedHeaders) return false;
 
-  let headerMatches = 0;
-  const mappedFields = Object.entries(headerCols).filter(
-    ([field, colKey]) => colKey,
-  );
-  const totalMappedFields = mappedFields.length;
+  const mappedFields = Object.values(headerCols).filter((colKey) => colKey);
+  if (mappedFields.length === 0) return false;
 
-  if (totalMappedFields === 0) return false;
+  const headerMatches = mappedFields.filter((colKey) =>
+    isHeaderMatch(row, originalHeaderRow, colKey),
+  ).length;
 
-  for (const entry of mappedFields) {
-    const colKey = entry[1];
-    if (row[colKey] && originalHeaderRow[colKey]) {
-      const currentValue = String(row[colKey]).toLowerCase().trim();
-      const headerValue = String(originalHeaderRow[colKey])
-        .toLowerCase()
-        .trim();
+  const threshold = config.headerMatchThreshold || 0.6;
+  return headerMatches >= Math.floor(mappedFields.length * threshold);
+}
 
-      // Check for exact match or partial header text match
-      if (
-        currentValue === headerValue ||
-        (headerValue.length >= 5 &&
-          currentValue.includes(headerValue.substring(0, 5))) ||
-        (currentValue.length >= 5 &&
-          headerValue.includes(currentValue.substring(0, 5)))
-      ) {
-        headerMatches++;
-      }
-    }
+/**
+ * Check if a single column matches header value
+ * @param {Object} row - The data row
+ * @param {Object} originalHeaderRow - The original header row
+ * @param {string} colKey - Column key to check
+ * @returns {boolean} - True if values match
+ */
+function isHeaderMatch(row, originalHeaderRow, colKey) {
+  if (!row[colKey] || !originalHeaderRow[colKey]) {
+    return false;
   }
 
-  // Use configured threshold or default to 60%
-  const threshold = config.headerMatchThreshold || 0.6;
-  return headerMatches >= Math.floor(totalMappedFields * threshold);
+  const currentValue = String(row[colKey]).toLowerCase().trim();
+  const headerValue = String(originalHeaderRow[colKey]).toLowerCase().trim();
+
+  // Exact match
+  if (currentValue === headerValue) {
+    return true;
+  }
+
+  // Partial match for strings >= 5 characters
+  if (
+    headerValue.length >= 5 &&
+    currentValue.includes(headerValue.substring(0, 5))
+  ) {
+    return true;
+  }
+  if (
+    currentValue.length >= 5 &&
+    headerValue.includes(currentValue.substring(0, 5))
+  ) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -195,15 +209,19 @@ function filterValidatableRows(
     }))
     .filter(({ row }) => {
       // Skip empty rows
-      if (isEmptyRow(row, headerCols)) return false;
+      if (isEmptyRow(row, headerCols)) {
+        return false;
+      }
 
       // Skip totals rows
-      if (isTotalsRow(row, headerCols, config)) return false;
+      if (isTotalsRow(row, headerCols, config)) {
+        return false;
+      }
 
       // Skip repeated header rows
-      if (isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config))
+      if (isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config)) {
         return false;
-
+      }
       return true;
     });
 }

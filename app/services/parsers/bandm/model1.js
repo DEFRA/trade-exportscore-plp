@@ -8,6 +8,7 @@ const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
+const { mapParser } = require("../../parser-map");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
@@ -16,8 +17,6 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
  * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
  * @returns {Object} Combined parser result.
  */
-const { mapParser } = require("../../parser-map");
-
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
@@ -52,7 +51,7 @@ function parse(packingListJson) {
         sheet,
       );
 
-      packingListContents = packingListContents.concat(packingListContentsTemp);
+      packingListContents.push(...packingListContentsTemp);
     }
 
     return combineParser.combine(
@@ -64,7 +63,7 @@ function parse(packingListJson) {
       headers.BANDM1,
     );
   } catch (err) {
-    logger.logError(filenameForLogging, "matches()", err);
+    logger.logError(filenameForLogging, "parse()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
 }
