@@ -20,7 +20,7 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
-    let packingListContents = [];
+    const packingListContents = [];
     let packingListContentsTemp = [];
     let establishmentNumbers = [];
 
