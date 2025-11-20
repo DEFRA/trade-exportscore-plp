@@ -1,3 +1,9 @@
+/**
+ * Parser model enumeration
+ *
+ * Defines all supported parser model identifiers used throughout the system.
+ * Each value corresponds to a specific retailer format variant.
+ */
 const ParserModel = {
   NOMATCH: "no-match",
   NOREMOS: "no-remos",

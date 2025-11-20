@@ -1,3 +1,9 @@
+/**
+ * Davenport model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Davenport packing list variants used by matchers.
+ */
 const davenportHeaders = {
   DAVENPORT1: {
     invalidSheets: [

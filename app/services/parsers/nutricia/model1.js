@@ -1,3 +1,7 @@
+/**
+ * NUTRICIA Excel parser - Model 1
+ * @module parsers/nutricia/model1
+ */
 const parserModel = require("../../parser-model");
 const combineParser = require("../../parser-combine");
 const { mapParser } = require("../../parser-map");
@@ -7,6 +11,12 @@ const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
+
+/**
+ * Parse the provided packing list JSON for NUTRICIA model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 const { matchesHeader } = require("../../matches-header");
 const MatcherResult = require("../../matcher-result");
 
@@ -26,8 +36,6 @@ function parse(packingListJson) {
     const callback = function (x) {
       return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
     };
-    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
-    const dataRow = headerRow + 1;
 
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
@@ -35,6 +43,9 @@ function parse(packingListJson) {
         packingListJson[sheet],
         establishmentNumbers,
       );
+
+      const headerRow = rowFinder(packingListJson[sheet], callback);
+      const dataRow = headerRow + 1;
 
       packingListContentsTemp = mapParser(
         packingListJson[sheet],

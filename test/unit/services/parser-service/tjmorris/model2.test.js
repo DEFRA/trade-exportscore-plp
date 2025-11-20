@@ -122,4 +122,15 @@ describe("matchesTJMorrisModel2", () => {
         ' in sheet "Sheet1" row 2 and sheet "Sheet1" row 4.\n',
     );
   });
+
+  test("matches valid TJMorris Model 2 file with multiple sheets where headers are on different rows", async () => {
+    const result = await parserService.findParser(
+      model.validModelMultipleSheetsHeadersOnDifferentRows,
+      filename,
+    );
+
+    expect(result.business_checks.all_required_fields_present).toBe(true);
+    expect(result.items[0].row_location.rowNumber).toBe(2);
+    expect(result.items[1].row_location.rowNumber).toBe(3);
+  });
 });

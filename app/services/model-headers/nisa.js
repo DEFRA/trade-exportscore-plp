@@ -1,3 +1,9 @@
+/**
+ * Nisa model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Nisa packing list variants used by matchers.
+ */
 const nisaHeaders = {
   NISA1: {
     establishmentNumber: {

@@ -1171,4 +1171,51 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000280)\n declares that these products are intend for the Green lane and will remain\n in Northern Ireland.",
+      },
+      { I: "RMS-GB-000149-005" },
+      { A: "RMS-GB-000280" },
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      {
+        C: "RS DOUBLE DECKER STD",
+        E: "1602509590",
+        F: "GB",
+        G: 32,
+        H: 30.336,
+      },
+    ],
+    Sheet2: [
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000280)\n declares that these products are intend for the Green lane and will remain\n in Northern Ireland.",
+      },
+      { I: "RMS-GB-000149-005" },
+      { A: "RMS-GB-000280" },
+      {
+        A: "extra row",
+      },
+      {
+        C: "DESCRIPTION",
+        E: "Commodity Code",
+        F: "Country of Origin",
+        G: "Quantity",
+        H: "Net Weight (KG)",
+      },
+      {
+        C: "RS CHICKEN TIKKA STD",
+        E: "1602393000",
+        F: "GB",
+        G: 18,
+        H: 22.5,
+      },
+    ],
+  },
 };

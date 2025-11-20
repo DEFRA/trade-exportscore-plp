@@ -1,3 +1,9 @@
+/**
+ * ASDA model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for ASDA packing list variants used by matchers.
+ */
 const netWeight = /Net Weight/i;
 
 const asdaHeaders = {

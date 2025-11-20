@@ -1,3 +1,9 @@
+/**
+ * CSV non-AI route
+ *
+ * Converts a CSV packing list to parser JSON and returns the
+ * structured packing list result.
+ */
 const config = require("../config");
 const { StatusCodes } = require("http-status-codes");
 const { processCsvFile } = require("../utilities/file-processor");

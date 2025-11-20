@@ -1,11 +1,30 @@
+/**
+ * Utility validators and helpers for packing list column validation.
+ *
+ * Exports a set of predicate functions used by the packing-list validator
+ * pipeline. Keep this module free of side-effects so it can be unit tested
+ * easily. Module-level documentation should appear before any `require`.
+ */
+
 const regex = require("../../utilities/regex");
 const isoCodesData = require("../data/data-iso-codes.json");
 const prohibitedItemsData = require("../data/data-prohibited-items.json");
 
+/**
+ * Check whether a value is null, undefined or an empty string.
+ * @param {*} value - Value to test.
+ * @returns {boolean} True when value is null/undefined/empty string.
+ */
 function isNullOrEmptyString(value) {
   return value === null || value === undefined || value === "";
 }
 
+/**
+ * Determine whether an item is missing an identifier (either commodity code
+ * or both nature_of_products and type_of_treatment).
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when identifier data is missing.
+ */
 function hasMissingIdentifier(item) {
   return !(
     (!isNullOrEmptyString(item.nature_of_products) &&
@@ -14,6 +33,11 @@ function hasMissingIdentifier(item) {
   );
 }
 
+/**
+ * Check if the `commodity_code` contains non-digit characters (ignoring whitespace).
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when the product code is present and contains non-digits.
+ */
 function hasInvalidProductCode(item) {
   if (isNullOrEmptyString(item.commodity_code)) {
     return false;
@@ -24,14 +48,30 @@ function hasInvalidProductCode(item) {
   );
 }
 
+/**
+ * Check if an item's description is missing.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when `description` is null/undefined/empty.
+ */
 function hasMissingDescription(item) {
   return isNullOrEmptyString(item.description);
 }
 
+/**
+ * Check if the `number_of_packages` field is missing.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when `number_of_packages` is null/undefined/empty.
+ */
 function hasMissingPackages(item) {
   return isNullOrEmptyString(item.number_of_packages);
 }
 
+/**
+ * Validate the numeric type for `number_of_packages`.
+ * Returns false when the value is missing; true when it's non-numeric or negative.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when `number_of_packages` is invalid.
+ */
 function wrongTypeForPackages(item) {
   // Check if number_of_packages is null, undefined, or an empty string
   if (isNullOrEmptyString(item.number_of_packages)) {
@@ -42,10 +82,21 @@ function wrongTypeForPackages(item) {
   return Number.isNaN(numberOfPackages) || numberOfPackages < 0;
 }
 
+/**
+ * Check if the `total_net_weight_kg` field is missing.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when net weight value is missing.
+ */
 function hasMissingNetWeight(item) {
   return isNullOrEmptyString(item.total_net_weight_kg);
 }
 
+/**
+ * Validate the numeric type for `total_net_weight_kg`.
+ * Returns false when the value is missing; true when it's non-numeric or negative.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when `total_net_weight_kg` is invalid.
+ */
 function wrongTypeNetWeight(item) {
   // Check if total_net_weight_kg is null, undefined, or an empty string
   if (isNullOrEmptyString(item.total_net_weight_kg)) {
@@ -56,6 +107,11 @@ function wrongTypeNetWeight(item) {
   return Number.isNaN(totalNetWeightKg) || totalNetWeightKg < 0;
 }
 
+/**
+ * Remove item objects that only contain an empty `row_location` and no data.
+ * @param {Array<Object>} packingListItems - Array of item objects.
+ * @returns {Array<Object>} Filtered array with empty entries removed.
+ */
 function removeEmptyItems(packingListItems) {
   const isNullOrUndefined = (entry) =>
     entry[0] === "row_location" || entry[1] === null || entry[1] === undefined;
@@ -64,6 +120,11 @@ function removeEmptyItems(packingListItems) {
   );
 }
 
+/**
+ * Mutate items to null out invalid numeric fields for packages/net weight.
+ * @param {Array<Object>} packingListItems - Array of item objects.
+ * @returns {Array<Object>} The same array after invalid values are nulled.
+ */
 function removeBadData(packingListItems) {
   for (const x of packingListItems) {
     if (wrongTypeForPackages(x)) {
@@ -76,6 +137,11 @@ function removeBadData(packingListItems) {
   return packingListItems;
 }
 
+/**
+ * Check whether a net weight unit is present and recognised.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when the unit is missing or unrecognised.
+ */
 function hasMissingNetWeightUnit(item) {
   return (
     isNullOrEmptyString(item.total_net_weight_unit) ||
@@ -83,10 +149,20 @@ function hasMissingNetWeightUnit(item) {
   );
 }
 
+/**
+ * Check whether the `nirms` declaration is missing for an item.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when `nirms` is null/undefined/empty.
+ */
 function hasMissingNirms(item) {
   return isNullOrEmptyString(item.nirms);
 }
 
+/**
+ * Validate the `nirms` field – it must match either NIRMS or Non-NIRMS patterns.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when `nirms` is present but invalid.
+ */
 function hasInvalidNirms(item) {
   return (
     !isNullOrEmptyString(item.nirms) &&
@@ -95,14 +171,30 @@ function hasInvalidNirms(item) {
   );
 }
 
+/**
+ * Check whether Country of Origin is missing for NIRMS items.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when the item is NIRMS and country_of_origin is missing.
+ */
 function hasMissingCoO(item) {
   return isNirms(item.nirms) && isNullOrEmptyString(item.country_of_origin);
 }
 
+/**
+ * Check whether Country of Origin value is invalid for NIRMS items.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when the item is NIRMS and the country_of_origin is invalid.
+ */
 function hasInvalidCoO(item) {
   return isNirms(item.nirms) && isInvalidCoO(item.country_of_origin);
 }
 
+/**
+ * Identify whether an item is considered a prohibited item based on country,
+ * commodity code prefix and treatment type.
+ * @param {Object} item - Packing list item object.
+ * @returns {boolean} True when the item matches an entry from the prohibited list.
+ */
 function hasProhibitedItems(item) {
   return (
     isNirms(item.nirms) &&
@@ -117,11 +209,21 @@ function hasProhibitedItems(item) {
   );
 }
 
+/**
+ * Determine if a value indicates NIRMS (green lane) status.
+ * @param {string} nirms - The raw nirms field value.
+ * @returns {boolean} True when value matches NIRMS patterns.
+ */
 function isNirms(nirms) {
   const nirmsValues = [/^(yes|nirms|green|y|g)$/i, /^green lane/i];
   return stringMatchesPattern(nirms, nirmsValues);
 }
 
+/**
+ * Determine if a value indicates Non-NIRMS (red lane) status.
+ * @param {string} nirms - The raw nirms field value.
+ * @returns {boolean} True when value matches Non-NIRMS patterns.
+ */
 function isNotNirms(nirms) {
   const notNirmsPatterns = [
     /^(no|non[- ]?nirms|red|n|r)$/i, //equals
@@ -130,6 +232,12 @@ function isNotNirms(nirms) {
   return stringMatchesPattern(nirms, notNirmsPatterns);
 }
 
+/**
+ * Test a string against an array of regular expression patterns.
+ * @param {string} input - Input string to test.
+ * @param {Array<RegExp>} regexPatterns - Array of regexp patterns.
+ * @returns {boolean} True when any pattern matches the trimmed/lowercased input.
+ */
 function stringMatchesPattern(input, regexPatterns) {
   if (typeof input !== "string") {
     return false;
@@ -139,6 +247,12 @@ function stringMatchesPattern(input, regexPatterns) {
   return regexPatterns.some((pattern) => pattern.test(value));
 }
 
+/**
+ * Validate a country-of-origin field. Accepts single or comma-separated codes,
+ * and special-case 'x' as valid.
+ * @param {*} countryOfOrigin - Raw country_of_origin value from item.
+ * @returns {boolean} True when value is present but invalid.
+ */
 function isInvalidCoO(countryOfOrigin) {
   if (isNullOrEmptyString(countryOfOrigin)) {
     return false;
@@ -166,6 +280,11 @@ function isInvalidCoO(countryOfOrigin) {
   return !isValidIsoCode(countryOfOrigin);
 }
 
+/**
+ * Check whether a single code exists in the ISO codes data.
+ * @param {string} code - ISO code to validate.
+ * @returns {boolean} True when `code` is a valid ISO code (case-insensitive).
+ */
 function isValidIsoCode(code) {
   if (!code || typeof code !== "string") {
     return false;
@@ -177,6 +296,14 @@ function isValidIsoCode(code) {
 }
 
 // Checks if the combination exists in prohibitedItemsData
+/**
+ * Determine whether a given item (COO + commodity code prefix + treatment)
+ * appears in the prohibited items dataset.
+ * @param {string} countryOfOrigin - Country of origin string (may be comma-separated).
+ * @param {string|number} commodityCode - Commodity code from the item.
+ * @param {string} typeOfTreatment - Type of treatment string.
+ * @returns {boolean} True when the combination matches a prohibited item entry.
+ */
 function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
   return prohibitedItemsData.some(
     (item) =>
@@ -190,6 +317,13 @@ function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
 }
 
 // Helper function to check if country of origin matches (handles comma-separated values)
+/**
+ * Compare a country_of_origin value against a prohibited-item country which may
+ * be a single code. Handles comma-separated COO values by testing any match.
+ * @param {string} countryOfOrigin - Item's COO (may be comma separated).
+ * @param {string} prohibitedItemCountryOfOrigin - Prohibited item COO from dataset.
+ * @returns {boolean} True when any COO code matches the prohibited country.
+ */
 function isCountryOfOriginMatching(
   countryOfOrigin,
   prohibitedItemCountryOfOrigin,
@@ -219,6 +353,12 @@ function isCountryOfOriginMatching(
 }
 
 // Helper function to check if treatment type matches
+/**
+ * Match treatment type values. If either side is missing, the treatment check passes.
+ * @param {string} typeOfTreatment - Item's treatment type string.
+ * @param {string} prohibitedItemTypeOfTreatment - Dataset's treatment type to match.
+ * @returns {boolean} True when treatment types are compatible or unspecified.
+ */
 function isTreatmentTypeMatching(
   typeOfTreatment,
   prohibitedItemTypeOfTreatment,

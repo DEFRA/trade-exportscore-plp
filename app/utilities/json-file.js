@@ -1,8 +1,20 @@
+/**
+ * JSON sanitisation helpers
+ *
+ * Provides a small utility to parse a JSON string and normalise empty string
+ * values to `null`. This is useful when external sources may provide empty
+ * strings where downstream code expects `null` for absent values.
+ */
+
 const logger = require("../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
-// Function to trim and replace empty strings with null
+/**
+ * Trim strings and convert empty strings to null.
+ * @param {*} value - Value to sanitise
+ * @returns {*} Trimmed string, null for empty strings, or original value
+ */
 function sanitiseValue(value) {
   if (typeof value === "string") {
     const trimmedValue = value.trim();
@@ -11,7 +23,11 @@ function sanitiseValue(value) {
   return value;
 }
 
-// Function to recursively sanitise objects and arrays
+/**
+ * Recursively walk objects/arrays and sanitise leaf values.
+ * @param {Object|Array} obj - Object or array to sanitise
+ * @returns {void}
+ */
 function sanitiseObject(obj) {
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
@@ -28,7 +44,11 @@ function sanitiseObject(obj) {
   }
 }
 
-// Main sanitise function to handle parsing and logging
+/**
+ * Parse JSON string, sanitise the object, and return JSON string.
+ * @param {string} jsonString - JSON string to sanitise
+ * @returns {string|null} Sanitised JSON string or null on parse error
+ */
 function sanitise(jsonString) {
   try {
     const jsonObj = JSON.parse(jsonString); // Parse the JSON string

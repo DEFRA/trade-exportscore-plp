@@ -1,3 +1,9 @@
+/**
+ * Parser mapping utilities
+ *
+ * Provides mapping functions to transform raw packing list data (Excel, PDF AI, PDF non-AI)
+ * into standardized item structures. Handles header detection, blanket values, and column mapping.
+ */
 const headers = require("./model-headers-pdf");
 const pdfHelper = require("../utilities/pdf-helper");
 const regex = require("../utilities/regex");
@@ -5,6 +11,12 @@ const logger = require("../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Find column keys matching header regex patterns.
+ * @param {Object} header - Header configuration with regex patterns
+ * @param {Object} packingListHeader - Header row from packing list
+ * @returns {Object} Mapped column keys
+ */
 function findHeaderCols(header, packingListHeader) {
   const headerCols = {};
   // Process required columns
@@ -56,6 +68,15 @@ function findHeaderCols(header, packingListHeader) {
   return headerCols;
 }
 
+/**
+ * Map Excel/CSV data rows to standardized packing list items.
+ * @param {Array<Object>} packingListJson - Raw packing list data
+ * @param {number} headerRow - Row index containing headers
+ * @param {number} dataRow - First row index containing data
+ * @param {Object} header - Header configuration
+ * @param {string|null} sheetName - Sheet name for row location
+ * @returns {Array<Object>} Mapped packing list items
+ */
 function mapParser(
   packingListJson,
   headerRow,
@@ -109,6 +130,14 @@ function mapParser(
   return packingListContents;
 }
 
+/**
+ * Extract blanket values (applies to all rows) from document.
+ * @param {Object} header - Header configuration
+ * @param {Array<Object>} packingListJson - Raw packing list data
+ * @param {Object} headerCols - Mapped header columns
+ * @param {number} headerRow - Header row index
+ * @returns {Object} Blanket values (netWeightUnit, blanketNirms, blanketTreatmentType)
+ */
 function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
   const netWeightUnit = header.findUnitInHeader
     ? (regex.findUnit(
@@ -143,6 +172,12 @@ function extractBlanketValues(header, packingListJson, headerCols, headerRow) {
   };
 }
 
+/**
+ * Extract blanket value from document using coordinate offsets.
+ * @param {Array<Object>} packingListJson - Raw packing list data
+ * @param {Object} blanketValue - Configuration with regex and offset
+ * @returns {string|null} Extracted value or null
+ */
 function getBlanketValueFromOffset(packingListJson, blanketValue) {
   try {
     // find position of blanket header value
@@ -169,6 +204,14 @@ function getBlanketValueFromOffset(packingListJson, blanketValue) {
   }
 }
 
+/**
+ * Get type of treatment with fallback to blanket value.
+ * @param {Object} col - Data row
+ * @param {Object} headerCols - Mapped columns
+ * @param {Object} blanketValues - Blanket values
+ * @param {boolean} hasData - Whether row has data
+ * @returns {string|null} Type of treatment
+ */
 function getTypeOfTreatment(col, headerCols, blanketValues, hasData) {
   return (
     columnValue(col[headerCols.type_of_treatment]) ??
@@ -177,6 +220,14 @@ function getTypeOfTreatment(col, headerCols, blanketValues, hasData) {
   );
 }
 
+/**
+ * Get net weight unit with fallback to blanket value.
+ * @param {Object} col - Data row
+ * @param {Object} headerCols - Mapped columns
+ * @param {Object} blanketValues - Blanket values
+ * @param {boolean} hasData - Whether row has data
+ * @returns {string|null} Net weight unit
+ */
 function getNetWeightUnit(col, headerCols, blanketValues, hasData) {
   return (
     col[headerCols.total_net_weight_unit] ??
@@ -185,6 +236,14 @@ function getNetWeightUnit(col, headerCols, blanketValues, hasData) {
   );
 }
 
+/**
+ * Get NIRMS with fallback to blanket value.
+ * @param {Object} col - Data row
+ * @param {Object} headerCols - Mapped columns
+ * @param {Object} blanketValues - Blanket values
+ * @param {boolean} hasData - Whether row has data
+ * @returns {string|null} NIRMS value
+ */
 function getNirms(col, headerCols, blanketValues, hasData) {
   return (
     columnValue(col[headerCols.nirms]) ??
@@ -193,15 +252,32 @@ function getNirms(col, headerCols, blanketValues, hasData) {
   );
 }
 
+/**
+ * Return column value or null if undefined.
+ * @param {*} value - Value to check
+ * @returns {*} Value or null
+ */
 function columnValue(value) {
   return value ?? null;
 }
 
+/**
+ * Check if row has any non-empty data in mapped columns.
+ * @param {Object} col - Data row
+ * @param {Object} headerCols - Mapped columns
+ * @returns {boolean} True if row has data
+ */
 function isNotEmpty(col, headerCols) {
   const firstCol = Object.values(headerCols).find((name) => col[name]);
   return firstCol ? col[firstCol] : undefined;
 }
 
+/**
+ * Extract net weight unit from PDF document header.
+ * @param {Object} packingListDocument - Parsed PDF document
+ * @param {string} key - Header configuration key
+ * @returns {string|null} Net weight unit or null
+ */
 function extractNetWeightUnit(packingListDocument, key) {
   if (!headers[key].findUnitInHeader) {
     return null;
@@ -211,6 +287,13 @@ function extractNetWeightUnit(packingListDocument, key) {
   return regex.findUnit(totalNetWeightHeader);
 }
 
+/**
+ * Extract page number from PDF row with fallback to last known page.
+ * @param {Object} row - PDF row data
+ * @param {string} key - Header configuration key
+ * @param {number} lastPageNumber - Last known page number
+ * @returns {number} Page number
+ */
 function getPageNumber(row, key, lastPageNumber) {
   return (
     row[headers[key].headers.description]?.boundingRegions?.[0]?.pageNumber ??
@@ -218,6 +301,15 @@ function getPageNumber(row, key, lastPageNumber) {
   );
 }
 
+/**
+ * Create standardized packing list row from PDF data.
+ * @param {Object} row - PDF row data
+ * @param {string} key - Header configuration key
+ * @param {string|null} netWeightUnit - Net weight unit
+ * @param {number} currentItemNumber - Item number on page
+ * @param {number} currentPageNumber - Current page number
+ * @returns {Object} Standardized packing list row
+ */
 function createPackingListRow(
   row,
   key,
@@ -249,6 +341,12 @@ function createPackingListRow(
   };
 }
 
+/**
+ * Map PDF AI parsed document to standardized packing list items.
+ * @param {Object} packingListDocument - Azure Form Recognizer result
+ * @param {string} key - Header configuration key
+ * @returns {Array<Object>} Mapped packing list items
+ */
 function mapPdfParser(packingListDocument, key) {
   if (!packingListDocument.fields.PackingListContents.values) {
     return [];
@@ -281,6 +379,13 @@ function mapPdfParser(packingListDocument, key) {
   return packingListContents;
 }
 
+/**
+ * Map PDF non-AI parsed data (coordinate-based) to standardized items.
+ * @param {Object} packingListJson - PDF content with coordinates
+ * @param {string} model - Parser model identifier
+ * @param {Array<number>} ys - Y-coordinates of data rows
+ * @returns {Array<Object>} Mapped packing list items
+ */
 function mapPdfNonAiParser(packingListJson, model, ys) {
   let netWeightUnit;
   if (headers[model].findUnitInHeader) {
@@ -323,6 +428,11 @@ function mapPdfNonAiParser(packingListJson, model, ys) {
   return packingListContents;
 }
 
+/**
+ * Extract 4-14 digit commodity code from input string.
+ * @param {string|null} input - Input string to extract from
+ * @returns {string|null} Extracted digits or original input
+ */
 function extractCommodityCodeDigits(input) {
   if (input === null) {
     return null;
@@ -336,6 +446,13 @@ function extractCommodityCodeDigits(input) {
   return input;
 }
 
+/**
+ * Find content items at specific Y-coordinate within X-range.
+ * @param {Object} packingListJson - PDF content with coordinates
+ * @param {Object} header - Header with x1, x2 range
+ * @param {number} y - Y-coordinate to search
+ * @returns {string|null} Concatenated content or null
+ */
 function findItemContent(packingListJson, header, y) {
   const result = packingListJson.content.filter(
     (item) =>

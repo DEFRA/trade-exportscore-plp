@@ -1,9 +1,21 @@
+/**
+ * Header matching utility
+ *
+ * Tests if packing list sheet rows match expected header patterns using regex.
+ * Returns matcher result codes to indicate success or failure reason.
+ */
 const matcherResult = require("./matcher-result");
 const regex = require("../utilities/regex");
 const logger = require("../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Check if any row in packing list sheet matches all provided regex patterns.
+ * @param {Array<RegExp>} regexHeaders - Array of regex patterns to match
+ * @param {Array<Object>} packingListSheet - Packing list sheet rows
+ * @returns {number} MatcherResult code (CORRECT, WRONG_HEADER, or GENERIC_ERROR)
+ */
 function matchesHeader(regexHeaders, packingListSheet) {
   try {
     // Iterate over each row in the packingListSheet

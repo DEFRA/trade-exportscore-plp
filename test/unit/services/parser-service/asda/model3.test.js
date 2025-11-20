@@ -202,4 +202,15 @@ describe("ASDA3 CoO Validation Tests - Type 1", () => {
     expect(result.items.every((item) => item.commodity_code)).toBe(true);
     expect(result.items.every((item) => item.nirms)).toBe(true);
   });
+
+  test("matches valid Asda Model 3 file with multiple sheets where headers are on different rows", async () => {
+    const result = await parserService.findParser(
+      model.validModelMultipleSheetsHeadersOnDifferentRows,
+      filename,
+    );
+
+    expect(result.business_checks.all_required_fields_present).toBe(true);
+    expect(result.items[0].row_location.rowNumber).toBe(2);
+    expect(result.items[1].row_location.rowNumber).toBe(3);
+  });
 });

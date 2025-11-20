@@ -1,3 +1,9 @@
+/**
+ * Greggs model headers
+ *
+ * Provides establishment number regexes and header regex mappings
+ * for Greggs packing list variants used by matchers.
+ */
 const pdfGreggsHeaders = {
   GREGGS1: {
     establishmentNumber: {

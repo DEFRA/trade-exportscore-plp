@@ -1,3 +1,10 @@
+/**
+ * AI-enabled parsing route
+ *
+ * Reads a file buffer, runs it through the parser-service to detect
+ * and parse packing lists (AI or PDF-based). When a parser matches,
+ * the parsed packing list is persisted using `createPackingList`.
+ */
 const fs = require("node:fs");
 const { StatusCodes } = require("http-status-codes");
 const config = require("../config");

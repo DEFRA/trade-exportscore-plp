@@ -1,3 +1,9 @@
+/**
+ * Document Intelligence connectivity test route
+ *
+ * Verifies connectivity to Azure Document Intelligence by calling
+ * a small built-in sample and returning its text content.
+ */
 const {
   createDocumentIntelligenceClient,
 } = require("../services/document-intelligence");

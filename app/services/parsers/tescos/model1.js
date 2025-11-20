@@ -1,3 +1,7 @@
+/**
+ * TESCOS Excel parser - Model 1
+ * @module parsers/tescos/model1
+ */
 const combineParser = require("../../parser-combine");
 const parserModel = require("../../parser-model");
 const headers = require("../../model-headers");
@@ -10,6 +14,11 @@ const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Parse the provided packing list JSON for TESCO model 1.
+ * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
+ * @returns {Object} Combined parser result.
+ */
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
@@ -34,7 +43,7 @@ function parse(packingListJson) {
         establishmentNumbers,
       );
 
-      const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
+      const headerRow = rowFinder(packingListJson[sheet], headerCallback);
       const dataRow = headerRow + 1;
       packingListContentsTemp = mapParser(
         packingListJson[sheet],

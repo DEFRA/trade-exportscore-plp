@@ -1,3 +1,10 @@
+/**
+ * Non-AI Excel route
+ *
+ * Provides a simple GET endpoint that converts an Excel packing list
+ * to the parser JSON using the local `file-processor` utilities and
+ * returns the structured result.
+ */
 const config = require("../config");
 const { StatusCodes } = require("http-status-codes");
 const { processExcelFile } = require("../utilities/file-processor");

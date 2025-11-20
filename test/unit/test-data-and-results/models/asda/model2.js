@@ -127,6 +127,51 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        B: "[Description Of All Retail Go",
+        D: "[Nature Of Product]",
+        F: "[Treatment Ty",
+        H: "Establishment Number",
+        J: "Cases",
+        L: "Case Weight",
+        N: "NET Weight kg",
+      },
+      {
+        B: "4PK X 17 PINK LADY APPLES",
+        D: "TOP FRUIT",
+        F: "PRODUCE",
+        H: "RMS-GB-000015-010",
+        J: 20,
+        L: 12.75,
+        N: 255,
+      },
+    ],
+    sheet2: [
+      {
+        A: "Extra row 1",
+      },
+      {
+        B: "[Description Of All Retail Go",
+        D: "[Nature Of Product]",
+        F: "[Treatment Ty",
+        H: "Establishment Number",
+        J: "Cases",
+        L: "Case Weight",
+        N: "NET Weight kg",
+      },
+      {
+        B: "ASDA BERRIES TWIN PACK 12X200G",
+        D: "BERRIES",
+        F: "PRODUCE",
+        H: "RMS-GB-000015-010",
+        J: 1,
+        L: 3,
+        N: 3,
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     Sheet1: [
       {

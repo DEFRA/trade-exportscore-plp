@@ -5,12 +5,25 @@ const {
   createDocumentIntelligenceClient,
   runAnalysis,
 } = require("../../document-intelligence");
+/**
+ * M&S matcher
+ *
+ * Detects M&S packing list format via header and establishment
+ * number checks.
+ */
 const matcherResult = require("../../matcher-result");
 const headers = require("../../model-headers-pdf");
 const regex = require("../../../utilities/regex");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
+/**
+ * Check whether the provided packing list matches M&S Model 1.
+ * Uses Document Intelligence extraction to validate establishment numbers.
+ * @param {Buffer|Object} packingList - PDF buffer or document input
+ * @param {string} filename - Source filename for logging
+ * @returns {Promise<Object>} - Result object with isMatched/document
+ */
 async function matches(packingList, filename) {
   const result = {
     isMatched: matcherResult.GENERIC_ERROR,

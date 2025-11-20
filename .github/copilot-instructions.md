@@ -113,6 +113,66 @@ exports.parse = (packingListJson) => {
 - **Error Handling**: Comprehensive logging with specific error types
 - **Testing**: Unit tests for all parsers with mock data and edge cases
 
+## Comments Format
+
+To keep comments consistent across the codebase use the following conventions:
+
+- **Module header**: Every module should start with a short header comment describing its purpose and any important behavioural notes. Prefer a JSDoc-style block for modules that export multiple utilities, for example:
+ - **Module header**: Every module should start with a short header comment describing its purpose and any important behavioural notes. Prefer a JSDoc-style block for modules that export multiple utilities, for example:
+
+  ```javascript
+  /**
+   * CSV utility wrapper
+   *
+   * Provides a minimal helper to convert CSV content into an array of rows
+   * using `csv-parse`. Accepts `Buffer`, `Readable` or filename inputs.
+   */
+  ```
+
+  Important: the module header must appear before any `require` or `import` statements.
+  Use this minimal template at the top of files:
+
+  ```javascript
+  /**
+   * Module purpose - short summary.
+   *
+   * Additional behavioural notes (side-effects, exported helpers, testing hints).
+   */
+  const dep = require('path/to/dep');
+  ```
+
+- **Function JSDoc**: Exported or non-trivial functions should include a small JSDoc block with `@param` and `@returns` where helpful. Keep types simple (e.g., `Array`, `Object`, `string`). Example:
+
+  ```javascript
+  /**
+   * Convert CSV input to an array of records.
+   * @param {Buffer|string|Readable} bufferOrFilename - CSV source
+   * @returns {Promise<Array>} rows - Array of row arrays
+   */
+  ```
+
+- **Inline comments**: Use short, focused inline comments to explain non-obvious behaviour, assumptions, or why a particular transformation is safe. Keep them concise (one or two lines) and place them immediately above the code they describe.
+
+- **Error logging**: When a function logs an error, include the module-local `filenameForLogging` and the specific function name to keep logs consistent.
+
+- **Tone & style**: Use English, present tense, and active voice. Prefer clarity over cleverness.
+
+Keeping comments uniform makes it easier for future contributors and automated tools (linters, documentation generators) to surface useful information.
+
+**Require JSDoc For All Functions**
+
+All functions in the repository — exported functions and non-trivial helpers — must include a JSDoc block immediately above the function declaration. This helps IDEs, reviewers and automated tools understand intent and types. Use the following minimal template for consistency:
+
+```javascript
+/**
+ * Short description of the function purpose.
+ * @param {Type} argName - Short arg description
+ * @param {Type} other - Short arg description
+ * @returns {Type} description of return value
+ */
+function example(argName, other) { ... }
+```
+
 ### Testing Standards (PLP-Specific)
 
 - **Jest Configuration**: Coverage with cobertura/lcov output to `test-output/`

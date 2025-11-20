@@ -483,4 +483,43 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      { A: "RMS-GB-000133-000" },
+      {
+        C: "Material description",
+        E: "Commodity code",
+        F: "coo",
+        G: "Order qty",
+        H: "Order net weight kg",
+      },
+      {
+        C: "ACTIVIA DRK FRTS 6X8X115",
+        E: "403209300",
+        F: "BE",
+        G: 2,
+        H: 11.04,
+      },
+    ],
+    Sheet2: [
+      {
+        A: "extra row",
+      },
+      { A: "RMS-GB-000133-000" },
+      {
+        C: "Material description",
+        E: "Commodity code",
+        F: "coo",
+        G: "Order qty",
+        H: "Order net weight kg",
+      },
+      {
+        C: "ACTIVIA VANILLA 6X8X115",
+        E: "403209200",
+        F: "DE",
+        G: 3,
+        H: 16.56,
+      },
+    ],
+  },
 };
