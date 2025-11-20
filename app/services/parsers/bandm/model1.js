@@ -8,6 +8,7 @@ const headers = require("../../model-headers");
 const regex = require("../../../utilities/regex");
 const { rowFinder } = require("../../../utilities/row-finder");
 const logger = require("../../../utilities/logger");
+const { mapParser } = require("../../parser-map");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
@@ -16,12 +17,10 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
  * @param {Object} packingListJson - Workbook JSON keyed by sheet name.
  * @returns {Object} Combined parser result.
  */
-const { mapParser } = require("../../parser-map");
-
 function parse(packingListJson) {
   try {
     const sheets = Object.keys(packingListJson);
-    let packingListContents = [];
+    const packingListContents = [];
     let packingListContentsTemp = [];
     let establishmentNumbers = [];
 
@@ -53,18 +52,7 @@ function parse(packingListJson) {
         sheet,
       );
 
-      const totalsIndex = packingListContentsTemp.findLastIndex(
-        (row) =>
-          row.description === null &&
-          row.commodity_code === null &&
-          row.country_of_origin === null &&
-          row.number_of_packages !== 0 &&
-          row.total_net_weight_kg !== 0,
-      );
-      if (totalsIndex === packingListContentsTemp.length - 1) {
-        packingListContentsTemp = packingListContentsTemp.slice(0, totalsIndex);
-      }
-      packingListContents = packingListContents.concat(packingListContentsTemp);
+      packingListContents.push(...packingListContentsTemp);
     }
 
     return combineParser.combine(
@@ -76,7 +64,7 @@ function parse(packingListJson) {
       headers.BANDM1,
     );
   } catch (err) {
-    logger.logError(filenameForLogging, "matches()", err);
+    logger.logError(filenameForLogging, "parse()", err);
     return combineParser.combine(null, [], false, parserModel.NOMATCH);
   }
 }

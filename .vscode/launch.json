@@ -25,6 +25,25 @@
       },
       "outputCapture": "std",
       "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "name": "Debug App",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/nodemon/bin/nodemon.js",
+      "args": [
+        "--inspect=0.0.0.0",
+        "--ext",
+        "js",
+        "--legacy-watch",
+        "${workspaceFolder}/app/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnSessionStart",
+      "restart": true
     }
   ]
 }
