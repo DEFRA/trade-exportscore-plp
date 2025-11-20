@@ -123,4 +123,15 @@ describe("matchesSaversModel1", () => {
         ' in sheet "(DO NOT SORT) Packing List" row 6.\n',
     );
   });
+
+  test("matches valid Savers Model 1 file with multiple sheets where headers are on different rows", async () => {
+    const result = await parserService.findParser(
+      model.validModelMultipleSheetsHeadersOnDifferentRows,
+      filename,
+    );
+
+    expect(result.business_checks.all_required_fields_present).toBe(true);
+    expect(result.items[0].row_location.rowNumber).toBe(3);
+    expect(result.items[1].row_location.rowNumber).toBe(4);
+  });
 });

@@ -1060,4 +1060,53 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        A: "RMS-GB-000025-003",
+      },
+      {
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
+        I: "NET WEIGHT TOTAL",
+        J: "NIRMS",
+      },
+      {
+        C: "900 - VEGETABLES PREPACK-C",
+        E: "NISA BROCCOLI",
+        F: "0403209300",
+        G: 1,
+        I: 2,
+        J: "Non-NIRMS",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "RMS-GB-000025-003",
+      },
+      {
+        A: "extra row",
+      },
+      {
+        C: "PRODUCT TYPE CATEGORY",
+        E: "PART NUMBER DESCRIPTION",
+        F: "TARIFF CODE EU",
+        G: "PACKAGES",
+        H: "NET WEIGHT PACKAGE KG",
+        I: "NET WEIGHT TOTAL",
+        J: "NIRMS",
+      },
+      {
+        C: "PRODUCT_TYPE_CATEGORY800 - FRUITS - C",
+        E: "NISA APPLES RED",
+        F: "0808100000",
+        G: 3,
+        I: 4.5,
+        J: "Non-NIRMS",
+      },
+    ],
+  },
 };

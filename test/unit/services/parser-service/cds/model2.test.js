@@ -67,6 +67,17 @@ describe("matchesCdsModel2", () => {
 
     expect(result).toMatchObject(test_results.emptyTestResultNoRemos);
   });
+
+  test("matches valid CDS Model 2 file with multiple sheets where headers are on different rows, calls parser and returns all_required_fields_present as true", async () => {
+    const result = await parserService.findParser(
+      model.validModelMultipleSheetsHeadersOnDifferentRows,
+      filename,
+    );
+
+    expect(result.business_checks.all_required_fields_present).toBe(true);
+    expect(result.items[0].row_location.rowNumber).toBe(2);
+    expect(result.items[1].row_location.rowNumber).toBe(3);
+  });
 });
 
 describe("matchesCdsModel2_CoOValidation", () => {

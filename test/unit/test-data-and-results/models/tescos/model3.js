@@ -127,6 +127,65 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        AT: "RMS-GB-000022-998",
+      },
+      {
+        D: "Country of Origin",
+        F: "NIRMS / NON NIRMS",
+        G: "Product Description",
+        L: "Tariff Code UK",
+        AS: "Treatment Type",
+        AT: "Green Lane",
+        BR: "Packages",
+        BT: "Gross Weight (KG)",
+        BU: "Net Weight (KG)",
+      },
+      {
+        D: "PL",
+        F: "NON NIRMS",
+        G: "CONTIGO AUTO-POP BOTTLE 720ML",
+        L: "9617000000",
+        AS: "Ambient",
+        AT: "Y",
+        BR: 1,
+        BT: 1.49,
+        BU: 1.4155,
+      },
+    ],
+    Sheet2: [
+      {
+        AT: "RMS-GB-000022-998",
+      },
+      {
+        A: "extra row",
+      },
+      {
+        D: "Country of Origin",
+        F: "NIRMS / NON NIRMS",
+        G: "Product Description",
+        L: "Tariff Code UK",
+        AS: "Treatment Type",
+        AT: "Green Lane",
+        BR: "Packages",
+        BT: "Gross Weight (KG)",
+        BU: "Net Weight (KG)",
+      },
+      {
+        D: "GR",
+        F: "NON NIRMS",
+        G: "JOIE MEASURING SPOONS",
+        L: "3924100090",
+        AS: "Ambient",
+        AT: "Y",
+        BR: 1,
+        BT: 0.84,
+        BU: 0.798,
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     "Input Data Sheet": [
       {},

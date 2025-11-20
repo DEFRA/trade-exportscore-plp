@@ -762,4 +762,43 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      { C: "RMS-GB-000323-001" },
+      {
+        C: "Commodity Code",
+        F: "Description of Goods",
+        G: "Country of Origin",
+        H: "No. of Pkgs(180)",
+        K: "Total Net Weight(Xkgs)",
+      },
+      {
+        C: "709200010",
+        F: "ASPARAGUS BUNDLE",
+        G: "Great Britain",
+        H: 160,
+        K: 40.0,
+      },
+    ],
+    sheet2: [
+      { C: "RMS-GB-000323-001" },
+      {
+        A: "extra row",
+      },
+      {
+        C: "Commodity Code",
+        F: "Description of Goods",
+        G: "Country of Origin",
+        H: "No. of Pkgs(180)",
+        K: "Total Net Weight(Xkgs)",
+      },
+      {
+        C: "709200020",
+        F: "BROCCOLI CROWN",
+        G: "Great Britain",
+        H: 90,
+        K: 22.5,
+      },
+    ],
+  },
 };

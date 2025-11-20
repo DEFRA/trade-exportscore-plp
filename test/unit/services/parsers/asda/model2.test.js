@@ -21,6 +21,16 @@ describe("parseAsdaModel2", () => {
     expect(result).toMatchObject(test_results.validTestResultForMultipleSheets);
   });
 
+  test("parses multiple sheets with headers on different rows", () => {
+    const result = parser.parse(
+      model.validModelMultipleSheetsHeadersOnDifferentRows,
+    );
+
+    expect(result.business_checks.all_required_fields_present).toBe(true);
+    expect(result.items[0].row_location.rowNumber).toBe(2);
+    expect(result.items[1].row_location.rowNumber).toBe(3);
+  });
+
   test("parses empty json", () => {
     const result = parser.parse(model.emptyModel);
 
