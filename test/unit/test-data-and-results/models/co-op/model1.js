@@ -573,4 +573,47 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        E: "Dispatch RMS Establishment",
+        O: "Product/ Part Number description",
+        P: "Tariff Code EU",
+        Q: "Packages",
+        R: "Net Weight/Package KG",
+        S: "NW total",
+        Y: "NIRMS",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Red Peppers Each",
+        P: "0709601000",
+        Q: 12,
+        S: 12,
+        Y: "no",
+      },
+    ],
+    sheet2: [
+      {
+        A: "Extra row 1",
+      },
+      {
+        E: "Dispatch RMS Establishment",
+        O: "Product/ Part Number description",
+        P: "Tariff Code EU",
+        Q: "Packages",
+        R: "Net Weight/Package KG",
+        S: "NW total",
+        Y: "NIRMS",
+      },
+      {
+        E: "RMS-GB-000009-001",
+        O: "Co-op Whole Cucumber Each #",
+        P: "0707000599",
+        Q: 10,
+        S: 58.8,
+        Y: "no",
+      },
+    ],
+  },
 };
