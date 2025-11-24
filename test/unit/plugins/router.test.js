@@ -6,7 +6,6 @@ const aiRoutes = require("../../../app/routes/ai");
 const upsertIdcomsRoutes = require("../../../app/routes/upsert-idcoms");
 const testDiConnRoutes = require("../../../app/routes/test-di-conn");
 const pdfNonAiRoutes = require("../../../app/routes/pdf-non-ai");
-const pdfNonAiSpikeRoutes = require("../../../app/routes/pdf-non-ai-spike");
 const createPackingList = require("../../../app/routes/create-packinglist-message");
 const dispatchLocation = require("../../../app/routes/get-dispatch-location");
 const router = require("../../../app/plugins/router");
@@ -26,7 +25,6 @@ jest.mock("../../../app/routes/create-packinglist-message", () => [
   { path: "/create-packinglist-message" },
 ]);
 jest.mock("../../../app/routes/pdf-non-ai", () => [{ path: "/pdf-non-ai" }]);
-jest.mock("../../../app/routes/pdf-non-ai-spike", () => [{ path: "/pdf-non-ai-spike" }]);
 jest.mock("../../../app/routes/get-dispatch-location", () => [
   { path: "/get-dispatch-location" },
 ]);
@@ -49,7 +47,6 @@ describe("router plugin", () => {
         testDiConnRoutes,
         createPackingList,
         pdfNonAiRoutes,
-        pdfNonAiSpikeRoutes,
         dispatchLocation,
         csvNonaiRoutes,
       ),
