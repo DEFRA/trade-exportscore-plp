@@ -485,4 +485,55 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        A: "RMS-GB-000213-001",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight KG",
+        G: "Commodity Code",
+        H: "Country Code",
+        I: "Type of Treatment",
+        J: "SPS",
+      },
+      {
+        C: "DO BOL ORIGINAL LIGHT 6X500G GB/IR",
+        D: 8,
+        E: 24,
+        G: "21032000",
+        H: "GB",
+        I: "Ambient",
+        J: "Red Lane - No OCR",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "Extra row 1",
+      },
+      {
+        A: "RMS-GB-000213-001",
+      },
+      {
+        C: "Description",
+        D: "Case Qty",
+        E: "Net Weight KG",
+        G: "Commodity Code",
+        H: "Country Code",
+        I: "Type of Treatment",
+        J: "SPS",
+      },
+      {
+        C: "BEN Mexican 6*220g GB",
+        D: 336,
+        E: 443.52,
+        G: "19049030",
+        H: "GB",
+        I: "Ambient",
+        J: "Red Lane - No OCR",
+      },
+    ],
+  },
 };

@@ -367,4 +367,51 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    "SUMMARY FOR GC": [
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000149-006) \
+            declares that these products are intend for the Green lane and will remain \
+            in Northern Ireland. ",
+      },
+      {
+        C: "DESCRIPTION",
+        F: "Country of Origin",
+        G: "Qauntity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+      {
+        C: "SPINACH AND RICOTTA TORT",
+        F: "IT",
+        G: 17,
+        H: 40.8,
+        E: "1902209990",
+      },
+    ],
+    "SUMMARY FOR GC 2": [
+      {
+        A: "The exporter of the products covered by this document (NIRMS RMS-GB-000149-006) \
+            declares that these products are intend for the Green lane and will remain \
+            in Northern Ireland. ",
+      },
+      {
+        A: "Extra row 1",
+      },
+      {
+        C: "DESCRIPTION",
+        F: "Country of Origin",
+        G: "Qauntity",
+        H: "Net Weight (KG)",
+        E: "Commodity Code",
+      },
+      {
+        C: "MUSHROOM AND HERB TORT",
+        F: "IT",
+        G: 12,
+        H: 28.8,
+        E: "1902209990",
+      },
+    ],
+  },
 };

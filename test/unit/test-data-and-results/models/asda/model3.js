@@ -355,6 +355,60 @@ module.exports = {
     ],
   },
 
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Page1_1: [
+      {
+        B: "Description Of All Retail Goods",
+        C: "Nature of Product",
+        D: "Treatment Type",
+        E: "Number Of Establishment",
+        F: "Destination Store Establishment Number",
+        G: "Number of Packages",
+        H: "Net Weight",
+        I: "kilograms/grams",
+        J: "NIRMs/Non-NIRMs",
+      },
+      {
+        B: "100000261 DAILY CROISSANT CHOCO 1PK",
+        C: "Bakery Bought In",
+        D: "Ambient Grocery",
+        E: "RMS-GB-000015-006",
+        F: "RMS-NI-000008-017",
+        G: 1,
+        H: 0.059,
+        I: "kgs",
+        J: "Non-NIRMS",
+      },
+    ],
+    Page2_2: [
+      {
+        B: "Extra data row 1",
+      },
+      {
+        B: "Description Of All Retail Goods",
+        C: "Nature of Product",
+        D: "Treatment Type",
+        E: "Number Of Establishment",
+        F: "Destination Store Establishment Number",
+        G: "Number of Packages",
+        H: "Net Weight",
+        I: "kilograms/grams",
+        J: "NIRMs/Non-NIRMs",
+      },
+      {
+        B: "100000859 ASDA CREPES TOFFEE 180G",
+        C: "Bakery Bought In",
+        D: "Ambient Grocery",
+        E: "RMS-GB-000015-006",
+        F: "RMS-NI-000008-017",
+        G: 1,
+        H: 0.204,
+        I: "kgs",
+        J: "Non-NIRMS",
+      },
+    ],
+  },
+
   // CoO Validation Test Data Models
   validCooModel: {
     Page1_1: [

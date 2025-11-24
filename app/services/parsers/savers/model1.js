@@ -36,11 +36,11 @@ function parse(packingListJson) {
       return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
     };
 
-    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
-    const dataRow = headerRow + 1;
-
     for (const sheet of sheets) {
       if (!headers.SAVERS1.invalidSheets.includes(sheet)) {
+        const headerRow = rowFinder(packingListJson[sheet], callback);
+        const dataRow = headerRow + 1;
+
         packingListContentsTemp = mapParser(
           packingListJson[sheet],
           headerRow,

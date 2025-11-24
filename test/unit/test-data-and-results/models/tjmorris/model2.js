@@ -97,6 +97,57 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        B: "Nature of Products",
+        J: "Treatment Type",
+        L: "Description",
+        O: "Tariff/Commodity",
+        P: "Number of packages",
+        R: "Net Weight Kg",
+        T: "Country of Origin",
+        W: "NIRMS Eligible",
+      },
+      {
+        A: "RMS-GB-000010-001",
+        J: "RAW",
+        L: "2 WEB LICK-E-LIX 5S BEEF",
+        B: "PET FOOD & HEALTHCARE",
+        O: "0408192000",
+        P: "2",
+        R: "1.4",
+        T: "GB",
+        W: "N",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "extra row",
+      },
+      {
+        B: "Nature of Products",
+        J: "Treatment Type",
+        L: "Description",
+        O: "Tariff/Commodity",
+        P: "Number of packages",
+        R: "Net Weight Kg",
+        T: "Country of Origin",
+        W: "NIRMS Eligible",
+      },
+      {
+        A: "RMS-GB-000010-001",
+        J: "FRESH PRODUCTS",
+        B: "LETTUCE & BAGGED SALADS",
+        L: "FLORETTE SWEET & CRUNCHY 250G",
+        O: "1602906100",
+        P: "4",
+        R: "8",
+        T: "GB",
+        W: "N",
+      },
+    ],
+  },
   invalidModel_MissingColumnCells: {
     Sheet1: [
       {

@@ -448,6 +448,53 @@ module.exports = {
       { A: 35 },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        B: "RMS-GB-000247-001",
+      },
+      {
+        C: "Item Description",
+        E: "EU Commodity Code",
+        G: "Country of Origin",
+        H: "CASE Quantity",
+        I: "Net Weight (KGs)",
+        J: "NIRMS / SPS Item",
+      },
+      {
+        C: "PEPSI MAX 330ML CAN",
+        E: 2202100000,
+        G: "GB",
+        H: 1,
+        I: 9.02,
+        J: "NON-NIRMS",
+      },
+    ],
+    sheet2: [
+      {
+        B: "RMS-GB-000247-001",
+      },
+      {
+        A: "extra row",
+      },
+      {
+        C: "Item Description",
+        E: "EU Commodity Code",
+        G: "Country of Origin",
+        H: "CASE Quantity",
+        I: "Net Weight (KGs)",
+        J: "NIRMS / SPS Item",
+      },
+      {
+        C: "TIDYZ REFUSE SACKS 50L 50PK",
+        E: 3306900000,
+        G: "GB",
+        H: 1,
+        I: 8.7,
+        J: "NON-NIRMS",
+      },
+    ],
+  },
   wrongEstablishment: {
     "(DO NOT SORT) Packing List": [
       { A: "Savers - Packing List" },
