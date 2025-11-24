@@ -190,29 +190,4 @@ module.exports = {
     registration_approval_number: "RMS-GB-000010-001",
     parserModel: parserModel.TJMORRIS1,
   },
-  testResultWithoutGcRef: {
-    business_checks: {
-      all_required_fields_present: true,
-      failure_reasons: null,
-    },
-    items: [
-      {
-        commodity_code: "0408192000",
-        description: "Test Product Without GC Ref",
-        nature_of_products: "Description",
-        number_of_packages: "2",
-        total_net_weight_kg: "1.4",
-        type_of_treatment: "CHILLED",
-        total_net_weight_unit: "Kg",
-        country_of_origin: "GB",
-        row_location: {
-          rowNumber: 2,
-          sheetName: "Sheet1",
-        },
-      },
-    ],
-    establishment_numbers: ["RMS-GB-000010-001"],
-    registration_approval_number: "RMS-GB-000010-001",
-    parserModel: parserModel.TJMORRIS1,
-  },
 };

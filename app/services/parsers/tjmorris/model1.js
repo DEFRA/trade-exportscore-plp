@@ -41,12 +41,6 @@ function parse(packingListJson) {
       const netWeightHeader = packingListJson[sheet][headerRow].R;
       const netWeightUnit = regex.findUnit(netWeightHeader);
 
-      // Check if first row contains "GC Ref" to determine row number 
-      const firstRow = packingListJson[sheet][0];
-      const hasGcRef = firstRow && Object.values(firstRow).some(value => 
-        value.toLowerCase().includes('gc ref')
-      );
-
       packingListContentsTemp = packingListJson[sheet]
         .slice(headerRow + 1)
         .map((col, rowPos) => ({
@@ -59,7 +53,7 @@ function parse(packingListJson) {
           total_net_weight_unit: (isNotEmpty(col) && netWeightUnit) ?? null,
           country_of_origin: col.T ?? null,
           row_location: {
-            rowNumber: hasGcRef ? rowPos + 3 : rowPos + 2,
+            rowNumber: headerRow + rowPos + 2,
             sheetName: sheet,
           },
         }));

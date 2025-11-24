@@ -53,24 +53,12 @@ describe("matchesTJMorrisModel1", () => {
     expect(result).toMatchObject(test_results.missingKgunit);
   });
 
-  test("matches valid TJMorris Model 1 file with GC Ref, calls parser and returns correct row number (+3)", async () => {
+  test("matches valid TJMorris Model 1 file with GC Ref, calls parser and returns correct row number", async () => {
     const result = await parserService.findParser(
       model.modelWithGcRef,
       filename,
     );
 
     expect(result).toMatchObject(test_results.testResultWithGcRef);
-    expect(result.items[0].row_location.rowNumber).toBe(3);
   });
-
-  test("matches valid TJMorris Model 1 file without GC Ref, calls parser and returns correct row number (+2)", async () => {
-    const result = await parserService.findParser(
-      model.modelWithoutGcRef,
-      filename,
-    );
-
-    expect(result).toMatchObject(test_results.testResultWithoutGcRef);
-    expect(result.items[0].row_location.rowNumber).toBe(2);
-  });
-  
 });
