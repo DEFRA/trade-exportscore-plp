@@ -1,9 +1,13 @@
 const ParserModel = require("../../../app/services/parser-model");
 const pdfNonAi = require("../../../app/routes/pdf-non-ai");
-const { processPdfFile } = require("../../../app/utilities/file-processor");
+const { findParser } = require("../../../app/services/parser-service");
+const { createPackingList } = require("../../../app/packing-list/index");
+const logger = require("../../../app/utilities/logger");
+const fs = require("node:fs");
 
 // Mocking the necessary modules
-jest.mock("../../../app/utilities/file-processor"); // Mock the file-processor module
+jest.mock("../../../app/services/parser-service"); // Mock the entire parser-service module
+jest.mock("../../../app/packing-list"); // Mock the entire packing-list module
 
 describe("/pdf-non-ai route handler", () => {
   let mockRequest;
@@ -19,16 +23,26 @@ describe("/pdf-non-ai route handler", () => {
       }),
     };
     mockRequest.query = { filename: "test" };
+
+    // Mock findParser's default behaviour
+    findParser.mockImplementation(() => {
+      return {
+        parserModel: ParserModel.ICELAND1, // Simulate a successful match with ICELAND1 parser
+        business_checks: {
+          all_required_fields_present: true,
+        },
+      };
+    });
+
+    // Mock createPackingList's default behaviour
+    createPackingList.mockImplementation(() => jest.fn()); // Simulate the packing list creation
   });
 
   // Test case for successful execution
   test("should return success", async () => {
-    // Mock processPdfFile with successful data return
-    processPdfFile.mockResolvedValueOnce({
-      parserModel: ParserModel.ICELAND1, // Simulate a successful match with ICELAND1 parser
-      business_checks: {
-        all_required_fields_present: true,
-      },
+    // Mock readFileSync with successful data return
+    jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {
+      return "parsedData";
     });
 
     // Call the handler with the mock request and mock response
@@ -40,12 +54,18 @@ describe("/pdf-non-ai route handler", () => {
 
   // Test case for not parsed
   test("should return no match", async () => {
-    // Mock processPdfFile with no match result
-    processPdfFile.mockResolvedValueOnce({
-      parserModel: ParserModel.NOMATCH, // Simulate no match
-      business_checks: {
-        all_required_fields_present: false,
-      },
+    // Mock readFileSync with successful data return
+    jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {
+      return "parsedData";
+    });
+
+    findParser.mockImplementationOnce(() => {
+      return {
+        parserModel: ParserModel.NOMATCH, // Simulate no match
+        business_checks: {
+          all_required_fields_present: false,
+        },
+      };
     });
 
     // Call the handler with the mock request and mock response
@@ -56,19 +76,29 @@ describe("/pdf-non-ai route handler", () => {
   });
 
   // Test case for handling an error
-  test("should handle processPdfFile error", async () => {
-    // Mock processPdfFile to return error result (file-processor handles errors internally)
-    processPdfFile.mockResolvedValueOnce({
-      parserModel: ParserModel.NOMATCH,
-      business_checks: {
-        all_required_fields_present: false,
-      },
+  test("should handle readFileSync error", async () => {
+    // Mock readFileSync to throw an error
+    jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {
+      throw new Error("Read file error"); // Simulate an error during read file
     });
+
+    // Spy on console.error to check if errors are being logged
+    const consoleErrorSpy = jest
+      .spyOn(logger, "logError")
+      .mockImplementation(() => {}); // Prevent actual error logging during tests
 
     // Call the handler with the mock request and mock response
     await pdfNonAi.handler(mockRequest, mockH);
 
     // Verify that the response function was called even when an error occurred
     expect(mockH.response).toHaveBeenCalled();
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.any(String),
+      expect.any(Error),
+    );
+
+    // Restore the original console.error after the test
+    consoleErrorSpy.mockRestore();
   });
 });
