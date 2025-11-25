@@ -52,4 +52,13 @@ describe("matchesTJMorrisModel1", () => {
 
     expect(result).toMatchObject(test_results.missingKgunit);
   });
+
+  test("matches valid TJMorris Model 1 file with GC Ref, calls parser and returns correct row number", async () => {
+    const result = await parserService.findParser(
+      model.modelWithGcRef,
+      filename,
+    );
+
+    expect(result).toMatchObject(test_results.testResultWithGcRef);
+  });
 });
