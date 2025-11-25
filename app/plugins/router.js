@@ -6,6 +6,7 @@ const routes = [].concat(
   require("../routes/ai"),
   require("../routes/test-di-conn"),
   require("../routes/test-mdm-conn"),
+  require("../routes/mdm-cache-invalidate"),
   require("../routes/create-packinglist-message"),
   require("../routes/pdf-non-ai"),
   require("../routes/get-dispatch-location"),
