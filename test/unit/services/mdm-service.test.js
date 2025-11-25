@@ -3,9 +3,11 @@ const {
 } = require("../../../app/services/mdm-service");
 const logger = require("../../../app/utilities/logger");
 const config = require("../../../app/config");
+const mdmBlobCache = require("../../../app/services/cache/mdm-blob-cache-service");
 const path = require("node:path");
 
 jest.mock("../../../app/utilities/logger");
+jest.mock("../../../app/services/cache/mdm-blob-cache-service");
 jest.mock("../../../app/config", () => ({
   mdmConfig: {
     apiUrl: "https://test-api.example.com",
@@ -27,6 +29,9 @@ describe("mdm-service", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     global.fetch = jest.fn();
+    // Default: cache returns null (cache miss)
+    mdmBlobCache.get.mockResolvedValue(null);
+    mdmBlobCache.set.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
@@ -56,7 +61,7 @@ describe("mdm-service", () => {
       expect(global.fetch).toHaveBeenCalledTimes(2);
       expect(global.fetch).toHaveBeenNthCalledWith(
         2,
-        "https://test-api.example.com/trade/nirms",
+        "https://test-api.example.com/trade/nirms/prohibited-items",
         {
           method: "GET",
           headers: {
@@ -282,6 +287,70 @@ describe("mdm-service", () => {
       const result = await getNirmsProhibitedItems(5, 500);
 
       expect(result).toEqual(mockData);
+    });
+
+    it("should return cached data when available", async () => {
+      const cachedData = { items: ["cached-item1", "cached-item2"] };
+      mdmBlobCache.get.mockResolvedValue(cachedData);
+
+      const result = await getNirmsProhibitedItems();
+
+      expect(result).toEqual(cachedData);
+      expect(mdmBlobCache.get).toHaveBeenCalled();
+      expect(global.fetch).not.toHaveBeenCalled();
+      expect(logger.logInfo).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getNirmsProhibitedItems()",
+        "Returning cached NIRMS data",
+      );
+    });
+
+    it("should fetch from API and cache on cache miss", async () => {
+      const mockData = { items: ["item1", "item2"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.set.mockResolvedValue(undefined);
+
+      global.fetch
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "mock-token" }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue(mockData),
+        });
+
+      const result = await getNirmsProhibitedItems();
+
+      expect(result).toEqual(mockData);
+      expect(mdmBlobCache.get).toHaveBeenCalled();
+      expect(mdmBlobCache.set).toHaveBeenCalledWith(mockData);
+    });
+
+    it("should continue on cache write failure", async () => {
+      const mockData = { items: ["item1", "item2"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.set.mockRejectedValue(new Error("Cache write failed"));
+
+      global.fetch
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "mock-token" }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue(mockData),
+        });
+
+      const result = await getNirmsProhibitedItems();
+
+      // Should still return data despite cache write failure
+      expect(result).toEqual(mockData);
+      expect(mdmBlobCache.set).toHaveBeenCalledWith(mockData);
     });
   });
 });

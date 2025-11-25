@@ -40,6 +40,9 @@ services:
       MDM_CLIENT_ID: ${MDM_CLIENT_ID}
       MDM_CLIENT_SECRET: ${MDM_CLIENT_SECRET}
       MDM_SCOPE: ${MDM_SCOPE}
+      MDM_CACHE_ENABLED: ${MDM_CACHE_ENABLED:-true}
+      MDM_CACHE_TTL_SECONDS: ${MDM_CACHE_TTL_SECONDS:-600}
+      MDM_CACHE_CONTAINER: ${MDM_CACHE_CONTAINER:-mdm-cache}
 
   trade-exportscore-plp-postgres:
     image: postgres:11.4-alpine

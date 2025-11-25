@@ -80,6 +80,84 @@ if (data) {
 const dataWithCustomRetry = await getNirmsProhibitedItems(5, 3000); // 5 retries, 3s delay
 ```
 
+### Architecture
+
+**Matcher-Parser Pipeline Integration:**
+
+The MDM service integrates into the existing PLP architecture to provide prohibited items validation during packing list processing. The service is called during the validation phase to check if commodity codes are prohibited.
+
+## Blob Cache Implementation
+
+### Overview
+
+The MDM blob cache provides a distributed caching layer for NIRMS prohibited items data using Azure Blob Storage. This reduces API calls to the MDM service and improves response times for frequently accessed data.
+
+### Configuration
+
+**Container Name:** `mdm-cache` (configurable via `MDM_CACHE_CONTAINER`)  
+**Blob Name:** `nirms-prohibited-items.json`  
+**TTL:** Configurable via `MDM_CACHE_TTL_SECONDS` (default: 3600 seconds / 1 hour)  
+**Authentication:** DefaultAzureCredential (Managed Identity in Azure, Service Principal locally)
+
+### Cache Flow
+
+1. **Cache Check**: On API request, check blob storage for cached data
+2. **TTL Validation**: Compare blob's `lastModified` timestamp against configured TTL
+3. **Cache Hit**: Return cached data if valid, skip API call
+4. **Cache Miss/Expired**: Fetch from MDM API
+5. **Cache Write**: Asynchronously cache successful API response (fire-and-forget)
+
+### Graceful Degradation
+
+- Cache disabled: Service operates normally without caching
+- Cache read failure: Falls back to API fetch, logs error
+- Cache write failure: Returns API data successfully, logs error
+- Missing storage account: Service continues with API-only mode
+
+### Environment Variables
+
+| Variable                     | Description                   | Default     | Type              |
+| ---------------------------- | ----------------------------- | ----------- | ----------------- |
+| `MDM_CACHE_ENABLED`          | Enable/disable blob caching   | `true`      | Boolean           |
+| `MDM_CACHE_TTL_SECONDS`      | Cache time-to-live in seconds | `3600`      | Integer           |
+| `MDM_CACHE_CONTAINER`        | Blob storage container name   | `mdm-cache` | String            |
+| `AZURE_STORAGE_ACCOUNT_NAME` | Azure Storage account name    | -           | String (Required) |
+
+### Manual Cache Invalidation
+
+**Endpoint:** `DELETE /mdm/cache`
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "message": "MDM cache successfully invalidated"
+}
+```
+
+**Error Response:**
+
+```json
+{
+  "success": false,
+  "error": "Error message"
+}
+```
+
+**Usage:**
+
+```bash
+curl -X DELETE http://localhost:3000/mdm/cache
+```
+
+### Monitoring
+
+- All cache operations logged via standard PLP logger
+- Cache hits/misses tracked in logs
+- TTL validation details logged for troubleshooting
+- Cache write failures logged but don't impact API response
+
 ### Authentication
 
 Configured with **OAuth 2.0 Client Credentials + APIM Subscription Key**:
@@ -124,11 +202,10 @@ curl http://localhost:3000/test-mdm-conn
 
 ### Future Enhancements
 
-1. **Caching**: Implement caching strategy for NIRMS data (infrequent changes)
-2. **Token Caching**: Cache OAuth bearer tokens until expiry to reduce token requests
-3. **Data Transformation**: Map MDM response to existing prohibited items format
-4. **Fallback**: Implement fallback to local JSON files if API unavailable
-5. **Environment-specific URLs**: Configure per-environment values in appConfig files (dev1, tst1, snd4, pre1, prd1)
+1. **Token Caching**: Cache OAuth bearer tokens until expiry to reduce token requests
+2. **Data Transformation**: Map MDM response to existing prohibited items format
+3. **Fallback**: Implement fallback to local JSON files if API unavailable
+4. **Environment-specific URLs**: Configure per-environment values in appConfig files (dev1, tst1, snd4, pre1, prd1)
 
 ### Test Coverage
 

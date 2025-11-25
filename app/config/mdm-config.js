@@ -7,10 +7,17 @@ const bearerTokenRequest = {
   clientSecret: process.env.MDM_CLIENT_SECRET,
 };
 
+const cache = {
+  enabled: process.env.MDM_CACHE_ENABLED === "true",
+  ttlSeconds: parseInt(process.env.MDM_CACHE_TTL_SECONDS || "3600", 10),
+  containerName: process.env.MDM_CACHE_CONTAINER || "mdm-cache",
+};
+
 const mdmConfig = {
   apiUrl: process.env.MDM_API_URL,
   subscriptionKey: process.env.MDM_SUBSCRIPTION_KEY,
   bearerTokenRequest,
+  cache,
 };
 
 // Debug logging - remove after testing
