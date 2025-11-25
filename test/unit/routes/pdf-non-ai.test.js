@@ -1,6 +1,7 @@
 const ParserModel = require("../../../app/services/parser-model");
 const pdfNonAi = require("../../../app/routes/pdf-non-ai");
 const { findParser } = require("../../../app/services/parser-service");
+const { createPackingList } = require("../../../app/packing-list/index");
 const logger = require("../../../app/utilities/logger");
 const fs = require("node:fs");
 
@@ -22,6 +23,19 @@ describe("/pdf-non-ai route handler", () => {
       }),
     };
     mockRequest.query = { filename: "test" };
+
+    // Mock findParser's default behaviour
+    findParser.mockImplementation(() => {
+      return {
+        parserModel: ParserModel.ICELAND1, // Simulate a successful match with ICELAND1 parser
+        business_checks: {
+          all_required_fields_present: true,
+        },
+      };
+    });
+
+    // Mock createPackingList's default behaviour
+    createPackingList.mockImplementation(() => jest.fn()); // Simulate the packing list creation
   });
 
   // Test case for successful execution
@@ -29,15 +43,6 @@ describe("/pdf-non-ai route handler", () => {
     // Mock readFileSync with successful data return
     jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {
       return "parsedData";
-    });
-
-    findParser.mockImplementationOnce(() => {
-      return {
-        parserModel: ParserModel.ICELAND1, // Simulate a successful match with NISA1 parser
-        business_checks: {
-          all_required_fields_present: true,
-        },
-      };
     });
 
     // Call the handler with the mock request and mock response
@@ -56,7 +61,7 @@ describe("/pdf-non-ai route handler", () => {
 
     findParser.mockImplementationOnce(() => {
       return {
-        parserModel: ParserModel.NOMATCH, // Simulate a successful match with NISA1 parser
+        parserModel: ParserModel.NOMATCH, // Simulate no match
         business_checks: {
           all_required_fields_present: false,
         },
@@ -70,7 +75,7 @@ describe("/pdf-non-ai route handler", () => {
     expect(mockH.response).toHaveBeenCalled();
   });
 
-  // Test case for handling an readFileSync error
+  // Test case for handling an error
   test("should handle readFileSync error", async () => {
     // Mock readFileSync to throw an error
     jest.spyOn(fs, "readFileSync").mockImplementationOnce(() => {

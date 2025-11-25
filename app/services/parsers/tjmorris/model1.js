@@ -53,7 +53,7 @@ function parse(packingListJson) {
           total_net_weight_unit: (isNotEmpty(col) && netWeightUnit) ?? null,
           country_of_origin: col.T ?? null,
           row_location: {
-            rowNumber: rowPos + 2,
+            rowNumber: headerRow + rowPos + 2,
             sheetName: sheet,
           },
         }));

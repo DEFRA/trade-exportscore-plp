@@ -20,6 +20,7 @@ const { findParser } = require("../services/parser-service");
 const { createPackingList } = require("../packing-list/index");
 const parserModel = require("../services/parser-model");
 const path = require("node:path");
+const fs = require("node:fs");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const logger = require("./logger");
 const { getRandomInt } = require("./random-int");
@@ -67,6 +68,27 @@ async function processCsvFile(filename, dispatchLocation = null) {
 }
 
 /**
+ * Process PDF file and parse packing list.
+ * @param {string} filename - Path to PDF file
+ * @param {string|null} dispatchLocation - Dispatch location identifier
+ * @returns {Promise<Object>} Parsed packing list object
+ */
+async function processPdfFile(filename, dispatchLocation = null) {
+  let buffer = {};
+  try {
+    buffer = fs.readFileSync(filename);
+  } catch (err) {
+    logger.logError(
+      filenameForLogging,
+      "processPdfFile() > fs.readFileSync",
+      err,
+    );
+  }
+
+  return processData(buffer, filename, dispatchLocation);
+}
+
+/**
  * Process converted data through parser and persist if matched.
  * @param {Object} data - Converted packing list data
  * @param {string} filename - Original filename
@@ -84,4 +106,4 @@ async function processData(data, filename, dispatchLocation) {
   return packingList;
 }
 
-module.exports = { processExcelFile, processCsvFile };
+module.exports = { processExcelFile, processCsvFile, processPdfFile };
