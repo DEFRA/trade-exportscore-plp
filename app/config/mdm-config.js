@@ -9,8 +9,11 @@ const bearerTokenRequest = {
 
 const cache = {
   enabled: process.env.MDM_CACHE_ENABLED === "true",
+  provider: process.env.MDM_CACHE_PROVIDER || "blob", // "blob" or "redis"
   ttlSeconds: parseInt(process.env.MDM_CACHE_TTL_SECONDS || "3600", 10),
   containerName: process.env.MDM_CACHE_CONTAINER || "mdm-cache",
+  redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
+  redisPassword: process.env.REDIS_PASSWORD,
 };
 
 const mdmConfig = {

@@ -79,7 +79,7 @@ describe("mdm-blob-cache-service", () => {
       expect(mockBlobClient.exists).toHaveBeenCalled();
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "get()",
+        "getFromBlob()",
         "Cache miss - blob not found",
       );
     });
@@ -103,7 +103,7 @@ describe("mdm-blob-cache-service", () => {
       expect(result).toEqual(mockData);
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "get()",
+        "getFromBlob()",
         expect.stringContaining("Cache hit:"),
       );
     });
@@ -123,7 +123,7 @@ describe("mdm-blob-cache-service", () => {
       expect(mockBlobClient.delete).toHaveBeenCalled();
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "get()",
+        "getFromBlob()",
         expect.stringContaining("Cache expired:"),
       );
     });
@@ -166,7 +166,7 @@ describe("mdm-blob-cache-service", () => {
 
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "set()",
+        "setToBlob()",
         expect.stringContaining("Cache updated:"),
       );
     });
@@ -205,7 +205,7 @@ describe("mdm-blob-cache-service", () => {
       expect(mockBlobClient.delete).toHaveBeenCalled();
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "clear()",
+        "clearBlob()",
         "Cache invalidated",
       );
     });
@@ -218,7 +218,7 @@ describe("mdm-blob-cache-service", () => {
       expect(mockBlobClient.delete).not.toHaveBeenCalled();
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "clear()",
+        "clearBlob()",
         "No cache to clear",
       );
     });

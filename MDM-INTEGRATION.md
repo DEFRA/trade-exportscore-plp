@@ -101,27 +101,49 @@ The MDM blob cache provides a distributed caching layer for NIRMS prohibited ite
 
 ### Cache Flow
 
-1. **Cache Check**: On API request, check blob storage for cached data
-2. **TTL Validation**: Compare blob's `lastModified` timestamp against configured TTL
+1. **Cache Check**: On API request, check cache storage (blob or Redis) for cached data
+2. **TTL Validation**:
+   - **Blob**: Compare blob's `lastModified` timestamp against configured TTL
+   - **Redis**: Automatic expiration via Redis TTL (no manual checking needed)
 3. **Cache Hit**: Return cached data if valid, skip API call
 4. **Cache Miss/Expired**: Fetch from MDM API
 5. **Cache Write**: Asynchronously cache successful API response (fire-and-forget)
+
+### Cache Provider Options
+
+#### Blob Storage Provider (`MDM_CACHE_PROVIDER="blob"`)
+
+- **Pros**: Persistent storage, survives restarts, good for infrequent changes
+- **Cons**: Slower than Redis, requires manual TTL checking
+- **Use Case**: Production environments with managed identity, data persistence requirements
+- **Authentication**: DefaultAzureCredential (Managed Identity in Azure, Service Principal locally)
+
+#### Redis Provider (`MDM_CACHE_PROVIDER="redis"`)
+
+- **Pros**: Fast in-memory cache, automatic TTL expiration, simple key-value operations
+- **Cons**: Data lost on restart (unless persistence configured), requires Redis instance
+- **Use Case**: High-performance caching, frequent reads, development environments
+- **Authentication**: Optional password for Azure Redis Cache (TLS supported)
 
 ### Graceful Degradation
 
 - Cache disabled: Service operates normally without caching
 - Cache read failure: Falls back to API fetch, logs error
 - Cache write failure: Returns API data successfully, logs error
-- Missing storage account: Service continues with API-only mode
+- Missing storage/Redis: Service continues with API-only mode
+- Provider mismatch: Each provider operates independently (safe to switch)
 
 ### Environment Variables
 
-| Variable                     | Description                   | Default     | Type              |
-| ---------------------------- | ----------------------------- | ----------- | ----------------- |
-| `MDM_CACHE_ENABLED`          | Enable/disable blob caching   | `true`      | Boolean           |
-| `MDM_CACHE_TTL_SECONDS`      | Cache time-to-live in seconds | `3600`      | Integer           |
-| `MDM_CACHE_CONTAINER`        | Blob storage container name   | `mdm-cache` | String            |
-| `AZURE_STORAGE_ACCOUNT_NAME` | Azure Storage account name    | -           | String (Required) |
+| Variable                     | Description                       | Default     | Type           |
+| ---------------------------- | --------------------------------- | ----------- | -------------- |
+| `MDM_CACHE_ENABLED`          | Enable/disable caching            | `true`      | Boolean        |
+| `MDM_CACHE_PROVIDER`         | Cache provider: `blob` or `redis` | `blob`      | String         |
+| `MDM_CACHE_TTL_SECONDS`      | Cache time-to-live in seconds     | `3600`      | Integer        |
+| `MDM_CACHE_CONTAINER`        | Blob storage container name       | `mdm-cache` | String (blob)  |
+| `AZURE_STORAGE_ACCOUNT_NAME` | Azure Storage account name        | -           | String (blob)  |
+| `REDIS_URL`                  | Redis connection URL              | -           | String (redis) |
+| `REDIS_PASSWORD`             | Redis password (if required)      | -           | String (redis) |
 
 ### Manual Cache Invalidation
 

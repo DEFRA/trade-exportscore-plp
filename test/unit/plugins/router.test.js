@@ -6,6 +6,7 @@ const aiRoutes = require("../../../app/routes/ai");
 const upsertIdcomsRoutes = require("../../../app/routes/upsert-idcoms");
 const testDiConnRoutes = require("../../../app/routes/test-di-conn");
 const testMdmConnRoutes = require("../../../app/routes/test-mdm-conn");
+const mdmCacheInvalidateRoutes = require("../../../app/routes/mdm-cache-invalidate");
 const pdfNonAiRoutes = require("../../../app/routes/pdf-non-ai");
 const createPackingList = require("../../../app/routes/create-packinglist-message");
 const dispatchLocation = require("../../../app/routes/get-dispatch-location");
@@ -19,15 +20,22 @@ jest.mock("../../../app/routes/ai", () => [{ path: "/ai" }]);
 jest.mock("../../../app/routes/test-di-conn", () => [
   { path: "/test-di-conn" },
 ]);
-jest.mock("../../../app/routes/test-mdm-conn", () => [
-  { path: "/test-mdm-conn" },
-]);
+jest.mock("../../../app/routes/test-mdm-conn", () => ({
+  path: "/test-mdm-conn",
+}));
+jest.mock("../../../app/routes/mdm-cache-invalidate", () => ({
+  method: "DELETE",
+  path: "/mdm/cache",
+  options: {
+    handler: jest.fn(),
+  },
+}));
 jest.mock("../../../app/routes/upsert-idcoms", () => [
   { path: "/upsert-idcoms" },
 ]);
-jest.mock("../../../app/routes/create-packinglist-message", () => [
-  { path: "/create-packinglist-message" },
-]);
+jest.mock("../../../app/routes/create-packinglist-message", () => ({
+  path: "/create-packinglist-message",
+}));
 jest.mock("../../../app/routes/pdf-non-ai", () => [{ path: "/pdf-non-ai" }]);
 jest.mock("../../../app/routes/get-dispatch-location", () => [
   { path: "/get-dispatch-location" },
@@ -50,6 +58,7 @@ describe("router plugin", () => {
         aiRoutes,
         testDiConnRoutes,
         testMdmConnRoutes,
+        mdmCacheInvalidateRoutes,
         createPackingList,
         pdfNonAiRoutes,
         dispatchLocation,

@@ -73,7 +73,15 @@
   type: "keyvault"
 - key: MDM_CACHE_ENABLED
   value: "true"
+- key: MDM_CACHE_PROVIDER
+  value: "blob"
 - key: MDM_CACHE_TTL_SECONDS
   value: "3600"
 - key: MDM_CACHE_CONTAINER
   value: "mdm-cache"
+- key: REDIS_URL
+  value: "{{servicename}}-REDIS-URL"
+  type: "keyvault"
+- key: REDIS_PASSWORD
+  value: "{{servicename}}-REDIS-PASSWORD"
+  type: "keyvault"
