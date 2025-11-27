@@ -348,4 +348,57 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        AT: "RMS-GB-000022-998",
+      },
+      {
+        G: "Product/ Part Number description",
+        L: "Tariff Code UK",
+        AS: "Treatment Type",
+        AT: "Green Lane",
+        BR: "Packages",
+        BT: "Gross Weight",
+        BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
+      },
+      {
+        G: "CONTIGO AUTO-POP BOTTLE 720ML",
+        L: "9617000000",
+        AS: "Ambient",
+        AT: "Y",
+        BR: 1,
+        BT: 1.49,
+        BU: 1.4155,
+      },
+    ],
+    Sheet2: [
+      {
+        A: "extra row",
+      },
+      {
+        AT: "RMS-GB-000022-998",
+      },
+      {
+        G: "Product/ Part Number description",
+        L: "Tariff Code UK",
+        AS: "Treatment Type",
+        AT: "Green Lane",
+        BR: "Packages",
+        BT: "Gross Weight",
+        BU: "Net Weight",
+        A: "Net Weight/ Package (KG)",
+      },
+      {
+        G: "SCOTT 1PLY BLUE ROLL 6X150M",
+        L: "4818200000",
+        AS: "Ambient",
+        AT: "Y",
+        BR: 1,
+        BT: 0.84,
+        BU: 0.798,
+      },
+    ],
+  },
 };

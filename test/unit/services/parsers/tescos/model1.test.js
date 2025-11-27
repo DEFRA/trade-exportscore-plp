@@ -14,6 +14,16 @@ describe("parseTescoModel1", () => {
     expect(result).toMatchObject(test_results.validTestResultForMultipleSheets);
   });
 
+  test("parses multiple sheets with headers on different rows", () => {
+    const result = parser.parse(
+      model.validModelMultipleSheetsHeadersOnDifferentRows,
+    );
+
+    expect(result.business_checks.all_required_fields_present).toBe(true);
+    expect(result.items[0].row_location.rowNumber).toBe(3);
+    expect(result.items[1].row_location.rowNumber).toBe(4);
+  });
+
   test("parses missing required values", () => {
     const result = parser.parse(model.invalidModel_MissingColumnCells);
 

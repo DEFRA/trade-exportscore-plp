@@ -24,8 +24,6 @@ function parse(packingListJson) {
     const callback = function (x) {
       return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
     };
-    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
-    const dataRow = headerRow + 1;
 
     const establishmentNumber = regex.findMatch(
       headers.GIOVANNI2.establishmentNumber.regex,
@@ -39,6 +37,9 @@ function parse(packingListJson) {
         establishmentNumbers,
       );
 
+      const headerRow = rowFinder(packingListJson[sheet], callback);
+      const dataRow = headerRow + 1;
+
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
         headerRow,
@@ -46,6 +47,7 @@ function parse(packingListJson) {
         headers.GIOVANNI2,
         sheet,
       );
+
       packingListContents = packingListContents.concat(packingListContentsTemp);
     }
 

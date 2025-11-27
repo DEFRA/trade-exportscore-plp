@@ -632,4 +632,51 @@ module.exports = {
       },
     ],
   },
+  validModelMultipleSheetsHeadersOnDifferentRows: {
+    Sheet1: [
+      {
+        C: "Product Type / Category",
+        E: "Product / Part Number Description",
+        G: "Packages",
+        H: "Net\nWeight / Package KG",
+        J: "Type of treatment",
+        N: "RMS Number (based on depot)",
+        O: "Commodity Code",
+        P: "NIRMS or non-NIRMS",
+      },
+      {
+        E: "Jason's Sourdough The Great White 450g",
+        C: "Bread",
+        O: "1905903000",
+        G: 1,
+        H: 3.15,
+        N: "RMS-GB-000094-002​",
+        P: "no",
+      },
+    ],
+    Sheet2: [
+      {
+        A: "Extra row 1",
+      },
+      {
+        C: "Product Type / Category",
+        E: "Product / Part Number Description",
+        G: "Packages",
+        H: "Net\nWeight / Package KG",
+        J: "Type of treatment",
+        N: "RMS Number (based on depot)",
+        O: "Commodity Code",
+        P: "NIRMS or non-NIRMS",
+      },
+      {
+        E: "Sainsbury's British Beef Mince (Typically 15% Fat) 500g",
+        C: "Meat/Fish",
+        O: "0201301900",
+        G: 1,
+        H: 5.5,
+        N: "RMS-GB-000094-002​",
+        P: "no",
+      },
+    ],
+  },
 };

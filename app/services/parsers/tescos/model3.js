@@ -31,15 +31,15 @@ function parse(packingListJson) {
       return matchesHeader(headerTitles, [x]) === MatcherResult.CORRECT;
     };
 
-    const headerRow = rowFinder(packingListJson[sheets[0]], callback);
-    const dataRow = headerRow + 1;
-
     for (const sheet of sheets) {
       establishmentNumbers = regex.findAllMatches(
         regex.remosRegex,
         packingListJson[sheet],
         establishmentNumbers,
       );
+
+      const headerRow = rowFinder(packingListJson[sheet], callback);
+      const dataRow = headerRow + 1;
 
       packingListContentsTemp = mapParser(
         packingListJson[sheet],

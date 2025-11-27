@@ -44,7 +44,7 @@ function parse(packingListJson) {
         packingListJson[sheet],
       );
 
-      const headerRow = rowFinder(packingListJson[sheets[0]], headerCallback);
+      const headerRow = rowFinder(packingListJson[sheet], headerCallback);
       const dataRow = headerRow + 1;
       packingListContentsTemp = mapParser(
         packingListJson[sheet],
