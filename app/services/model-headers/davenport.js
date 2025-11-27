@@ -6,6 +6,7 @@
  */
 const davenportHeaders = {
   DAVENPORT1: {
+    deprecated: true,
     invalidSheets: [
       "Packing List",
       "Invoice",

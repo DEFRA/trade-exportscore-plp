@@ -1,3 +1,9 @@
+/**
+ * Davenport Model 1 parser service tests
+ *
+ * DEPRECATED: Davenport Model 1 format is no longer supported as of [Work Item: AB#XXXXXX].
+ * All instances now return NOMATCH. Tests remain for historical reference.
+ */
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/davenport/model1");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -5,7 +11,7 @@ const test_results = require("../../../test-data-and-results/results/davenport/m
 
 const filename = "packinglist-davenport-model1.xlsx";
 
-describe("matchesDavenportModel1", () => {
+describe.skip("matchesDavenportModel1 - DEPRECATED", () => {
   test("matches valid Davenport Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 
@@ -62,5 +68,16 @@ describe("matchesDavenportModel1", () => {
     expect(result.business_checks.all_required_fields_present).toBe(true);
     expect(result.items[0].row_location.rowNumber).toBe(3);
     expect(result.items[1].row_location.rowNumber).toBe(4);
+  });
+});
+
+describe("matchesDavenportModel1 - Deprecation Behavior", () => {
+  test("returns NOMATCH for deprecated Davenport Model 1 format", async () => {
+    const result = await parserService.findParser(model.validModel, filename);
+
+    expect(result.parserModel).toBe(parserModel.NOMATCH);
+    expect(result.business_checks.all_required_fields_present).toBe(false);
+    expect(result.items).toEqual([]);
+    expect(result.registration_approval_number).toBeNull();
   });
 });
