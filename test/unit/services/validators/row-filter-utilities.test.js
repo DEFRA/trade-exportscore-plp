@@ -218,17 +218,17 @@ describe("Row Filter Utilities", () => {
       ).toBe(true);
     });
 
-    test("should identify row with partial header matches above threshold", () => {
+    test("should NOT identify row with partial header matches (not all match)", () => {
       const row = {
         A: "ITEM DESCRIPTION",
         B: "Commodity Code",
         C: "TOTAL NUMBER OF CASES",
         D: "Different Value",
       };
-      // 3 out of 4 matches = 75% > 60% threshold
+      // 3 out of 4 matches = not 100%, so should return false
       expect(
         isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config),
-      ).toBe(true);
+      ).toBe(false);
     });
 
     test("should NOT identify row with partial matches below threshold", () => {
@@ -244,7 +244,7 @@ describe("Row Filter Utilities", () => {
       ).toBe(false);
     });
 
-    test("should use custom headerMatchThreshold when provided", () => {
+    test("should NOT identify row with only one match (needs 100%)", () => {
       const row = {
         A: "ITEM DESCRIPTION",
         B: "Different",
@@ -252,7 +252,7 @@ describe("Row Filter Utilities", () => {
         D: "Different",
       };
       const configLowThreshold = { ...config, headerMatchThreshold: 0.25 };
-      // 1 out of 4 matches = 25% = 25% threshold
+      // Only 1 out of 4 matches = not 100%, threshold ignored
       expect(
         isRepeatedHeaderRow(
           row,
@@ -260,10 +260,10 @@ describe("Row Filter Utilities", () => {
           headerCols,
           configLowThreshold,
         ),
-      ).toBe(true);
+      ).toBe(false);
     });
 
-    test("should use default 0.6 threshold when not specified", () => {
+    test("should require all fields to match (100% match required)", () => {
       const row = {
         A: "ITEM DESCRIPTION",
         B: "Commodity Code",
@@ -271,7 +271,7 @@ describe("Row Filter Utilities", () => {
         D: "Different",
       };
       const configNoThreshold = { skipRepeatedHeaders: true };
-      // 3 out of 4 = 75% > 60% default
+      // 3 out of 4 = 75%, but needs 100%
       expect(
         isRepeatedHeaderRow(
           row,
@@ -279,7 +279,7 @@ describe("Row Filter Utilities", () => {
           headerCols,
           configNoThreshold,
         ),
-      ).toBe(true);
+      ).toBe(false);
     });
 
     test("should return false when skipRepeatedHeaders is false", () => {
@@ -316,16 +316,17 @@ describe("Row Filter Utilities", () => {
       ).toBe(false);
     });
 
-    test("should match headers with substring comparison (length >= 5)", () => {
+    test("should NOT match headers with partial substring (exact match only)", () => {
       const row = {
-        A: "ITEM DESC", // Contains first 5+ chars
-        B: "Commo", // Contains first 5 chars
-        C: "TOTAL", // Contains first 5 chars
-        D: "Net W", // Contains first 5 chars
+        A: "ITEM DESC", // Partial match, not exact
+        B: "Commo", // Partial match, not exact
+        C: "TOTAL", // Partial match, not exact
+        D: "Net W", // Partial match, not exact
       };
+      // Partial matches don't count - exact match required
       expect(
         isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config),
-      ).toBe(true);
+      ).toBe(false);
     });
   });
 

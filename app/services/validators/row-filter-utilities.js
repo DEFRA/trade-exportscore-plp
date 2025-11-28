@@ -133,9 +133,8 @@ function isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config) {
     isHeaderMatch(row, originalHeaderRow, colKey),
   ).length;
 
-  const defaultHeaderMatchThreshold = 0.6;
-  const threshold = config.headerMatchThreshold || defaultHeaderMatchThreshold;
-  return headerMatches >= Math.floor(mappedFields.length * threshold);
+  // Require all fields to match (100%)
+  return headerMatches === mappedFields.length;
 }
 
 /**
@@ -153,26 +152,8 @@ function isHeaderMatch(row, originalHeaderRow, colKey) {
   const currentValue = String(row[colKey]).toLowerCase().trim();
   const headerValue = String(originalHeaderRow[colKey]).toLowerCase().trim();
 
-  // Exact match
-  if (currentValue === headerValue) {
-    return true;
-  }
-
-  const stringLength5 = 5;
-  // Partial match for strings >= 5 characters
-  if (
-    headerValue.length >= stringLength5 &&
-    currentValue.includes(headerValue.substring(0, stringLength5))
-  ) {
-    return true;
-  }
-  if (
-    currentValue.length >= stringLength5 &&
-    headerValue.includes(currentValue.substring(0, stringLength5))
-  ) {
-    return true;
-  }
-  return false;
+  // Exact match only
+  return currentValue === headerValue;
 }
 
 /**

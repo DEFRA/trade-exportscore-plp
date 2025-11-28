@@ -32,13 +32,11 @@ const bandmHeaders = {
     // Row filtering configuration
     skipTotalsRows: true,
     skipRepeatedHeaders: true,
-    totalsRowKeywords: ["TOTAL", "SUBTOTAL", "SUM", "SUMMARY", "GRAND TOTAL"],
     totalsRowPattern: {
       hasNumericOnly: true, // Only numeric fields populated
       descriptionEmpty: true, // Description field must be empty
       commodityCodeEmpty: true, // Commodity code field must be empty
     },
-    headerMatchThreshold: 0.6, // 60% of header fields must match to be considered a repeated header
   },
 };
 
