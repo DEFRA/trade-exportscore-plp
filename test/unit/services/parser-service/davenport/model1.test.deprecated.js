@@ -11,7 +11,7 @@ const test_results = require("../../../test-data-and-results/results/davenport/m
 
 const filename = "packinglist-davenport-model1.xlsx";
 
-describe.skip("matchesDavenportModel1 - DEPRECATED", () => {
+describe("matchesDavenportModel1 - DEPRECATED", () => {
   test("matches valid Davenport Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 

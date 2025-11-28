@@ -17,18 +17,9 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
  * Davenport matcher (model 1) - DEPRECATED
  * @param {Object} packingList - Excel->JSON representation keyed by sheet
  * @param {string} filename - Source filename for logging
- * @returns {string} matcherResult - Always returns NOMATCH for deprecated format
+ * @returns {string} matcherResult - One of the matcher result codes
  */
 function matches(packingList, filename) {
-  // DAVENPORT1 is deprecated - always return NOMATCH
-  logger.logInfo(
-    filenameForLogging,
-    "matches()",
-    `Davenport Model 1 is deprecated. Skipping match for filename: ${filename}`,
-  );
-  return matcherResult.NOMATCH;
-
-  /* Original matching logic retained for reference:
   try {
     let result = matcherResult.EMPTY_FILE; // Initialise to EMPTY_FILE as spreadsheet with only invalid sheets is equivalent to an empty file.
     const sheets = Object.keys(packingList);
@@ -74,7 +65,6 @@ function matches(packingList, filename) {
     logger.logError(filenameForLogging, "matches()", err);
     return matcherResult.GENERIC_ERROR;
   }
-  */
 }
 
 module.exports = {

@@ -11,7 +11,7 @@ const logger = require("../../../../../app/utilities/logger");
 
 const filename = "packinglist.xlsx";
 
-describe.skip("matchesDavenportModel1 - DEPRECATED", () => {
+describe("matchesDavenportModel1 - DEPRECATED", () => {
   test("returns Correct", () => {
     const result = matcher.matches(model.validModel, filename);
 
