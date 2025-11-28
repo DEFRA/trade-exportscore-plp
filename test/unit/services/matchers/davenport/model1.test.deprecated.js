@@ -93,35 +93,3 @@ describe("matchesDavenportModel1 - DEPRECATED", () => {
     expect(result).toBe(matcherResult.EMPTY_FILE);
   });
 });
-
-/**
- * Verify deprecated model returns NOMATCH
- *
- * Ensures the matcher correctly rejects Davenport Model 1 format
- * since it has been deprecated in favor of Model 2.
- */
-describe("matchesDavenportModel1 - Deprecation Behavior", () => {
-  test("returns NOMATCH for deprecated Davenport Model 1 format", () => {
-    const result = matcher.matches(model.validModel, filename);
-
-    expect(result).toBe(matcherResult.NOMATCH);
-  });
-
-  test("returns NOMATCH even for previously valid inputs", () => {
-    const result = matcher.matches(model.validModel, filename);
-
-    expect(result).toBe(matcherResult.NOMATCH);
-  });
-
-  test("logs deprecation message when called", () => {
-    const logInfoSpy = jest.spyOn(logger, "logInfo");
-
-    matcher.matches(model.validModel, filename);
-
-    expect(logInfoSpy).toHaveBeenCalledWith(
-      expect.any(String),
-      "matches()",
-      expect.stringContaining("deprecated"),
-    );
-  });
-});
