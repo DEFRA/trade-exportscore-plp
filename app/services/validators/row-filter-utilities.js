@@ -116,7 +116,7 @@ function hasNumericData(row, headerCols) {
  * @param {Object} row - The data row
  * @param {Object} originalHeaderRow - The original header row from sheet
  * @param {Object} headerCols - Column mappings
- * @param {Object} config - Model configuration
+ * @param {Object} config - Model configuration (must include regex object for mandatory fields)
  * @returns {boolean} - True if row is a repeated header
  */
 function isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config) {
@@ -124,17 +124,27 @@ function isRepeatedHeaderRow(row, originalHeaderRow, headerCols, config) {
     return false;
   }
 
-  const mappedFields = Object.values(headerCols).filter(Boolean);
-  if (mappedFields.length === 0) {
+  // Get mandatory field names from config.regex object
+  const mandatoryFieldNames = config.regex ? Object.keys(config.regex) : [];
+  if (mandatoryFieldNames.length === 0) {
     return false;
   }
 
-  const headerMatches = mappedFields.filter((colKey) =>
+  // Filter to only check mandatory fields that are mapped
+  const mandatoryMappedFields = mandatoryFieldNames
+    .map((fieldName) => headerCols[fieldName])
+    .filter(Boolean);
+
+  if (mandatoryMappedFields.length === 0) {
+    return false;
+  }
+
+  const headerMatches = mandatoryMappedFields.filter((colKey) =>
     isHeaderMatch(row, originalHeaderRow, colKey),
   ).length;
 
-  // Require all fields to match (100%)
-  return headerMatches === mappedFields.length;
+  // Require all mandatory fields to match (100%)
+  return headerMatches === mandatoryMappedFields.length;
 }
 
 /**

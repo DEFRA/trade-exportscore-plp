@@ -191,7 +191,12 @@ describe("Row Filter Utilities", () => {
 
     const config = {
       skipRepeatedHeaders: true,
-      headerMatchThreshold: 0.6,
+      regex: {
+        description: /ITEM DESCRIPTION/i,
+        commodity_code: /Commodity Code/i,
+        number_of_packages: /TOTAL NUMBER OF CASES/i,
+        total_net_weight_kg: /Net Weight/i,
+      },
     };
 
     test("should identify row with exact header values", () => {
@@ -270,7 +275,15 @@ describe("Row Filter Utilities", () => {
         C: "TOTAL NUMBER OF CASES",
         D: "Different",
       };
-      const configNoThreshold = { skipRepeatedHeaders: true };
+      const configNoThreshold = {
+        skipRepeatedHeaders: true,
+        regex: {
+          description: /ITEM DESCRIPTION/i,
+          commodity_code: /Commodity Code/i,
+          number_of_packages: /TOTAL NUMBER OF CASES/i,
+          total_net_weight_kg: /Net Weight/i,
+        },
+      };
       // 3 out of 4 = 75%, but needs 100%
       expect(
         isRepeatedHeaderRow(
@@ -413,7 +426,12 @@ describe("Row Filter Utilities", () => {
         descriptionEmpty: true,
         commodityCodeEmpty: true,
       },
-      headerMatchThreshold: 0.6,
+      regex: {
+        description: /ITEM DESCRIPTION/i,
+        commodity_code: /Commodity Code/i,
+        number_of_packages: /Cases/i,
+        total_net_weight_kg: /Weight/i,
+      },
     };
 
     test("should filter out empty rows", () => {
