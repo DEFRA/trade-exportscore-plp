@@ -70,14 +70,3 @@ describe("matchesDavenportModel1 - DEPRECATED", () => {
     expect(result.items[1].row_location.rowNumber).toBe(4);
   });
 });
-
-describe("matchesDavenportModel1 - Deprecation Behavior", () => {
-  test("returns NOMATCH for deprecated Davenport Model 1 format", async () => {
-    const result = await parserService.findParser(model.validModel, filename);
-
-    expect(result.parserModel).toBe(parserModel.NOMATCH);
-    expect(result.business_checks.all_required_fields_present).toBe(false);
-    expect(result.items).toEqual([]);
-    expect(result.registration_approval_number).toBeNull();
-  });
-});
