@@ -1,3 +1,9 @@
+/**
+ * Davenport Model 1 matcher tests
+ *
+ * DEPRECATED: Davenport Model 1 format is no longer supported as of [Work Item: AB#XXXXXX].
+ * Matcher now returns NOMATCH for all inputs. Tests remain for historical reference.
+ */
 const matcher = require("../../../../../app/services/matchers/davenport/model1");
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/davenport/model1");
@@ -5,7 +11,7 @@ const logger = require("../../../../../app/utilities/logger");
 
 const filename = "packinglist.xlsx";
 
-describe("matchesDavenportModel1", () => {
+describe("matchesDavenportModel1 - DEPRECATED", () => {
   test("returns Correct", () => {
     const result = matcher.matches(model.validModel, filename);
 
