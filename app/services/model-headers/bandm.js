@@ -29,6 +29,14 @@ const bandmHeaders = {
       regex: /Treatment type: all products are processed/i,
       value: "Processed",
     },
+    // Row filtering configuration
+    skipTotalsRows: true,
+    skipRepeatedHeaders: true,
+    totalsRowPattern: {
+      hasNumericOnly: true, // Only numeric fields populated
+      descriptionEmpty: true, // Description field must be empty
+      commodityCodeEmpty: true, // Commodity code field must be empty
+    },
   },
 };
 
