@@ -12,6 +12,7 @@ const netWeight = /Net Weight/i;
 
 const tescoHeaders = {
   TESCO1: {
+    deprecated: true,
     establishmentNumber: {
       regex: /RMS-GB-000022-(\d{3})?/i,
     },

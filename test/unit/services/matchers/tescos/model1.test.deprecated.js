@@ -1,3 +1,9 @@
+/**
+ * Tesco Model 1 matcher tests
+ *
+ * DEPRECATED: Tesco Model 1 format is no longer supported as of December 2025.
+ * All instances now return NOMATCH. Tests remain for historical reference.
+ */
 const matcher = require("../../../../../app/services/matchers/tescos/model1");
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/tescos/model1");
@@ -5,7 +11,7 @@ const logger = require("../../../../../app/utilities/logger");
 
 const filename = "PackingListTesco1.xlsx";
 
-describe("matchesTescoModel1", () => {
+describe("matchesTescoModel1 - DEPRECATED", () => {
   test("returns Correct", () => {
     const result = matcher.matches(model.validModel, filename);
 

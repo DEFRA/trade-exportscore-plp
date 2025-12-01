@@ -1,8 +1,9 @@
 /**
  * Tescos matcher (model 1)
  *
- * Detects Tesco packing list formats by checking establishment numbers
- * and header row signatures.
+ * DEPRECATED: Tesco Model 1 is no longer supported. This matcher always
+ * returns NOMATCH to prevent matching against the deprecated format.
+ * Retained for backward compatibility and historical reference.
  */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
