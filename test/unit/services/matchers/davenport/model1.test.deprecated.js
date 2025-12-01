@@ -1,11 +1,17 @@
-const matcher = require("../../../../../app/services/matchers/tescos/model1");
+/**
+ * Davenport Model 1 matcher tests
+ *
+ * DEPRECATED: Davenport Model 1 format is no longer supported as of [Work Item: AB#XXXXXX].
+ * Matcher now returns NOMATCH for all inputs. Tests remain for historical reference.
+ */
+const matcher = require("../../../../../app/services/matchers/davenport/model1");
 const matcherResult = require("../../../../../app/services/matcher-result");
-const model = require("../../../test-data-and-results/models/tescos/model1");
+const model = require("../../../test-data-and-results/models/davenport/model1");
 const logger = require("../../../../../app/utilities/logger");
 
-const filename = "PackingListTesco1.xlsx";
+const filename = "packinglist.xlsx";
 
-describe("matchesTescoModel1", () => {
+describe("matchesDavenportModel1 - DEPRECATED", () => {
   test("returns Correct", () => {
     const result = matcher.matches(model.validModel, filename);
 
@@ -21,18 +27,10 @@ describe("matchesTescoModel1", () => {
   });
 
   test("returns 'Wrong Establishment Number' matcher result for missing establishment number", () => {
-    const packingListJson = {
-      "Input Data Sheet": [
-        {},
-        {},
-        {},
-        {
-          AT: "INCORRECT",
-        },
-      ],
-    };
-
-    const result = matcher.matches(packingListJson, filename);
+    const result = matcher.matches(
+      model.invalidModel_IncorrectEstablishmentNumber,
+      filename,
+    );
 
     expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
@@ -43,31 +41,21 @@ describe("matchesTescoModel1", () => {
     expect(result).toBe(matcherResult.WRONG_ESTABLISHMENT_NUMBER);
   });
 
-  test("return 'Wrong Header' matcher result for incorrect header values", () => {
-    const packingListJson = {
-      "Input Data Sheet": [
-        {},
-        {},
-        {},
-        {
-          AT: "RMS-GB-000022-001",
-        },
-        {
-          G: "NOT",
-          L: "CORRECT",
-          AS: "HEADER",
-          AT: "Green Lane",
-          BR: "Packages",
-          BT: "Gross Weight",
-          BU: "Net Weight",
-        },
-      ],
-    };
-
-    const result = matcher.matches(packingListJson, filename);
+  test("return 'Wrong Header' matcher result for missing header values", () => {
+    const result = matcher.matches(model.invalidModel_MissingHeaders, filename);
 
     expect(result).toBe(matcherResult.WRONG_HEADER);
   });
+
+  test("return 'Wrong Header' matcher result for incorrect header values", () => {
+    const result = matcher.matches(
+      model.invalidModel_IncorrectHeaders,
+      filename,
+    );
+
+    expect(result).toBe(matcherResult.WRONG_HEADER);
+  });
+
   test("return 'Wrong Header' matcher result for incorrect header values of multiple sheets", () => {
     const result = matcher.matches(model.incorrectHeaderMultiple, filename);
 
@@ -86,5 +74,22 @@ describe("matchesTescoModel1", () => {
     matcher.matches(null, null);
 
     expect(logErrorSpy).toHaveBeenCalled();
+  });
+
+  test("skips processing for sheets listed in invalidSheets", () => {
+    const packingListJson = {
+      Invoice: [
+        {
+          C: "Commodity Code",
+          F: "Description of Goods",
+          H: "No. of Pkgs(X)",
+          K: "Total Net Weight(X)",
+        },
+      ],
+    };
+
+    const result = matcher.matches(packingListJson, filename);
+
+    expect(result).toBe(matcherResult.EMPTY_FILE);
   });
 });

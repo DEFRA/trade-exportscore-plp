@@ -8,6 +8,7 @@ const descriptionOfGoodsRegex = /Description of goods/i;
 
 const warrensHeaders = {
   WARRENS1: {
+    deprecated: true,
     establishmentNumber: {
       regex: /^RMS-GB-000174-\d{3}$/i,
     },

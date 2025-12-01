@@ -1,3 +1,9 @@
+/**
+ * Tesco Model 1 parser service tests
+ *
+ * DEPRECATED: Tesco Model 1 format is no longer supported as of December 2025.
+ * All instances now return NOMATCH. Tests remain for historical reference.
+ */
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/tescos/model1");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -5,7 +11,7 @@ const test_results = require("../../../test-data-and-results/results/tescos/mode
 
 const filename = "PackingListTesco1.xlsx";
 
-describe("matchesTescosModel1", () => {
+describe("matchesTescosModel1 - DEPRECATED", () => {
   test("matches valid Tescos Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 

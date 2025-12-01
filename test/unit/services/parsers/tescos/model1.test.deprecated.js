@@ -1,8 +1,14 @@
+/**
+ * Tesco Model 1 parser tests
+ *
+ * DEPRECATED: Tesco Model 1 format is no longer supported as of December 2025.
+ * All instances now return NOMATCH. Tests remain for historical reference.
+ */
 const parser = require("../../../../../app/services/parsers/tescos/model1");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/tescos/model1");
 const test_results = require("../../../test-data-and-results/results/tescos/model1");
-describe("parseTescoModel1", () => {
+describe("parseTescoModel1 - DEPRECATED", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);
 
