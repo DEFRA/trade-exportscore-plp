@@ -295,6 +295,43 @@ function isValidIsoCode(code) {
   );
 }
 
+/**
+ * Check if item treatment matches any exception rule.
+ * @param {Array} exceptionRules - Array of exception rules (with "!" prefix).
+ * @param {string|null} normalizedTypeOfTreatment - Normalized treatment type.
+ * @returns {boolean} True if treatment matches an exception.
+ */
+function matchesExceptionRule(exceptionRules, normalizedTypeOfTreatment) {
+  if (!normalizedTypeOfTreatment) {
+    return false;
+  }
+  return exceptionRules.some((rule) => {
+    const exceptionTreatment = rule.type_of_treatment.substring(1);
+    return (
+      normalizedTypeOfTreatment.toLowerCase() ===
+      exceptionTreatment.toLowerCase()
+    );
+  });
+}
+
+/**
+ * Check if item matches standard prohibition rules.
+ * @param {Array} standardRules - Array of standard prohibition rules.
+ * @param {string|null} normalizedTypeOfTreatment - Normalized treatment type.
+ * @returns {boolean} True if item matches a standard rule.
+ */
+function matchesStandardRule(standardRules, normalizedTypeOfTreatment) {
+  return standardRules.some((rule) => {
+    if (!rule.type_of_treatment || !normalizedTypeOfTreatment) {
+      return true;
+    }
+    return (
+      normalizedTypeOfTreatment.toLowerCase() ===
+      rule.type_of_treatment.toLowerCase()
+    );
+  });
+}
+
 // Checks if the combination exists in prohibitedItemsData
 /**
  * Determine whether a given item (COO + commodity code prefix + treatment)
@@ -308,19 +345,17 @@ function isValidIsoCode(code) {
  * @returns {boolean} True when the combination matches a prohibited item entry.
  */
 function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
-  // Normalize typeOfTreatment: treat non-string values as null/missing
   const normalizedTypeOfTreatment =
     typeof typeOfTreatment === "string" && typeOfTreatment.trim() !== ""
       ? typeOfTreatment.trim()
       : null;
 
-  // Find all matching prohibition entries (same country and commodity)
   const matchingEntries = prohibitedItemsData.filter(
     (item) =>
       isCountryOfOriginMatching(countryOfOrigin, item.country_of_origin) &&
       commodityCode
         .toString()
-        ?.toLowerCase()
+        .toLowerCase()
         .startsWith(item.commodity_code?.toLowerCase()),
   );
 
@@ -328,52 +363,25 @@ function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
     return false;
   }
 
-  // Separate exception rules (starting with "!") from standard rules
   const exceptionRules = matchingEntries.filter(
-    (item) => item.type_of_treatment && item.type_of_treatment.startsWith("!"),
+    (item) => item.type_of_treatment?.startsWith("!"),
   );
   const standardRules = matchingEntries.filter(
-    (item) =>
-      !item.type_of_treatment || !item.type_of_treatment.startsWith("!"),
+    (item) => !item.type_of_treatment?.startsWith("!"),
   );
 
-  // Check exception rules: if item treatment matches ANY exception, it's allowed
-  if (exceptionRules.length > 0 && normalizedTypeOfTreatment) {
-    const matchesException = exceptionRules.some((rule) => {
-      const exceptionTreatment = rule.type_of_treatment.substring(1);
-      return (
-        normalizedTypeOfTreatment.toLowerCase() ===
-        exceptionTreatment.toLowerCase()
-      );
-    });
-    if (matchesException) {
-      return false; // Matches an exception, so not prohibited
-    }
-  }
-
-  // If there are exception rules and item has no treatment, it's prohibited
-  if (exceptionRules.length > 0 && !normalizedTypeOfTreatment) {
-    return true;
-  }
-
-  // If there are exception rules and item has a treatment that doesn't match any, it's prohibited
-  if (exceptionRules.length > 0 && normalizedTypeOfTreatment) {
-    return true;
-  }
-
-  // Check standard rules: if item treatment matches ANY standard rule, it's prohibited
-  return standardRules.some((rule) => {
-    if (!rule.type_of_treatment) {
-      return true; // No treatment specified in rule, so it matches
-    }
-    if (!normalizedTypeOfTreatment) {
-      return true; // Item has no treatment, rule has treatment, matches
-    }
-    return (
-      normalizedTypeOfTreatment.toLowerCase() ===
-      rule.type_of_treatment.toLowerCase()
+  if (exceptionRules.length > 0) {
+    const matchesException = matchesExceptionRule(
+      exceptionRules,
+      normalizedTypeOfTreatment,
     );
-  });
+    if (matchesException) {
+      return false;
+    }
+    return true; // Has exception rules but doesn't match any
+  }
+
+  return matchesStandardRule(standardRules, normalizedTypeOfTreatment);
 }
 
 // Helper function to check if country of origin matches (handles comma-separated values)
