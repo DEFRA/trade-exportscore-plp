@@ -1,8 +1,9 @@
 /**
  * Davenport matcher (model 1)
  *
- * Matches the Davenport packing list layout by checking establishment
- * number patterns and expected header fields.
+ * DEPRECATED: Davenport Model 1 is no longer supported. This matcher always
+ * returns NOMATCH to prevent matching against the deprecated format.
+ * Retained for backward compatibility and historical reference.
  */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
@@ -13,7 +14,7 @@ const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 /**
- * Davenport matcher (model 1)
+ * Davenport matcher (model 1) - DEPRECATED
  * @param {Object} packingList - Excel->JSON representation keyed by sheet
  * @param {string} filename - Source filename for logging
  * @returns {string} matcherResult - One of the matcher result codes
