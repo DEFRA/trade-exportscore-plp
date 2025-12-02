@@ -3,6 +3,19 @@ const model = require("../../../test-data-and-results/models/cds/model2");
 const parserModel = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/cds/model2");
 
+jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
+  "GB",
+  "VALID_ISO",
+  "PROHIBITED_ITEM_ISO",
+]);
+jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+  {
+    country_of_origin: "PROHIBITED_ITEM_ISO",
+    commodity_code: "012",
+    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+  },
+]);
+
 const filename = "packinglist-cds-model2.xlsx";
 
 describe("matchesCdsModel2", () => {

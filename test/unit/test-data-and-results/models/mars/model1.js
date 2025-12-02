@@ -478,9 +478,9 @@ module.exports = {
         C: "PROHIBITED ITEM",
         D: 8,
         E: 24,
-        G: "07061000", // Prohibited commodity code from CN
-        H: "CN", // China - prohibited country
-        I: "Chilled",
+        G: "012", // Prohibited commodity code
+        H: "PROHIBITED_ITEM_ISO", // Prohibited country
+        I: "PROHIBITED_ITEM_TREATMENT",
         J: "Green Lane - OCR",
       },
     ],
