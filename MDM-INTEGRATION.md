@@ -95,7 +95,7 @@ The MDM blob cache provides a distributed caching layer for NIRMS prohibited ite
 ### Configuration
 
 **Container Name:** `mdm-cache` (configurable via `MDM_CACHE_CONTAINER`)  
-**Blob Name:** `nirms-prohibited-items.json`  
+**Blob Name:** `nirms-ineligible-items.json`  
 **TTL:** Configurable via `MDM_CACHE_TTL_SECONDS` (default: 3600 seconds / 1 hour)  
 **Authentication:** DefaultAzureCredential (Managed Identity in Azure, Service Principal locally)
 
@@ -212,7 +212,7 @@ curl http://localhost:3000/test-mdm-conn
 **Full API Path:**
 
 ```
-{MDM_API_URL}/trade/nirms/prohibited-items
+{MDM_API_URL}/trade/nirms/ineligible-items
 ```
 
 ### Network Requirements
