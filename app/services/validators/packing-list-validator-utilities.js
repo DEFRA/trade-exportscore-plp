@@ -363,8 +363,8 @@ function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
     return false;
   }
 
-  const exceptionRules = matchingEntries.filter(
-    (item) => item.type_of_treatment?.startsWith("!"),
+  const exceptionRules = matchingEntries.filter((item) =>
+    item.type_of_treatment?.startsWith("!"),
   );
   const standardRules = matchingEntries.filter(
     (item) => !item.type_of_treatment?.startsWith("!"),
