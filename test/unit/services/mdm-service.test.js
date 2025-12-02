@@ -61,7 +61,7 @@ describe("mdm-service", () => {
       expect(global.fetch).toHaveBeenCalledTimes(2);
       expect(global.fetch).toHaveBeenNthCalledWith(
         2,
-        "https://test-api.example.com/trade/nirms/prohibited-items",
+        "https://test-api.example.com/trade/nirms/ineligible-items",
         {
           method: "GET",
           headers: {

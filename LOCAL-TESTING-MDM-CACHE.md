@@ -330,7 +330,7 @@ az storage blob list \
 ```powershell
 az storage blob download \
   --container-name mdm-cache \
-  --name nirms-prohibited-items.json \
+  --name nirms-ineligible-items.json \
   --file cached-data.json \
   --account-name YOUR_STORAGE_ACCOUNT \
   --auth-mode login
@@ -344,7 +344,7 @@ Get-Content cached-data.json | ConvertFrom-Json | ConvertTo-Json
 ```powershell
 az storage blob show \
   --container-name mdm-cache \
-  --name nirms-prohibited-items.json \
+  --name nirms-ineligible-items.json \
   --account-name YOUR_STORAGE_ACCOUNT \
   --auth-mode login \
   --query "{LastModified:properties.lastModified, Metadata:metadata}"
@@ -363,17 +363,17 @@ docker exec redis-cache redis-cli KEYS "*"
 
 ```powershell
 # Get cached NIRMS data
-docker exec redis-cache redis-cli GET "mdm-nirms-prohibited-items"
+docker exec redis-cache redis-cli GET "mdm-nirms-ineligible-items"
 
 # Pretty print JSON
-docker exec redis-cache redis-cli GET "mdm-nirms-prohibited-items" | ConvertFrom-Json | ConvertTo-Json
+docker exec redis-cache redis-cli GET "mdm-nirms-ineligible-items" | ConvertFrom-Json | ConvertTo-Json
 ```
 
 #### Check TTL (Time To Live)
 
 ```powershell
 # See how many seconds until expiration
-docker exec redis-cache redis-cli TTL "mdm-nirms-prohibited-items"
+docker exec redis-cache redis-cli TTL "mdm-nirms-ineligible-items"
 
 # Returns: number of seconds remaining (or -1 if no expiry, -2 if key doesn't exist)
 ```
@@ -389,7 +389,7 @@ docker exec -it redis-cache redis-cli MONITOR
 
 ```powershell
 # Manually delete cached key
-docker exec redis-cache redis-cli DEL "mdm-nirms-prohibited-items"
+docker exec redis-cache redis-cli DEL "mdm-nirms-ineligible-items"
 ```
 
 ## Troubleshooting
