@@ -295,25 +295,93 @@ function isValidIsoCode(code) {
   );
 }
 
+/**
+ * Check if item treatment matches any exception rule.
+ * @param {Array} exceptionRules - Array of exception rules (with "!" prefix).
+ * @param {string|null} normalizedTypeOfTreatment - Normalized treatment type.
+ * @returns {boolean} True if treatment matches an exception.
+ */
+function matchesExceptionRule(exceptionRules, normalizedTypeOfTreatment) {
+  if (!normalizedTypeOfTreatment) {
+    return false;
+  }
+  return exceptionRules.some((rule) => {
+    const exceptionTreatment = rule.type_of_treatment.substring(1);
+    return (
+      normalizedTypeOfTreatment.toLowerCase() ===
+      exceptionTreatment.toLowerCase()
+    );
+  });
+}
+
+/**
+ * Check if item matches standard prohibition rules.
+ * @param {Array} standardRules - Array of standard prohibition rules.
+ * @param {string|null} normalizedTypeOfTreatment - Normalized treatment type.
+ * @returns {boolean} True if item matches a standard rule.
+ */
+function matchesStandardRule(standardRules, normalizedTypeOfTreatment) {
+  return standardRules.some((rule) => {
+    if (!rule.type_of_treatment || !normalizedTypeOfTreatment) {
+      return true;
+    }
+    return (
+      normalizedTypeOfTreatment.toLowerCase() ===
+      rule.type_of_treatment.toLowerCase()
+    );
+  });
+}
+
 // Checks if the combination exists in prohibitedItemsData
 /**
  * Determine whether a given item (COO + commodity code prefix + treatment)
- * appears in the prohibited items dataset.
+ * appears in the prohibited items dataset. Handles "!" prefix logic for treatments:
+ * - "!X" means prohibited UNLESS treatment is X (exception rule)
+ * - "X" means prohibited IF treatment is X (standard rule)
+ * Multiple "!" rules act as OR - item is allowed if it matches ANY exception.
  * @param {string} countryOfOrigin - Country of origin string (may be comma-separated).
  * @param {string|number} commodityCode - Commodity code from the item.
  * @param {string} typeOfTreatment - Type of treatment string.
  * @returns {boolean} True when the combination matches a prohibited item entry.
  */
 function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
-  return prohibitedItemsData.some(
+  const normalizedTypeOfTreatment =
+    typeof typeOfTreatment === "string" && typeOfTreatment.trim() !== ""
+      ? typeOfTreatment.trim()
+      : null;
+
+  const matchingEntries = prohibitedItemsData.filter(
     (item) =>
       isCountryOfOriginMatching(countryOfOrigin, item.country_of_origin) &&
       commodityCode
         .toString()
-        ?.toLowerCase()
-        .startsWith(item.commodity_code?.toLowerCase()) &&
-      isTreatmentTypeMatching(typeOfTreatment, item.type_of_treatment),
+        .toLowerCase()
+        .startsWith(item.commodity_code?.toLowerCase()),
   );
+
+  if (matchingEntries.length === 0) {
+    return false;
+  }
+
+  const exceptionRules = matchingEntries.filter((item) =>
+    item.type_of_treatment?.startsWith("!"),
+  );
+  const standardRules = matchingEntries.filter(
+    (item) => !item.type_of_treatment?.startsWith("!"),
+  );
+
+  if (exceptionRules.length > 0) {
+    const matchesException = matchesExceptionRule(
+      exceptionRules,
+      normalizedTypeOfTreatment,
+    );
+    if (matchesException) {
+      return false;
+    }
+    return true; // Has exception rules but doesn't match any
+  }
+
+  return matchesStandardRule(standardRules, normalizedTypeOfTreatment);
 }
 
 // Helper function to check if country of origin matches (handles comma-separated values)
@@ -350,31 +418,6 @@ function isCountryOfOriginMatching(
 
   // Single value case
   return normalizedCountry === normalizedProhibitedItemCountry;
-}
-
-// Helper function to check if treatment type matches
-/**
- * Match treatment type values. If either side is missing, the treatment check passes.
- * @param {string} typeOfTreatment - Item's treatment type string.
- * @param {string} prohibitedItemTypeOfTreatment - Dataset's treatment type to match.
- * @returns {boolean} True when treatment types are compatible or unspecified.
- */
-function isTreatmentTypeMatching(
-  typeOfTreatment,
-  prohibitedItemTypeOfTreatment,
-) {
-  // If prohibited item treatment type or typeOfTreatment is not specified, skip the treatment type check
-  if (
-    isNullOrEmptyString(prohibitedItemTypeOfTreatment) ||
-    isNullOrEmptyString(typeOfTreatment)
-  ) {
-    return true;
-  }
-
-  return (
-    prohibitedItemTypeOfTreatment?.toLowerCase() ===
-    typeOfTreatment?.toLowerCase()
-  );
 }
 
 module.exports = {

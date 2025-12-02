@@ -3,6 +3,25 @@ const model = require("../../../test-data-and-results/models/giovanni/model1");
 const parserModel = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/giovanni/model1");
 
+jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
+  "VALID_ISO",
+  "PROHIBITED_ITEM_ISO",
+  "GB",
+  "CN",
+  "IT",
+  "DE",
+  "FR",
+  "ES",
+  "US",
+]);
+jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+  {
+    country_of_origin: "PROHIBITED_ITEM_ISO",
+    commodity_code: "012",
+    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+  },
+]);
+
 const filename = "packinglist-giovanni-model1.xlsx";
 
 describe("matchesGiovanniModel1", () => {

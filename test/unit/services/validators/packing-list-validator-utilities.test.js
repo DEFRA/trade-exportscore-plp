@@ -29,6 +29,21 @@ jest.mock("../../../../app/services/data/data-prohibited-items.json", () => [
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
   },
+  {
+    country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+    commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+    type_of_treatment: "!PROHIBITED_ITEM_TREATMENT", // !processed
+  },
+  {
+    country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+    commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+    type_of_treatment: "!PROHIBITED_ITEM_TREATMENT_2", // !dried
+  },
+  {
+    country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+    commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+    type_of_treatment: "PROHIBITED_ITEM_TREATMENT_3", // unprocessed
+  },
 ]);
 
 describe("validator function tests", () => {
@@ -209,10 +224,32 @@ describe("validator function tests", () => {
     [
       "NIRMS",
       "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_1",
-      "VALID_TREATMENT",
+      "PROHIBITED_ITEM_COMMODITY_3",
+      "PROHIBITED_ITEM_TREATMENT",
       false,
-    ], // Value not matching
+    ], // not prohibited as !PROHIBITED_ITEM_TREATMENT
+    [
+      "NIRMS",
+      "PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_3",
+      "PROHIBITED_ITEM_TREATMENT_2",
+      false,
+    ], // not prohibited as !PROHIBITED_ITEM_TREATMENT_2
+    [
+      "NIRMS",
+      "PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_3",
+      "PROHIBITED_ITEM_TREATMENT_3",
+      true,
+    ], // prohibited as PROHIBITED_ITEM_TREATMENT_3
+    [
+      "NIRMS",
+      "PROHIBITED_ITEM_ISO",
+      "PROHIBITED_ITEM_COMMODITY_3",
+      "PROHIBITED_ITEM_TREATMENT_4",
+      true,
+    ], // prohibited from !PROHIBITED_ITEM_TREATMENT_2 or !PROHIBITED_ITEM_TREATMENT
+    ["NIRMS", "PROHIBITED_ITEM_ISO", "PROHIBITED_ITEM_COMMODITY_3", null, true], // prohibited when no treatment type provided as !PROHIBITED_ITEM_TREATMENT_2 or !PROHIBITED_ITEM_TREATMENT
   ])(
     "hasProhibitedItems",
     (nirms, country_of_origin, commodity_code, type_of_treatment, expected) => {
