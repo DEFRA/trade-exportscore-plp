@@ -7,10 +7,31 @@
   },
   "item": [
     {
-      "name": "Get Prohibited Items list (200)",
+      "name": "Get ineligible Items list (200)",
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Bearer Token}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
-        "header": []
+        "header": [
+          {
+            "key": "Ocp-Apim-Subscription-Key",
+            "value": "{{ApimSubscriptionKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/ineligible-items",
+          "host": ["{{base_url}}"],
+          "path": ["ineligible-items"]
+        }
       },
       "response": []
     }
