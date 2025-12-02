@@ -112,7 +112,7 @@ curl http://localhost:3000/test-mdm-conn
 **Full API Path:**
 
 ```
-{MDM_API_URL}/trade/nirms/prohibited-items
+{MDM_API_URL}/trade/nirms/ineligible-items
 ```
 
 ### Network Requirements

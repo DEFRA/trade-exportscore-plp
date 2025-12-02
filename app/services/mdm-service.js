@@ -116,7 +116,7 @@ async function getNirmsProhibitedItems(maxRetries = 3, retryDelayMs = 2000) {
       }
 
       const { response, status } = await makeMdmRequest(
-        "/trade/nirms/prohibited-items",
+        "/trade/nirms/ineligible-items",
         bearerToken,
       );
 
