@@ -63,10 +63,10 @@ The `mdm-service.js` includes:
 ### Usage Example
 
 ```javascript
-const { getNirmsProhibitedItems } = require("./app/services/mdm-service");
+const { getNirmsIneligibleItems } = require("./app/services/mdm-service");
 
 // Get NIRMS data from MDM API
-const data = await getNirmsProhibitedItems();
+const data = await getNirmsIneligibleItems();
 
 if (data) {
   // Process the prohibited items data
@@ -77,7 +77,7 @@ if (data) {
 }
 
 // Custom retry parameters
-const dataWithCustomRetry = await getNirmsProhibitedItems(5, 3000); // 5 retries, 3s delay
+const dataWithCustomRetry = await getNirmsIneligibleItems(5, 3000); // 5 retries, 3s delay
 ```
 
 ### Architecture

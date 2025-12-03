@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/mands/model1");
 const parser_model = require("../../../../../app/services/parser-model");
@@ -245,14 +246,14 @@ describe("findParser", () => {
 
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
     runAnalysis.mockImplementationOnce(() => {
-      return model.prohibitedItems;
+      return model.ineligibleItems;
     });
     extractPdf.mockImplementation(() => {
       return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
     });
 
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
 

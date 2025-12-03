@@ -896,7 +896,7 @@ module.exports = {
     ],
   },
   // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  multipleProhibitedItemsWithTreatment: {
+  multipleineligibleItemsWithTreatment: {
     Sheet1: [
       {},
       {},
@@ -1023,7 +1023,7 @@ module.exports = {
     ],
   },
   // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  multipleProhibitedItemsNoTreatment: {
+  multipleineligibleItemsNoTreatment: {
     Sheet1: [
       {},
       {},

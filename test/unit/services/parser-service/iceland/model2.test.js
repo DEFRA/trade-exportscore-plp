@@ -1,3 +1,4 @@
+require("../test-setup");
 // Jest mocks for CoO validation testing
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
@@ -179,7 +180,7 @@ describe("ICELAND2 CoO Validation Tests", () => {
 
   test("Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatmentModel,
+      model.ineligibleItemsWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -189,7 +190,7 @@ describe("ICELAND2 CoO Validation Tests", () => {
 
   test("Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatmentModel,
+      model.ineligibleItemsMultipleWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
@@ -197,7 +198,7 @@ describe("ICELAND2 CoO Validation Tests", () => {
 
   test("Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsNoTreatmentModel,
+      model.ineligibleItemsNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -207,7 +208,7 @@ describe("ICELAND2 CoO Validation Tests", () => {
 
   test("Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleNoTreatmentModel,
+      model.ineligibleItemsMultipleNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");

@@ -477,7 +477,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     Revised: [
       { C: "RMS-GB-000323-001" },
       {

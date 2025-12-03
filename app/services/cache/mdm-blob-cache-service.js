@@ -136,11 +136,19 @@ const getFromRedis = async () => {
 
   const parsedData = JSON.parse(cached);
   const ttl = await client.ttl("nirms-prohibited-items");
-  
+
   if (ttl > 0) {
-    logger.logInfo(filenameForLogging, "getFromRedis()", `Cache hit from Redis, TTL: ${ttl}s`);
+    logger.logInfo(
+      filenameForLogging,
+      "getFromRedis()",
+      `Cache hit from Redis, TTL: ${ttl}s`,
+    );
   } else {
-    logger.logInfo(filenameForLogging, "getFromRedis()", `Cache expired in Redis (TTL: ${ttl}s) - not deleting for fallback use`);
+    logger.logInfo(
+      filenameForLogging,
+      "getFromRedis()",
+      `Cache expired in Redis (TTL: ${ttl}s) - not deleting for fallback use`,
+    );
     return null;
   }
 

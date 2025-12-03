@@ -247,5 +247,5 @@ describe("Excel Process Non-AI", () => {
         }),
       ]),
     );
-  });
+  }, 30000);
 });

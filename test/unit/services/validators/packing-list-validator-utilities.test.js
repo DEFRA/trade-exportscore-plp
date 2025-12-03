@@ -8,7 +8,7 @@ const {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
   wrongTypeForPackages,
   wrongTypeNetWeight,
   removeBadData,
@@ -30,6 +30,30 @@ jest.mock("../../../../app/services/data/data-prohibited-items.json", () => [
     commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
   },
 ]);
+jest.mock("../../../../app/services/ineligible-items-service", () => ({
+  getIneligibleItems: jest.fn().mockResolvedValue([
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_1",
+      type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
+    },
+  ]),
+  getLocalIneligibleItems: jest.fn().mockReturnValue([
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_1",
+      type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
+    },
+  ]),
+}));
 
 describe("validator function tests", () => {
   test.each([
@@ -214,15 +238,21 @@ describe("validator function tests", () => {
       false,
     ], // Value not matching
   ])(
-    "hasProhibitedItems",
-    (nirms, country_of_origin, commodity_code, type_of_treatment, expected) => {
+    "hasIneligibleItems",
+    async (
+      nirms,
+      country_of_origin,
+      commodity_code,
+      type_of_treatment,
+      expected,
+    ) => {
       const item = {
         nirms,
         country_of_origin,
         commodity_code,
         type_of_treatment,
       };
-      expect(hasProhibitedItems(item)).toBe(expected);
+      expect(await hasIneligibleItems(item)).toBe(expected);
     },
   );
 });

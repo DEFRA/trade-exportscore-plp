@@ -288,7 +288,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000008-001",
     parserModel: parser_model.MANDS1,
   },
-  prohibitedItemsTestResult: {
+  ineligibleItemsTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:

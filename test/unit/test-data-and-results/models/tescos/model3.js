@@ -646,7 +646,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     "Input Data Sheet": [
       {},
       {},

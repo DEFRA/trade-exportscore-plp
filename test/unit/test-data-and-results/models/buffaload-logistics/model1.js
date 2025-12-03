@@ -803,7 +803,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsWithTreatmentModel: {
+  ineligibleItemsWithTreatmentModel: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
@@ -837,7 +837,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsMultipleWithTreatmentModel: {
+  ineligibleItemsMultipleWithTreatmentModel: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
@@ -907,7 +907,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsNoTreatmentModel: {
+  ineligibleItemsNoTreatmentModel: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
@@ -941,7 +941,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsMultipleNoTreatmentModel: {
+  ineligibleItemsMultipleNoTreatmentModel: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",

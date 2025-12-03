@@ -3,7 +3,7 @@ const packingListValidator = require("../../../../app/services/validators/packin
 const failureReasonsDescriptions = require("../../../../app/services/validators/packing-list-failure-reasons");
 
 describe("validatePackingListByIndexAndType", () => {
-  test("valid data", () => {
+  test("valid data", async () => {
     const packingList = {
       registration_approval_number: "RMS/2024/12345",
       items: [
@@ -24,7 +24,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeTruthy();
     expect(result.missingIdentifier.length).toBe(0);
@@ -40,7 +40,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("missing remos number", () => {
+  test("missing remos number", async () => {
     const packingList = {
       registration_approval_number: null,
       items: [
@@ -61,7 +61,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
@@ -77,7 +77,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("missing commodity code", () => {
+  test("missing commodity code", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -101,7 +101,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(1);
@@ -117,7 +117,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("missing treatment type", () => {
+  test("missing treatment type", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -141,7 +141,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(1);
@@ -157,7 +157,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("missing nature of products", () => {
+  test("missing nature of products", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -181,7 +181,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(1);
@@ -197,7 +197,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("missing description", () => {
+  test("missing description", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -221,7 +221,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
@@ -237,7 +237,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("missing packages", () => {
+  test("missing packages", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -261,7 +261,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
@@ -277,7 +277,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("missing net weight", () => {
+  test("missing net weight", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -301,7 +301,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
@@ -317,7 +317,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("missing net weight unit", () => {
+  test("missing net weight unit", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -341,7 +341,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(0);
@@ -356,7 +356,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(1);
   });
 
-  test("invalid packages", () => {
+  test("invalid packages", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -380,7 +380,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.invalidProductCodes.length).toBe(0);
@@ -396,7 +396,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("invalid net weight", () => {
+  test("invalid net weight", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -420,7 +420,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.invalidProductCodes.length).toBe(0);
@@ -436,7 +436,7 @@ describe("validatePackingListByIndexAndType", () => {
     expect(result.missingNetWeightUnit.length).toBe(0);
   });
 
-  test("multiple failures", () => {
+  test("multiple failures", async () => {
     const packingList = {
       registration_approval_number: "remos",
       items: [
@@ -484,7 +484,7 @@ describe("validatePackingListByIndexAndType", () => {
     };
 
     const result =
-      packingListValidator.validatePackingListByIndexAndType(packingList);
+      await packingListValidator.validatePackingListByIndexAndType(packingList);
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.missingIdentifier.length).toBe(1);
@@ -502,7 +502,7 @@ describe("validatePackingListByIndexAndType", () => {
 });
 
 describe("generateFailuresByIndexAndTypes", () => {
-  test("valid data", () => {
+  test("valid data", async () => {
     const validationResult = {
       hasAllFields: true,
       hasSingleRms: true,
@@ -517,7 +517,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     expect(result.failureReasons).toBeFalsy();
   });
 
-  test("no data", () => {
+  test("no data", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: true,
@@ -534,7 +534,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -546,7 +546,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     expect(result.failureReasons).toBe(failureReasonsDescriptions.EMPTY_DATA);
   });
 
-  test("missing identifier", () => {
+  test("missing identifier", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -563,7 +563,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -575,7 +575,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     expect(result.failureReasons).toContain("Identifier is missing");
   });
 
-  test("missing description", () => {
+  test("missing description", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -592,7 +592,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -606,7 +606,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("missing packages", () => {
+  test("missing packages", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -623,7 +623,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -637,7 +637,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("missing net weight", () => {
+  test("missing net weight", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -654,7 +654,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -668,7 +668,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("missing net weight unit", () => {
+  test("missing net weight unit", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -685,7 +685,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -698,7 +698,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("invalid packages", () => {
+  test("invalid packages", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -715,7 +715,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -729,7 +729,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("invalid net weight", () => {
+  test("invalid net weight", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -746,7 +746,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -760,7 +760,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("invalid product code", () => {
+  test("invalid product code", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -777,7 +777,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -791,7 +791,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("missing nirms", () => {
+  test("missing nirms", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -808,7 +808,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -822,7 +822,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("invalid nirms", () => {
+  test("invalid nirms", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -839,7 +839,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [{ rowNumber: 1 }],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -852,7 +852,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       failureReasonsDescriptions.NIRMS_INVALID,
     );
   });
-  test("missing coo", () => {
+  test("missing coo", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -869,7 +869,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [{ rowNumber: 1 }],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -883,7 +883,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("invalid coo", () => {
+  test("invalid coo", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -900,7 +900,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [{ rowNumber: 1 }],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -914,7 +914,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("prohibited items", () => {
+  test("prohibited items", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -931,7 +931,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [{ rowNumber: 1 }],
+      ineligibleItems: [{ rowNumber: 1 }],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -945,7 +945,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("all failures", () => {
+  test("all failures", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -962,7 +962,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [{ rowNumber: 1 }],
       missingCoO: [{ rowNumber: 1 }],
       invalidCoO: [{ rowNumber: 1 }],
-      prohibitedItems: [{ rowNumber: 1 }],
+      ineligibleItems: [{ rowNumber: 1 }],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -1015,7 +1015,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("multiple failures", () => {
+  test("multiple failures", async () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -1032,7 +1032,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(

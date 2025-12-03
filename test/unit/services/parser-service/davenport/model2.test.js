@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/davenport/model2");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -131,7 +132,7 @@ describe("matchesDavenportModel2", () => {
 
   test("matches valid Davenport Model 2 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
 

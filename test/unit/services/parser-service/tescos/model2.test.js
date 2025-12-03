@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/tescos/model2");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -174,7 +175,7 @@ describe("Tesco2 CoO Validation Tests", () => {
 
   test("BAC11: Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      cooModel.prohibitedItemsWithTreatmentModel,
+      cooModel.ineligibleItemsWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -184,7 +185,7 @@ describe("Tesco2 CoO Validation Tests", () => {
 
   test("BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      cooModel.prohibitedItemsMultipleWithTreatmentModel,
+      cooModel.ineligibleItemsMultipleWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
@@ -192,7 +193,7 @@ describe("Tesco2 CoO Validation Tests", () => {
 
   test("BAC13: Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      cooModel.prohibitedItemsNoTreatmentModel,
+      cooModel.ineligibleItemsNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -202,7 +203,7 @@ describe("Tesco2 CoO Validation Tests", () => {
 
   test("BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      cooModel.prohibitedItemsMultipleNoTreatmentModel,
+      cooModel.ineligibleItemsMultipleNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");

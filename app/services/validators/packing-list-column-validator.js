@@ -11,21 +11,21 @@ const {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
 } = require("./packing-list-validator-utilities");
 const parserModel = require("../parser-model");
 const failureReasonsDescriptions = require("./packing-list-failure-reasons");
 
-function validatePackingList(packingList) {
-  const validationResult = validatePackingListByIndexAndType(packingList);
+async function validatePackingList(packingList) {
+  const validationResult = await validatePackingListByIndexAndType(packingList);
   return generateFailuresByIndexAndTypes(validationResult, packingList);
 }
 
-function validatePackingListByIndexAndType(packingList) {
+async function validatePackingListByIndexAndType(packingList) {
   const basicValidationResults = getBasicValidationResults(packingList);
   const packingListStatusResults = getPackingListStatusResults(packingList);
   const countryOfOriginResults =
-    getCountryOfOriginValidationResults(packingList);
+    await getCountryOfOriginValidationResults(packingList);
   return {
     ...basicValidationResults,
     ...packingListStatusResults,
@@ -69,14 +69,14 @@ function getPackingListStatusResults(packingList) {
   };
 }
 
-function getCountryOfOriginValidationResults(packingList) {
+async function getCountryOfOriginValidationResults(packingList) {
   if (!packingList.validateCountryOfOrigin) {
     return {
       missingNirms: [],
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
   }
 
@@ -85,7 +85,10 @@ function getCountryOfOriginValidationResults(packingList) {
     invalidNirms: findItems(packingList.items, hasInvalidNirms),
     missingCoO: findItems(packingList.items, hasMissingCoO),
     invalidCoO: findItems(packingList.items, hasInvalidCoO),
-    prohibitedItems: findItems(packingList.items, hasProhibitedItems),
+    ineligibleItems: await findItemsAsync(
+      packingList.items,
+      hasIneligibleItems,
+    ),
   };
 }
 
@@ -113,7 +116,7 @@ function calculateHasAllFields(
       countryOfOriginResults.invalidNirms.length +
       countryOfOriginResults.missingCoO.length +
       countryOfOriginResults.invalidCoO.length +
-      countryOfOriginResults.prohibitedItems.length ===
+      countryOfOriginResults.ineligibleItems.length ===
     0;
 
   return (
@@ -130,6 +133,13 @@ function findItems(items, fn) {
   return items
     .map((val) => (fn(val) ? val.row_location : null))
     .filter((val) => val !== null);
+}
+
+async function findItemsAsync(items, fn) {
+  const results = await Promise.all(
+    items.map(async (val) => ((await fn(val)) ? val.row_location : null)),
+  );
+  return results.filter((val) => val !== null);
 }
 
 function generateFailuresByIndexAndTypes(validationResult, packingList) {
@@ -261,7 +271,7 @@ function createValidationChecks(validationResult) {
       description: failureReasonsDescriptions.COO_INVALID,
     },
     {
-      collection: validationResult.prohibitedItems,
+      collection: validationResult.ineligibleItems,
       description: failureReasonsDescriptions.PROHIBITED_ITEM,
     },
   ];

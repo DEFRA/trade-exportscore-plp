@@ -411,7 +411,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000252-002",
     parserModel: parserModel.CDS2,
   },
-  validTestResultNotOnProhibitedItemsList: {
+  validTestResultNotOnineligibleItemsList: {
     business_checks: {
       all_required_fields_present: true,
       failure_reasons: null,
@@ -431,7 +431,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000252-002",
     parserModel: parserModel.CDS2,
   },
-  validTestResultOnProhibitedItemsList: {
+  validTestResultOnineligibleItemsList: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -452,7 +452,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000252-002",
     parserModel: parserModel.CDS2,
   },
-  validTestResultMultipleProhibitedItemsList_NoTreatmentType: {
+  validTestResultMultipleineligibleItemsList_NoTreatmentType: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -513,7 +513,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000252-002",
     parserModel: parserModel.CDS2,
   },
-  validTestResultMultipleProhibitedItemsListMoreThan3_TreatmentType: {
+  validTestResultMultipleineligibleItemsListMoreThan3_TreatmentType: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:

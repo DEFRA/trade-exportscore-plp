@@ -708,7 +708,7 @@ module.exports = {
       },
     },
   },
-  prohibitedItems: {
+  ineligibleItems: {
     fields: {
       NIRMSNumber: {
         content: "RMS-GB-000008-001",

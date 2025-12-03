@@ -588,7 +588,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     Sheet1: [
       {
         B: "Nature of Products",

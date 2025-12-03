@@ -108,23 +108,27 @@ describe("mdm-blob-cache-service", () => {
       );
     });
 
-    it("should return null when cache is expired", async () => {
+    it("should return null when cache is expired but not delete it (for stale fallback)", async () => {
       const oldDate = new Date(Date.now() - 7200 * 1000); // 2 hours ago
 
       mockBlobClient.exists.mockResolvedValue(true);
       mockBlobClient.getProperties.mockResolvedValue({
         lastModified: oldDate,
       });
-      mockBlobClient.delete.mockResolvedValue({});
 
       const result = await mdmBlobCache.get();
 
       expect(result).toBeNull();
-      expect(mockBlobClient.delete).toHaveBeenCalled();
+      expect(mockBlobClient.delete).not.toHaveBeenCalled(); // Should NOT delete for stale fallback
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
         "getFromBlob()",
         expect.stringContaining("Cache expired:"),
+      );
+      expect(logger.logInfo).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getFromBlob()",
+        expect.stringContaining("not deleting for fallback use"),
       );
     });
 
@@ -192,6 +196,59 @@ describe("mdm-blob-cache-service", () => {
 
       // Restore environment
       process.env.MDM_CACHE_ENABLED = "true";
+    });
+  });
+
+  describe("getStale()", () => {
+    it("should return expired cache data as fallback", async () => {
+      const mockData = { items: ["item1", "item2"] };
+      const oldDate = new Date(Date.now() - 7200 * 1000); // 2 hours ago (expired)
+
+      mockBlobClient.exists.mockResolvedValue(true);
+      mockBlobClient.getProperties.mockResolvedValue({
+        lastModified: oldDate,
+      });
+      mockBlobClient.download.mockResolvedValue({
+        readableStreamBody: (async function* () {
+          yield Buffer.from(JSON.stringify(mockData));
+        })(),
+      });
+
+      const result = await mdmBlobCache.getStale();
+
+      expect(result).toEqual(mockData);
+      expect(logger.logInfo).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getStaleFromBlob()",
+        expect.stringContaining("Using stale cache as fallback:"),
+      );
+    });
+
+    it("should return null when no stale cache exists", async () => {
+      mockBlobClient.exists.mockResolvedValue(false);
+
+      const result = await mdmBlobCache.getStale();
+
+      expect(result).toBeNull();
+      expect(logger.logInfo).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getStaleFromBlob()",
+        "No stale cache available - blob not found",
+      );
+    });
+
+    it("should return null on error and log the error", async () => {
+      const error = new Error("Network error");
+      mockBlobClient.exists.mockRejectedValue(error);
+
+      const result = await mdmBlobCache.getStale();
+
+      expect(result).toBeNull();
+      expect(logger.logError).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getStale()",
+        error,
+      );
     });
   });
 

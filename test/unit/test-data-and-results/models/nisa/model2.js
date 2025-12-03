@@ -530,7 +530,7 @@ module.exports = {
   },
 
   // BAC11: Prohibited Item with Treatment Type - validation errors
-  prohibitedItemsWithTreatment: {
+  ineligibleItemsWithTreatment: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",
@@ -563,7 +563,7 @@ module.exports = {
   },
 
   // BAC12: Prohibited Items, more than 3 (Treatment Type specified) - multiple validation errors
-  prohibitedItemsMultipleWithTreatment: {
+  ineligibleItemsMultipleWithTreatment: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",
@@ -626,7 +626,7 @@ module.exports = {
   },
 
   // BAC13: Prohibited Item without Treatment Type - validation errors
-  prohibitedItemsWithoutTreatment: {
+  ineligibleItemsWithoutTreatment: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",
@@ -658,7 +658,7 @@ module.exports = {
   },
 
   // BAC14: Prohibited Items, more than 3 (no Treatment Type specified) - multiple validation errors
-  prohibitedItemsMultipleWithoutTreatment: {
+  ineligibleItemsMultipleWithoutTreatment: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",

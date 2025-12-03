@@ -520,7 +520,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     "Input Packing Sheet": [
       {
         E: "Dispatch RMS Establishment",

@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/asda/model2");
 const parserModel = require("../../../../../app/services/parser-model");

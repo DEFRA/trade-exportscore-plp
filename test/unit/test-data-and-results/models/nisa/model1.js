@@ -490,7 +490,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     "Customer Order": [
       {
         A: "RMS_ESTABLISHMENT_NO",

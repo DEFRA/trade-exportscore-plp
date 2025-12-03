@@ -1,6 +1,6 @@
 const regex = require("../../utilities/regex");
 const isoCodesData = require("../data/data-iso-codes.json");
-const prohibitedItemsData = require("../data/data-prohibited-items.json");
+const ineligibleItemsService = require("../ineligible-items-service");
 
 function isNullOrEmptyString(value) {
   return value === null || value === undefined || value === "";
@@ -103,17 +103,22 @@ function hasInvalidCoO(item) {
   return isNirms(item.nirms) && isInvalidCoO(item.country_of_origin);
 }
 
-function hasProhibitedItems(item) {
-  return (
-    isNirms(item.nirms) &&
-    !isNullOrEmptyString(item.country_of_origin) &&
-    !isInvalidCoO(item.country_of_origin) &&
-    !isNullOrEmptyString(item.commodity_code) &&
-    isProhibitedItems(
-      item.country_of_origin,
-      item.commodity_code,
-      item.type_of_treatment,
-    )
+async function hasIneligibleItems(item) {
+  if (
+    !isNirms(item.nirms) ||
+    isNullOrEmptyString(item.country_of_origin) ||
+    isInvalidCoO(item.country_of_origin) ||
+    isNullOrEmptyString(item.commodity_code)
+  ) {
+    return false;
+  }
+
+  const ineligibleItems = await ineligibleItemsService.getIneligibleItems();
+  return isIneligibleItems(
+    item.country_of_origin,
+    item.commodity_code,
+    item.type_of_treatment,
+    ineligibleItems,
   );
 }
 
@@ -176,9 +181,14 @@ function isValidIsoCode(code) {
   );
 }
 
-// Checks if the combination exists in prohibitedItemsData
-function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
-  return prohibitedItemsData.some(
+// Checks if the combination exists in ineligible items data
+function isIneligibleItems(
+  countryOfOrigin,
+  commodityCode,
+  typeOfTreatment,
+  ineligibleItemsData,
+) {
+  return ineligibleItemsData.some(
     (item) =>
       isCountryOfOriginMatching(countryOfOrigin, item.country_of_origin) &&
       commodityCode
@@ -252,7 +262,7 @@ module.exports = {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
   isNirms,
   isNotNirms,
 };

@@ -1,3 +1,4 @@
+require("../test-setup");
 // ⚠️ CRITICAL: Top-level mocks (hoisted properly)
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
@@ -190,7 +191,7 @@ describe("Nisa 2 CoO Validation Tests - Type 1", () => {
   // BAC11: Prohibited Item with Treatment Type - validation errors
   test("BAC11: Prohibited Item with Treatment Type - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatment,
+      model.ineligibleItemsWithTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -201,7 +202,7 @@ describe("Nisa 2 CoO Validation Tests - Type 1", () => {
   // BAC12: Prohibited Items, more than 3 (Treatment Type specified) - multiple validation errors
   test("BAC12: Prohibited Items, more than 3 (Treatment Type specified) - multiple validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatment,
+      model.ineligibleItemsMultipleWithTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
@@ -210,7 +211,7 @@ describe("Nisa 2 CoO Validation Tests - Type 1", () => {
   // BAC13: Prohibited Item without Treatment Type - validation errors
   test("BAC13: Prohibited Item without Treatment Type - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithoutTreatment,
+      model.ineligibleItemsWithoutTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -221,7 +222,7 @@ describe("Nisa 2 CoO Validation Tests - Type 1", () => {
   // BAC14: Prohibited Items, more than 3 (no Treatment Type specified) - multiple validation errors
   test("BAC14: Prohibited Items, more than 3 (no Treatment Type specified) - multiple validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithoutTreatment,
+      model.ineligibleItemsMultipleWithoutTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");

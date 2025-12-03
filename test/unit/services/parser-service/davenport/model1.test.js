@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/davenport/model1");
 const parserModel = require("../../../../../app/services/parser-model");
