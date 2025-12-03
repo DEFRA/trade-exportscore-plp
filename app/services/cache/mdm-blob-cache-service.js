@@ -103,6 +103,24 @@ const get = async () => {
   }
 };
 
+const getStale = async () => {
+  if (!mdmConfig.cache.enabled) {
+    logger.logInfo(filenameForLogging, "getStale()", "Cache disabled");
+    return null;
+  }
+
+  try {
+    if (mdmConfig.cache.provider === "redis") {
+      return await getStaleFromRedis();
+    } else {
+      return await getStaleFromBlob();
+    }
+  } catch (error) {
+    logger.logError(filenameForLogging, "getStale()", error);
+    return null;
+  }
+};
+
 const getFromRedis = async () => {
   const client = await initializeRedisClient();
   const cached = await client.get("nirms-prohibited-items");
@@ -117,7 +135,38 @@ const getFromRedis = async () => {
   }
 
   const parsedData = JSON.parse(cached);
-  logger.logInfo(filenameForLogging, "getFromRedis()", `Cache hit from Redis`);
+  const ttl = await client.ttl("nirms-prohibited-items");
+  
+  if (ttl > 0) {
+    logger.logInfo(filenameForLogging, "getFromRedis()", `Cache hit from Redis, TTL: ${ttl}s`);
+  } else {
+    logger.logInfo(filenameForLogging, "getFromRedis()", `Cache expired in Redis (TTL: ${ttl}s) - not deleting for fallback use`);
+    return null;
+  }
+
+  return parsedData;
+};
+
+const getStaleFromRedis = async () => {
+  const client = await initializeRedisClient();
+  const cached = await client.get("nirms-prohibited-items");
+
+  if (!cached) {
+    logger.logInfo(
+      filenameForLogging,
+      "getStaleFromRedis()",
+      "No stale cache available - key not found",
+    );
+    return null;
+  }
+
+  const parsedData = JSON.parse(cached);
+  const ttl = await client.ttl("nirms-prohibited-items");
+  logger.logInfo(
+    filenameForLogging,
+    "getStaleFromRedis()",
+    `Using stale cache as fallback (TTL: ${ttl}s)`,
+  );
 
   return parsedData;
 };
@@ -143,9 +192,8 @@ const getFromBlob = async () => {
     logger.logInfo(
       filenameForLogging,
       "getFromBlob()",
-      `Cache expired: ${ageSeconds}s old (TTL: ${mdmConfig.cache.ttlSeconds}s)`,
+      `Cache expired: ${ageSeconds}s old (TTL: ${mdmConfig.cache.ttlSeconds}s) - not deleting for fallback use`,
     );
-    await client.delete();
     return null;
   }
 
@@ -163,6 +211,42 @@ const getFromBlob = async () => {
     filenameForLogging,
     "getFromBlob()",
     `Cache hit: ${ageSeconds}s old, ${chunks.length} chunks`,
+  );
+
+  return parsedData;
+};
+
+const getStaleFromBlob = async () => {
+  const client = initializeBlobClient();
+  const exists = await client.exists();
+
+  if (!exists) {
+    logger.logInfo(
+      filenameForLogging,
+      "getStaleFromBlob()",
+      "No stale cache available - blob not found",
+    );
+    return null;
+  }
+
+  const properties = await client.getProperties();
+  const lastModified = properties.lastModified;
+  const ageSeconds = Math.floor((Date.now() - lastModified.getTime()) / 1000);
+
+  const downloadResponse = await client.download(0);
+  const chunks = [];
+
+  for await (const chunk of downloadResponse.readableStreamBody) {
+    chunks.push(chunk);
+  }
+
+  const jsonContent = Buffer.concat(chunks).toString("utf-8");
+  const parsedData = JSON.parse(jsonContent);
+
+  logger.logInfo(
+    filenameForLogging,
+    "getStaleFromBlob()",
+    `Using stale cache as fallback: ${ageSeconds}s old (TTL was: ${mdmConfig.cache.ttlSeconds}s)`,
   );
 
   return parsedData;
@@ -259,4 +343,4 @@ const clearBlob = async () => {
   }
 };
 
-module.exports = { get, set, clear };
+module.exports = { get, set, clear, getStale };
