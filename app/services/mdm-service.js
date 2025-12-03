@@ -124,6 +124,17 @@ async function getNirmsProhibitedItems(maxRetries = 3, retryDelayMs = 2000) {
           `Failed to obtain bearer token: ${bearerToken}`,
         );
         logger.logError(filenameForLogging, GET_NIRMS_METHOD, error);
+        
+        // Try stale cache as fallback
+        const staleData = await mdmBlobCache.getStale();
+        if (staleData) {
+          logger.logInfo(
+            filenameForLogging,
+            GET_NIRMS_METHOD,
+            "MDM API unavailable - using stale cache as fallback",
+          );
+          return staleData;
+        }
         return null;
       }
 
@@ -145,15 +156,36 @@ async function getNirmsProhibitedItems(maxRetries = 3, retryDelayMs = 2000) {
         return result;
       }
 
-      // Any HTTP error response - don't retry, return immediately
+      // Any HTTP error response - don't retry, return immediately with stale cache fallback
       const errorText = await response.text();
       logHttpError(status, errorText);
+      
+      // Try stale cache as fallback
+      const staleData = await mdmBlobCache.getStale();
+      if (staleData) {
+        logger.logInfo(
+          filenameForLogging,
+          GET_NIRMS_METHOD,
+          "MDM API unavailable - using stale cache as fallback",
+        );
+        return staleData;
+      }
       return null;
     } catch (err) {
       // Only retry on fetch failures (network errors)
       logCatchError(attempt, maxRetries, err.message, retryDelayMs);
 
       if (attempt === maxRetries) {
+        // Final attempt failed - try stale cache as fallback
+        const staleData = await mdmBlobCache.getStale();
+        if (staleData) {
+          logger.logInfo(
+            filenameForLogging,
+            GET_NIRMS_METHOD,
+            "MDM API unavailable after retries - using stale cache as fallback",
+          );
+          return staleData;
+        }
         return null;
       }
 
