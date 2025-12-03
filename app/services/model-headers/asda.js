@@ -22,6 +22,7 @@ const asdaHeaders = {
     total_net_weight_unit: /\[kilograms\/grams\]/i,
   },
   ASDA2: {
+    deprecated: true,
     establishmentNumber: {
       regex: /^RMS-GB-000015-\d{3}$/i,
     },

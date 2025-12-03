@@ -1,3 +1,9 @@
+/**
+ * ASDA Model 2 matcher tests
+ *
+ * DEPRECATED: ASDA Model 2 format is no longer supported as of December 2025.
+ * All instances now return NOMATCH. Tests remain for historical reference.
+ */
 const matcher = require("../../../../../app/services/matchers/asda/model2");
 const matcherResult = require("../../../../../app/services/matcher-result");
 const model = require("../../../test-data-and-results/models/asda/model2");
@@ -5,7 +11,7 @@ const logger = require("../../../../../app/utilities/logger");
 
 const filename = "packinglist.xls";
 
-describe("matchesAsdaModel2", () => {
+describe("matchesAsdaModel2 - DEPRECATED", () => {
   test("returns Correct", () => {
     const result = matcher.matches(model.validModel, filename);
 
