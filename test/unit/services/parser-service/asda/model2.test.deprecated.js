@@ -1,3 +1,9 @@
+/**
+ * ASDA Model 2 parser service tests
+ *
+ * DEPRECATED: ASDA Model 2 format is no longer supported as of December 2025.
+ * All instances now return NOMATCH. Tests remain for historical reference.
+ */
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/asda/model2");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -5,7 +11,7 @@ const test_results = require("../../../test-data-and-results/results/asda/model2
 
 const filename = "packinglist-asda-model2.xls";
 
-describe("matchesAsdaModel2", () => {
+describe("matchesAsdaModel2 - DEPRECATED", () => {
   test("matches valid Asda Model 2 file, calls parser and returns all_required_fields_present as true", async () => {
     const result = await parserService.findParser(model.validModel, filename);
 

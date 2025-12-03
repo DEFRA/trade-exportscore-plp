@@ -1,9 +1,9 @@
 /**
  * ASDA Model 2 matcher
  *
- * Detects whether a provided Excel-converted packing list matches
- * the ASDA Model 2 format by checking the establishment number and
- * header row patterns.
+ * DEPRECATED: ASDA Model 2 is no longer supported. This matcher always
+ * returns NOMATCH to prevent matching against the deprecated format.
+ * Retained for backward compatibility and historical reference.
  */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");

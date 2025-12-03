@@ -1,10 +1,16 @@
+/**
+ * ASDA Model 2 parser tests
+ *
+ * DEPRECATED: ASDA Model 2 format is no longer supported as of December 2025.
+ * All instances now return NOMATCH. Tests remain for historical reference.
+ */
 const parser = require("../../../../../app/services/parsers/asda/model2");
 const logger = require("../../../../../app/utilities/logger");
 const model = require("../../../test-data-and-results/models/asda/model2");
 const test_results = require("../../../test-data-and-results/results/asda/model2");
 const parserModel = require("../../../../../app/services/parser-model");
 
-describe("parseAsdaModel2", () => {
+describe("parseAsdaModel2 - DEPRECATED", () => {
   test("parses populated json", () => {
     const result = parser.parse(model.validModel);
 
