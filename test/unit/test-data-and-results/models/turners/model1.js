@@ -445,7 +445,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     PackingList_Extract: [
       {
         A: "Description of Goods",

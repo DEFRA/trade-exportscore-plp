@@ -1,5 +1,5 @@
 const {
-  getNirmsProhibitedItems,
+  getNirmsIneligibleItems,
 } = require("../../../app/services/mdm-service");
 const logger = require("../../../app/utilities/logger");
 const config = require("../../../app/config");
@@ -38,7 +38,7 @@ describe("mdm-service", () => {
     delete global.fetch;
   });
 
-  describe("getNirmsProhibitedItems", () => {
+  describe("getNirmsIneligibleItems", () => {
     it("should successfully retrieve NIRMS data on first attempt", async () => {
       const mockData = { items: ["item1", "item2"] };
       // Mock bearer token request
@@ -55,7 +55,7 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsProhibitedItems();
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toEqual(mockData);
       expect(global.fetch).toHaveBeenCalledTimes(2);
@@ -90,13 +90,13 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsProhibitedItems(3, 100);
+      const result = await getNirmsIneligibleItems(3, 100);
 
       expect(result).toEqual(mockData);
       expect(global.fetch).toHaveBeenCalledTimes(3);
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "getNirmsProhibitedItems()",
+        "getNirmsIneligibleItems()",
         "Successfully retrieved NIRMS data after 2 attempts",
       );
     });
@@ -116,13 +116,13 @@ describe("mdm-service", () => {
           text: jest.fn().mockResolvedValue("Not Found"),
         });
 
-      const result = await getNirmsProhibitedItems();
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toBeNull();
       expect(global.fetch).toHaveBeenCalledTimes(2);
       expect(logger.logError).toHaveBeenCalledWith(
         filenameForLogging,
-        "getNirmsProhibitedItems()",
+        "getNirmsIneligibleItems()",
         "Request failed - HTTP 404: Not Found",
       );
     });
@@ -148,7 +148,7 @@ describe("mdm-service", () => {
         })
         .mockRejectedValueOnce(new Error("Network error"));
 
-      const result = await getNirmsProhibitedItems(3, 100);
+      const result = await getNirmsIneligibleItems(3, 100);
 
       expect(result).toBeNull();
       expect(global.fetch).toHaveBeenCalledTimes(6);
@@ -176,22 +176,22 @@ describe("mdm-service", () => {
         })
         .mockRejectedValueOnce(new Error("Network error"));
 
-      await getNirmsProhibitedItems(3, 100);
+      await getNirmsIneligibleItems(3, 100);
 
       // Note: bearerTokenRequest succeeds, then API call fails, so check the API errors
       expect(logger.logError).toHaveBeenCalledWith(
         filenameForLogging,
-        "getNirmsProhibitedItems()",
+        "getNirmsIneligibleItems()",
         "Attempt 1 failed with error: Network error, retrying in 100ms",
       );
       expect(logger.logError).toHaveBeenCalledWith(
         filenameForLogging,
-        "getNirmsProhibitedItems()",
+        "getNirmsIneligibleItems()",
         "Attempt 2 failed with error: Network error, retrying in 100ms",
       );
       expect(logger.logError).toHaveBeenCalledWith(
         filenameForLogging,
-        "getNirmsProhibitedItems()",
+        "getNirmsIneligibleItems()",
         "Final attempt failed with error: Network error",
       );
     });
@@ -216,7 +216,7 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsProhibitedItems(3, 100);
+      const result = await getNirmsIneligibleItems(3, 100);
 
       expect(result).toEqual(mockData);
       expect(global.fetch).toHaveBeenCalledTimes(4);
@@ -237,12 +237,12 @@ describe("mdm-service", () => {
           text: jest.fn().mockResolvedValue("Unauthorized"),
         });
 
-      const result = await getNirmsProhibitedItems();
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toBeNull();
       expect(logger.logError).toHaveBeenCalledWith(
         filenameForLogging,
-        "getNirmsProhibitedItems()",
+        "getNirmsIneligibleItems()",
         "Request failed - HTTP 401: Unauthorized",
       );
     });
@@ -260,12 +260,12 @@ describe("mdm-service", () => {
           text: jest.fn().mockResolvedValue("Internal Server Error"),
         });
 
-      const result = await getNirmsProhibitedItems();
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toBeNull();
       expect(logger.logError).toHaveBeenCalledWith(
         filenameForLogging,
-        "getNirmsProhibitedItems()",
+        "getNirmsIneligibleItems()",
         "Request failed - HTTP 500: Internal Server Error",
       );
     });
@@ -284,7 +284,7 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsProhibitedItems(5, 500);
+      const result = await getNirmsIneligibleItems(5, 500);
 
       expect(result).toEqual(mockData);
     });
@@ -293,14 +293,14 @@ describe("mdm-service", () => {
       const cachedData = { items: ["cached-item1", "cached-item2"] };
       mdmBlobCache.get.mockResolvedValue(cachedData);
 
-      const result = await getNirmsProhibitedItems();
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toEqual(cachedData);
       expect(mdmBlobCache.get).toHaveBeenCalled();
       expect(global.fetch).not.toHaveBeenCalled();
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "getNirmsProhibitedItems()",
+        "getNirmsIneligibleItems()",
         "Returning cached NIRMS data",
       );
     });
@@ -322,7 +322,7 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsProhibitedItems();
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toEqual(mockData);
       expect(mdmBlobCache.get).toHaveBeenCalled();
@@ -346,7 +346,7 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsProhibitedItems();
+      const result = await getNirmsIneligibleItems();
 
       // Should still return data despite cache write failure
       expect(result).toEqual(mockData);

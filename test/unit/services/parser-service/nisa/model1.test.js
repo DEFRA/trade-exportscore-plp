@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/nisa/model1");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -113,7 +114,7 @@ describe("findParser", () => {
 
   test("matches valid NISA Model 1 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
 

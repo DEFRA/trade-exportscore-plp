@@ -636,7 +636,7 @@ const cooPlaceholderXModel = [
   ],
 ];
 
-const prohibitedItemsWithTreatmentModel = [
+const ineligibleItemsWithTreatmentModel = [
   [
     "",
     "RMS Dispatch location",
@@ -663,7 +663,7 @@ const prohibitedItemsWithTreatmentModel = [
   ],
 ];
 
-const prohibitedItemsNoTreatmentModel = [
+const ineligibleItemsNoTreatmentModel = [
   [
     "",
     "RMS Dispatch location",
@@ -690,7 +690,7 @@ const prohibitedItemsNoTreatmentModel = [
   ],
 ];
 
-const prohibitedItemsMultipleWithTreatmentModel = [
+const ineligibleItemsMultipleWithTreatmentModel = [
   [
     "",
     "RMS Dispatch location",
@@ -753,7 +753,7 @@ const prohibitedItemsMultipleWithTreatmentModel = [
   ],
 ];
 
-const prohibitedItemsMultipleNoTreatmentModel = [
+const ineligibleItemsMultipleNoTreatmentModel = [
   [
     "",
     "RMS Dispatch location",
@@ -836,8 +836,8 @@ module.exports = {
   nullCooMultipleModel,
   invalidCooMultipleModel,
   cooPlaceholderXModel,
-  prohibitedItemsWithTreatmentModel,
-  prohibitedItemsNoTreatmentModel,
-  prohibitedItemsMultipleWithTreatmentModel,
-  prohibitedItemsMultipleNoTreatmentModel,
+  ineligibleItemsWithTreatmentModel,
+  ineligibleItemsNoTreatmentModel,
+  ineligibleItemsMultipleWithTreatmentModel,
+  ineligibleItemsMultipleNoTreatmentModel,
 };

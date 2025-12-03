@@ -81,7 +81,7 @@ async function generateParsedPackingList(
   );
   parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
   const validationResults =
-    packingListValidator.validatePackingList(parsedPackingList);
+    await packingListValidator.validatePackingList(parsedPackingList);
   parsedPackingList.business_checks.all_required_fields_present =
     validationResults.hasAllFields;
 

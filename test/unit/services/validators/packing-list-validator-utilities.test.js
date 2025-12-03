@@ -8,7 +8,7 @@ const {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
   wrongTypeForPackages,
   wrongTypeNetWeight,
   removeBadData,
@@ -45,6 +45,30 @@ jest.mock("../../../../app/services/data/data-prohibited-items.json", () => [
     type_of_treatment: "PROHIBITED_ITEM_TREATMENT_3", // unprocessed
   },
 ]);
+jest.mock("../../../../app/services/ineligible-items-service", () => ({
+  getIneligibleItems: jest.fn().mockResolvedValue([
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_1",
+      type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
+    },
+  ]),
+  getLocalIneligibleItems: jest.fn().mockReturnValue([
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_1",
+      type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
+    },
+  ]),
+}));
 
 describe("validator function tests", () => {
   test.each([
@@ -251,15 +275,21 @@ describe("validator function tests", () => {
     ], // prohibited from !PROHIBITED_ITEM_TREATMENT_2 or !PROHIBITED_ITEM_TREATMENT
     ["NIRMS", "PROHIBITED_ITEM_ISO", "PROHIBITED_ITEM_COMMODITY_3", null, true], // prohibited when no treatment type provided as !PROHIBITED_ITEM_TREATMENT_2 or !PROHIBITED_ITEM_TREATMENT
   ])(
-    "hasProhibitedItems",
-    (nirms, country_of_origin, commodity_code, type_of_treatment, expected) => {
+    "hasIneligibleItems",
+    async (
+      nirms,
+      country_of_origin,
+      commodity_code,
+      type_of_treatment,
+      expected,
+    ) => {
       const item = {
         nirms,
         country_of_origin,
         commodity_code,
         type_of_treatment,
       };
-      expect(hasProhibitedItems(item)).toBe(expected);
+      expect(await hasIneligibleItems(item)).toBe(expected);
     },
   );
 });

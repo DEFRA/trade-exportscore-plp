@@ -1699,7 +1699,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     "(DO NOT SORT) Packing List": [
       { A: "Savers - Packing List" },
       { D: "ENTER TRAILER ID", E: "MD66" },

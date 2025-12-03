@@ -864,7 +864,7 @@ module.exports = {
       },
     ],
   },
-  validModel_CoO__NotOnProhibitedItemsList: {
+  validModel_CoO__NotOnineligibleItemsList: {
     PackingList_Extract: [
       {
         A: "TruckID",
@@ -904,7 +904,7 @@ module.exports = {
       },
     ],
   },
-  validModel_CoO__OnProhibitedItemsList: {
+  validModel_CoO__OnineligibleItemsList: {
     PackingList_Extract: [
       {
         A: "TruckID",
@@ -944,7 +944,7 @@ module.exports = {
       },
     ],
   },
-  validModel_CoO__MultipleProhibitedItemsList_NoTreatmentType: {
+  validModel_CoO__MultipleineligibleItemsList_NoTreatmentType: {
     PackingList_Extract: [
       {
         A: "TruckID",
@@ -1056,7 +1056,7 @@ module.exports = {
       },
     ],
   },
-  validModel_CoO__MultipleProhibitedItemsListMoreThan3_TreatmentType: {
+  validModel_CoO__MultipleineligibleItemsListMoreThan3_TreatmentType: {
     PackingList_Extract: [
       {
         A: "TruckID",

@@ -5,7 +5,7 @@ const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 const mdmConfig = config.mdmConfig;
-const GET_NIRMS_METHOD = "getNirmsProhibitedItems()";
+const GET_NIRMS_METHOD = "getNirmsIneligibleItems()";
 
 // Helper function for retry delays
 function sleep(ms) {
@@ -103,7 +103,7 @@ function logCatchError(attempt, maxRetries, errorMessage, retryDelayMs) {
   logger.logError(filenameForLogging, GET_NIRMS_METHOD, message);
 }
 
-async function getNirmsProhibitedItems(maxRetries = 3, retryDelayMs = 2000) {
+async function getNirmsIneligibleItems(maxRetries = 3, retryDelayMs = 2000) {
   // Check cache first
   const cachedData = await mdmBlobCache.get();
   if (cachedData) {
@@ -124,7 +124,7 @@ async function getNirmsProhibitedItems(maxRetries = 3, retryDelayMs = 2000) {
           `Failed to obtain bearer token: ${bearerToken}`,
         );
         logger.logError(filenameForLogging, GET_NIRMS_METHOD, error);
-        
+
         // Try stale cache as fallback
         const staleData = await mdmBlobCache.getStale();
         if (staleData) {
@@ -159,7 +159,7 @@ async function getNirmsProhibitedItems(maxRetries = 3, retryDelayMs = 2000) {
       // Any HTTP error response - don't retry, return immediately with stale cache fallback
       const errorText = await response.text();
       logHttpError(status, errorText);
-      
+
       // Try stale cache as fallback
       const staleData = await mdmBlobCache.getStale();
       if (staleData) {
@@ -196,4 +196,4 @@ async function getNirmsProhibitedItems(maxRetries = 3, retryDelayMs = 2000) {
   return null;
 }
 
-module.exports = { getNirmsProhibitedItems, bearerTokenRequest };
+module.exports = { getNirmsIneligibleItems, bearerTokenRequest };

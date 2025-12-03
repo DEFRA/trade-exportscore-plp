@@ -21,6 +21,7 @@ const mdmConfig = {
   subscriptionKey: process.env.MDM_SUBSCRIPTION_KEY,
   bearerTokenRequest,
   cache,
+  useLocalData: process.env.MDM_USE_LOCAL_DATA === "true",
 };
 
 // Debug logging - remove after testing

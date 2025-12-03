@@ -575,7 +575,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     Sheet1: [
       {
         C: "Product Type / Category",

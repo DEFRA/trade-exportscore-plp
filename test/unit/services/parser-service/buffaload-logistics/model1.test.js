@@ -1,3 +1,4 @@
+require("../test-setup");
 // Jest mocks for CoO validation testing
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
@@ -198,7 +199,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
   test("Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatmentModel,
+      model.ineligibleItemsWithTreatmentModel,
       filename,
     );
 
@@ -210,7 +211,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
   test("Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatmentModel,
+      model.ineligibleItemsMultipleWithTreatmentModel,
       filename,
     );
 
@@ -223,7 +224,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
   test("Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsNoTreatmentModel,
+      model.ineligibleItemsNoTreatmentModel,
       filename,
     );
 
@@ -235,7 +236,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
   test("Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleNoTreatmentModel,
+      model.ineligibleItemsMultipleNoTreatmentModel,
       filename,
     );
 

@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/fowlerwelch/model2");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -154,7 +155,7 @@ describe("Fowlerwelch 2 CoO Validation Tests", () => {
 
   test("BAC11: Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatment,
+      model.ineligibleItemsWithTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -164,7 +165,7 @@ describe("Fowlerwelch 2 CoO Validation Tests", () => {
 
   test("BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatment,
+      model.ineligibleItemsMultipleWithTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
@@ -172,7 +173,7 @@ describe("Fowlerwelch 2 CoO Validation Tests", () => {
 
   test("BAC13: Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsNoTreatment,
+      model.ineligibleItemsNoTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -182,7 +183,7 @@ describe("Fowlerwelch 2 CoO Validation Tests", () => {
 
   test("BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleNoTreatment,
+      model.ineligibleItemsMultipleNoTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
