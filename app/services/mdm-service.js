@@ -7,6 +7,10 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const mdmConfig = config.mdmConfig;
 const GET_NIRMS_METHOD = "getNirmsIneligibleItems()";
 
+// Retry configuration from config with defaults
+const MAX_RETRIES = mdmConfig.maxRetries || 3;
+const RETRY_DELAY_MS = mdmConfig.retryDelayMs || 2000;
+
 // Helper function for retry delays
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -103,7 +107,7 @@ function logCatchError(attempt, maxRetries, errorMessage, retryDelayMs) {
   logger.logError(filenameForLogging, GET_NIRMS_METHOD, message);
 }
 
-async function getNirmsIneligibleItems(maxRetries = 3, retryDelayMs = 2000) {
+async function getNirmsIneligibleItems() {
   // Check cache first
   const cachedData = await mdmBlobCache.get();
   if (cachedData) {
@@ -115,7 +119,7 @@ async function getNirmsIneligibleItems(maxRetries = 3, retryDelayMs = 2000) {
     return cachedData;
   }
 
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
       const bearerToken = await bearerTokenRequest();
 
@@ -173,9 +177,9 @@ async function getNirmsIneligibleItems(maxRetries = 3, retryDelayMs = 2000) {
       return null;
     } catch (err) {
       // Only retry on fetch failures (network errors)
-      logCatchError(attempt, maxRetries, err.message, retryDelayMs);
+      logCatchError(attempt, MAX_RETRIES, err.message, RETRY_DELAY_MS);
 
-      if (attempt === maxRetries) {
+      if (attempt === MAX_RETRIES) {
         // Final attempt failed - try stale cache as fallback
         const staleData = await mdmBlobCache.getStale();
         if (staleData) {
@@ -189,7 +193,7 @@ async function getNirmsIneligibleItems(maxRetries = 3, retryDelayMs = 2000) {
         return null;
       }
 
-      await sleep(retryDelayMs);
+      await sleep(RETRY_DELAY_MS);
     }
   }
 
