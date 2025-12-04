@@ -1,4 +1,4 @@
-const { getNirmsProhibitedItems } = require("../services/mdm-service");
+const { getNirmsIneligibleItems } = require("../services/mdm-service");
 const { StatusCodes } = require("http-status-codes");
 const logger = require("./../utilities/logger");
 const path = require("node:path");
@@ -10,7 +10,7 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
-        const nirmsData = await getNirmsProhibitedItems();
+        const nirmsData = await getNirmsIneligibleItems();
 
         if (nirmsData) {
           logger.logInfo(
