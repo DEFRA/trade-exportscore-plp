@@ -30,7 +30,7 @@ const failureReasonsDescriptions = require("./packing-list-failure-reasons");
  * @returns {Object} result - Validation result containing either `hasAllFields: true` or `hasAllFields: false` and `failureReasons`.
  */
 async function validatePackingList(packingList) {
-  const validationResult = await validatePackingListByIndexAndType(packingList);
+  const validationResult = await await validatePackingListByIndexAndType(packingList);
   return generateFailuresByIndexAndTypes(validationResult, packingList);
 }
 
@@ -179,6 +179,20 @@ function findItems(items, fn) {
   return items
     .map((val) => (fn(val) ? val.row_location : null))
     .filter((val) => val !== null);
+}
+
+async function findItemsAsync(items, fn) {
+  const results = await Promise.all(
+    items.map(async (val) => ((await fn(val)) ? val.row_location : null)),
+  );
+  return results.filter((val) => val !== null);
+}
+
+async function findItemsAsync(items, fn) {
+  const results = await Promise.all(
+    items.map(async (val) => ((await fn(val)) ? val.row_location : null)),
+  );
+  return results.filter((val) => val !== null);
 }
 
 async function findItemsAsync(items, fn) {
