@@ -684,8 +684,8 @@ module.exports = {
       // Data rows with prohibited items
       {
         C: "PROHIBITED ITEM",
-        E: "07061000", // Prohibited commodity code from CN
-        F: "CN", // China - prohibited country
+        E: "012", // Prohibited commodity code
+        F: "PROHIBITED_ITEM_ISO", // Prohibited country
         G: 17,
         H: 40.8,
       },
@@ -704,7 +704,7 @@ module.exports = {
         A: "Type of Treatment",
       },
       {
-        A: "Chilled",
+        A: "PROHIBITED_ITEM_TREATMENT",
       },
       {
         C: "DESCRIPTION",
@@ -715,8 +715,8 @@ module.exports = {
       },
       {
         C: "PROHIBITED ITEM WITH TREATMENT",
-        E: "07061000", // Prohibited commodity code
-        F: "CN", // China - prohibited country
+        E: "012", // Prohibited commodity code
+        F: "PROHIBITED_ITEM_ISO", // Prohibited country
         G: 17,
         H: 40.8,
       },
@@ -743,29 +743,29 @@ module.exports = {
       // Multiple prohibited items (>3)
       {
         C: "PROHIBITED ITEM 1",
-        E: "07061000",
-        F: "CN",
+        E: "012",
+        F: "PROHIBITED_ITEM_ISO",
         G: 17,
         H: 40.8,
       },
       {
         C: "PROHIBITED ITEM 2",
-        E: "07061000",
-        F: "CN",
+        E: "012",
+        F: "PROHIBITED_ITEM_ISO",
         G: 10,
         H: 24,
       },
       {
         C: "PROHIBITED ITEM 3",
-        E: "07061000",
-        F: "CN",
+        E: "012",
+        F: "PROHIBITED_ITEM_ISO",
         G: 15,
         H: 30,
       },
       {
         C: "PROHIBITED ITEM 4",
-        E: "07061000",
-        F: "CN",
+        E: "012",
+        F: "PROHIBITED_ITEM_ISO",
         G: 5,
         H: 12,
       },
