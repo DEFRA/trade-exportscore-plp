@@ -1,3 +1,50 @@
+jest.mock("../../../../app/services/ineligible-items-service", () => ({
+  getIneligibleItems: jest.fn(() =>
+    Promise.resolve([
+      {
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        commodity_code: "PROHIBITED_ITEM_COMMODITY_1",
+        type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+      },
+      {
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
+      },
+      {
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        commodity_code: "PROHIBITED_ITEM_COMMODITY_3",
+        type_of_treatment: "!PROHIBITED_ITEM_TREATMENT",
+      },
+      {
+        country_of_origin: "PROHIBITED_ITEM_ISO",
+        commodity_code: "PROHIBITED_ITEM_COMMODITY_3",
+        type_of_treatment: "!PROHIBITED_ITEM_TREATMENT_2",
+      },
+    ]),
+  ),
+  getLocalIneligibleItems: jest.fn(() => [
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_1",
+      type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_3",
+      type_of_treatment: "!PROHIBITED_ITEM_TREATMENT",
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO",
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_3",
+      type_of_treatment: "!PROHIBITED_ITEM_TREATMENT_2",
+    },
+  ]),
+}));
+
 const {
   hasMissingDescription,
   hasInvalidProductCode,
@@ -56,6 +103,21 @@ jest.mock("../../../../app/services/ineligible-items-service", () => ({
       country_of_origin: "PROHIBITED_ITEM_ISO",
       commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
     },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+      type_of_treatment: "!PROHIBITED_ITEM_TREATMENT", // !processed
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+      type_of_treatment: "!PROHIBITED_ITEM_TREATMENT_2", // !dried
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+      type_of_treatment: "PROHIBITED_ITEM_TREATMENT_3", // unprocessed
+    },
   ]),
   getLocalIneligibleItems: jest.fn().mockReturnValue([
     {
@@ -66,6 +128,21 @@ jest.mock("../../../../app/services/ineligible-items-service", () => ({
     {
       country_of_origin: "PROHIBITED_ITEM_ISO",
       commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+      type_of_treatment: "!PROHIBITED_ITEM_TREATMENT", // !processed
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+      type_of_treatment: "!PROHIBITED_ITEM_TREATMENT_2", // !dried
+    },
+    {
+      country_of_origin: "PROHIBITED_ITEM_ISO", // GB
+      commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
+      type_of_treatment: "PROHIBITED_ITEM_TREATMENT_3", // unprocessed
     },
   ]),
 }));
