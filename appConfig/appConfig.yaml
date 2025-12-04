@@ -73,8 +73,6 @@
   type: "keyvault"
 - key: MDM_CACHE_ENABLED
   value: "true"
-- key: MDM_CACHE_PROVIDER
-  value: "blob"
 - key: MDM_CACHE_TTL_SECONDS
   value: "3600"
 - key: MDM_CACHE_CONTAINER
