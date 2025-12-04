@@ -37,12 +37,12 @@ async function matches(packingList, filename) {
 
       // match header
       result = matchHeaders(page.content);
-      if (result === matcherResult.WRONG_HEADER) {
+      if (result == matcherResult.WRONG_HEADER) {
         return matcherResult.WRONG_HEADER;
       }
     }
 
-    if (result === matcherResult.CORRECT) {
+    if (result == matcherResult.CORRECT) {
       logger.logInfo(
         filenameForLogging,
         "matches()",
@@ -65,7 +65,7 @@ async function matches(packingList, filename) {
  */
 function matchHeaders(pageContent) {
   const isHeader = findHeader("GIOVANNI3", pageContent);
-  if (isHeader === matcherResult.CORRECT) {
+  if (isHeader == matcherResult.CORRECT) {
     return matcherResult.CORRECT;
   } else {
     return matcherResult.WRONG_HEADER;
