@@ -9,7 +9,6 @@
 const regex = require("../../utilities/regex");
 const isoCodesData = require("../data/data-iso-codes.json");
 const ineligibleItemsService = require("../ineligible-items-service");
-const ineligibleItemsService = require("../ineligible-items-service");
 
 /**
  * Check whether a value is null, undefined or an empty string.

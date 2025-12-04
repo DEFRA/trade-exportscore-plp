@@ -5,7 +5,6 @@
  * All instances now return NOMATCH. Tests remain for historical reference.
  */
 require("../test-setup");
-require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/tescos/model1");
 const parserModel = require("../../../../../app/services/parser-model");
