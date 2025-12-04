@@ -18,7 +18,7 @@ const mdmConfig = {
   subscriptionKey: process.env.MDM_SUBSCRIPTION_KEY,
   bearerTokenRequest,
   cache,
-  useLocalData: process.env.MDM_USE_LOCAL_DATA === "true",
+  useLocalData: process.env.MDM_USE_LOCAL_DATA !== "false", // Defaults to true unless explicitly set to "false"
   maxRetries: parseInt(process.env.MDM_MAX_RETRIES || "3", 10),
   retryDelayMs: parseInt(process.env.MDM_RETRY_DELAY_MS || "2000", 10),
 };
