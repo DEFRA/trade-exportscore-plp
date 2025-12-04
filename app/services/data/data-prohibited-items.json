@@ -590,11 +590,6 @@
     "type_of_treatment": "Unprocessed"
   },
   {
-    "country_of_origin": "ZA",
-    "commodity_code": "08093030",
-    "type_of_treatment": null
-  },
-  {
     "country_of_origin": "BR",
     "commodity_code": "08093030",
     "type_of_treatment": null
@@ -1988,5 +1983,55 @@
     "country_of_origin": "GB",
     "commodity_code": "08045000",
     "type_of_treatment": "!dried"
+  },
+  {
+    "country_of_origin": "ZA",
+    "commodity_code": "080930",
+    "type_of_treatment": "Unprocessed"
+  },
+  {
+    "country_of_origin": "ZA",
+    "commodity_code": "080930",
+    "type_of_treatment": "No treatment"
+  },
+  {
+    "country_of_origin": "GB",
+    "commodity_code": "08051020",
+    "type_of_treatment": "Unprocessed"
+  },
+  {
+    "country_of_origin": "GB",
+    "commodity_code": "08051080",
+    "type_of_treatment": "Unprocessed"
+  },
+  {
+    "country_of_origin": "GB",
+    "commodity_code": "08051020",
+    "type_of_treatment": "No treatment"
+  },
+  {
+    "country_of_origin": "GB",
+    "commodity_code": "08051080",
+    "type_of_treatment": "No treatment"
+  },
+  {
+    "country_of_origin": "ZA",
+    "commodity_code": "0809400500",
+    "type_of_treatment": "Chilled"
+  },
+  {
+    "country_of_origin": "ZA",
+    "commodity_code": "0809400500",
+    "type_of_treatment": "Fresh"
+  },
+  {
+    "country_of_origin": "ZA",
+    "commodity_code": "0809400500",
+    "type_of_treatment": "Raw"
+  },
+  {
+    "country_of_origin": "ZA",
+    "commodity_code": "0809400500",
+    "type_of_treatment": "Unprocessed"
   }
 ]
