@@ -20,6 +20,11 @@ jest.mock("../../app/messaging", () => ({
 
 jest.mock("../../app/config", () => ({
   isDev: true,
+  mdmConfig: {
+    useLocalData: true,
+    maxRetries: 3,
+    retryDelayMs: 2000,
+  },
 }));
 
 describe("createServer", () => {

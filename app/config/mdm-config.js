@@ -22,6 +22,8 @@ const mdmConfig = {
   bearerTokenRequest,
   cache,
   useLocalData: process.env.MDM_USE_LOCAL_DATA === "true",
+  maxRetries: parseInt(process.env.MDM_MAX_RETRIES || "3", 10),
+  retryDelayMs: parseInt(process.env.MDM_RETRY_DELAY_MS || "2000", 10),
 };
 
 // Debug logging - remove after testing

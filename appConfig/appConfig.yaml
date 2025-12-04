@@ -79,6 +79,10 @@
   value: "3600"
 - key: MDM_CACHE_CONTAINER
   value: "mdm-cache"
+- key: MDM_MAX_RETRIES
+  value: "3"
+- key: MDM_RETRY_DELAY_MS
+  value: "2000"
 - key: REDIS_URL
   value: "{{servicename}}-REDIS-URL"
   type: "keyvault"

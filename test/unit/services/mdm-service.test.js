@@ -12,6 +12,8 @@ jest.mock("../../../app/config", () => ({
   mdmConfig: {
     apiUrl: "https://test-api.example.com",
     subscriptionKey: "test-subscription-key",
+    maxRetries: 3,
+    retryDelayMs: 100,
     bearerTokenRequest: {
       url: "https://test-auth.example.com/token",
       tenant: "test-tenant.onmicrosoft.com",
@@ -90,7 +92,7 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsIneligibleItems(3, 100);
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toEqual(mockData);
       expect(global.fetch).toHaveBeenCalledTimes(3);
@@ -148,7 +150,7 @@ describe("mdm-service", () => {
         })
         .mockRejectedValueOnce(new Error("Network error"));
 
-      const result = await getNirmsIneligibleItems(3, 100);
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toBeNull();
       expect(global.fetch).toHaveBeenCalledTimes(6);
@@ -176,7 +178,7 @@ describe("mdm-service", () => {
         })
         .mockRejectedValueOnce(new Error("Network error"));
 
-      await getNirmsIneligibleItems(3, 100);
+      await getNirmsIneligibleItems();
 
       // Note: bearerTokenRequest succeeds, then API call fails, so check the API errors
       expect(logger.logError).toHaveBeenCalledWith(
@@ -216,7 +218,7 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsIneligibleItems(3, 100);
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toEqual(mockData);
       expect(global.fetch).toHaveBeenCalledTimes(4);
@@ -284,7 +286,7 @@ describe("mdm-service", () => {
           json: jest.fn().mockResolvedValue(mockData),
         });
 
-      const result = await getNirmsIneligibleItems(5, 500);
+      const result = await getNirmsIneligibleItems();
 
       expect(result).toEqual(mockData);
     });
