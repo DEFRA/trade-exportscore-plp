@@ -95,17 +95,11 @@ $env:MDM_SCOPE="<SCOPE>"
 
 # Cache Configuration (new)
 $env:MDM_CACHE_ENABLED="true"
-$env:MDM_CACHE_PROVIDER="blob"  # "blob" or "redis" - choose cache backend
 $env:MDM_CACHE_TTL_SECONDS="600"  # 10 minutes for testing
 $env:MDM_CACHE_CONTAINER="mdm-cache"  # Only for blob provider
 
-# Azure Blob Storage Configuration (if using MDM_CACHE_PROVIDER="blob")
-# For Azurite: Already set in Option A above
-# For Cloud: Already set in Option B above
-
-# Redis Configuration (if using MDM_CACHE_PROVIDER="redis")
-$env:REDIS_URL="redis://localhost:6379"
-$env:REDIS_PASSWORD=""  # Leave empty for local Redis without password
+# Azure Blob Storage Configuration
+# For Azurite
 ```
 
 ### 3. Verify Azurite is Running (if using local emulator)
@@ -141,35 +135,12 @@ $env:MDM_CLIENT_ID="<CLIENT_ID>"
 $env:MDM_CLIENT_SECRET="<CLIENT_SECRET>"
 $env:MDM_SCOPE="<SCOPE>"
 $env:MDM_CACHE_ENABLED="true"
-$env:MDM_CACHE_PROVIDER="blob"
 $env:MDM_CACHE_TTL_SECONDS="600"
 $env:MDM_CACHE_CONTAINER="mdm-cache"
 $env:AZURE_STORAGE_ACCOUNT_URL="http://127.0.0.1:10000/devstoreaccount1"
 $env:AZURE_STORAGE_USE_EMULATOR="true"
 
 Write-Host "✅ Setup complete! Run: npm run start:watch"
-```
-
-**For Redis (local testing)**:
-
-```powershell
-# Install and start Redis (using Docker)
-docker run -d --name redis-cache -p 6379:6379 redis:latest
-
-# Set all environment variables
-$env:MDM_API_URL="<MDM_API_URL>"
-$env:MDM_SUBSCRIPTION_KEY="<SUBSCRIPTION_KEY>"
-$env:MDM_TENANT="<TENANT_NAME>"
-$env:MDM_AUTH_URL="https://login.microsoftonline.com/<TENANT_NAME>/oauth2/v2.0/token"
-$env:MDM_CLIENT_ID="<CLIENT_ID>"
-$env:MDM_CLIENT_SECRET="<CLIENT_SECRET>"
-$env:MDM_SCOPE="<SCOPE>"
-$env:MDM_CACHE_ENABLED="true"
-$env:MDM_CACHE_PROVIDER="redis"
-$env:MDM_CACHE_TTL_SECONDS="600"
-$env:REDIS_URL="redis://localhost:6379"
-
-Write-Host "✅ Redis setup complete! Run: npm run start:watch"
 ```
 
 ## Running Tests
@@ -219,15 +190,6 @@ Successfully retrieved NIRMS data from MDM API
 Cache updated: X bytes written
 ```
 
-**Expected logs (Redis Provider):**
-
-```
-Redis client initialized: redis://localhost:6379
-Cache miss - key not found
-Successfully retrieved NIRMS data from MDM API
-Cache updated in Redis: X bytes, TTL: 3600s
-```
-
 #### Test Scenario 2: Cache Hit
 
 ```powershell
@@ -240,13 +202,6 @@ curl http://localhost:3004/test-mdm-conn
 ```
 Cache hit: Xs old, Y chunks
 Returning blob-cached NIRMS data
-```
-
-**Expected logs (Redis Provider):**
-
-```
-Cache hit from Redis: X bytes
-Returning Redis-cached NIRMS data
 ```
 
 **NO** "fetching from MDM API" message should appear.
@@ -283,13 +238,6 @@ curl http://localhost:3004/test-mdm-conn
 ```
 Cache expired: Xs old (TTL: 600s)
 Cache miss - fetching from MDM API
-```
-
-**Expected logs (Redis Provider):**
-
-```
-Cache miss - key not found  # Redis auto-expires keys after TTL
-Successfully retrieved NIRMS data from MDM API
 ```
 
 #### Test Scenario 5: Cache Disabled
@@ -348,48 +296,6 @@ az storage blob show \
   --account-name YOUR_STORAGE_ACCOUNT \
   --auth-mode login \
   --query "{LastModified:properties.lastModified, Metadata:metadata}"
-```
-
-### Redis Provider - Redis Cache
-
-#### Check Redis Keys
-
-```powershell
-# List all cached keys
-docker exec redis-cache redis-cli KEYS "*"
-```
-
-#### View Cached Data
-
-```powershell
-# Get cached NIRMS data
-docker exec redis-cache redis-cli GET "mdm-nirms-ineligible-items"
-
-# Pretty print JSON
-docker exec redis-cache redis-cli GET "mdm-nirms-ineligible-items" | ConvertFrom-Json | ConvertTo-Json
-```
-
-#### Check TTL (Time To Live)
-
-```powershell
-# See how many seconds until expiration
-docker exec redis-cache redis-cli TTL "mdm-nirms-ineligible-items"
-
-# Returns: number of seconds remaining (or -1 if no expiry, -2 if key doesn't exist)
-```
-
-#### Monitor Redis Activity
-
-```powershell
-# Watch all Redis commands in real-time
-docker exec -it redis-cache redis-cli MONITOR
-```
-
-#### Clear Specific Key
-
-```powershell
-# Manually delete cached key
-docker exec redis-cache redis-cli DEL "mdm-nirms-ineligible-items"
 ```
 
 ## Troubleshooting
@@ -479,37 +385,27 @@ Select-String -Path logs.txt -Pattern "Cache miss:" | Measure-Object
 
 ## Configuration Summary
 
-| Environment Variable        | Value                                     | Purpose                       | Required For |
-| --------------------------- | ----------------------------------------- | ----------------------------- | ------------ |
-| `MDM_CACHE_ENABLED`         | `"true"`                                  | Enable/disable caching        | Both         |
-| `MDM_CACHE_PROVIDER`        | `"blob"` or `"redis"`                     | Choose cache backend          | Both         |
-| `MDM_CACHE_TTL_SECONDS`     | `"600"` (dev) / `"3600"` (prod)           | Cache lifetime                | Both         |
-| `MDM_CACHE_CONTAINER`       | `"mdm-cache"`                             | Azure blob container name     | Blob only    |
-| `AZURE_STORAGE_ACCOUNT_URL` | `https://{account}.blob.core.windows.net` | Storage account URL           | Blob only    |
-| `REDIS_URL`                 | `redis://localhost:6379`                  | Redis connection URL          | Redis only   |
-| `REDIS_PASSWORD`            | `""` (empty for local)                    | Redis authentication password | Redis only   |
+| Environment Variable        | Value                                     | Purpose                       | Required |
+| --------------------------- | ----------------------------------------- | ----------------------------- | -------- |
+| `MDM_CACHE_ENABLED`         | `"true"`                                  | Enable/disable caching        | Yes      |
+| `MDM_CACHE_TTL_SECONDS`     | `"600"` (dev) / `"3600"` (prod)           | Cache lifetime                | Yes      |
+| `MDM_CACHE_CONTAINER`       | `"mdm-cache"`                             | Azure blob container name     | Yes      |
+| `AZURE_STORAGE_ACCOUNT_URL` | `https://{account}.blob.core.windows.net` | Storage account URL           | Yes      |
 
 ## Architecture Notes
 
-### General
+### Cache Strategy
 
-- **Cache Strategy**: Check cache → On miss, fetch API → Cache result (async)
-- **Provider Toggle**: Switch between blob and Redis via `MDM_CACHE_PROVIDER` environment variable
+- **Flow**: Check cache → On miss, fetch API → Cache result (async)
 - **Graceful Degradation**: Cache failures return null, API call proceeds
-- **Cache Invalidation**: Manual via DELETE /mdm/cache endpoint (works for both providers)
+- **Cache Invalidation**: Manual via DELETE /mdm/cache endpoint
 
-### Blob Provider Specifics
+### Blob Storage Implementation
 
 - **TTL Enforcement**: Manual checking via blob lastModified timestamp comparison
 - **Authentication**: `DefaultAzureCredential` (managed identity in Azure, Azure CLI locally)
 - **Storage**: Streaming upload/download with metadata (cachedAt, ttl, source)
-
-### Redis Provider Specifics
-
-- **TTL Enforcement**: Automatic expiration via Redis `SETEX` command
-- **Authentication**: Optional password support for Azure Redis Cache (TLS enabled)
-- **Storage**: Simple key-value with JSON serialization
-- **Performance**: In-memory cache, faster than blob storage for frequent reads
+- **Provider**: Azure Blob Storage for persistent caching
 
 ## Known Issues
 
