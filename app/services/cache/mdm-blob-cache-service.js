@@ -1,13 +1,11 @@
 const { BlobServiceClient } = require("@azure/storage-blob");
 const { DefaultAzureCredential } = require("@azure/identity");
-const redis = require("redis");
 const logger = require("../../utilities/logger");
 const mdmConfig = require("../../config/mdm-config");
 
 const filenameForLogging = "mdm-blob-cache-service";
 
 let blobClient = null;
-let redisClient = null;
 
 const initializeBlobClient = () => {
   if (blobClient) return blobClient;
@@ -47,44 +45,6 @@ const initializeBlobClient = () => {
   }
 };
 
-const initializeRedisClient = async () => {
-  if (redisClient && redisClient.isOpen) return redisClient;
-
-  try {
-    const config = {
-      url: mdmConfig.cache.redisUrl,
-    };
-
-    if (mdmConfig.cache.redisPassword) {
-      config.password = mdmConfig.cache.redisPassword;
-    }
-
-    // Azure Redis Cache requires TLS
-    if (mdmConfig.cache.redisUrl.includes("redis.cache.windows.net")) {
-      config.socket = { tls: true };
-    }
-
-    redisClient = redis.createClient(config);
-
-    redisClient.on("error", (err) => {
-      logger.logError(filenameForLogging, "Redis Client Error", err);
-    });
-
-    await redisClient.connect();
-
-    logger.logInfo(
-      filenameForLogging,
-      "initializeRedisClient()",
-      `Redis client initialized: ${mdmConfig.cache.redisUrl}`,
-    );
-
-    return redisClient;
-  } catch (error) {
-    logger.logError(filenameForLogging, "initializeRedisClient()", error);
-    throw error;
-  }
-};
-
 const get = async () => {
   if (!mdmConfig.cache.enabled) {
     logger.logInfo(filenameForLogging, "get()", "Cache disabled");
@@ -92,11 +52,7 @@ const get = async () => {
   }
 
   try {
-    if (mdmConfig.cache.provider === "redis") {
-      return await getFromRedis();
-    } else {
-      return await getFromBlob();
-    }
+    return await getFromBlob();
   } catch (error) {
     logger.logError(filenameForLogging, "get()", error);
     return null;
@@ -110,73 +66,11 @@ const getStale = async () => {
   }
 
   try {
-    if (mdmConfig.cache.provider === "redis") {
-      return await getStaleFromRedis();
-    } else {
-      return await getStaleFromBlob();
-    }
+    return await getStaleFromBlob();
   } catch (error) {
     logger.logError(filenameForLogging, "getStale()", error);
     return null;
   }
-};
-
-const getFromRedis = async () => {
-  const client = await initializeRedisClient();
-  const cached = await client.get("nirms-prohibited-items");
-
-  if (!cached) {
-    logger.logInfo(
-      filenameForLogging,
-      "getFromRedis()",
-      "Cache miss - key not found",
-    );
-    return null;
-  }
-
-  const parsedData = JSON.parse(cached);
-  const ttl = await client.ttl("nirms-prohibited-items");
-
-  if (ttl > 0) {
-    logger.logInfo(
-      filenameForLogging,
-      "getFromRedis()",
-      `Cache hit from Redis, TTL: ${ttl}s`,
-    );
-  } else {
-    logger.logInfo(
-      filenameForLogging,
-      "getFromRedis()",
-      `Cache expired in Redis (TTL: ${ttl}s) - not deleting for fallback use`,
-    );
-    return null;
-  }
-
-  return parsedData;
-};
-
-const getStaleFromRedis = async () => {
-  const client = await initializeRedisClient();
-  const cached = await client.get("nirms-prohibited-items");
-
-  if (!cached) {
-    logger.logInfo(
-      filenameForLogging,
-      "getStaleFromRedis()",
-      "No stale cache available - key not found",
-    );
-    return null;
-  }
-
-  const parsedData = JSON.parse(cached);
-  const ttl = await client.ttl("nirms-prohibited-items");
-  logger.logInfo(
-    filenameForLogging,
-    "getStaleFromRedis()",
-    `Using stale cache as fallback (TTL: ${ttl}s)`,
-  );
-
-  return parsedData;
 };
 
 const getFromBlob = async () => {
@@ -264,31 +158,10 @@ const set = async (data) => {
   if (!mdmConfig.cache.enabled) return;
 
   try {
-    if (mdmConfig.cache.provider === "redis") {
-      await setToRedis(data);
-    } else {
-      await setToBlob(data);
-    }
+    await setToBlob(data);
   } catch (error) {
     logger.logError(filenameForLogging, "set()", error);
   }
-};
-
-const setToRedis = async (data) => {
-  const client = await initializeRedisClient();
-  const content = JSON.stringify(data);
-
-  await client.setEx(
-    "nirms-prohibited-items",
-    mdmConfig.cache.ttlSeconds,
-    content,
-  );
-
-  logger.logInfo(
-    filenameForLogging,
-    "setToRedis()",
-    `Cache updated in Redis: ${content.length} bytes, TTL: ${mdmConfig.cache.ttlSeconds}s`,
-  );
 };
 
 const setToBlob = async (data) => {
@@ -317,25 +190,10 @@ const setToBlob = async (data) => {
 
 const clear = async () => {
   try {
-    if (mdmConfig.cache.provider === "redis") {
-      await clearRedis();
-    } else {
-      await clearBlob();
-    }
+    await clearBlob();
   } catch (error) {
     logger.logError(filenameForLogging, "clear()", error);
     throw error;
-  }
-};
-
-const clearRedis = async () => {
-  const client = await initializeRedisClient();
-  const deleted = await client.del("nirms-prohibited-items");
-
-  if (deleted > 0) {
-    logger.logInfo(filenameForLogging, "clearRedis()", "Cache invalidated");
-  } else {
-    logger.logInfo(filenameForLogging, "clearRedis()", "No cache to clear");
   }
 };
 

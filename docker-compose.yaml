@@ -41,12 +41,9 @@ services:
       MDM_CLIENT_SECRET: ${MDM_CLIENT_SECRET}
       MDM_SCOPE: ${MDM_SCOPE}
       MDM_CACHE_ENABLED: ${MDM_CACHE_ENABLED:-true}
-      MDM_CACHE_PROVIDER: ${MDM_CACHE_PROVIDER:-blob}
       MDM_CACHE_TTL_SECONDS: ${MDM_CACHE_TTL_SECONDS:-600}
       MDM_CACHE_CONTAINER: ${MDM_CACHE_CONTAINER:-mdm-cache}
       MDM_USE_LOCAL_DATA: ${MDM_USE_LOCAL_DATA:-false}
-      REDIS_URL: ${REDIS_URL:-redis://localhost:6379}
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
 
   trade-exportscore-plp-postgres:
     image: postgres:11.4-alpine
