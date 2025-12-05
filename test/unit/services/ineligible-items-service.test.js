@@ -16,7 +16,7 @@ jest.mock("../../../app/config", () => ({
 
 // Mock the local data file
 jest.mock(
-  "../../../app/services/data/data-prohibited-items.json",
+  "../../../app/services/data/data-ineligible-items.json",
   () => [
     {
       country_of_origin: "BR",

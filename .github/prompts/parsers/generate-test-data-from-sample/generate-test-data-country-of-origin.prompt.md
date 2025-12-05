@@ -91,7 +91,7 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 
 ### Prohibited Items Validation (for exporters with country_of_origin, commodity_code, and type_of_treatment fields)
 
-- **Prohibited Combinations**: Items that match entries in services/data/data-prohibited-items.json based on exact combination of country_of_origin + commodity_code + type_of_treatment
+- **Prohibited Combinations**: Items that match entries in services/data/data-ineligible-items.json based on exact combination of country_of_origin + commodity_code + type_of_treatment
 - **Common Examples**: 
   - CN + 07061000 + Chilled (Chinese carrots, chilled)
   - BR + 0207 + Fresh (Brazilian poultry, fresh)
@@ -126,7 +126,7 @@ Use MCP Excel tools to modify specific cells for each scenario:
 
 - **NIRMS Validation**: For exporters with `nirms` property, test blank values and invalid patterns (should be recognizable values like "Yes", "No", "Green", "Red", "NIRMS", "NON-NIRMS", etc.)
 - **Country of Origin Validation**: For exporters with `validateCountryOfOrigin: true`, test blank values and invalid formats (should be 2-digit ISO codes like "GB", "FR", "DE" or "X")
-- **Prohibited Items**: For exporters with all required fields, select a prohibited item from services/data/data-prohibited-items.json and set the appropriate country_of_origin, commodity_code, and type_of_treatment values in the data rows
+- **Prohibited Items**: For exporters with all required fields, select a prohibited item from services/data/data-ineligible-items.json and set the appropriate country_of_origin, commodity_code, and type_of_treatment values in the data rows
 
 ## Output
 - Place all generated files in `app/packing-lists/{exporter}/test-scenarios/country-of-origin/`.

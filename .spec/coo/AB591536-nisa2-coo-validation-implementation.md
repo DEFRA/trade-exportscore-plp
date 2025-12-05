@@ -545,7 +545,7 @@ module.exports = {
    - **CoO column**: `country_of_origin: /COUNTRY OF ORIGIN/i,` (outside regex section for CoO validation) ✅
 2. **Test patterns against actual headers**: Verify regex works with real test data column headers
 3. **Conventional NIRMS values**: Test data uses standard patterns (Yes/No/NIRMS/Non-NIRMS/etc.)
-4. **Prohibited items**: Use actual prohibited commodity codes from `app/services/data/data-prohibited-items.json` (e.g., "08045000" from "GB")
+4. **Prohibited items**: Use actual prohibited commodity codes from `app/services/data/data-ineligible-items.json` (e.g., "08045000" from "GB")
 
 ### Step 4: Integration Verification
 

@@ -13,7 +13,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
   "PROHIBITED_ITEM_ISO",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "012",

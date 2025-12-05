@@ -29,7 +29,7 @@ const initializeBlobClient = () => {
 
     const containerClient = serviceClient.getContainerClient(containerName);
     blobClient = containerClient.getBlockBlobClient(
-      "nirms-prohibited-items.json",
+      "nirms-ineligible-items.json",
     );
 
     logger.logInfo(

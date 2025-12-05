@@ -67,9 +67,9 @@ This prompt generates implementation guides for Country of Origin (CoO) validati
 
 **❌ ERROR 5: Prohibited Items Test Data Using Non-Prohibited Items**
 - **Problem**: Test data uses commodity codes that aren't actually in the prohibited items list
-- **Solution**: Use actual prohibited items from `app/services/data/data-prohibited-items.json`
+- **Solution**: Use actual prohibited items from `app/services/data/data-ineligible-items.json`
 - **Example**: Use "08045000" from "GB" (actually prohibited) instead of "0201100010" (not prohibited)
-- **Verification**: `grep -i "[commodity_code]" app/services/data/data-prohibited-items.json` to verify
+- **Verification**: `grep -i "[commodity_code]" app/services/data/data-ineligible-items.json` to verify
 
 **❌ ERROR 6: Not Updating Legacy Test Results**
 - **Problem**: Existing tests fail because they expect old validation errors that CoO validation now prevents
@@ -642,7 +642,7 @@ Before finalizing implementation guide:
 8. **Legacy Test Compatibility**: Have existing test results been updated?
    - **⚠️ CRITICAL**: Remove outdated NIRMS validation errors when blanket statement now works
 9. **Prohibited Items Validation**: Are test data using actually prohibited items?
-   - **⚠️ CRITICAL**: Verify commodity codes exist in `data-prohibited-items.json`
+   - **⚠️ CRITICAL**: Verify commodity codes exist in `data-ineligible-items.json`
 10. **Complete Test Pass**: Are ALL tests passing?
    - **⚠️ CRITICAL**: Run `npm test -- --testPathPattern="[retailer]/model1.test.js"` until 0 failures
 
@@ -710,7 +710,7 @@ module.exports = {
 **Fix**: Use actual prohibited items:
 ```bash
 # Find prohibited items
-grep -i "GB" app/services/data/data-prohibited-items.json
+grep -i "GB" app/services/data/data-ineligible-items.json
 # Use commodity codes that actually appear in the file
 # Example: "08045000" from "GB" is actually prohibited
 ```
