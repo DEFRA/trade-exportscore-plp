@@ -8,8 +8,7 @@ const mdmConfig = config.mdmConfig;
 
 // Configurable local data file path
 const localIneligbileItemsDataFilePath =
-  process.env.MDM_INELIGIBLE_ITEMS_FILE ||
-  "./data/data-ineligible-items.json";
+  process.env.MDM_INELIGIBLE_ITEMS_FILE || "./data/data-ineligible-items.json";
 
 const getIneligibleItemsMethod = "getIneligibleItems()";
 

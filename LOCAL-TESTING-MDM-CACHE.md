@@ -7,7 +7,6 @@ The MDM blob cache implementation has been completed with the following files:
 ### Created Files:
 
 - `app/services/cache/mdm-blob-cache-service.js` - Blob storage cache service
-- `app/routes/mdm-cache-invalidate.js` - DELETE /mdm/cache endpoint
 - `test/unit/services/cache/mdm-blob-cache-service.test.js` - Unit tests
 
 ### Modified Files:
