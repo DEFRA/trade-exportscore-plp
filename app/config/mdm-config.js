@@ -9,7 +9,7 @@ const bearerTokenRequest = {
 
 const cache = {
   enabled: process.env.MDM_CACHE_ENABLED === "true",
-  ttlSeconds: parseInt(process.env.MDM_CACHE_TTL_SECONDS || "3600", 10),
+  ttlSeconds: Number.parseInt(process.env.MDM_CACHE_TTL_SECONDS || "3600", 10),
   containerName: process.env.MDM_CACHE_CONTAINER || "mdm-cache",
 };
 
@@ -19,8 +19,8 @@ const mdmConfig = {
   bearerTokenRequest,
   cache,
   useLocalData: process.env.MDM_USE_LOCAL_DATA !== "false", // Defaults to true unless explicitly set to "false"
-  maxRetries: parseInt(process.env.MDM_MAX_RETRIES || "3", 10),
-  retryDelayMs: parseInt(process.env.MDM_RETRY_DELAY_MS || "2000", 10),
+  maxRetries: Number.parseInt(process.env.MDM_MAX_RETRIES || "3", 10),
+  retryDelayMs: Number.parseInt(process.env.MDM_RETRY_DELAY_MS || "2000", 10),
 };
 
 // Debug logging - remove after testing

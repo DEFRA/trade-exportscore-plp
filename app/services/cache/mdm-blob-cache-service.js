@@ -4,11 +4,15 @@ const logger = require("../../utilities/logger");
 const mdmConfig = require("../../config/mdm-config");
 
 const filenameForLogging = "mdm-blob-cache-service";
+const getFromBlobMethod = "getFromBlob()";
 
 let blobClient = null;
 
 const initializeBlobClient = () => {
-  if (blobClient) return blobClient;
+  if (blobClient)
+  {
+      return blobClient;
+  } 
 
   try {
     const accountUrl = process.env.AZURE_STORAGE_ACCOUNT_URL;
@@ -80,7 +84,7 @@ const getFromBlob = async () => {
   if (!exists) {
     logger.logInfo(
       filenameForLogging,
-      "getFromBlob()",
+      getFromBlobMethod,
       "Cache miss - blob not found",
     );
     return null;
@@ -93,7 +97,7 @@ const getFromBlob = async () => {
   if (ageSeconds > mdmConfig.cache.ttlSeconds) {
     logger.logInfo(
       filenameForLogging,
-      "getFromBlob()",
+      getFromBlobMethod ,
       `Cache expired: ${ageSeconds}s old (TTL: ${mdmConfig.cache.ttlSeconds}s) - not deleting for fallback use`,
     );
     return null;
@@ -111,7 +115,7 @@ const getFromBlob = async () => {
 
   logger.logInfo(
     filenameForLogging,
-    "getFromBlob()",
+    getFromBlobMethod,
     `Cache hit: ${ageSeconds}s old, ${chunks.length} chunks`,
   );
 
@@ -155,7 +159,10 @@ const getStaleFromBlob = async () => {
 };
 
 const set = async (data) => {
-  if (!mdmConfig.cache.enabled) return;
+  if (!mdmConfig.cache.enabled) 
+  {
+    return;
+  } 
 
   try {
     await setToBlob(data);

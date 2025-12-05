@@ -7,6 +7,7 @@ const { BlobServiceClient } = require("@azure/storage-blob");
 const { DefaultAzureCredential } = require("@azure/identity");
 
 const filenameForLogging = "mdm-blob-cache-service";
+const getFromBlobMethod = "getFromBlob()";
 
 // Set up environment BEFORE loading module (mdm-config reads these on load)
 process.env.AZURE_STORAGE_ACCOUNT_URL =
@@ -79,7 +80,7 @@ describe("mdm-blob-cache-service", () => {
       expect(mockBlobClient.exists).toHaveBeenCalled();
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "getFromBlob()",
+        getFromBlobMethod,
         "Cache miss - blob not found",
       );
     });
@@ -103,7 +104,7 @@ describe("mdm-blob-cache-service", () => {
       expect(result).toEqual(mockData);
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "getFromBlob()",
+        getFromBlobMethod,
         expect.stringContaining("Cache hit:"),
       );
     });
@@ -122,12 +123,12 @@ describe("mdm-blob-cache-service", () => {
       expect(mockBlobClient.delete).not.toHaveBeenCalled(); // Should NOT delete for stale fallback
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "getFromBlob()",
+        getFromBlobMethod,
         expect.stringContaining("Cache expired:"),
       );
       expect(logger.logInfo).toHaveBeenCalledWith(
         filenameForLogging,
-        "getFromBlob()",
+        getFromBlobMethod,
         expect.stringContaining("not deleting for fallback use"),
       );
     });
