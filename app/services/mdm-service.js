@@ -9,8 +9,8 @@ const mdmConfig = config.mdmConfig;
 const GET_NIRMS_METHOD = "getNirmsIneligibleItems()";
 
 // Retry configuration from config with defaults
-const MAX_RETRIES = mdmConfig.maxRetries || 3;
-const RETRY_DELAY_MS = mdmConfig.retryDelayMs || 2000;
+const MAX_RETRIES = mdmConfig.maxRetries;
+const RETRY_DELAY_MS = mdmConfig.retryDelayMs;
 
 // Helper function to request bearer token
 async function bearerTokenRequest() {
