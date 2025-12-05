@@ -375,10 +375,8 @@ function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
       exceptionRules,
       normalizedTypeOfTreatment,
     );
-    if (matchesException) {
-      return false;
-    }
-    return true; // Has exception rules but doesn't match any
+    // Item is allowed if it matches an exception rule, prohibited otherwise
+    return !matchesException;
   }
 
   return matchesStandardRule(standardRules, normalizedTypeOfTreatment);
