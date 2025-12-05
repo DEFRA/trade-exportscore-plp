@@ -6,9 +6,6 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 const mdmConfig = config.mdmConfig;
 
-// Local data fallback
-const localIneligibleItemsData = require("./data/data-ineligible-items.json");
-
 /**
  * Get ineligible items list - either from local file or MDM API
  * @returns {Promise<Array>} Array of ineligible items
@@ -21,7 +18,7 @@ async function getIneligibleItems() {
       "getIneligibleItems()",
       "Using local ineligible items data (MDM_USE_LOCAL_DATA=true)",
     );
-    return localIneligibleItemsData;
+    return getLocalIneligibleItems();
   }
 
   try {
@@ -60,6 +57,7 @@ async function getIneligibleItems() {
  * @returns {Array} Array of ineligible items from local file
  */
 function getLocalIneligibleItems() {
+  const localIneligibleItemsData = require("./data/data-ineligible-items.json");
   return localIneligibleItemsData;
 }
 
