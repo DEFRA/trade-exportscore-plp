@@ -1,3 +1,25 @@
+/**
+ * MDM Service
+ *
+ * Manages integration with the Master Data Management (MDM) API for retrieving NIRMS ineligible items.
+ * Implements a resilient three-tier fallback strategy:
+ *   1. Check blob cache for fresh data (within TTL)
+ *   2. Fetch from MDM API with OAuth 2.0 authentication and retry logic
+ *   3. Fall back to stale cache if API unavailable
+ *
+ * Key Features:
+ * - Bearer token authentication via OAuth 2.0
+ * - Configurable retry logic for network failures (retries fetch errors only)
+ * - Immediate stale cache fallback on HTTP errors (no retries)
+ * - Asynchronous cache updates (fire-and-forget pattern)
+ * - Graceful degradation when MDM API is unavailable
+ *
+ * Methods:
+ * - getNirmsIneligibleItems(): Main entry point, returns ineligible items list
+ * - bearerTokenRequest(): Obtains OAuth bearer token from MDM auth endpoint
+ * - Helper functions: Handle success/error responses and stale cache fallback
+ */
+
 const config = require("../config");
 const logger = require("../utilities/logger");
 const mdmBlobCache = require("./cache/mdm-blob-cache-service");
@@ -143,6 +165,19 @@ async function handleFinalRetryFailure() {
   );
 }
 
+/**
+ * Get NIRMS ineligible items with three-tier fallback strategy.
+ *
+ * Flow:
+ * 1. Check blob cache for fresh data (within TTL)
+ * 2. If cache miss, fetch from MDM API with OAuth authentication
+ *    - Retry on network/fetch errors (MAX_RETRIES times)
+ *    - No retry on HTTP errors (immediate stale cache fallback)
+ * 3. If API fails, return stale cache data
+ * 4. If no stale cache, return null
+ *
+ * @returns {Promise<Array|null>} Array of ineligible items or null if all sources fail
+ */
 async function getNirmsIneligibleItems() {
   // Check cache first
   const cachedData = await mdmBlobCache.get();

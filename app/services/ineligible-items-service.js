@@ -1,3 +1,31 @@
+/**
+ * Ineligible Items Service
+ *
+ * Manages retrieval of NIRMS ineligible items from either local file or MDM API.
+ * Acts as the entry point for ineligible items data, delegating to appropriate source.
+ *
+ * Data Source Selection:
+ * - Local File: When MDM_USE_LOCAL_DATA=true (default for development/testing)
+ * - MDM API: When MDM_USE_LOCAL_DATA=false (production environments)
+ *
+ * Error Handling:
+ * - Local mode: Throws error if local file cannot be loaded
+ * - MDM mode: Throws error if API fails (resilience handled by mdm-service layer)
+ *
+ * Important Design Notes:
+ * - This service does NOT implement stale cache fallback (handled by mdm-service)
+ * - This service does NOT fallback to local file when MDM fails (fail-fast in production)
+ * - Local file is for development/testing only, not a production fallback mechanism
+ *
+ * Methods:
+ * - getIneligibleItems(): Main entry point, routes to local file or MDM API
+ * - getLocalIneligibleItems(): Loads data from local JSON file
+ *
+ * Configuration:
+ * - MDM_USE_LOCAL_DATA: Toggle between local file and MDM API
+ * - MDM_INELIGIBLE_ITEMS_FILE: Path to local data file (default: ./data/data-ineligible-items.json)
+ */
+
 const config = require("../config");
 const logger = require("../utilities/logger");
 const mdmService = require("./mdm-service");

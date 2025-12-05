@@ -1,3 +1,32 @@
+/**
+ * MDM Blob Cache Service
+ *
+ * Provides persistent caching for MDM API responses using Azure Blob Storage.
+ * Supports both Azure Storage (production) and Azurite emulator (local development).
+ *
+ * Cache Strategy:
+ * - TTL-based expiration: Fresh data returned if within TTL, null if expired
+ * - Stale data retention: Expired blobs are NOT deleted, allowing fallback use
+ * - Graceful degradation: Cache failures return null, allowing API call to proceed
+ *
+ * Authentication:
+ * - Production: DefaultAzureCredential (Managed Identity)
+ * - Local: Azurite connection string (well-known emulator credentials)
+ *
+ * Methods:
+ * - get(): Returns fresh cached data (within TTL) or null
+ * - getStale(): Returns cached data regardless of TTL (for fallback scenarios)
+ * - set(): Stores data with metadata (cachedAt, ttl, source)
+ * - clear(): Invalidates cache by deleting blob
+ *
+ * Configuration:
+ * - MDM_CACHE_ENABLED: Enable/disable caching
+ * - MDM_CACHE_TTL_SECONDS: Cache lifetime in seconds
+ * - AZURE_STORAGE_ACCOUNT_URL: Storage account endpoint
+ * - AZURE_STORAGE_USE_EMULATOR: Use Azurite for local testing
+ * - AZURE_STORAGE_CONNECTION_STRING: Override default Azurite connection
+ */
+
 const { BlobServiceClient } = require("@azure/storage-blob");
 const { DefaultAzureCredential } = require("@azure/identity");
 const logger = require("../../utilities/logger");
@@ -8,6 +37,11 @@ const getFromBlobMethod = "getFromBlob()";
 
 let blobClient = null;
 
+/**
+ * Initialize Azure Blob Storage client.
+ * Creates connection to either Azurite (local) or Azure Storage (cloud).
+ * @returns {BlockBlobClient} Initialized blob client
+ */
 const initializeBlobClient = () => {
   if (blobClient) {
     return blobClient;
@@ -49,6 +83,10 @@ const initializeBlobClient = () => {
   }
 };
 
+/**
+ * Get fresh cached data (within TTL).
+ * @returns {Promise<Object|null>} Cached data if fresh and available, null otherwise
+ */
 const get = async () => {
   if (!mdmConfig.cache.enabled) {
     logger.logInfo(filenameForLogging, "get()", "Cache disabled");
@@ -63,6 +101,11 @@ const get = async () => {
   }
 };
 
+/**
+ * Get stale cached data (ignores TTL expiration).
+ * Used as fallback when MDM API is unavailable.
+ * @returns {Promise<Object|null>} Cached data if available (regardless of age), null otherwise
+ */
 const getStale = async () => {
   if (!mdmConfig.cache.enabled) {
     logger.logInfo(filenameForLogging, "getStale()", "Cache disabled");
@@ -77,6 +120,11 @@ const getStale = async () => {
   }
 };
 
+/**
+ * Retrieve fresh cached data from blob storage.
+ * Checks TTL and returns null if expired (blob is not deleted for fallback use).
+ * @returns {Promise<Object|null>} Parsed JSON data if fresh, null if expired or missing
+ */
 const getFromBlob = async () => {
   const client = initializeBlobClient();
   const exists = await client.exists();
@@ -122,6 +170,11 @@ const getFromBlob = async () => {
   return parsedData;
 };
 
+/**
+ * Retrieve stale cached data from blob storage (ignores TTL).
+ * Used as fallback when MDM API is unavailable after retries.
+ * @returns {Promise<Object|null>} Parsed JSON data regardless of age, null if blob doesn't exist
+ */
 const getStaleFromBlob = async () => {
   const client = initializeBlobClient();
   const exists = await client.exists();
@@ -158,6 +211,12 @@ const getStaleFromBlob = async () => {
   return parsedData;
 };
 
+/**
+ * Store data in blob cache.
+ * Fire-and-forget pattern - errors are logged but not thrown.
+ * @param {Object} data - Data to cache
+ * @returns {Promise<void>}
+ */
 const set = async (data) => {
   if (!mdmConfig.cache.enabled) {
     return;
@@ -170,6 +229,11 @@ const set = async (data) => {
   }
 };
 
+/**
+ * Upload data to blob storage with metadata.
+ * @param {Object} data - Data to upload
+ * @returns {Promise<void>}
+ */
 const setToBlob = async (data) => {
   const client = initializeBlobClient();
   const content = JSON.stringify(data, null, 2);
@@ -194,6 +258,12 @@ const setToBlob = async (data) => {
   );
 };
 
+/**
+ * Clear cached data by deleting the blob.
+ * Used for manual cache invalidation via API endpoint.
+ * @returns {Promise<void>}
+ * @throws {Error} If delete operation fails
+ */
 const clear = async () => {
   try {
     await clearBlob();
@@ -203,6 +273,10 @@ const clear = async () => {
   }
 };
 
+/**
+ * Delete blob from storage.
+ * @returns {Promise<void>}
+ */
 const clearBlob = async () => {
   const client = initializeBlobClient();
   const exists = await client.exists();
