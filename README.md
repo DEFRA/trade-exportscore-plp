@@ -190,6 +190,7 @@ In addition to the above, please refer to the [Additional Information](./additio
 This service integrates with the Master Data Management (MDM) API to retrieve NIRMS (Northern Ireland Retail Movement Scheme) ineligible items data for validation during packing list processing.
 
 **Key Features:**
+
 - OAuth 2.0 authentication with Azure AD
 - Azure Blob Storage caching with configurable TTL
 - Automatic retry logic with stale cache fallback

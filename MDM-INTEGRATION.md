@@ -97,7 +97,7 @@ graph TD
     E -->|NIRMS Data| C
     C -->|4. Return Data| A
     C -.->|5. Cache Write| B
-    
+
     style A fill:#e1f5ff
     style B fill:#fff4e1
     style C fill:#e8f5e9
@@ -133,10 +133,10 @@ sequenceDiagram
     participant BlobCache
     participant AzureAD
     participant APIM
-    
+
     Client->>MDMService: getNirmsIneligibleItems()
     MDMService->>BlobCache: get()
-    
+
     alt Cache Hit (valid TTL)
         BlobCache-->>MDMService: Cached Data
         MDMService-->>Client: Return Cached Data
@@ -144,7 +144,7 @@ sequenceDiagram
         BlobCache-->>MDMService: null
         MDMService->>AzureAD: Request Bearer Token
         AzureAD-->>MDMService: access_token
-        
+
         loop Retry Logic (max 3 attempts)
             MDMService->>APIM: GET /trade/nirms/ineligible-items
             alt Success
@@ -165,7 +165,7 @@ sequenceDiagram
                 Note over MDMService: Retry with delay
             end
         end
-        
+
         alt All Retries Failed
             MDMService->>BlobCache: getStale()
             alt Stale Cache Available
@@ -253,7 +253,7 @@ graph LR
     C -->|4. Validate Token & Key| D[MDM API]
     D -->|5. NIRMS Data| C
     C -->|6. Response| A
-    
+
     style A fill:#e1f5ff
     style B fill:#fce4ec
     style C fill:#f3e5f5

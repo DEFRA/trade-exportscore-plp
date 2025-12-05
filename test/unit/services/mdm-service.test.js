@@ -105,7 +105,7 @@ describe("mdm-service", () => {
 
     it("should return null and log error on HTTP error response", async () => {
       mdmBlobCache.getStale.mockResolvedValue(null);
-      
+
       global.fetch
         // Mock bearer token
         .mockResolvedValueOnce({
@@ -133,7 +133,7 @@ describe("mdm-service", () => {
 
     it("should retry on network errors up to maxRetries", async () => {
       mdmBlobCache.getStale.mockResolvedValue(null);
-      
+
       global.fetch
         .mockResolvedValueOnce({
           ok: true,
@@ -232,7 +232,7 @@ describe("mdm-service", () => {
 
     it("should handle 401 unauthorized error", async () => {
       mdmBlobCache.getStale.mockResolvedValue(null);
-      
+
       global.fetch
         .mockResolvedValueOnce({
           ok: true,
@@ -257,7 +257,7 @@ describe("mdm-service", () => {
 
     it("should handle 500 server error", async () => {
       mdmBlobCache.getStale.mockResolvedValue(null);
-      
+
       global.fetch
         .mockResolvedValueOnce({
           ok: true,

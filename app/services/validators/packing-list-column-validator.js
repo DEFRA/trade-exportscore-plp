@@ -30,8 +30,9 @@ const failureReasonsDescriptions = require("./packing-list-failure-reasons");
  * @returns {Promise<Object>} result - Validation result containing either `hasAllFields: true` or `hasAllFields: false` and `failureReasons`.
  */
 function validatePackingList(packingList) {
-  return validatePackingListByIndexAndType(packingList).then((validationResult) =>
-    generateFailuresByIndexAndTypes(validationResult, packingList)
+  return validatePackingListByIndexAndType(packingList).then(
+    (validationResult) =>
+      generateFailuresByIndexAndTypes(validationResult, packingList),
   );
 }
 
@@ -43,7 +44,8 @@ function validatePackingList(packingList) {
 async function validatePackingListByIndexAndType(packingList) {
   const basicValidationResults = getBasicValidationResults(packingList);
   const packingListStatusResults = getPackingListStatusResults(packingList);
-  const countryOfOriginResults = await getCountryOfOriginValidationResults(packingList);
+  const countryOfOriginResults =
+    await getCountryOfOriginValidationResults(packingList);
   return {
     ...basicValidationResults,
     ...packingListStatusResults,

@@ -15,24 +15,6 @@ jest.mock("../../../app/config", () => ({
   },
 }));
 
-// Mock the local data file
-jest.mock(
-  "../../../app/services/data/data-ineligible-items.json",
-  () => [
-    {
-      country_of_origin: "BR",
-      commodity_code: "0207",
-      type_of_treatment: null,
-    },
-    {
-      country_of_origin: "UA",
-      commodity_code: "0207",
-      type_of_treatment: null,
-    },
-  ],
-  { virtual: false },
-);
-
 describe("ineligible-items-service", () => {
   beforeEach(() => {
     jest.clearAllMocks();

@@ -128,7 +128,9 @@ async function getStaleCacheFallback(logMessage) {
 async function handleTokenValidationFailure(bearerToken) {
   const error = new Error(`Failed to obtain bearer token: ${bearerToken}`);
   logger.logError(filenameForLogging, GET_NIRMS_METHOD, error);
-  return getStaleCacheFallback("MDM API unavailable - using stale cache as fallback");
+  return getStaleCacheFallback(
+    "MDM API unavailable - using stale cache as fallback",
+  );
 }
 
 /**
@@ -139,7 +141,9 @@ async function handleTokenValidationFailure(bearerToken) {
  */
 async function handleHttpError(status, errorText) {
   logHttpError(status, errorText);
-  return getStaleCacheFallback("MDM API unavailable - using stale cache as fallback");
+  return getStaleCacheFallback(
+    "MDM API unavailable - using stale cache as fallback",
+  );
 }
 
 /**
@@ -147,7 +151,9 @@ async function handleHttpError(status, errorText) {
  * @returns {Promise<Object|null>} Stale cache data or null.
  */
 async function handleFinalRetryFailure() {
-  return getStaleCacheFallback("MDM API unavailable after retries - using stale cache as fallback");
+  return getStaleCacheFallback(
+    "MDM API unavailable after retries - using stale cache as fallback",
+  );
 }
 
 async function getNirmsIneligibleItems() {
