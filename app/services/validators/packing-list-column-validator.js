@@ -29,9 +29,10 @@ const failureReasonsDescriptions = require("./packing-list-failure-reasons");
  * @param {Object} packingList - The parsed packing list object.
  * @returns {Promise<Object>} result - Validation result containing either `hasAllFields: true` or `hasAllFields: false` and `failureReasons`.
  */
-async function validatePackingList(packingList) {
-  const validationResult = await validatePackingListByIndexAndType(packingList);
-  return generateFailuresByIndexAndTypes(validationResult, packingList);
+function validatePackingList(packingList) {
+  return validatePackingListByIndexAndType(packingList).then((validationResult) =>
+    generateFailuresByIndexAndTypes(validationResult, packingList)
+  );
 }
 
 /**
@@ -103,24 +104,26 @@ function getPackingListStatusResults(packingList) {
  */
 async function getCountryOfOriginValidationResults(packingList) {
   if (!packingList.validateCountryOfOrigin) {
-    return {
+    return Promise.resolve({
       missingNirms: [],
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
       ineligibleItems: [],
-    };
+    });
   }
+
+  const ineligibleItems = await findItemsAsync(
+    packingList.items,
+    hasIneligibleItems,
+  );
 
   return {
     missingNirms: findItems(packingList.items, hasMissingNirms),
     invalidNirms: findItems(packingList.items, hasInvalidNirms),
     missingCoO: findItems(packingList.items, hasMissingCoO),
     invalidCoO: findItems(packingList.items, hasInvalidCoO),
-    ineligibleItems: await findItemsAsync(
-      packingList.items,
-      hasIneligibleItems,
-    ),
+    ineligibleItems,
   };
 }
 
