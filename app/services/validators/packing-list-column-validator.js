@@ -31,9 +31,7 @@ const failureReasonsDescriptions = require("./packing-list-failure-reasons");
  */
 async function validatePackingList(packingList) {
   const validationResult = await validatePackingListByIndexAndType(packingList);
-  return Promise.resolve(
-    generateFailuresByIndexAndTypes(validationResult, packingList),
-  );
+  return generateFailuresByIndexAndTypes(validationResult, packingList);
 }
 
 /**
@@ -44,9 +42,7 @@ async function validatePackingList(packingList) {
 async function validatePackingListByIndexAndType(packingList) {
   const basicValidationResults = getBasicValidationResults(packingList);
   const packingListStatusResults = getPackingListStatusResults(packingList);
-  const countryOfOriginResults = await Promise.resolve(
-    getCountryOfOriginValidationResults(packingList),
-  );
+  const countryOfOriginResults = await getCountryOfOriginValidationResults(packingList);
   return {
     ...basicValidationResults,
     ...packingListStatusResults,
