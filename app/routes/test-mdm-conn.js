@@ -8,7 +8,7 @@ module.exports = {
   method: "GET",
   path: "/test-mdm-conn",
   options: {
-    handler: async (request, h) => {
+    handler: async (_request, h) => {
       try {
         const nirmsData = await getNirmsIneligibleItems();
 

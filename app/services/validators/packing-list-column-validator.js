@@ -25,13 +25,15 @@ const parserModel = require("../parser-model");
 const failureReasonsDescriptions = require("./packing-list-failure-reasons");
 
 /**
- * Validate a full packing list and produce final failure output.
+ * Validate a packing list: run checks, generate failure reasons.
  * @param {Object} packingList - The parsed packing list object.
- * @returns {Object} result - Validation result containing either `hasAllFields: true` or `hasAllFields: false` and `failureReasons`.
+ * @returns {Promise<Object>} result - Validation result containing either `hasAllFields: true` or `hasAllFields: false` and `failureReasons`.
  */
 async function validatePackingList(packingList) {
   const validationResult = await validatePackingListByIndexAndType(packingList);
-  return generateFailuresByIndexAndTypes(validationResult, packingList);
+  return Promise.resolve(
+    generateFailuresByIndexAndTypes(validationResult, packingList),
+  );
 }
 
 /**
@@ -42,8 +44,9 @@ async function validatePackingList(packingList) {
 async function validatePackingListByIndexAndType(packingList) {
   const basicValidationResults = getBasicValidationResults(packingList);
   const packingListStatusResults = getPackingListStatusResults(packingList);
-  const countryOfOriginResults =
-    await getCountryOfOriginValidationResults(packingList);
+  const countryOfOriginResults = await Promise.resolve(
+    getCountryOfOriginValidationResults(packingList),
+  );
   return {
     ...basicValidationResults,
     ...packingListStatusResults,
