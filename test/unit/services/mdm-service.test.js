@@ -354,5 +354,227 @@ describe("mdm-service", () => {
       expect(result).toEqual(mockData);
       expect(mdmBlobCache.set).toHaveBeenCalledWith(mockData);
     });
+
+    it("should return stale cache when bearer token validation fails", async () => {
+      const staleData = { items: ["stale-item1"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.getStale.mockResolvedValue(staleData);
+
+      // Mock all retry attempts - bearerTokenRequest throws on missing access_token
+      global.fetch
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: null }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: null }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: null }),
+        });
+
+      const result = await getNirmsIneligibleItems();
+
+      expect(result).toEqual(staleData);
+      expect(mdmBlobCache.getStale).toHaveBeenCalled();
+      expect(logger.logInfo).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getNirmsIneligibleItems()",
+        "MDM API unavailable after retries - using stale cache as fallback",
+      );
+    });
+
+    it("should return null when bearer token validation fails and no stale cache", async () => {
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.getStale.mockResolvedValue(null);
+
+      // Mock all retry attempts - bearerTokenRequest throws on empty access_token
+      global.fetch
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "" }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "" }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "" }),
+        });
+
+      const result = await getNirmsIneligibleItems();
+
+      expect(result).toBeNull();
+      expect(mdmBlobCache.getStale).toHaveBeenCalled();
+      // Should have logged errors during retries
+      expect(logger.logError).toHaveBeenCalled();
+    });
+
+    it("should return stale cache on HTTP error when available", async () => {
+      const staleData = { items: ["stale-item1", "stale-item2"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.getStale.mockResolvedValue(staleData);
+
+      global.fetch
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "mock-token" }),
+        })
+        .mockResolvedValueOnce({
+          ok: false,
+          status: 503,
+          text: jest.fn().mockResolvedValue("Service Unavailable"),
+        });
+
+      const result = await getNirmsIneligibleItems();
+
+      expect(result).toEqual(staleData);
+      expect(mdmBlobCache.getStale).toHaveBeenCalled();
+      expect(logger.logError).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getNirmsIneligibleItems()",
+        "Request failed - HTTP 503: Service Unavailable",
+      );
+      expect(logger.logInfo).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getNirmsIneligibleItems()",
+        "MDM API unavailable - using stale cache as fallback",
+      );
+    });
+
+    it("should return stale cache after all retries exhausted", async () => {
+      const staleData = { items: ["stale-item1"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.getStale.mockResolvedValue(staleData);
+
+      global.fetch
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "mock-token" }),
+        })
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "mock-token" }),
+        })
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "mock-token" }),
+        })
+        .mockRejectedValueOnce(new Error("Network error"));
+
+      const result = await getNirmsIneligibleItems();
+
+      expect(result).toEqual(staleData);
+      expect(mdmBlobCache.getStale).toHaveBeenCalled();
+      expect(logger.logInfo).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getNirmsIneligibleItems()",
+        "MDM API unavailable after retries - using stale cache as fallback",
+      );
+    });
+
+    it("should handle bearer token request without access_token field", async () => {
+      const staleData = { items: ["stale1"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.getStale.mockResolvedValue(staleData);
+
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: jest.fn().mockResolvedValue({ token_type: "Bearer" }),
+      });
+
+      const result = await getNirmsIneligibleItems();
+
+      expect(result).toEqual(staleData);
+      expect(logger.logError).toHaveBeenCalled();
+    });
+
+    it("should handle bearer token request that returns error string", async () => {
+      const staleData = { items: ["stale1"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.getStale.mockResolvedValue(staleData);
+
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: jest
+          .fn()
+          .mockResolvedValue({ access_token: "Error: Invalid credentials" }),
+      });
+
+      const result = await getNirmsIneligibleItems();
+
+      expect(result).toEqual(staleData);
+      expect(logger.logError).toHaveBeenCalled();
+    });
+
+    it("should log error when caching fails asynchronously", async () => {
+      const mockData = { items: ["item1", "item2"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      const cacheError = new Error("Blob storage unavailable");
+      mdmBlobCache.set.mockRejectedValue(cacheError);
+
+      global.fetch
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue({ access_token: "mock-token" }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: jest.fn().mockResolvedValue(mockData),
+        });
+
+      const result = await getNirmsIneligibleItems();
+
+      expect(result).toEqual(mockData);
+
+      // Wait for async cache operation to complete
+      await new Promise((resolve) => setTimeout(resolve, 10));
+
+      expect(logger.logError).toHaveBeenCalledWith(
+        filenameForLogging,
+        "getNirmsIneligibleItems()",
+        "Failed to cache response: Blob storage unavailable",
+      );
+    });
+
+    it("should handle bearer token request failure", async () => {
+      const staleData = { items: ["stale1"] };
+      mdmBlobCache.get.mockResolvedValue(null);
+      mdmBlobCache.getStale.mockResolvedValue(staleData);
+
+      global.fetch.mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        text: jest.fn().mockResolvedValue("Bad Request"),
+      });
+
+      const result = await getNirmsIneligibleItems();
+
+      expect(result).toEqual(staleData);
+      expect(logger.logError).toHaveBeenCalledWith(
+        filenameForLogging,
+        "bearerTokenRequest()",
+        expect.any(Error),
+      );
+    });
   });
 });
