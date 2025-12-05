@@ -11,6 +11,8 @@ const localIneligbileItemsDataFilePath =
   process.env.MDM_INELIGIBLE_ITEMS_FILE ||
   "./data/data-ineligible-items.json";
 
+const getIneligibleItemsMethod = "getIneligibleItems()";
+
 /**
  * Get ineligible items list - either from local file or MDM API
  * @returns {Promise<Array>} Array of ineligible items
@@ -20,7 +22,7 @@ async function getIneligibleItems() {
   if (mdmConfig.useLocalData === true) {
     logger.logInfo(
       filenameForLogging,
-      "getIneligibleItems()",
+      getIneligibleItemsMethod,
       "Using local ineligible items data (MDM_USE_LOCAL_DATA=true)",
     );
     return getLocalIneligibleItems();
@@ -30,7 +32,7 @@ async function getIneligibleItems() {
     // Call MDM API to get ineligible items
     logger.logInfo(
       filenameForLogging,
-      "getIneligibleItems()",
+      getIneligibleItemsMethod,
       "Fetching ineligible items from MDM API",
     );
     const items = await mdmService.getNirmsIneligibleItems();
@@ -38,7 +40,7 @@ async function getIneligibleItems() {
     if (!items) {
       logger.logError(
         filenameForLogging,
-        "getIneligibleItems()",
+        getIneligibleItemsMethod,
         "Failed to retrieve ineligible items - MDM API unavailable and no cache available",
       );
       throw new Error(
@@ -50,7 +52,7 @@ async function getIneligibleItems() {
   } catch (error) {
     logger.logError(
       filenameForLogging,
-      "getIneligibleItems()",
+      getIneligibleItemsMethod,
       `Error fetching from MDM API: ${error.message}`,
     );
     throw error;

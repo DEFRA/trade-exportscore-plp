@@ -5,6 +5,7 @@ const {
 const config = require("../../../app/config");
 const logger = require("../../../app/utilities/logger");
 const mdmService = require("../../../app/services/mdm-service");
+const getIneligibleItemsMethod = "getIneligibleItems()";
 
 jest.mock("../../../app/utilities/logger");
 jest.mock("../../../app/services/mdm-service");
@@ -60,7 +61,7 @@ describe("ineligible-items-service", () => {
       expect(mdmService.getNirmsIneligibleItems).not.toHaveBeenCalled();
       expect(logger.logInfo).toHaveBeenCalledWith(
         expect.any(String),
-        "getIneligibleItems()",
+        getIneligibleItemsMethod,
         "Using local ineligible items data (MDM_USE_LOCAL_DATA=true)",
       );
     });
@@ -82,7 +83,7 @@ describe("ineligible-items-service", () => {
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalled();
       expect(logger.logInfo).toHaveBeenCalledWith(
         expect.any(String),
-        "getIneligibleItems()",
+        getIneligibleItemsMethod,
         "Fetching ineligible items from MDM API",
       );
     });
@@ -98,7 +99,7 @@ describe("ineligible-items-service", () => {
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalled();
       expect(logger.logError).toHaveBeenCalledWith(
         expect.any(String),
-        "getIneligibleItems()",
+        getIneligibleItemsMethod,
         "Failed to retrieve ineligible items - MDM API unavailable and no cache available",
       );
     });
@@ -114,7 +115,7 @@ describe("ineligible-items-service", () => {
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalled();
       expect(logger.logError).toHaveBeenCalledWith(
         expect.any(String),
-        "getIneligibleItems()",
+        getIneligibleItemsMethod,
         "Error fetching from MDM API: Network error",
       );
     });
