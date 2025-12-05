@@ -70,6 +70,35 @@ const RUN_QA =
   String(process.env.RUN_QA_REGRESSION).toLowerCase() === "true";
 const maybeDescribe = RUN_QA ? describe : describe.skip;
 
+/**
+ * Filter expected results based on --testFilter command-line argument.
+ * Supports filtering by filename patterns (case-insensitive).
+ * Usage: npm run test:regression -- --testFilter=Coopparser
+ * @param {Array} expectedResults - Array of expected result objects
+ * @returns {Array} Filtered array based on --testFilter argument
+ */
+const filterExpectedResults = (expectedResults) => {
+  // Check for --testFilter argument in process.argv
+  const filterArgIndex = process.argv.findIndex((arg) =>
+    arg.startsWith("--testFilter="),
+  );
+
+  if (filterArgIndex === -1 || !expectedResults) {
+    return expectedResults;
+  }
+
+  const filter = process.argv[filterArgIndex].split("=")[1];
+  const filterLower = filter.toLowerCase();
+  const filtered = expectedResults.filter((result) =>
+    result.filename.toLowerCase().includes(filterLower),
+  );
+
+  console.log(
+    `🔍 Filter applied: "${filter}" - ${filtered.length} of ${expectedResults.length} files selected`,
+  );
+  return filtered;
+};
+
 const isExcelFile = (fileName) => {
   const lower = fileName.toLowerCase();
   return lower.endsWith(".xlsx") || lower.endsWith(".xls");
@@ -158,28 +187,15 @@ describe("Excel Process Non-AI", () => {
   });
 
   test("should process multiple Excel files and return responses", async () => {
-    // JSON file is always in app/packing-lists directory
+    // JSON file is in test/regression directory
     const basePackingListDir = path.join(process.cwd(), "app", "packing-lists");
 
-    // Find JSON file in the base packing-lists directory
-    let jsonFilePath = null;
-    let expectedResultsMap = null;
+    // Read JSON file directly from regression folder
+    const jsonFilePath = path.join(__dirname, "Expected_Outcomes.json");
+    let expectedResultsMap = loadExpectedResults(jsonFilePath);
 
-    try {
-      const files = fs.readdirSync(basePackingListDir);
-      const jsonFiles = files.filter((file) =>
-        file.toLowerCase().endsWith(".json"),
-      );
-
-      if (jsonFiles.length > 0) {
-        jsonFilePath = path.join(basePackingListDir, jsonFiles[0]); // Use first JSON file found
-        expectedResultsMap = loadExpectedResults(jsonFilePath);
-      }
-    } catch (error) {
-      console.log(
-        `⚠️  Could not read directory ${basePackingListDir}: ${error.message}`,
-      );
-    }
+    // Apply filter if --testFilter argument is provided
+    expectedResultsMap = filterExpectedResults(expectedResultsMap);
 
     // Allow custom root path via environment variable or use default
     const customPath = process.env.TEST_FOLDER_PATH;
@@ -220,8 +236,25 @@ describe("Excel Process Non-AI", () => {
       rootFolderName,
     );
 
-    // Check if no  files found
-    if (filesToProcess.length === 0) {
+    // Filter files based on expected results if filter is applied
+    let filteredFiles = filesToProcess;
+    const hasFilter = process.argv.some((arg) =>
+      arg.startsWith("--testFilter="),
+    );
+    if (expectedResultsMap && hasFilter) {
+      const expectedFilenames = new Set(
+        expectedResultsMap.map((r) => r.filename),
+      );
+      filteredFiles = filesToProcess.filter((file) =>
+        expectedFilenames.has(file.relativePath),
+      );
+      console.log(
+        `📋 Processing ${filteredFiles.length} files matching filter (${filesToProcess.length} total files found)`,
+      );
+    }
+
+    // Check if no files found
+    if (filteredFiles.length === 0) {
       console.log(`📂 No files found in: ${packingListDir}`);
       console.log(`✅ Test passed (no files to process)`);
       expect(true).toBe(true);
@@ -235,7 +268,7 @@ describe("Excel Process Non-AI", () => {
     const csvRows = [csvHeaders];
     let idCounter = 1;
 
-    for (const fileInfo of filesToProcess) {
+    for (const fileInfo of filteredFiles) {
       try {
         const response = await processFile(fileInfo.fullPath);
 
