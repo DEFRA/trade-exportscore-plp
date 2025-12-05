@@ -39,13 +39,14 @@ function validatePackingList(packingList) {
 /**
  * Run the set of validation checks and return a structured map of failing row locations.
  * @param {Object} packingList - The parsed packing list object.
- * @returns {Object} validationSummary - Collections of failing locations grouped by failure type and a boolean `hasAllFields`.
+ * @returns {Promise<Object>} validationSummary - Collections of failing locations grouped by failure type and a boolean `hasAllFields`.
  */
 async function validatePackingListByIndexAndType(packingList) {
   const basicValidationResults = getBasicValidationResults(packingList);
   const packingListStatusResults = getPackingListStatusResults(packingList);
-  const countryOfOriginResults =
-    await getCountryOfOriginValidationResults(packingList);
+  const countryOfOriginResults = await Promise.resolve(
+    getCountryOfOriginValidationResults(packingList),
+  );
   return {
     ...basicValidationResults,
     ...packingListStatusResults,
