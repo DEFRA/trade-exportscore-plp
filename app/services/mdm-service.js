@@ -1,6 +1,7 @@
 const config = require("../config");
 const logger = require("../utilities/logger");
 const mdmBlobCache = require("./cache/mdm-blob-cache-service");
+const { sleep, validateBearerToken } = require("../utilities/async-helpers");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
@@ -10,11 +11,6 @@ const GET_NIRMS_METHOD = "getNirmsIneligibleItems()";
 // Retry configuration from config with defaults
 const MAX_RETRIES = mdmConfig.maxRetries || 3;
 const RETRY_DELAY_MS = mdmConfig.retryDelayMs || 2000;
-
-// Helper function for retry delays
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 // Helper function to request bearer token
 async function bearerTokenRequest() {
@@ -50,15 +46,6 @@ async function bearerTokenRequest() {
     logger.logError(filenameForLogging, "bearerTokenRequest()", err);
     throw err;
   }
-}
-
-// Helper function to validate bearer token
-function validateBearerToken(bearerToken) {
-  return (
-    bearerToken &&
-    typeof bearerToken === "string" &&
-    !bearerToken.includes("Error")
-  );
 }
 
 // Helper function to make HTTP request to MDM API
