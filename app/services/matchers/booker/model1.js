@@ -37,12 +37,12 @@ async function matches(packingList, filename) {
 
       // match header
       result = matchHeaders(page.content);
-      if (result == matcherResult.WRONG_HEADER) {
+      if (result === matcherResult.WRONG_HEADER) {
         return matcherResult.WRONG_HEADER;
       }
     }
 
-    if (result == matcherResult.CORRECT) {
+    if (result === matcherResult.CORRECT) {
       logger.logInfo(
         filenameForLogging,
         "matches()",
@@ -68,8 +68,8 @@ function matchHeaders(pageContent) {
   const isBookerLandscapeHeader = findHeader("BOOKER1L", pageContent);
 
   if (
-    isBookerHeader == matcherResult.CORRECT ||
-    isBookerLandscapeHeader == matcherResult.CORRECT
+    isBookerHeader === matcherResult.CORRECT ||
+    isBookerLandscapeHeader === matcherResult.CORRECT
   ) {
     return matcherResult.CORRECT;
   } else {
