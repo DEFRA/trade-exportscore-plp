@@ -11,6 +11,7 @@ const localIneligbileItemsDataFilePath =
   process.env.MDM_INELIGIBLE_ITEMS_FILE || "./data/data-ineligible-items.json";
 
 const getIneligibleItemsMethod = "getIneligibleItems()";
+const getLocalIneligibleItemsMethod = "getLocalIneligibleItems()";
 
 /**
  * Get ineligible items list - either from local file or MDM API
@@ -66,20 +67,20 @@ function getLocalIneligibleItems() {
   try {
     logger.logInfo(
       filenameForLogging,
-      "getLocalIneligibleItems()",
+      getLocalIneligibleItemsMethod,
       `Loading local ineligible items from: ${localIneligbileItemsDataFilePath}`,
     );
     const localIneligibleItemsData = require(localIneligbileItemsDataFilePath);
     logger.logInfo(
       filenameForLogging,
-      "getLocalIneligibleItems()",
+      getLocalIneligibleItemsMethod,
       `Successfully loaded ${localIneligibleItemsData?.length || 0} ineligible items from local file`,
     );
     return localIneligibleItemsData;
   } catch (error) {
     logger.logError(
       filenameForLogging,
-      "getLocalIneligibleItems()",
+      getLocalIneligibleItemsMethod,
       `Failed to load local ineligible items file: ${error.message}`,
     );
     throw error;
