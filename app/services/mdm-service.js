@@ -107,6 +107,49 @@ function logCatchError(attempt, maxRetries, errorMessage, retryDelayMs) {
   logger.logError(filenameForLogging, GET_NIRMS_METHOD, message);
 }
 
+/**
+ * Attempt to retrieve stale cache data with appropriate logging.
+ * @param {string} logMessage - The log message to use if stale data is found.
+ * @returns {Promise<Object|null>} Stale cache data or null.
+ */
+async function getStaleCacheFallback(logMessage) {
+  const staleData = await mdmBlobCache.getStale();
+  if (staleData) {
+    logger.logInfo(filenameForLogging, GET_NIRMS_METHOD, logMessage);
+  }
+  return staleData;
+}
+
+/**
+ * Handle bearer token validation failure.
+ * @param {string} bearerToken - The invalid bearer token.
+ * @returns {Promise<Object|null>} Stale cache data or null.
+ */
+async function handleTokenValidationFailure(bearerToken) {
+  const error = new Error(`Failed to obtain bearer token: ${bearerToken}`);
+  logger.logError(filenameForLogging, GET_NIRMS_METHOD, error);
+  return getStaleCacheFallback("MDM API unavailable - using stale cache as fallback");
+}
+
+/**
+ * Handle HTTP error response.
+ * @param {number} status - HTTP status code.
+ * @param {string} errorText - Error response text.
+ * @returns {Promise<Object|null>} Stale cache data or null.
+ */
+async function handleHttpError(status, errorText) {
+  logHttpError(status, errorText);
+  return getStaleCacheFallback("MDM API unavailable - using stale cache as fallback");
+}
+
+/**
+ * Handle final retry attempt failure.
+ * @returns {Promise<Object|null>} Stale cache data or null.
+ */
+async function handleFinalRetryFailure() {
+  return getStaleCacheFallback("MDM API unavailable after retries - using stale cache as fallback");
+}
+
 async function getNirmsIneligibleItems() {
   // Check cache first
   const cachedData = await mdmBlobCache.get();
@@ -124,22 +167,7 @@ async function getNirmsIneligibleItems() {
       const bearerToken = await bearerTokenRequest();
 
       if (!validateBearerToken(bearerToken)) {
-        const error = new Error(
-          `Failed to obtain bearer token: ${bearerToken}`,
-        );
-        logger.logError(filenameForLogging, GET_NIRMS_METHOD, error);
-
-        // Try stale cache as fallback
-        const staleData = await mdmBlobCache.getStale();
-        if (staleData) {
-          logger.logInfo(
-            filenameForLogging,
-            GET_NIRMS_METHOD,
-            "MDM API unavailable - using stale cache as fallback",
-          );
-          return staleData;
-        }
-        return null;
+        return handleTokenValidationFailure(bearerToken);
       }
 
       const { response, status } = await makeMdmRequest(
@@ -162,35 +190,13 @@ async function getNirmsIneligibleItems() {
 
       // Any HTTP error response - don't retry, return immediately with stale cache fallback
       const errorText = await response.text();
-      logHttpError(status, errorText);
-
-      // Try stale cache as fallback
-      const staleData = await mdmBlobCache.getStale();
-      if (staleData) {
-        logger.logInfo(
-          filenameForLogging,
-          GET_NIRMS_METHOD,
-          "MDM API unavailable - using stale cache as fallback",
-        );
-        return staleData;
-      }
-      return null;
+      return handleHttpError(status, errorText);
     } catch (err) {
       // Only retry on fetch failures (network errors)
       logCatchError(attempt, MAX_RETRIES, err.message, RETRY_DELAY_MS);
 
       if (attempt === MAX_RETRIES) {
-        // Final attempt failed - try stale cache as fallback
-        const staleData = await mdmBlobCache.getStale();
-        if (staleData) {
-          logger.logInfo(
-            filenameForLogging,
-            GET_NIRMS_METHOD,
-            "MDM API unavailable after retries - using stale cache as fallback",
-          );
-          return staleData;
-        }
-        return null;
+        return handleFinalRetryFailure();
       }
 
       await sleep(RETRY_DELAY_MS);
