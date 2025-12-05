@@ -39,7 +39,7 @@ graph TD
 
 - **Parser Models**: Direct integration with `app/services/parsers/` model definitions for header detection and validation rules
 - **Model Headers**: Uses `app/services/utilities/model-headers.js` for accurate column mapping and field validation
-- **Prohibited Items Database**: References `app/services/data/data-prohibited-items.json` for compliance checking
+- **Prohibited Items Database**: References `app/services/data/data-ineligible-items.json` for compliance checking
 - **MCP Excel Server**: Leverages MCP Excel tools for direct file manipulation without script generation
 - **Business Rule Engine**: Applies DEFRA trade export regulations and validation patterns
 

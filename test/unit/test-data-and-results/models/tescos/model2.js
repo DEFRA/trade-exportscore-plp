@@ -1130,7 +1130,7 @@ module.exports = {
   })(),
 
   // BAC11: Item Present on Prohibited Item List (Treatment Type specified)
-  prohibitedItemsWithTreatmentModel: (() => {
+  ineligibleItemsWithTreatmentModel: (() => {
     const data = JSON.parse(
       JSON.stringify({
         Sheet2: [
@@ -1173,7 +1173,7 @@ module.exports = {
   })(),
 
   // BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  prohibitedItemsMultipleWithTreatmentModel: (() => {
+  ineligibleItemsMultipleWithTreatmentModel: (() => {
     const data = JSON.parse(
       JSON.stringify({
         Sheet2: [
@@ -1252,7 +1252,7 @@ module.exports = {
   })(),
 
   // BAC13: Item Present on Prohibited Item List (no Treatment Type specified)
-  prohibitedItemsNoTreatmentModel: (() => {
+  ineligibleItemsNoTreatmentModel: (() => {
     const data = JSON.parse(
       JSON.stringify({
         Sheet2: [
@@ -1295,7 +1295,7 @@ module.exports = {
   })(),
 
   // BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  prohibitedItemsMultipleNoTreatmentModel: (() => {
+  ineligibleItemsMultipleNoTreatmentModel: (() => {
     const data = JSON.parse(
       JSON.stringify({
         Sheet2: [

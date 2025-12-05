@@ -243,7 +243,7 @@ When implementing BAC scenarios that test prohibited items validation:
      "X",
    ]);
 
-   jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+   jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
      {
        country_of_origin: "PROHIBITED_ITEM_ISO",
        commodity_code: "1234",
@@ -294,7 +294,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "X",
 ]);
 
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "1234",
@@ -381,7 +381,7 @@ For BAC scenarios involving prohibited items validation:
    ]);
 
    // Mock prohibited items data as array of objects
-   jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+   jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
      {
        country_of_origin: "PROHIBITED_ITEM_ISO",
        commodity_code: "1234", 

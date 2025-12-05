@@ -50,3 +50,36 @@
 - key: FORM_RECOGNIZER_ENDPOINT
   value: "{{servicename}}-FORM-RECOGNIZER-ENDPOINT"
   type: "keyvault"
+- key: MDM_API_URL
+  value: "{{servicename}}-MDM-API-URL"
+  type: "keyvault"
+- key: MDM_SUBSCRIPTION_KEY
+  value: "{{servicename}}-MDM-SUBSCRIPTION-KEY"
+  type: "keyvault"
+- key: MDM_TENANT
+  value: "{{servicename}}-MDM-TENANT"
+  type: "keyvault"
+- key: MDM_AUTH_URL
+  value: "{{servicename}}-MDM-AUTH-URL"
+  type: "keyvault"
+- key: MDM_CLIENT_ID
+  value: "{{servicename}}-MDM-CLIENT-ID"
+  type: "keyvault"
+- key: MDM_CLIENT_SECRET
+  value: "{{servicename}}-MDM-CLIENT-SECRET"
+  type: "keyvault"
+- key: MDM_SCOPE
+  value: "{{servicename}}-MDM-SCOPE"
+  type: "keyvault"
+- key: MDM_CACHE_ENABLED
+  value: "true"
+- key: MDM_CACHE_TTL_SECONDS
+  value: "3600"
+- key: MDM_CACHE_CONTAINER
+  value: "mdm-cache"
+- key: MDM_MAX_RETRIES
+  value: "3"
+- key: MDM_RETRY_DELAY_MS
+  value: "2000"
+- key: MDM_USE_LOCAL_DATA
+  value: "true"

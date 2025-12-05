@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/bandm/model1");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -10,7 +11,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "GB",
   "X",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "012",
@@ -160,12 +161,12 @@ describe("matchesBAndMModel1", () => {
   // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
   test("AC8: matches BAndM Model 1 file, returns all_required_fields_present as false for multiple prohibited items with treatment type", async () => {
     const result = await parserService.findParser(
-      model.multipleProhibitedItemsWithTreatment,
+      model.multipleineligibleItemsWithTreatment,
       filename,
     );
 
     expect(result).toMatchObject(
-      test_results.multipleProhibitedItemsWithTreatmentTestResult,
+      test_results.multipleineligibleItemsWithTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
       failureReasons.PROHIBITED_ITEM,
@@ -193,12 +194,12 @@ describe("matchesBAndMModel1", () => {
   // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
   test("AC10: matches BAndM Model 1 file, returns all_required_fields_present as false for multiple prohibited items without treatment type", async () => {
     const result = await parserService.findParser(
-      model.multipleProhibitedItemsNoTreatment,
+      model.multipleineligibleItemsNoTreatment,
       filename,
     );
 
     expect(result).toMatchObject(
-      test_results.multipleProhibitedItemsNoTreatmentTestResult,
+      test_results.multipleineligibleItemsNoTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
       failureReasons.PROHIBITED_ITEM,

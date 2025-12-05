@@ -1,3 +1,4 @@
+require("../test-setup");
 // Jest mocks for CoO validation testing
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
@@ -6,7 +7,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "X",
 ]);
 
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "1234",
@@ -158,7 +159,7 @@ describe("ASDA3 CoO Validation Tests - Type 1", () => {
 
   test("BAC11: Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatmentModel,
+      model.ineligibleItemsWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -168,7 +169,7 @@ describe("ASDA3 CoO Validation Tests - Type 1", () => {
 
   test("BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatmentModel,
+      model.ineligibleItemsMultipleWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
@@ -176,7 +177,7 @@ describe("ASDA3 CoO Validation Tests - Type 1", () => {
 
   test("BAC13: Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsNoTreatmentModel,
+      model.ineligibleItemsNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -186,7 +187,7 @@ describe("ASDA3 CoO Validation Tests - Type 1", () => {
 
   test("BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleNoTreatmentModel,
+      model.ineligibleItemsMultipleNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");

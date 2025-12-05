@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/mars/model1");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -14,7 +15,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "ES",
   "US",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "012",

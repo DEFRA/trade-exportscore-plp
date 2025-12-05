@@ -663,7 +663,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     RANA: [
       // NIRMS NUMBER
       { A: "NIRMS NUMBER" },
@@ -691,7 +691,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsWithTreatment: {
+  ineligibleItemsWithTreatment: {
     RANA: [
       // NIRMS NUMBER
       { A: "NIRMS NUMBER" },
@@ -722,7 +722,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsMultiple: {
+  ineligibleItemsMultiple: {
     RANA: [
       // NIRMS NUMBER
       { A: "NIRMS NUMBER" },

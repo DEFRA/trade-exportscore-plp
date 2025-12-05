@@ -410,7 +410,7 @@ module.exports = {
   },
 
   // BAC11: Item Present on Prohibited Item List (Treatment Type specified) - validation errors
-  prohibitedItemsWithTreatmentResult: {
+  ineligibleItemsWithTreatmentResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: [
@@ -436,7 +436,7 @@ module.exports = {
   },
 
   // BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary
-  prohibitedItemsMultipleWithTreatmentResult: {
+  ineligibleItemsMultipleWithTreatmentResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: expect.arrayContaining([
@@ -455,7 +455,7 @@ module.exports = {
   },
 
   // BAC13: Item Present on Prohibited Item List (no Treatment Type specified) - validation errors
-  prohibitedItemsNoTreatmentResult: {
+  ineligibleItemsNoTreatmentResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: [
@@ -481,7 +481,7 @@ module.exports = {
   },
 
   // BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary
-  prohibitedItemsMultipleNoTreatmentResult: {
+  ineligibleItemsMultipleNoTreatmentResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: expect.arrayContaining([

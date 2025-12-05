@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/giovanni/model1");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -14,7 +15,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "ES",
   "US",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "012",
@@ -145,7 +146,7 @@ describe("GIOVANNI1 CoO Validation Tests - Type 4", () => {
 
   test("BAC7: Prohibited items validation with treatment type", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatment,
+      model.ineligibleItemsWithTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -156,7 +157,7 @@ describe("GIOVANNI1 CoO Validation Tests - Type 4", () => {
 
   test('BAC8,10: Multiple prohibited items aggregation - shows first 3 and "in addition to" message', async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultiple,
+      model.ineligibleItemsMultiple,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -168,7 +169,7 @@ describe("GIOVANNI1 CoO Validation Tests - Type 4", () => {
 
   test("BAC9: Prohibited items validation without treatment type", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(

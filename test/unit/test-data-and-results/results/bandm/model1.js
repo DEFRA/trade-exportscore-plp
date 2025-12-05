@@ -398,7 +398,7 @@ module.exports = {
     parserModel: parserModel.BANDM1,
   },
   // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  multipleProhibitedItemsWithTreatmentTestResult: {
+  multipleineligibleItemsWithTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -490,7 +490,7 @@ module.exports = {
     parserModel: parserModel.BANDM1,
   },
   // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  multipleProhibitedItemsNoTreatmentTestResult: {
+  multipleineligibleItemsNoTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:

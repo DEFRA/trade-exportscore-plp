@@ -517,7 +517,7 @@ module.exports = {
         G: 1,
         H: 0.059,
         I: "kgs",
-        M: "08045000", // ⚠️ Use actual prohibited commodity code from data-prohibited-items.json
+        M: "08045000", // ⚠️ Use actual prohibited commodity code from data-ineligible-items.json
         N: "GB", // ⚠️ Use country that makes this combination prohibited
       },
     ],
@@ -621,7 +621,7 @@ invalidTestResult_MissingCells: {
 
    ```bash
    # Verify prohibited items:
-   grep -i "08045000" app/services/data/data-prohibited-items.json
+   grep -i "08045000" app/services/data/data-ineligible-items.json
    # Use commodity codes that actually appear in the file
    ```
 
@@ -676,7 +676,7 @@ invalidTestResult_MissingCells: {
 - [ ] **Test Data Models Created**: ALL test data models exist for every test case reference
   - [ ] Every `model.[testDataName]` has corresponding export in test data file
   - [ ] CoO validation columns (C, M, N) included in all test headers
-  - [ ] Prohibited items use actual prohibited commodity codes from data-prohibited-items.json
+  - [ ] Prohibited items use actual prohibited commodity codes from data-ineligible-items.json
 
 - [ ] **Legacy Test Results Updated**: Existing test expectations updated for CoO validation changes
   - [ ] Updated expectations if existing behavior changes due to CoO validation

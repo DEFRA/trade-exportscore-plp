@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/turners/model1");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -12,7 +13,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
   "PROHIBITED_ITEM_ISO",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "012",
@@ -117,10 +118,10 @@ describe("matchesTurnersModel1", () => {
 
   test("matches valid TURNERS Model 1 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
 
-    expect(result).toMatchObject(test_results.prohibitedItemsTestResult);
+    expect(result).toMatchObject(test_results.ineligibleItemsTestResult);
   });
 });

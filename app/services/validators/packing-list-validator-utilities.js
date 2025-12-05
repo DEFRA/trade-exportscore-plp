@@ -8,7 +8,7 @@
 
 const regex = require("../../utilities/regex");
 const isoCodesData = require("../data/data-iso-codes.json");
-const prohibitedItemsData = require("../data/data-prohibited-items.json");
+const ineligibleItemsService = require("../ineligible-items-service");
 
 /**
  * Check whether a value is null, undefined or an empty string.
@@ -195,17 +195,22 @@ function hasInvalidCoO(item) {
  * @param {Object} item - Packing list item object.
  * @returns {boolean} True when the item matches an entry from the prohibited list.
  */
-function hasProhibitedItems(item) {
-  return (
-    isNirms(item.nirms) &&
-    !isNullOrEmptyString(item.country_of_origin) &&
-    !isInvalidCoO(item.country_of_origin) &&
-    !isNullOrEmptyString(item.commodity_code) &&
-    isProhibitedItems(
-      item.country_of_origin,
-      item.commodity_code,
-      item.type_of_treatment,
-    )
+async function hasIneligibleItems(item) {
+  if (
+    !isNirms(item.nirms) ||
+    isNullOrEmptyString(item.country_of_origin) ||
+    isInvalidCoO(item.country_of_origin) ||
+    isNullOrEmptyString(item.commodity_code)
+  ) {
+    return false;
+  }
+
+  const ineligibleItems = await ineligibleItemsService.getIneligibleItems();
+  return isIneligibleItems(
+    item.country_of_origin,
+    item.commodity_code,
+    item.type_of_treatment,
+    ineligibleItems,
   );
 }
 
@@ -332,7 +337,7 @@ function matchesStandardRule(standardRules, normalizedTypeOfTreatment) {
   });
 }
 
-// Checks if the combination exists in prohibitedItemsData
+// Checks if the combination exists in ineligible items data
 /**
  * Determine whether a given item (COO + commodity code prefix + treatment)
  * appears in the prohibited items dataset. Handles "!" prefix logic for treatments:
@@ -344,13 +349,18 @@ function matchesStandardRule(standardRules, normalizedTypeOfTreatment) {
  * @param {string} typeOfTreatment - Type of treatment string.
  * @returns {boolean} True when the combination matches a prohibited item entry.
  */
-function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
+function isIneligibleItems(
+  countryOfOrigin,
+  commodityCode,
+  typeOfTreatment,
+  ineligibleItemsData,
+) {
   const normalizedTypeOfTreatment =
     typeof typeOfTreatment === "string" && typeOfTreatment.trim() !== ""
       ? typeOfTreatment.trim()
       : null;
 
-  const matchingEntries = prohibitedItemsData.filter(
+  const matchingEntries = ineligibleItemsData.filter(
     (item) =>
       isCountryOfOriginMatching(countryOfOrigin, item.country_of_origin) &&
       commodityCode
@@ -433,7 +443,7 @@ module.exports = {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
   isNirms,
   isNotNirms,
 };

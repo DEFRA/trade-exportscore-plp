@@ -907,7 +907,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsWithTreatmentModel: {
+  ineligibleItemsWithTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -938,7 +938,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsNoTreatmentModel: {
+  ineligibleItemsNoTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -969,7 +969,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleWithTreatmentModel: {
+  ineligibleItemsMultipleWithTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -1039,7 +1039,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleNoTreatmentModel: {
+  ineligibleItemsMultipleNoTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",

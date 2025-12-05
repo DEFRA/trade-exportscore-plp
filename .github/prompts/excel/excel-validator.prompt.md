@@ -72,7 +72,7 @@ Analyze an Excel file to identify and validate specific error conditions mention
    - **Code Validation**: Non-empty, non-error values for commodity codes
 
 6. **Prohibited Items Cross-Reference**
-   - **Data Source**: Load prohibited items from app/services/data/data-prohibited-items.json
+   - **Data Source**: Load prohibited items from app/services/data/data-ineligible-items.json
    - **Matching Criteria**: Match combination of country_of_origin, commodity_code, and type_of_treatment
    - **Validation Logic**: Check if Excel row data matches any prohibited item entry exactly
    - **Error Classification**: Items matching prohibited combinations should be flagged as prohibited items
@@ -87,7 +87,7 @@ Analyze an Excel file to identify and validate specific error conditions mention
 ```
 - Use read_file to load the parser-model.js file to convert parser model string to constant
 - Use read_file to load the model-headers.js file and extract the specific parser model configuration
-- Use read_file to load app/services/data/data-prohibited-items.json for prohibited item cross-referencing
+- Use read_file to load app/services/data/data-ineligible-items.json for prohibited item cross-referencing
 - Map the provided parser model string (e.g., "coop-1") to the corresponding constant (e.g., "COOP1")
 - Validate that the mapped parser model exists in the model-headers definitions
 - Use mcp_excel_excel_describe_sheets to understand file structure
@@ -123,7 +123,7 @@ For each data row mentioned in the failure reason:
 - For "in addition to X other locations (rows A, B, C)" format: extract and validate all listed row numbers
 - Check only the cells and conditions specified in the failure reason parameter
 - Confirm the exact error conditions described in the failure reason
-- For "prohibited item" errors: Cross-reference country_of_origin, commodity_code, and type_of_treatment against data-prohibited-items.json
+- For "prohibited item" errors: Cross-reference country_of_origin, commodity_code, and type_of_treatment against data-ineligible-items.json
 - Verify exact matches in the prohibited items database before confirming prohibited status
 - For "prohibited item" errors: Also include the product description from the description column to provide context
 - Record specific column references and error descriptions for specified errors only

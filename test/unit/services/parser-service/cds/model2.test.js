@@ -1,3 +1,4 @@
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/cds/model2");
 const parserModel = require("../../../../../app/services/parser-model");
@@ -8,7 +9,7 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
   "PROHIBITED_ITEM_ISO",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
     country_of_origin: "PROHIBITED_ITEM_ISO",
     commodity_code: "012",
@@ -158,41 +159,41 @@ describe("matchesCdsModel2_CoOValidation", () => {
 
   test("matches valid CDS Model 2 file with items not on prohibited list", async () => {
     const result = await parserService.findParser(
-      model.validModel_CoO__NotOnProhibitedItemsList,
+      model.validModel_CoO__NotOnineligibleItemsList,
       filename,
     );
     expect(result).toMatchObject(
-      test_results.validTestResultNotOnProhibitedItemsList,
+      test_results.validTestResultNotOnineligibleItemsList,
     );
   });
 
   test("matches CDS Model 2 file with items on prohibited list and returns validation errors", async () => {
     const result = await parserService.findParser(
-      model.validModel_CoO__OnProhibitedItemsList,
+      model.validModel_CoO__OnineligibleItemsList,
       filename,
     );
     expect(result).toMatchObject(
-      test_results.validTestResultOnProhibitedItemsList,
+      test_results.validTestResultOnineligibleItemsList,
     );
   });
 
   test("matches CDS Model 2 file with multiple prohibited items (more than 3) with no treatment type and returns validation errors", async () => {
     const result = await parserService.findParser(
-      model.validModel_CoO__MultipleProhibitedItemsList_NoTreatmentType,
+      model.validModel_CoO__MultipleineligibleItemsList_NoTreatmentType,
       filename,
     );
     expect(result).toMatchObject(
-      test_results.validTestResultMultipleProhibitedItemsList_NoTreatmentType,
+      test_results.validTestResultMultipleineligibleItemsList_NoTreatmentType,
     );
   });
 
   test("matches CDS Model 2 file with multiple prohibited items (more than 3) with treatment type and returns validation errors", async () => {
     const result = await parserService.findParser(
-      model.validModel_CoO__MultipleProhibitedItemsListMoreThan3_TreatmentType,
+      model.validModel_CoO__MultipleineligibleItemsListMoreThan3_TreatmentType,
       filename,
     );
     expect(result).toMatchObject(
-      test_results.validTestResultMultipleProhibitedItemsListMoreThan3_TreatmentType,
+      test_results.validTestResultMultipleineligibleItemsListMoreThan3_TreatmentType,
     );
   });
 });

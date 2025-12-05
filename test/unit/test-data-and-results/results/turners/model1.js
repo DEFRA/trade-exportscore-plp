@@ -349,7 +349,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000156-001",
     parserModel: parserModel.TURNERS1,
   },
-  prohibitedItemsTestResult: {
+  ineligibleItemsTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:

@@ -1514,7 +1514,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsWithTreatment: {
+  ineligibleItemsWithTreatment: {
     CRANSWICK: [
       {
         A: "Item",
@@ -1561,7 +1561,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsNoTreatment: {
+  ineligibleItemsNoTreatment: {
     CRANSWICK: [
       {
         A: "Item",
@@ -1608,7 +1608,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleWithTreatment: {
+  ineligibleItemsMultipleWithTreatment: {
     CRANSWICK: [
       {
         A: "Item",
@@ -1718,7 +1718,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleNoTreatment: {
+  ineligibleItemsMultipleNoTreatment: {
     CRANSWICK: [
       {
         A: "Item",

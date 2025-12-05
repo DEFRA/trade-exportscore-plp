@@ -19,31 +19,34 @@ const {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
 } = require("./packing-list-validator-utilities");
 const parserModel = require("../parser-model");
 const failureReasonsDescriptions = require("./packing-list-failure-reasons");
 
 /**
- * Validate a full packing list and produce final failure output.
+ * Validate a packing list: run checks, generate failure reasons.
  * @param {Object} packingList - The parsed packing list object.
- * @returns {Object} result - Validation result containing either `hasAllFields: true` or `hasAllFields: false` and `failureReasons`.
+ * @returns {Promise<Object>} result - Validation result containing either `hasAllFields: true` or `hasAllFields: false` and `failureReasons`.
  */
 function validatePackingList(packingList) {
-  const validationResult = validatePackingListByIndexAndType(packingList);
-  return generateFailuresByIndexAndTypes(validationResult, packingList);
+  return validatePackingListByIndexAndType(packingList).then(
+    (validationResult) =>
+      generateFailuresByIndexAndTypes(validationResult, packingList),
+  );
 }
 
 /**
  * Run the set of validation checks and return a structured map of failing row locations.
  * @param {Object} packingList - The parsed packing list object.
- * @returns {Object} validationSummary - Collections of failing locations grouped by failure type and a boolean `hasAllFields`.
+ * @returns {Promise<Object>} validationSummary - Collections of failing locations grouped by failure type and a boolean `hasAllFields`.
  */
-function validatePackingListByIndexAndType(packingList) {
+async function validatePackingListByIndexAndType(packingList) {
   const basicValidationResults = getBasicValidationResults(packingList);
   const packingListStatusResults = getPackingListStatusResults(packingList);
-  const countryOfOriginResults =
-    getCountryOfOriginValidationResults(packingList);
+  const countryOfOriginResults = await Promise.resolve(
+    getCountryOfOriginValidationResults(packingList),
+  );
   return {
     ...basicValidationResults,
     ...packingListStatusResults,
@@ -102,23 +105,28 @@ function getPackingListStatusResults(packingList) {
  * @param {Object} packingList - The parsed packing list object.
  * @returns {Object} cooResults - Arrays of `row_location` values for country-of-origin related failures.
  */
-function getCountryOfOriginValidationResults(packingList) {
+async function getCountryOfOriginValidationResults(packingList) {
   if (!packingList.validateCountryOfOrigin) {
     return {
       missingNirms: [],
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
   }
+
+  const ineligibleItems = await findItemsAsync(
+    packingList.items,
+    hasIneligibleItems,
+  );
 
   return {
     missingNirms: findItems(packingList.items, hasMissingNirms),
     invalidNirms: findItems(packingList.items, hasInvalidNirms),
     missingCoO: findItems(packingList.items, hasMissingCoO),
     invalidCoO: findItems(packingList.items, hasInvalidCoO),
-    prohibitedItems: findItems(packingList.items, hasProhibitedItems),
+    ineligibleItems,
   };
 }
 
@@ -153,7 +161,7 @@ function calculateHasAllFields(
       countryOfOriginResults.invalidNirms.length +
       countryOfOriginResults.missingCoO.length +
       countryOfOriginResults.invalidCoO.length +
-      countryOfOriginResults.prohibitedItems.length ===
+      countryOfOriginResults.ineligibleItems.length ===
     0;
 
   return (
@@ -176,6 +184,13 @@ function findItems(items, fn) {
   return items
     .map((val) => (fn(val) ? val.row_location : null))
     .filter((val) => val !== null);
+}
+
+async function findItemsAsync(items, fn) {
+  const results = await Promise.all(
+    items.map(async (val) => ((await fn(val)) ? val.row_location : null)),
+  );
+  return results.filter((val) => val !== null);
 }
 
 /**
@@ -335,7 +350,7 @@ function createValidationChecks(validationResult) {
       description: failureReasonsDescriptions.COO_INVALID,
     },
     {
-      collection: validationResult.prohibitedItems,
+      collection: validationResult.ineligibleItems,
       description: failureReasonsDescriptions.PROHIBITED_ITEM,
     },
   ];

@@ -1515,7 +1515,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsWithTreatmentModel: {
+  ineligibleItemsWithTreatmentModel: {
     Page1_1: [
       {
         A: "Item",
@@ -1562,7 +1562,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsNoTreatmentModel: {
+  ineligibleItemsNoTreatmentModel: {
     Page1_1: [
       {
         A: "Item",
@@ -1609,7 +1609,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleWithTreatmentModel: {
+  ineligibleItemsMultipleWithTreatmentModel: {
     Page1_1: [
       {
         A: "Item",
@@ -1719,7 +1719,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleNoTreatmentModel: {
+  ineligibleItemsMultipleNoTreatmentModel: {
     Page1_1: [
       {
         A: "Item",

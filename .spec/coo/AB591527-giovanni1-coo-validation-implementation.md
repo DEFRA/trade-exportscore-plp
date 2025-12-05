@@ -251,7 +251,7 @@ If tests fail with "NIRMS/Non-NIRMS goods not specified":
 - [ ] **Test Data Models Created**: ALL test data models exist for every test case reference
   - [ ] Every `model.[testDataName]` has corresponding export in test data file
   - [ ] Blanket statement text in test data matches configuration regex exactly
-  - [ ] Prohibited items use actual prohibited commodity codes from data-prohibited-items.json
+  - [ ] Prohibited items use actual prohibited commodity codes from data-ineligible-items.json
 - [ ] **Legacy Test Results Updated**: Existing test expectations updated for CoO validation changes
   - [ ] Removed outdated "NIRMS/Non-NIRMS goods not specified" errors where blanket statement now detected
 - [ ] **Complete Test Coverage**: All acceptance criteria covered in unit tests
@@ -348,7 +348,7 @@ module.exports = {
 **Fix**: Use actual prohibited items:
 
 ```bash
-grep -i "GB" app/services/data/data-prohibited-items.json
+grep -i "GB" app/services/data/data-ineligible-items.json
 ```
 
 ### Legacy Test Failures After CoO Implementation

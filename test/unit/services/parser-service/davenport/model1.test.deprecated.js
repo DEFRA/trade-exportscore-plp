@@ -4,6 +4,7 @@
  * DEPRECATED: Davenport Model 1 format is no longer supported as of [Work Item: AB#XXXXXX].
  * All instances now return NOMATCH. Tests remain for historical reference.
  */
+require("../test-setup");
 const parserService = require("../../../../../app/services/parser-service");
 const model = require("../../../test-data-and-results/models/davenport/model1");
 const parserModel = require("../../../../../app/services/parser-model");

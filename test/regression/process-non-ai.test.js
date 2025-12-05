@@ -30,7 +30,7 @@ const loadExpectedResults = (jsonFilePath) => {
   }
 };
 
-// Mock         csvRows.push(`"${file}","ERROR","${error.message.replace(/\n/g, ' ').replace(/"/g, '""').trim()}"`);;atabase service
+// Mock database service
 const mockDatabaseService = {
   models: {
     packingList: {

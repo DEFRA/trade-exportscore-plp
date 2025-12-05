@@ -1,0 +1,39 @@
+{
+  "info": {
+    "_postman_id": "99aa54de-f946-4cfd-8fa3-76f2de8997cb",
+    "name": "MDM API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31456399"
+  },
+  "item": [
+    {
+      "name": "Get ineligible Items list (200)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Bearer Token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Ocp-Apim-Subscription-Key",
+            "value": "{{ApimSubscriptionKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/ineligible-items",
+          "host": ["{{base_url}}"],
+          "path": ["ineligible-items"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

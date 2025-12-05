@@ -12,6 +12,7 @@ const path = require("node:path");
 const messageQueueConfig = require("./mq-config");
 const dbConfig = require("./database-config");
 const dynamicsConfig = require("./dynamics-config");
+const mdmConfig = require("./mdm-config");
 const { development, production, test } = require("./constants").environments;
 const schemaDefaultPort = 3004;
 
@@ -49,6 +50,7 @@ value.dbConfig = dbConfig;
 value.plpSubscription = messageQueueConfig.plpSubscription;
 value.tpQueue = messageQueueConfig.tpQueue;
 value.dynamicsConfig = dynamicsConfig;
+value.mdmConfig = mdmConfig;
 
 // AI values
 value.formRecognizerEndpoint = process.env.FORM_RECOGNIZER_ENDPOINT;
