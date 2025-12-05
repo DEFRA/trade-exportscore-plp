@@ -54,6 +54,8 @@ az storage container create --name mdm-cache --connection-string "DefaultEndpoin
 ```powershell
 $env:AZURE_STORAGE_ACCOUNT_URL="http://127.0.0.1:10000/devstoreaccount1"
 $env:AZURE_STORAGE_USE_EMULATOR="true"
+# Optional: Override default Azurite connection string if needed
+$env:AZURE_STORAGE_CONNECTION_STRING="DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
 ```
 
 #### Option B: Using Azure Storage Account (Cloud)
@@ -138,6 +140,7 @@ $env:MDM_CACHE_TTL_SECONDS="600"
 $env:MDM_CACHE_CONTAINER="mdm-cache"
 $env:AZURE_STORAGE_ACCOUNT_URL="http://127.0.0.1:10000/devstoreaccount1"
 $env:AZURE_STORAGE_USE_EMULATOR="true"
+$env:AZURE_STORAGE_CONNECTION_STRING="DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
 
 Write-Host "✅ Setup complete! Run: npm run start:watch"
 ```
@@ -384,12 +387,14 @@ Select-String -Path logs.txt -Pattern "Cache miss:" | Measure-Object
 
 ## Configuration Summary
 
-| Environment Variable        | Value                                     | Purpose                   | Required |
-| --------------------------- | ----------------------------------------- | ------------------------- | -------- |
-| `MDM_CACHE_ENABLED`         | `"true"`                                  | Enable/disable caching    | Yes      |
-| `MDM_CACHE_TTL_SECONDS`     | `"600"` (dev) / `"3600"` (prod)           | Cache lifetime            | Yes      |
-| `MDM_CACHE_CONTAINER`       | `"mdm-cache"`                             | Azure blob container name | Yes      |
-| `AZURE_STORAGE_ACCOUNT_URL` | `https://{account}.blob.core.windows.net` | Storage account URL       | Yes      |
+| Environment Variable              | Value                                     | Purpose                          | Required |
+| --------------------------------- | ----------------------------------------- | -------------------------------- | -------- |
+| `MDM_CACHE_ENABLED`               | `"true"`                                  | Enable/disable caching           | Yes      |
+| `MDM_CACHE_TTL_SECONDS`           | `"600"` (dev) / `"3600"` (prod)           | Cache lifetime                   | Yes      |
+| `MDM_CACHE_CONTAINER`             | `"mdm-cache"`                             | Azure blob container name        | Yes      |
+| `AZURE_STORAGE_ACCOUNT_URL`       | `https://{account}.blob.core.windows.net` | Storage account URL              | Yes      |
+| `AZURE_STORAGE_USE_EMULATOR`      | `"true"`                                  | Use Azurite emulator             | Optional |
+| `AZURE_STORAGE_CONNECTION_STRING` | Connection string                         | Override default Azurite config  | Optional |
 
 ## Architecture Notes
 
