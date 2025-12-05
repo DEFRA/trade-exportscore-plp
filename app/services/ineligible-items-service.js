@@ -63,8 +63,27 @@ async function getIneligibleItems() {
  * @returns {Array} Array of ineligible items from local file
  */
 function getLocalIneligibleItems() {
-  const localIneligibleItemsData = require(localIneligbileItemsDataFilePath);
-  return localIneligibleItemsData;
+  try {
+    logger.logInfo(
+      filenameForLogging,
+      "getLocalIneligibleItems()",
+      `Loading local ineligible items from: ${localIneligbileItemsDataFilePath}`,
+    );
+    const localIneligibleItemsData = require(localIneligbileItemsDataFilePath);
+    logger.logInfo(
+      filenameForLogging,
+      "getLocalIneligibleItems()",
+      `Successfully loaded ${localIneligibleItemsData?.length || 0} ineligible items from local file`,
+    );
+    return localIneligibleItemsData;
+  } catch (error) {
+    logger.logError(
+      filenameForLogging,
+      "getLocalIneligibleItems()",
+      `Failed to load local ineligible items file: ${error.message}`,
+    );
+    throw error;
+  }
 }
 
 module.exports = {
