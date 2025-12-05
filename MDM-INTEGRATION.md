@@ -86,6 +86,25 @@ const dataWithCustomRetry = await getNirmsIneligibleItems(5, 3000); // 5 retries
 
 The MDM service integrates into the existing PLP architecture to provide prohibited items validation during packing list processing. The service is called during the validation phase to check if commodity codes are prohibited.
 
+```mermaid
+graph TD
+    A[PLP Service] -->|1. Check Cache| B[Blob Cache Service]
+    B -->|Cache Hit| A
+    B -->|Cache Miss/Expired| C[MDM Service]
+    C -->|2. Request Token| D[Azure AD OAuth]
+    D -->|Bearer Token| C
+    C -->|3. API Call + Token| E[Trade APIM Gateway]
+    E -->|NIRMS Data| C
+    C -->|4. Return Data| A
+    C -.->|5. Cache Write| B
+    
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#e8f5e9
+    style D fill:#fce4ec
+    style E fill:#f3e5f5
+```
+
 ## Blob Cache Implementation
 
 ### Overview
@@ -106,6 +125,58 @@ The MDM blob cache provides a distributed caching layer for NIRMS prohibited ite
 3. **Cache Hit**: Return cached data if valid, skip API call
 4. **Cache Miss/Expired**: Fetch from MDM API
 5. **Cache Write**: Asynchronously cache successful API response (fire-and-forget)
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant MDMService
+    participant BlobCache
+    participant AzureAD
+    participant APIM
+    
+    Client->>MDMService: getNirmsIneligibleItems()
+    MDMService->>BlobCache: get()
+    
+    alt Cache Hit (valid TTL)
+        BlobCache-->>MDMService: Cached Data
+        MDMService-->>Client: Return Cached Data
+    else Cache Miss/Expired
+        BlobCache-->>MDMService: null
+        MDMService->>AzureAD: Request Bearer Token
+        AzureAD-->>MDMService: access_token
+        
+        loop Retry Logic (max 3 attempts)
+            MDMService->>APIM: GET /trade/nirms/ineligible-items
+            alt Success
+                APIM-->>MDMService: NIRMS Data
+                MDMService->>BlobCache: set() [async]
+                MDMService-->>Client: Return Fresh Data
+            else HTTP Error (no retry)
+                APIM-->>MDMService: HTTP Error
+                MDMService->>BlobCache: getStale()
+                alt Stale Cache Available
+                    BlobCache-->>MDMService: Stale Data
+                    MDMService-->>Client: Return Stale Data
+                else No Stale Cache
+                    MDMService-->>Client: Return null
+                end
+            else Network Error (retry)
+                APIM-->>MDMService: Network Error
+                Note over MDMService: Retry with delay
+            end
+        end
+        
+        alt All Retries Failed
+            MDMService->>BlobCache: getStale()
+            alt Stale Cache Available
+                BlobCache-->>MDMService: Stale Data
+                MDMService-->>Client: Return Stale Data
+            else No Stale Cache
+                MDMService-->>Client: Return null
+            end
+        end
+    end
+```
 
 ### Blob Storage Cache
 
@@ -173,6 +244,21 @@ Configured with **OAuth 2.0 Client Credentials + APIM Subscription Key**:
 - **Bearer Token**: Retrieved from Azure AD token endpoint before each API call
 - **APIM Header**: `Ocp-Apim-Subscription-Key` required for APIM gateway
 - **Token Scope**: Application-specific scope for Future Trade API
+
+```mermaid
+graph LR
+    A[PLP Service] -->|1. Request Token| B[Azure AD Token Endpoint]
+    B -->|2. Access Token| A
+    A -->|3. API Call + Bearer Token + Subscription Key| C[APIM Gateway]
+    C -->|4. Validate Token & Key| D[MDM API]
+    D -->|5. NIRMS Data| C
+    C -->|6. Response| A
+    
+    style A fill:#e1f5ff
+    style B fill:#fce4ec
+    style C fill:#f3e5f5
+    style D fill:#e8f5e9
+```
 
 ### Testing
 

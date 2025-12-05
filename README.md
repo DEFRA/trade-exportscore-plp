@@ -185,6 +185,18 @@ To facilitate the above, you will need to create a local directory called `packi
 
 In addition to the above, please refer to the [Additional Information](./additional-info.md) file for extensions that make running / debugging a single test easier than the above method.
 
+## MDM Integration
+
+This service integrates with the Master Data Management (MDM) API to retrieve NIRMS (Northern Ireland Retail Movement Scheme) ineligible items data for validation during packing list processing.
+
+**Key Features:**
+- OAuth 2.0 authentication with Azure AD
+- Azure Blob Storage caching with configurable TTL
+- Automatic retry logic with stale cache fallback
+- Manual cache invalidation endpoint
+
+For detailed documentation on the MDM integration including architecture diagrams, configuration, and API usage, see [MDM-INTEGRATION.md](./MDM-INTEGRATION.md).
+
 #### Troubleshooting
 
 If you receive the following error:
