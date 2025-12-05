@@ -106,13 +106,13 @@ function getPackingListStatusResults(packingList) {
  */
 async function getCountryOfOriginValidationResults(packingList) {
   if (!packingList.validateCountryOfOrigin) {
-    return Promise.resolve({
+    return {
       missingNirms: [],
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
       ineligibleItems: [],
-    });
+    };
   }
 
   const ineligibleItems = await findItemsAsync(
