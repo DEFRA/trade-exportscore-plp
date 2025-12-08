@@ -200,18 +200,18 @@ function generateFailuresByIndexAndTypes(validationResult, packingList) {
     addSingleRmsFailureReason(validationResult, failuresAndChecks);
 
     // Handle net weight unit as a special case
-    if (packingList.unitInHeader) {
-      addNetWeightUnitBlanketFailure(validationResult, failuresAndChecks);
-    } else {
-      addNetWeightUnitRowCheck(validationResult, failuresAndChecks);
-    }
+    addNetWeightFailuireReasonOrCheck(
+      validationResult,
+      packingList.unitInHeader,
+      failuresAndChecks,
+    );
 
-    // Handle NIRMS failures - either blanket or per-row based on packing list configuration
-    if (packingList.blanketNirms) {
-      addNirmsBlanketFailureReason(validationResult, failuresAndChecks);
-    } else {
-      addNirmsRowCheck(validationResult, failuresAndChecks);
-    }
+    // if there is a nirms blanket statement, just the description below is assigned to the failure reason
+    addNirmsFailureReasonOrCheck(
+      validationResult,
+      packingList.blanketNirms,
+      failuresAndChecks,
+    );
 
     const failingChecks = failuresAndChecks.checks.filter(
       (check) => check.collection.length > 0,
@@ -242,49 +242,49 @@ function addSingleRmsFailureReason(validationResult, reasonsAndChecks) {
 }
 
 /**
- * Add blanket failure reason when net weight unit is in header but missing from rows.
+ * Either append a net-weight-unit blanket failure reason or add a check entry for rows needing attention.
  * @param {Object} validationResult - Validation summary object.
+ * @param {boolean} unitInHeader - True when a unit-of-weight appears in the header.
  * @param {Object} reasonsAndChecks - Accumulator containing `failureReasons` and `checks`.
  */
-function addNetWeightUnitBlanketFailure(validationResult, reasonsAndChecks) {
-  if (validationResult.missingNetWeightUnit.length !== 0) {
+function addNetWeightFailuireReasonOrCheck(
+  validationResult,
+  unitInHeader,
+  reasonsAndChecks,
+) {
+  if (validationResult.missingNetWeightUnit.length !== 0 && unitInHeader) {
     reasonsAndChecks.failureReasons += `${failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING}.\n`;
   }
-}
-
-/**
- * Add check entry for rows missing net weight unit when no header unit is present.
- * @param {Object} validationResult - Validation summary object.
- * @param {Object} reasonsAndChecks - Accumulator containing `failureReasons` and `checks`.
- */
-function addNetWeightUnitRowCheck(validationResult, reasonsAndChecks) {
-  reasonsAndChecks.checks.push({
-    collection: validationResult.missingNetWeightUnit,
-    description: failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
-  });
-}
-
-/**
- * Append a blanket NIRMS failure reason when missing NIRMS are detected.
- * @param {Object} validationResult - Validation summary object.
- * @param {Object} reasonsAndChecks - Accumulator containing `failureReasons` and `checks`.
- */
-function addNirmsBlanketFailureReason(validationResult, reasonsAndChecks) {
-  if (validationResult.missingNirms.length !== 0) {
-    reasonsAndChecks.failureReasons += `${failureReasonsDescriptions.NIRMS_MISSING}.\n`;
+  // if the net weight unit is not in the header, the collection of the row/sheet location and description should be added into the checks array
+  else {
+    reasonsAndChecks.checks.push({
+      collection: validationResult.missingNetWeightUnit,
+      description: failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING,
+    });
   }
 }
 
 /**
- * Add a check entry for per-row missing NIRMS validation.
+ * Either append a blanket NIRMS failure reason or add a check entry for per-row missing NIRMS.
  * @param {Object} validationResult - Validation summary object.
+ * @param {boolean} blanketNirms - True when a blanket NIRMS statement is present on the packing list.
  * @param {Object} reasonsAndChecks - Accumulator containing `failureReasons` and `checks`.
  */
-function addNirmsRowCheck(validationResult, reasonsAndChecks) {
-  reasonsAndChecks.checks.push({
-    collection: validationResult.missingNirms,
-    description: failureReasonsDescriptions.NIRMS_MISSING,
-  });
+function addNirmsFailureReasonOrCheck(
+  validationResult,
+  blanketNirms,
+  reasonsAndChecks,
+) {
+  if (validationResult.missingNirms.length !== 0 && blanketNirms) {
+    reasonsAndChecks.failureReasons += `${failureReasonsDescriptions.NIRMS_MISSING}.\n`;
+  }
+  // if there is no nirms blanket statement, the collection of the row/sheet location and description should be added into the checks array
+  else {
+    reasonsAndChecks.checks.push({
+      collection: validationResult.missingNirms,
+      description: failureReasonsDescriptions.NIRMS_MISSING,
+    });
+  }
 }
 
 /**

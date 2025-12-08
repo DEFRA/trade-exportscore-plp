@@ -33,7 +33,6 @@ async function findParser(packingList, fileName, dispatchLocation) {
 async function parsePackingList(packingList, fileName, dispatchLocation) {
   try {
     const sanitizedPackingList = sanitizeInput(packingList, fileName);
-    //NOSONAR - PDF parsers require async operations, so await is necessary even though some paths are synchronous
     const parser = await parserFactory.findParser(
       sanitizedPackingList,
       fileName,
@@ -43,7 +42,6 @@ async function parsePackingList(packingList, fileName, dispatchLocation) {
       fileExtension.isPdf(fileName) &&
       parser.result?.isMatched === matcherResult.CORRECT
     ) {
-      //NOSONAR - await is necessary as generateParsedPackingList calls async parser.parse() internally
       return await parserFactory.generateParsedPackingList(
         parser.parser,
         parser.result.document,
@@ -51,7 +49,6 @@ async function parsePackingList(packingList, fileName, dispatchLocation) {
         sanitizedPackingList,
       );
     } else {
-      //NOSONAR - await is necessary as generateParsedPackingList calls async parser.parse() internally
       return await parserFactory.generateParsedPackingList(
         parser,
         sanitizedPackingList,
