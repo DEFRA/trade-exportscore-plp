@@ -20,7 +20,7 @@ storageAccounts:
        roleName: 'DataReader'
     blobContainers:
       - name: packing-lists
-  - name: tradeplpmdmcache
+  - name: mdmcache
     roleAssignments:
        roleName: 'DataWriter'
     blobContainers:
