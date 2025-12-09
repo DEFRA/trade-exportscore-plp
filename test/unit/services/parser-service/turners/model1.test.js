@@ -10,13 +10,13 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "IE",
   "GB",
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO",
+  "INELIGIBLE_ITEM_ISO",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
     commodity_code: "012",
-    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
   },
 ]);
 
@@ -115,12 +115,12 @@ describe("matchesTurnersModel1", () => {
     expect(result).toMatchObject(test_results.xCoOTestResult);
   });
 
-  test("matches valid TURNERS Model 1 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
+  test("matches valid TURNERS Model 1 file, calls parser and returns all_required_fields_present as false for ineligible items", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
 
-    expect(result).toMatchObject(test_results.prohibitedItemsTestResult);
+    expect(result).toMatchObject(test_results.ineligibleItemsTestResult);
   });
 });

@@ -8,7 +8,7 @@ const {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
   wrongTypeForPackages,
   wrongTypeNetWeight,
   removeBadData,
@@ -17,32 +17,32 @@ const {
 
 jest.mock("../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO",
+  "INELIGIBLE_ITEM_ISO",
 ]);
-jest.mock("../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../app/services/data/data-ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
-    commodity_code: "PROHIBITED_ITEM_COMMODITY_1",
-    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
+    commodity_code: "INELIGIBLE_ITEM_COMMODITY_1",
+    type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
   },
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
-    commodity_code: "PROHIBITED_ITEM_COMMODITY_2",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
+    commodity_code: "INELIGIBLE_ITEM_COMMODITY_2",
   },
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO", // GB
-    commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
-    type_of_treatment: "!PROHIBITED_ITEM_TREATMENT", // !processed
+    country_of_origin: "INELIGIBLE_ITEM_ISO", // GB
+    commodity_code: "INELIGIBLE_ITEM_COMMODITY_3", // mango
+    type_of_treatment: "!INELIGIBLE_ITEM_TREATMENT", // !processed
   },
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO", // GB
-    commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
-    type_of_treatment: "!PROHIBITED_ITEM_TREATMENT_2", // !dried
+    country_of_origin: "INELIGIBLE_ITEM_ISO", // GB
+    commodity_code: "INELIGIBLE_ITEM_COMMODITY_3", // mango
+    type_of_treatment: "!INELIGIBLE_ITEM_TREATMENT_2", // !dried
   },
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO", // GB
-    commodity_code: "PROHIBITED_ITEM_COMMODITY_3", // mango
-    type_of_treatment: "PROHIBITED_ITEM_TREATMENT_3", // unprocessed
+    country_of_origin: "INELIGIBLE_ITEM_ISO", // GB
+    commodity_code: "INELIGIBLE_ITEM_COMMODITY_3", // mango
+    type_of_treatment: "INELIGIBLE_ITEM_TREATMENT_3", // unprocessed
   },
 ]);
 
@@ -164,13 +164,13 @@ describe("validator function tests", () => {
   test.each([
     ["NIRMS", "INVALID_ISO", true], // Nirms, invalid value
     ["NIRMS", 0, true], // Nirms, invalid value
-    ["NIRMS", "VALID_ISO PROHIBITED_ITEM_ISO", true], // Nirms, Multiple ISO codes not comma separated
+    ["NIRMS", "VALID_ISO INELIGIBLE_ITEM_ISO", true], // Nirms, Multiple ISO codes not comma separated
     ["NIRMS", "VALID_ISO, INVALID_ISO", true], // Nirms, Multiple ISO codes comma separated, one invalid
     ["NON-NIRMS", null, false], // Non-NIRMS, missing value, should be handled by hasMissingCoO
     ["NIRMS", "VALID_ISO", false], // Nirms, valid value
     ["NIRMS", "X", false], // Nirms, Specific 'X' value, should be ignored
     ["NIRMS", "x", false], // Nirms, Specific 'x' value, should be ignored
-    ["NIRMS", "VALID_ISO, PROHIBITED_ITEM_ISO", false], // Nirms, Multiple ISO codes comma separated
+    ["NIRMS", "VALID_ISO, INELIGIBLE_ITEM_ISO", false], // Nirms, Multiple ISO codes comma separated
   ])("hasInvalidCoO", (nirms, country_of_origin, expected) => {
     const item = { nirms, country_of_origin };
     expect(hasInvalidCoO(item)).toBe(expected);
@@ -179,79 +179,79 @@ describe("validator function tests", () => {
   test.each([
     [
       "NIRMS",
-      "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_1",
-      "PROHIBITED_ITEM_TREATMENT",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_1",
+      "INELIGIBLE_ITEM_TREATMENT",
       true,
     ], // Exact matching value with treatment type
     [
       "NIRMS",
-      "VALID_ISO, PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_1",
-      "PROHIBITED_ITEM_TREATMENT",
+      "VALID_ISO, INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_1",
+      "INELIGIBLE_ITEM_TREATMENT",
       true,
     ], // Matching value with multiple countries of origin
     [
       "NIRMS",
-      "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_1_EXTRA",
-      "PROHIBITED_ITEM_TREATMENT",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_1_EXTRA",
+      "INELIGIBLE_ITEM_TREATMENT",
       true,
-    ], // Matching value with longer commodity code that starts with value in prohibited item list
+    ], // Matching value with longer commodity code that starts with value in ineligible item list
     [
       "nirms",
-      "prohibited_item_iso",
-      "prohibited_item_commodity_1",
-      "prohibited_item_treatment",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_1",
+      "INELIGIBLE_ITEM_TREATMENT",
       true,
     ], // Exact matching value with treatment type case insensitive
-    ["NIRMS", "PROHIBITED_ITEM_ISO", "PROHIBITED_ITEM_COMMODITY_1", null, true], // no treatment type specified in packing list, treatment type specified in prohibited item list
-    ["NIRMS", "PROHIBITED_ITEM_ISO", "PROHIBITED_ITEM_COMMODITY_2", null, true], // Exact matching value without treatment type specified in prohibited item list
+    ["NIRMS", "INELIGIBLE_ITEM_ISO", "INELIGIBLE_ITEM_COMMODITY_1", null, true], // no treatment type specified in packing list, treatment type specified in ineligible item list
+    ["NIRMS", "INELIGIBLE_ITEM_ISO", "INELIGIBLE_ITEM_COMMODITY_2", null, true], // Exact matching value without treatment type specified in ineligible item list
     [
       "NIRMS",
-      "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_2",
-      "PROHIBITED_ITEM_TREATMENT",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_2",
+      "INELIGIBLE_ITEM_TREATMENT",
       true,
     ], // Matching value with optional treatment type
     [
       "NON-NIRMS",
-      "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_1",
-      "PROHIBITED_ITEM_TREATMENT",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_1",
+      "INELIGIBLE_ITEM_TREATMENT",
       false,
     ], // NON NIRMS entry
     [
       "NIRMS",
-      "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_3",
-      "PROHIBITED_ITEM_TREATMENT",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_3",
+      "INELIGIBLE_ITEM_TREATMENT",
       false,
-    ], // not prohibited as !PROHIBITED_ITEM_TREATMENT
+    ], // not ineligible as !INELIGIBLE_ITEM_TREATMENT
     [
       "NIRMS",
-      "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_3",
-      "PROHIBITED_ITEM_TREATMENT_2",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_3",
+      "INELIGIBLE_ITEM_TREATMENT_2",
       false,
-    ], // not prohibited as !PROHIBITED_ITEM_TREATMENT_2
+    ], // not ineligible as !INELIGIBLE_ITEM_TREATMENT_2
     [
       "NIRMS",
-      "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_3",
-      "PROHIBITED_ITEM_TREATMENT_3",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_3",
+      "INELIGIBLE_ITEM_TREATMENT_3",
       true,
-    ], // prohibited as PROHIBITED_ITEM_TREATMENT_3
+    ], // ineligible as INELIGIBLE_ITEM_TREATMENT_3
     [
       "NIRMS",
-      "PROHIBITED_ITEM_ISO",
-      "PROHIBITED_ITEM_COMMODITY_3",
-      "PROHIBITED_ITEM_TREATMENT_4",
+      "INELIGIBLE_ITEM_ISO",
+      "INELIGIBLE_ITEM_COMMODITY_3",
+      "INELIGIBLE_ITEM_TREATMENT_4",
       true,
-    ], // prohibited from !PROHIBITED_ITEM_TREATMENT_2 or !PROHIBITED_ITEM_TREATMENT
-    ["NIRMS", "PROHIBITED_ITEM_ISO", "PROHIBITED_ITEM_COMMODITY_3", null, true], // prohibited when no treatment type provided as !PROHIBITED_ITEM_TREATMENT_2 or !PROHIBITED_ITEM_TREATMENT
+    ], // ineligible from !INELIGIBLE_ITEM_TREATMENT_2 or !INELIGIBLE_ITEM_TREATMENT
+    ["NIRMS", "INELIGIBLE_ITEM_ISO", "INELIGIBLE_ITEM_COMMODITY_3", null, true], // ineligible when no treatment type provided as !INELIGIBLE_ITEM_TREATMENT_2 or !INELIGIBLE_ITEM_TREATMENT
   ])(
-    "hasProhibitedItems",
+    "hasIneligibleItems",
     (nirms, country_of_origin, commodity_code, type_of_treatment, expected) => {
       const item = {
         nirms,
@@ -259,7 +259,7 @@ describe("validator function tests", () => {
         commodity_code,
         type_of_treatment,
       };
-      expect(hasProhibitedItems(item)).toBe(expected);
+      expect(hasIneligibleItems(item)).toBe(expected);
     },
   );
 });

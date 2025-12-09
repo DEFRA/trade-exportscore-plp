@@ -636,7 +636,7 @@ const cooPlaceholderXModel = [
   ],
 ];
 
-const prohibitedItemsWithTreatmentModel = [
+const ineligibleItemsWithTreatmentModel = [
   [
     "",
     "RMS Dispatch location",
@@ -654,8 +654,8 @@ const prohibitedItemsWithTreatmentModel = [
     "RMS-GB-000040-001",
     "Fresh",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM WITH TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM WITH TREATMENT",
     "5.5",
     "10",
     "Processed",
@@ -663,7 +663,7 @@ const prohibitedItemsWithTreatmentModel = [
   ],
 ];
 
-const prohibitedItemsNoTreatmentModel = [
+const ineligibleItemsNoTreatmentModel = [
   [
     "",
     "RMS Dispatch location",
@@ -681,8 +681,8 @@ const prohibitedItemsNoTreatmentModel = [
     "RMS-GB-000040-001",
     "Fresh",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM NO TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM NO TREATMENT",
     "5.5",
     "10",
     null,
@@ -690,7 +690,7 @@ const prohibitedItemsNoTreatmentModel = [
   ],
 ];
 
-const prohibitedItemsMultipleWithTreatmentModel = [
+const ineligibleItemsMultipleWithTreatmentModel = [
   [
     "",
     "RMS Dispatch location",
@@ -708,8 +708,8 @@ const prohibitedItemsMultipleWithTreatmentModel = [
     "RMS-GB-000040-001",
     "Fresh",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM 1 WITH TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM 1 WITH TREATMENT",
     "5.5",
     "10",
     "Processed",
@@ -720,8 +720,8 @@ const prohibitedItemsMultipleWithTreatmentModel = [
     "RMS-GB-000040-001",
     "Fresh",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM 2 WITH TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM 2 WITH TREATMENT",
     "12.3",
     "20",
     "Processed",
@@ -732,8 +732,8 @@ const prohibitedItemsMultipleWithTreatmentModel = [
     "RMS-GB-000040-001",
     "Fresh",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM 3 WITH TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM 3 WITH TREATMENT",
     "7.8",
     "15",
     "Processed",
@@ -744,8 +744,8 @@ const prohibitedItemsMultipleWithTreatmentModel = [
     "RMS-GB-000040-001",
     "Ambient",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM 4 WITH TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM 4 WITH TREATMENT",
     "9.1",
     "25",
     "Processed",
@@ -753,7 +753,7 @@ const prohibitedItemsMultipleWithTreatmentModel = [
   ],
 ];
 
-const prohibitedItemsMultipleNoTreatmentModel = [
+const ineligibleItemsMultipleNoTreatmentModel = [
   [
     "",
     "RMS Dispatch location",
@@ -771,8 +771,8 @@ const prohibitedItemsMultipleNoTreatmentModel = [
     "RMS-GB-000040-001",
     "Fresh",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM 1 NO TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM 1 NO TREATMENT",
     "5.5",
     "10",
     null,
@@ -783,8 +783,8 @@ const prohibitedItemsMultipleNoTreatmentModel = [
     "RMS-GB-000040-001",
     "Fresh",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM 2 NO TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM 2 NO TREATMENT",
     "12.3",
     "20",
     null,
@@ -795,8 +795,8 @@ const prohibitedItemsMultipleNoTreatmentModel = [
     "RMS-GB-000040-001",
     "Fresh",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM 3 NO TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM 3 NO TREATMENT",
     "7.8",
     "15",
     null,
@@ -807,8 +807,8 @@ const prohibitedItemsMultipleNoTreatmentModel = [
     "RMS-GB-000040-001",
     "Ambient",
     "1234",
-    "PROHIBITED_ITEM_ISO",
-    "PROHIBITED ITEM 4 NO TREATMENT",
+    "INELIGIBLE_ITEM_ISO",
+    "Ineligible ITEM 4 NO TREATMENT",
     "9.1",
     "25",
     null,
@@ -836,8 +836,8 @@ module.exports = {
   nullCooMultipleModel,
   invalidCooMultipleModel,
   cooPlaceholderXModel,
-  prohibitedItemsWithTreatmentModel,
-  prohibitedItemsNoTreatmentModel,
-  prohibitedItemsMultipleWithTreatmentModel,
-  prohibitedItemsMultipleNoTreatmentModel,
+  ineligibleItemsWithTreatmentModel,
+  ineligibleItemsNoTreatmentModel,
+  ineligibleItemsMultipleWithTreatmentModel,
+  ineligibleItemsMultipleNoTreatmentModel,
 };

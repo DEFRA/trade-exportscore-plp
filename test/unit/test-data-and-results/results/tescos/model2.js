@@ -409,8 +409,8 @@ module.exports = {
     parserModel: parserModel.TESCO2,
   },
 
-  // BAC11: Item Present on Prohibited Item List (Treatment Type specified) - validation errors
-  prohibitedItemsWithTreatmentResult: {
+  // BAC11: Item Present on Ineligible item List (Treatment Type specified) - validation errors
+  ineligibleItemsWithTreatmentResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: [
@@ -426,7 +426,7 @@ module.exports = {
         total_net_weight_kg: "5.00",
         type_of_treatment: "Processed",
         total_net_weight_unit: "kgs",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         nirms: "NIRMS",
       },
     ],
@@ -435,8 +435,8 @@ module.exports = {
     parserModel: parserModel.TESCO2,
   },
 
-  // BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary
-  prohibitedItemsMultipleWithTreatmentResult: {
+  // BAC12: Item Present on Ineligible item List, more than 3 (Treatment Type specified) - validation errors with summary
+  ineligibleItemsMultipleWithTreatmentResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: expect.arrayContaining([
@@ -454,8 +454,8 @@ module.exports = {
     },
   },
 
-  // BAC13: Item Present on Prohibited Item List (no Treatment Type specified) - validation errors
-  prohibitedItemsNoTreatmentResult: {
+  // BAC13: Item Present on Ineligible item List (no Treatment Type specified) - validation errors
+  ineligibleItemsNoTreatmentResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: [
@@ -471,7 +471,7 @@ module.exports = {
         total_net_weight_kg: "5.00",
         type_of_treatment: null,
         total_net_weight_unit: "kgs",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         nirms: "NIRMS",
       },
     ],
@@ -480,8 +480,8 @@ module.exports = {
     parserModel: parserModel.TESCO2,
   },
 
-  // BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary
-  prohibitedItemsMultipleNoTreatmentResult: {
+  // BAC14: Item Present on Ineligible item List, more than 3 (no Treatment Type specified) - validation errors with summary
+  ineligibleItemsMultipleNoTreatmentResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: expect.arrayContaining([

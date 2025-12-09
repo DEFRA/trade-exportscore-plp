@@ -6,13 +6,13 @@ const failureReasons = require("../../../../../app/services/validators/packing-l
 
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO",
+  "INELIGIBLE_ITEM_ISO",
   "GB",
   "X",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
     commodity_code: "012",
     type_of_treatment: "Processed",
   },
@@ -138,60 +138,60 @@ describe("matchesKepakModel1", () => {
     expect(result.business_checks.failure_reasons).toBe(null);
   });
 
-  // AC7: Item Present on Prohibited Item List (Treatment Type specified)
-  test("AC7: matches KEPAK Model 1 file, returns all_required_fields_present as false for prohibited item with treatment type", async () => {
+  // AC7: Item Present on Ineligible Item List (Treatment Type specified)
+  test("AC7: matches KEPAK Model 1 file, returns all_required_fields_present as false for ineligible item with treatment type", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemWithTreatment,
+      model.ineligibleItemWithTreatment,
       filename,
     );
 
     expect(result).toMatchObject(
-      test_results.prohibitedItemWithTreatmentTestResult,
+      test_results.ineligibleItemWithTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
       failureReasons.PROHIBITED_ITEM,
     );
   });
 
-  // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  test("AC8: matches KEPAK Model 1 file, returns all_required_fields_present as false for multiple prohibited items with treatment type", async () => {
+  // AC8: Item Present on Ineligible Item List, more than 3 (Treatment Type specified)
+  test("AC8: matches KEPAK Model 1 file, returns all_required_fields_present as false for multiple ineligible items with treatment type", async () => {
     const result = await parserService.findParser(
-      model.multipleProhibitedItemsWithTreatment,
+      model.multipleineligibleItemsWithTreatment,
       filename,
     );
 
     expect(result).toMatchObject(
-      test_results.multipleProhibitedItemsWithTreatmentTestResult,
+      test_results.multipleineligibleItemsWithTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
       failureReasons.PROHIBITED_ITEM,
     );
   });
 
-  // AC9: Item Present on Prohibited Item List (no Treatment Type specified)
-  test("AC9: matches KEPAK Model 1 file, returns all_required_fields_present as false for prohibited item without treatment type", async () => {
+  // AC9: Item Present on Ineligible Item List (no Treatment Type specified)
+  test("AC9: matches KEPAK Model 1 file, returns all_required_fields_present as false for ineligible item without treatment type", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemNoTreatment,
+      model.ineligibleItemNoTreatment,
       filename,
     );
 
     expect(result).toMatchObject(
-      test_results.prohibitedItemNoTreatmentTestResult,
+      test_results.ineligibleItemNoTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
       failureReasons.PROHIBITED_ITEM,
     );
   });
 
-  // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  test("AC10: matches KEPAK Model 1 file, returns all_required_fields_present as false for multiple prohibited items without treatment type", async () => {
+  // AC10: Item Present on Ineligible Item List, more than 3 (no Treatment Type specified)
+  test("AC10: matches KEPAK Model 1 file, returns all_required_fields_present as false for multiple ineligible items without treatment type", async () => {
     const result = await parserService.findParser(
-      model.multipleProhibitedItemsNoTreatment,
+      model.multipleineligibleItemsNoTreatment,
       filename,
     );
 
     expect(result).toMatchObject(
-      test_results.multipleProhibitedItemsNoTreatmentTestResult,
+      test_results.multipleineligibleItemsNoTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
       failureReasons.PROHIBITED_ITEM,

@@ -65,11 +65,11 @@ This prompt generates implementation guides for Country of Origin (CoO) validati
 - **Example**: GIOVANNI1 (Type 4) should NOT have `value: "Processed"` - treatment type comes from document content
 - **⚠️ CRITICAL**: Type 4 Dynamic means values are extracted from document, not assigned from configuration
 
-**❌ ERROR 5: Prohibited Items Test Data Using Non-Prohibited Items**
-- **Problem**: Test data uses commodity codes that aren't actually in the prohibited items list
-- **Solution**: Use actual prohibited items from `app/services/data/data-prohibited-items.json`
-- **Example**: Use "08045000" from "GB" (actually prohibited) instead of "0201100010" (not prohibited)
-- **Verification**: `grep -i "[commodity_code]" app/services/data/data-prohibited-items.json` to verify
+**❌ ERROR 5: Ineligible Items Test Data Using Non-Ineligible Items**
+- **Problem**: Test data uses commodity codes that aren't actually in the Ineligible items list
+- **Solution**: Use actual Ineligible items from `app/services/data/data-Ineligible-items.json`
+- **Example**: Use "08045000" from "GB" (actually Ineligible) instead of "0201100010" (not Ineligible)
+- **Verification**: `grep -i "[commodity_code]" app/services/data/data-Ineligible-items.json` to verify
 
 **❌ ERROR 6: Not Updating Legacy Test Results**
 - **Problem**: Existing tests fail because they expect old validation errors that CoO validation now prevents
@@ -486,8 +486,8 @@ describe('[RETAILER] CoO Validation Tests - Type 4', () => {
     expect(result.business_checks.failure_reasons).toBeNull();
   });
   
-  test('BAC7-10: Prohibited items validation with treatment type', () => {
-    const result = await parserService.findParser(model.prohibitedItems, filename);
+  test('BAC7-10: Ineligible items validation with treatment type', () => {
+    const result = await parserService.findParser(model.ineligibleItems, filename);
     expect(result.business_checks.failure_reasons).toContain('Prohibited item identified on the packing list');
   });
   
@@ -543,7 +543,7 @@ If tests fail with "NIRMS/Non-NIRMS goods not specified":
 - [ ] **Test Data Models Created**: ALL test data models exist for every test case reference
   - [ ] Every `model.[testDataName]` has corresponding export in test data file
   - [ ] Blanket statement text in test data matches configuration regex exactly
-  - [ ] Prohibited items use actual prohibited commodity codes from data file
+  - [ ] Ineligible items use actual Ineligible commodity codes from data file
 - [ ] **Legacy Test Results Updated**: Existing test expectations updated for CoO validation changes
   - [ ] Removed outdated "NIRMS/Non-NIRMS goods not specified" errors where blanket statement now detected
 - [ ] **Complete Test Coverage**: All acceptance criteria covered in unit tests
@@ -641,8 +641,8 @@ Before finalizing implementation guide:
    - Test blanket statement text against regex: `node -e 'console.log(/regex/.test("text"))'`
 8. **Legacy Test Compatibility**: Have existing test results been updated?
    - **⚠️ CRITICAL**: Remove outdated NIRMS validation errors when blanket statement now works
-9. **Prohibited Items Validation**: Are test data using actually prohibited items?
-   - **⚠️ CRITICAL**: Verify commodity codes exist in `data-prohibited-items.json`
+9. **Ineligible Items Validation**: Are test data using actually Ineligible items?
+   - **⚠️ CRITICAL**: Verify commodity codes exist in `data-Ineligible-items.json`
 10. **Complete Test Pass**: Are ALL tests passing?
    - **⚠️ CRITICAL**: Run `npm test -- --testPathPattern="[retailer]/model1.test.js"` until 0 failures
 
@@ -698,21 +698,21 @@ module.exports = {
   invalidCooFormat: { },
   cooPlaceholderX: { },
   multipleCooErrors: { },
-  prohibitedItems: { },
+  ineligibleItems: { },
 };
 ```
 
-### Prohibited Items Test Failures
+### Ineligible Items Test Failures
 
-**Symptom**: Prohibited items test passes when it should fail
-**Root Cause**: Test data uses commodity codes not in prohibited items list
+**Symptom**: Ineligible items test passes when it should fail
+**Root Cause**: Test data uses commodity codes not in Ineligible items list
 
-**Fix**: Use actual prohibited items:
+**Fix**: Use actual Ineligible items:
 ```bash
-# Find prohibited items
-grep -i "GB" app/services/data/data-prohibited-items.json
+# Find Ineligible items
+grep -i "GB" app/services/data/data-Ineligible-items.json
 # Use commodity codes that actually appear in the file
-# Example: "08045000" from "GB" is actually prohibited
+# Example: "08045000" from "GB" is actually Ineligible
 ```
 
 ### Legacy Test Failures After CoO Implementation
@@ -767,7 +767,7 @@ ADO_TICKET_NUMBER="AB591527"  # GIOVANNI1
 
 ### Testing Success  
 10. ✅ **Include comprehensive test data model creation guidance** (every test reference must have export)
-11. ✅ **Provide prohibited items test data using actual prohibited commodity codes**
+11. ✅ **Provide Ineligible items test data using actual Ineligible commodity codes**
 12. ✅ **Include legacy test result update requirements** (remove outdated error expectations)
 13. ✅ **Emphasize 100% test pass rate requirement** (0 failures before completion)
 14. ✅ **Include blanket statement regex testing procedures** (manual verification steps)
@@ -782,6 +782,6 @@ ADO_TICKET_NUMBER="AB591527"  # GIOVANNI1
 ### Debugging Success
 20. ✅ **Include troubleshooting guide for blanket statement detection failures**
 21. ✅ **Provide test data model error resolution steps**  
-22. ✅ **Include prohibited items validation debugging procedures**
+22. ✅ **Include Ineligible items validation debugging procedures**
 23. ✅ **Explain legacy test compatibility requirements**
 24. ✅ **Define clear implementation completion criteria** (all tests passing)

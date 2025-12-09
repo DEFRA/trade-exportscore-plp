@@ -174,9 +174,9 @@ Treatment Blanket Statement Location: Cell H:I17, value is 'Processed'
 
 ### 3. Specification Generation (ONLY AFTER PHASES 0 AND 1 COMPLETE)
 - **CRITICAL**: Generate appropriate BAC count based on validation approach:
-  - **Individual Column (14 BACs)**: BAC1-BAC5 (NIRMS), BAC6-BAC10 (CoO), BAC11-BAC14 (Prohibited)
-  - **Fixed Blanket (9 BACs)**: BAC1 (statement), BAC2-BAC6 (CoO), BAC7-BAC9 (Prohibited)  
-  - **Variable Blanket (10 BACs)**: BAC1 (statement), BAC2-BAC6 (CoO), BAC7-BAC10 (Prohibited)
+  - **Individual Column (14 BACs)**: BAC1-BAC5 (NIRMS), BAC6-BAC10 (CoO), BAC11-BAC14 (Ineligible)
+  - **Fixed Blanket (9 BACs)**: BAC1 (statement), BAC2-BAC6 (CoO), BAC7-BAC9 (Ineligible)  
+  - **Variable Blanket (10 BACs)**: BAC1 (statement), BAC2-BAC6 (CoO), BAC7-BAC10 (Ineligible)
 - **MANDATORY**: Include Technical Requirements (TR1-TR7) with verified "(VERIFIED: ...)" annotations
 - **MANDATORY**: Include Implementation Constraints (IC1-IC5) with verified "(VERIFIED: ...)" annotations  
 - **MANDATORY**: Include Data Integration Requirements (DIR1-DIR4) with verified "(VERIFIED: ...)" annotations
@@ -281,7 +281,7 @@ Column mappings and NIRMS value patterns from ADO + workspace analysis.
 
 ## Overview
 
-This specification defines the implementation requirements for Country of Origin (CoO) validation for {Trader Name} trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and prohibited item checking for {Trader Name}-specific Excel format.
+This specification defines the implementation requirements for Country of Origin (CoO) validation for {Trader Name} trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and Ineligible item checking for {Trader Name}-specific Excel format.
 
 ## Business Context
 
@@ -296,7 +296,7 @@ This specification defines the implementation requirements for Country of Origin
 - Collect relevant CoO fields from {Trader Name} trader format
 - Provide basic validation for Country of Origin compliance
 - Enforce NIRMS scheme validation rules
-- Check against prohibited items list
+- Check against Ineligible items list
 - Generate comprehensive error messages with location details
 
 ## {Trader Name} Trader Format Specification
@@ -338,14 +338,14 @@ The {Trader Name} packing list uses the following column structure:
 [For Individual Column Validation - Generate 14 BACs:]
 [BAC1-BAC5: NIRMS validation scenarios]
 [BAC6-BAC10: CoO validation scenarios] 
-[BAC11-BAC14: Prohibited items scenarios]
+[BAC11-BAC14: Ineligible items scenarios]
 
 [For Blanket Statement Validation - Generate 9 BACs:]
 [BAC1: NIRMS statement validation]
 [BAC2-BAC4: Missing CoO with NIRMS present]
 [BAC5-BAC6: Invalid CoO format]
 [BAC7: CoO placeholder acceptance] 
-[BAC8-BAC9: Prohibited items scenarios using "matches an item on the prohibited list in more than 3 instances"]
+[BAC8-BAC9: Ineligible items scenarios using "matches an item on the Ineligible list in more than 3 instances"]
 
 ### Technical Requirements (TR) - Implementation Specifics
 
@@ -357,7 +357,7 @@ The {Trader Name} packing list uses the following column structure:
 
 **TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature verified in workspace WHEN returning parser results (VERIFIED: Exact 6-parameter signature extracted from actual parser implementations - establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel, establishmentNumbers, headers)
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual packing-list-validator-utilities.js file)
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasineligibleItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual packing-list-validator-utilities.js file)
 
 **TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in actual parser implementations - mapParser() with headerRow, dataRow, headers configuration parameters)
 
@@ -452,7 +452,7 @@ And the failure reason is: "Missing Country of Origin in sheet X row Y"
 
 **BAC7-BAC10**: CoO validation scenarios (invalid format, multiple errors, X placeholder)
 
-**BAC11-BAC14**: Prohibited items scenarios (with/without treatment type, multiple errors)
+**BAC11-BAC14**: Ineligible items scenarios (with/without treatment type, multiple errors)
 
 **Then generate corresponding Technical Requirements:**
 
@@ -578,11 +578,11 @@ Generate these business acceptance criteria patterns:
 - **BAC9**: Invalid CoO Value, more than 3 (multiple failures) 
 - **BAC10**: CoO Value is Acceptable Placeholder (X/x pass scenario)
 
-**Prohibited Items Validation (BAC11-BAC14) - CRITICAL: Must follow ASDA3 pattern:**
-- **BAC11**: Prohibited Item with Treatment Type (single item failure)
-- **BAC12**: Prohibited Item, More Than 3 (Treatment Type specified - multiple failures)
-- **BAC13**: Prohibited Item without Treatment Type (single item failure)
-- **BAC14**: Prohibited Item, More Than 3 (no Treatment Type specified - multiple failures)
+**Ineligible Items Validation (BAC11-BAC14) - CRITICAL: Must follow ASDA3 pattern:**
+- **BAC11**: Ineligible Item with Treatment Type (single item failure)
+- **BAC12**: Ineligible Item, More Than 3 (Treatment Type specified - multiple failures)
+- **BAC13**: Ineligible Item without Treatment Type (single item failure)
+- **BAC14**: Ineligible Item, More Than 3 (no Treatment Type specified - multiple failures)
 
 **BAC1: NOT within NIRMS Scheme**
 ```gherkin
@@ -616,7 +616,7 @@ And the failure reason is: "Missing Country of Origin in sheet X row Y"
 
 **BAC7-BAC10**: CoO validation scenarios (invalid format, multiple errors, X placeholder)
 
-**BAC11: Prohibited Item with Treatment Type**
+**BAC11: Ineligible Item with Treatment Type**
 ```gherkin
 Given a {Trader} packing list item has NIRMS value specified
 And it contains a True value below (case insensitive):
@@ -624,13 +624,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified
 And the treatment type is specified
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
-**BAC12: Prohibited Item, More Than 3 (Treatment Type specified)**
+**BAC12: Ineligible Item, More Than 3 (Treatment Type specified)**
 ```gherkin
 Given a {Trader} packing list has more than 3 items that have NIRMS value specified
 And it contains a True value below (case insensitive):
@@ -638,13 +638,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified
 And the treatment type is specified
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-**BAC13: Prohibited Item without Treatment Type**
+**BAC13: Ineligible Item without Treatment Type**
 ```gherkin
 Given a {Trader} packing list item has NIRMS value specified
 And it contains a True value below (case insensitive):
@@ -652,13 +652,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified
 And the treatment type is null
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
-**BAC14: Prohibited Item, More Than 3 (no Treatment Type specified)**
+**BAC14: Ineligible Item, More Than 3 (no Treatment Type specified)**
 ```gherkin
 Given a {Trader} packing list has more than 3 items that have NIRMS value specified
 And it contains a True value below (case insensitive):
@@ -666,7 +666,7 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified
 And the treatment type is null
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
@@ -688,10 +688,10 @@ Generate these business acceptance criteria patterns:
 - **BAC5**: Invalid CoO Value, More Than 3 (multiple failures)
 - **BAC6**: CoO Value is Acceptable Placeholder (X/x pass scenario)
 
-**Prohibited Items Validation (BAC7-BAC9):**
-- **BAC7**: Prohibited Item with Fixed Treatment Type (single failure)
-- **BAC8**: Prohibited Item without Treatment Type (single failure) 
-- **BAC9**: Prohibited Items, Multiple Occurrences (multiple failures)
+**Ineligible Items Validation (BAC7-BAC9):**
+- **BAC7**: Ineligible Item with Fixed Treatment Type (single failure)
+- **BAC8**: Ineligible Item without Treatment Type (single failure) 
+- **BAC9**: Ineligible Items, Multiple Occurrences (multiple failures)
 
 #### Variable Blanket Statement Validation (10 BACs + Technical Requirements)
 
@@ -709,11 +709,11 @@ Generate these business acceptance criteria patterns:
 - **BAC5**: Invalid CoO Value, More Than 3 (multiple failures) - **CRITICAL: Must include "And there are more than 3 line items with these CoO-related errors" clause**
 - **BAC6**: CoO Value is Acceptable Placeholder (X/x pass scenario)
 
-**Prohibited Items Validation (BAC7-BAC10):**
-- **BAC7**: Prohibited Item with Treatment Type (single failure)
-- **BAC8**: Prohibited Item, More Than 3 (Treatment Type specified - multiple failures) - **CRITICAL: Must include "matches an item on the prohibited list in more than 3 instances" condition**
-- **BAC9**: Prohibited Item without Treatment Type (single failure)
-- **BAC10**: Prohibited Items, More Than 3 (no Treatment Type specified - multiple failures) - **CRITICAL: Must include "matches an item on the prohibited list in more than 3 instances" condition**
+**Ineligible Items Validation (BAC7-BAC10):**
+- **BAC7**: Ineligible Item with Treatment Type (single failure)
+- **BAC8**: Ineligible Item, More Than 3 (Treatment Type specified - multiple failures) - **CRITICAL: Must include "matches an item on the Ineligible list in more than 3 instances" condition**
+- **BAC9**: Ineligible Item without Treatment Type (single failure)
+- **BAC10**: Ineligible Items, More Than 3 (no Treatment Type specified - multiple failures) - **CRITICAL: Must include "matches an item on the Ineligible list in more than 3 instances" condition**
 
 **CRITICAL: Variable Blanket Statement Template Requirements**
 - **DO NOT** use specific treatment type values like 'Processed' in BAC7 and BAC8 Gherkin scenarios
@@ -750,13 +750,13 @@ Then the packing list will fail
 And the failure reason is: "Invalid Country of Origin ISO Code in sheet X row Y"
 ```
 
-**BAC7: Prohibited Item with Treatment Type**
+**BAC7: Ineligible Item with Treatment Type**
 ```gherkin
 Given a {Trader} packing list has the statement '{NIRMS_STATEMENT_FROM_ADO}' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified
 And the treatment type is specified
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
@@ -767,8 +767,8 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 **🚨 MANDATORY "MORE THAN 3" PATTERN REQUIREMENTS:**
 - **BAC4 REQUIREMENT**: MUST include "for more than 3 line items" after "the CoO value is null"
 - **BAC5 REQUIREMENT**: MUST include "And there are more than 3 line items with these CoO-related errors" as separate And clause
-- **BAC8 REQUIREMENT**: MUST include "matches an item on the prohibited list in more than 3 instances" NOT "matches an item on the prohibited list"
-- **BAC10 REQUIREMENT**: MUST include "matches an item on the prohibited list in more than 3 instances" NOT "matches an item on the prohibited list"
+- **BAC8 REQUIREMENT**: MUST include "matches an item on the Ineligible list in more than 3 instances" NOT "matches an item on the Ineligible list"
+- **BAC10 REQUIREMENT**: MUST include "matches an item on the Ineligible list in more than 3 instances" NOT "matches an item on the Ineligible list"
 - **ENFORCEMENT**: Any specification missing these exact conditions is INCORRECT and must be regenerated
 
 **Quality Checklist**: Verify BAC count (14/9/10), file naming (AB{ticket}-{trader}-coo-validation-spec.md in .spec/coo/), and technical accuracy against workspace implementation.

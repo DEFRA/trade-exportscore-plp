@@ -224,7 +224,7 @@ This confirmation step is required to prevent accidental data corruption and ens
    - `basic-tests` — Core functionality and data validation tests
    - `single-rms` — Establishment number validation tests
    - `net-weight` — Weight unit and formatting tests
-   - `country-of-origin` — Country, NIRMS, and prohibited items tests
+   - `country-of-origin` — Country, NIRMS, and Ineligible items tests
 
    **Only the selected folders will be created and seeded.**
 
