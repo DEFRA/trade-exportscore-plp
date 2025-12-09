@@ -8,7 +8,7 @@
 
 ## Overview
 
-This specification defines the implementation requirements for Country of Origin (CoO) validation for Giovanni 1 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance through variable blanket statement validation and prohibited item checking for Giovanni 1-specific Excel format with treatment type header validation.
+This specification defines the implementation requirements for Country of Origin (CoO) validation for Giovanni 1 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance through variable blanket statement validation and Ineligible item checking for Giovanni 1-specific Excel format with treatment type header validation.
 
 ## Business Context
 
@@ -23,7 +23,7 @@ This specification defines the implementation requirements for Country of Origin
 - Collect relevant CoO fields from Giovanni 1 trader format using blanket statement detection
 - Provide comprehensive validation for Country of Origin compliance with NIRMS requirements
 - Enforce blanket NIRMS statement validation rules with treatment type header validation
-- Check against prohibited items list with treatment type considerations
+- Check against Ineligible items list with treatment type considerations
 - Generate comprehensive error messages with location details and aggregated reporting
 
 ## Giovanni 1 Trader Format Specification
@@ -113,56 +113,56 @@ When the packing list is submitted
 Then the packing list will pass
 ```
 
-**BAC7: Prohibited Item with Treatment Type**
+**BAC7: Ineligible Item with Treatment Type**
 
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified
 And the treatment type is specified
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
 ```
 
-**BAC8: Prohibited Item, More Than 3 (Treatment Type specified)**
+**BAC8: Ineligible Item, More Than 3 (Treatment Type specified)**
 
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified
 And the treatment type is specified
-And the commodity code + CoO + treatment combination matches an item on the prohibited list in more than 3 instances
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list in more than 3 instances
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-**BAC9: Prohibited Item without Treatment Type**
+**BAC9: Ineligible Item without Treatment Type**
 
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified
 And the treatment type null in the treatment type field
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
 ```
 
-**BAC10: Prohibited Item, More Than 3 (no Treatment Type specified)**
+**BAC10: Ineligible Item, More Than 3 (no Treatment Type specified)**
 
 ```gherkin
 Given a Giovanni 1 packing list has the statement 'The exporter of the products covered by this document (NIRMS RMS-GB-000153) declares that these products are intend for the Green lane and will remain in Northern Ireland.' specified anywhere on it
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified
 And the treatment type null in the treatment type field
-And the commodity code + CoO combination matches an item on the prohibited list in more than 3 instances
+And the commodity code + CoO combination matches an item on the Ineligible list in more than 3 instances
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics
@@ -171,7 +171,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 
 **TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature verified in workspace WHEN returning parser results (VERIFIED: Exact 6-parameter signature extracted from actual parser implementations - establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel, establishmentNumbers, headers)
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual packing-list-validator-utilities.js file)
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasineligibleItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual packing-list-validator-utilities.js file)
 
 **TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in actual parser implementations - mapParser() with headerRow, dataRow, headers configuration parameters)
 

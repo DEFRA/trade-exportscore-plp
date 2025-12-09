@@ -1,14 +1,14 @@
 // Jest mocks for CoO validation testing
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO",
+  "INELIGIBLE_ITEM_ISO",
   "GB",
   "X",
 ]);
 
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
     commodity_code: "1234",
     type_of_treatment: "Processed",
   },
@@ -158,37 +158,37 @@ describe("Warrens 2 CoO Validation Tests - Type 1", () => {
     expect(result.business_checks.failure_reasons).toBeNull();
   });
 
-  test("BAC11: Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
+  test("BAC11: Item Present on Ineligible Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatmentModel,
+      model.ineligibleItemsWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Prohibited item identified on the packing list",
+      "Ineligible item identified on the packing list",
     );
   });
 
-  test("BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
+  test("BAC12: Item Present on Ineligible Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatmentModel,
+      model.ineligibleItemsMultipleWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
   });
 
-  test("BAC13: Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
+  test("BAC13: Item Present on Ineligible Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsNoTreatmentModel,
+      model.ineligibleItemsNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Prohibited item identified on the packing list",
+      "Ineligible item identified on the packing list",
     );
   });
 
-  test("BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
+  test("BAC14: Item Present on Ineligible Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleNoTreatmentModel,
+      model.ineligibleItemsMultipleNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");

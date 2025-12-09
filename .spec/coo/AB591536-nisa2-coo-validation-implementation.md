@@ -221,37 +221,37 @@ describe("Nisa 2 CoO Validation Tests - Type 1", () => {
     expect(result.business_checks.failure_reasons).toBeNull();
   });
 
-  test("BAC11: Prohibited Item with Treatment Type - validation errors", async () => {
+  test("BAC11: Ineligible Item with Treatment Type - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatment,
+      model.ineligibleItemsWithTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Prohibited item identified on the packing list",
+      "Ineligible item identified on the packing list",
     );
   });
 
-  test("BAC12: Prohibited Items, more than 3 (Treatment Type specified) - multiple validation errors", async () => {
+  test("BAC12: Ineligible Items, more than 3 (Treatment Type specified) - multiple validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatment,
+      model.ineligibleItemsMultipleWithTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
   });
 
-  test("BAC13: Prohibited Item without Treatment Type - validation errors", async () => {
+  test("BAC13: Ineligible Item without Treatment Type - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithoutTreatment,
+      model.ineligibleItemsWithoutTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Prohibited item identified on the packing list",
+      "Ineligible item identified on the packing list",
     );
   });
 
-  test("BAC14: Prohibited Items, more than 3 (no Treatment Type specified) - multiple validation errors", async () => {
+  test("BAC14: Ineligible Items, more than 3 (no Treatment Type specified) - multiple validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithoutTreatment,
+      model.ineligibleItemsMultipleWithoutTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
@@ -448,8 +448,8 @@ module.exports = {
     ],
   },
 
-  // BAC11: Prohibited Item with Treatment Type
-  prohibitedItemsWithTreatment: {
+  // BAC11: Ineligible Item with Treatment Type
+  ineligibleItemsWithTreatment: {
     "Customer Order": [
       [
         "PART NUMBER DESCRIPTION",
@@ -464,8 +464,8 @@ module.exports = {
     ],
   },
 
-  // BAC12: Prohibited Items, more than 3 (Treatment Type specified)
-  prohibitedItemsMultipleWithTreatment: {
+  // BAC12: Ineligible Items, more than 3 (Treatment Type specified)
+  ineligibleItemsMultipleWithTreatment: {
     "Customer Order": [
       [
         "PART NUMBER DESCRIPTION",
@@ -483,8 +483,8 @@ module.exports = {
     ],
   },
 
-  // BAC13: Prohibited Item without Treatment Type
-  prohibitedItemsWithoutTreatment: {
+  // BAC13: Ineligible Item without Treatment Type
+  ineligibleItemsWithoutTreatment: {
     "Customer Order": [
       [
         "PART NUMBER DESCRIPTION",
@@ -499,8 +499,8 @@ module.exports = {
     ],
   },
 
-  // BAC14: Prohibited Items, more than 3 (no Treatment Type specified)
-  prohibitedItemsMultipleWithoutTreatment: {
+  // BAC14: Ineligible Items, more than 3 (no Treatment Type specified)
+  ineligibleItemsMultipleWithoutTreatment: {
     "Customer Order": [
       [
         "PART NUMBER DESCRIPTION",
@@ -545,7 +545,7 @@ module.exports = {
    - **CoO column**: `country_of_origin: /COUNTRY OF ORIGIN/i,` (outside regex section for CoO validation) ✅
 2. **Test patterns against actual headers**: Verify regex works with real test data column headers
 3. **Conventional NIRMS values**: Test data uses standard patterns (Yes/No/NIRMS/Non-NIRMS/etc.)
-4. **Prohibited items**: Use actual prohibited commodity codes from `app/services/data/data-prohibited-items.json` (e.g., "08045000" from "GB")
+4. **Ineligible items**: Use actual Ineligible commodity codes from `app/services/data/data-Ineligible-items.json` (e.g., "08045000" from "GB")
 
 ### Step 4: Integration Verification
 
@@ -588,7 +588,7 @@ module.exports = {
 - [ ] **Test Data Models Created**: ALL test data models exist for every test case reference
   - [ ] Every `model.[testDataName]` has corresponding export in test data file
   - [ ] Test data uses conventional NIRMS values (Yes/No/NIRMS/Non-NIRMS/Green/Red/Y/N/G/R)
-  - [ ] Prohibited items use actual prohibited commodity codes from data file (e.g., "08045000")
+  - [ ] Ineligible items use actual Ineligible commodity codes from data file (e.g., "08045000")
 - [ ] **Complete Test Coverage**: All 14 acceptance criteria covered in unit tests
   - [ ] ALL CoO validation test cases passing
   - [ ] ALL existing regression tests passing

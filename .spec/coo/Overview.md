@@ -17,7 +17,7 @@ All CoO validation implementations follow the **configuration-driven approach** 
 - **Generic Validation Utilities** (`app/services/validators/packing-list-validator-utilities.js`)
   - `hasMissingCoO()` / `hasInvalidCoO()` - Country of Origin validation
   - `hasMissingNirms()` / `hasInvalidNirms()` - NIRMS classification validation
-  - `hasProhibitedItems()` - Cross-reference prohibited items lists
+  - `hasineligibleItems()` - Cross-reference Ineligible items lists
 - **Column Validator** (`app/services/validators/packing-list-column-validator.js`)
   - Checks `validateCountryOfOrigin` flag from parser configuration
   - Applies CoO validation rules when flag is enabled
@@ -56,7 +56,7 @@ TRADER_NAME: {
 
 ## Foundation Work Item
 
-All specifications depend on **AB#592259** - the foundational validation rules and prohibited items cross-reference functionality already implemented in the generic validation utilities.
+All specifications depend on **AB#592259** - the foundational validation rules and Ineligible items cross-reference functionality already implemented in the generic validation utilities.
 
 ## Implementation Notes
 
@@ -71,7 +71,7 @@ Each specification includes comprehensive test scenarios covering:
 
 - Missing/invalid NIRMS values
 - Missing/invalid Country of Origin values
-- Prohibited items cross-referencing
+- Ineligible items cross-referencing
 - Error message formatting and aggregation
 - Edge cases and boundary conditions
 

@@ -19,7 +19,7 @@ const {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
 } = require("./packing-list-validator-utilities");
 const parserModel = require("../parser-model");
 const failureReasonsDescriptions = require("./packing-list-failure-reasons");
@@ -109,7 +109,7 @@ function getCountryOfOriginValidationResults(packingList) {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
   }
 
@@ -118,7 +118,7 @@ function getCountryOfOriginValidationResults(packingList) {
     invalidNirms: findItems(packingList.items, hasInvalidNirms),
     missingCoO: findItems(packingList.items, hasMissingCoO),
     invalidCoO: findItems(packingList.items, hasInvalidCoO),
-    prohibitedItems: findItems(packingList.items, hasProhibitedItems),
+    ineligibleItems: findItems(packingList.items, hasIneligibleItems),
   };
 }
 
@@ -153,7 +153,7 @@ function calculateHasAllFields(
       countryOfOriginResults.invalidNirms.length +
       countryOfOriginResults.missingCoO.length +
       countryOfOriginResults.invalidCoO.length +
-      countryOfOriginResults.prohibitedItems.length ===
+      countryOfOriginResults.ineligibleItems.length ===
     0;
 
   return (
@@ -335,8 +335,8 @@ function createValidationChecks(validationResult) {
       description: failureReasonsDescriptions.COO_INVALID,
     },
     {
-      collection: validationResult.prohibitedItems,
-      description: failureReasonsDescriptions.PROHIBITED_ITEM,
+      collection: validationResult.ineligibleItems,
+      description: failureReasonsDescriptions.INELIGIBLE_ITEM,
     },
   ];
 }

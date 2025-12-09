@@ -663,7 +663,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     RANA: [
       // NIRMS NUMBER
       { A: "NIRMS NUMBER" },
@@ -681,17 +681,17 @@ module.exports = {
         G: "Quantity",
         H: "Net Weight (KG)",
       },
-      // Data rows with prohibited items
+      // Data rows with Ineligible items
       {
-        C: "PROHIBITED ITEM",
-        E: "012", // Prohibited commodity code
-        F: "PROHIBITED_ITEM_ISO", // Prohibited country
+        C: "Ineligible ITEM",
+        E: "012", // Ineligible commodity code
+        F: "INELIGIBLE_ITEM_ISO", // Ineligible country
         G: 17,
         H: 40.8,
       },
     ],
   },
-  prohibitedItemsWithTreatment: {
+  ineligibleItemsWithTreatment: {
     RANA: [
       // NIRMS NUMBER
       { A: "NIRMS NUMBER" },
@@ -704,7 +704,7 @@ module.exports = {
         A: "Type of Treatment",
       },
       {
-        A: "PROHIBITED_ITEM_TREATMENT",
+        A: "INELIGIBLE_ITEM_TREATMENT",
       },
       {
         C: "DESCRIPTION",
@@ -714,15 +714,15 @@ module.exports = {
         H: "Net Weight (KG)",
       },
       {
-        C: "PROHIBITED ITEM WITH TREATMENT",
-        E: "012", // Prohibited commodity code
-        F: "PROHIBITED_ITEM_ISO", // Prohibited country
+        C: "Ineligible ITEM WITH TREATMENT",
+        E: "012", // Ineligible commodity code
+        F: "INELIGIBLE_ITEM_ISO", // Ineligible country
         G: 17,
         H: 40.8,
       },
     ],
   },
-  prohibitedItemsMultiple: {
+  ineligibleItemsMultiple: {
     RANA: [
       // NIRMS NUMBER
       { A: "NIRMS NUMBER" },
@@ -740,32 +740,32 @@ module.exports = {
         G: "Quantity",
         H: "Net Weight (KG)",
       },
-      // Multiple prohibited items (>3)
+      // Multiple Ineligible items (>3)
       {
-        C: "PROHIBITED ITEM 1",
+        C: "Ineligible ITEM 1",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 17,
         H: 40.8,
       },
       {
-        C: "PROHIBITED ITEM 2",
+        C: "Ineligible ITEM 2",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 10,
         H: 24,
       },
       {
-        C: "PROHIBITED ITEM 3",
+        C: "Ineligible ITEM 3",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 15,
         H: 30,
       },
       {
-        C: "PROHIBITED ITEM 4",
+        C: "Ineligible ITEM 4",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 5,
         H: 12,
       },

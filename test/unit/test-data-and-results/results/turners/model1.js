@@ -349,23 +349,23 @@ module.exports = {
     registration_approval_number: "RMS-GB-000156-001",
     parserModel: parserModel.TURNERS1,
   },
-  prohibitedItemsTestResult: {
+  ineligibleItemsTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.PROHIBITED_ITEM +
+        failureReasonsDescriptions.INELIGIBLE_ITEM +
         ' in sheet "PackingList_Extract" row 2.\n',
     },
     items: [
       {
         commodity_code: "012",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
-        description: "Prohibited Beef Product",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
+        description: "Ineligible Beef Product",
         nature_of_products: "Meat Products",
         number_of_packages: "10",
         total_net_weight_kg: "50.5",
         total_net_weight_unit: "kg",
-        type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+        type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
         nirms: "NIRMS",
       },
     ],

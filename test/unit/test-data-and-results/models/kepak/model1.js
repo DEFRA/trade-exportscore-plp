@@ -919,8 +919,8 @@ module.exports = {
       },
     ],
   },
-  // AC7: Item Present on Prohibited Item List (Treatment Type specified)
-  prohibitedItemWithTreatment: {
+  // AC7: Item Present on Ineligible Item List (Treatment Type specified)
+  ineligibleItemWithTreatment: {
     KEPAK: [
       {},
       {},
@@ -952,7 +952,7 @@ module.exports = {
       {
         C: "RS DOUBLE DECKER STD",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 32,
         H: 30.336,
       },
@@ -961,8 +961,8 @@ module.exports = {
       },
     ],
   },
-  // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  multipleProhibitedItemsWithTreatment: {
+  // AC8: Item Present on Ineligible Item List, more than 3 (Treatment Type specified)
+  multipleineligibleItemsWithTreatment: {
     KEPAK: [
       {},
       {},
@@ -994,28 +994,28 @@ module.exports = {
       {
         C: "RS DOUBLE DECKER STD",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 32,
         H: 30.336,
       },
       {
         C: "RS BBQ RIB STD 8X157G",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 22,
         H: 27.632,
       },
       {
         C: "RS DOUBLE DECKER STD",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 32,
         H: 30.336,
       },
       {
         C: "RS BBQ RIB STD 8X157G",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 22,
         H: 27.632,
       },
@@ -1024,8 +1024,8 @@ module.exports = {
       },
     ],
   },
-  // AC9: Item Present on Prohibited Item List (no Treatment Type specified)
-  prohibitedItemNoTreatment: {
+  // AC9: Item Present on Ineligible Item List (no Treatment Type specified)
+  ineligibleItemNoTreatment: {
     KEPAK: [
       {},
       {},
@@ -1057,7 +1057,7 @@ module.exports = {
       {
         C: "RS DOUBLE DECKER STD",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 32,
         H: 30.336,
       },
@@ -1066,8 +1066,8 @@ module.exports = {
       },
     ],
   },
-  // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  multipleProhibitedItemsNoTreatment: {
+  // AC10: Item Present on Ineligible Item List, more than 3 (no Treatment Type specified)
+  multipleineligibleItemsNoTreatment: {
     KEPAK: [
       {},
       {},
@@ -1099,28 +1099,28 @@ module.exports = {
       {
         C: "RS DOUBLE DECKER STD",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 32,
         H: 30.336,
       },
       {
         C: "RS BBQ RIB STD 8X157G",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 22,
         H: 27.632,
       },
       {
         C: "RS DOUBLE DECKER STD",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 32,
         H: 30.336,
       },
       {
         C: "RS BBQ RIB STD 8X157G",
         E: "012",
-        F: "PROHIBITED_ITEM_ISO",
+        F: "INELIGIBLE_ITEM_ISO",
         G: 22,
         H: 27.632,
       },

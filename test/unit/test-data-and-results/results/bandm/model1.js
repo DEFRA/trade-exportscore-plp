@@ -373,12 +373,12 @@ module.exports = {
     registration_approval_number: "RMS-GB-000005-001",
     parserModel: parserModel.BANDM1,
   },
-  // AC7: Item Present on Prohibited Item List (Treatment Type specified)
-  prohibitedItemWithTreatmentTestResult: {
+  // AC7: Item Present on Ineligible item List (Treatment Type specified)
+  ineligibleItemWithTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.PROHIBITED_ITEM +
+        failureReasonsDescriptions.INELIGIBLE_ITEM +
         ' in sheet "Sheet1" row 7.\n',
     },
     items: [
@@ -391,18 +391,18 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
     parserModel: parserModel.BANDM1,
   },
-  // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  multipleProhibitedItemsWithTreatmentTestResult: {
+  // AC8: Item Present on Ineligible item List, more than 3 (Treatment Type specified)
+  multipleineligibleItemsWithTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.PROHIBITED_ITEM +
+        failureReasonsDescriptions.INELIGIBLE_ITEM +
         ' in sheet "Sheet1" row 7, sheet "Sheet1" row 8, sheet "Sheet1" row 9 in addition to 2 other locations.\n',
     },
     items: [
@@ -415,7 +415,7 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -426,7 +426,7 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -437,7 +437,7 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -448,7 +448,7 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -459,18 +459,18 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
     parserModel: parserModel.BANDM1,
   },
-  // AC9: Item Present on Prohibited Item List (no Treatment Type specified)
-  prohibitedItemNoTreatmentTestResult: {
+  // AC9: Item Present on Ineligible item List (no Treatment Type specified)
+  ineligibleItemNoTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.PROHIBITED_ITEM +
+        failureReasonsDescriptions.INELIGIBLE_ITEM +
         ' in sheet "Sheet1" row 7.\n',
     },
     items: [
@@ -483,18 +483,18 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
     parserModel: parserModel.BANDM1,
   },
-  // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  multipleProhibitedItemsNoTreatmentTestResult: {
+  // AC10: Item Present on Ineligible item List, more than 3 (no Treatment Type specified)
+  multipleineligibleItemsNoTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.PROHIBITED_ITEM +
+        failureReasonsDescriptions.INELIGIBLE_ITEM +
         ' in sheet "Sheet1" row 7, sheet "Sheet1" row 8, sheet "Sheet1" row 9 in addition to 2 other locations.\n',
     },
     items: [
@@ -507,7 +507,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -518,7 +518,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -529,7 +529,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -540,7 +540,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -551,7 +551,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",

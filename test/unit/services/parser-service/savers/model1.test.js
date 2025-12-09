@@ -7,13 +7,13 @@ const filename = "packinglist-boots-model1.xlsx";
 
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO",
+  "INELIGIBLE_ITEM_ISO",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
     commodity_code: "012",
-    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
   },
 ]);
 describe("matchesSaversModel1", () => {
@@ -112,14 +112,14 @@ describe("matchesSaversModel1", () => {
     expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
 
-  test("matches valid SAVERS Model 1 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
+  test("matches valid SAVERS Model 1 file, calls parser and returns all_required_fields_present as false for ineligible items", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.PROHIBITED_ITEM +
+      failureReasons.INELIGIBLE_ITEM +
         ' in sheet "(DO NOT SORT) Packing List" row 6.\n',
     );
   });

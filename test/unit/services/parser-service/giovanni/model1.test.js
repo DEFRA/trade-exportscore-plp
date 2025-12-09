@@ -5,7 +5,7 @@ const test_results = require("../../../test-data-and-results/results/giovanni/mo
 
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO",
+  "INELIGIBLE_ITEM_ISO",
   "GB",
   "CN",
   "IT",
@@ -14,11 +14,11 @@ jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "ES",
   "US",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
     commodity_code: "012",
-    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
   },
 ]);
 
@@ -143,36 +143,36 @@ describe("GIOVANNI1 CoO Validation Tests - Type 4", () => {
     expect(result.items.every((item) => item.nirms === "NIRMS")).toBe(true);
   });
 
-  test("BAC7: Prohibited items validation with treatment type", async () => {
+  test("BAC7: ineligible items validation with treatment type", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatment,
+      model.ineligibleItemsWithTreatment,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Prohibited item identified on the packing list",
+      "Ineligible item identified on the packing list",
     );
     expect(result.business_checks.all_required_fields_present).toBe(false);
   });
 
-  test('BAC8,10: Multiple prohibited items aggregation - shows first 3 and "in addition to" message', async () => {
+  test('BAC8,10: Multiple ineligible items aggregation - shows first 3 and "in addition to" message', async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultiple,
+      model.ineligibleItemsMultiple,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Prohibited item identified on the packing list",
+      "Ineligible item identified on the packing list",
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
     expect(result.business_checks.all_required_fields_present).toBe(false);
   });
 
-  test("BAC9: Prohibited items validation without treatment type", async () => {
+  test("BAC9: ineligible items validation without treatment type", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Prohibited item identified on the packing list",
+      "Ineligible item identified on the packing list",
     );
     expect(result.business_checks.all_required_fields_present).toBe(false);
   });

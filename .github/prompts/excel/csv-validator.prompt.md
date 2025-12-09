@@ -70,13 +70,13 @@ Analyze a CSV file to identify and validate specific error conditions mentioned 
    - **Weight Validation**: Positive numeric values, proper units
    - **Code Validation**: Non-empty, non-error values for commodity codes
 
-6. **Prohibited Items Cross-Reference**
-   - **Data Source**: Load prohibited items from app/services/data/data-prohibited-items.json
+6. **Ineligible Items Cross-Reference**
+   - **Data Source**: Load Ineligible items from app/services/data/data-Ineligible-items.json
    - **Matching Criteria**: Match combination of country_of_origin, commodity_code, and type_of_treatment
-   - **Validation Logic**: Check if CSV row data matches any prohibited item entry exactly
-   - **Error Classification**: Items matching prohibited combinations should be flagged as prohibited items
-   - **Cross-Reference Process**: For any "prohibited item" errors, verify against the JSON data before reporting
-   - **Description Context**: For prohibited item errors, include the product description to provide context about what item is prohibited
+   - **Validation Logic**: Check if CSV row data matches any Ineligible item entry exactly
+   - **Error Classification**: Items matching Ineligible combinations should be flagged as Ineligible items
+   - **Cross-Reference Process**: For any "Ineligible item" errors, verify against the JSON data before reporting
+   - **Description Context**: For Ineligible item errors, include the product description to provide context about what item is Ineligible
 ```
 
 ## Detailed Instructions
@@ -86,7 +86,7 @@ Analyze a CSV file to identify and validate specific error conditions mentioned 
 ```
 - Use read_file to load the parser-model.js file to convert parser model string to constant
 - Use read_file to load the model-headers.js file and extract the specific parser model configuration
-- Use read_file to load app/services/data/data-prohibited-items.json for prohibited item cross-referencing
+- Use read_file to load app/services/data/data-Ineligible-items.json for Ineligible item cross-referencing
 - Map the provided parser model string (e.g., "coop-1") to the corresponding constant (e.g., "COOP1")
 - Validate that the mapped parser model exists in the model-headers definitions
 - Use read_file to load the CSV file content
@@ -144,9 +144,9 @@ For each data row mentioned in the failure reason:
   * If no offset provided: CSV row = failure reason row (default behavior)
 - Check only the cells and conditions specified in the failure reason parameter at the calculated CSV row positions
 - Confirm the exact error conditions described in the failure reason
-- For "prohibited item" errors: Cross-reference country_of_origin, commodity_code, and type_of_treatment against data-prohibited-items.json
-- Verify exact matches in the prohibited items database before confirming prohibited status
-- For "prohibited item" errors: Also include the product description from the description column to provide context
+- For "Ineligible item" errors: Cross-reference country_of_origin, commodity_code, and type_of_treatment against data-Ineligible-items.json
+- Verify exact matches in the Ineligible items database before confirming Ineligible status
+- For "Ineligible item" errors: Also include the product description from the description column to provide context
 - Record specific column references and error descriptions for specified errors only
 - ALWAYS include the actual cell value (e.g., "empty/blank", specific text/number) in error descriptions
 - IGNORE any other validation issues not mentioned in the failure reason
@@ -274,12 +274,12 @@ Use these patterns for consistent error reporting:
 - "**Invalid package count** - Column 5 (Packages) contains 'text' instead of a numeric value"
 - "**Country of origin missing** - Column 10 (Country of Origin) contains 'empty/blank' (required by model coop-1 validateCountryOfOrigin flag)"
 - "**Establishment number invalid** - Column 4 (Establishment Number) contains 'RMS-GB-123456-789' but model expects pattern matching /^RMS-GB-000009-\d{3}$/i"
-- "**Prohibited item identified** - Product 'Co-op Fresh Carrots 500G' in Column 14 (Description) with Country of Origin 'CN', Commodity Code '07061000', and Type of Treatment 'Unprocessed' matches prohibited combination in database"
+- "**Ineligible item identified** - Product 'Co-op Fresh Carrots 500G' in Column 14 (Description) with Country of Origin 'CN', Commodity Code '07061000', and Type of Treatment 'Unprocessed' matches Ineligible combination in database"
 - "**Invalid Country of Origin ISO Code** - Column 4 (Country of Origin) contains 'EU', which is not a valid ISO code"
 
 ✅ Accepted Failure Reason Formats:
 - "Product code is invalid in row 54 and row 408"
-- "Prohibited item identified on the packing list in row 161, row 168, row 169 in addition to 2 other locations"
+- "Ineligible item identified on the packing list in row 161, row 168, row 169 in addition to 2 other locations"
 - "Invalid Country of Origin ISO Code in row 85, row 89, row 92 in addition to 8 other locations (rows 95, 98, 101, 104, 107, 110, 113, 116)"
 
 ✅ Row Offset Examples:
@@ -292,7 +292,7 @@ Use these patterns for consistent error reporting:
 - "Invalid data"  
 - "Cell contains wrong value"
 - "Column 15 contains an invalid value" (missing actual cell value)
-- "Prohibited item found" (missing product description and specific values)
+- "Ineligible item found" (missing product description and specific values)
 ```
 
 ## Model-Headers Integration Reference

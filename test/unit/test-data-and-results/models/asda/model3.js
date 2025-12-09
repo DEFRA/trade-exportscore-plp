@@ -907,7 +907,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsWithTreatmentModel: {
+  ineligibleItemsWithTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -923,7 +923,7 @@ module.exports = {
         N: "Country of Origin",
       },
       {
-        B: "PROHIBITED ITEM WITH TREATMENT",
+        B: "Ineligible ITEM WITH TREATMENT",
         C: "Bakery Bought In",
         D: "Processed",
         E: "RMS-GB-000015-006",
@@ -933,12 +933,12 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
 
-  prohibitedItemsNoTreatmentModel: {
+  ineligibleItemsNoTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -954,7 +954,7 @@ module.exports = {
         N: "Country of Origin",
       },
       {
-        B: "PROHIBITED ITEM NO TREATMENT",
+        B: "Ineligible ITEM NO TREATMENT",
         C: "Bakery Bought In",
         D: null,
         E: "RMS-GB-000015-006",
@@ -964,12 +964,12 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
 
-  prohibitedItemsMultipleWithTreatmentModel: {
+  ineligibleItemsMultipleWithTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -985,7 +985,7 @@ module.exports = {
         N: "Country of Origin",
       },
       {
-        B: "PROHIBITED ITEM 1 WITH TREATMENT",
+        B: "Ineligible ITEM 1 WITH TREATMENT",
         C: "Bakery Bought In",
         D: "Processed",
         E: "RMS-GB-000015-006",
@@ -995,10 +995,10 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
       {
-        B: "PROHIBITED ITEM 2 WITH TREATMENT",
+        B: "Ineligible ITEM 2 WITH TREATMENT",
         C: "Bakery Bought In",
         D: "Processed",
         E: "RMS-GB-000015-006",
@@ -1008,10 +1008,10 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
       {
-        B: "PROHIBITED ITEM 3 WITH TREATMENT",
+        B: "Ineligible ITEM 3 WITH TREATMENT",
         C: "Bakery Bought In",
         D: "Processed",
         E: "RMS-GB-000015-006",
@@ -1021,10 +1021,10 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
       {
-        B: "PROHIBITED ITEM 4 WITH TREATMENT",
+        B: "Ineligible ITEM 4 WITH TREATMENT",
         C: "Bakery Bought In",
         D: "Processed",
         E: "RMS-GB-000015-006",
@@ -1034,12 +1034,12 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
 
-  prohibitedItemsMultipleNoTreatmentModel: {
+  ineligibleItemsMultipleNoTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -1055,7 +1055,7 @@ module.exports = {
         N: "Country of Origin",
       },
       {
-        B: "PROHIBITED ITEM 1 NO TREATMENT",
+        B: "Ineligible ITEM 1 NO TREATMENT",
         C: "Bakery Bought In",
         D: null,
         E: "RMS-GB-000015-006",
@@ -1065,10 +1065,10 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
       {
-        B: "PROHIBITED ITEM 2 NO TREATMENT",
+        B: "Ineligible ITEM 2 NO TREATMENT",
         C: "Bakery Bought In",
         D: null,
         E: "RMS-GB-000015-006",
@@ -1078,10 +1078,10 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
       {
-        B: "PROHIBITED ITEM 3 NO TREATMENT",
+        B: "Ineligible ITEM 3 NO TREATMENT",
         C: "Bakery Bought In",
         D: null,
         E: "RMS-GB-000015-006",
@@ -1091,10 +1091,10 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
       {
-        B: "PROHIBITED ITEM 4 NO TREATMENT",
+        B: "Ineligible ITEM 4 NO TREATMENT",
         C: "Bakery Bought In",
         D: null,
         E: "RMS-GB-000015-006",
@@ -1104,7 +1104,7 @@ module.exports = {
         I: "kgs",
         J: "NIRMS",
         M: "1234",
-        N: "PROHIBITED_ITEM_ISO",
+        N: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },

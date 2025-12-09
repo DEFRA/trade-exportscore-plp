@@ -8,7 +8,7 @@
 
 ## Overview
 
-This specification defines the requirements for Country of Origin (CoO) validation for Savers trader packing lists within the DEFRA trade-exportscore-plp service. The validation will ensure NIRMS compliance and prohibited item checking for Savers-specific Excel format.
+This specification defines the requirements for Country of Origin (CoO) validation for Savers trader packing lists within the DEFRA trade-exportscore-plp service. The validation will ensure NIRMS compliance and Ineligible item checking for Savers-specific Excel format.
 
 ## Business Context
 
@@ -23,7 +23,7 @@ This specification defines the requirements for Country of Origin (CoO) validati
 - Collect relevant CoO fields from Savers trader format
 - Provide basic validation for Country of Origin compliance
 - Enforce NIRMS scheme validation rules
-- Check against prohibited items list
+- Check against Ineligible items list
 - Generate comprehensive error messages with location details
 
 ## Savers Trader Format Specification
@@ -152,44 +152,44 @@ Then the packing list will pass
 And the item is accepted as valid
 ```
 
-#### BAC11: Prohibited Item - Single Item with Treatment Type
+#### BAC11: Ineligible Item - Single Item with Treatment Type
 
 ```gherkin
-Given a Savers packing list item contains a prohibited item based on commodity code or description
+Given a Savers packing list item contains a Ineligible item based on commodity code or description
 And the 'Type of Treatment' column [column L] has a specified treatment type
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item detected in sheet X row Y"
+And the failure reason is: "Ineligible item detected in sheet X row Y"
 ```
 
-#### BAC12: Prohibited Item - Multiple Items with Treatment Type
+#### BAC12: Ineligible Item - Multiple Items with Treatment Type
 
 ```gherkin
-Given a Savers packing list has more than 3 prohibited items based on commodity code or description
+Given a Savers packing list has more than 3 Ineligible items based on commodity code or description
 And the 'Type of Treatment' column [column L] has specified treatment types
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item detected - more than 3 errors"
+And the failure reason is: "Ineligible item detected - more than 3 errors"
 ```
 
-#### BAC13: Prohibited Item - Single Item without Treatment Type
+#### BAC13: Ineligible Item - Single Item without Treatment Type
 
 ```gherkin
-Given a Savers packing list item contains a prohibited item based on commodity code or description
+Given a Savers packing list item contains a Ineligible item based on commodity code or description
 And the 'Type of Treatment' column [column L] has no specified treatment type
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item detected in sheet X row Y"
+And the failure reason is: "Ineligible item detected in sheet X row Y"
 ```
 
-#### BAC14: Prohibited Item - Multiple Items without Treatment Type
+#### BAC14: Ineligible Item - Multiple Items without Treatment Type
 
 ```gherkin
-Given a Savers packing list has more than 3 prohibited items based on commodity code or description
+Given a Savers packing list has more than 3 Ineligible items based on commodity code or description
 And the 'Type of Treatment' column [column L] has no specified treatment types
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item detected - more than 3 errors"
+And the failure reason is: "Ineligible item detected - more than 3 errors"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics
@@ -198,7 +198,7 @@ And the failure reason is: "Prohibited item detected - more than 3 errors"
 
 **TR2: Parser Function Signature** - The system SHALL use combineParser.combine(establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel.SAVERS1, establishmentNumbers, headers.SAVERS1) signature WHEN returning parser results
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasineligibleItems) WHEN validateCountryOfOrigin flag is enabled
 
 **TR4: Data Processing Pattern** - The system SHALL use mapParser(packingListJson[sheet], headerRow, dataRow, headers.SAVERS1, sheet) WHEN processing packing list data
 
@@ -388,7 +388,7 @@ function hasMissingCoO(item) {
 function hasInvalidCoO(item) {
   /* ... */
 }
-function hasProhibitedItems(item) {
+function hasineligibleItems(item) {
   /* ... */
 }
 

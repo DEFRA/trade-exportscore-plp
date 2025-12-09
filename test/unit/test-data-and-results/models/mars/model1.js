@@ -457,7 +457,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItem: {
+  ineligibleItem: {
     Sheet1: [
       {
         A: "Despatch Location : ",
@@ -475,12 +475,12 @@ module.exports = {
         J: "SPS",
       },
       {
-        C: "PROHIBITED ITEM",
+        C: "Ineligible ITEM",
         D: 8,
         E: 24,
-        G: "012", // Prohibited commodity code
-        H: "PROHIBITED_ITEM_ISO", // Prohibited country
-        I: "PROHIBITED_ITEM_TREATMENT",
+        G: "012", // Ineligible commodity code
+        H: "INELIGIBLE_ITEM_ISO", // Ineligible country
+        I: "INELIGIBLE_ITEM_TREATMENT",
         J: "Green Lane - OCR",
       },
     ],

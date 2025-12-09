@@ -534,7 +534,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -563,7 +563,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -592,7 +592,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -623,7 +623,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -654,7 +654,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -685,7 +685,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -715,7 +715,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -746,7 +746,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -777,7 +777,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -808,7 +808,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -839,7 +839,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [{ rowNumber: 1 }],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -869,7 +869,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [{ rowNumber: 1 }],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -900,7 +900,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [{ rowNumber: 1 }],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -914,7 +914,7 @@ describe("generateFailuresByIndexAndTypes", () => {
     );
   });
 
-  test("prohibited items", () => {
+  test("ineligible items", () => {
     const validationResult = {
       hasAllFields: false,
       isEmpty: false,
@@ -931,7 +931,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [{ rowNumber: 1 }],
+      ineligibleItems: [{ rowNumber: 1 }],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -941,7 +941,7 @@ describe("generateFailuresByIndexAndTypes", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain(
-      failureReasonsDescriptions.PROHIBITED_ITEM,
+      failureReasonsDescriptions.INELIGIBLE_ITEM,
     );
   });
 
@@ -962,7 +962,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [{ rowNumber: 1 }],
       missingCoO: [{ rowNumber: 1 }],
       invalidCoO: [{ rowNumber: 1 }],
-      prohibitedItems: [{ rowNumber: 1 }],
+      ineligibleItems: [{ rowNumber: 1 }],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(
@@ -1011,7 +1011,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       failureReasonsDescriptions.COO_INVALID,
     );
     expect(result.failureReasons).toContain(
-      failureReasonsDescriptions.PROHIBITED_ITEM,
+      failureReasonsDescriptions.INELIGIBLE_ITEM,
     );
   });
 
@@ -1032,7 +1032,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       invalidNirms: [],
       missingCoO: [],
       invalidCoO: [],
-      prohibitedItems: [],
+      ineligibleItems: [],
     };
 
     const result = packingListValidator.generateFailuresByIndexAndTypes(

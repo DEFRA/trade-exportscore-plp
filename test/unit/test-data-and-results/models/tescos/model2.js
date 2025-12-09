@@ -1129,8 +1129,8 @@ module.exports = {
     return data;
   })(),
 
-  // BAC11: Item Present on Prohibited Item List (Treatment Type specified)
-  prohibitedItemsWithTreatmentModel: (() => {
+  // BAC11: Item Present on Ineligible Item List (Treatment Type specified)
+  ineligibleItemsWithTreatmentModel: (() => {
     const data = JSON.parse(
       JSON.stringify({
         Sheet2: [
@@ -1159,7 +1159,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1172,8 +1172,8 @@ module.exports = {
     return data;
   })(),
 
-  // BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  prohibitedItemsMultipleWithTreatmentModel: (() => {
+  // BAC12: Item Present on Ineligible Item List, more than 3 (Treatment Type specified)
+  ineligibleItemsMultipleWithTreatmentModel: (() => {
     const data = JSON.parse(
       JSON.stringify({
         Sheet2: [
@@ -1202,7 +1202,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1214,7 +1214,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1226,7 +1226,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1238,7 +1238,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1251,8 +1251,8 @@ module.exports = {
     return data;
   })(),
 
-  // BAC13: Item Present on Prohibited Item List (no Treatment Type specified)
-  prohibitedItemsNoTreatmentModel: (() => {
+  // BAC13: Item Present on Ineligible Item List (no Treatment Type specified)
+  ineligibleItemsNoTreatmentModel: (() => {
     const data = JSON.parse(
       JSON.stringify({
         Sheet2: [
@@ -1281,7 +1281,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1294,8 +1294,8 @@ module.exports = {
     return data;
   })(),
 
-  // BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  prohibitedItemsMultipleNoTreatmentModel: (() => {
+  // BAC14: Item Present on Ineligible Item List, more than 3 (no Treatment Type specified)
+  ineligibleItemsMultipleNoTreatmentModel: (() => {
     const data = JSON.parse(
       JSON.stringify({
         Sheet2: [
@@ -1324,7 +1324,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1336,7 +1336,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1348,7 +1348,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",
@@ -1360,7 +1360,7 @@ module.exports = {
             B: "TEST001",
             C: "1234",
             F: "Test Product",
-            G: "PROHIBITED_ITEM_ISO",
+            G: "INELIGIBLE_ITEM_ISO",
             H: "10",
             K: "5.00",
             M: "Chilled",

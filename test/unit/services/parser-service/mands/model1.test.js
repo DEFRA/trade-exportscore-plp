@@ -15,13 +15,13 @@ jest.mock("../../../../../app/config", () => {
 jest.mock("../../../../../app/utilities/pdf-helper");
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO",
+  "INELIGIBLE_ITEM_ISO",
 ]);
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
     commodity_code: "012",
-    type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
+    type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
   },
 ]);
 
@@ -243,21 +243,21 @@ describe("findParser", () => {
     expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
 
-  test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for prohibited items", async () => {
+  test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for ineligible items", async () => {
     runAnalysis.mockImplementationOnce(() => {
-      return model.prohibitedItems;
+      return model.ineligibleItems;
     });
     extractPdf.mockImplementation(() => {
       return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
     });
 
     const result = await parserService.findParser(
-      model.prohibitedItems,
+      model.ineligibleItems,
       filename,
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasonsDescriptions.PROHIBITED_ITEM +
+      failureReasonsDescriptions.INELIGIBLE_ITEM +
         " in page 1 row 1 and page 1 row 3.\n",
     );
   });

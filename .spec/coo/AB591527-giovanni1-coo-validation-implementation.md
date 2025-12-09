@@ -16,7 +16,7 @@
 - Collect relevant CoO fields from Giovanni 1 trader format using dynamic blanket statement detection
 - Provide comprehensive validation for Country of Origin compliance with NIRMS requirements
 - Enforce variable blanket NIRMS statement validation rules with treatment type header validation
-- Check against prohibited items list with treatment type considerations
+- Check against Ineligible items list with treatment type considerations
 - Generate comprehensive error messages with location details and aggregated reporting
 
 **Column Mapping:**
@@ -120,9 +120,9 @@ module.exports = {
   invalidCooFormat: {},
   cooPlaceholderX: {},
   multipleCooErrors: {},
-  prohibitedItems: {},
-  prohibitedItemsWithTreatment: {},
-  prohibitedItemsMultiple: {},
+  ineligibleItems: {},
+  ineligibleItemsWithTreatment: {},
+  ineligibleItemsMultiple: {},
 };
 ```
 
@@ -184,18 +184,18 @@ describe('GIOVANNI1 CoO Validation Tests - Type 4', () => {
     expect(result.business_checks.failure_reasons).toContain('in addition to');
   });
 
-  test('BAC7: Prohibited items validation with treatment type', () => {
-    const result = await parserService.findParser(model.prohibitedItemsWithTreatment, filename);
-    expect(result.business_checks.failure_reasons).toContain('Prohibited item identified on the packing list');
+  test('BAC7: Ineligible items validation with treatment type', () => {
+    const result = await parserService.findParser(model.ineligibleItemsWithTreatment, filename);
+    expect(result.business_checks.failure_reasons).toContain('Ineligible item identified on the packing list');
   });
 
-  test('BAC9: Prohibited items validation without treatment type', () => {
-    const result = await parserService.findParser(model.prohibitedItems, filename);
-    expect(result.business_checks.failure_reasons).toContain('Prohibited item identified on the packing list');
+  test('BAC9: Ineligible items validation without treatment type', () => {
+    const result = await parserService.findParser(model.ineligibleItems, filename);
+    expect(result.business_checks.failure_reasons).toContain('Ineligible item identified on the packing list');
   });
 
-  test('BAC8,10: Multiple prohibited items aggregation', () => {
-    const result = await parserService.findParser(model.prohibitedItemsMultiple, filename);
+  test('BAC8,10: Multiple Ineligible items aggregation', () => {
+    const result = await parserService.findParser(model.ineligibleItemsMultiple, filename);
     expect(result.business_checks.failure_reasons).toContain('in addition to');
   });
 });
@@ -251,14 +251,14 @@ If tests fail with "NIRMS/Non-NIRMS goods not specified":
 - [ ] **Test Data Models Created**: ALL test data models exist for every test case reference
   - [ ] Every `model.[testDataName]` has corresponding export in test data file
   - [ ] Blanket statement text in test data matches configuration regex exactly
-  - [ ] Prohibited items use actual prohibited commodity codes from data-prohibited-items.json
+  - [ ] Ineligible items use actual Ineligible commodity codes from data-Ineligible-items.json
 - [ ] **Legacy Test Results Updated**: Existing test expectations updated for CoO validation changes
   - [ ] Removed outdated "NIRMS/Non-NIRMS goods not specified" errors where blanket statement now detected
 - [ ] **Complete Test Coverage**: All acceptance criteria covered in unit tests
   - [ ] BAC1: Missing NIRMS blanket statement test
   - [ ] BAC2-5: CoO validation tests (null, invalid, aggregation)
   - [ ] BAC6: CoO placeholder X/x test
-  - [ ] BAC7-10: Prohibited items tests (with/without treatment, aggregation)
+  - [ ] BAC7-10: Ineligible items tests (with/without treatment, aggregation)
   - [ ] ALL CoO validation test cases passing
   - [ ] ALL existing regression tests passing
   - [ ] 100% test pass rate: `npm test -- --testPathPattern="giovanni/model1.test.js"`
@@ -336,19 +336,19 @@ module.exports = {
   invalidCooFormat: {},
   cooPlaceholderX: {},
   multipleCooErrors: {},
-  prohibitedItems: {},
+  ineligibleItems: {},
 };
 ```
 
-### Prohibited Items Test Failures
+### Ineligible Items Test Failures
 
-**Symptom**: Prohibited items test passes when it should fail
-**Root Cause**: Test data uses commodity codes not in prohibited items list
+**Symptom**: Ineligible items test passes when it should fail
+**Root Cause**: Test data uses commodity codes not in Ineligible items list
 
-**Fix**: Use actual prohibited items:
+**Fix**: Use actual Ineligible items:
 
 ```bash
-grep -i "GB" app/services/data/data-prohibited-items.json
+grep -i "GB" app/services/data/data-Ineligible-items.json
 ```
 
 ### Legacy Test Failures After CoO Implementation
@@ -378,7 +378,7 @@ failure_reasons: "Other errors...";
 
 6. ✅ **All 10 BAC test scenarios implemented and passing**
 7. ✅ **Test data models created for every test case reference**
-8. ✅ **Prohibited items tests using actual prohibited commodity codes**
+8. ✅ **Ineligible items tests using actual Ineligible commodity codes**
 9. ✅ **Legacy test results updated for CoO validation changes**
 10. ✅ **100% test pass rate with 0 failures**
 

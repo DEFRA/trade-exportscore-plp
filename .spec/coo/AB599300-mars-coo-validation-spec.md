@@ -8,7 +8,7 @@
 
 ## Overview
 
-This specification defines the implementation requirements for Country of Origin (CoO) validation for Mars trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and prohibited item checking for Mars-specific Excel format with irregular NIRMS value patterns.
+This specification defines the implementation requirements for Country of Origin (CoO) validation for Mars trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and Ineligible item checking for Mars-specific Excel format with irregular NIRMS value patterns.
 
 ## Business Context
 
@@ -23,7 +23,7 @@ This specification defines the implementation requirements for Country of Origin
 - Collect relevant CoO fields from Mars trader format
 - Provide basic validation for Country of Origin compliance
 - Enforce NIRMS scheme validation rules with Mars-specific value recognition
-- Check against prohibited items list
+- Check against Ineligible items list
 - Generate comprehensive error messages with location details
 
 ## Mars Trader Format Specification
@@ -162,7 +162,7 @@ When the packing list is submitted
 Then the packing list will pass
 ```
 
-**BAC11: Prohibited Item with Treatment Type**
+**BAC11: Ineligible Item with Treatment Type**
 
 ```gherkin
 Given a Mars packing list item has NIRMS value specified
@@ -171,13 +171,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is specified in the 'Type of Treatment' column [column C]
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
 ```
 
-**BAC12: Prohibited Item, More Than 3 (Treatment Type specified)**
+**BAC12: Ineligible Item, More Than 3 (Treatment Type specified)**
 
 ```gherkin
 Given a Mars packing list has more than 3 items that have NIRMS value specified
@@ -186,13 +186,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is specified in the 'Type of Treatment' column [column C]
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-**BAC13: Prohibited Item without Treatment Type**
+**BAC13: Ineligible Item without Treatment Type**
 
 ```gherkin
 Given a Mars packing list item has NIRMS value specified
@@ -201,13 +201,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is null in the 'Type of Treatment' column [column C]
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
 ```
 
-**BAC14: Prohibited Item, More Than 3 (no Treatment Type specified)**
+**BAC14: Ineligible Item, More Than 3 (no Treatment Type specified)**
 
 ```gherkin
 Given a Mars packing list has more than 3 items that have NIRMS value specified
@@ -216,10 +216,10 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is null in the 'Type of Treatment' column [column C]
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics
@@ -230,7 +230,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 
 **TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature verified in workspace WHEN returning parser results (VERIFIED: Exact signature extracted from actual parser-combine.js)
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual codebase)
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasineligibleItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual codebase)
 
 **TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in actual parser implementation)
 
@@ -401,10 +401,10 @@ function hasInvalidCoO(item) {
   return isNirms(item.nirms) && isInvalidCoO(item.country_of_origin);
 }
 
-function hasProhibitedItems(item) {
+function hasineligibleItems(item) {
   return (
     isNirms(item.nirms) &&
-    isProhibitedItem(
+    isineligibleItem(
       item.commodity_code,
       item.country_of_origin,
       item.type_of_treatment,
@@ -439,7 +439,7 @@ This specification enables Mars CoO validation through:
 3. **Irregular NIRMS Handling**: Mars-specific Green/Red value recognition instead of standard NIRMS values
 4. **Automatic Validation**: Existing validation pipeline automatically processes CoO rules when flag is enabled
 5. **Error Reporting**: Uses existing validation utilities to generate comprehensive error messages with row locations
-6. **Business Rule Compliance**: Leverages existing prohibited items checking and NIRMS validation infrastructure
+6. **Business Rule Compliance**: Leverages existing Ineligible items checking and NIRMS validation infrastructure
 
 No new validation code is required - all functionality uses the existing, tested validation utilities and pipeline infrastructure with Mars-specific NIRMS value handling.
 
@@ -558,7 +558,7 @@ When the packing list is submitted
 Then the packing list will pass
 ```
 
-**BAC11: Prohibited Item with Treatment Type**
+**BAC11: Ineligible Item with Treatment Type**
 
 ```gherkin
 Given a Mars packing list item has NIRMS value specified
@@ -567,13 +567,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is specified in the 'Type of Treatment' column [column C]
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
 ```
 
-**BAC12: Prohibited Item, More Than 3 (Treatment Type specified)**
+**BAC12: Ineligible Item, More Than 3 (Treatment Type specified)**
 
 ```gherkin
 Given a Mars packing list has more than 3 items that have NIRMS value specified
@@ -582,13 +582,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is specified in the 'Type of Treatment' column [column C]
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-**BAC13: Prohibited Item without Treatment Type**
+**BAC13: Ineligible Item without Treatment Type**
 
 ```gherkin
 Given a Mars packing list item has NIRMS value specified
@@ -597,13 +597,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is null in the 'Type of Treatment' column [column C]
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
 ```
 
-**BAC14: Prohibited Item, More Than 3 (no Treatment Type specified)**
+**BAC14: Ineligible Item, More Than 3 (no Treatment Type specified)**
 
 ```gherkin
 Given a Mars packing list has more than 3 items that have NIRMS value specified
@@ -612,10 +612,10 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is null in the 'Type of Treatment' column [column C]
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics
@@ -624,7 +624,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 
 **TR2: Parser Function Signature** - The system SHALL use the 6-parameter combineParser.combine() signature (establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel.MARS1, establishmentNumbers, headers.MARS1) WHEN returning parser results
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasineligibleItems) WHEN validateCountryOfOrigin flag is enabled
 
 **TR4: Data Processing Pattern** - The system SHALL use mapParser() with header configuration WHEN processing packing list data
 
@@ -654,7 +654,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 
 **DIR3: NIRMS Recognition Pattern** - The system SHALL recognize Mars NIRMS values using irregular patterns: nirms: /sps/i with custom value recognition (Green=NIRMS, Red=Non-NIRMS)
 
-**DIR4: Field Regex Patterns** - The system SHALL use Mars-specific regex patterns and add type_of_treatment: /Type of Treatment/i for prohibited items validation
+**DIR4: Field Regex Patterns** - The system SHALL use Mars-specific regex patterns and add type_of_treatment: /Type of Treatment/i for Ineligible items validation
 
 ### AC2: Null NIRMS value
 
@@ -757,7 +757,7 @@ When the packing list is submitted
 Then the packing list will pass
 ```
 
-### AC11: Item Present on Prohibited Item List (Treatment Type specified)
+### AC11: Item Present on Ineligible Item List (Treatment Type specified)
 
 ```gherkin
 Given a Mars packing list item has a NIRMS value specified
@@ -766,13 +766,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is specified in the 'Type of Treatment' column [column C]
-And the commodity code starts with and CoO, and treatment type matches an item on the prohibited item list
+And the commodity code starts with and CoO, and treatment type matches an item on the Ineligible item list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
 ```
 
-### AC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
+### AC12: Item Present on Ineligible Item List, more than 3 (Treatment Type specified)
 
 ```gherkin
 Given a Mars packing list have more than 3 items that have a NIRMS value specified
@@ -781,13 +781,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And the treatment type is specified in the 'Type of Treatment' column [column C]
-And the commodity code starts with, and CoO, and treatment type matches an item on the prohibited item list
+And the commodity code starts with, and CoO, and treatment type matches an item on the Ineligible item list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-### AC13: Item Present on Prohibited Item List (no Treatment Type specified)
+### AC13: Item Present on Ineligible Item List (no Treatment Type specified)
 
 ```gherkin
 Given a Mars packing list item has a NIRMS value specified
@@ -796,13 +796,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified in the 'Country Code' column [column I]
 And treatment type is not specified (null) in the 'Type of Treatment' column [column C]
-And the commodity code starts with, and CoO matches an item on the prohibited item list
+And the commodity code starts with, and CoO matches an item on the Ineligible item list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
 ```
 
-### AC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
+### AC14: Item Present on Ineligible Item List, more than 3 (no Treatment Type specified)
 
 ```gherkin
 Given a Mars packing list have more than 3 items that have a NIRMS value specified
@@ -811,10 +811,10 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)
 And the commodity code is specified in the 'Commodity Code' column [column I]
 And treatment type is not specified (null) in the 'Type of Treatment' column [column C]
-And the commodity code starts with, and CoO matches an item on the prohibited item list
+And the commodity code starts with, and CoO matches an item on the Ineligible item list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ## Technical Implementation
@@ -947,7 +947,7 @@ CoO validation follows the standard parser architecture used across the codebase
 
 4. **Existing Validation Utilities** handle CoO validation automatically:
    - `packingListValidator.validatePackingList()` checks the `validateCountryOfOrigin` flag
-   - Uses existing validation functions: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasProhibitedItems()`
+   - Uses existing validation functions: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasineligibleItems()`
    - Column validator applies CoO validation rules when flag is enabled
    - No new validation code required - all functionality uses existing utilities
 
@@ -994,10 +994,10 @@ function hasInvalidCoO(item) {
   return isNirms(item.nirms) && isInvalidCoO(item.country_of_origin);
 }
 
-function hasProhibitedItems(item) {
+function hasineligibleItems(item) {
   return (
     isNirms(item.nirms) &&
-    isProhibitedItem(
+    isineligibleItem(
       item.commodity_code,
       item.country_of_origin,
       item.type_of_treatment,
@@ -1053,11 +1053,11 @@ function getCountryOfOriginValidationResults(packingList) {
         );
       }
 
-      // Prohibited items validation
-      if (hasProhibitedItems(item)) {
+      // Ineligible items validation
+      if (hasineligibleItems(item)) {
         failureReasons.push(
           createFailureReason(
-            "Prohibited item identified on the packing list",
+            "Ineligible item identified on the packing list",
             item,
           ),
         );
@@ -1081,6 +1081,6 @@ This specification enables Mars CoO validation through:
 3. **Irregular NIRMS Handling**: Mars-specific Green/Red value recognition instead of standard NIRMS values
 4. **Automatic Validation**: Existing validation pipeline automatically processes CoO rules when flag is enabled
 5. **Error Reporting**: Uses existing validation utilities to generate comprehensive error messages with row locations
-6. **Business Rule Compliance**: Leverages existing prohibited items checking and NIRMS validation infrastructure
+6. **Business Rule Compliance**: Leverages existing Ineligible items checking and NIRMS validation infrastructure
 
 No new validation code is required - all functionality uses the existing, tested validation utilities and pipeline infrastructure with Mars-specific NIRMS value handling.

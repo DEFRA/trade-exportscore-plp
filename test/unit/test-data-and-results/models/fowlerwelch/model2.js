@@ -1514,7 +1514,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsWithTreatment: {
+  ineligibleItemsWithTreatment: {
     CRANSWICK: [
       {
         A: "Item",
@@ -1544,7 +1544,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1561,7 +1561,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsNoTreatment: {
+  ineligibleItemsNoTreatment: {
     CRANSWICK: [
       {
         A: "Item",
@@ -1591,7 +1591,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1608,7 +1608,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleWithTreatment: {
+  ineligibleItemsMultipleWithTreatment: {
     CRANSWICK: [
       {
         A: "Item",
@@ -1638,7 +1638,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1659,7 +1659,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1680,7 +1680,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1701,7 +1701,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1718,7 +1718,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleNoTreatment: {
+  ineligibleItemsMultipleNoTreatment: {
     CRANSWICK: [
       {
         A: "Item",
@@ -1748,7 +1748,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1769,7 +1769,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1790,7 +1790,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1811,7 +1811,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
