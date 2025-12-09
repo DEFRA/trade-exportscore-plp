@@ -490,7 +490,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     "Customer Order": [
       {
         A: "RMS_ESTABLISHMENT_NO",
@@ -507,13 +507,13 @@ module.exports = {
       {
         A: "RMS-GB-000025-001",
         I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        K: "Mocked Prohibited Item Product",
+        K: "Mocked Ineligible Item Product",
         L: "012",
         M: 2,
         O: 2.5,
-        S: "PROHIBITED_ITEM_ISO",
+        S: "INELIGIBLE_ITEM_ISO",
         U: "yes",
-        W: "PROHIBITED_ITEM_TREATMENT",
+        W: "INELIGIBLE_ITEM_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
@@ -522,18 +522,18 @@ module.exports = {
         L: "0403209300",
         M: 1,
         O: 2,
-        S: "PROHIBITED_ITEM_ISO",
+        S: "INELIGIBLE_ITEM_ISO",
         U: "Yes",
-        W: "NOT_PROHIBITED_ITEM_TREATMENT",
+        W: "NOT_INELIGIBLE_ITEM_TREATMENT",
       },
       {
         A: "RMS-GB-000025-001",
         I: "PRODUCT_TYPE_CATEGORY675 - CHEESE - C",
-        K: "Mocked Prohibited Item Product",
+        K: "Mocked Ineligible Item Product",
         L: "012",
         M: 2,
         O: 2.5,
-        S: "PROHIBITED_ITEM_ISO",
+        S: "INELIGIBLE_ITEM_ISO",
         U: "yes",
         W: null,
       },

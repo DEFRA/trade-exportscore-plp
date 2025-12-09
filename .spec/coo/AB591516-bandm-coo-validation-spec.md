@@ -2,13 +2,13 @@
 
 ## Overview
 
-This specification details the implementation of Country of Origin (CoO) validation for B&M retailer packing lists as part of NIRMS (Northern Ireland Retail Movement Scheme) compliance requirements. This enhancement extends the existing PLP service to provide comprehensive validation of country of origin data and prohibited items checking.
+This specification details the implementation of Country of Origin (CoO) validation for B&M retailer packing lists as part of NIRMS (Northern Ireland Retail Movement Scheme) compliance requirements. This enhancement extends the existing PLP service to provide comprehensive validation of country of origin data and Ineligible items checking.
 
 ## Business Context
 
 **User Story**: As a caseworker, I want the Packing List Parser to help me validate Country of Origin entries on packing lists so that I can make informed decisions about accepting or rejecting General Certificate (GC) applications in line with NIRMS requirements.
 
-**Value**: Ensures NIRMS compliance by validating country of origin information and identifying prohibited items before they enter the Northern Ireland supply chain.
+**Value**: Ensures NIRMS compliance by validating country of origin information and identifying Ineligible items before they enter the Northern Ireland supply chain.
 
 ## Technical Scope
 
@@ -75,28 +75,28 @@ When the packing list is processed
 Then the validation should pass for that field
 ```
 
-### AC5: Prohibited Item with Treatment Type
+### AC5: Ineligible Item with Treatment Type
 
 ```gherkin
 Given a B&M packing list contains "This consignment contains only NIRMS eligible goods"
 And the packing list contains "Treatment type: all products are processed"
 And the CoO value is valid
 And the commodity code is specified
-And the commodity code + CoO combination matches an item on the prohibited list
-And the prohibited item has treatment type "processed"
+And the commodity code + CoO combination matches an item on the Ineligible list
+And the Ineligible item has treatment type "processed"
 When the packing list is processed
 Then the validation should fail
 And the failure reason should include "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
-### AC6: Prohibited Item without Treatment Type
+### AC6: Ineligible Item without Treatment Type
 
 ```gherkin
 Given a B&M packing list contains "This consignment contains only NIRMS eligible goods"
 And the packing list does NOT contain "Treatment type: all products are processed"
 And the CoO value is valid
 And the commodity code is specified
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is processed
 Then the validation should fail
 And the failure reason should include "Prohibited item identified on the packing list in sheet X row Y"
@@ -118,10 +118,10 @@ When the packing list is processed
 Then the failure reason should be "Invalid Country of Origin ISO Code in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-### AC9: Multiple Prohibited Items
+### AC9: Multiple Ineligible Items
 
 ```gherkin
-Given a B&M packing list has more than 3 prohibited items
+Given a B&M packing list has more than 3 Ineligible items
 When the packing list is processed
 Then the failure reason should be "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
@@ -216,7 +216,7 @@ The CoO validation for B&M uses the standard parser architecture:
 
 3. **Existing validation pipeline** handles CoO validation automatically:
    - `packingListValidator.validatePackingList()` checks the `validateCountryOfOrigin` flag
-   - Uses existing validation utilities: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasProhibitedItems()`
+   - Uses existing validation utilities: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasineligibleItems()`
    - Column validator applies CoO validation rules when flag is enabled
 
 ### B&M-Specific Processing
@@ -279,7 +279,7 @@ The B&M CoO validation leverages the existing validation infrastructure without 
 
 2. **Standard Configuration-Driven Validation**
    - **CoO Validation**: Enabled via `validateCountryOfOrigin: true` in header config
-   - **Existing Utilities**: Uses `hasMissingCoO()`, `hasInvalidCoO()`, `hasProhibitedItems()` functions
+   - **Existing Utilities**: Uses `hasMissingCoO()`, `hasInvalidCoO()`, `hasineligibleItems()` functions
    - **Standard Pipeline**: No B&M-specific validation functions required
 
 ### Database Schema Updates
@@ -297,7 +297,7 @@ No database schema changes required - existing Item and PackingList models suppo
    - Missing NIRMS statement
    - Missing CoO values
    - Invalid CoO formats
-   - Prohibited items scenarios
+   - Ineligible items scenarios
    - Multiple error combinations
 
 3. **Edge Cases**
@@ -317,7 +317,7 @@ No database schema changes required - existing Item and PackingList models suppo
 ### Performance Considerations
 
 - **Validation Performance**: CoO validation should add <100ms to processing time
-- **Memory Usage**: Prohibited items list should be cached efficiently
+- **Memory Usage**: Ineligible items list should be cached efficiently
 - **Error Handling**: Multiple errors should be collected in single pass
 
 ### Security Considerations
@@ -334,7 +334,7 @@ The B&M Country of Origin Validation feature will be considered complete when:
 2. ✅ Missing CoO values are properly identified and reported (AC2, AC4)
 3. ✅ Invalid CoO formats are validated against ISO standards (AC3, AC5)
 4. ✅ "X" placeholder values are accepted as valid (AC6)
-5. ✅ Prohibited items are identified correctly with and without treatment statements (AC7-10)
+5. ✅ Ineligible items are identified correctly with and without treatment statements (AC7-10)
 6. ✅ Missing treatment types with null commodity codes fail appropriately (AC11)
 7. ✅ Error message aggregation works for multiple occurrences
 8. ✅ All validation logic integrates seamlessly with existing B&M parser
@@ -355,7 +355,7 @@ The B&M Country of Origin Validation feature will be considered complete when:
 
 - Track validation failure rates by error type
 - Monitor processing time impact
-- Alert on prohibited items detection frequency
+- Alert on Ineligible items detection frequency
 - Track NIRMS compliance rates
 
 ### Rollback Plan

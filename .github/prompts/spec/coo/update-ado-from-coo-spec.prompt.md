@@ -124,7 +124,7 @@ Extract these sections from specification file:
 
 **Validation Types Supported**:
 - **Individual Column** (14 ACs): ASDA3, Sainsburys - BAC1-14 → AC1-14
-- **Variable Blanket** (10 ACs): Giovanni1 - Statement + CoO + Prohibited items  
+- **Variable Blanket** (10 ACs): Giovanni1 - Statement + CoO + Ineligible items  
 - **Fixed Blanket** (9 ACs): B&M - Fixed statement + CoO validation
 
 **File Discovery Examples**:

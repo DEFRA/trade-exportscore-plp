@@ -32,7 +32,7 @@ The specifications provide conceptual error descriptions, but the actual validat
 
 **Common Discrepancies Between Specifications and System:**
 1. **Summary format**: Specs may show "and in addition to X other error" but system returns "in addition to X other locations"
-2. **Prohibited items**: Specs may show "Prohibited item identified" but system returns multiple specific errors like "Product code is invalid" + "Invalid Country of Origin ISO Code"
+2. **Ineligible items**: Specs may show "Ineligible item identified" but system returns multiple specific errors like "Product code is invalid" + "Invalid Country of Origin ISO Code"
 3. **Message formatting**: System messages include specific punctuation, newlines, and casing that differ from specification examples
 4. **Aggregation patterns**: System may combine or separate error messages differently than specification examples suggest
 
@@ -225,27 +225,27 @@ This ensures test data consistency, makes test failures easier to diagnose, and 
 - **Type 3**: Fixed blanket statement presence/absence + column variations based on valid model template
 - **Type 4**: Dynamic blanket statement variations + column validation based on valid model template
 
-**⚠️ CRITICAL: Mock Data for Prohibited Items Testing**
+**⚠️ CRITICAL: Mock Data for Ineligible Items Testing**
 
-When implementing BAC scenarios that test prohibited items validation:
+When implementing BAC scenarios that test Ineligible items validation:
 
 1. **Use Mock Values**: Replace real commodity codes and ISO codes with consistent mock values:
-   - Use `'1234'` for commodity codes that should trigger prohibited item validation
-   - Use `'PROHIBITED_ITEM_ISO'` for country codes that should trigger prohibited item validation
+   - Use `'1234'` for commodity codes that should trigger Ineligible item validation
+   - Use `'INELIGIBLE_ITEM_ISO'` for country codes that should trigger Ineligible item validation
 
 2. **Jest Mock Implementation**: Follow established patterns from B&M model1 for mocking data modules:
    ```javascript
    // Mock data as arrays matching actual data structure
    jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
      "VALID_ISO",
-     "PROHIBITED_ITEM_ISO",
+     "INELIGIBLE_ITEM_ISO",
      "GB",
      "X",
    ]);
 
-   jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+   jest.mock("../../../../../app/services/data/data-Ineligible-items.json", () => [
      {
-       country_of_origin: "PROHIBITED_ITEM_ISO",
+       country_of_origin: "INELIGIBLE_ITEM_ISO",
        commodity_code: "1234",
        type_of_treatment: "Processed", 
      },
@@ -254,7 +254,7 @@ When implementing BAC scenarios that test prohibited items validation:
 
 3. **Benefits of Mock Approach**:
    - Tests are reliable and deterministic
-   - Independent of changes to real prohibited items data
+   - Independent of changes to real Ineligible items data
    - Consistent results across environments
    - Follows established testing patterns in the codebase
 
@@ -289,14 +289,14 @@ const test_results = require("../../../test-data-and-results/results/<retailer>/
 // ✅ CORRECT: Jest mocks at top level (hoisted properly)
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO", 
+  "INELIGIBLE_ITEM_ISO", 
   "GB",
   "X",
 ]);
 
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-Ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
     commodity_code: "1234",
     type_of_treatment: "Processed",
   },
@@ -339,7 +339,7 @@ describe("matches<Retailer><Model> CoO Validation", () => {
    - Use naming pattern: `bac<N>Model`, `validCooModel`, `nullNirmsModel`, etc.
    - **⚠️ CRITICAL: Base all BAC models on variations of the valid model** - Start with validCooModel structure and modify only the specific field(s) being tested
    - Include ALL required CoO columns as specified in implementation guide
-   - Use mock values for prohibited items testing
+   - Use mock values for Ineligible items testing
    - **Single variation principle**: Each BAC model should change only the field(s) relevant to that specific acceptance criteria
 3. **Expected result** in `results/<retailer>/<model>.js` with specific `failure_reasons`
    - **⚠️ CRITICAL: Expected results must directly correspond to test data variations** - If bac6Model sets country_of_origin to null, expected result should contain error messages specifically about null country_of_origin
@@ -361,13 +361,13 @@ This ensures test reliability and makes debugging test failures straightforward 
 **⚠️ CRITICAL: NEW Test Data Models vs. EXISTING Models**
 - **EXISTING models** (validModel, invalidModel_MissingColumnCells, etc.): Already updated in Step 1 with Non-NIRMS values, should NOT be modified further
 - **NEW models** (validCooModel, bac1Model, bac2Model, etc.): Created fresh in this step with full CoO column structure for BAC testing
-**⚠️ CRITICAL: Mock Data Requirements for Prohibited Items Testing**
+**⚠️ CRITICAL: Mock Data Requirements for Ineligible Items Testing**
 
-For BAC scenarios involving prohibited items validation:
+For BAC scenarios involving Ineligible items validation:
 
-1. **Use Mock Values in Test Data**: Replace real prohibited items with consistent mock values:
-   - `commodity_code`: Use `'1234'` for prohibited items
-   - `country_of_origin`: Use `'PROHIBITED_ITEM_ISO'` for prohibited country codes
+1. **Use Mock Values in Test Data**: Replace real Ineligible items with consistent mock values:
+   - `commodity_code`: Use `'1234'` for Ineligible items
+   - `country_of_origin`: Use `'INELIGIBLE_ITEM_ISO'` for Ineligible country codes
    - This ensures consistent, reliable testing independent of real data changes
 
 2. **Implement Jest Mocks**: Follow the pattern established in B&M model1 tests:
@@ -375,15 +375,15 @@ For BAC scenarios involving prohibited items validation:
    // Mock ISO codes data as array
    jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
      "VALID_ISO",
-     "PROHIBITED_ITEM_ISO",
+     "INELIGIBLE_ITEM_ISO",
      "GB", 
      "X",
    ]);
 
-   // Mock prohibited items data as array of objects
-   jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+   // Mock Ineligible items data as array of objects
+   jest.mock("../../../../../app/services/data/data-Ineligible-items.json", () => [
      {
-       country_of_origin: "PROHIBITED_ITEM_ISO",
+       country_of_origin: "INELIGIBLE_ITEM_ISO",
        commodity_code: "1234", 
        type_of_treatment: "Processed",
      },
@@ -396,12 +396,12 @@ For BAC scenarios involving prohibited items validation:
    bac11Model: {
      Page1_1: [
        ['Header Row'],
-       ['Item Description', '1234', 'PROHIBITED_ITEM_ISO', 'NIRMS']
+       ['Item Description', '1234', 'INELIGIBLE_ITEM_ISO', 'NIRMS']
      ]
    }
    ```
 
-This approach ensures prohibited items tests are reliable, consistent, and independent of external data changes.
+This approach ensures Ineligible items tests are reliable, consistent, and independent of external data changes.
 
 NOTE: The instructions above are normative: implementing the BAC-driven tests and test data is a required deliverable for the ticket. Tests should follow the repository's existing patterns using `parserService.findParser()` to trigger the full validation pipeline including `business_checks.failure_reasons` population. Tests must be added to `test/unit/services/parser-service/<retailer>/` with fixtures under `test/unit/test-data-and-results/models/<retailer>/` and expected results under `test/unit/test-data-and-results/results/<retailer>/`.
 
@@ -454,8 +454,8 @@ Before considering implementation complete:
 - [ ] **Error messages**: Exact error message strings from ACTUAL SYSTEM BEHAVIOR (not specification examples)
 - [ ] **Location tracking**: Sheet and row references tested
 - [ ] **Aggregation**: "More than 3 errors" patterns tested with actual system summary format
-- [ ] **Mock implementation**: Jest mocks for prohibited items data using established patterns
-- [ ] **Mock values**: Consistent use of `1234` and `PROHIBITED_ITEM_ISO` in test data
+- [ ] **Mock implementation**: Jest mocks for Ineligible items data using established patterns
+- [ ] **Mock values**: Consistent use of `1234` and `INELIGIBLE_ITEM_ISO` in test data
 - [ ] **Test reliability**: Tests pass consistently with mocked data, independent of real data changes
 - [ ] **⚠️ CRITICAL: Error message verification**: All expected results updated with actual system messages, not specification assumptions
 - [ ] **⚠️ CRITICAL: Data-result traceability**: Clear mapping between test data field modifications and corresponding expected error messages

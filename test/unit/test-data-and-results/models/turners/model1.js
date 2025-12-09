@@ -445,7 +445,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     PackingList_Extract: [
       {
         A: "Description of Goods",
@@ -458,13 +458,13 @@ module.exports = {
         H: "NIRMS / NON NIRMS",
       },
       {
-        A: "Prohibited Beef Product",
-        B: "012", // Prohibited commodity code
+        A: "Ineligible Beef Product",
+        B: "012", // Ineligible commodity code
         C: "10",
         D: "50.5",
         E: "Meat Products",
-        F: "PROHIBITED_ITEM_TREATMENT", // Prohibited treatment
-        G: "PROHIBITED_ITEM_ISO", // Prohibited origin
+        F: "INELIGIBLE_ITEM_TREATMENT", // Ineligible treatment
+        G: "INELIGIBLE_ITEM_ISO", // Ineligible origin
         H: "NIRMS",
         I: "RMS-GB-000156-001",
       },

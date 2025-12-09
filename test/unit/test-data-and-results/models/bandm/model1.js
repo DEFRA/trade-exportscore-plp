@@ -855,8 +855,8 @@ module.exports = {
       },
     ],
   },
-  // AC7: Item Present on Prohibited Item List (Treatment Type specified)
-  prohibitedItemWithTreatment: {
+  // AC7: Item Present on Ineligible Item List (Treatment Type specified)
+  ineligibleItemWithTreatment: {
     Sheet1: [
       {},
       {},
@@ -891,12 +891,12 @@ module.exports = {
         G: 1.15,
         H: 1.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
-  // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  multipleProhibitedItemsWithTreatment: {
+  // AC8: Item Present on Ineligible Item List, more than 3 (Treatment Type specified)
+  multipleineligibleItemsWithTreatment: {
     Sheet1: [
       {},
       {},
@@ -931,7 +931,7 @@ module.exports = {
         G: 1.15,
         H: 1.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
       {
         A: 412268,
@@ -943,7 +943,7 @@ module.exports = {
         G: 2.15,
         H: 2.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
       {
         A: 412269,
@@ -955,7 +955,7 @@ module.exports = {
         G: 3.15,
         H: 3.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
       {
         A: 412270,
@@ -967,7 +967,7 @@ module.exports = {
         G: 4.15,
         H: 4.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
       {
         A: 412271,
@@ -979,12 +979,12 @@ module.exports = {
         G: 5.15,
         H: 5.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
-  // AC9: Item Present on Prohibited Item List (no Treatment Type specified)
-  prohibitedItemNoTreatment: {
+  // AC9: Item Present on Ineligible Item List (no Treatment Type specified)
+  ineligibleItemNoTreatment: {
     Sheet1: [
       {},
       {},
@@ -1018,12 +1018,12 @@ module.exports = {
         G: 1.15,
         H: 1.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
-  // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  multipleProhibitedItemsNoTreatment: {
+  // AC10: Item Present on Ineligible Item List, more than 3 (no Treatment Type specified)
+  multipleineligibleItemsNoTreatment: {
     Sheet1: [
       {},
       {},
@@ -1057,7 +1057,7 @@ module.exports = {
         G: 1.15,
         H: 1.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
       {
         A: 412268,
@@ -1069,7 +1069,7 @@ module.exports = {
         G: 2.15,
         H: 2.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
       {
         A: 412269,
@@ -1081,7 +1081,7 @@ module.exports = {
         G: 3.15,
         H: 3.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
       {
         A: 412270,
@@ -1093,7 +1093,7 @@ module.exports = {
         G: 4.15,
         H: 4.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
       {
         A: 412271,
@@ -1105,7 +1105,7 @@ module.exports = {
         G: 5.15,
         H: 5.28,
         I: "YES",
-        J: "PROHIBITED_ITEM_ISO",
+        J: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
