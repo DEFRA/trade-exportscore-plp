@@ -1,5 +1,5 @@
 ---
-description: "Generate test data scenarios for country of origin, NIRMS, and prohibited items validation in the country-of-origin folder. Strictly follow the scenario list and mutation instructions below."
+description: "Generate test data scenarios for country of origin, NIRMS, and Ineligible items validation in the country-of-origin folder. Strictly follow the scenario list and mutation instructions below."
 mode: "agent"
 ---
 
@@ -31,7 +31,7 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **ac9_InvalidCoOMultiple_Fail**: Set country_of_origin column to different invalid values including special characters, alphanumeric, and numeric patterns for multiple data rows (3 rows): `"@GB"`, `"G1B"`, `"123"`, `"#FR"`, `"F2R"`, `"456"`, `"-DE"`, `"D3E"`, `"789"`.
 - **ac10_xCoO_Pass**: Set country_of_origin column to "X" for 2-3 data rows.
 
-### High-Risk/Prohibited Items Scenarios (Generate if `country_of_origin`, `commodity_code`, and `type_of_treatment` properties exist)
+### High-Risk/Ineligible Items Scenarios (Generate if `country_of_origin`, `commodity_code`, and `type_of_treatment` properties exist)
 - **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: Set country_of_origin to a high-risk value and type_of_treatment to a specified value that should fail validation for 2-3 data rows.
 - **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Set multiple rows (3 rows) with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
 - **ac13_HighRiskCoOTreatmentTypeNotSpecified_Fail**: Set country_of_origin to a high-risk value and leave type_of_treatment blank or not specified for 2-3 data rows.
@@ -52,7 +52,7 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **Baseline scenario**: `Happypath` should remain completely unmodified
 
 
-## Documentation: Country of Origin, NIRMS, and High-Risk/Prohibited Items Scenario Types
+## Documentation: Country of Origin, NIRMS, and High-Risk/Ineligible Items Scenario Types
 
 - **ac1_NotNirms_Pass**: NIRMS column set to a valid non-NIRMS value (e.g. "NON-NIRMS" or "No"). Should pass validation.
 - **ac2_NullNirms_Fail**: NIRMS column set to blank/empty. Should fail validation.
@@ -64,7 +64,7 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **ac8_NullCoOMultiple_Fail**: country_of_origin column set to blank/empty for multiple rows. Should fail validation for all.
 - **ac9_InvalidCoOMultiple_Fail**: country_of_origin column set to different invalid values for multiple rows (3 rows). Should fail validation for all.
 - **ac10_xCoO_Pass**: country_of_origin column set to "X". Should pass validation.
-- **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: country_of_origin set to a high-risk value and type_of_treatment to a specified value that should fail validation (e.g. prohibited combination) for 2-3 data rows.
+- **ac11_HighRiskCoOTreatmentTypeSpecified_Fail**: country_of_origin set to a high-risk value and type_of_treatment to a specified value that should fail validation (e.g. Ineligible combination) for 2-3 data rows.
 - **ac12_HighRiskCoOTreatmentTypeSpecifiedMultiple_Fail**: Multiple rows (3 rows) with high-risk country_of_origin and specified type_of_treatment values that should fail validation.
 - **ac13_HighRiskCoOTreatmentTypeNotSpecified_Fail**: country_of_origin set to a high-risk value and type_of_treatment left blank or not specified. Should fail validation.
 - **ac14_HighRiskCoOTreatmentTypeNotSpecified_COO_InvalidMultiple_Fail**: Multiple rows (3 rows) with high-risk country_of_origin, missing type_of_treatment, and invalid country_of_origin values. Should fail validation for all.
@@ -89,19 +89,19 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
   - Valid 2-digit ISO codes should pass validation
   - "X" value should pass validation (used for mixed/unknown origins)
 
-### Prohibited Items Validation (for exporters with country_of_origin, commodity_code, and type_of_treatment fields)
+### Ineligible Items Validation (for exporters with country_of_origin, commodity_code, and type_of_treatment fields)
 
-- **Prohibited Combinations**: Items that match entries in services/data/data-prohibited-items.json based on exact combination of country_of_origin + commodity_code + type_of_treatment
+- **Ineligible Combinations**: Items that match entries in services/data/data-Ineligible-items.json based on exact combination of country_of_origin + commodity_code + type_of_treatment
 - **Common Examples**: 
   - CN + 07061000 + Chilled (Chinese carrots, chilled)
   - BR + 0207 + Fresh (Brazilian poultry, fresh)
   - ZA + 08054000 + Raw (South African grapefruit, raw)
   - IN + 100610 + Fresh (Indian rice, fresh)
 - **Test Patterns**:
-  - Select any entry from the prohibited items JSON file
+  - Select any entry from the Ineligible items JSON file
   - Set the corresponding values in the data rows (not headers)
-  - Should trigger FAILUREREASON due to prohibited item detection
-  - Use realistic descriptions for the prohibited items (e.g., "Chinese Fresh Carrots", "Brazilian Raw Chicken", etc.)
+  - Should trigger FAILUREREASON due to Ineligible item detection
+  - Use realistic descriptions for the Ineligible items (e.g., "Chinese Fresh Carrots", "Brazilian Raw Chicken", etc.)
 
 ## Conditional Scenario Planning
 
@@ -110,7 +110,7 @@ Based on the exporter configuration, determine which country-of-origin-related s
 - **NIRMS Scenarios (ac1-ac5)**: Generate only if the exporter has a `nirms` property **AND** does **NOT** have a `blanketNirms` property. If `blanketNirms` exists, skip scenarios ac1-ac5.
 - **Country of Origin Success Scenarios**: If the exporter has a `country_of_origin` property, generate Country of Origin success scenarios (ac10).
 - **Country of Origin Validation Scenarios**: If the exporter has both `country_of_origin` and `validateCountryOfOrigin: true`, generate Country of Origin validation scenarios (ac6-ac9).
-- **Prohibited Items Scenarios**: If the exporter has `country_of_origin`, `commodity_code` (from regex), and `type_of_treatment` properties, generate prohibited items scenarios (ac11-ac14).
+- **Ineligible Items Scenarios**: If the exporter has `country_of_origin`, `commodity_code` (from regex), and `type_of_treatment` properties, generate Ineligible items scenarios (ac11-ac14).
 - **Baseline Scenario**: Always generate the Happypath scenario regardless of configuration.
 
 ### Configuration Property Checks:
@@ -118,7 +118,7 @@ Based on the exporter configuration, determine which country-of-origin-related s
 2. Check for `nirms` property - if present and no `blanketNirms`, generate NIRMS scenarios (ac1-ac5)
 3. Check for `country_of_origin` property - if present, generate country of origin scenarios (ac6-ac10)
 4. Check for `validateCountryOfOrigin: true` - if present with `country_of_origin`, generate validation scenarios (ac6-ac9)
-5. Check for all three properties (`country_of_origin`, `commodity_code`, `type_of_treatment`) - if all present, generate prohibited items scenarios (ac11-ac14)
+5. Check for all three properties (`country_of_origin`, `commodity_code`, `type_of_treatment`) - if all present, generate Ineligible items scenarios (ac11-ac14)
 
 ## Apply Mutations
 
@@ -126,7 +126,7 @@ Use MCP Excel tools to modify specific cells for each scenario:
 
 - **NIRMS Validation**: For exporters with `nirms` property, test blank values and invalid patterns (should be recognizable values like "Yes", "No", "Green", "Red", "NIRMS", "NON-NIRMS", etc.)
 - **Country of Origin Validation**: For exporters with `validateCountryOfOrigin: true`, test blank values and invalid formats (should be 2-digit ISO codes like "GB", "FR", "DE" or "X")
-- **Prohibited Items**: For exporters with all required fields, select a prohibited item from services/data/data-prohibited-items.json and set the appropriate country_of_origin, commodity_code, and type_of_treatment values in the data rows
+- **Ineligible Items**: For exporters with all required fields, select a Ineligible item from services/data/data-Ineligible-items.json and set the appropriate country_of_origin, commodity_code, and type_of_treatment values in the data rows
 
 ## Output
 - Place all generated files in `app/packing-lists/{exporter}/test-scenarios/country-of-origin/`.

@@ -411,7 +411,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000252-002",
     parserModel: parserModel.CDS2,
   },
-  validTestResultNotOnProhibitedItemsList: {
+  validTestResultNotOnineligibleItemsList: {
     business_checks: {
       all_required_fields_present: true,
       failure_reasons: null,
@@ -431,7 +431,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000252-002",
     parserModel: parserModel.CDS2,
   },
-  validTestResultOnProhibitedItemsList: {
+  validTestResultOnineligibleItemsList: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -440,19 +440,19 @@ module.exports = {
     items: [
       {
         commodity_code: "012",
-        description: "047301 - Prohibited Item",
+        description: "047301 - Ineligible Item",
         nature_of_products: "General Retail Goods",
         number_of_packages: "2",
         total_net_weight_kg: "1.9",
         total_net_weight_unit: "KG",
-        type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000252-002",
     parserModel: parserModel.CDS2,
   },
-  validTestResultMultipleProhibitedItemsList_NoTreatmentType: {
+  validTestResultMultipleineligibleItemsList_NoTreatmentType: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -461,59 +461,59 @@ module.exports = {
     items: [
       {
         commodity_code: "012",
-        description: "047301 - Prohibited Item 1",
+        description: "047301 - Ineligible Item 1",
         nature_of_products: "General Retail Goods",
         number_of_packages: "2",
         total_net_weight_kg: "1.9",
         total_net_weight_unit: "KG",
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
-        description: "020100 - Prohibited Item 2",
+        description: "020100 - Ineligible Item 2",
         nature_of_products: "General Retail Goods",
         number_of_packages: "5",
         total_net_weight_kg: "7.2",
         total_net_weight_unit: "KG",
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
-        description: "049203 - Prohibited Item 3",
+        description: "049203 - Ineligible Item 3",
         nature_of_products: "General Retail Goods",
         number_of_packages: "3",
         total_net_weight_kg: "4.2",
         total_net_weight_unit: "KG",
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
-        description: "020200 - Prohibited Item 4",
+        description: "020200 - Ineligible Item 4",
         nature_of_products: "General Retail Goods",
         number_of_packages: "4",
         total_net_weight_kg: "5.8",
         total_net_weight_unit: "KG",
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
-        description: "051105 - Prohibited Item 5",
+        description: "051105 - Ineligible Item 5",
         nature_of_products: "General Retail Goods",
         number_of_packages: "6",
         total_net_weight_kg: "8.4",
         total_net_weight_unit: "KG",
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000252-002",
     parserModel: parserModel.CDS2,
   },
-  validTestResultMultipleProhibitedItemsListMoreThan3_TreatmentType: {
+  validTestResultMultipleineligibleItemsListMoreThan3_TreatmentType: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -527,8 +527,8 @@ module.exports = {
         number_of_packages: "2",
         total_net_weight_kg: "1.9",
         total_net_weight_unit: "KG",
-        type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -537,8 +537,8 @@ module.exports = {
         number_of_packages: "5",
         total_net_weight_kg: "7.2",
         total_net_weight_unit: "KG",
-        type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -547,8 +547,8 @@ module.exports = {
         number_of_packages: "3",
         total_net_weight_kg: "4.2",
         total_net_weight_unit: "KG",
-        type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -557,8 +557,8 @@ module.exports = {
         number_of_packages: "4",
         total_net_weight_kg: "5.8",
         total_net_weight_unit: "KG",
-        type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -567,8 +567,8 @@ module.exports = {
         number_of_packages: "6",
         total_net_weight_kg: "8.4",
         total_net_weight_unit: "KG",
-        type_of_treatment: "PROHIBITED_ITEM_TREATMENT",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        type_of_treatment: "INELIGIBLE_ITEM_TREATMENT",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000252-002",

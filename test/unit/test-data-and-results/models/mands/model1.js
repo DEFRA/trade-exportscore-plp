@@ -708,7 +708,7 @@ module.exports = {
       },
     },
   },
-  prohibitedItems: {
+  ineligibleItems: {
     fields: {
       NIRMSNumber: {
         content: "RMS-GB-000008-001",
@@ -733,20 +733,20 @@ module.exports = {
                 content: "1.0",
               },
               "Treatment Type": {
-                value: "PROHIBITED_ITEM_TREATMENT",
+                value: "INELIGIBLE_ITEM_TREATMENT",
               },
               NIRMS: {
                 value: "yes",
               },
               CountryOfOrigin: {
-                value: "PROHIBITED_ITEM_ISO",
+                value: "INELIGIBLE_ITEM_ISO",
               },
             },
           },
           {
             properties: {
               "Description of Goods": {
-                value: "Prohibited Carrot Product",
+                value: "Ineligible Carrot Product",
               },
               "EU Commodity Code": {
                 value: "012",
@@ -771,7 +771,7 @@ module.exports = {
           {
             properties: {
               "Description of Goods": {
-                value: "Prohibited Celery Product",
+                value: "Ineligible Celery Product",
               },
               "EU Commodity Code": {
                 value: "012",
@@ -786,7 +786,7 @@ module.exports = {
                 value: "yes",
               },
               CountryOfOrigin: {
-                value: "PROHIBITED_ITEM_ISO",
+                value: "INELIGIBLE_ITEM_ISO",
               },
             },
           },

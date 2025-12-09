@@ -24,7 +24,7 @@ graph TD
     C --> C3[Surgical Column Updates]
     
     B1 --> D[Model-Headers Integration]
-    B2 --> E[Prohibited Items Database]
+    B2 --> E[Ineligible Items Database]
     B3 --> F[Validation Reports]
     
     C1 --> G[Processing Reports]
@@ -39,7 +39,7 @@ graph TD
 
 - **Parser Models**: Direct integration with `app/services/parsers/` model definitions for header detection and validation rules
 - **Model Headers**: Uses `app/services/utilities/model-headers.js` for accurate column mapping and field validation
-- **Prohibited Items Database**: References `app/services/data/data-prohibited-items.json` for compliance checking
+- **Ineligible Items Database**: References `app/services/data/data-Ineligible-items.json` for compliance checking
 - **MCP Excel Server**: Leverages MCP Excel tools for direct file manipulation without script generation
 - **Business Rule Engine**: Applies DEFRA trade export regulations and validation patterns
 
@@ -49,7 +49,7 @@ graph TD
 
 - **Model-Based Validation**: Uses specific parser models (coop-1, tesco-1, asda-1, etc.) for accurate header detection and field validation
 - **Row-by-Row Error Analysis**: Detailed validation of individual data rows with specific error reporting and column references
-- **Prohibited Items Detection**: Cross-references country of origin, commodity codes, and treatment types against regulatory database
+- **Ineligible Items Detection**: Cross-references country of origin, commodity codes, and treatment types against regulatory database
 - **Business Rule Compliance**: Validates REMOS patterns, NIRMS values, and mandatory field completeness
 - **Error Pattern Recognition**: Detects Excel error values (#N/A, #REF!, etc.), data type mismatches, and formatting issues
 
@@ -89,7 +89,7 @@ PLP Model-Based Strategy:
 ├── Parser Model Loading → Extract specific model configuration
 ├── Header Detection → Use model regex patterns for column identification  
 ├── Field Validation → Apply model-specific validation rules
-├── Business Rules → REMOS patterns, NIRMS values, prohibited items
+├── Business Rules → REMOS patterns, NIRMS values, Ineligible items
 └── Error Reporting → Row-by-row detailed error descriptions
 ```
 
@@ -121,7 +121,7 @@ Processing Pipeline:
 
 - **Focused Validation**: Use failure reason parameter to target specific error conditions rather than comprehensive audits
 - **Model Selection**: Choose correct parser model (coop-1, tesco-1, etc.) based on file source and format
-- **Error Prioritization**: Address critical errors (prohibited items, invalid REMOS) before minor formatting issues
+- **Error Prioritization**: Address critical errors (Ineligible items, invalid REMOS) before minor formatting issues
 - **Iterative Validation**: Re-validate files after making corrections to ensure error resolution
 
 #### Bulk Processing Workflow
@@ -147,7 +147,7 @@ Processing Pipeline:
 1. Run comprehensive validation with specific parser model
 2. Review error reports and prioritize critical issues
 3. Apply bulk corrections where applicable
-4. Validate prohibited items against regulatory database
+4. Validate Ineligible items against regulatory database
 5. Confirm compliance with DEFRA trade export requirements
 ```
 
@@ -159,7 +159,7 @@ The validation framework supports extensive customization:
 
 - **Parser Model Flexibility**: Support for all existing parser models with automatic configuration loading
 - **Custom Field Patterns**: Model-specific regex patterns for precise field validation and header detection
-- **Business Rule Integration**: Seamless integration with DEFRA regulatory requirements and prohibited items database
+- **Business Rule Integration**: Seamless integration with DEFRA regulatory requirements and Ineligible items database
 - **Error Classification**: Sophisticated error categorization and severity assessment for prioritized remediation
 
 ### Bulk Processing Capabilities
@@ -189,7 +189,7 @@ The Excel Tools provide significant performance improvements over manual process
 - **Validation Speed**: Automated validation of complex Excel files reduces review time from hours to minutes
 - **Bulk Operations**: Processing multiple files simultaneously improves throughput for large-scale operations
 - **Error Detection**: Comprehensive error identification eliminates manual review cycles and reduces oversight
-- **Compliance Checking**: Automated prohibited items detection ensures regulatory compliance without manual cross-referencing
+- **Compliance Checking**: Automated Ineligible items detection ensures regulatory compliance without manual cross-referencing
 
 ### Quality Improvements  
 
@@ -207,7 +207,7 @@ The tools enhance data quality through systematic approaches:
 Regular maintenance ensures continued effectiveness:
 
 - **Parser Model Synchronization**: Keep validation rules aligned with parser model updates and new retailer formats
-- **Regulatory Updates**: Update prohibited items database and validation rules as DEFRA regulations evolve
+- **Regulatory Updates**: Update Ineligible items database and validation rules as DEFRA regulations evolve
 - **Tool Enhancement**: Refine prompts based on user feedback and new processing requirements
 - **Quality Gate Validation**: Regular testing of validation accuracy and processing reliability
 

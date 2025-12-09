@@ -2,13 +2,13 @@
 
 ## Overview
 
-This specification documents the Country of Origin (CoO) validation for Sainsbury's retailer packing lists as part of NIRMS (Northern Ireland Retail Movement Scheme) compliance requirements. This enhancement extends the existing PLP service to provide comprehensive validation of country of origin data and prohibited items checking.
+This specification documents the Country of Origin (CoO) validation for Sainsbury's retailer packing lists as part of NIRMS (Northern Ireland Retail Movement Scheme) compliance requirements. This enhancement extends the existing PLP service to provide comprehensive validation of country of origin data and Ineligible items checking.
 
 ## Business Context
 
 **User Story**: As a caseworker, I want the Packing List Parser to help me validate Country of Origin entries on packing lists so that I can make informed decisions about accepting or rejecting General Certificate (GC) applications in line with NIRMS requirements.
 
-**Value**: Ensures NIRMS compliance by validating country of origin information and identifying prohibited items before they enter the Northern Ireland supply chain.
+**Value**: Ensures NIRMS compliance by validating country of origin information and identifying Ineligible items before they enter the Northern Ireland supply chain.
 
 ## Technical Scope
 
@@ -100,14 +100,14 @@ When the packing list is processed
 Then the validation should pass for that field
 ```
 
-### AC7: Prohibited Item Detection
+### AC7: Ineligible Item Detection
 
 ```gherkin
 Given a Sainbury's packing list item has NIRMS classification as True value (case insensitive):
   • Yes | NIRMS | Green | Y | G
 And the CoO value is valid in column Q
 And the commodity code is specified
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is processed
 Then the validation should fail
 And the failure reason should be "Prohibited item identified on the packing list in sheet X row Y"
@@ -123,10 +123,10 @@ When the packing list is processed
 Then the failure reason should be "Missing Country of Origin in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-### AC9: Multiple Prohibited Items (More Than 3)
+### AC9: Multiple Ineligible Items (More Than 3)
 
 ```gherkin
-Given a Sainbury's packing list has more than 3 prohibited items
+Given a Sainbury's packing list has more than 3 Ineligible items
 When the packing list is processed
 Then the failure reason should be "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
@@ -222,7 +222,7 @@ The CoO validation for Sainsbury's uses the standard parser architecture:
 
 3. **Existing validation pipeline** handles CoO validation automatically (WORKING):
    - `packingListValidator.validatePackingList()` checks the `validateCountryOfOrigin` flag
-   - Uses existing validation utilities: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasProhibitedItems()`
+   - Uses existing validation utilities: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasineligibleItems()`
    - Column validator applies CoO validation rules when flag is enabled
 
 ### Sainsbury's-Specific Processing (OPERATIONAL)

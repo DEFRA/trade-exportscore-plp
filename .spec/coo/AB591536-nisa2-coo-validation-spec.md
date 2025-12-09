@@ -8,7 +8,7 @@
 
 ## Overview
 
-This specification defines the implementation requirements for Country of Origin (CoO) validation for Nisa 2 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and prohibited item checking for Nisa 2-specific Excel format.
+This specification defines the implementation requirements for Country of Origin (CoO) validation for Nisa 2 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and Ineligible item checking for Nisa 2-specific Excel format.
 
 ## Business Context
 
@@ -22,7 +22,7 @@ This specification defines the implementation requirements for Country of Origin
 
 - Collect CoO-relevant fields from Nisa 2 format
 - Apply NIRMS + CoO validation via existing generic utilities
-- Enforce prohibited items cross-reference rules
+- Enforce Ineligible items cross-reference rules
 - Provide standardised failure reasons with sheet/row location
 - Remain configuration-driven (no bespoke validator logic)
 
@@ -156,20 +156,20 @@ When the packing list is submitted
 Then the packing list will pass
 ```
 
-**BAC11: Prohibited Item with Treatment Type**
+**BAC11: Ineligible Item with Treatment Type**
 
 ```gherkin
 Given a Nisa 2 packing list item has a NIRMS True value (Yes | NIRMS | Green | Y | G)
 And the CoO value is valid (single ISO 2-digit code, comma-separated list, or X/x)
 And the commodity code is specified in 'TARIFF CODE EU' column [column F]
 And the treatment type is specified in 'TYPE OF TREATMENT' column [column Q]
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
-**BAC12: Prohibited Items, more than 3 (Treatment Type specified)**
+**BAC12: Ineligible Items, more than 3 (Treatment Type specified)**
 
 ```gherkin
 Given a Nisa 2 packing list has more than 3 items that each have:
@@ -177,26 +177,26 @@ And a NIRMS True value (Yes | NIRMS | Green | Y | G)
 And a valid CoO (ISO 2-digit code, comma-separated list, or X/x)
 And a commodity code specified in column F
 And a treatment type specified in column Q
-And a commodity code + CoO + treatment combination matching the prohibited list
+And a commodity code + CoO + treatment combination matching the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-**BAC13: Prohibited Item without Treatment Type**
+**BAC13: Ineligible Item without Treatment Type**
 
 ```gherkin
 Given a Nisa 2 packing list item has a NIRMS True value (Yes | NIRMS | Green | Y | G)
 And the CoO value is valid (ISO 2-digit, comma-separated, or X/x)
 And the commodity code is specified in column F
 And the treatment type is null in column Q
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
-**BAC14: Prohibited Items, more than 3 (no Treatment Type specified)**
+**BAC14: Ineligible Items, more than 3 (no Treatment Type specified)**
 
 ```gherkin
 Given a Nisa 2 packing list has more than 3 items that each have:
@@ -204,7 +204,7 @@ And a NIRMS True value (Yes | NIRMS | Green | Y | G)
 And a valid CoO (ISO 2-digit code, comma-separated list, or X/x)
 And a commodity code specified in column F
 And a null treatment type in column Q
-And a commodity code + CoO combination matching an item on the prohibited list
+And a commodity code + CoO combination matching an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
@@ -216,7 +216,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 
 **TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature verified in workspace WHEN returning parser results (VERIFIED: Exact 6-parameter signature extracted from actual parser implementations - establishmentNumber, packingListContents, allRequiredFieldsPresent, parserModel, establishmentNumbers, headers)
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual packing-list-validator-utilities.js file)
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasineligibleItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual packing-list-validator-utilities.js file)
 
 **TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in actual parser implementations - mapParser() with headerRow, dataRow, headers configuration parameters)
 

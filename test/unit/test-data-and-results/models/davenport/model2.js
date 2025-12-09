@@ -477,7 +477,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     Revised: [
       { C: "RMS-GB-000323-001" },
       {
@@ -493,16 +493,16 @@ module.exports = {
       {
         C: "709200010",
         F: "ASPARAGUS BUNDLE",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: 160,
         K: 40.0,
-        O: "PROHIBITED_ITEM_TREATMENT",
+        O: "INELIGIBLE_ITEM_TREATMENT",
         P: "yes",
       },
       {
         C: "709200010",
         F: "ASPARAGUS BUNDLE",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: 160,
         K: 40.0,
         P: "yes",

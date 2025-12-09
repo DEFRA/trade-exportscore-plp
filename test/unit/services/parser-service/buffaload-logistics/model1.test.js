@@ -1,14 +1,14 @@
 // Jest mocks for CoO validation testing
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
-  "PROHIBITED_ITEM_ISO",
+  "INELIGIBLE_ITEM_ISO",
   "GB",
   "X",
 ]);
 
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
+jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   {
-    country_of_origin: "PROHIBITED_ITEM_ISO",
+    country_of_origin: "INELIGIBLE_ITEM_ISO",
     commodity_code: "1234",
     type_of_treatment: "Processed",
   },
@@ -196,9 +196,9 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
     expect(result.business_checks.failure_reasons).toBeNull();
   });
 
-  test("Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
+  test("Item Present on Ineligible Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatmentModel,
+      model.ineligibleItemsWithTreatmentModel,
       filename,
     );
 
@@ -208,9 +208,9 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
     );
   });
 
-  test("Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
+  test("Item Present on Ineligible Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatmentModel,
+      model.ineligibleItemsMultipleWithTreatmentModel,
       filename,
     );
 
@@ -221,9 +221,9 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
     );
   });
 
-  test("Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
+  test("Item Present on Ineligible Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsNoTreatmentModel,
+      model.ineligibleItemsNoTreatmentModel,
       filename,
     );
 
@@ -233,9 +233,9 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
     );
   });
 
-  test("Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
+  test("Item Present on Ineligible Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleNoTreatmentModel,
+      model.ineligibleItemsMultipleNoTreatmentModel,
       filename,
     );
 

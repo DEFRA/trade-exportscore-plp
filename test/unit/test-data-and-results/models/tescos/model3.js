@@ -705,7 +705,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItems: {
+  ineligibleItems: {
     "Input Data Sheet": [
       {},
       {},
@@ -725,11 +725,11 @@ module.exports = {
         BU: "Net Weight (KG)",
       },
       {
-        E: "PROHIBITED_ITEM_ISO",
+        E: "INELIGIBLE_ITEM_ISO",
         F: "NIRMS",
         G: "CONTIGO AUTO-POP BOTTLE 720ML",
         L: "012",
-        AS: "PROHIBITED_ITEM_TREATMENT",
+        AS: "INELIGIBLE_ITEM_TREATMENT",
         AT: "Y",
         BR: 1,
         BT: 1.49,

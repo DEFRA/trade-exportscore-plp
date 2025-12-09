@@ -288,7 +288,7 @@ module.exports = {
     registration_approval_number: "RMS-GB-000008-001",
     parserModel: parser_model.MANDS1,
   },
-  prohibitedItemsTestResult: {
+  ineligibleItemsTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -307,7 +307,7 @@ module.exports = {
         nirms: "no",
       },
       {
-        description: "Prohibited Carrot Product",
+        description: "Ineligible Carrot Product",
         commodity_code: "07061000",
         nature_of_products: null,
         number_of_packages: 5,
@@ -327,7 +327,7 @@ module.exports = {
         nirms: "no",
       },
       {
-        description: "Prohibited Celery Product",
+        description: "Ineligible Celery Product",
         commodity_code: "07094000",
         nature_of_products: null,
         number_of_packages: 8,
