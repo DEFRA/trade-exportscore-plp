@@ -149,7 +149,7 @@ describe("matchesKepakModel1", () => {
       test_results.ineligibleItemWithTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      failureReasons.INELIGIBLE_ITEM,
+      failureReasons.PROHIBITED_ITEM,
     );
   });
 
@@ -164,7 +164,7 @@ describe("matchesKepakModel1", () => {
       test_results.multipleineligibleItemsWithTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      failureReasons.INELIGIBLE_ITEM,
+      failureReasons.PROHIBITED_ITEM,
     );
   });
 
@@ -179,7 +179,7 @@ describe("matchesKepakModel1", () => {
       test_results.ineligibleItemNoTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      failureReasons.INELIGIBLE_ITEM,
+      failureReasons.PROHIBITED_ITEM,
     );
   });
 
@@ -194,7 +194,7 @@ describe("matchesKepakModel1", () => {
       test_results.multipleineligibleItemsNoTreatmentTestResult,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      failureReasons.INELIGIBLE_ITEM,
+      failureReasons.PROHIBITED_ITEM,
     );
   });
 

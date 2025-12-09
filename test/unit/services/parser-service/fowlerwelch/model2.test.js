@@ -158,7 +158,7 @@ describe("Fowlerwelch 2 CoO Validation Tests", () => {
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Ineligible item identified on the packing list",
+      "Prohibited item identified on the packing list",
     );
   });
 
@@ -176,7 +176,7 @@ describe("Fowlerwelch 2 CoO Validation Tests", () => {
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Ineligible item identified on the packing list",
+      "Prohibited item identified on the packing list",
     );
   });
 

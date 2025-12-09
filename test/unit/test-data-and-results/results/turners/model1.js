@@ -353,7 +353,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "PackingList_Extract" row 2.\n',
     },
     items: [

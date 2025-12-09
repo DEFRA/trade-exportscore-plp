@@ -292,7 +292,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         " in page 1 row 1, page 1 row 2, page 1 row 3.\n",
     },
     items: [

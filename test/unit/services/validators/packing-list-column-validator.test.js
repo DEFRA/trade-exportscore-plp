@@ -941,7 +941,7 @@ describe("generateFailuresByIndexAndTypes", () => {
 
     expect(result.hasAllFields).toBeFalsy();
     expect(result.failureReasons).toContain(
-      failureReasonsDescriptions.INELIGIBLE_ITEM,
+      failureReasonsDescriptions.PROHIBITED_ITEM,
     );
   });
 
@@ -1011,7 +1011,7 @@ describe("generateFailuresByIndexAndTypes", () => {
       failureReasonsDescriptions.COO_INVALID,
     );
     expect(result.failureReasons).toContain(
-      failureReasonsDescriptions.INELIGIBLE_ITEM,
+      failureReasonsDescriptions.PROHIBITED_ITEM,
     );
   });
 

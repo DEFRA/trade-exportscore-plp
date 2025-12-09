@@ -204,7 +204,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.INELIGIBLE_ITEM + ' in sheet "Tabelle1" row 3.\n',
+      failureReasons.PROHIBITED_ITEM + ' in sheet "Tabelle1" row 3.\n',
     );
   });
 
@@ -216,7 +216,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.INELIGIBLE_ITEM +
+      failureReasons.PROHIBITED_ITEM +
         ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
     );
   });
@@ -229,7 +229,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.INELIGIBLE_ITEM + ' in sheet "Tabelle1" row 3.\n',
+      failureReasons.PROHIBITED_ITEM + ' in sheet "Tabelle1" row 3.\n',
     );
   });
 
@@ -241,7 +241,7 @@ describe("BUFFALOAD1 CoO Validation Tests", () => {
 
     expect(result.business_checks.all_required_fields_present).toBe(false);
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.INELIGIBLE_ITEM +
+      failureReasons.PROHIBITED_ITEM +
         ' in sheet "Tabelle1" row 3, sheet "Tabelle1" row 4, sheet "Tabelle1" row 5 in addition to 1 other locations.\n',
     );
   });

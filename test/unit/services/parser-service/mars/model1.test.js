@@ -109,7 +109,7 @@ describe("CoO Validation Tests", () => {
     {
       description: "ineligible item",
       model: model.ineligibleItem,
-      expected: "Ineligible item identified on the packing list",
+      expected: "Prohibited item identified on the packing list",
     },
   ])("checks CoO validation for $description", async ({ model, expected }) => {
     const result = await parserService.findParser(model, filename);

@@ -433,7 +433,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "KEPAK" row 22.\n',
     },
     items: [
@@ -458,7 +458,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "KEPAK" row 22, sheet "KEPAK" row 23, sheet "KEPAK" row 24 in addition to 1 other locations.\n',
     },
     items: [
@@ -516,7 +516,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "KEPAK" row 22.\n',
     },
     items: [
@@ -541,7 +541,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "KEPAK" row 22, sheet "KEPAK" row 23, sheet "KEPAK" row 24 in addition to 1 other locations.\n',
     },
     items: [

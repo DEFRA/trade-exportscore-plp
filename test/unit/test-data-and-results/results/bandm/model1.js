@@ -378,7 +378,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "Sheet1" row 7.\n',
     },
     items: [
@@ -402,7 +402,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "Sheet1" row 7, sheet "Sheet1" row 8, sheet "Sheet1" row 9 in addition to 2 other locations.\n',
     },
     items: [
@@ -470,7 +470,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "Sheet1" row 7.\n',
     },
     items: [
@@ -494,7 +494,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        failureReasonsDescriptions.INELIGIBLE_ITEM +
+        failureReasonsDescriptions.PROHIBITED_ITEM +
         ' in sheet "Sheet1" row 7, sheet "Sheet1" row 8, sheet "Sheet1" row 9 in addition to 2 other locations.\n',
     },
     items: [

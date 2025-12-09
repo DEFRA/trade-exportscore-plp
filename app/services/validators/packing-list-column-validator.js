@@ -336,7 +336,7 @@ function createValidationChecks(validationResult) {
     },
     {
       collection: validationResult.ineligibleItems,
-      description: failureReasonsDescriptions.INELIGIBLE_ITEM,
+      description: failureReasonsDescriptions.PROHIBITED_ITEM,
     },
   ];
 }

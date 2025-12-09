@@ -119,7 +119,7 @@ describe("matchesSaversModel1", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.INELIGIBLE_ITEM +
+      failureReasons.PROHIBITED_ITEM +
         ' in sheet "(DO NOT SORT) Packing List" row 6.\n',
     );
   });

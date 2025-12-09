@@ -117,7 +117,7 @@ describe("matchesTescosModel3", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.INELIGIBLE_ITEM + ' in sheet "Input Data Sheet" row 6.\n',
+      failureReasons.PROHIBITED_ITEM + ' in sheet "Input Data Sheet" row 6.\n',
     );
   });
 

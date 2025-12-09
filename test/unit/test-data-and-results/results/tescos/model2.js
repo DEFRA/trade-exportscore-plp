@@ -414,7 +414,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: [
-        "Ineligible item identified on the packing list for line 1",
+        "Prohibited item identified on the packing list for line 1",
       ],
     },
     items: [
@@ -441,13 +441,13 @@ module.exports = {
       all_required_fields_present: false,
       failure_reasons: expect.arrayContaining([
         expect.stringContaining(
-          "Ineligible item identified on the packing list for line 1",
+          "Prohibited item identified on the packing list for line 1",
         ),
         expect.stringContaining(
-          "Ineligible item identified on the packing list for line 2",
+          "Prohibited item identified on the packing list for line 2",
         ),
         expect.stringContaining(
-          "Ineligible item identified on the packing list for line 3",
+          "Prohibited item identified on the packing list for line 3",
         ),
         expect.stringContaining("in addition to"),
       ]),
@@ -459,7 +459,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons: [
-        "Ineligible item identified on the packing list for line 1",
+        "Prohibited item identified on the packing list for line 1",
       ],
     },
     items: [
@@ -486,13 +486,13 @@ module.exports = {
       all_required_fields_present: false,
       failure_reasons: expect.arrayContaining([
         expect.stringContaining(
-          "Ineligible item identified on the packing list for line 1",
+          "Prohibited item identified on the packing list for line 1",
         ),
         expect.stringContaining(
-          "Ineligible item identified on the packing list for line 2",
+          "Prohibited item identified on the packing list for line 2",
         ),
         expect.stringContaining(
-          "Ineligible item identified on the packing list for line 3",
+          "Prohibited item identified on the packing list for line 3",
         ),
         expect.stringContaining("in addition to"),
       ]),

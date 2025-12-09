@@ -257,7 +257,7 @@ describe("findParser", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasonsDescriptions.INELIGIBLE_ITEM +
+      failureReasonsDescriptions.PROHIBITED_ITEM +
         " in page 1 row 1 and page 1 row 3.\n",
     );
   });

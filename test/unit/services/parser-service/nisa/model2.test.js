@@ -205,7 +205,7 @@ describe("Nisa 2 CoO Validation Tests - Type 1", () => {
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Ineligible item identified on the packing list",
+      "Prohibited item identified on the packing list",
     );
   });
 
@@ -225,7 +225,7 @@ describe("Nisa 2 CoO Validation Tests - Type 1", () => {
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Ineligible item identified on the packing list",
+      "Prohibited item identified on the packing list",
     );
   });
 

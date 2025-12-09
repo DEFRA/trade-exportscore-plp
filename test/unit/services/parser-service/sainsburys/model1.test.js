@@ -119,7 +119,7 @@ describe("matchesSainsburysModel1", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.INELIGIBLE_ITEM +
+      failureReasons.PROHIBITED_ITEM +
         ' in sheet "Sheet1" row 2 and sheet "Sheet1" row 4.\n',
     );
   });

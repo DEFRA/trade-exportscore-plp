@@ -119,7 +119,7 @@ describe("matchesCoopModel1", () => {
     );
 
     expect(result.business_checks.failure_reasons).toBe(
-      failureReasons.INELIGIBLE_ITEM +
+      failureReasons.PROHIBITED_ITEM +
         ' in sheet "Input Packing Sheet" row 2 and sheet "Input Packing Sheet" row 4.\n',
     );
   });

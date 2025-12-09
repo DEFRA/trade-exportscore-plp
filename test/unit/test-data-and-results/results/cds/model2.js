@@ -435,7 +435,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'Ineligible item identified on the packing list in sheet "PackingList_Extract" row 2.\n',
+        'Prohibited item identified on the packing list in sheet "PackingList_Extract" row 2.\n',
     },
     items: [
       {
@@ -456,7 +456,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'Ineligible item identified on the packing list in sheet "PackingList_Extract" row 2, sheet "PackingList_Extract" row 3, sheet "PackingList_Extract" row 4 in addition to 2 other locations.\n',
+        'Prohibited item identified on the packing list in sheet "PackingList_Extract" row 2, sheet "PackingList_Extract" row 3, sheet "PackingList_Extract" row 4 in addition to 2 other locations.\n',
     },
     items: [
       {
@@ -517,7 +517,7 @@ module.exports = {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
-        'Ineligible item identified on the packing list in sheet "PackingList_Extract" row 2, sheet "PackingList_Extract" row 3, sheet "PackingList_Extract" row 4 in addition to 2 other locations.\n',
+        'Prohibited item identified on the packing list in sheet "PackingList_Extract" row 2, sheet "PackingList_Extract" row 3, sheet "PackingList_Extract" row 4 in addition to 2 other locations.\n',
     },
     items: [
       {

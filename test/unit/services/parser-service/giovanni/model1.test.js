@@ -149,7 +149,7 @@ describe("GIOVANNI1 CoO Validation Tests - Type 4", () => {
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Ineligible item identified on the packing list",
+      "Prohibited item identified on the packing list",
     );
     expect(result.business_checks.all_required_fields_present).toBe(false);
   });
@@ -160,7 +160,7 @@ describe("GIOVANNI1 CoO Validation Tests - Type 4", () => {
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Ineligible item identified on the packing list",
+      "Prohibited item identified on the packing list",
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
     expect(result.business_checks.all_required_fields_present).toBe(false);
@@ -172,7 +172,7 @@ describe("GIOVANNI1 CoO Validation Tests - Type 4", () => {
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
-      "Ineligible item identified on the packing list",
+      "Prohibited item identified on the packing list",
     );
     expect(result.business_checks.all_required_fields_present).toBe(false);
   });
