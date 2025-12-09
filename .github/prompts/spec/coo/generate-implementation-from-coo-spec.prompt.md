@@ -488,7 +488,7 @@ describe('[RETAILER] CoO Validation Tests - Type 4', () => {
   
   test('BAC7-10: Ineligible items validation with treatment type', () => {
     const result = await parserService.findParser(model.ineligibleItems, filename);
-    expect(result.business_checks.failure_reasons).toContain('Ineligible item identified on the packing list');
+    expect(result.business_checks.failure_reasons).toContain('Prohibited item identified on the packing list');
   });
   
   test('Dynamic blanket statement sets all items to NIRMS', () => {

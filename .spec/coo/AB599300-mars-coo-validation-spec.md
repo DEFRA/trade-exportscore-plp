@@ -174,7 +174,7 @@ And the treatment type is specified in the 'Type of Treatment' column [column C]
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC12: Ineligible Item, More Than 3 (Treatment Type specified)**
@@ -189,7 +189,7 @@ And the treatment type is specified in the 'Type of Treatment' column [column C]
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 **BAC13: Ineligible Item without Treatment Type**
@@ -204,7 +204,7 @@ And the treatment type is null in the 'Type of Treatment' column [column C]
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC14: Ineligible Item, More Than 3 (no Treatment Type specified)**
@@ -219,7 +219,7 @@ And the treatment type is null in the 'Type of Treatment' column [column C]
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics
@@ -570,7 +570,7 @@ And the treatment type is specified in the 'Type of Treatment' column [column C]
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC12: Ineligible Item, More Than 3 (Treatment Type specified)**
@@ -585,7 +585,7 @@ And the treatment type is specified in the 'Type of Treatment' column [column C]
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 **BAC13: Ineligible Item without Treatment Type**
@@ -600,7 +600,7 @@ And the treatment type is null in the 'Type of Treatment' column [column C]
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC14: Ineligible Item, More Than 3 (no Treatment Type specified)**
@@ -615,7 +615,7 @@ And the treatment type is null in the 'Type of Treatment' column [column C]
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics
@@ -769,7 +769,7 @@ And the treatment type is specified in the 'Type of Treatment' column [column C]
 And the commodity code starts with and CoO, and treatment type matches an item on the Ineligible item list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 ### AC12: Item Present on Ineligible Item List, more than 3 (Treatment Type specified)
@@ -784,7 +784,7 @@ And the treatment type is specified in the 'Type of Treatment' column [column C]
 And the commodity code starts with, and CoO, and treatment type matches an item on the Ineligible item list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### AC13: Item Present on Ineligible Item List (no Treatment Type specified)
@@ -799,7 +799,7 @@ And treatment type is not specified (null) in the 'Type of Treatment' column [co
 And the commodity code starts with, and CoO matches an item on the Ineligible item list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 ### AC14: Item Present on Ineligible Item List, more than 3 (no Treatment Type specified)
@@ -814,7 +814,7 @@ And treatment type is not specified (null) in the 'Type of Treatment' column [co
 And the commodity code starts with, and CoO matches an item on the Ineligible item list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ## Technical Implementation
@@ -1057,7 +1057,7 @@ function getCountryOfOriginValidationResults(packingList) {
       if (hasineligibleItems(item)) {
         failureReasons.push(
           createFailureReason(
-            "Ineligible item identified on the packing list",
+            "Prohibited item identified on the packing list",
             item,
           ),
         );

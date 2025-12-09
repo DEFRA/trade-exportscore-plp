@@ -186,12 +186,12 @@ describe('GIOVANNI1 CoO Validation Tests - Type 4', () => {
 
   test('BAC7: Ineligible items validation with treatment type', () => {
     const result = await parserService.findParser(model.ineligibleItemsWithTreatment, filename);
-    expect(result.business_checks.failure_reasons).toContain('Ineligible item identified on the packing list');
+    expect(result.business_checks.failure_reasons).toContain('Prohibited item identified on the packing list');
   });
 
   test('BAC9: Ineligible items validation without treatment type', () => {
     const result = await parserService.findParser(model.ineligibleItems, filename);
-    expect(result.business_checks.failure_reasons).toContain('Ineligible item identified on the packing list');
+    expect(result.business_checks.failure_reasons).toContain('Prohibited item identified on the packing list');
   });
 
   test('BAC8,10: Multiple Ineligible items aggregation', () => {

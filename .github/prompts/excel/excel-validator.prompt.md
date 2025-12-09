@@ -255,7 +255,7 @@ Use these patterns for consistent error reporting:
 
 ✅ Accepted Failure Reason Formats:
 - "Product code is invalid in sheet 'Input Packing Sheet' row 54 and sheet 'Input Packing Sheet' row 408"
-- "Ineligible item identified on the packing list in sheet 'Input Data Sheet' row 161, sheet 'Input Data Sheet' row 168, sheet 'Input Data Sheet' row 169 in addition to 2 other locations"
+- "Prohibited item identified on the packing list in sheet 'Input Data Sheet' row 161, sheet 'Input Data Sheet' row 168, sheet 'Input Data Sheet' row 169 in addition to 2 other locations"
 - "Invalid Country of Origin ISO Code in sheet 'Input Data Sheet' row 85, sheet 'Input Data Sheet' row 89, sheet 'Input Data Sheet' row 92 in addition to 8 other locations (rows 95, 98, 101, 104, 107, 110, 113, 116)"
 
 ❌ Avoid Vague Descriptions:

@@ -86,7 +86,7 @@ And the commodity code + CoO combination matches an item on the Ineligible list
 And the Ineligible item has treatment type "processed"
 When the packing list is processed
 Then the validation should fail
-And the failure reason should include "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason should include "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 ### AC6: Ineligible Item without Treatment Type
@@ -99,7 +99,7 @@ And the commodity code is specified
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is processed
 Then the validation should fail
-And the failure reason should include "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason should include "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 ### AC7: Multiple Missing CoO Values
@@ -123,7 +123,7 @@ Then the failure reason should be "Invalid Country of Origin ISO Code in sheet X
 ```gherkin
 Given a B&M packing list has more than 3 Ineligible items
 When the packing list is processed
-Then the failure reason should be "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+Then the failure reason should be "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ## Data Structures

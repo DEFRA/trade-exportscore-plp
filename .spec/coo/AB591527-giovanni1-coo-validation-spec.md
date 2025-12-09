@@ -123,7 +123,7 @@ And the treatment type is specified
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC8: Ineligible Item, More Than 3 (Treatment Type specified)**
@@ -136,7 +136,7 @@ And the treatment type is specified
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list in more than 3 instances
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 **BAC9: Ineligible Item without Treatment Type**
@@ -149,7 +149,7 @@ And the treatment type null in the treatment type field
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC10: Ineligible Item, More Than 3 (no Treatment Type specified)**
@@ -162,7 +162,7 @@ And the treatment type null in the treatment type field
 And the commodity code + CoO combination matches an item on the Ineligible list in more than 3 instances
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics

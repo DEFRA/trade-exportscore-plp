@@ -279,7 +279,7 @@ Use these patterns for consistent error reporting:
 
 ✅ Accepted Failure Reason Formats:
 - "Product code is invalid in row 54 and row 408"
-- "Ineligible item identified on the packing list in row 161, row 168, row 169 in addition to 2 other locations"
+- "Prohibited item identified on the packing list in row 161, row 168, row 169 in addition to 2 other locations"
 - "Invalid Country of Origin ISO Code in row 85, row 89, row 92 in addition to 8 other locations (rows 95, 98, 101, 104, 107, 110, 113, 116)"
 
 ✅ Row Offset Examples:

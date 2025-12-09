@@ -178,7 +178,7 @@ And the treatment type is specified
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC12: Ineligible Item, More Than 3 (Treatment Type specified)**
@@ -193,7 +193,7 @@ And the treatment type is specified
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 **BAC13: Ineligible Item without Treatment Type**
@@ -208,7 +208,7 @@ And the treatment type is null
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC14: Ineligible Item, More Than 3 (no Treatment Type specified)**
@@ -223,7 +223,7 @@ And the treatment type is null
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics
@@ -508,7 +508,7 @@ function getCountryOfOriginValidationResults(packingList) {
     if (hasineligibleItems(item)) {
       results.hasValidCountryOfOrigin = false;
       results.failureReasons.push(
-        `Ineligible item identified on the packing list in sheet ${item.sheet_name} row ${item.row_location}`,
+        `Prohibited item identified on the packing list in sheet ${item.sheet_name} row ${item.row_location}`,
       );
     }
   });

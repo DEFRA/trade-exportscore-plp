@@ -180,7 +180,7 @@ As a **DEFRA caseworker** processing trade export documentation, I need **Countr
 **And** the commodity code + CoO + treatment combination matches an item on the Ineligible list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
-**And** the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+**And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 
 #### AC8 - Ineligible Item, More Than 3 (Treatment Type Specified)
 
@@ -191,7 +191,7 @@ As a **DEFRA caseworker** processing trade export documentation, I need **Countr
 **And** the commodity code + CoO + treatment combination matches more than 3 items on the Ineligible list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
-**And** the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+**And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
 #### AC9 - Ineligible Item without Treatment Type
 
@@ -202,7 +202,7 @@ As a **DEFRA caseworker** processing trade export documentation, I need **Countr
 **And** the commodity code + CoO combination matches an item on the Ineligible list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
-**And** the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+**And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 
 #### AC10 - Ineligible Items, More Than 3 (No Treatment Type Specified)
 
@@ -213,7 +213,7 @@ As a **DEFRA caseworker** processing trade export documentation, I need **Countr
 **And** the commodity code + CoO combination matches more than 3 items on the Ineligible list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
-**And** the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+**And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
 ---
 

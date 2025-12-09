@@ -110,7 +110,7 @@ And the commodity code is specified
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is processed
 Then the validation should fail
-And the failure reason should be "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason should be "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 ### AC8: Multiple Missing CoO Values (More Than 3)
@@ -128,7 +128,7 @@ Then the failure reason should be "Missing Country of Origin in sheet X row Y, s
 ```gherkin
 Given a Sainbury's packing list has more than 3 Ineligible items
 When the packing list is processed
-Then the failure reason should be "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+Then the failure reason should be "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ## Data Structures

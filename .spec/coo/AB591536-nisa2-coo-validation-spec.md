@@ -166,7 +166,7 @@ And the treatment type is specified in 'TYPE OF TREATMENT' column [column Q]
 And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC12: Ineligible Items, more than 3 (Treatment Type specified)**
@@ -180,7 +180,7 @@ And a treatment type specified in column Q
 And a commodity code + CoO + treatment combination matching the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 **BAC13: Ineligible Item without Treatment Type**
@@ -193,7 +193,7 @@ And the treatment type is null in column Q
 And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
 **BAC14: Ineligible Items, more than 3 (no Treatment Type specified)**
@@ -207,7 +207,7 @@ And a null treatment type in column Q
 And a commodity code + CoO combination matching an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
-And the failure reason is: "Ineligible item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
+And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
 ### Technical Requirements (TR) - Implementation Specifics
