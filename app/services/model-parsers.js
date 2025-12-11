@@ -6,10 +6,6 @@
  */
 const noMatchMatcher = require("./matchers/no-match/model1");
 const noMatchParser = require("./parsers/no-match/model1");
-const asdaMatcher = require("./matchers/asda/model1");
-const asdaParser = require("./parsers/asda/model1");
-const asdaMatcher2 = require("./matchers/asda/model2");
-const asdaParser2 = require("./parsers/asda/model2");
 const asdaMatcher3 = require("./matchers/asda/model3");
 const asdaParser3 = require("./parsers/asda/model3");
 const asdaMatcher4 = require("./matchers/asda/model4");
@@ -26,8 +22,6 @@ const cds2Matcher = require("./matchers/cds/model2");
 const cds2Parser = require("./parsers/cds/model2");
 const coopMatcher = require("./matchers/co-op/model1");
 const coopParser = require("./parsers/co-op/model1");
-const davenportMatcher = require("./matchers/davenport/model1");
-const davenportParser = require("./parsers/davenport/model1");
 const davenportMatcher2 = require("./matchers/davenport/model2");
 const davenportParser2 = require("./parsers/davenport/model2");
 const fowlerWelchMatcher = require("./matchers/fowlerwelch/model1");
@@ -86,16 +80,6 @@ const turnersMatcher = require("./matchers/turners/model1");
 const turnersParser = require("./parsers/turners/model1");
 
 const parsersExcel = {
-  ASDA1: {
-    matches: (packingList, filename) =>
-      asdaMatcher.matches(packingList, filename),
-    parse: (packingList, filename) => asdaParser.parse(packingList, filename),
-  },
-  ASDA2: {
-    matches: (packingList, filename) =>
-      asdaMatcher2.matches(packingList, filename),
-    parse: (packingList, filename) => asdaParser2.parse(packingList, filename),
-  },
   ASDA3: {
     matches: (packingList, filename) =>
       asdaMatcher3.matches(packingList, filename),
@@ -137,12 +121,6 @@ const parsersExcel = {
     matches: (packingList, filename) =>
       coopMatcher.matches(packingList, filename),
     parse: (packingList, filename) => coopParser.parse(packingList, filename),
-  },
-  DAVENPORT1: {
-    matches: (packingList, filename) =>
-      davenportMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      davenportParser.parse(packingList, filename),
   },
   DAVENPORT2: {
     matches: (packingList, filename) =>
