@@ -48,8 +48,6 @@ const sainsburysMatcher = require("./matchers/sainsburys/model1");
 const sainsburysParser = require("./parsers/sainsburys/model1");
 const saversMatcher = require("./matchers/savers/model1");
 const saversParser = require("./parsers/savers/model1");
-const tescosMatcher = require("./matchers/tescos/model1");
-const tescosParser = require("./parsers/tescos/model1");
 const tescosMatcher2 = require("./matchers/tescos/model2");
 const tescosParser2 = require("./parsers/tescos/model2");
 const tescosMatcher3 = require("./matchers/tescos/model3");
@@ -194,11 +192,6 @@ const parsersExcel = {
     matches: (packingList, filename) =>
       saversMatcher.matches(packingList, filename),
     parse: (packingList, filename) => saversParser.parse(packingList, filename),
-  },
-  TESCO1: {
-    matches: (packingList, filename) =>
-      tescosMatcher.matches(packingList, filename),
-    parse: (packingList, filename) => tescosParser.parse(packingList, filename),
   },
   TESCO2: {
     matches: (packingList, filename) =>
