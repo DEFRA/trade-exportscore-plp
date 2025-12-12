@@ -77,4 +77,18 @@ describe("matchesFowlerwelch2", () => {
 
     expect(logErrorSpy).toHaveBeenCalled();
   });
+
+  test("skips listed invalidSheets", () => {
+    const packingListJson = {
+      Sheet2: [
+        {
+          A: "GC Ref: RMS/2025/1721152188279",
+        },
+      ],
+    };
+
+    const result = matcher.matches(packingListJson, filename);
+
+    expect(result).toBe(matcherResult.EMPTY_FILE);
+  });
 });

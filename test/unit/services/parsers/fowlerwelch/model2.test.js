@@ -35,4 +35,10 @@ describe("parseFowlerwelchModel2", () => {
     // Check if logger.logError has been called
     expect(logErrorSpy).toHaveBeenCalled();
   });
+
+  test("parses json with invalid rows", () => {
+    const result = parser.parse(model.invalidRowsModel);
+
+    expect(result).toMatchObject(test_results.validTestResult);
+  });
 });
