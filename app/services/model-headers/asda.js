@@ -7,34 +7,6 @@
 const netWeight = /Net Weight/i;
 
 const asdaHeaders = {
-  ASDA1: {
-    deprecated: true,
-    establishmentNumber: {
-      regex: /^RMS-GB-000015-\d{3}$/i,
-    },
-    regex: {
-      description: /\[Description Of All Retail Goods\]/i,
-      nature_of_products: /\[Nature Of Product\]/i,
-      type_of_treatment: /\[Treatment Type\]/i,
-      number_of_packages: /\[Number of Packages\]/i,
-      total_net_weight_kg: /\[Net Weight\]/i,
-    },
-    total_net_weight_unit: /\[kilograms\/grams\]/i,
-  },
-  ASDA2: {
-    deprecated: true,
-    establishmentNumber: {
-      regex: /^RMS-GB-000015-\d{3}$/i,
-    },
-    regex: {
-      description: /\[Description Of All Retail Go/i,
-      nature_of_products: /\[Nature Of Product\]/i,
-      type_of_treatment: /\[Treatment Ty/i,
-      number_of_packages: /Cases/i,
-      total_net_weight_kg: netWeight,
-    },
-    findUnitInHeader: true,
-  },
   ASDA3: {
     establishmentNumber: {
       regex: /^RMS-GB-000015-\d{3}$/i,

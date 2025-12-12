@@ -74,9 +74,9 @@ tools: ['extensions', 'todos', 'runTests', 'codebase', 'usages', 'vscodeAPI', 't
 **Excel-based Retailers (27 variants):**
 
 - ASDA (3 variants), BANDM, BOOTS, BUFFALOAD, CDS, COOP
-- DAVENPORT (2 variants), FOWLERWELCH, GIOVANNI (2 variants)
+- DAVENPORT, FOWLERWELCH, GIOVANNI (2 variants)
 - KEPAK, MARS, NISA (2 variants), NUTRICIA (2 variants)
-- SAINSBURYS, SAVERS, TESCO (3 variants), TJMORRIS (2 variants), WARRENS (2 variants)
+- SAINSBURYS, SAVERS, TESCO (3 variants), TJMORRIS (2 variants), WARRENS
 
 **PDF AI Retailers (3 variants):**
 

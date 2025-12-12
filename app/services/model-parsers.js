@@ -6,10 +6,6 @@
  */
 const noMatchMatcher = require("./matchers/no-match/model1");
 const noMatchParser = require("./parsers/no-match/model1");
-const asdaMatcher = require("./matchers/asda/model1");
-const asdaParser = require("./parsers/asda/model1");
-const asdaMatcher2 = require("./matchers/asda/model2");
-const asdaParser2 = require("./parsers/asda/model2");
 const asdaMatcher3 = require("./matchers/asda/model3");
 const asdaParser3 = require("./parsers/asda/model3");
 const asdaMatcher4 = require("./matchers/asda/model4");
@@ -26,8 +22,6 @@ const cds2Matcher = require("./matchers/cds/model2");
 const cds2Parser = require("./parsers/cds/model2");
 const coopMatcher = require("./matchers/co-op/model1");
 const coopParser = require("./parsers/co-op/model1");
-const davenportMatcher = require("./matchers/davenport/model1");
-const davenportParser = require("./parsers/davenport/model1");
 const davenportMatcher2 = require("./matchers/davenport/model2");
 const davenportParser2 = require("./parsers/davenport/model2");
 const fowlerWelchMatcher = require("./matchers/fowlerwelch/model1");
@@ -54,8 +48,6 @@ const sainsburysMatcher = require("./matchers/sainsburys/model1");
 const sainsburysParser = require("./parsers/sainsburys/model1");
 const saversMatcher = require("./matchers/savers/model1");
 const saversParser = require("./parsers/savers/model1");
-const tescosMatcher = require("./matchers/tescos/model1");
-const tescosParser = require("./parsers/tescos/model1");
 const tescosMatcher2 = require("./matchers/tescos/model2");
 const tescosParser2 = require("./parsers/tescos/model2");
 const tescosMatcher3 = require("./matchers/tescos/model3");
@@ -64,8 +56,6 @@ const tjMorrisMatcher = require("./matchers/tjmorris/model1");
 const tjMorrisParser = require("./parsers/tjmorris/model1");
 const tjMorrisMatcher2 = require("./matchers/tjmorris/model2");
 const tjMorrisParser2 = require("./parsers/tjmorris/model2");
-const warrensMatcher = require("./matchers/warrens/model1");
-const warrensParser = require("./parsers/warrens/model1");
 const warrensMatcher2 = require("./matchers/warrens/model2");
 const warrensParser2 = require("./parsers/warrens/model2");
 const icelandMatcher = require("./matchers/iceland/model1");
@@ -86,16 +76,6 @@ const turnersMatcher = require("./matchers/turners/model1");
 const turnersParser = require("./parsers/turners/model1");
 
 const parsersExcel = {
-  ASDA1: {
-    matches: (packingList, filename) =>
-      asdaMatcher.matches(packingList, filename),
-    parse: (packingList, filename) => asdaParser.parse(packingList, filename),
-  },
-  ASDA2: {
-    matches: (packingList, filename) =>
-      asdaMatcher2.matches(packingList, filename),
-    parse: (packingList, filename) => asdaParser2.parse(packingList, filename),
-  },
   ASDA3: {
     matches: (packingList, filename) =>
       asdaMatcher3.matches(packingList, filename),
@@ -137,12 +117,6 @@ const parsersExcel = {
     matches: (packingList, filename) =>
       coopMatcher.matches(packingList, filename),
     parse: (packingList, filename) => coopParser.parse(packingList, filename),
-  },
-  DAVENPORT1: {
-    matches: (packingList, filename) =>
-      davenportMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      davenportParser.parse(packingList, filename),
   },
   DAVENPORT2: {
     matches: (packingList, filename) =>
@@ -217,11 +191,6 @@ const parsersExcel = {
       saversMatcher.matches(packingList, filename),
     parse: (packingList, filename) => saversParser.parse(packingList, filename),
   },
-  TESCO1: {
-    matches: (packingList, filename) =>
-      tescosMatcher.matches(packingList, filename),
-    parse: (packingList, filename) => tescosParser.parse(packingList, filename),
-  },
   TESCO2: {
     matches: (packingList, filename) =>
       tescosMatcher2.matches(packingList, filename),
@@ -245,12 +214,6 @@ const parsersExcel = {
       tjMorrisMatcher2.matches(packingList, filename),
     parse: (packingList, filename) =>
       tjMorrisParser2.parse(packingList, filename),
-  },
-  WARRENS1: {
-    matches: (packingList, filename) =>
-      warrensMatcher.matches(packingList, filename),
-    parse: (packingList, filename) =>
-      warrensParser.parse(packingList, filename),
   },
   WARRENS2: {
     matches: (packingList, filename) =>
