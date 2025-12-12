@@ -68,6 +68,17 @@ function parseModel(packingListJson, model, establishmentNumberRegex) {
       }
     }
 
+    packingListContents = packingListContents.filter(
+      (row) =>
+        !(
+          row.description === null &&
+          row.commodity_code === null &&
+          row.type_of_treatment === null &&
+          row.number_of_packages !== 0 &&
+          row.total_net_weight_kg !== 0
+        ),
+    );
+
     return combineParser.combine(
       establishmentNumber,
       packingListContents,
