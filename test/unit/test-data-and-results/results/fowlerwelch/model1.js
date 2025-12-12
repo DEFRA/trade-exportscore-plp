@@ -1,6 +1,4 @@
 const parserModel = require("../../../../../app/services/parser-model");
-// Removed dependency on deprecated Davenport1 test result; define local emptyModelResult if needed.
-// Note: The file already exports its own `emptyModelResult`, so no external import is required.
 const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 module.exports = {
