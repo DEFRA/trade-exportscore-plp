@@ -43,7 +43,7 @@ Analyze a CSV file to identify and validate specific error conditions mentioned 
    - Apply model-specific validation rules based on the header configuration
 
 2. **Parser Model Structure Understanding**
-   - Each parser model (COOP1, TESCO1, ASDA1, etc.) has specific header regex patterns
+   - Each parser model (COOP1, ASDA3, etc.) has specific header regex patterns
    - Models define which fields are required and their expected formats
    - Some models have additional validation flags (validateCountryOfOrigin, findUnitInHeader)
 

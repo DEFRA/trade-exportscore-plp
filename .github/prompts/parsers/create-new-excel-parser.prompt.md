@@ -32,7 +32,7 @@ Secondary tasks include generating a standard set of unit tests and integrating 
 - A matcher must be created to determine if a file matches the model (see `app/matchers/asda/model2.js` for example)
 - A parser must be created to convert the spreadsheet into a standard data structure (see `app/parsers/asda/model2.js` for example)
 - If specific sheets need to be excluded from processing:
-  - Add `invalidSheets` array property to the model in `model-headers.js` (like DAVENPORT1, FOWLERWELCH1)
+  - Add `invalidSheets` array property to the model in `model-headers.js` (like DAVENPORT2, FOWLERWELCH1)
   - Use `!headers.MODEL.invalidSheets.includes(sheet)` check before processing each sheet in the parser
   - If no sheets need excluding, omit the invalidSheets property and process all sheets (like ASDA1)
 - If totals/footer rows need filtering, implement the appropriate pattern:

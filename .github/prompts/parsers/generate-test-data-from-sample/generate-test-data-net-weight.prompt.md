@@ -39,7 +39,7 @@ _Follow the generic instructions in `generate-test-data-from-sample.prompt.md` f
 - **Zero_Data_TotalNetWeight_Pass**: Set total net weight data to zero.
 
 ### UOM-Specific Scenarios (Only Generated if `header_net_weight_unit` property exists)
-**Note**: These scenarios are only generated if the exporter configuration contains a `header_net_weight_unit` property (e.g., COOP1, NISA1, NISA2, TESCO1, SAINSBURYS1). For exporters without this property (like ASDA4), these scenarios are skipped.
+**Note**: These scenarios are only generated if the exporter configuration contains a `header_net_weight_unit` property (e.g., COOP1, NISA1, NISA2, SAINSBURYS1). For exporters without this property (like ASDA4), these scenarios are skipped.
 
 - **Alpha_Numeric_UOM_Weight**: Set the unit of measure to alphanumeric values that do NOT match the allowed kilogram tokens (see main prompt). Examples: `K9G`, `L2B`, `G3M`, `K5G`, `M7L`.
 - **Data_empty_NetweightUOM**: Leave unit of measure cells empty.
