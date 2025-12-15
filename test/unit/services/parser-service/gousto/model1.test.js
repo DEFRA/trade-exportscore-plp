@@ -165,14 +165,14 @@ describe("matchesGoustoModel1", () => {
     expect(result.parserModel).toBe("no-remos");
   });
 
-  test("AC4: NIRMS field is set to NIRMS with blanket statement", async () => {
+  test("AC4: NIRMS field is null when blanket statement is missing", async () => {
     const result = await parserService.findParser(
       model.missingNirmsStatement,
       filename,
     );
 
     result.items.forEach((item) => {
-      expect(item.nirms).toBe("NIRMS");
+      expect(item.nirms).toBeNull();
     });
   });
 

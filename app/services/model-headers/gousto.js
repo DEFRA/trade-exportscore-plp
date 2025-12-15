@@ -20,7 +20,7 @@ const goustoHeaders = {
     country_of_origin: /COUNTRY OF ORIGIN/i,
     box_number: /BOX NUMBER/i,
     blanketNirms: {
-      regex: /.*/,
+      regex: /All goods on this packing list are NIRMS/i,
       value: "NIRMS",
     },
     findUnitInHeader: true,

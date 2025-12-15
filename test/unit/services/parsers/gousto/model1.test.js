@@ -70,11 +70,11 @@ describe("parseGoustoModel1", () => {
     });
   });
 
-  test("AC4: NIRMS field set by blanket statement even without explicit text", () => {
+  test("AC4: NIRMS field is null when blanket statement is missing", () => {
     const result = parser.parse(model.missingNirmsStatement);
 
     result.items.forEach((item) => {
-      expect(item.nirms).toBe("NIRMS");
+      expect(item.nirms).toBeNull();
     });
   });
 
