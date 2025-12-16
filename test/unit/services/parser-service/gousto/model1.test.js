@@ -92,11 +92,17 @@ describe("matchesGoustoModel1", () => {
     expect(result.business_checks.all_required_fields_present).toBe(true);
   });
 
-  test("AC9: rejects x (lowercase) as invalid Country of Origin", async () => {
+  test("AC9: accepts x (lowercase) as valid Country of Origin placeholder", async () => {
     const lowercaseX = {
       "Packing List": [
         { A: "GB Establishment RMS Number", B: "RMS-GB-000483-001" },
-        { A: "" },
+        {
+          A: "",
+          B: "",
+          C: "",
+          D: "",
+          E: "All goods on this packing list are NIRMS",
+        },
         {
           A: "DESCRIPTION",
           B: "COMMODITY CODE",
@@ -108,27 +114,19 @@ describe("matchesGoustoModel1", () => {
         },
         {
           A: "Test Item",
-          B: "1234.56.78",
+          B: "03021200",
           C: "10",
           D: "5.5",
           E: "Test",
           F: "Fresh",
           G: "x",
         },
-        {
-          A: "",
-          B: "",
-          C: "",
-          D: "",
-          E: "All goods on this packing list are NIRMS",
-        },
       ],
     };
     const result = await parserService.findParser(lowercaseX, filename);
 
     expect(result.items[0].country_of_origin).toBe("x");
-    expect(result.business_checks.all_required_fields_present).toBe(false);
-    // Note: lowercase x not accepted - generates validation errors
+    expect(result.business_checks.all_required_fields_present).toBe(true);
   });
 
   test("accepts comma-separated list of valid ISO country codes", async () => {

@@ -7,13 +7,13 @@
 const goustoHeaders = {
   GOUSTO1: {
     establishmentNumber: {
-      regex: /RMS-GB-000483(-\d{3})?/i,
+      regex: /^RMS-GB-000483-\d{3}$/i,
     },
     regex: {
       description: /DESCRIPTION/i,
       type_of_treatment: /TYPE OF TREATMENT/i,
       number_of_packages: /NUMBER OF PACKS/i,
-      total_net_weight_kg: /NET WEIGHT.*KG/i,
+      total_net_weight_kg: /NET WEIGHT/i,
       nature_of_products: /NATURE/i,
       commodity_code: /COMMODITY CODE/i,
     },

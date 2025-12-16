@@ -108,34 +108,6 @@ describe("matchesGoustoModel1", () => {
     expect(result).toBe(matcherResult.CORRECT);
   });
 
-  test("accepts establishment number without suffix", () => {
-    const withoutSuffix = {
-      "Packing List": [
-        { A: "GB Establishment RMS Number", B: "RMS-GB-000483" },
-        { A: "" },
-        {
-          A: "DESCRIPTION",
-          B: "COMMODITY CODE",
-          C: "NUMBER OF PACKS",
-          D: "NET WEIGHT (KG)",
-          E: "NATURE",
-          F: "TYPE OF TREATMENT",
-        },
-        {
-          A: "Test Item",
-          B: "1234.56.78",
-          C: "5",
-          D: "2.5",
-          E: "Test",
-          F: "Fresh",
-        },
-      ],
-    };
-    const result = matcher.matches(withoutSuffix, filename);
-
-    expect(result).toBe(matcherResult.CORRECT);
-  });
-
   test("handles packing list with table information above data", () => {
     const withTableAbove = {
       "Packing List": [
