@@ -34,6 +34,35 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get iso codes list (200)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{Bearer Token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Ocp-Apim-Subscription-Key",
+            "value": "{{ApimSubscriptionKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/geo/countries",
+          "host": ["{{base_url}}"],
+          "path": ["geo", "countries"]
+        }
+      },
+      "response": []
     }
   ]
 }
