@@ -11,6 +11,11 @@ jest.mock("../../../../../app/services/document-intelligence");
 jest.mock("../../../../../app/config", () => {
   return {
     isDiEnabled: true,
+    mdmConfig: {
+      useLocalData: true,
+      maxRetries: 3,
+      retryDelayMs: 2000,
+    },
   };
 });
 jest.mock("../../../../../app/utilities/pdf-helper");

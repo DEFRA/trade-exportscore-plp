@@ -7,7 +7,7 @@
  */
 
 const regex = require("../../utilities/regex");
-const isoCodesData = require("../data/data-iso-codes.json");
+const isoCodesService = require("../iso-codes-service");
 const ineligibleItemsService = require("../ineligible-items-service");
 
 /**
@@ -183,23 +183,23 @@ function hasMissingCoO(item) {
 /**
  * Check whether Country of Origin value is invalid for NIRMS items.
  * @param {Object} item - Packing list item object.
- * @returns {boolean} True when the item is NIRMS and the country_of_origin is invalid.
+ * @returns {Promise<boolean>} True when the item is NIRMS and the country_of_origin is invalid.
  */
-function hasInvalidCoO(item) {
-  return isNirms(item.nirms) && isInvalidCoO(item.country_of_origin);
+async function hasInvalidCoO(item) {
+  return isNirms(item.nirms) && (await isInvalidCoO(item.country_of_origin));
 }
 
 /**
  * Identify whether an item is considered a prohibited item based on country,
  * commodity code prefix and treatment type.
  * @param {Object} item - Packing list item object.
- * @returns {boolean} True when the item matches an entry from the prohibited list.
+ * @returns {Promise<boolean>} True when the item matches an entry from the prohibited list.
  */
 async function hasIneligibleItems(item) {
   if (
     !isNirms(item.nirms) ||
     isNullOrEmptyString(item.country_of_origin) ||
-    isInvalidCoO(item.country_of_origin) ||
+    (await isInvalidCoO(item.country_of_origin)) ||
     isNullOrEmptyString(item.commodity_code)
   ) {
     return false;
@@ -256,9 +256,9 @@ function stringMatchesPattern(input, regexPatterns) {
  * Validate a country-of-origin field. Accepts single or comma-separated codes,
  * and special-case 'x' as valid.
  * @param {*} countryOfOrigin - Raw country_of_origin value from item.
- * @returns {boolean} True when value is present but invalid.
+ * @returns {Promise<boolean>} True when value is present but invalid.
  */
-function isInvalidCoO(countryOfOrigin) {
+async function isInvalidCoO(countryOfOrigin) {
   if (isNullOrEmptyString(countryOfOrigin)) {
     return false;
   }
@@ -274,23 +274,27 @@ function isInvalidCoO(countryOfOrigin) {
     return false;
   }
 
+  // Load ISO codes on-demand
+  const isoCodesData = await isoCodesService.getIsoCodes();
+
   // Check if it contains comma-separated values
   if (normalizedValue.includes(",")) {
     const codes = normalizedValue.split(",");
     // All individual codes must be valid
-    return codes.some((code) => !isValidIsoCode(code.trim()));
+    return codes.some((code) => !isValidIsoCode(code.trim(), isoCodesData));
   }
 
   // Single value case
-  return !isValidIsoCode(countryOfOrigin);
+  return !isValidIsoCode(countryOfOrigin, isoCodesData);
 }
 
 /**
  * Check whether a single code exists in the ISO codes data.
  * @param {string} code - ISO code to validate.
+ * @param {Array<string>} isoCodesData - Array of valid ISO codes.
  * @returns {boolean} True when `code` is a valid ISO code (case-insensitive).
  */
-function isValidIsoCode(code) {
+function isValidIsoCode(code, isoCodesData) {
   if (!code || typeof code !== "string") {
     return false;
   }

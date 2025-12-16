@@ -272,9 +272,9 @@ describe("validator function tests", () => {
     ["NIRMS", "X", false], // Nirms, Specific 'X' value, should be ignored
     ["NIRMS", "x", false], // Nirms, Specific 'x' value, should be ignored
     ["NIRMS", "VALID_ISO, PROHIBITED_ITEM_ISO", false], // Nirms, Multiple ISO codes comma separated
-  ])("hasInvalidCoO", (nirms, country_of_origin, expected) => {
+  ])("hasInvalidCoO", async (nirms, country_of_origin, expected) => {
     const item = { nirms, country_of_origin };
-    expect(hasInvalidCoO(item)).toBe(expected);
+    expect(await hasInvalidCoO(item)).toBe(expected);
   });
 
   test.each([

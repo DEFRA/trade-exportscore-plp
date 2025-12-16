@@ -9,3 +9,12 @@ jest.mock("../../../../app/services/ineligible-items-service", () => {
     getLocalIneligibleItems: jest.fn().mockReturnValue(localData),
   };
 });
+
+// Mock iso-codes-service to always use local data in parser-service tests
+jest.mock("../../../../app/services/iso-codes-service", () => {
+  const localData = require("../../../../app/services/data/data-iso-codes.json");
+  return {
+    getIsoCodes: jest.fn().mockResolvedValue(localData),
+    getLocalIsoCodes: jest.fn().mockReturnValue(localData),
+  };
+});

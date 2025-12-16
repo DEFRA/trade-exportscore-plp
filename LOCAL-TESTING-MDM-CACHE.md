@@ -387,14 +387,14 @@ Select-String -Path logs.txt -Pattern "Cache miss:" | Measure-Object
 
 ## Configuration Summary
 
-| Environment Variable              | Value                                     | Purpose                          | Required |
-| --------------------------------- | ----------------------------------------- | -------------------------------- | -------- |
-| `MDM_CACHE_ENABLED`               | `"true"`                                  | Enable/disable caching           | Yes      |
-| `MDM_CACHE_TTL_SECONDS`           | `"600"` (dev) / `"3600"` (prod)           | Cache lifetime                   | Yes      |
-| `MDM_CACHE_CONTAINER`             | `"mdm-cache"`                             | Azure blob container name        | Yes      |
-| `AZURE_STORAGE_ACCOUNT_URL`       | `https://{account}.blob.core.windows.net` | Storage account URL              | Yes      |
-| `AZURE_STORAGE_USE_EMULATOR`      | `"true"`                                  | Use Azurite emulator             | Optional |
-| `AZURE_STORAGE_CONNECTION_STRING` | Connection string                         | Override default Azurite config  | Optional |
+| Environment Variable              | Value                                     | Purpose                         | Required |
+| --------------------------------- | ----------------------------------------- | ------------------------------- | -------- |
+| `MDM_CACHE_ENABLED`               | `"true"`                                  | Enable/disable caching          | Yes      |
+| `MDM_CACHE_TTL_SECONDS`           | `"600"` (dev) / `"3600"` (prod)           | Cache lifetime                  | Yes      |
+| `MDM_CACHE_CONTAINER`             | `"mdm-cache"`                             | Azure blob container name       | Yes      |
+| `AZURE_STORAGE_ACCOUNT_URL`       | `https://{account}.blob.core.windows.net` | Storage account URL             | Yes      |
+| `AZURE_STORAGE_USE_EMULATOR`      | `"true"`                                  | Use Azurite emulator            | Optional |
+| `AZURE_STORAGE_CONNECTION_STRING` | Connection string                         | Override default Azurite config | Optional |
 
 ## Architecture Notes
 

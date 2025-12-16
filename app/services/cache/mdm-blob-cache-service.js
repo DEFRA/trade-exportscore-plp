@@ -35,16 +35,30 @@ const mdmConfig = require("../../config/mdm-config");
 const filenameForLogging = "mdm-blob-cache-service";
 const getFromBlobMethod = "getFromBlob()";
 
-let blobClient = null;
+let blobClients = {};
 
 /**
- * Initialize Azure Blob Storage client.
+ * Get blob client for a specific data type.
+ * @param {string} dataType - Type of data (e.g., 'ineligible-items', 'countries')
+ * @returns {string} Blob name for the data type
+ */
+const getBlobName = (dataType = "ineligible-items") => {
+  const blobNames = {
+    "ineligible-items": "nirms-ineligible-items.json",
+    countries: "countries.json",
+  };
+  return blobNames[dataType] || `${dataType}.json`;
+};
+
+/**
+ * Initialize Azure Blob Storage client for a specific blob.
  * Creates connection to either Azurite (local) or Azure Storage (cloud).
+ * @param {string} blobName - Name of the blob file
  * @returns {BlockBlobClient} Initialized blob client
  */
-const initializeBlobClient = () => {
-  if (blobClient) {
-    return blobClient;
+const initializeBlobClient = (blobName = "nirms-ineligible-items.json") => {
+  if (blobClients[blobName]) {
+    return blobClients[blobName];
   }
 
   try {
@@ -66,17 +80,17 @@ const initializeBlobClient = () => {
     }
 
     const containerClient = serviceClient.getContainerClient(containerName);
-    blobClient = containerClient.getBlockBlobClient(
-      "nirms-ineligible-items.json",
-    );
+    const client = containerClient.getBlockBlobClient(blobName);
+
+    blobClients[blobName] = client;
 
     logger.logInfo(
       filenameForLogging,
       "initializeBlobClient()",
-      `Blob client initialized for container: ${containerName}`,
+      `Blob client initialized for container: ${containerName}, blob: ${blobName}`,
     );
 
-    return blobClient;
+    return client;
   } catch (error) {
     logger.logError(filenameForLogging, "initializeBlobClient()", error);
     throw error;
@@ -85,16 +99,17 @@ const initializeBlobClient = () => {
 
 /**
  * Get fresh cached data (within TTL).
+ * @param {string} dataType - Type of data to retrieve (e.g., 'ineligible-items', 'countries')
  * @returns {Promise<Object|null>} Cached data if fresh and available, null otherwise
  */
-const get = async () => {
+const get = async (dataType = "ineligible-items") => {
   if (!mdmConfig.cache.enabled) {
     logger.logInfo(filenameForLogging, "get()", "Cache disabled");
     return null;
   }
 
   try {
-    return await getFromBlob();
+    return await getFromBlob(dataType);
   } catch (error) {
     logger.logError(filenameForLogging, "get()", error);
     return null;
@@ -104,16 +119,17 @@ const get = async () => {
 /**
  * Get stale cached data (ignores TTL expiration).
  * Used as fallback when MDM API is unavailable.
+ * @param {string} dataType - Type of data to retrieve (e.g., 'ineligible-items', 'countries')
  * @returns {Promise<Object|null>} Cached data if available (regardless of age), null otherwise
  */
-const getStale = async () => {
+const getStale = async (dataType = "ineligible-items") => {
   if (!mdmConfig.cache.enabled) {
     logger.logInfo(filenameForLogging, "getStale()", "Cache disabled");
     return null;
   }
 
   try {
-    return await getStaleFromBlob();
+    return await getStaleFromBlob(dataType);
   } catch (error) {
     logger.logError(filenameForLogging, "getStale()", error);
     return null;
@@ -123,10 +139,12 @@ const getStale = async () => {
 /**
  * Retrieve fresh cached data from blob storage.
  * Checks TTL and returns null if expired (blob is not deleted for fallback use).
+ * @param {string} dataType - Type of data to retrieve (e.g., 'ineligible-items', 'countries')
  * @returns {Promise<Object|null>} Parsed JSON data if fresh, null if expired or missing
  */
-const getFromBlob = async () => {
-  const client = initializeBlobClient();
+const getFromBlob = async (dataType = "ineligible-items") => {
+  const blobName = getBlobName(dataType);
+  const client = initializeBlobClient(blobName);
   const exists = await client.exists();
 
   if (!exists) {
@@ -173,10 +191,12 @@ const getFromBlob = async () => {
 /**
  * Retrieve stale cached data from blob storage (ignores TTL).
  * Used as fallback when MDM API is unavailable after retries.
+ * @param {string} dataType - Type of data to retrieve (e.g., 'ineligible-items', 'countries')
  * @returns {Promise<Object|null>} Parsed JSON data regardless of age, null if blob doesn't exist
  */
-const getStaleFromBlob = async () => {
-  const client = initializeBlobClient();
+const getStaleFromBlob = async (dataType = "ineligible-items") => {
+  const blobName = getBlobName(dataType);
+  const client = initializeBlobClient(blobName);
   const exists = await client.exists();
 
   if (!exists) {
@@ -215,15 +235,16 @@ const getStaleFromBlob = async () => {
  * Store data in blob cache.
  * Fire-and-forget pattern - errors are logged but not thrown.
  * @param {Object} data - Data to cache
+ * @param {string} dataType - Type of data to cache (e.g., 'ineligible-items', 'countries')
  * @returns {Promise<void>}
  */
-const set = async (data) => {
+const set = async (data, dataType = "ineligible-items") => {
   if (!mdmConfig.cache.enabled) {
     return;
   }
 
   try {
-    await setToBlob(data);
+    await setToBlob(data, dataType);
   } catch (error) {
     logger.logError(filenameForLogging, "set()", error);
   }
@@ -232,10 +253,12 @@ const set = async (data) => {
 /**
  * Upload data to blob storage with metadata.
  * @param {Object} data - Data to upload
+ * @param {string} dataType - Type of data to cache (e.g., 'ineligible-items', 'countries')
  * @returns {Promise<void>}
  */
-const setToBlob = async (data) => {
-  const client = initializeBlobClient();
+const setToBlob = async (data, dataType = "ineligible-items") => {
+  const blobName = getBlobName(dataType);
+  const client = initializeBlobClient(blobName);
   const content = JSON.stringify(data, null, 2);
   const buffer = Buffer.from(content, "utf-8");
 

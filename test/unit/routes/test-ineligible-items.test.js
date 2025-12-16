@@ -1,11 +1,11 @@
 /**
- * Unit tests for test-mdm-conn route
+ * Unit tests for test-ineligible-items route
  *
  * Tests the MDM connection test endpoint that verifies connectivity
  * to the Master Data Management API by fetching NIRMS ineligible items.
  */
 
-const testMdmConnRoute = require("../../../app/routes/test-mdm-conn");
+const testIneligibleItemsRoute = require("../../../app/routes/test-ineligible-items");
 const mdmService = require("../../../app/services/mdm-service");
 const logger = require("../../../app/utilities/logger");
 const { StatusCodes } = require("http-status-codes");
@@ -13,7 +13,7 @@ const { StatusCodes } = require("http-status-codes");
 jest.mock("../../../app/services/mdm-service");
 jest.mock("../../../app/utilities/logger");
 
-describe("test-mdm-conn route", () => {
+describe("test-ineligible-items route", () => {
   let mockH;
 
   beforeEach(() => {
@@ -26,16 +26,16 @@ describe("test-mdm-conn route", () => {
 
   describe("route configuration", () => {
     test("should have correct method", () => {
-      expect(testMdmConnRoute.method).toBe("GET");
+      expect(testIneligibleItemsRoute.method).toBe("GET");
     });
 
     test("should have correct path", () => {
-      expect(testMdmConnRoute.path).toBe("/test-mdm-conn");
+      expect(testIneligibleItemsRoute.path).toBe("/test-ineligible-items");
     });
 
     test("should have handler in options", () => {
-      expect(testMdmConnRoute.options.handler).toBeDefined();
-      expect(typeof testMdmConnRoute.options.handler).toBe("function");
+      expect(testIneligibleItemsRoute.options.handler).toBeDefined();
+      expect(typeof testIneligibleItemsRoute.options.handler).toBe("function");
     });
   });
 
@@ -50,7 +50,7 @@ describe("test-mdm-conn route", () => {
 
       mdmService.getNirmsIneligibleItems.mockResolvedValue(mockNirmsData);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalledTimes(1);
       expect(logger.logInfo).toHaveBeenCalledWith(
@@ -67,7 +67,7 @@ describe("test-mdm-conn route", () => {
 
       mdmService.getNirmsIneligibleItems.mockResolvedValue(mockNirmsData);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalledTimes(1);
       expect(logger.logInfo).toHaveBeenCalledWith(
@@ -84,7 +84,7 @@ describe("test-mdm-conn route", () => {
     test("should return 503 when NIRMS data is null", async () => {
       mdmService.getNirmsIneligibleItems.mockResolvedValue(null);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalledTimes(1);
       expect(logger.logError).toHaveBeenCalledWith(
@@ -101,7 +101,7 @@ describe("test-mdm-conn route", () => {
     test("should return 503 when NIRMS data is undefined", async () => {
       mdmService.getNirmsIneligibleItems.mockResolvedValue(undefined);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalledTimes(1);
       expect(logger.logError).toHaveBeenCalledWith(
@@ -121,7 +121,7 @@ describe("test-mdm-conn route", () => {
       const mockError = new Error("Network connection failed");
       mdmService.getNirmsIneligibleItems.mockRejectedValue(mockError);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalledTimes(1);
       expect(logger.logError).toHaveBeenCalledWith(
@@ -139,7 +139,7 @@ describe("test-mdm-conn route", () => {
       const mockError = new Error();
       mdmService.getNirmsIneligibleItems.mockRejectedValue(mockError);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalledTimes(1);
       expect(logger.logError).toHaveBeenCalledWith(
@@ -157,7 +157,7 @@ describe("test-mdm-conn route", () => {
       const mockError = new Error("API timeout");
       mdmService.getNirmsIneligibleItems.mockRejectedValue(mockError);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(mdmService.getNirmsIneligibleItems).toHaveBeenCalledTimes(1);
       expect(logger.logError).toHaveBeenCalledWith(
@@ -177,7 +177,7 @@ describe("test-mdm-conn route", () => {
       const mockNirmsData = { items: [] };
       mdmService.getNirmsIneligibleItems.mockResolvedValue(mockNirmsData);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(logger.logInfo).toHaveBeenCalledWith(
         expect.stringContaining("routes"),
@@ -189,7 +189,7 @@ describe("test-mdm-conn route", () => {
     test("should log error with correct filename format", async () => {
       mdmService.getNirmsIneligibleItems.mockResolvedValue(null);
 
-      await testMdmConnRoute.options.handler({}, mockH);
+      await testIneligibleItemsRoute.options.handler({}, mockH);
 
       expect(logger.logError).toHaveBeenCalledWith(
         expect.stringContaining("routes"),

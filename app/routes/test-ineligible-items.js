@@ -6,7 +6,7 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 module.exports = {
   method: "GET",
-  path: "/test-mdm-conn",
+  path: "/test-ineligible-items",
   options: {
     handler: async (_request, h) => {
       try {
