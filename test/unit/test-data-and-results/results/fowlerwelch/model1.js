@@ -1,5 +1,4 @@
 const parserModel = require("../../../../../app/services/parser-model");
-const { emptyModelResult } = require("../davenport/model1");
 const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
 
 module.exports = {

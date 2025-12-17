@@ -1,9 +1,9 @@
 /**
- * Davenport matcher (model 1)
+ * Gousto Model 1 matcher
  *
- * DEPRECATED: Davenport Model 1 is no longer supported. This matcher always
- * returns NOMATCH to prevent matching against the deprecated format.
- * Retained for backward compatibility and historical reference.
+ * Detects whether a provided Excel-converted packing list matches
+ * the Gousto Model 1 format by checking the establishment number and
+ * header row patterns.
  */
 const matcherResult = require("../../matcher-result");
 const { matchesHeader } = require("../../matches-header");
@@ -14,29 +14,24 @@ const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 
 /**
- * Davenport matcher (model 1) - DEPRECATED
+ * Check whether the provided packing list matches Gousto Model 1.
  * @param {Object} packingList - Excel->JSON representation keyed by sheet
  * @param {string} filename - Source filename for logging
- * @returns {string} matcherResult - One of the matcher result codes
+ * @returns {string} - One of matcherResult codes
  */
 function matches(packingList, filename) {
   try {
-    let result = matcherResult.EMPTY_FILE; // Initialise to EMPTY_FILE as spreadsheet with only invalid sheets is equivalent to an empty file.
+    let result;
     const sheets = Object.keys(packingList);
-    if (!sheets?.length) {
+    if (sheets?.length === 0) {
       return matcherResult.EMPTY_FILE;
     }
 
     for (const sheet of sheets) {
-      // Skip invalid sheets
-      if (headers.DAVENPORT1.invalidSheets.includes(sheet)) {
-        continue;
-      }
-
       // check for correct establishment number
       if (
         !regex.test(
-          headers.DAVENPORT1.establishmentNumber.regex,
+          headers.GOUSTO1.establishmentNumber.regex,
           packingList[sheet],
         )
       ) {
@@ -44,7 +39,7 @@ function matches(packingList, filename) {
       }
       // check for header values
       result = matchesHeader(
-        Object.values(headers.DAVENPORT1.regex),
+        Object.values(headers.GOUSTO1.regex),
         packingList[sheet],
       );
       if (result === matcherResult.WRONG_HEADER) {
@@ -56,13 +51,14 @@ function matches(packingList, filename) {
       logger.logInfo(
         filenameForLogging,
         "matches()",
-        `Packing list matches davenport Model 1 with filename: ${filename}`,
+        `Packing list matches Gousto Model 1 with filename: ${filename}`,
       );
     }
 
     return result;
   } catch (err) {
     logger.logError(filenameForLogging, "matches()", err);
+
     return matcherResult.GENERIC_ERROR;
   }
 }
