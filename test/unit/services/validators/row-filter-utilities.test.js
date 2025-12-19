@@ -172,6 +172,78 @@ describe("Row Filter Utilities", () => {
       // Whitespace description is considered "empty", so totals pattern matches
       expect(isTotalsRow(row, headerCols, config)).toBe(true);
     });
+
+    test("should handle numeric description value (not string)", () => {
+      const row = {
+        A: 12345, // Numeric, not string
+        B: null,
+        C: 100,
+        D: 500,
+      };
+      // Numeric description doesn't match keyword pattern
+      expect(isTotalsRow(row, headerCols, config)).toBe(true);
+    });
+
+    test("should handle boolean false description value", () => {
+      const row = {
+        A: false, // Boolean false - falsy but not string
+        B: null,
+        C: 100,
+        D: 500,
+      };
+      // Boolean description doesn't match keyword pattern
+      expect(isTotalsRow(row, headerCols, config)).toBe(true);
+    });
+
+    test("should handle object as description value", () => {
+      const configKeywordOnly = {
+        skipTotalsRows: true,
+        totalsRowKeywords: ["TOTAL"],
+        // No pattern check - keyword only
+      };
+      const row = {
+        A: { value: "test" }, // Object - not string
+        B: "0123456789",
+        C: 100,
+        D: 500,
+      };
+      // Object description cannot match keyword pattern
+      expect(isTotalsRow(row, headerCols, configKeywordOnly)).toBe(false);
+    });
+
+    test("should not match totals row when country of origin present", () => {
+      const headerColsWithCoO = {
+        ...headerCols,
+        country_of_origin: "F",
+      };
+      const row = {
+        A: null,
+        B: null,
+        C: 100,
+        D: 500,
+        F: "GB", // Country of origin present
+      };
+      expect(isTotalsRow(row, headerColsWithCoO, config)).toBe(false);
+    });
+
+    test("should match totals row without hasNumericOnly flag", () => {
+      const configNoNumeric = {
+        skipTotalsRows: true,
+        totalsRowKeywords: ["TOTAL"],
+        totalsRowPattern: {
+          descriptionEmpty: true,
+          commodityCodeEmpty: true,
+          hasNumericOnly: false, // No numeric check required
+        },
+      };
+      const row = {
+        A: null,
+        B: null,
+        C: 100,
+        D: 500,
+      };
+      expect(isTotalsRow(row, headerCols, configNoNumeric)).toBe(false);
+    });
   });
 
   describe("isRepeatedHeaderRow", () => {
@@ -313,6 +385,22 @@ describe("Row Filter Utilities", () => {
       const emptyHeaderCols = {};
       expect(
         isRepeatedHeaderRow(row, originalHeaderRow, emptyHeaderCols, config),
+      ).toBe(false);
+    });
+
+    test("should return false when config has no regex object", () => {
+      const row = {
+        A: "ITEM DESCRIPTION",
+        B: "Commodity Code",
+        C: "TOTAL NUMBER OF CASES",
+        D: "Net Weight",
+      };
+      const configNoRegex = {
+        skipRepeatedHeaders: true,
+        // No regex property
+      };
+      expect(
+        isRepeatedHeaderRow(row, originalHeaderRow, headerCols, configNoRegex),
       ).toBe(false);
     });
 

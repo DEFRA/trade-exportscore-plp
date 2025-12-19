@@ -32,6 +32,7 @@ const bandmHeaders = {
     // Row filtering configuration
     skipTotalsRows: true,
     skipRepeatedHeaders: true,
+    totalsRowKeywords: ["total", "totals", "grand total"],
     totalsRowPattern: {
       hasNumericOnly: true, // Only numeric fields populated
       descriptionEmpty: true, // Description field must be empty
