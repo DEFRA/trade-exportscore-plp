@@ -79,7 +79,7 @@ exports.parse = (packingListJson) => {
 
 - **Structure**: Each retailer has establishmentNumber regex + field mapping regex patterns
 - **Pattern**: `RETAILER1/RETAILER2` variants with specific regex for each format
-- **Example**: ASDA1/ASDA2 with different header patterns but same establishment number
+- Example: ASDA3/ASDA4 with different header patterns but same establishment number
 - **Field Mappings**: description, nature_of_products, type_of_treatment, number_of_packages, total_net_weight_kg
 - **REMOS Pattern**: `/^RMS-GB-\d{6}-\d{3}$/i` for establishment number validation
 

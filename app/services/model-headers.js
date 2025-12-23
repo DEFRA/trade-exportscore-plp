@@ -14,6 +14,7 @@ const coopHeaders = require("./model-headers/coop");
 const davenportHeaders = require("./model-headers/davenport");
 const fowlerWelchHeaders = require("./model-headers/fowlerwelch");
 const { giovanniHeaders } = require("./model-headers/giovanni");
+const goustoHeaders = require("./model-headers/gousto");
 const kepakHeaders = require("./model-headers/kepak");
 const marsHeaders = require("./model-headers/mars");
 const nisaHeaders = require("./model-headers/nisa");
@@ -36,6 +37,7 @@ const headers = {
   ...davenportHeaders,
   ...fowlerWelchHeaders,
   ...giovanniHeaders,
+  ...goustoHeaders,
   ...kepakHeaders,
   ...marsHeaders,
   ...nisaHeaders,

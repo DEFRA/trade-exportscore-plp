@@ -90,7 +90,7 @@ Usage (minimal):
 - (Optional) To specify a test folder (By default, tests point to `./app/packing-lists`):
 
 ```bash
-export TEST_FOLDER_PATH=./app/packing-lists/ASDA1
+export TEST_FOLDER_PATH=./app/packing-lists/ASDA3
 ```
 
 - To run the QA suite:
@@ -119,13 +119,13 @@ Usage:
 **Command Prompt:**
 
 ```cmd
-set TEST_FOLDER_PATH=./app/packing-lists/ASDA1
+set TEST_FOLDER_PATH=./app/packing-lists/ASDA3
 ```
 
 **PowerShell:**
 
 ```powershell
-$env:TEST_FOLDER_PATH = "./app/packing-lists/ASDA1"
+$env:TEST_FOLDER_PATH = "./app/packing-lists/ASDA3"
 ```
 
 - To run the QA suite:
