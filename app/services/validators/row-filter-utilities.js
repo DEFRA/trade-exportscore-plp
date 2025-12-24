@@ -75,6 +75,15 @@ function matchesTotalsPattern(row, headerCols, pattern) {
     return false;
   }
 
+  // Check if country of origin is also empty (totals rows shouldn't have CoO)
+  if (
+    pattern.descriptionEmpty &&
+    pattern.commodityCodeEmpty &&
+    hasNonEmptyField(row, headerCols.country_of_origin)
+  ) {
+    return false;
+  }
+
   // Check if only numeric fields are populated
   if (pattern.hasNumericOnly) {
     return hasNumericData(row, headerCols);
