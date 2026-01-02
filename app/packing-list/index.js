@@ -12,6 +12,7 @@ const logger = require("./../utilities/logger");
 const {
   isNirms,
   isNotNirms,
+  getItemFailureMessage,
 } = require("../services/validators/packing-list-validator-utilities");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
@@ -28,6 +29,7 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
  * @param {number|string} applicationId - Primary id used to link items
  */
 async function createPackingList(packingListJson, applicationId) {
+  return packingListMapper(packingListJson, applicationId); // TODO remove
   try {
     await sequelize.transaction(async (transaction) => {
       const packingList = packingListMapper(packingListJson, applicationId);
@@ -60,12 +62,17 @@ async function createPackingList(packingListJson, applicationId) {
  */
 function packingListMapper(packingListJson, applicationId) {
   try {
+    const validateCountryOfOrigin =
+      packingListJson.validateCountryOfOrigin ?? false;
+    const unitInHeader = packingListJson.unitInHeader ?? false;
     return {
       applicationId,
       registrationApprovalNumber: packingListJson.registration_approval_number,
       allRequiredFieldsPresent:
         packingListJson.business_checks.all_required_fields_present,
-      item: packingListJson.items.map((n) => itemsMapper(n, applicationId)),
+      item: packingListJson.items.map((n) =>
+        itemsMapper(n, applicationId, validateCountryOfOrigin, unitInHeader),
+      ),
       parserModel: packingListJson.parserModel,
       reasonsForFailure: packingListJson.business_checks.failure_reasons,
       dispatchLocationNumber: packingListJson.dispatchLocationNumber,
@@ -74,6 +81,24 @@ function packingListMapper(packingListJson, applicationId) {
     logger.logError(filenameForLogging, "packingListMapper()", err);
     return undefined;
   }
+}
+
+/**
+ * Format sheet/page location from row_location object.
+ * @param {Object} rowLocation - Row location object with sheetName or pageNumber
+ * @returns {string|null} Formatted location string or null
+ */
+function getSheetPageLocation(rowLocation) {
+  if (!rowLocation) {
+    return null;
+  }
+  if (rowLocation.sheetName) {
+    return `Sheet ${rowLocation.sheetName}`;
+  }
+  if (rowLocation.pageNumber) {
+    return `Page ${rowLocation.pageNumber}`;
+  }
+  return null;
 }
 
 /**
@@ -86,9 +111,16 @@ function packingListMapper(packingListJson, applicationId) {
  *
  * @param {Object} o - Single item object from the parser JSON
  * @param {number|string} applicationId - Foreign key for the parent packing list
+ * @param {boolean} validateCountryOfOrigin - Whether to include country of origin validations
+ * @param {boolean} unitInHeader - Whether the net weight unit was found in the header
  * @returns {Object|undefined} - Mapped item object or undefined on error
  */
-function itemsMapper(o, applicationId) {
+function itemsMapper(
+  o,
+  applicationId,
+  validateCountryOfOrigin = false,
+  unitInHeader = false,
+) {
   /**
    * Convert NIRMS string value to boolean using validation utilities.
    * @param {string} nirmsValue - NIRMS value to convert
@@ -117,6 +149,13 @@ function itemsMapper(o, applicationId) {
       applicationId,
       countryOfOrigin: o.country_of_origin,
       nirms: getNirmsBooleanValue(o.nirms),
+      rowNumber: o.row_location?.rowNumber ?? null,
+      sheetPageLocation: getSheetPageLocation(o.row_location),
+      failureMessage: getItemFailureMessage(
+        o,
+        validateCountryOfOrigin,
+        unitInHeader,
+      ),
     };
   } catch (err) {
     logger.logError(filenameForLogging, "itemsMapper()", err);
