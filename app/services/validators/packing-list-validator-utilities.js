@@ -420,20 +420,14 @@ function isCountryOfOriginMatching(
 }
 
 /**
- * Generate a failure message string for an individual item.
+ * Collect basic field validation failures for an item.
  * @param {Object} item - Packing list item object.
- * @param {boolean} validateCountryOfOrigin - Whether to include country of origin validations.
- * @param {boolean} unitInHeader - Whether the net weight unit was found in the header (applies to all items).
- * @returns {string|null} Semicolon-separated failure messages or null if no failures.
+ * @param {boolean} unitInHeader - Whether net weight unit was found in header.
+ * @returns {Array<string>} Array of failure messages.
  */
-function getItemFailureMessage(
-  item,
-  validateCountryOfOrigin = false,
-  unitInHeader = false,
-) {
+function collectBasicFieldFailures(item, unitInHeader) {
   const failures = [];
 
-  // Basic field validations
   if (hasMissingIdentifier(item)) {
     failures.push(failureReasonsDescriptions.IDENTIFIER_MISSING);
   }
@@ -460,24 +454,52 @@ function getItemFailureMessage(
     failures.push(failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING);
   }
 
-  // Country of Origin validations (only if enabled)
-  if (validateCountryOfOrigin) {
-    if (hasMissingNirms(item)) {
-      failures.push(failureReasonsDescriptions.NIRMS_MISSING);
-    }
-    if (hasInvalidNirms(item)) {
-      failures.push(failureReasonsDescriptions.NIRMS_INVALID);
-    }
-    if (hasMissingCoO(item)) {
-      failures.push(failureReasonsDescriptions.COO_MISSING);
-    }
-    if (hasInvalidCoO(item)) {
-      failures.push(failureReasonsDescriptions.COO_INVALID);
-    }
-    if (hasIneligibleItems(item)) {
-      failures.push(failureReasonsDescriptions.PROHIBITED_ITEM);
-    }
+  return failures;
+}
+
+/**
+ * Collect country of origin validation failures for an item.
+ * @param {Object} item - Packing list item object.
+ * @returns {Array<string>} Array of failure messages.
+ */
+function collectCountryOfOriginFailures(item) {
+  const failures = [];
+
+  if (hasMissingNirms(item)) {
+    failures.push(failureReasonsDescriptions.NIRMS_MISSING);
   }
+  if (hasInvalidNirms(item)) {
+    failures.push(failureReasonsDescriptions.NIRMS_INVALID);
+  }
+  if (hasMissingCoO(item)) {
+    failures.push(failureReasonsDescriptions.COO_MISSING);
+  }
+  if (hasInvalidCoO(item)) {
+    failures.push(failureReasonsDescriptions.COO_INVALID);
+  }
+  if (hasIneligibleItems(item)) {
+    failures.push(failureReasonsDescriptions.PROHIBITED_ITEM);
+  }
+
+  return failures;
+}
+
+/**
+ * Generate a failure message string for an individual item.
+ * @param {Object} item - Packing list item object.
+ * @param {boolean} validateCountryOfOrigin - Whether to include country of origin validations.
+ * @param {boolean} unitInHeader - Whether the net weight unit was found in the header (applies to all items).
+ * @returns {string|null} Semicolon-separated failure messages or null if no failures.
+ */
+function getItemFailureMessage(
+  item,
+  validateCountryOfOrigin = false,
+  unitInHeader = false,
+) {
+  const failures = [
+    ...collectBasicFieldFailures(item, unitInHeader),
+    ...(validateCountryOfOrigin ? collectCountryOfOriginFailures(item) : []),
+  ];
 
   return failures.length > 0 ? failures.join("; ") : null;
 }
