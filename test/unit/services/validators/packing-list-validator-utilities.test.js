@@ -1,3 +1,4 @@
+const failureReasons = require("../../../../app/services/validators/packing-list-failure-reasons");
 const {
   hasMissingDescription,
   hasInvalidProductCode,
@@ -13,6 +14,7 @@ const {
   wrongTypeNetWeight,
   removeBadData,
   removeEmptyItems,
+  getItemFailureMessage,
 } = require("../../../../app/services/validators/packing-list-validator-utilities");
 
 jest.mock("../../../../app/services/data/data-iso-codes.json", () => [
@@ -416,5 +418,86 @@ describe("removeEmptyItems", () => {
     const result = removeEmptyItems(packingList.items);
 
     expect(result.length).toBe(1);
+  });
+});
+
+describe("getItemFailureMessage", () => {
+  test("multiple failure messages", () => {
+    const item = {
+      description: null,
+      nature_of_products: null,
+      type_of_treatment: null,
+      commodity_code: null,
+      number_of_packages: null,
+      total_net_weight_kg: null,
+    };
+
+    const result = getItemFailureMessage(item);
+
+    expect(result).toEqual(
+      `${failureReasons.IDENTIFIER_MISSING}; ${failureReasons.DESCRIPTION_MISSING}; ${failureReasons.PACKAGES_MISSING}; ${failureReasons.NET_WEIGHT_MISSING}; ${failureReasons.NET_WEIGHT_UNIT_MISSING}`,
+    );
+  });
+
+  test("product code invalid", () => {
+    const item = {
+      description: "test",
+      commodity_code: "wrong",
+      number_of_packages: 1,
+      total_net_weight_kg: 1,
+      total_net_weight_unit: "kg",
+    };
+
+    const result = getItemFailureMessage(item);
+
+    expect(result).toEqual(`${failureReasons.PRODUCT_CODE_INVALID}`);
+  });
+
+  test("invalid packages and net weight", () => {
+    const item = {
+      description: "test",
+      commodity_code: 1,
+      number_of_packages: "wrong",
+      total_net_weight_kg: "wrong",
+      total_net_weight_unit: null,
+    };
+
+    const result = getItemFailureMessage(item, false, true);
+
+    expect(result).toEqual(
+      `${failureReasons.PACKAGES_INVALID}; ${failureReasons.NET_WEIGHT_INVALID}`,
+    );
+  });
+
+  test("country of origin", () => {
+    const item = {
+      description: "test",
+      commodity_code: 1,
+      number_of_packages: 1,
+      total_net_weight_kg: 1,
+      total_net_weight_unit: "kg",
+      country_of_origin: null,
+      nirms: "NIRMS",
+    };
+
+    const result = getItemFailureMessage(item, true);
+
+    expect(result).toEqual(`${failureReasons.COO_MISSING}`);
+  });
+
+  test("happy path", () => {
+    const item = {
+      description: "test",
+      commodity_code: 1,
+      number_of_packages: 1,
+      total_net_weight_kg: 1,
+      total_net_weight_unit: "kg",
+      country_of_origin: "test",
+      nirms: "NON-NIRMS",
+    };
+
+    const result = getItemFailureMessage(item, true);
+
+    expect(result).toEqual(null);
   });
 });
