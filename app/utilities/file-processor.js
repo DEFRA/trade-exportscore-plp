@@ -100,7 +100,7 @@ async function processData(data, filename, dispatchLocation) {
 
   if (packingList.parserModel !== parserModel.NOMATCH) {
     const randomInt = getRandomInt();
-    return createPackingList(packingList, randomInt); // TODO Change back
+    await createPackingList(packingList, randomInt);
   }
 
   return packingList;

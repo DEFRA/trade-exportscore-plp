@@ -29,7 +29,6 @@ const filenameForLogging = path.join("app", __filename.split("app")[1]);
  * @param {number|string} applicationId - Primary id used to link items
  */
 async function createPackingList(packingListJson, applicationId) {
-  return packingListMapper(packingListJson, applicationId); // TODO remove
   try {
     await sequelize.transaction(async (transaction) => {
       const packingList = packingListMapper(packingListJson, applicationId);
