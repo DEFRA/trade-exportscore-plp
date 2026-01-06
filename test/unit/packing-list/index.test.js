@@ -195,4 +195,46 @@ describe("Packing list", () => {
 
     expect(result).not.toBeDefined();
   });
+
+  describe("getSheetPageLocation", () => {
+    test("should return formatted sheet name when sheetName is provided", () => {
+      const rowLocation = { sheetName: "Sheet1" };
+      const result = packingListIndex.getSheetPageLocation(rowLocation);
+      expect(result).toBe("Sheet Sheet1");
+    });
+
+    test("should return formatted page number when pageNumber is provided", () => {
+      const rowLocation = { pageNumber: 3 };
+      const result = packingListIndex.getSheetPageLocation(rowLocation);
+      expect(result).toBe("Page 3");
+    });
+
+    test("should prioritize sheetName over pageNumber when both are provided", () => {
+      const rowLocation = { sheetName: "Data", pageNumber: 5 };
+      const result = packingListIndex.getSheetPageLocation(rowLocation);
+      expect(result).toBe("Sheet Data");
+    });
+
+    test("should return null when rowLocation is null", () => {
+      const result = packingListIndex.getSheetPageLocation(null);
+      expect(result).toBeNull();
+    });
+
+    test("should return null when rowLocation is undefined", () => {
+      const result = packingListIndex.getSheetPageLocation(undefined);
+      expect(result).toBeNull();
+    });
+
+    test("should return null when rowLocation has neither sheetName nor pageNumber", () => {
+      const rowLocation = { rowNumber: 10 };
+      const result = packingListIndex.getSheetPageLocation(rowLocation);
+      expect(result).toBeNull();
+    });
+
+    test("should return null when rowLocation is an empty object", () => {
+      const rowLocation = {};
+      const result = packingListIndex.getSheetPageLocation(rowLocation);
+      expect(result).toBeNull();
+    });
+  });
 });

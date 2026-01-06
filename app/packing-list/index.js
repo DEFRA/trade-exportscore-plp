@@ -147,6 +147,7 @@ function itemsMapper(o, applicationId) {
 
 module.exports = {
   createPackingList,
+  getSheetPageLocation,
   itemsMapper,
   packingListMapper,
 };
