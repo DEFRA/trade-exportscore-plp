@@ -12,7 +12,6 @@ const logger = require("./../utilities/logger");
 const {
   isNirms,
   isNotNirms,
-  getItemFailureMessage,
 } = require("../services/validators/packing-list-validator-utilities");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
@@ -110,8 +109,8 @@ function getSheetPageLocation(rowLocation) {
  *
  * @param {Object} o - Single item object from the parser JSON
  * @param {number|string} applicationId - Foreign key for the parent packing list
- * @param {boolean} validateCountryOfOrigin - Whether to include country of origin validations
- * @param {boolean} unitInHeader - Whether the net weight unit was found in the header
+ * @param {boolean} validateCountryOfOrigin - Whether to include country of origin validations (deprecated - kept for signature compatibility)
+ * @param {boolean} unitInHeader - Whether the net weight unit was found in the header (deprecated - kept for signature compatibility)
  * @returns {Object|undefined} - Mapped item object or undefined on error
  */
 function itemsMapper(
@@ -148,13 +147,9 @@ function itemsMapper(
       applicationId,
       countryOfOrigin: o.country_of_origin,
       nirms: getNirmsBooleanValue(o.nirms),
-      rowNumber: o.row_location?.rowNumber ?? null,
-      sheetPageLocation: getSheetPageLocation(o.row_location),
-      failureMessage: getItemFailureMessage(
-        o,
-        validateCountryOfOrigin,
-        unitInHeader,
-      ),
+      row: o.row_location?.rowNumber ?? null,
+      location: getSheetPageLocation(o.row_location),
+      failure: o.failure ?? null,
     };
   } catch (err) {
     logger.logError(filenameForLogging, "itemsMapper()", err);
