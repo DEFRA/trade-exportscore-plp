@@ -60,17 +60,12 @@ async function createPackingList(packingListJson, applicationId) {
  */
 function packingListMapper(packingListJson, applicationId) {
   try {
-    const validateCountryOfOrigin =
-      packingListJson.validateCountryOfOrigin ?? false;
-    const unitInHeader = packingListJson.unitInHeader ?? false;
     return {
       applicationId,
       registrationApprovalNumber: packingListJson.registration_approval_number,
       allRequiredFieldsPresent:
         packingListJson.business_checks.all_required_fields_present,
-      item: packingListJson.items.map((n) =>
-        itemsMapper(n, applicationId, validateCountryOfOrigin, unitInHeader),
-      ),
+      item: packingListJson.items.map((n) => itemsMapper(n, applicationId)),
       parserModel: packingListJson.parserModel,
       reasonsForFailure: packingListJson.business_checks.failure_reasons,
       dispatchLocationNumber: packingListJson.dispatchLocationNumber,
@@ -109,16 +104,9 @@ function getSheetPageLocation(rowLocation) {
  *
  * @param {Object} o - Single item object from the parser JSON
  * @param {number|string} applicationId - Foreign key for the parent packing list
- * @param {boolean} validateCountryOfOrigin - Whether to include country of origin validations (deprecated - kept for signature compatibility)
- * @param {boolean} unitInHeader - Whether the net weight unit was found in the header (deprecated - kept for signature compatibility)
  * @returns {Object|undefined} - Mapped item object or undefined on error
  */
-function itemsMapper(
-  o,
-  applicationId,
-  validateCountryOfOrigin = false,
-  unitInHeader = false,
-) {
+function itemsMapper(o, applicationId) {
   /**
    * Convert NIRMS string value to boolean using validation utilities.
    * @param {string} nirmsValue - NIRMS value to convert
