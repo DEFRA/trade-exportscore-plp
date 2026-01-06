@@ -66,6 +66,11 @@ function findHeaderCols(header, packingListHeader) {
       },
     );
   }
+  if (header.box_number) {
+    headerCols.box_number = Object.keys(packingListHeader).find((key) => {
+      return header.box_number.test(packingListHeader[key]);
+    });
+  }
   return headerCols;
 }
 
@@ -115,6 +120,14 @@ function mapParser(
       actualRowNumber: dataRow + index + 1,
       sheetName,
     }));
+  }
+
+  // Filter out rows with box numbers if configured
+  if (header.skipBoxNumberRows && headerCols.box_number) {
+    rowsToProcess = rowsToProcess.filter(({ row }) => {
+      const boxNumberValue = row[headerCols.box_number];
+      return !boxNumberValue || String(boxNumberValue).trim() === "";
+    });
   }
 
   // parse the packing list contents based on columns identified

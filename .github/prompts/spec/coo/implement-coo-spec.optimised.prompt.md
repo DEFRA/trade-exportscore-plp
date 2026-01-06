@@ -30,7 +30,7 @@ The specifications provide conceptual error descriptions, but the validation sys
 
 **Common System vs Specification Discrepancies:**
 - Summary format: "in addition to X other locations" vs "and in addition to X other error"
-- Prohibited items: Multiple specific errors vs generic "Prohibited item identified"
+- Ineligible items: Multiple specific errors vs generic "Ineligible item identified"
 - Message formatting: Specific punctuation, newlines, casing differ from examples
 
 **Implementation Pattern:**
@@ -77,11 +77,11 @@ The specifications provide conceptual error descriptions, but the validation sys
 ```javascript
 // ✅ CORRECT: Top-level mocks (hoisted properly)
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
-  "VALID_ISO", "PROHIBITED_ITEM_ISO", "GB", "X"
+  "VALID_ISO", "INELIGIBLE_ITEM_ISO", "GB", "X"
 ]);
 
-jest.mock("../../../../../app/services/data/data-prohibited-items.json", () => [
-  { country_of_origin: "PROHIBITED_ITEM_ISO", commodity_code: "1234", type_of_treatment: "Processed" }
+jest.mock("../../../../../app/services/data/data-Ineligible-items.json", () => [
+  { country_of_origin: "INELIGIBLE_ITEM_ISO", commodity_code: "1234", type_of_treatment: "Processed" }
 ]);
 
 // ❌ WRONG: Never inside describe blocks (not hoisted)
@@ -158,9 +158,9 @@ validCooModel: {
 3. **Preserve Valid Context**: Keep all other fields valid for focused testing
 4. **Consistent Naming**: `validCooModel`, `bac6NullCooModel`, `bac7InvalidCooModel`, etc.
 
-**Mock Data for Prohibited Items Testing:**
-- Use `'1234'` for prohibited commodity codes
-- Use `'PROHIBITED_ITEM_ISO'` for prohibited country codes
+**Mock Data for Ineligible Items Testing:**
+- Use `'1234'` for Ineligible commodity codes
+- Use `'INELIGIBLE_ITEM_ISO'` for Ineligible country codes
 - Ensures reliable, consistent testing independent of real data changes
 
 **Step 7: Create Test Implementation**
@@ -269,7 +269,7 @@ If CoO tests fail with "Failed to parse packing list...no match" errors:
 - [ ] Expected results match exact test data field modifications
 - [ ] Error locations reference correct row numbers from test data
 - [ ] Jest mocks at top-level (not inside describe blocks)
-- [ ] Mock values consistently used (`1234`, `PROHIBITED_ITEM_ISO`)
+- [ ] Mock values consistently used (`1234`, `INELIGIBLE_ITEM_ISO`)
 - [ ] Tests use `parserService.findParser()` (not direct parser calls)
 
 **Integration Compliance:**

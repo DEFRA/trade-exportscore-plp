@@ -803,7 +803,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsWithTreatmentModel: {
+  ineligibleItemsWithTreatmentModel: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
@@ -825,8 +825,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 6,
         E: "Cases",
         F: 3.782,
@@ -837,7 +837,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsMultipleWithTreatmentModel: {
+  ineligibleItemsMultipleWithTreatmentModel: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
@@ -859,8 +859,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item 1",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item 1",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 1,
         E: "Cases",
         F: 1.0,
@@ -871,8 +871,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item 2",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item 2",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 1,
         E: "Cases",
         F: 1.0,
@@ -883,8 +883,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item 3",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item 3",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 1,
         E: "Cases",
         F: 1.0,
@@ -895,8 +895,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item 4",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item 4",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 1,
         E: "Cases",
         F: 1.0,
@@ -907,7 +907,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsNoTreatmentModel: {
+  ineligibleItemsNoTreatmentModel: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
@@ -929,8 +929,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 6,
         E: "Cases",
         F: 3.782,
@@ -941,7 +941,7 @@ module.exports = {
       },
     ],
   },
-  prohibitedItemsMultipleNoTreatmentModel: {
+  ineligibleItemsMultipleNoTreatmentModel: {
     Tabelle1: [
       {
         A: "NIIRMS Dispatch number",
@@ -963,8 +963,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item 1",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item 1",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 1,
         E: "Cases",
         F: 1.0,
@@ -975,8 +975,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item 2",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item 2",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 1,
         E: "Cases",
         F: 1.0,
@@ -987,8 +987,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item 3",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item 3",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 1,
         E: "Cases",
         F: 1.0,
@@ -999,8 +999,8 @@ module.exports = {
       },
       {
         A: "1234",
-        B: "Prohibited Item 4",
-        C: "PROHIBITED_ITEM_ISO",
+        B: "Ineligible Item 4",
+        C: "INELIGIBLE_ITEM_ISO",
         D: 1,
         E: "Cases",
         F: 1.0,

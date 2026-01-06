@@ -22,7 +22,7 @@ The system implements a **comprehensive validation hierarchy** that addresses di
 
 1. **Basic Field Validation** - Ensures required fields are present and correctly formatted
 2. **Business Rule Compliance** - Validates establishment numbers, document structure, and trade requirements
-3. **Country of Origin Validation** - Applies NIRMS compliance and prohibited item detection when enabled
+3. **Country of Origin Validation** - Applies NIRMS compliance and Ineligible item detection when enabled
 
 **Rationale**: Different validation concerns require different approaches and error handling. Basic field validation catches data extraction issues, business rules ensure regulatory compliance, and Country of Origin validation addresses specific Northern Ireland trade requirements.
 
@@ -50,7 +50,7 @@ Validation follows a **systematic evaluation pattern**:
 
 1. **Basic Field Validation** - Checks for missing descriptions, invalid product codes, missing package counts, incorrect net weights, and missing weight units
 2. **Document Status Validation** - Verifies establishment number presence, document completeness, parser success, and single RMS compliance
-3. **Regulatory Compliance Validation** - Applies NIRMS requirements, Country of Origin validation, and prohibited item detection when enabled
+3. **Regulatory Compliance Validation** - Applies NIRMS requirements, Country of Origin validation, and Ineligible item detection when enabled
 4. **Aggregate Assessment** - Combines all validation results to determine overall compliance status
 
 ### Error Categorization and Reporting
@@ -79,7 +79,7 @@ When enabled, the system applies **comprehensive NIRMS validation**:
 
 - **NIRMS Classification**: Determines whether items qualify for simplified customs procedures
 - **Country of Origin Verification**: Validates ISO country codes against approved reference data
-- **Prohibited Item Detection**: Cross-references commodity codes, countries, and treatment types against regulatory restrictions
+- **Ineligible Item Detection**: Cross-references commodity codes, countries, and treatment types against regulatory restrictions
 - **Treatment Type Correlation**: Ensures Country of Origin requirements align with product treatment specifications
 
 ### Validation Result Aggregation

@@ -227,9 +227,9 @@ describe("ASDA3 CoO Validation Tests - Type 1", () => {
     expect(result.business_checks.failure_reasons).toBeNull();
   });
 
-  test("BAC11: Item Present on Prohibited Item List (Treatment Type specified) - validation errors", async () => {
+  test("BAC11: Item Present on Ineligible Item List (Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsWithTreatmentModel,
+      model.ineligibleItemsWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -237,17 +237,17 @@ describe("ASDA3 CoO Validation Tests - Type 1", () => {
     );
   });
 
-  test("BAC12: Item Present on Prohibited Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
+  test("BAC12: Item Present on Ineligible Item List, more than 3 (Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleWithTreatmentModel,
+      model.ineligibleItemsMultipleWithTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
   });
 
-  test("BAC13: Item Present on Prohibited Item List (no Treatment Type specified) - validation errors", async () => {
+  test("BAC13: Item Present on Ineligible Item List (no Treatment Type specified) - validation errors", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsNoTreatmentModel,
+      model.ineligibleItemsNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain(
@@ -255,9 +255,9 @@ describe("ASDA3 CoO Validation Tests - Type 1", () => {
     );
   });
 
-  test("BAC14: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
+  test("BAC14: Item Present on Ineligible Item List, more than 3 (no Treatment Type specified) - validation errors with summary", async () => {
     const result = await parserService.findParser(
-      model.prohibitedItemsMultipleNoTreatmentModel,
+      model.ineligibleItemsMultipleNoTreatmentModel,
       filename,
     );
     expect(result.business_checks.failure_reasons).toContain("in addition to");
@@ -494,7 +494,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsWithTreatmentModel: {
+  ineligibleItemsWithTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -509,7 +509,7 @@ module.exports = {
         N: "Country of Origin",
       },
       {
-        B: "PROHIBITED ITEM WITH TREATMENT",
+        B: "Ineligible ITEM WITH TREATMENT",
         C: "NIRMS", // Valid NIRMS
         D: "Processed", // Treatment specified
         E: "RMS-GB-000015-006",
@@ -517,13 +517,13 @@ module.exports = {
         G: 1,
         H: 0.059,
         I: "kgs",
-        M: "08045000", // ⚠️ Use actual prohibited commodity code from data-prohibited-items.json
-        N: "GB", // ⚠️ Use country that makes this combination prohibited
+        M: "08045000", // ⚠️ Use actual Ineligible commodity code from data-Ineligible-items.json
+        N: "GB", // ⚠️ Use country that makes this combination Ineligible
       },
     ],
   },
 
-  prohibitedItemsNoTreatmentModel: {
+  ineligibleItemsNoTreatmentModel: {
     Page1_1: [
       {
         B: "Description Of All Retail Goods",
@@ -538,7 +538,7 @@ module.exports = {
         N: "Country of Origin",
       },
       {
-        B: "PROHIBITED ITEM NO TREATMENT",
+        B: "Ineligible ITEM NO TREATMENT",
         C: "NIRMS", // Valid NIRMS
         D: null, // No treatment specified
         E: "RMS-GB-000015-006",
@@ -546,8 +546,8 @@ module.exports = {
         G: 1,
         H: 0.059,
         I: "kgs",
-        M: "08045000", // ⚠️ Use actual prohibited commodity code
-        N: "GB", // ⚠️ Use country that makes this combination prohibited
+        M: "08045000", // ⚠️ Use actual Ineligible commodity code
+        N: "GB", // ⚠️ Use country that makes this combination Ineligible
       },
     ],
   },
@@ -565,11 +565,11 @@ module.exports = {
   invalidCooMultipleModel: {
     /* 4+ NIRMS items with invalid CoO */
   },
-  prohibitedItemsMultipleWithTreatmentModel: {
-    /* 4+ prohibited items with treatment */
+  ineligibleItemsMultipleWithTreatmentModel: {
+    /* 4+ Ineligible items with treatment */
   },
-  prohibitedItemsMultipleNoTreatmentModel: {
-    /* 4+ prohibited items without treatment */
+  ineligibleItemsMultipleNoTreatmentModel: {
+    /* 4+ Ineligible items without treatment */
   },
 };
 ```
@@ -617,11 +617,11 @@ invalidTestResult_MissingCells: {
 
 4. **⚠️ CRITICAL**: NEVER add commodity_code to regex if not already present - this breaks existing unit tests
 
-5. **Prohibited items verification**: Ensure test data uses actually prohibited items
+5. **Ineligible items verification**: Ensure test data uses actually Ineligible items
 
    ```bash
-   # Verify prohibited items:
-   grep -i "08045000" app/services/data/data-prohibited-items.json
+   # Verify Ineligible items:
+   grep -i "08045000" app/services/data/data-Ineligible-items.json
    # Use commodity codes that actually appear in the file
    ```
 
@@ -676,7 +676,7 @@ invalidTestResult_MissingCells: {
 - [ ] **Test Data Models Created**: ALL test data models exist for every test case reference
   - [ ] Every `model.[testDataName]` has corresponding export in test data file
   - [ ] CoO validation columns (C, M, N) included in all test headers
-  - [ ] Prohibited items use actual prohibited commodity codes from data-prohibited-items.json
+  - [ ] Ineligible items use actual Ineligible commodity codes from data-Ineligible-items.json
 
 - [ ] **Legacy Test Results Updated**: Existing test expectations updated for CoO validation changes
   - [ ] Updated expectations if existing behavior changes due to CoO validation

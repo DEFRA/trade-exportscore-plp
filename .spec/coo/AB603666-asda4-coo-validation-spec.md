@@ -8,7 +8,7 @@
 
 ## Overview
 
-This specification defines the implementation requirements for Country of Origin (CoO) validation for ASDA 4 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and prohibited item checking for ASDA 4-specific CSV format.
+This specification defines the implementation requirements for Country of Origin (CoO) validation for ASDA 4 trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and Ineligible item checking for ASDA 4-specific CSV format.
 
 ## Business Context
 
@@ -23,7 +23,7 @@ This specification defines the implementation requirements for Country of Origin
 - Collect relevant CoO fields from ASDA 4 trader format
 - Provide basic validation for Country of Origin compliance
 - Enforce NIRMS scheme validation rules
-- Check against prohibited items list
+- Check against Ineligible items list
 - Generate comprehensive error messages with location details
 
 ## ASDA 4 Trader Format Specification
@@ -166,7 +166,7 @@ When the packing list is submitted
 Then the packing list will pass
 ```
 
-**BAC11: Prohibited Item with Treatment Type**
+**BAC11: Ineligible Item with Treatment Type**
 
 ```gherkin
 Given an ASDA 4 packing list item has NIRMS value specified
@@ -175,13 +175,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified
 And the treatment type is specified
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
-**BAC12: Prohibited Item, More Than 3 (Treatment Type specified)**
+**BAC12: Ineligible Item, More Than 3 (Treatment Type specified)**
 
 ```gherkin
 Given an ASDA 4 packing list has more than 3 items that have NIRMS value specified
@@ -190,13 +190,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified
 And the treatment type is specified
-And the commodity code + CoO + treatment combination matches an item on the prohibited list
+And the commodity code + CoO + treatment combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 ```
 
-**BAC13: Prohibited Item without Treatment Type**
+**BAC13: Ineligible Item without Treatment Type**
 
 ```gherkin
 Given an ASDA 4 packing list item has NIRMS value specified
@@ -205,13 +205,13 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified
 And the treatment type is null
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 ```
 
-**BAC14: Prohibited Item, More Than 3 (no Treatment Type specified)**
+**BAC14: Ineligible Item, More Than 3 (no Treatment Type specified)**
 
 ```gherkin
 Given an ASDA 4 packing list has more than 3 items that have NIRMS value specified
@@ -220,7 +220,7 @@ And it contains a True value below (case insensitive):
 And the CoO value is valid (ISO code, comma-separated list, or "X"/"x")
 And the commodity code is specified
 And the treatment type is null
-And the commodity code + CoO combination matches an item on the prohibited list
+And the commodity code + CoO combination matches an item on the Ineligible list
 When the packing list is submitted
 Then the packing list will fail
 And the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
@@ -234,7 +234,7 @@ And the failure reason is: "Prohibited item identified on the packing list in sh
 
 **TR2: Parser Function Signature** - The system SHALL use the ACTUAL combineParser.combine() signature verified in workspace WHEN returning parser results (VERIFIED: Exact signature extracted from actual implementation)
 
-**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasProhibitedItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual codebase)
+**TR3: Validation Function Integration** - The system SHALL use existing validation utilities verified in workspace (hasMissingNirms, hasInvalidNirms, hasMissingCoO, hasInvalidCoO, hasineligibleItems) WHEN validateCountryOfOrigin flag is enabled (VERIFIED: Function names confirmed in actual codebase)
 
 **TR4: Data Processing Pattern** - The system SHALL use mapParser() with ACTUAL header configuration verified in workspace WHEN processing packing list data (VERIFIED: Pattern confirmed in actual parser implementation)
 
@@ -419,7 +419,7 @@ CoO validation follows the ACTUAL parser architecture verified in workspace:
 
 4. **Existing Validation Utilities** handle CoO validation automatically:
    - `packingListValidator.validatePackingList()` checks the `validateCountryOfOrigin` flag
-   - Uses existing validation functions: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasProhibitedItems()`
+   - Uses existing validation functions: `hasMissingCoO()`, `hasInvalidCoO()`, `hasMissingNirms()`, `hasInvalidNirms()`, `hasineligibleItems()`
    - Column validator applies CoO validation rules when flag is enabled
    - No new validation code required - all functionality uses existing utilities
 
@@ -449,13 +449,13 @@ function hasInvalidCoO(item) {
   return isNirms(item.nirms) && isInvalidCoO(item.country_of_origin);
 }
 
-function hasProhibitedItems(item) {
+function hasineligibleItems(item) {
   return (
     isNirms(item.nirms) &&
     !isNullOrEmptyString(item.country_of_origin) &&
     !isInvalidCoO(item.country_of_origin) &&
     !isNullOrEmptyString(item.commodity_code) &&
-    isProhibitedItems(
+    isineligibleItems(
       item.country_of_origin,
       item.commodity_code,
       item.type_of_treatment,
@@ -505,7 +505,7 @@ function getCountryOfOriginValidationResults(packingList) {
         `Invalid Country of Origin ISO Code in sheet ${item.sheet_name} row ${item.row_location}`,
       );
     }
-    if (hasProhibitedItems(item)) {
+    if (hasineligibleItems(item)) {
       results.hasValidCountryOfOrigin = false;
       results.failureReasons.push(
         `Prohibited item identified on the packing list in sheet ${item.sheet_name} row ${item.row_location}`,

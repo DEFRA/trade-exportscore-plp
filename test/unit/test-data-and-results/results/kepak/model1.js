@@ -428,8 +428,8 @@ module.exports = {
     registration_approval_number: "RMS-GB-000280",
     parserModel: parserModel.KEPAK1,
   },
-  // AC7: Item Present on Prohibited Item List (Treatment Type specified)
-  prohibitedItemWithTreatmentTestResult: {
+  // AC7: Item Present on Ineligible item List (Treatment Type specified)
+  ineligibleItemWithTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -444,7 +444,7 @@ module.exports = {
         number_of_packages: 32,
         total_net_weight_kg: 30.336,
         type_of_treatment: "Processed",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -453,8 +453,8 @@ module.exports = {
     registration_approval_number: "RMS-GB-000280",
     parserModel: parserModel.KEPAK1,
   },
-  // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  multipleProhibitedItemsWithTreatmentTestResult: {
+  // AC8: Item Present on Ineligible item List, more than 3 (Treatment Type specified)
+  multipleineligibleItemsWithTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -469,7 +469,7 @@ module.exports = {
         number_of_packages: 32,
         total_net_weight_kg: 30.336,
         type_of_treatment: "Processed",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -480,7 +480,7 @@ module.exports = {
         number_of_packages: 22,
         total_net_weight_kg: 27.632,
         type_of_treatment: "Processed",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -491,7 +491,7 @@ module.exports = {
         number_of_packages: 32,
         total_net_weight_kg: 30.336,
         type_of_treatment: "Processed",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -502,7 +502,7 @@ module.exports = {
         number_of_packages: 22,
         total_net_weight_kg: 27.632,
         type_of_treatment: "Processed",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -511,8 +511,8 @@ module.exports = {
     registration_approval_number: "RMS-GB-000280",
     parserModel: parserModel.KEPAK1,
   },
-  // AC9: Item Present on Prohibited Item List (no Treatment Type specified)
-  prohibitedItemNoTreatmentTestResult: {
+  // AC9: Item Present on Ineligible item List (no Treatment Type specified)
+  ineligibleItemNoTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -527,7 +527,7 @@ module.exports = {
         number_of_packages: 32,
         total_net_weight_kg: 30.336,
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -536,8 +536,8 @@ module.exports = {
     registration_approval_number: "RMS-GB-000280",
     parserModel: parserModel.KEPAK1,
   },
-  // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  multipleProhibitedItemsNoTreatmentTestResult: {
+  // AC10: Item Present on Ineligible item List, more than 3 (no Treatment Type specified)
+  multipleineligibleItemsNoTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -552,7 +552,7 @@ module.exports = {
         number_of_packages: 32,
         total_net_weight_kg: 30.336,
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -563,7 +563,7 @@ module.exports = {
         number_of_packages: 22,
         total_net_weight_kg: 27.632,
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -574,7 +574,7 @@ module.exports = {
         number_of_packages: 32,
         total_net_weight_kg: 30.336,
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },
@@ -585,7 +585,7 @@ module.exports = {
         number_of_packages: 22,
         total_net_weight_kg: 27.632,
         type_of_treatment: null,
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
       },

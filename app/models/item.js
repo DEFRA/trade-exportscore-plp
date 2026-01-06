@@ -22,6 +22,9 @@ module.exports = function defineItemModel(sequelize, DataTypes) {
    * - countryOfOrigin: ISO/Country text when available
    * - totalWeightUnit: unit string (e.g., 'kg')
    * - nirms: boolean flag for NIRMS marking
+   * - row: row number from the packing list source document
+   * - location: formatted location string (e.g., "Sheet 1", "Page 2")
+   * - failure: semicolon-separated validation failure messages for this item
    */
   const item = sequelize.define(
     "item",
@@ -37,6 +40,9 @@ module.exports = function defineItemModel(sequelize, DataTypes) {
       countryOfOrigin: DataTypes.STRING,
       totalWeightUnit: DataTypes.STRING,
       nirms: DataTypes.BOOLEAN,
+      row: DataTypes.INTEGER,
+      location: DataTypes.STRING,
+      failure: DataTypes.STRING,
     },
     {
       freezeTableName: true,

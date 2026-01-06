@@ -8,7 +8,8 @@
 
 const regex = require("../../utilities/regex");
 const isoCodesData = require("../data/data-iso-codes.json");
-const prohibitedItemsData = require("../data/data-prohibited-items.json");
+const ineligibleItemsData = require("../data/data-ineligible-items.json");
+const failureReasonsDescriptions = require("./packing-list-failure-reasons");
 
 /**
  * Check whether a value is null, undefined or an empty string.
@@ -190,18 +191,18 @@ function hasInvalidCoO(item) {
 }
 
 /**
- * Identify whether an item is considered a prohibited item based on country,
+ * Identify whether an item is considered an ineligible item based on country,
  * commodity code prefix and treatment type.
  * @param {Object} item - Packing list item object.
- * @returns {boolean} True when the item matches an entry from the prohibited list.
+ * @returns {boolean} True when the item matches an entry from the ineligible list.
  */
-function hasProhibitedItems(item) {
+function hasIneligibleItems(item) {
   return (
     isNirms(item.nirms) &&
     !isNullOrEmptyString(item.country_of_origin) &&
     !isInvalidCoO(item.country_of_origin) &&
     !isNullOrEmptyString(item.commodity_code) &&
-    isProhibitedItems(
+    isIneligibleItems(
       item.country_of_origin,
       item.commodity_code,
       item.type_of_treatment,
@@ -332,25 +333,25 @@ function matchesStandardRule(standardRules, normalizedTypeOfTreatment) {
   });
 }
 
-// Checks if the combination exists in prohibitedItemsData
+// Checks if the combination exists in ineligibleItemsData
 /**
  * Determine whether a given item (COO + commodity code prefix + treatment)
- * appears in the prohibited items dataset. Handles "!" prefix logic for treatments:
- * - "!X" means prohibited UNLESS treatment is X (exception rule)
- * - "X" means prohibited IF treatment is X (standard rule)
+ * appears in the ineligible items dataset. Handles "!" prefix logic for treatments:
+ * - "!X" means ineligible UNLESS treatment is X (exception rule)
+ * - "X" means ineligible IF treatment is X (standard rule)
  * Multiple "!" rules act as OR - item is allowed if it matches ANY exception.
  * @param {string} countryOfOrigin - Country of origin string (may be comma-separated).
  * @param {string|number} commodityCode - Commodity code from the item.
  * @param {string} typeOfTreatment - Type of treatment string.
- * @returns {boolean} True when the combination matches a prohibited item entry.
+ * @returns {boolean} True when the combination matches an ineligible item entry.
  */
-function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
+function isIneligibleItems(countryOfOrigin, commodityCode, typeOfTreatment) {
   const normalizedTypeOfTreatment =
     typeof typeOfTreatment === "string" && typeOfTreatment.trim() !== ""
       ? typeOfTreatment.trim()
       : null;
 
-  const matchingEntries = prohibitedItemsData.filter(
+  const matchingEntries = ineligibleItemsData.filter(
     (item) =>
       isCountryOfOriginMatching(countryOfOrigin, item.country_of_origin) &&
       commodityCode
@@ -375,7 +376,7 @@ function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
       exceptionRules,
       normalizedTypeOfTreatment,
     );
-    // Item is allowed if it matches an exception rule, prohibited otherwise
+    // Item is allowed if it matches an exception rule, ineligible otherwise
     return !matchesException;
   }
 
@@ -384,38 +385,123 @@ function isProhibitedItems(countryOfOrigin, commodityCode, typeOfTreatment) {
 
 // Helper function to check if country of origin matches (handles comma-separated values)
 /**
- * Compare a country_of_origin value against a prohibited-item country which may
+ * Compare a country_of_origin value against an ineligible-item country which may
  * be a single code. Handles comma-separated COO values by testing any match.
  * @param {string} countryOfOrigin - Item's COO (may be comma separated).
- * @param {string} prohibitedItemCountryOfOrigin - Prohibited item COO from dataset.
- * @returns {boolean} True when any COO code matches the prohibited country.
+ * @param {string} ineligibleItemCountryOfOrigin - Ineligible item COO from dataset.
+ * @returns {boolean} True when any COO code matches the ineligible country.
  */
 function isCountryOfOriginMatching(
   countryOfOrigin,
-  prohibitedItemCountryOfOrigin,
+  ineligibleItemCountryOfOrigin,
 ) {
   if (
     isNullOrEmptyString(countryOfOrigin) ||
-    isNullOrEmptyString(prohibitedItemCountryOfOrigin)
+    isNullOrEmptyString(ineligibleItemCountryOfOrigin)
   ) {
     return false;
   }
 
   const normalizedCountry = countryOfOrigin.toLowerCase();
-  const normalizedProhibitedItemCountry =
-    prohibitedItemCountryOfOrigin.toLowerCase();
+  const normalizedIneligibleItemCountry =
+    ineligibleItemCountryOfOrigin.toLowerCase();
 
   // Check if countryOfOrigin contains comma-separated values
   if (normalizedCountry.includes(",")) {
     const countryCodes = normalizedCountry.split(",");
-    // Check if any of the country codes matches the prohibited item country
+    // Check if any of the country codes matches the ineligible item country
     return countryCodes.some(
-      (code) => code.trim() === normalizedProhibitedItemCountry,
+      (code) => code.trim() === normalizedIneligibleItemCountry,
     );
   }
 
   // Single value case
-  return normalizedCountry === normalizedProhibitedItemCountry;
+  return normalizedCountry === normalizedIneligibleItemCountry;
+}
+
+/**
+ * Collect basic field validation failures for an item.
+ * @param {Object} item - Packing list item object.
+ * @param {boolean} unitInHeader - Whether net weight unit was found in header.
+ * @returns {Array<string>} Array of failure messages.
+ */
+function collectBasicFieldFailures(item, unitInHeader) {
+  const failures = [];
+
+  if (hasMissingIdentifier(item)) {
+    failures.push(failureReasonsDescriptions.IDENTIFIER_MISSING);
+  }
+  if (hasInvalidProductCode(item)) {
+    failures.push(failureReasonsDescriptions.PRODUCT_CODE_INVALID);
+  }
+  if (hasMissingDescription(item)) {
+    failures.push(failureReasonsDescriptions.DESCRIPTION_MISSING);
+  }
+  if (hasMissingPackages(item)) {
+    failures.push(failureReasonsDescriptions.PACKAGES_MISSING);
+  }
+  if (wrongTypeForPackages(item)) {
+    failures.push(failureReasonsDescriptions.PACKAGES_INVALID);
+  }
+  if (hasMissingNetWeight(item)) {
+    failures.push(failureReasonsDescriptions.NET_WEIGHT_MISSING);
+  }
+  if (wrongTypeNetWeight(item)) {
+    failures.push(failureReasonsDescriptions.NET_WEIGHT_INVALID);
+  }
+  // Only add net weight unit failure if unit is NOT in header
+  if (!unitInHeader && hasMissingNetWeightUnit(item)) {
+    failures.push(failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING);
+  }
+
+  return failures;
+}
+
+/**
+ * Collect country of origin validation failures for an item.
+ * @param {Object} item - Packing list item object.
+ * @returns {Array<string>} Array of failure messages.
+ */
+function collectCountryOfOriginFailures(item) {
+  const failures = [];
+
+  if (hasMissingNirms(item)) {
+    failures.push(failureReasonsDescriptions.NIRMS_MISSING);
+  }
+  if (hasInvalidNirms(item)) {
+    failures.push(failureReasonsDescriptions.NIRMS_INVALID);
+  }
+  if (hasMissingCoO(item)) {
+    failures.push(failureReasonsDescriptions.COO_MISSING);
+  }
+  if (hasInvalidCoO(item)) {
+    failures.push(failureReasonsDescriptions.COO_INVALID);
+  }
+  if (hasIneligibleItems(item)) {
+    failures.push(failureReasonsDescriptions.PROHIBITED_ITEM);
+  }
+
+  return failures;
+}
+
+/**
+ * Generate a failure message string for an individual item.
+ * @param {Object} item - Packing list item object.
+ * @param {boolean} validateCountryOfOrigin - Whether to include country of origin validations.
+ * @param {boolean} unitInHeader - Whether the net weight unit was found in the header (applies to all items).
+ * @returns {string|null} Semicolon-separated failure messages or null if no failures.
+ */
+function getItemFailureMessage(
+  item,
+  validateCountryOfOrigin = false,
+  unitInHeader = false,
+) {
+  const failures = [
+    ...collectBasicFieldFailures(item, unitInHeader),
+    ...(validateCountryOfOrigin ? collectCountryOfOriginFailures(item) : []),
+  ];
+
+  return failures.length > 0 ? failures.join("; ") : null;
 }
 
 module.exports = {
@@ -433,7 +519,8 @@ module.exports = {
   hasInvalidNirms,
   hasMissingCoO,
   hasInvalidCoO,
-  hasProhibitedItems,
+  hasIneligibleItems,
   isNirms,
   isNotNirms,
+  getItemFailureMessage,
 };

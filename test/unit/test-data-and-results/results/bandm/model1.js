@@ -47,6 +47,13 @@ module.exports = {
         number_of_packages: 1,
         total_net_weight_kg: 1.15,
         type_of_treatment: "Processed",
+        country_of_origin: "GB",
+        nirms: "NIRMS",
+        total_net_weight_unit: null,
+        row_location: {
+          sheetName: "Sheet1",
+          rowNumber: 7,
+        },
       },
       {
         commodity_code: 16041428,
@@ -55,6 +62,13 @@ module.exports = {
         number_of_packages: 1,
         total_net_weight_kg: 8.1,
         type_of_treatment: "Processed",
+        country_of_origin: "GB",
+        nirms: "NIRMS",
+        total_net_weight_unit: null,
+        row_location: {
+          sheetName: "sheet2",
+          rowNumber: 7,
+        },
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
@@ -74,6 +88,13 @@ module.exports = {
         number_of_packages: 1,
         total_net_weight_kg: null,
         type_of_treatment: "Processed",
+        country_of_origin: "GB",
+        nirms: "NIRMS",
+        total_net_weight_unit: null,
+        row_location: {
+          sheetName: "Sheet1",
+          rowNumber: 7,
+        },
       },
       {
         commodity_code: 19053199,
@@ -82,6 +103,13 @@ module.exports = {
         number_of_packages: 1,
         total_net_weight_kg: 3.27,
         type_of_treatment: "Processed",
+        country_of_origin: "GB",
+        nirms: "NIRMS",
+        total_net_weight_unit: null,
+        row_location: {
+          sheetName: "Sheet1",
+          rowNumber: 8,
+        },
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
@@ -373,8 +401,8 @@ module.exports = {
     registration_approval_number: "RMS-GB-000005-001",
     parserModel: parserModel.BANDM1,
   },
-  // AC7: Item Present on Prohibited Item List (Treatment Type specified)
-  prohibitedItemWithTreatmentTestResult: {
+  // AC7: Item Present on Ineligible item List (Treatment Type specified)
+  ineligibleItemWithTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -391,14 +419,14 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
     parserModel: parserModel.BANDM1,
   },
-  // AC8: Item Present on Prohibited Item List, more than 3 (Treatment Type specified)
-  multipleProhibitedItemsWithTreatmentTestResult: {
+  // AC8: Item Present on Ineligible item List, more than 3 (Treatment Type specified)
+  multipleineligibleItemsWithTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -415,7 +443,7 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -426,7 +454,7 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -437,7 +465,7 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -448,7 +476,7 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -459,14 +487,14 @@ module.exports = {
         type_of_treatment: "Processed",
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
     parserModel: parserModel.BANDM1,
   },
-  // AC9: Item Present on Prohibited Item List (no Treatment Type specified)
-  prohibitedItemNoTreatmentTestResult: {
+  // AC9: Item Present on Ineligible item List (no Treatment Type specified)
+  ineligibleItemNoTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -483,14 +511,14 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",
     parserModel: parserModel.BANDM1,
   },
-  // AC10: Item Present on Prohibited Item List, more than 3 (no Treatment Type specified)
-  multipleProhibitedItemsNoTreatmentTestResult: {
+  // AC10: Item Present on Ineligible item List, more than 3 (no Treatment Type specified)
+  multipleineligibleItemsNoTreatmentTestResult: {
     business_checks: {
       all_required_fields_present: false,
       failure_reasons:
@@ -507,7 +535,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -518,7 +546,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -529,7 +557,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -540,7 +568,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
       {
         commodity_code: "012",
@@ -551,7 +579,7 @@ module.exports = {
         type_of_treatment: null,
         total_net_weight_unit: "KG",
         nirms: "NIRMS",
-        country_of_origin: "PROHIBITED_ITEM_ISO",
+        country_of_origin: "INELIGIBLE_ITEM_ISO",
       },
     ],
     registration_approval_number: "RMS-GB-000005-001",

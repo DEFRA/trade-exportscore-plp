@@ -1515,7 +1515,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsWithTreatmentModel: {
+  ineligibleItemsWithTreatmentModel: {
     Page1_1: [
       {
         A: "Item",
@@ -1545,7 +1545,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1562,7 +1562,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsNoTreatmentModel: {
+  ineligibleItemsNoTreatmentModel: {
     Page1_1: [
       {
         A: "Item",
@@ -1592,7 +1592,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1609,7 +1609,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleWithTreatmentModel: {
+  ineligibleItemsMultipleWithTreatmentModel: {
     Page1_1: [
       {
         A: "Item",
@@ -1639,7 +1639,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1660,7 +1660,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1681,7 +1681,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1702,7 +1702,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1719,7 +1719,7 @@ module.exports = {
     ],
   },
 
-  prohibitedItemsMultipleNoTreatmentModel: {
+  ineligibleItemsMultipleNoTreatmentModel: {
     Page1_1: [
       {
         A: "Item",
@@ -1749,7 +1749,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1770,7 +1770,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1791,7 +1791,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",
@@ -1812,7 +1812,7 @@ module.exports = {
         D: "Check - 0702000007",
         E: "",
         F: "Nightingale Cherry Tomatoes TS 42x250g",
-        G: "PROHIBITED_ITEM_ISO",
+        G: "INELIGIBLE_ITEM_ISO",
         H: "32",
         I: "Cases",
         J: "25.119",

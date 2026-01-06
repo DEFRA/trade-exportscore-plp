@@ -9,9 +9,9 @@
 
 ## Overview
 
-This specification defines the implementation requirements for Country of Origin (CoO) validation for Kepak trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and prohibited item checking for Kepak-specific Excel format using variable blanket statement validation approach.
+This specification defines the implementation requirements for Country of Origin (CoO) validation for Kepak trader packing lists within the DEFRA trade-exportscore-plp service. The validation ensures NIRMS compliance and Ineligible item checking for Kepak-specific Excel format using variable blanket statement validation approach.
 
-**Business Context**: DEFRA trade exports system requires comprehensive Country of Origin (CoO) validation for Kepak packing lists to ensure compliance with NIRMS (Northern Ireland Retail Movement Scheme) requirements and prohibited item regulations.
+**Business Context**: DEFRA trade exports system requires comprehensive Country of Origin (CoO) validation for Kepak packing lists to ensure compliance with NIRMS (Northern Ireland Retail Movement Scheme) requirements and Ineligible item regulations.
 
 **Trader**: Kepak (KEPAK)  
 **System Impact**: Packing List Parser (PLP) Service  
@@ -22,13 +22,13 @@ This specification defines the implementation requirements for Country of Origin
 
 ### Business Context
 
-As a **DEFRA caseworker** processing trade export documentation, I need **Country of Origin validation for Kepak packing lists** so that **I can ensure NIRMS compliance and identify prohibited items requiring additional verification** according to Northern Ireland trade regulations.
+As a **DEFRA caseworker** processing trade export documentation, I need **Country of Origin validation for Kepak packing lists** so that **I can ensure NIRMS compliance and identify Ineligible items requiring additional verification** according to Northern Ireland trade regulations.
 
 ### User Story
 
 **As a** DEFRA caseworker  
 **I want** to validate Country of Origin values in Kepak Excel packing lists against NIRMS requirements  
-**So that** I can ensure regulatory compliance and flag prohibited items for manual review
+**So that** I can ensure regulatory compliance and flag Ineligible items for manual review
 
 ### Business Requirements
 
@@ -36,7 +36,7 @@ As a **DEFRA caseworker** processing trade export documentation, I need **Countr
 
 **BR2: Country of Origin Field Processing** - The system SHALL extract and validate Country of Origin values from Column F in Kepak Excel format according to established column mappings
 
-**BR3: Prohibited Item Detection** - The system SHALL identify items with invalid or missing Country of Origin values that require manual caseworker intervention
+**BR3: Ineligible Item Detection** - The system SHALL identify items with invalid or missing Country of Origin values that require manual caseworker intervention
 
 **BR4: Treatment Type Integration** - The system SHALL correlate Country of Origin validation with treatment type requirements for comprehensive compliance checking
 
@@ -69,11 +69,11 @@ As a **DEFRA caseworker** processing trade export documentation, I need **Countr
 **AC3 - Invalid Country of Origin Codes**  
 **Given** a Kepak packing list with invalid Country of Origin codes, **When** the system validates against approved country lists, **Then** the system SHALL flag invalid codes **And** provide specific error details for each occurrence
 
-**AC4 - Prohibited Items Without Treatment Type**  
-**Given** a Kepak packing list containing prohibited items without specified treatment types, **When** the system correlates CoO with treatment requirements, **Then** the system SHALL identify non-compliant items **And** require manual intervention
+**AC4 - Ineligible Items Without Treatment Type**  
+**Given** a Kepak packing list containing Ineligible items without specified treatment types, **When** the system correlates CoO with treatment requirements, **Then** the system SHALL identify non-compliant items **And** require manual intervention
 
-**AC5 - Prohibited Items With Incorrect Treatment Type**  
-**Given** a Kepak packing list containing prohibited items with incorrect treatment specifications, **When** the system validates treatment type against CoO requirements, **Then** the system SHALL flag treatment mismatches **And** generate compliance alerts
+**AC5 - Ineligible Items With Incorrect Treatment Type**  
+**Given** a Kepak packing list containing Ineligible items with incorrect treatment specifications, **When** the system validates treatment type against CoO requirements, **Then** the system SHALL flag treatment mismatches **And** generate compliance alerts
 
 **AC6 - Valid NIRMS Statement Processing**  
 **Given** a Kepak packing list with valid NIRMS statement, **When** the system processes the document, **Then** the system SHALL extract the statement content **And** proceed with standard CoO validation workflow
@@ -116,7 +116,7 @@ As a **DEFRA caseworker** processing trade export documentation, I need **Countr
 
 - **Location**: Cell H:I17
 - **Value**: 'Processed'
-- **Purpose**: Treatment type blanket statement for prohibited item validation scenarios
+- **Purpose**: Treatment type blanket statement for Ineligible item validation scenarios
 
 ### Business Acceptance Criteria (FROM ADO TICKET - AUTHORITATIVE)
 
@@ -171,46 +171,46 @@ As a **DEFRA caseworker** processing trade export documentation, I need **Countr
 **When** the packing list is submitted  
 **Then** the packing list will pass
 
-#### AC7 - Prohibited Item with Treatment Type
+#### AC7 - Ineligible Item with Treatment Type
 
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
 **And** the treatment type is specified  
-**And** the commodity code + CoO + treatment combination matches an item on the prohibited list  
+**And** the commodity code + CoO + treatment combination matches an item on the Ineligible list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 
-#### AC8 - Prohibited Item, More Than 3 (Treatment Type Specified)
+#### AC8 - Ineligible Item, More Than 3 (Treatment Type Specified)
 
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
 **And** the treatment type is specified  
-**And** the commodity code + CoO + treatment combination matches more than 3 items on the prohibited list  
+**And** the commodity code + CoO + treatment combination matches more than 3 items on the Ineligible list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"
 
-#### AC9 - Prohibited Item without Treatment Type
+#### AC9 - Ineligible Item without Treatment Type
 
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
 **And** the treatment type is null  
-**And** the commodity code + CoO combination matches an item on the prohibited list  
+**And** the commodity code + CoO combination matches an item on the Ineligible list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y"
 
-#### AC10 - Prohibited Items, More Than 3 (No Treatment Type Specified)
+#### AC10 - Ineligible Items, More Than 3 (No Treatment Type Specified)
 
 **Given** a Kepak packing list contains "The exporter of the products covered by this document (NIRMS RMS-GB-000280) declares that these products are intend for the Green lane and will remain in Northern Ireland." specified anywhere on it  
 **And** the CoO value is valid (single ISO 2-digit country code or comma-separated list of ISO 2-digit country codes)  
 **And** the commodity code is specified  
 **And** the treatment type is null  
-**And** the commodity code + CoO combination matches more than 3 items on the prohibited list  
+**And** the commodity code + CoO combination matches more than 3 items on the Ineligible list  
 **When** the packing list is submitted  
 **Then** the packing list will fail  
 **And** the failure reason is: "Prohibited item identified on the packing list in sheet X row Y, sheet X row Y, sheet X row Y, in addition to Z other locations"

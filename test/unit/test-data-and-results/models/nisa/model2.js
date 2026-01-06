@@ -529,8 +529,8 @@ module.exports = {
     ],
   },
 
-  // BAC11: Prohibited Item with Treatment Type - validation errors
-  prohibitedItemsWithTreatment: {
+  // BAC11: Ineligible Item with Treatment Type - validation errors
+  ineligibleItemsWithTreatment: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",
@@ -551,19 +551,19 @@ module.exports = {
       },
       {
         C: "900 - VEGETABLES PREPACK-C",
-        E: "PROHIBITED ITEM",
+        E: "Ineligible ITEM",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
         L: "Processed",
       },
     ],
   },
 
-  // BAC12: Prohibited Items, more than 3 (Treatment Type specified) - multiple validation errors
-  prohibitedItemsMultipleWithTreatment: {
+  // BAC12: Ineligible Items, more than 3 (Treatment Type specified) - multiple validation errors
+  ineligibleItemsMultipleWithTreatment: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",
@@ -584,49 +584,49 @@ module.exports = {
       },
       {
         C: "PRODUCT1",
-        E: "PROHIBITED ITEM 1",
+        E: "Ineligible ITEM 1",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
         L: "Processed",
       },
       {
         C: "PRODUCT2",
-        E: "PROHIBITED ITEM 2",
+        E: "Ineligible ITEM 2",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
         L: "Processed",
       },
       {
         C: "PRODUCT3",
-        E: "PROHIBITED ITEM 3",
+        E: "Ineligible ITEM 3",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
         L: "Processed",
       },
       {
         C: "PRODUCT4",
-        E: "PROHIBITED ITEM 4",
+        E: "Ineligible ITEM 4",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
         L: "Processed",
       },
     ],
   },
 
-  // BAC13: Prohibited Item without Treatment Type - validation errors
-  prohibitedItemsWithoutTreatment: {
+  // BAC13: Ineligible Item without Treatment Type - validation errors
+  ineligibleItemsWithoutTreatment: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",
@@ -647,18 +647,18 @@ module.exports = {
       },
       {
         C: "900 - VEGETABLES PREPACK-C",
-        E: "PROHIBITED ITEM",
+        E: "Ineligible ITEM",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
 
-  // BAC14: Prohibited Items, more than 3 (no Treatment Type specified) - multiple validation errors
-  prohibitedItemsMultipleWithoutTreatment: {
+  // BAC14: Ineligible Items, more than 3 (no Treatment Type specified) - multiple validation errors
+  ineligibleItemsMultipleWithoutTreatment: {
     sheet: [
       {
         A: "RMS_ESTABLISHMENT_NO",
@@ -679,39 +679,39 @@ module.exports = {
       },
       {
         C: "PRODUCT1",
-        E: "PROHIBITED ITEM 1",
+        E: "Ineligible ITEM 1",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
       },
       {
         C: "PRODUCT2",
-        E: "PROHIBITED ITEM 2",
+        E: "Ineligible ITEM 2",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
       },
       {
         C: "PRODUCT3",
-        E: "PROHIBITED ITEM 3",
+        E: "Ineligible ITEM 3",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
       },
       {
         C: "PRODUCT4",
-        E: "PROHIBITED ITEM 4",
+        E: "Ineligible ITEM 4",
         F: "1234",
         G: 1,
         I: 2,
         J: "Yes",
-        K: "PROHIBITED_ITEM_ISO",
+        K: "INELIGIBLE_ITEM_ISO",
       },
     ],
   },
