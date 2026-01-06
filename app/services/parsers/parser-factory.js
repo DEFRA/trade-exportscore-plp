@@ -19,6 +19,7 @@ const packingListValidator = require("../validators/packing-list-column-validato
 const {
   removeEmptyItems,
   removeBadData,
+  getItemFailureMessage,
 } = require("../validators/packing-list-validator-utilities");
 const { noMatchParsers } = require("../model-parsers");
 const logger = require("../../utilities/logger");
@@ -80,6 +81,18 @@ async function generateParsedPackingList(
     sanitizedFullPackingList,
   );
   parsedPackingList.items = removeEmptyItems(parsedPackingList.items);
+
+  // Generate item failure messages before removeBadData so validation can
+  // distinguish between invalid and missing net weight/packages
+  const validateCountryOfOrigin =
+    parsedPackingList.validateCountryOfOrigin ?? false;
+  const unitInHeader = parsedPackingList.unitInHeader ?? false;
+
+  parsedPackingList.items = parsedPackingList.items.map((item) => ({
+    ...item,
+    failure: getItemFailureMessage(item, validateCountryOfOrigin, unitInHeader),
+  }));
+
   const validationResults =
     packingListValidator.validatePackingList(parsedPackingList);
   parsedPackingList.business_checks.all_required_fields_present =

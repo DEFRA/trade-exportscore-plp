@@ -9,6 +9,7 @@
 const regex = require("../../utilities/regex");
 const isoCodesData = require("../data/data-iso-codes.json");
 const ineligibleItemsData = require("../data/data-ineligible-items.json");
+const failureReasonsDescriptions = require("./packing-list-failure-reasons");
 
 /**
  * Check whether a value is null, undefined or an empty string.
@@ -418,6 +419,91 @@ function isCountryOfOriginMatching(
   return normalizedCountry === normalizedIneligibleItemCountry;
 }
 
+/**
+ * Collect basic field validation failures for an item.
+ * @param {Object} item - Packing list item object.
+ * @param {boolean} unitInHeader - Whether net weight unit was found in header.
+ * @returns {Array<string>} Array of failure messages.
+ */
+function collectBasicFieldFailures(item, unitInHeader) {
+  const failures = [];
+
+  if (hasMissingIdentifier(item)) {
+    failures.push(failureReasonsDescriptions.IDENTIFIER_MISSING);
+  }
+  if (hasInvalidProductCode(item)) {
+    failures.push(failureReasonsDescriptions.PRODUCT_CODE_INVALID);
+  }
+  if (hasMissingDescription(item)) {
+    failures.push(failureReasonsDescriptions.DESCRIPTION_MISSING);
+  }
+  if (hasMissingPackages(item)) {
+    failures.push(failureReasonsDescriptions.PACKAGES_MISSING);
+  }
+  if (wrongTypeForPackages(item)) {
+    failures.push(failureReasonsDescriptions.PACKAGES_INVALID);
+  }
+  if (hasMissingNetWeight(item)) {
+    failures.push(failureReasonsDescriptions.NET_WEIGHT_MISSING);
+  }
+  if (wrongTypeNetWeight(item)) {
+    failures.push(failureReasonsDescriptions.NET_WEIGHT_INVALID);
+  }
+  // Only add net weight unit failure if unit is NOT in header
+  if (!unitInHeader && hasMissingNetWeightUnit(item)) {
+    failures.push(failureReasonsDescriptions.NET_WEIGHT_UNIT_MISSING);
+  }
+
+  return failures;
+}
+
+/**
+ * Collect country of origin validation failures for an item.
+ * @param {Object} item - Packing list item object.
+ * @returns {Array<string>} Array of failure messages.
+ */
+function collectCountryOfOriginFailures(item) {
+  const failures = [];
+
+  if (hasMissingNirms(item)) {
+    failures.push(failureReasonsDescriptions.NIRMS_MISSING);
+  }
+  if (hasInvalidNirms(item)) {
+    failures.push(failureReasonsDescriptions.NIRMS_INVALID);
+  }
+  if (hasMissingCoO(item)) {
+    failures.push(failureReasonsDescriptions.COO_MISSING);
+  }
+  if (hasInvalidCoO(item)) {
+    failures.push(failureReasonsDescriptions.COO_INVALID);
+  }
+  if (hasIneligibleItems(item)) {
+    failures.push(failureReasonsDescriptions.PROHIBITED_ITEM);
+  }
+
+  return failures;
+}
+
+/**
+ * Generate a failure message string for an individual item.
+ * @param {Object} item - Packing list item object.
+ * @param {boolean} validateCountryOfOrigin - Whether to include country of origin validations.
+ * @param {boolean} unitInHeader - Whether the net weight unit was found in the header (applies to all items).
+ * @returns {string|null} Semicolon-separated failure messages or null if no failures.
+ */
+function getItemFailureMessage(
+  item,
+  validateCountryOfOrigin = false,
+  unitInHeader = false,
+) {
+  const failures = [
+    ...collectBasicFieldFailures(item, unitInHeader),
+    ...(validateCountryOfOrigin ? collectCountryOfOriginFailures(item) : []),
+  ];
+
+  return failures.length > 0 ? failures.join("; ") : null;
+}
+
 module.exports = {
   hasMissingDescription,
   hasInvalidProductCode,
@@ -436,4 +522,5 @@ module.exports = {
   hasIneligibleItems,
   isNirms,
   isNotNirms,
+  getItemFailureMessage,
 };
