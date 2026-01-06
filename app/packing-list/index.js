@@ -77,6 +77,24 @@ function packingListMapper(packingListJson, applicationId) {
 }
 
 /**
+ * Format sheet/page location from row_location object.
+ * @param {Object} rowLocation - Row location object with sheetName or pageNumber
+ * @returns {string|null} Formatted location string or null
+ */
+function getSheetPageLocation(rowLocation) {
+  if (!rowLocation) {
+    return null;
+  }
+  if (rowLocation.sheetName) {
+    return `Sheet ${rowLocation.sheetName}`;
+  }
+  if (rowLocation.pageNumber) {
+    return `Page ${rowLocation.pageNumber}`;
+  }
+  return null;
+}
+
+/**
  * Map a single parser item row into the `item` DB shape.
  *
  * Normalises special fields such as NIRMS using validator utilities.
@@ -117,6 +135,9 @@ function itemsMapper(o, applicationId) {
       applicationId,
       countryOfOrigin: o.country_of_origin,
       nirms: getNirmsBooleanValue(o.nirms),
+      row: o.row_location?.rowNumber ?? null,
+      location: getSheetPageLocation(o.row_location),
+      failure: o.failure ?? null,
     };
   } catch (err) {
     logger.logError(filenameForLogging, "itemsMapper()", err);
@@ -126,6 +147,7 @@ function itemsMapper(o, applicationId) {
 
 module.exports = {
   createPackingList,
+  getSheetPageLocation,
   itemsMapper,
   packingListMapper,
 };
