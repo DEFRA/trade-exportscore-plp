@@ -6,6 +6,7 @@
  * properties for routing and telemetry.
  */
 const { v4 } = require("uuid");
+const { determineApprovalStatus } = require("../utilities/approval-status");
 
 /**
  * Build a message envelope for the parsed PLP result.
@@ -18,7 +19,7 @@ function createMessage(parsedResult, applicationId, failureReasons) {
   return {
     body: {
       applicationId: applicationId,
-      approvalStatus: parsedResult ? "approved" : "rejected",
+      approvalStatus: determineApprovalStatus(!!parsedResult, failureReasons),
       failureReasons,
     },
     // Top-level metadata properties used by the messaging infra
