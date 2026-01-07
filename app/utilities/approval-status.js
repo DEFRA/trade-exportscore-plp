@@ -6,6 +6,8 @@
  * database persistence and message creation to ensure consistency.
  */
 
+const failureReasonConstants = require("../services/validators/packing-list-failure-reasons");
+
 /**
  * Determine approval status based on parsing result and failure reasons.
  * @param {boolean} allRequiredFieldsPresent - True when all business checks pass
@@ -19,16 +21,14 @@ function determineApprovalStatus(allRequiredFieldsPresent, failureReasons) {
 
   if (failureReasons && typeof failureReasons === "string") {
     // Check if failure is specifically due to ineligible/prohibited items
-    if (
-      failureReasons.includes("Prohibited item identified on the packing list")
-    ) {
+    if (failureReasons.includes(failureReasonConstants.PROHIBITED_ITEM)) {
       return "rejected_ineligible";
     }
 
     // Check if failure is specifically due to Country of Origin issues
     if (
-      failureReasons.includes("Missing Country of Origin") ||
-      failureReasons.includes("Invalid Country of Origin ISO Code")
+      failureReasons.includes(failureReasonConstants.COO_MISSING) ||
+      failureReasons.includes(failureReasonConstants.COO_INVALID)
     ) {
       return "rejected_coo";
     }
