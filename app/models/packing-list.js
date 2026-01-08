@@ -8,6 +8,7 @@
  * - Exports a factory function returning the model definition.
  * - Uses `freezeTableName` to preserve table naming in migrations.
  */
+const { determineApprovalStatus } = require("../utilities/approval-status");
 module.exports = function definePackingListModel(sequelize, DataTypes) {
   /**
    * Model fields
@@ -17,6 +18,7 @@ module.exports = function definePackingListModel(sequelize, DataTypes) {
    * - parserModel: name of the parser/model that matched the document
    * - reasonsForFailure: textual reasons when validation fails
    * - dispatchLocationNumber: origin establishment number
+   * - approvalStatus: calculated approval status enum value
    */
   const PackingList = sequelize.define(
     "packingList",
@@ -27,9 +29,24 @@ module.exports = function definePackingListModel(sequelize, DataTypes) {
       parserModel: DataTypes.STRING,
       reasonsForFailure: DataTypes.STRING,
       dispatchLocationNumber: DataTypes.STRING,
+      approvalStatus: DataTypes.STRING,
     },
     {
       freezeTableName: true,
+      hooks: {
+        beforeCreate: (packingList) => {
+          packingList.approvalStatus = determineApprovalStatus(
+            packingList.allRequiredFieldsPresent,
+            packingList.reasonsForFailure,
+          );
+        },
+        beforeUpdate: (packingList) => {
+          packingList.approvalStatus = determineApprovalStatus(
+            packingList.allRequiredFieldsPresent,
+            packingList.reasonsForFailure,
+          );
+        },
+      },
     },
   );
 
