@@ -461,15 +461,12 @@ function mapPdfNonAiParser(
       );
     }
 
-    if (headers[model].nirms) {
-      if (nirmsHeaderExists) {
-        plRow.nirms = findItemContent(packingListJson, headers[model].nirms, y);
-      }
+    if (headers[model].nirms && nirmsHeaderExists) {
+      plRow.nirms = findItemContent(packingListJson, headers[model].nirms, y);
     }
 
-    if (headers[model].country_of_origin) {
-      if (coHeaderExists) {
-        plRow.country_of_origin = findItemContent(
+    if (headers[model].country_of_origin && coHeaderExists) {
+      plRow.country_of_origin = findItemContent(
           packingListJson,
           headers[model].country_of_origin,
           y,
