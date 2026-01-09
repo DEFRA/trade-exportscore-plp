@@ -32,7 +32,7 @@ const pdfMandsHeaders = {
         regex: /Trays\/Ctns/i,
       },
       total_net_weight_kg: {
-        x1: 490,
+        x1: 550,
         x2: 600,
         regex: /Tot Net Weight/i,
       },
@@ -48,9 +48,12 @@ const pdfMandsHeaders = {
       regex: /NIRMS/i,
     },
     minHeadersY: 214,
-    maxHeadersY: 240,
+    maxHeadersY: 225,
     validateCountryOfOrigin: true,
     findUnitInHeader: true,
+    footer: /Delivery IDs|\* see certification/,
+    pageNumber: /\d of \d*/,
+    firstPage: /^1 of \d*/,
   },
 };
 

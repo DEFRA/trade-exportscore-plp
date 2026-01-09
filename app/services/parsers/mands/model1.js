@@ -18,12 +18,6 @@ const {
   groupByYCoordinate,
 } = require("../../../utilities/pdf-helper");
 
-// Constants
-const MODEL_NAME = "MANDS1";
-const FOOTER_TEXT_PATTERN = /\* see certification/;
-const PAGE_NUMBER_PATTERN = /\d of \d*/;
-const FIRST_PAGE_PATTERN = /^1 of \d*/;
-
 /**
  * Parse the supplied PDF packing list (non-AI) into structured items.
  * @param {Buffer|Object} packingList - Raw PDF buffer or helper object used
@@ -36,21 +30,21 @@ async function parse(packingList) {
     const firstPage = pdfJson.pages[0];
     
     const establishmentNumber = regex.findMatch(
-      headers[MODEL_NAME].establishmentNumber.regex,
+      headers.MANDS1.establishmentNumber.regex,
       firstPage.content,
     );
 
     const establishmentNumbers = extractEstablishmentNumbers(
       pdfJson,
-      headers[MODEL_NAME].establishmentNumber.establishmentRegex,
+      headers.MANDS1.establishmentNumber.establishmentRegex,
     );
 
     const header = extractHeader(
       firstPage.content,
-      headers[MODEL_NAME].minHeadersY,
-      headers[MODEL_NAME].maxHeadersY,
+      headers.MANDS1.minHeadersY,
+      headers.MANDS1.maxHeadersY,
     );
-    const headersExist = checkHeadersExist(header, headers[MODEL_NAME]);
+    const headersExist = checkHeadersExist(header, headers.MANDS1);
 
     const packingListContents = processPages(
       pdfJson.pages,
@@ -65,7 +59,7 @@ async function parse(packingList) {
       true,
       parserModel.MANDS1,
       establishmentNumbers,
-      headers[MODEL_NAME],
+      headers.MANDS1,
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
@@ -75,7 +69,6 @@ async function parse(packingList) {
       false,
       parserModel.NOMATCH,
       [],
-      headers[MODEL_NAME],
     );
   }
 }
@@ -93,10 +86,10 @@ function processPages(pages, headersExist) {
     const groupedByY = groupByYCoordinate(page.content);
     page.content = groupedByY;
     
-    const ys = getYsForRows(page.content, headers[MODEL_NAME]);
+    const ys = getYsForRows(page.content, headers.MANDS1);
     const pageContents = mapPdfNonAiParser(
       page,
-      MODEL_NAME,
+      "MANDS1",
       ys,
       headersExist.nirms,
       headersExist.countryOfOrigin,
@@ -110,7 +103,7 @@ function processPages(pages, headersExist) {
     allContents = allContents.concat(pageContents);
 
     // Stop if footer found (prevents processing final page as valid table)
-    if (isEndOfItems(page.content)) {
+    if (isEndOfItems(page.content, headers.MANDS1)) {
       break;
     }
   }
@@ -179,14 +172,14 @@ function isEmptyRow(row) {
 function getYsForRows(pageContent, model) {
   try {
     const pageNumberY = pageContent.find((item) =>
-      PAGE_NUMBER_PATTERN.test(item.str),
+      model.pageNumber.test(item.str),
     )?.y;
     const isFirstPage = pageContent.some((item) =>
-      FIRST_PAGE_PATTERN.test(item.str),
+      model.firstPage.test(item.str),
     );
     const firstY = isFirstPage ? model.maxHeadersY : pageNumberY;
     const lastPageY = pageContent.find((item) =>
-      FOOTER_TEXT_PATTERN.test(item.str),
+      model.footer.test(item.str),
     )?.y;
 
     const lastY = lastPageY ?? Math.max(...pageContent.map((item) => item.y));
@@ -213,8 +206,8 @@ function getYsForRows(pageContent, model) {
  * @param {Array} pageContent - Array of PDF text items with positions.
  * @returns {boolean} True if the end of the table is found, false otherwise.
  */
-function isEndOfItems(pageContent) {
-  return pageContent.some((item) => FOOTER_TEXT_PATTERN.test(item.str));
+function isEndOfItems(pageContent, model) {
+  return pageContent.some((item) => model.footer.test(item.str));
 }
 
 module.exports = {

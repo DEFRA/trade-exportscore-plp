@@ -467,11 +467,10 @@ function mapPdfNonAiParser(
 
     if (headers[model].country_of_origin && coHeaderExists) {
       plRow.country_of_origin = findItemContent(
-          packingListJson,
-          headers[model].country_of_origin,
-          y,
-        );
-      }
+        packingListJson,
+        headers[model].country_of_origin,
+        y,
+      );
     }
 
     plRow.row_location = {
