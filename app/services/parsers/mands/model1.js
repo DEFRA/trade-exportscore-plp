@@ -11,13 +11,18 @@ const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
 const {
   mapPdfNonAiParser,
-  extractPdfNonAiNetWeightUnit,
 } = require("../../../services/parser-map");
 const {
   extractPdf,
   extractEstablishmentNumbers,
   groupByYCoordinate,
 } = require("../../../utilities/pdf-helper");
+
+// Constants
+const MODEL_NAME = "MANDS1";
+const FOOTER_TEXT_PATTERN = /\* see certification/;
+const PAGE_NUMBER_PATTERN = /\d of \d*/;
+const FIRST_PAGE_PATTERN = /^1 of \d*/;
 
 /**
  * Parse the supplied PDF packing list (non-AI) into structured items.
@@ -27,64 +32,40 @@ const {
  */
 async function parse(packingList) {
   try {
-    let packingListContents = [];
-    let packingListContentsTemp = [];
-
     const pdfJson = await extractPdf(packingList);
-
+    const firstPage = pdfJson.pages[0];
+    
     const establishmentNumber = regex.findMatch(
-      headers.MANDS1.establishmentNumber.regex,
-      pdfJson.pages[0].content,
+      headers[MODEL_NAME].establishmentNumber.regex,
+      firstPage.content,
     );
 
     const establishmentNumbers = extractEstablishmentNumbers(
       pdfJson,
-      headers.MANDS1.establishmentNumber.establishmentRegex,
+      headers[MODEL_NAME].establishmentNumber.establishmentRegex,
     );
 
-    const model = "MANDS1";
-    const netWeightUnit = extractPdfNonAiNetWeightUnit(pdfJson.pages[0], model);
-
-    for (const page of pdfJson.pages) {
-      const groupedByY = groupByYCoordinate(page.content);
-      page.content = groupedByY;
-      const ys = getYsForRows(page.content, headers.MANDS1);
-      packingListContentsTemp = mapPdfNonAiParser(page, model, ys);
-
-      // since header is only on first page, update all items
-      packingListContentsTemp.forEach((item) => {
-        item.total_net_weight_unit = netWeightUnit;
-      });
-
-      packingListContents = packingListContents.concat(packingListContentsTemp);
-
-      // if footer runs over 2 pages this breaks the loop to stop the final page being processed as a valid table
-      if (isEndOfItems(page.content)) {
-        break;
-      }
-    }
-
-    // filter out empty rows
-    packingListContents = packingListContents.filter(
-      (row) =>
-        !(
-          row.description === null &&
-          row.commodity_code === null &&
-          row.number_of_packages === null &&
-          row.total_net_weight_kg === null &&
-          row.country_of_origin === null &&
-          row.nirms === null &&
-          row.type_of_treatment === null
-        ),
+    const header = extractHeader(
+      firstPage.content,
+      headers[MODEL_NAME].minHeadersY,
+      headers[MODEL_NAME].maxHeadersY,
     );
+    const headersExist = checkHeadersExist(header, headers[MODEL_NAME]);
+
+    const packingListContents = processPages(
+      pdfJson.pages,
+      headersExist,
+    );
+
+    const filteredContents = packingListContents.filter((row) => !isEmptyRow(row));
 
     return combineParser.combine(
       establishmentNumber,
-      packingListContents,
+      filteredContents,
       true,
       parserModel.MANDS1,
       establishmentNumbers,
-      headers[model],
+      headers[MODEL_NAME],
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
@@ -94,26 +75,118 @@ async function parse(packingList) {
       false,
       parserModel.NOMATCH,
       [],
-      headers.MANDS1,
+      headers[MODEL_NAME],
     );
   }
+}
+
+/**
+ * Process all pages and extract packing list items.
+ * @param {Array} pages - Array of PDF pages
+ * @param {Object} headersExist - Flags indicating which headers are present
+ * @returns {Array} Combined packing list contents from all pages
+ */
+function processPages(pages, headersExist) {
+  let allContents = [];
+
+  for (const page of pages) {
+    const groupedByY = groupByYCoordinate(page.content);
+    page.content = groupedByY;
+    
+    const ys = getYsForRows(page.content, headers[MODEL_NAME]);
+    const pageContents = mapPdfNonAiParser(
+      page,
+      MODEL_NAME,
+      ys,
+      headersExist.nirms,
+      headersExist.countryOfOrigin,
+    );
+
+    // Apply net weight unit to all items (header only on first page)
+    pageContents.forEach((item) => {
+      item.total_net_weight_unit = headersExist.totalNetWeightUnit;
+    });
+
+    allContents = allContents.concat(pageContents);
+
+    // Stop if footer found (prevents processing final page as valid table)
+    if (isEndOfItems(page.content)) {
+      break;
+    }
+  }
+
+  return allContents;
+}
+
+/**
+ * Extract header content within Y coordinate range.
+ * @param {Array} pageContent - Page content items
+ * @param {number} minY - Minimum Y coordinate
+ * @param {number} maxY - Maximum Y coordinate
+ * @returns {Array} Filtered header items
+ */
+function extractHeader(pageContent, minY, maxY) {
+  return pageContent.filter(
+    (item) => item.y >= minY && item.y <= maxY && item.str.trim() !== "",
+  );
+}
+
+/**
+ * Check if specific headers exist on a page.
+ * @param {Array} header - Header content items
+ * @param {Object} modelHeaders - Model header configuration
+ * @returns {Object} Object with boolean flags for each header type
+ */
+function checkHeadersExist(header, modelHeaders) {
+  const totalNetWeightHeader = header.find((x) =>
+    modelHeaders.headers.total_net_weight_kg.regex.test(x.str),
+  )?.str; // TODO 'Units Per Tray Tot Net Weight (Kg) Tot Gross Weight (Kg) Ind Item Price Value of Goods'
+
+  return {
+    nirms: header.some((item) => modelHeaders.nirms.regex.test(item.str)),
+    countryOfOrigin: header.some((item) =>
+      modelHeaders.country_of_origin.regex.test(item.str),
+    ),
+    totalNetWeightUnit: regex.findUnit(totalNetWeightHeader)
+  };
+}
+
+/**
+ * Check if a row is completely empty.
+ * @param {Object} row - Parsed row object
+ * @returns {boolean} True if all key fields are null
+ */
+function isEmptyRow(row) {
+  const fields = [
+    "description",
+    "commodity_code",
+    "number_of_packages",
+    "total_net_weight_kg",
+    "country_of_origin",
+    "nirms",
+    "type_of_treatment",
+  ];
+  return fields.every((field) => row[field] === null);
 }
 
 /**
  * Determine the Y coordinates for rows between header and totals on a PDF
  * page. This is a helper used by the M&S PDF non-AI parser.
  * @param {Array} pageContent - Array of PDF text items with positions.
+ * @param {Object} model - Model header configuration
  * @returns {Array<number>} Unique Y coordinates for rows.
  */
 function getYsForRows(pageContent, model) {
   try {
     const pageNumberY = pageContent.find((item) =>
-      /\d of \d*/.test(item.str),
+      PAGE_NUMBER_PATTERN.test(item.str),
     )?.y;
-    const isFirstPage = pageContent.some((item) => /^1 of \d*/.test(item.str));
+    const isFirstPage = pageContent.some((item) =>
+      FIRST_PAGE_PATTERN.test(item.str),
+    );
     const firstY = isFirstPage ? model.maxHeadersY : pageNumberY;
     const lastPageY = pageContent.find((item) =>
-      /\* see certification/.test(item.str),
+      FOOTER_TEXT_PATTERN.test(item.str),
     )?.y;
 
     const lastY = lastPageY ?? Math.max(...pageContent.map((item) => item.y));
@@ -141,7 +214,7 @@ function getYsForRows(pageContent, model) {
  * @returns {boolean} True if the end of the table is found, false otherwise.
  */
 function isEndOfItems(pageContent) {
-  return pageContent.some((item) => /\* see certification/.test(item.str));
+  return pageContent.some((item) => FOOTER_TEXT_PATTERN.test(item.str));
 }
 
 module.exports = {

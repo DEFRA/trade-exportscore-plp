@@ -69,6 +69,9 @@ function findHeader(pageContent) {
   );
   const mandsHeaders = headers.MANDS1.headers;
   for (const headerField in mandsHeaders) {
+    if (!Object.prototype.hasOwnProperty.call(mandsHeaders, headerField)) {
+      continue;
+    }
     // check if any of the str fields in header match headerField regex
     const matchFound = header.some((item) =>
       mandsHeaders[headerField].regex.test(item.str),

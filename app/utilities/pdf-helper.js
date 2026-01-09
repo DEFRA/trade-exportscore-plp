@@ -118,51 +118,6 @@ function getHeaders(pageContent, model) {
 }
 
 /**
- * Locate and group header text fragments by X coordinate ranges from model headers.
- * Groups items whose X coordinate falls between x1 and x2 for each header field.
- * @param {Array} pageContent - Page content array
- * @param {string} model - Parser model identifier
- * @returns {Object} Header text grouped by field name (e.g., { description: "...", commodity_code: "..." })
- */
-function getHeadersByRange(pageContent, model) {
-  try {
-    const y1 = headers[model].minHeadersY;
-    const y2 = headers[model].maxHeadersY;
-    const header = pageContent.filter(
-      (item) => item.y >= y1 && item.y <= y2 && item.str.trim() !== "",
-    );
-
-    const groupedByRange = {};
-    const modelHeaders = headers[model].headers;
-
-    // Initialize groups for each header field
-    for (const fieldName in modelHeaders) {
-      if (modelHeaders.hasOwnProperty(fieldName)) {
-        groupedByRange[fieldName] = "";
-      }
-    }
-
-    // Group text by matching X coordinate ranges
-    for (const obj of header) {
-      for (const fieldName in modelHeaders) {
-        if (modelHeaders.hasOwnProperty(fieldName)) {
-          const { x1, x2 } = modelHeaders[fieldName];
-          if (obj.x >= x1 && obj.x <= x2) {
-            groupedByRange[fieldName] +=
-              (groupedByRange[fieldName] ? " " : "") + obj.str;
-          }
-        }
-      }
-    }
-
-    return groupedByRange;
-  } catch (err) {
-    logger.logError(filenameForLogging, "getHeadersByRange()", err);
-    return {};
-  }
-}
-
-/**
  * Extract establishment numbers (RMS numbers) from PDF page content.
  * @param {Object} pdfJson - PDF JSON structure
  * @param {RegExp} remosRegex - REMOS pattern (default: regex.remosRegex)
@@ -282,7 +237,6 @@ function processGroup(group) {
 
 module.exports = {
   getHeaders,
-  getHeadersByRange,
   extractPdf,
   findSmaller,
   removeEmptyStringElements,

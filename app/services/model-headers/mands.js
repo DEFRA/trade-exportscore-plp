@@ -40,7 +40,7 @@ const pdfMandsHeaders = {
     country_of_origin: {
       x1: 210,
       x2: 250,
-      regex: /Co. of (Origin)?/i,
+      regex: /Co. of( Origin)?/i,
     },
     nirms: {
       x1: 400,

@@ -415,31 +415,29 @@ function mapPdfParser(packingListDocument, key) {
 }
 
 /**
- * Extract net weight unit from PDF non-AI document header.
- * @param {Object} packingListJson - PDF content with coordinates
- * @param {string} model - Parser model identifier
- * @returns {string|null} Net weight unit or null
- */
-function extractPdfNonAiNetWeightUnit(packingListJson, model) {
-  if (!headers[model].findUnitInHeader) {
-    return null;
-  }
-  const pageHeader = pdfHelper.getHeaders(packingListJson.content, model);
-  const totalNetWeightHeader = Object.values(pageHeader).find((x) =>
-    headers[model].headers.total_net_weight_kg.regex.test(x),
-  );
-  return regex.findUnit(totalNetWeightHeader);
-}
-
-/**
  * Map PDF non-AI parsed data (coordinate-based) to standardized items.
  * @param {Object} packingListJson - PDF content with coordinates
  * @param {string} model - Parser model identifier
  * @param {Array<number>} ys - Y-coordinates of data rows
+ * @param {boolean} nirmsHeaderExists - Flag indicating if NIRMS header exists
+ * @param {boolean} coHeaderExists - Flag indicating if Country of Origin header exists
  * @returns {Array<Object>} Mapped packing list items
  */
-function mapPdfNonAiParser(packingListJson, model, ys) {
-  const netWeightUnit = extractPdfNonAiNetWeightUnit(packingListJson, model);
+function mapPdfNonAiParser(
+  packingListJson,
+  model,
+  ys,
+  nirmsHeaderExists = false,
+  coHeaderExists = false,
+) {
+  let netWeightUnit;
+  if (headers[model].findUnitInHeader) {
+    const pageHeader = pdfHelper.getHeaders(packingListJson.content, model);
+    const totalNetWeightHeader = Object.values(pageHeader).find((x) =>
+      headers[model].headers.total_net_weight_kg.regex.test(x),
+    );
+    netWeightUnit = regex.findUnit(totalNetWeightHeader);
+  }
 
   const packingListContents = [];
 
@@ -462,18 +460,23 @@ function mapPdfNonAiParser(packingListJson, model, ys) {
         y,
       );
     }
+
     if (headers[model].nirms) {
-      // TODO and if "NIRMS" is present in header
-      plRow.nirms = findItemContent(packingListJson, headers[model].nirms, y);
+      if (nirmsHeaderExists) {
+        plRow.nirms = findItemContent(packingListJson, headers[model].nirms, y);
+      }
     }
+
     if (headers[model].country_of_origin) {
-      // TODO and if "Co. of Origin" is present in header
-      plRow.country_of_origin = findItemContent(
-        packingListJson,
-        headers[model].country_of_origin,
-        y,
-      );
+      if (coHeaderExists) {
+        plRow.country_of_origin = findItemContent(
+          packingListJson,
+          headers[model].country_of_origin,
+          y,
+        );
+      }
     }
+
     plRow.row_location = {
       rowNumber: row + 1,
       pageNumber: packingListJson.pageInfo.num,
@@ -531,7 +534,6 @@ module.exports = {
   mapPdfNonAiParser,
   findHeaderCols,
   extractNetWeightUnit,
-  extractPdfNonAiNetWeightUnit,
   getBlanketValueFromOffset,
   isNotEmpty,
 };
