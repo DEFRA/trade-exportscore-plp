@@ -415,6 +415,23 @@ function mapPdfParser(packingListDocument, key) {
 }
 
 /**
+ * Extract net weight unit from PDF non-AI document header.
+ * @param {Object} packingListJson - PDF content with coordinates
+ * @param {string} model - Parser model identifier
+ * @returns {string|null} Net weight unit or null
+ */
+function extractPdfNonAiNetWeightUnit(packingListJson, model) {
+  if (!headers[model].findUnitInHeader) {
+    return null;
+  }
+  const pageHeader = pdfHelper.getHeaders(packingListJson.content, model);
+  const totalNetWeightHeader = Object.values(pageHeader).find((x) =>
+    headers[model].headers.total_net_weight_kg.regex.test(x),
+  );
+  return regex.findUnit(totalNetWeightHeader);
+}
+
+/**
  * Map PDF non-AI parsed data (coordinate-based) to standardized items.
  * @param {Object} packingListJson - PDF content with coordinates
  * @param {string} model - Parser model identifier
@@ -422,14 +439,7 @@ function mapPdfParser(packingListDocument, key) {
  * @returns {Array<Object>} Mapped packing list items
  */
 function mapPdfNonAiParser(packingListJson, model, ys) {
-  let netWeightUnit;
-  if (headers[model].findUnitInHeader) {
-    const pageHeader = pdfHelper.getHeaders(packingListJson.content, model);
-    const totalNetWeightHeader = Object.values(pageHeader).find((x) =>
-      headers[model].headers.total_net_weight_kg.regex.test(x),
-    );
-    netWeightUnit = regex.findUnit(totalNetWeightHeader);
-  }
+  const netWeightUnit = extractPdfNonAiNetWeightUnit(packingListJson, model);
 
   const packingListContents = [];
 
@@ -449,6 +459,18 @@ function mapPdfNonAiParser(packingListJson, model, ys) {
       plRow[key] = findItemContent(
         packingListJson,
         headers[model].headers[key],
+        y,
+      );
+    }
+    if (headers[model].nirms) {
+      // TODO and if "NIRMS" is present in header
+      plRow.nirms = findItemContent(packingListJson, headers[model].nirms, y);
+    }
+    if (headers[model].country_of_origin) {
+      // TODO and if "Co. of Origin" is present in header
+      plRow.country_of_origin = findItemContent(
+        packingListJson,
+        headers[model].country_of_origin,
         y,
       );
     }
@@ -509,6 +531,7 @@ module.exports = {
   mapPdfNonAiParser,
   findHeaderCols,
   extractNetWeightUnit,
+  extractPdfNonAiNetWeightUnit,
   getBlanketValueFromOffset,
   isNotEmpty,
 };
