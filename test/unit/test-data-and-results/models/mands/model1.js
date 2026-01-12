@@ -130,6 +130,35 @@ module.exports = {
       },
     ],
   },
+  invalidModel_WrongHeaders: {
+    pages: [
+      {
+        pageInfo: {
+          num: 1,
+        },
+        content: [
+          {
+            x: 229.64,
+            y: 157.86,
+            str: "Depot Approval Number: RMS-GB-000008-001",
+            width: 157.14,
+          },
+          {
+            x: 767.299999999997,
+            y: 30.0000000000001,
+            str: "1 of 22",
+            width: 36.696,
+          },
+          {
+            x: 75.2600025,
+            y: 219.48,
+            str: "Wrong",
+            width: 76.26,
+          },
+        ],
+      },
+    ],
+  },
   invalidModel_WrongRemosNumber: {
     pages: [
       {

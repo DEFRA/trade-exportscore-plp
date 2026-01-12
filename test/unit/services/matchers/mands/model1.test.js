@@ -28,6 +28,7 @@ describe("matchesMandS", () => {
       matcherResult.WRONG_ESTABLISHMENT_NUMBER,
       model.invalidModel_MissingRemosElement,
     ],
+    [matcherResult.WRONG_HEADER, model.invalidModel_WrongHeaders],
   ])("returns '%s' for mands model", async (expected, inputModel) => {
     const filename = "PackingList.xlsx";
     extractPdf.mockImplementation(() => {
