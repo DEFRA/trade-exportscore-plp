@@ -9,9 +9,7 @@ const regex = require("../../../utilities/regex");
 const logger = require("../../../utilities/logger");
 const path = require("node:path");
 const filenameForLogging = path.join("app", __filename.split("app")[1]);
-const {
-  mapPdfNonAiParser,
-} = require("../../../services/parser-map");
+const { mapPdfNonAiParser } = require("../../../services/parser-map");
 const {
   extractPdf,
   extractEstablishmentNumbers,
@@ -28,7 +26,7 @@ async function parse(packingList) {
   try {
     const pdfJson = await extractPdf(packingList);
     const firstPage = pdfJson.pages[0];
-    
+
     const establishmentNumber = regex.findMatch(
       headers.MANDS1.establishmentNumber.regex,
       firstPage.content,
@@ -46,12 +44,11 @@ async function parse(packingList) {
     );
     const headersExist = checkHeadersExist(header, headers.MANDS1);
 
-    const packingListContents = processPages(
-      pdfJson.pages,
-      headersExist,
-    );
+    const packingListContents = processPages(pdfJson.pages, headersExist);
 
-    const filteredContents = packingListContents.filter((row) => !isEmptyRow(row));
+    const filteredContents = packingListContents.filter(
+      (row) => !isEmptyRow(row),
+    );
 
     return combineParser.combine(
       establishmentNumber,
@@ -63,13 +60,7 @@ async function parse(packingList) {
     );
   } catch (err) {
     logger.logError(filenameForLogging, "parse()", err);
-    return combineParser.combine(
-      null,
-      [],
-      false,
-      parserModel.NOMATCH,
-      [],
-    );
+    return combineParser.combine(null, [], false, parserModel.NOMATCH, []);
   }
 }
 
@@ -85,7 +76,7 @@ function processPages(pages, headersExist) {
   for (const page of pages) {
     const groupedByY = groupByYCoordinate(page.content);
     page.content = groupedByY;
-    
+
     const ys = getYsForRows(page.content, headers.MANDS1);
     const pageContents = mapPdfNonAiParser(
       page,
@@ -133,14 +124,17 @@ function extractHeader(pageContent, minY, maxY) {
 function checkHeadersExist(header, modelHeaders) {
   const totalNetWeightHeader = header.find((x) =>
     modelHeaders.headers.total_net_weight_kg.regex.test(x.str),
-  )?.str; // TODO 'Units Per Tray Tot Net Weight (Kg) Tot Gross Weight (Kg) Ind Item Price Value of Goods'
+  )?.str;
 
   return {
     nirms: header.some((item) => modelHeaders.nirms.regex.test(item.str)),
     countryOfOrigin: header.some((item) =>
       modelHeaders.country_of_origin.regex.test(item.str),
     ),
-    totalNetWeightUnit: regex.findUnit(totalNetWeightHeader)
+    totalNetWeightUnit: regex.findUnit(
+      totalNetWeightHeader,
+      modelHeaders.totalNetWeightUnit,
+    ),
   };
 }
 

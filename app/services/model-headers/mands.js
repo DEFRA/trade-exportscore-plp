@@ -54,6 +54,7 @@ const pdfMandsHeaders = {
     footer: /Delivery IDs|\* see certification/,
     pageNumber: /\d of \d*/,
     firstPage: /^1 of \d*/,
+    totalNetWeightUnit: /(?<!gross weight).*(KGS?|KILOGRAMS?|KILOS?)/i,
   },
 };
 

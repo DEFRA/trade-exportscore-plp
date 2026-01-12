@@ -116,11 +116,10 @@ function testAllPatterns(regexArray, obj) {
  * @param {string} header - Header string to search
  * @returns {string|null} Matched unit or null
  */
-function findUnit(header) {
-  const unitRegex = /(KGS?|KILOGRAMS?|KILOS?)/i; //regex of all possible units
+function findUnit(header, unitRegex = /(KGS?|KILOGRAMS?|KILOS?)/i) {
   const match = unitRegex.exec(header);
   if (match) {
-    return match[0]; // return only the matching part of the string (the unit)
+    return match[1] ?? match[0]; // return the first capturing group, or the full match if no group
   }
   return null;
 }
