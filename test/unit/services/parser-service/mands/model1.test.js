@@ -3,15 +3,18 @@ const model = require("../../../test-data-and-results/models/mands/model1");
 const parser_model = require("../../../../../app/services/parser-model");
 const test_results = require("../../../test-data-and-results/results/mands/model1");
 const failureReasonsDescriptions = require("../../../../../app/services/validators/packing-list-failure-reasons");
+const { extractPdf } = require("../../../../../app/utilities/pdf-helper");
 
 const filename = "mands-model1.pdf";
 
-jest.mock("../../../../../app/services/document-intelligence");
-jest.mock("../../../../../app/config", () => {
+jest.mock("../../../../../app/utilities/pdf-helper", () => {
+  const actual = jest.requireActual("../../../../../app/utilities/pdf-helper");
   return {
-    isDiEnabled: true,
+    ...actual,
+    extractPdf: jest.fn(),
   };
 });
+
 jest.mock("../../../../../app/utilities/pdf-helper");
 jest.mock("../../../../../app/services/data/data-iso-codes.json", () => [
   "VALID_ISO",
@@ -25,43 +28,26 @@ jest.mock("../../../../../app/services/data/data-ineligible-items.json", () => [
   },
 ]);
 
-const {
-  createDocumentIntelligenceClient,
-  runAnalysis,
-} = require("../../../../../app/services/document-intelligence");
-const {
-  extractPdf,
-  extractEstablishmentNumbers,
-} = require("../../../../../app/utilities/pdf-helper");
-
-createDocumentIntelligenceClient.mockImplementation(() => {
-  return jest.fn();
-});
-
 describe("findParser", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as true", async () => {
-    runAnalysis.mockImplementationOnce(() => {
+    extractPdf.mockImplementation(() => {
       return model.validModel;
     });
 
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
-    const result = await parserService.findParser(model.validModel, filename);
+    const result = await parserService.findParser({}, filename);
     expect(result).toMatchObject(test_results.validTestResult);
   });
 
   test("matches valid MandS Model 1 file, calls parser, but returns all_required_fields_present as false when cells missing", async () => {
-    runAnalysis.mockImplementationOnce(() => {
+    extractPdf.mockImplementation(() => {
       return model.invalidModel_MissingColumnCells;
     });
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
-    const result = await parserService.findParser(
-      model.invalidModel_MissingColumnCells,
-      filename,
-    );
+
+    const result = await parserService.findParser({}, filename);
 
     expect(result).toMatchObject(test_results.invalidTestResult_MissingCells);
   });
@@ -80,31 +66,14 @@ describe("findParser", () => {
     extractPdf.mockImplementation(() => {
       return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
     });
-    const result = await parserService.findParser(model.validModel, filename);
+    const result = await parserService.findParser({}, filename);
 
     expect(result).toMatchObject(invalidTestResult_NoMatch);
   });
 
   test("parses model multiple RMS", async () => {
     extractPdf.mockImplementation(() => {
-      return {
-        pages: [
-          {
-            content: [
-              { str: "RMS-GB-000008-000" },
-              { str: "RMS-GB-000008-001" },
-            ],
-          },
-        ],
-      };
-    });
-
-    extractEstablishmentNumbers.mockImplementation(() => {
-      return ["RMS-GB-000008-000", "RMS-GB-000008-001"];
-    });
-
-    runAnalysis.mockImplementationOnce(() => {
-      return model.validModel;
+      return model.multipleRms;
     });
 
     const result = await parserService.findParser({}, filename);
@@ -116,14 +85,6 @@ describe("findParser", () => {
 
   test("parses model missing unit of weight", async () => {
     extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
-
-    extractEstablishmentNumbers.mockImplementation(() => {
-      return ["RMS-GB-000008-001"];
-    });
-
-    runAnalysis.mockImplementationOnce(() => {
       return model.missingKgunit;
     });
 
@@ -132,38 +93,13 @@ describe("findParser", () => {
       "Net Weight Unit of Measure (kg) not found.\n",
     );
   });
-  test("extracts rms number from sentence string", async () => {
+
+  test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for invalid NIRMS", async () => {
     extractPdf.mockImplementation(() => {
-      return {
-        pages: [
-          {
-            content: [{ str: "Depot Approval Number: RMS-GB-000008-001" }],
-          },
-        ],
-      };
-    });
-
-    extractEstablishmentNumbers.mockImplementation(() => {
-      return ["RMS-GB-000008-001"];
-    });
-
-    runAnalysis.mockImplementationOnce(() => {
-      return model.validModel;
+      return model.invalidNirms;
     });
 
     const result = await parserService.findParser({}, filename);
-    expect(result.establishment_numbers).toEqual(["RMS-GB-000008-001"]);
-  });
-
-  test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for invalid NIRMS", async () => {
-    runAnalysis.mockImplementationOnce(() => {
-      return model.invalidNirms;
-    });
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
-
-    const result = await parserService.findParser(model.invalidNirms, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
       failureReasonsDescriptions.NIRMS_INVALID + " in page 1 row 1.\n",
@@ -171,27 +107,21 @@ describe("findParser", () => {
   });
 
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as true for valid NIRMS", async () => {
-    runAnalysis.mockImplementationOnce(() => {
+    extractPdf.mockImplementation(() => {
       return model.nonNirms;
     });
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
 
-    const result = await parserService.findParser(model.nonNirms, filename);
+    const result = await parserService.findParser({}, filename);
 
     expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
 
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for missing NIRMS", async () => {
-    runAnalysis.mockImplementationOnce(() => {
+    extractPdf.mockImplementation(() => {
       return model.missingNirms;
     });
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
 
-    const result = await parserService.findParser(model.missingNirms, filename);
+    const result = await parserService.findParser({}, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
       failureReasonsDescriptions.NIRMS_MISSING + " in page 1 row 1.\n",
@@ -199,14 +129,11 @@ describe("findParser", () => {
   });
 
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for missing CoO", async () => {
-    runAnalysis.mockImplementationOnce(() => {
+    extractPdf.mockImplementation(() => {
       return model.missingCoO;
     });
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
 
-    const result = await parserService.findParser(model.missingCoO, filename);
+    const result = await parserService.findParser({}, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
       failureReasonsDescriptions.COO_MISSING +
@@ -215,14 +142,11 @@ describe("findParser", () => {
   });
 
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for invalid CoO", async () => {
-    runAnalysis.mockImplementationOnce(() => {
+    extractPdf.mockImplementation(() => {
       return model.invalidCoO;
     });
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
 
-    const result = await parserService.findParser(model.invalidCoO, filename);
+    const result = await parserService.findParser({}, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
       failureReasonsDescriptions.COO_INVALID +
@@ -231,30 +155,21 @@ describe("findParser", () => {
   });
 
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as true for X CoO", async () => {
-    runAnalysis.mockImplementationOnce(() => {
+    extractPdf.mockImplementation(() => {
       return model.xCoO;
     });
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
 
-    const result = await parserService.findParser(model.xCoO, filename);
+    const result = await parserService.findParser({}, filename);
 
     expect(result.business_checks.all_required_fields_present).toBeTruthy();
   });
 
   test("matches valid MandS Model 1 file, calls parser and returns all_required_fields_present as false for ineligible items", async () => {
-    runAnalysis.mockImplementationOnce(() => {
+    extractPdf.mockImplementation(() => {
       return model.ineligibleItems;
     });
-    extractPdf.mockImplementation(() => {
-      return { pages: [{ content: [{ remos: "RMS-GB-000008-001" }] }] };
-    });
 
-    const result = await parserService.findParser(
-      model.ineligibleItems,
-      filename,
-    );
+    const result = await parserService.findParser({}, filename);
 
     expect(result.business_checks.failure_reasons).toBe(
       failureReasonsDescriptions.PROHIBITED_ITEM +

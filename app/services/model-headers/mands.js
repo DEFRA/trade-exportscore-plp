@@ -7,22 +7,54 @@
 const pdfMandsHeaders = {
   MANDS1: {
     establishmentNumber: {
-      regex: /^(?:Depot Approval Number:\s)?(RMS-GB-000008-\d{3})$/i,
-      establishmentRegex:
-        /^(?:Depot Approval Number:\s)?(RMS-GB-\d{6}-\d{3})$/i,
+      regex: /RMS-GB-000008-\d{3}/i,
+      establishmentRegex: /RMS-GB-000008-\d{3}/i,
     },
     headers: {
-      description: "Description of Goods",
-      commodity_code: "EU Commodity Code",
-      type_of_treatment: "Treatment Type",
-      number_of_packages: "Trays/Ctns",
-      total_net_weight_kg: "Tot Net Weight (Kg)",
-      country_of_origin: "CountryOfOrigin",
-      nirms: "NIRMS",
+      description: {
+        x1: 75,
+        x2: 200,
+        regex: /Description of Goods/i,
+      },
+      commodity_code: {
+        x1: 255,
+        x2: 330,
+        regex: /EU Commodity Code/i,
+      },
+      type_of_treatment: {
+        x1: 335,
+        x2: 395,
+        regex: /Treatment Type/i,
+      },
+      number_of_packages: {
+        x1: 440,
+        x2: 480,
+        regex: /Trays\/Ctns/i,
+      },
+      total_net_weight_kg: {
+        x1: 550,
+        x2: 600,
+        regex: /Tot Net Weight/i,
+      },
     },
+    country_of_origin: {
+      x1: 210,
+      x2: 250,
+      regex: /Co. of( Origin)?/i,
+    },
+    nirms: {
+      x1: 400,
+      x2: 435,
+      regex: /NIRMS/i,
+    },
+    minHeadersY: 214,
+    maxHeadersY: 225,
     validateCountryOfOrigin: true,
     findUnitInHeader: true,
-    modelId: "mands1-v5",
+    footer: /Delivery IDs|\* see certification/,
+    pageNumber: /\d of \d*/,
+    firstPage: /^1 of \d*/,
+    totalNetWeightUnit: /(?<!gross weight).*(KGS?|KILOGRAMS?|KILOS?)/i,
   },
 };
 
