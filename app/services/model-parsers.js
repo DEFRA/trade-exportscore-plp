@@ -243,11 +243,6 @@ const parsersPdf = {
     parse: (packingList, filename) =>
       icelandParser.parse(packingList, filename),
   },
-  MANDS1: {
-    matches: (packingList, filename) =>
-      mandsMatcher.matches(packingList, filename),
-    parse: (packingList, filename) => mandsParser.parse(packingList, filename),
-  },
   GREGGS1: {
     matches: (packingList, filename) =>
       greggsMatcher.matches(packingList, filename),
@@ -293,6 +288,11 @@ const parsersPdfNonAi = {
       giovanniMatcher3.matches(packingList, filename),
     parse: (packingList, filename) =>
       giovanniParser3.parse(packingList, filename),
+  },
+  MANDS1: {
+    matches: (packingList, filename) =>
+      mandsMatcher.matches(packingList, filename),
+    parse: (packingList, filename) => mandsParser.parse(packingList, filename),
   },
 };
 
