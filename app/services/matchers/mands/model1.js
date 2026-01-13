@@ -59,7 +59,7 @@ async function matches(packingList, filename) {
  * Locate a header for a specific model within page content.
  * Validates that each model header regex matches at least one extracted header text.
  * @param {Array} pageContent - Extracted page content
- * @returns {string} matcherResult - `CORRECT` if all headers match, otherwise `WRONG_HEADER`
+ * @returns {number} matcherResult - `CORRECT` if all headers match, otherwise `WRONG_HEADER`
  */
 function findHeader(pageContent) {
   const y1 = headers.MANDS1.minHeadersY;

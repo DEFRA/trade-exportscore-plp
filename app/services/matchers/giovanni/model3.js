@@ -76,7 +76,7 @@ function matchHeaders(pageContent) {
  * Locate a header for a specific model within page content.
  * @param {string} model - Header model key (e.g., 'GIOVANNI3')
  * @param {string} pageContent - Extracted page content
- * @returns {string} matcherResult - `CORRECT` or `WRONG_HEADER`
+ * @returns {number} matcherResult - `CORRECT` or `WRONG_HEADER`
  */
 function findHeader(model, pageContent) {
   const header = pdfHelper.getHeaders(pageContent, model);

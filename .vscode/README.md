@@ -23,6 +23,62 @@ This project uses the following approved MCP servers:
 - **Configuration**: Runs via `npx @azure-devops/mcp defragovuk`
 - **Organization**: defragovuk
 
+### 3. SonarQube MCP Server
+
+- **Type**: Local (Docker-based)
+- **Purpose**: Access SonarCloud analysis results, quality gates, code issues, and metrics
+- **Configuration**: Runs via Docker container `mcp/sonarqube`
+- **Organization**: defra
+- **Project Key**: trade-exportscore-plp
+
+#### SonarQube MCP Capabilities
+
+The SonarQube MCP server provides access to:
+
+- **Quality Gate Status**: Check if the project passes quality gate conditions
+- **Code Metrics**: Retrieve metrics like coverage, duplications, complexity, lines of code
+- **Issue Management**: Search and analyze code quality issues (bugs, vulnerabilities, code smells)
+- **Security Analysis**: Access security hotspots and vulnerability details
+- **Rule Information**: Get detailed information about SonarQube rules
+- **Code Analysis**: Analyze code snippets using SonarQube analyzers
+
+#### Authentication Setup
+
+To use the SonarQube MCP server, you need to configure authentication:
+
+1. **Create a SonarCloud Token**:
+   - Log in to [SonarCloud](https://sonarcloud.io)
+   - Go to **My Account** → **Security**
+   - Generate a new token with appropriate permissions
+
+2. **Configure Local Environment**:
+   - Create a `.env` file in the project root (if it doesn't exist)
+   - Add your token: `SONARQUBE_TOKEN=your_sonarcloud_token_here`
+   - **Important**: The `.env` file is in `.gitignore` - never commit it!
+
+3. **Verify Configuration**:
+   - Restart VS Code to reload the MCP server
+   - The SonarQube MCP should authenticate automatically
+
+#### Example Usage
+
+Common SonarQube MCP queries:
+
+- "What's the quality gate status for the main branch?"
+- "Show me all open bugs in the project"
+- "Get the test coverage metrics"
+- "Explain the SonarQube rule javascript:S3403"
+- "Search for security vulnerabilities in the project"
+
+#### Alternative Configuration (Java-based)
+
+The project also supports a Java-based SonarQube MCP configuration (commented out in `mcp.json`). This requires:
+- Java Runtime Environment (JRE)
+- SonarQube MCP JAR file downloaded locally
+- Direct token configuration in environment variables
+
+The Docker-based approach is recommended for consistency across development environments.
+
 ## DEFRA MCP Guidance Compliance
 
 All MCP servers configured in this project must follow DEFRA MCP guidance as documented at:
@@ -52,6 +108,10 @@ All MCP servers configured in this project must follow DEFRA MCP guidance as doc
 - Search GitHub repository code and history
 - Create or update tickets based on development work
 - Access approved external work systems with proper authentication
+- Review SonarQube code quality metrics and quality gate status
+- Investigate and fix code quality issues flagged by SonarQube
+- Analyze security vulnerabilities and code smells
+- Track technical debt and maintainability ratings
 
 ❌ Do not use MCP when:
 

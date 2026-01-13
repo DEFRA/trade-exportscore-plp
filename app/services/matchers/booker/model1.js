@@ -61,7 +61,7 @@ async function matches(packingList, filename) {
 /**
  * Determine whether any known Booker header variant is present on the page.
  * @param {string} pageContent - Extracted page content from PDF
- * @returns {string} matcherResult - `CORRECT` or `WRONG_HEADER`
+ * @returns {number} matcherResult - `CORRECT` or `WRONG_HEADER`
  */
 function matchHeaders(pageContent) {
   const isBookerHeader = findHeader("BOOKER1", pageContent);
@@ -81,7 +81,7 @@ function matchHeaders(pageContent) {
  * Find and validate a header for a given model on the supplied page content.
  * @param {string} model - Header model key (e.g., 'BOOKER1')
  * @param {string} pageContent - Extracted page content from PDF
- * @returns {string} matcherResult - `CORRECT` or `WRONG_HEADER`
+ * @returns {number} matcherResult - `CORRECT` or `WRONG_HEADER`
  */
 function findHeader(model, pageContent) {
   const header = pdfHelper.getHeaders(pageContent, model);
