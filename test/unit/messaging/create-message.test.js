@@ -17,13 +17,15 @@ describe("createMessage", () => {
   });
 
   test("should create a rejected_other message for generic failures", () => {
+    const failureReasons =
+      'Total net weight is missing in sheet "PackingList" row 15.\nInvalid entry for NIRMS/Non-NIRMS goods in sheet "PackingList" row 23.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_other",
-      failureReasons: "Identifier is missing",
+      failureReasons,
     };
 
-    const result = createMessage(false, "claim123", "Identifier is missing");
+    const result = createMessage(false, "claim123", failureReasons);
 
     expect(result).toMatchObject({
       body: testObject,
@@ -33,8 +35,9 @@ describe("createMessage", () => {
   });
 
   test("should create a rejected_ineligible message when prohibited items identified", () => {
+    // Carrot product with commodity code 07061000 (prohibited item)
     const failureReasons =
-      "Prohibited item identified on the packing list at Sheet 1, row 5";
+      'Prohibited item identified on the packing list in sheet "Products" row 12.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_ineligible",
@@ -51,8 +54,9 @@ describe("createMessage", () => {
   });
 
   test("should create rejected_ineligible message for multiple failures including prohibited items", () => {
+    // Fresh celery (prohibited) with additional validation failures
     const failureReasons =
-      "Identifier is missing at Sheet 1, row 3.\nProhibited item identified on the packing list at Sheet 1, row 5";
+      'No of packages is missing in sheet "Manifest" row 8.\nProhibited item identified on the packing list in sheet "Manifest" row 14.\nTotal net weight is missing in sheet "Manifest" row 21.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_ineligible",
@@ -69,7 +73,9 @@ describe("createMessage", () => {
   });
 
   test("should create a rejected_coo message when Missing Country of Origin detected", () => {
-    const failureReasons = "Missing Country of Origin for line 3 in sheet 1";
+    // CARPLAN DEMON FREEZE product missing Country of Origin
+    const failureReasons =
+      'Missing Country of Origin in sheet "Export_Data" row 5.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_coo",
@@ -86,8 +92,9 @@ describe("createMessage", () => {
   });
 
   test("should create a rejected_coo message when Invalid Country of Origin ISO Code detected", () => {
+    // Book product with invalid CoO code "UK" instead of "GB"
     const failureReasons =
-      "Invalid Country of Origin ISO Code for line 5 in sheet 1";
+      'Invalid Country of Origin ISO Code in sheet "Items" row 18.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_coo",
@@ -104,8 +111,9 @@ describe("createMessage", () => {
   });
 
   test("should create rejected_coo message for multiple failures including Country of Origin issues", () => {
+    // Multiple items with CoO issues and other validation failures
     const failureReasons =
-      "Identifier is missing at Sheet 1, row 2.\nMissing Country of Origin for line 3.\nTotal net weight is missing at row 7";
+      'Product code is invalid in sheet "PackingList" row 7.\nMissing Country of Origin in sheet "PackingList" row 11.\nNo of packages is missing in sheet "PackingList" row 19.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_coo",
@@ -122,8 +130,9 @@ describe("createMessage", () => {
   });
 
   test("should prioritize rejected_ineligible over rejected_coo and rejected_other when all failures present (AC5)", () => {
+    // Mixed packing list: raw potatoes (prohibited), missing CoO, and other failures
     const failureReasons =
-      "Identifier is missing at Sheet 1, row 2.\nMissing Country of Origin for line 3.\nProhibited item identified on the packing list at Sheet 1, row 5.\nTotal net weight is missing at row 7";
+      'NIRMS/Non-NIRMS goods not specified in sheet "Export" row 4.\nMissing Country of Origin in sheet "Export" row 9.\nProhibited item identified on the packing list in sheet "Export" row 12.\nTotal net weight is missing in sheet "Export" row 16.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_ineligible",
@@ -140,12 +149,13 @@ describe("createMessage", () => {
     // Verify failure reasons are preserved in the message body
     expect(result.body.failureReasons).toContain("Prohibited item");
     expect(result.body.failureReasons).toContain("Missing Country of Origin");
-    expect(result.body.failureReasons).toContain("Identifier is missing");
+    expect(result.body.failureReasons).toContain("NIRMS/Non-NIRMS");
   });
 
   test("should prioritize rejected_coo over rejected_other when both present without ineligible items (AC5)", () => {
+    // Dairy products with invalid CoO codes and missing package counts
     const failureReasons =
-      "Identifier is missing at Sheet 1, row 2.\nInvalid Country of Origin ISO Code for line 3.\nTotal net weight is missing at row 7";
+      'Product description is missing in sheet "Goods" row 5.\nInvalid Country of Origin ISO Code in sheet "Goods" row 8.\nNo of packages is missing in sheet "Goods" row 13.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_coo",
@@ -161,13 +171,14 @@ describe("createMessage", () => {
     });
     // Verify all failure reasons are preserved
     expect(result.body.failureReasons).toContain("Invalid Country of Origin");
-    expect(result.body.failureReasons).toContain("Identifier is missing");
-    expect(result.body.failureReasons).toContain("Total net weight");
+    expect(result.body.failureReasons).toContain("Product description");
+    expect(result.body.failureReasons).toContain("No of packages");
   });
 
   test("should prioritize rejected_ineligible over rejected_coo when both prohibited items and COO failures present (AC5.1)", () => {
+    // Fresh leeks (07039000) with wrong CoO format
     const failureReasons =
-      "Prohibited item identified on the packing list at Sheet 1, row 3.\nInvalid Country of Origin ISO Code for line 5";
+      'Prohibited item identified on the packing list in sheet "Shipment" row 6.\nInvalid Country of Origin ISO Code in sheet "Shipment" row 11.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_ineligible",
@@ -189,8 +200,9 @@ describe("createMessage", () => {
   });
 
   test("should prioritize rejected_ineligible over rejected_other when both prohibited items and other failures present (AC5.2)", () => {
+    // Spring onions (prohibited) with multiple RMS numbers found
     const failureReasons =
-      "Prohibited item identified on the packing list at Sheet 1, row 2.\nCheck GB Establishment RMS Number.";
+      'Prohibited item identified on the packing list in sheet "Inventory" row 9.\nMultiple GB Place of Dispatch (Establishment) numbers found on packing list.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_ineligible",
@@ -207,13 +219,14 @@ describe("createMessage", () => {
     // Verify both failure reasons are included in description field
     expect(result.body.failureReasons).toContain("Prohibited item identified");
     expect(result.body.failureReasons).toContain(
-      "Check GB Establishment RMS Number",
+      "Multiple GB Place of Dispatch",
     );
   });
 
   test("should prioritize rejected_coo over rejected_other when both COO and other failures present (AC5.3)", () => {
+    // Beverages with CoO issues and missing RMS
     const failureReasons =
-      "Invalid Country of Origin ISO Code for line 3.\nCheck GB Establishment RMS Number.";
+      'Invalid Country of Origin ISO Code in sheet "Products" row 14.\nCheck GB Establishment RMS Number.';
     const testObject = {
       applicationId: "claim123",
       approvalStatus: "rejected_coo",
@@ -237,6 +250,7 @@ describe("createMessage", () => {
   });
 
   test("should return rejected_other when only other failures present with no ineligible items or COO issues (AC5.4)", () => {
+    // Empty packing list with RMS validation failure
     const failureReasons =
       "Check GB Establishment RMS Number.\nNo product line data found.";
     const testObject = {
