@@ -12,15 +12,24 @@ const { determineApprovalStatus } = require("../utilities/approval-status");
  * Build a message envelope for the parsed PLP result.
  * @param {Object|null} parsedResult - Truthy when parsing succeeded
  * @param {string} applicationId - Identifier of the application being updated
- * @param {Array|null} failureReasons - Array of error reasons when parsing failed
+ * @param {Array|string|null} failureReasons - Failure reasons when parsing failed
  * @returns {Object} Message envelope with body and metadata properties
  */
 function createMessage(parsedResult, applicationId, failureReasons) {
+  const normalizedFailureReasons = Array.isArray(failureReasons)
+    ? failureReasons.join("\n")
+    : (failureReasons ?? null);
+
+  const approvalStatus = determineApprovalStatus(
+    Boolean(parsedResult),
+    normalizedFailureReasons,
+  );
+
   return {
     body: {
       applicationId: applicationId,
-      approvalStatus: determineApprovalStatus(!!parsedResult, failureReasons),
-      failureReasons,
+      approvalStatus,
+      failureReasons: normalizedFailureReasons,
     },
     // Top-level metadata properties used by the messaging infra
     type: "uk.gov.trade.plp",

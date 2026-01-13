@@ -258,4 +258,33 @@ describe("createMessage", () => {
     );
     expect(result.body.failureReasons).toContain("No product line data found");
   });
+
+  test("should create rejected_coo message for real-world data with missing Country of Origin", () => {
+    // Real-world test data with:
+    // - Item 1: Valid item with NIRMS and Country of Origin (ZA)
+    // - Item 2: Missing Country of Origin (Non-NIRMs)
+    // - Item 3: Missing Country of Origin (Non-NIRMs)
+    const failureReasons =
+      'Missing Country of Origin in sheet "Sheet1" row 3.\nMissing Country of Origin in sheet "Sheet1" row 4.';
+
+    const testObject = {
+      applicationId: "claim456",
+      approvalStatus: "rejected_coo",
+      failureReasons,
+    };
+
+    const result = createMessage(false, "claim456", failureReasons);
+
+    expect(result).toMatchObject({
+      body: testObject,
+      type: "uk.gov.trade.plp",
+      source: "trade-exportscore-plp",
+    });
+
+    // Verify the specific failure reasons are present
+    expect(result.body.failureReasons).toContain("Missing Country of Origin");
+    expect(result.body.failureReasons).toContain('sheet "Sheet1" row 3');
+    expect(result.body.failureReasons).toContain('sheet "Sheet1" row 4');
+    expect(result.body.approvalStatus).toBe("rejected_coo");
+  });
 });
