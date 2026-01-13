@@ -8,6 +8,43 @@
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@azure-devops/mcp", "defragovuk"]
+    },
+    // SonarQube Configuration using Docker
+    "sonarqube": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--env-file",
+        ".env", // put your SONARQUBE_TOKEN in your local .env file
+        "-e",
+        "SONARQUBE_URL",
+        "-e",
+        "SONARQUBE_ORG",
+        "-e",
+        "SONARQUBE_PROJECT_KEY",
+        "mcp/sonarqube"
+      ],
+      "env": {
+        "SONARQUBE_URL": "https://sonarcloud.io",
+        "SONARQUBE_ORG": "defra",
+        "SONARQUBE_PROJECT_KEY": "trade-exportscore-plp"
+      }
     }
+    // SonarQube Configuration using Java
+    // "sonarqube": {
+    //   "command": "java",
+    //   "args": [
+    //       "-jar",
+    //       "C:\\Users\\**username**\\.sonarqube-mcp\\sonarqube-mcp-server.jar"
+    //   ],
+    //   "env": {
+    //       "SONARQUBE_TOKEN": "Your Token Here",
+    //       "SONARQUBE_HOST_URL": "https://sonarcloud.io",
+    //       "SONARQUBE_ORG": "defra",
+    //       "STORAGE_PATH": "C:\\Users\\**username**\\.sonarqube-mcp\\storage"
+    //   }
+    // }
   }
 }
