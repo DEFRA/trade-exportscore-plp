@@ -4,6 +4,7 @@ const {
   extractNetWeightUnit,
   getBlanketValueFromOffset,
   isNotEmpty,
+  extractCommodityCodeDigits,
 } = require("../../../app/services/parser-map");
 
 jest.mock("../../../app/services/model-headers-pdf", () => ({
@@ -236,4 +237,15 @@ describe("isNotEmpty", () => {
       expect(result).toBe(expected);
     },
   );
+});
+
+describe("extractCommodityCodeDigits", () => {
+  test.each([
+    ["12345GB", "12345"],
+    ["IT", null],
+    ["12345", "12345"],
+  ])("extractCommodityCodeDigits(%p) should return %p", (input, expected) => {
+    const result = extractCommodityCodeDigits(input);
+    expect(result).toEqual(expected);
+  });
 });
