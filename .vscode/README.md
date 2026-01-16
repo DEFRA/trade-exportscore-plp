@@ -73,6 +73,7 @@ Common SonarQube MCP queries:
 #### Alternative Configuration (Java-based)
 
 The project also supports a Java-based SonarQube MCP configuration (commented out in `mcp.json`). This requires:
+
 - Java Runtime Environment (JRE)
 - SonarQube MCP JAR file downloaded locally
 - Direct token configuration in environment variables
