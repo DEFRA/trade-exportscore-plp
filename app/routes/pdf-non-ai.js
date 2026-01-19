@@ -9,9 +9,9 @@ const config = require("../config");
 const { StatusCodes } = require("http-status-codes");
 const { processPdfFile } = require("../utilities/file-processor");
 // Uncomment to see pdf elements positions
-const PDFExtract = require("pdf.js-extract").PDFExtract;
-const pdfExtract = new PDFExtract();
-const fs = require("node:fs");
+// const PDFExtract = require("pdf.js-extract").PDFExtract;
+// const pdfExtract = new PDFExtract();
+// const fs = require("node:fs");
 
 module.exports = {
   method: "GET",
@@ -25,13 +25,13 @@ module.exports = {
     );
 
     // Uncomment to see pdf elements positions
-    let result = {};
-    try {
-      result = fs.readFileSync(filename);
-    } catch (err) {
-      console.error(err);
-    }
-    const packing = await pdfExtract.extractBuffer(result);
+    // let result = {};
+    // try {
+    //   result = fs.readFileSync(filename);
+    // } catch (err) {
+    //   console.error(err);
+    // }
+    // const packing = await pdfExtract.extractBuffer(result);
 
     return h.response(packingList).code(StatusCodes.OK);
   },
