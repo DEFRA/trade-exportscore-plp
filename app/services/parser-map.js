@@ -494,6 +494,11 @@ function extractCommodityCodeDigits(input) {
     return null;
   }
 
+  // If input is only 2 alphabetic characters (ie the country of origin), return null
+  if (/^[A-Z]{2}$/i.test(input)) {
+    return null;
+  }
+
   // Match if input starts with 4 to 14 digits
   const match = new RegExp(/^(\d{4,14})/).exec(input);
   if (match) {
@@ -532,4 +537,5 @@ module.exports = {
   extractNetWeightUnit,
   getBlanketValueFromOffset,
   isNotEmpty,
+  extractCommodityCodeDigits,
 };
