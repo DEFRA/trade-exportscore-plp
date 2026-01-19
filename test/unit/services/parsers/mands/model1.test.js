@@ -41,3 +41,63 @@ describe("parseMandS1", () => {
     expect(logErrorSpy).toHaveBeenCalled();
   });
 });
+
+describe("findNetWeightUnit", () => {
+  test("should find the net weight unit from the header", () => {
+    const header = "Tot Net Weight kg Tot Gross Weight kg";
+    const result = parser.findNetWeightUnit(header);
+    expect(result).toBe("kg");
+  });
+
+  test("should find the net weight unit from the header without gross weight", () => {
+    const header = "Tot Net Weight kg";
+    const result = parser.findNetWeightUnit(header);
+    expect(result).toBe("kg");
+  });
+
+  test("should find the net weight unit from the header without gross weight kg", () => {
+    const header = "Tot Net Weight kg gross weight";
+    const result = parser.findNetWeightUnit(header);
+    expect(result).toBe("kg");
+  });
+
+  test("should return null if no valid unit is found", () => {
+    const header = "Tot Net Weight";
+
+    const result = parser.findNetWeightUnit(header);
+    expect(result).toBeNull();
+  });
+
+  test("shouldn't return gross weight kg", () => {
+    const header = "tot Net Weight (other string) Tot Gross Weight kg";
+    const result = parser.findNetWeightUnit(header);
+    expect(result).toBeNull();
+  });
+
+  test("shouldn't return gross weight kg for any characters", () => {
+    const header = "tot Net Weight 5tgif20 Tot Gross Weight kg";
+    const result = parser.findNetWeightUnit(header);
+    expect(result).toBeNull();
+  });
+
+  test("should return null when header is undefined", () => {
+    const result = parser.findNetWeightUnit(undefined);
+    expect(result).toBeNull();
+  });
+
+  test("should return null when header is null", () => {
+    const result = parser.findNetWeightUnit(null);
+    expect(result).toBeNull();
+  });
+
+  test("should return null when header is empty string", () => {
+    const result = parser.findNetWeightUnit("");
+    expect(result).toBeNull();
+  });
+
+  test("should return null when header doesn't contain 'net weight'", () => {
+    const header = "Total Weight kg";
+    const result = parser.findNetWeightUnit(header);
+    expect(result).toBeNull();
+  });
+});
