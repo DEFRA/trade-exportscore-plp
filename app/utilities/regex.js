@@ -8,6 +8,7 @@
  */
 
 const remosRegex = /^RMS-GB-\d{6}-\d{3}$/i;
+const kgRegex = /(KGS?|KILOGRAMS?|KILOS?)/i;
 
 /**
  * Create case-insensitive global regex pattern.
@@ -116,7 +117,7 @@ function testAllPatterns(regexArray, obj) {
  * @param {string} header - Header string to search
  * @returns {string|null} Matched unit or null
  */
-function findUnit(header, unitRegex = /(KGS?|KILOGRAMS?|KILOS?)/i) {
+function findUnit(header, unitRegex = kgRegex) {
   const match = unitRegex.exec(header);
   if (match) {
     return match[1] ?? match[0]; // return the first capturing group, or the full match if no group
@@ -191,6 +192,7 @@ module.exports = {
   findUnit,
   findAllMatches,
   remosRegex,
+  kgRegex,
   addMatch,
   positionFinder,
 };
