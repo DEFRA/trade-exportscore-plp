@@ -79,4 +79,25 @@ describe("findNetWeightUnit", () => {
     const result = parser.findNetWeightUnit(header);
     expect(result).toBeNull();
   });
+
+  test("should return null when header is undefined", () => {
+    const result = parser.findNetWeightUnit(undefined);
+    expect(result).toBeNull();
+  });
+
+  test("should return null when header is null", () => {
+    const result = parser.findNetWeightUnit(null);
+    expect(result).toBeNull();
+  });
+
+  test("should return null when header is empty string", () => {
+    const result = parser.findNetWeightUnit("");
+    expect(result).toBeNull();
+  });
+
+  test("should return null when header doesn't contain 'net weight'", () => {
+    const header = "Total Weight kg";
+    const result = parser.findNetWeightUnit(header);
+    expect(result).toBeNull();
+  });
 });
